@@ -1,0 +1,1320 @@
+Pandoc
+  Meta
+    { unMeta =
+        fromList
+          [ ( "abstract"
+            , MetaBlocks
+                [ Para
+                    [ Str "This"
+                    , Space
+                    , Str "document"
+                    , Space
+                    , Str "is"
+                    , Space
+                    , Str "a"
+                    , Space
+                    , Str "template"
+                    , Space
+                    , Str "demonstrating"
+                    , Space
+                    , Str "the"
+                    , Space
+                    , Str "apaquarto"
+                    , Space
+                    , Str "format."
+                    ]
+                ]
+            )
+          , ( "affiliations"
+            , MetaList
+                [ MetaMap
+                    (fromList
+                       [ ( "address"
+                         , MetaInlines
+                             [ Str "1"
+                             , Space
+                             , Str "Main"
+                             , Space
+                             , Str "St"
+                             ]
+                         )
+                       , ( "city" , MetaInlines [ Str "Boston" ] )
+                       , ( "country" , MetaInlines [ Str "USA" ] )
+                       , ( "department"
+                         , MetaInlines
+                             [ Str "The" , Space , Str "Department" ]
+                         )
+                       , ( "id" , MetaInlines [ Str "aff-1" ] )
+                       , ( "letter" , MetaString "a" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaInlines
+                             [ Str "An" , Space , Str "Organization" ]
+                         )
+                       , ( "number" , MetaString "1" )
+                       , ( "postal-code"
+                         , MetaInlines [ Str "02210-1022" ]
+                         )
+                       ])
+                , MetaMap
+                    (fromList
+                       [ ( "id" , MetaInlines [ Str "aff-2" ] )
+                       , ( "letter" , MetaString "b" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaInlines
+                             [ Str "A"
+                             , Space
+                             , Str "second"
+                             , Space
+                             , Str "affilication"
+                             ]
+                         )
+                       , ( "number" , MetaString "2" )
+                       ])
+                , MetaMap
+                    (fromList
+                       [ ( "id" , MetaInlines [ Str "aff-3" ] )
+                       , ( "letter" , MetaString "c" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaInlines
+                             [ Str "Another"
+                             , Space
+                             , Str "Affiliation"
+                             ]
+                         )
+                       , ( "number" , MetaString "3" )
+                       ])
+                ]
+            )
+          , ( "author"
+            , MetaList
+                [ MetaInlines [ Str "Sarah" , Space , Str "Malloc" ]
+                , MetaInlines [ Str "Eliza" , Space , Str "Dealloc" ]
+                ]
+            )
+          , ( "authors"
+            , MetaList
+                [ MetaMap
+                    (fromList
+                       [ ( "affiliations"
+                         , MetaList
+                             [ MetaMap
+                                 (fromList
+                                    [ ( "ref"
+                                      , MetaInlines [ Str "aff-1" ]
+                                      )
+                                    ])
+                             , MetaMap
+                                 (fromList
+                                    [ ( "ref"
+                                      , MetaInlines [ Str "aff-2" ]
+                                      )
+                                    ])
+                             ]
+                         )
+                       , ( "email"
+                         , MetaInlines [ Str "sm@example.org" ]
+                         )
+                       , ( "id" , MetaString "1" )
+                       , ( "letter" , MetaString "a" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaMap
+                             (fromList
+                                [ ( "family"
+                                  , MetaInlines [ Str "Malloc" ]
+                                  )
+                                , ( "given"
+                                  , MetaInlines [ Str "Sarah" ]
+                                  )
+                                , ( "literal"
+                                  , MetaInlines
+                                      [ Str "Sarah"
+                                      , Space
+                                      , Str "Malloc"
+                                      ]
+                                  )
+                                ])
+                         )
+                       , ( "number" , MetaString "1" )
+                       , ( "orcid"
+                         , MetaInlines [ Str "0000-0000-0000-0000" ]
+                         )
+                       , ( "url"
+                         , MetaInlines [ Str "https://example.org/" ]
+                         )
+                       ])
+                , MetaMap
+                    (fromList
+                       [ ( "affiliations"
+                         , MetaList
+                             [ MetaMap
+                                 (fromList
+                                    [ ( "ref"
+                                      , MetaInlines [ Str "aff-3" ]
+                                      )
+                                    ])
+                             ]
+                         )
+                       , ( "id" , MetaString "2" )
+                       , ( "letter" , MetaString "b" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaMap
+                             (fromList
+                                [ ( "family"
+                                  , MetaInlines [ Str "Dealloc" ]
+                                  )
+                                , ( "given"
+                                  , MetaInlines [ Str "Eliza" ]
+                                  )
+                                , ( "literal"
+                                  , MetaInlines
+                                      [ Str "Eliza"
+                                      , Space
+                                      , Str "Dealloc"
+                                      ]
+                                  )
+                                ])
+                         )
+                       , ( "number" , MetaString "2" )
+                       ])
+                ]
+            )
+          , ( "bibliography"
+            , MetaInlines [ Str "bibliography.bib" ]
+            )
+          , ( "by-affiliation"
+            , MetaList
+                [ MetaMap
+                    (fromList
+                       [ ( "address"
+                         , MetaInlines
+                             [ Str "1"
+                             , Space
+                             , Str "Main"
+                             , Space
+                             , Str "St"
+                             ]
+                         )
+                       , ( "authors"
+                         , MetaList
+                             [ MetaMap
+                                 (fromList
+                                    [ ( "affiliations"
+                                      , MetaList
+                                          [ MetaMap
+                                              (fromList
+                                                 [ ( "ref"
+                                                   , MetaInlines
+                                                       [ Str "aff-1" ]
+                                                   )
+                                                 ])
+                                          , MetaMap
+                                              (fromList
+                                                 [ ( "ref"
+                                                   , MetaInlines
+                                                       [ Str "aff-2" ]
+                                                   )
+                                                 ])
+                                          ]
+                                      )
+                                    , ( "email"
+                                      , MetaInlines
+                                          [ Str "sm@example.org" ]
+                                      )
+                                    , ( "id" , MetaString "1" )
+                                    , ( "letter" , MetaString "a" )
+                                    , ( "metadata"
+                                      , MetaMap (fromList [])
+                                      )
+                                    , ( "name"
+                                      , MetaMap
+                                          (fromList
+                                             [ ( "family"
+                                               , MetaInlines
+                                                   [ Str "Malloc" ]
+                                               )
+                                             , ( "given"
+                                               , MetaInlines
+                                                   [ Str "Sarah" ]
+                                               )
+                                             , ( "literal"
+                                               , MetaInlines
+                                                   [ Str "Sarah"
+                                                   , Space
+                                                   , Str "Malloc"
+                                                   ]
+                                               )
+                                             ])
+                                      )
+                                    , ( "number" , MetaString "1" )
+                                    , ( "orcid"
+                                      , MetaInlines
+                                          [ Str "0000-0000-0000-0000" ]
+                                      )
+                                    , ( "url"
+                                      , MetaInlines
+                                          [ Str "https://example.org/" ]
+                                      )
+                                    ])
+                             ]
+                         )
+                       , ( "city" , MetaInlines [ Str "Boston" ] )
+                       , ( "country" , MetaInlines [ Str "USA" ] )
+                       , ( "department"
+                         , MetaInlines
+                             [ Str "The" , Space , Str "Department" ]
+                         )
+                       , ( "id" , MetaInlines [ Str "aff-1" ] )
+                       , ( "letter" , MetaString "a" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaInlines
+                             [ Str "An" , Space , Str "Organization" ]
+                         )
+                       , ( "number" , MetaString "1" )
+                       , ( "postal-code"
+                         , MetaInlines [ Str "02210-1022" ]
+                         )
+                       ])
+                , MetaMap
+                    (fromList
+                       [ ( "authors"
+                         , MetaList
+                             [ MetaMap
+                                 (fromList
+                                    [ ( "affiliations"
+                                      , MetaList
+                                          [ MetaMap
+                                              (fromList
+                                                 [ ( "ref"
+                                                   , MetaInlines
+                                                       [ Str "aff-1" ]
+                                                   )
+                                                 ])
+                                          , MetaMap
+                                              (fromList
+                                                 [ ( "ref"
+                                                   , MetaInlines
+                                                       [ Str "aff-2" ]
+                                                   )
+                                                 ])
+                                          ]
+                                      )
+                                    , ( "email"
+                                      , MetaInlines
+                                          [ Str "sm@example.org" ]
+                                      )
+                                    , ( "id" , MetaString "1" )
+                                    , ( "letter" , MetaString "a" )
+                                    , ( "metadata"
+                                      , MetaMap (fromList [])
+                                      )
+                                    , ( "name"
+                                      , MetaMap
+                                          (fromList
+                                             [ ( "family"
+                                               , MetaInlines
+                                                   [ Str "Malloc" ]
+                                               )
+                                             , ( "given"
+                                               , MetaInlines
+                                                   [ Str "Sarah" ]
+                                               )
+                                             , ( "literal"
+                                               , MetaInlines
+                                                   [ Str "Sarah"
+                                                   , Space
+                                                   , Str "Malloc"
+                                                   ]
+                                               )
+                                             ])
+                                      )
+                                    , ( "number" , MetaString "1" )
+                                    , ( "orcid"
+                                      , MetaInlines
+                                          [ Str "0000-0000-0000-0000" ]
+                                      )
+                                    , ( "url"
+                                      , MetaInlines
+                                          [ Str "https://example.org/" ]
+                                      )
+                                    ])
+                             ]
+                         )
+                       , ( "id" , MetaInlines [ Str "aff-2" ] )
+                       , ( "letter" , MetaString "b" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaInlines
+                             [ Str "A"
+                             , Space
+                             , Str "second"
+                             , Space
+                             , Str "affilication"
+                             ]
+                         )
+                       , ( "number" , MetaString "2" )
+                       ])
+                , MetaMap
+                    (fromList
+                       [ ( "authors"
+                         , MetaList
+                             [ MetaMap
+                                 (fromList
+                                    [ ( "affiliations"
+                                      , MetaList
+                                          [ MetaMap
+                                              (fromList
+                                                 [ ( "ref"
+                                                   , MetaInlines
+                                                       [ Str "aff-3" ]
+                                                   )
+                                                 ])
+                                          ]
+                                      )
+                                    , ( "id" , MetaString "2" )
+                                    , ( "letter" , MetaString "b" )
+                                    , ( "metadata"
+                                      , MetaMap (fromList [])
+                                      )
+                                    , ( "name"
+                                      , MetaMap
+                                          (fromList
+                                             [ ( "family"
+                                               , MetaInlines
+                                                   [ Str "Dealloc" ]
+                                               )
+                                             , ( "given"
+                                               , MetaInlines
+                                                   [ Str "Eliza" ]
+                                               )
+                                             , ( "literal"
+                                               , MetaInlines
+                                                   [ Str "Eliza"
+                                                   , Space
+                                                   , Str "Dealloc"
+                                                   ]
+                                               )
+                                             ])
+                                      )
+                                    , ( "number" , MetaString "2" )
+                                    ])
+                             ]
+                         )
+                       , ( "id" , MetaInlines [ Str "aff-3" ] )
+                       , ( "letter" , MetaString "c" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaInlines
+                             [ Str "Another"
+                             , Space
+                             , Str "Affiliation"
+                             ]
+                         )
+                       , ( "number" , MetaString "3" )
+                       ])
+                ]
+            )
+          , ( "by-author"
+            , MetaList
+                [ MetaMap
+                    (fromList
+                       [ ( "affiliations"
+                         , MetaList
+                             [ MetaMap
+                                 (fromList
+                                    [ ( "address"
+                                      , MetaInlines
+                                          [ Str "1"
+                                          , Space
+                                          , Str "Main"
+                                          , Space
+                                          , Str "St"
+                                          ]
+                                      )
+                                    , ( "city"
+                                      , MetaInlines [ Str "Boston" ]
+                                      )
+                                    , ( "country"
+                                      , MetaInlines [ Str "USA" ]
+                                      )
+                                    , ( "department"
+                                      , MetaInlines
+                                          [ Str "The"
+                                          , Space
+                                          , Str "Department"
+                                          ]
+                                      )
+                                    , ( "id"
+                                      , MetaInlines [ Str "aff-1" ]
+                                      )
+                                    , ( "letter" , MetaString "a" )
+                                    , ( "metadata"
+                                      , MetaMap (fromList [])
+                                      )
+                                    , ( "name"
+                                      , MetaInlines
+                                          [ Str "An"
+                                          , Space
+                                          , Str "Organization"
+                                          ]
+                                      )
+                                    , ( "number" , MetaString "1" )
+                                    , ( "postal-code"
+                                      , MetaInlines [ Str "02210-1022" ]
+                                      )
+                                    ])
+                             , MetaMap
+                                 (fromList
+                                    [ ( "id"
+                                      , MetaInlines [ Str "aff-2" ]
+                                      )
+                                    , ( "letter" , MetaString "b" )
+                                    , ( "metadata"
+                                      , MetaMap (fromList [])
+                                      )
+                                    , ( "name"
+                                      , MetaInlines
+                                          [ Str "A"
+                                          , Space
+                                          , Str "second"
+                                          , Space
+                                          , Str "affilication"
+                                          ]
+                                      )
+                                    , ( "number" , MetaString "2" )
+                                    ])
+                             ]
+                         )
+                       , ( "email"
+                         , MetaInlines [ Str "sm@example.org" ]
+                         )
+                       , ( "id" , MetaString "1" )
+                       , ( "letter" , MetaString "a" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaMap
+                             (fromList
+                                [ ( "family"
+                                  , MetaInlines [ Str "Malloc" ]
+                                  )
+                                , ( "given"
+                                  , MetaInlines [ Str "Sarah" ]
+                                  )
+                                , ( "literal"
+                                  , MetaInlines
+                                      [ Str "Sarah"
+                                      , Space
+                                      , Str "Malloc"
+                                      ]
+                                  )
+                                ])
+                         )
+                       , ( "number" , MetaString "1" )
+                       , ( "orcid"
+                         , MetaInlines [ Str "0000-0000-0000-0000" ]
+                         )
+                       , ( "url"
+                         , MetaInlines [ Str "https://example.org/" ]
+                         )
+                       ])
+                , MetaMap
+                    (fromList
+                       [ ( "affiliations"
+                         , MetaList
+                             [ MetaMap
+                                 (fromList
+                                    [ ( "id"
+                                      , MetaInlines [ Str "aff-3" ]
+                                      )
+                                    , ( "letter" , MetaString "c" )
+                                    , ( "metadata"
+                                      , MetaMap (fromList [])
+                                      )
+                                    , ( "name"
+                                      , MetaInlines
+                                          [ Str "Another"
+                                          , Space
+                                          , Str "Affiliation"
+                                          ]
+                                      )
+                                    , ( "number" , MetaString "3" )
+                                    ])
+                             ]
+                         )
+                       , ( "id" , MetaString "2" )
+                       , ( "letter" , MetaString "b" )
+                       , ( "metadata" , MetaMap (fromList []) )
+                       , ( "name"
+                         , MetaMap
+                             (fromList
+                                [ ( "family"
+                                  , MetaInlines [ Str "Dealloc" ]
+                                  )
+                                , ( "given"
+                                  , MetaInlines [ Str "Eliza" ]
+                                  )
+                                , ( "literal"
+                                  , MetaInlines
+                                      [ Str "Eliza"
+                                      , Space
+                                      , Str "Dealloc"
+                                      ]
+                                  )
+                                ])
+                         )
+                       , ( "number" , MetaString "2" )
+                       ])
+                ]
+            )
+          , ( "keywords"
+            , MetaList
+                [ MetaInlines [ Str "keyword" ]
+                , MetaInlines [ Str "other" , Space , Str "keyword" ]
+                ]
+            )
+          , ( "title"
+            , MetaInlines
+                [ Str "Template"
+                , Space
+                , Str "for"
+                , Space
+                , Str "the"
+                , Space
+                , Str "APAquarto"
+                , Space
+                , Str "Format:"
+                , LineBreak
+                , Str "7th"
+                , Space
+                , Str "Edition"
+                , Space
+                , Str "APA"
+                , Space
+                , Str "Documents"
+                , Space
+                , Str "in"
+                , Space
+                , Str "Quarto"
+                ]
+            )
+          ]
+    }
+  [ RawBlock
+      (Format "html")
+      "<!-- {{< include _extensions/apaquarto/_apa_title.qmd >}} -->"
+  , Para
+      [ Str "This"
+      , Space
+      , Str "is"
+      , Space
+      , Str "my"
+      , Space
+      , Str "introductory"
+      , Space
+      , Str "paragraph."
+      , Space
+      , Str "The"
+      , Space
+      , Str "title"
+      , Space
+      , Str "will"
+      , Space
+      , Str "be"
+      , Space
+      , Str "placed"
+      , Space
+      , Str "above"
+      , Space
+      , Str "it"
+      , Space
+      , Str "automatically."
+      , Space
+      , Emph
+          [ Str "Do"
+          , Space
+          , Str "not"
+          , Space
+          , Str "start"
+          , Space
+          , Str "with"
+          , Space
+          , Str "an"
+          , Space
+          , Str "introductory"
+          , Space
+          , Str "heading"
+          ]
+      , Space
+      , Str "(e.g.,"
+      , Space
+      , Quoted DoubleQuote [ Str "Introduction" ]
+      , Str ")."
+      , Space
+      , Str "The"
+      , Space
+      , Str "title"
+      , Space
+      , Str "acts"
+      , Space
+      , Str "as"
+      , Space
+      , Str "your"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "1"
+      , Space
+      , Str "heading"
+      , Space
+      , Str "for"
+      , Space
+      , Str "the"
+      , Space
+      , Str "introduction."
+      ]
+  , Para
+      [ Str "Readers"
+      , Space
+      , Str "are"
+      , Space
+      , Str "better"
+      , Space
+      , Str "able"
+      , Space
+      , Str "to"
+      , Space
+      , Str "follow"
+      , Space
+      , Str "your"
+      , Space
+      , Str "ideas"
+      , Space
+      , Str "if"
+      , Space
+      , Str "you"
+      , Space
+      , Str "differentiate"
+      , Space
+      , Str "sections"
+      , Space
+      , Str "in"
+      , Space
+      , Str "your"
+      , Space
+      , Str "introduction"
+      , Space
+      , Str "with"
+      , Space
+      , Str "headings."
+      , Space
+      , Str "Mostly"
+      , Space
+      , Str "stick"
+      , Space
+      , Str "to"
+      , Space
+      , Str "level"
+      , Space
+      , Str "2"
+      , Space
+      , Str "headers."
+      , Space
+      , Str "Sometimes"
+      , Space
+      , Str "level"
+      , Space
+      , Str "3"
+      , Space
+      , Str "heading"
+      , Space
+      , Str "are"
+      , Space
+      , Str "needed."
+      , Space
+      , Str "Try"
+      , Space
+      , Str "not"
+      , Space
+      , Str "to"
+      , Space
+      , Str "use"
+      , Space
+      , Str "a"
+      , Space
+      , Str "level"
+      , Space
+      , Str "3"
+      , Space
+      , Str "heading"
+      , Space
+      , Str "Be"
+      , Space
+      , Str "sparing"
+      , Space
+      , Str "to"
+      , Space
+      , Str "the"
+      , Space
+      , Str "point"
+      , Space
+      , Str "of"
+      , Space
+      , Str "stinginess"
+      , Space
+      , Str "with"
+      , Space
+      , Str "levels"
+      , Space
+      , Str "4"
+      , Space
+      , Str "and"
+      , Space
+      , Str "5."
+      ]
+  , Header
+      2
+      ( "level-2-heading-flush-left-bold-title-case" , [] , [] )
+      [ Str "Level"
+      , Space
+      , Str "2"
+      , Space
+      , Str "Heading:"
+      , Space
+      , Str "Flush"
+      , Space
+      , Str "Left,"
+      , Space
+      , Str "Bold,"
+      , Space
+      , Str "Title"
+      , Space
+      , Str "Case"
+      ]
+  , Para
+      [ Str "Subsections"
+      , Space
+      , Str "of"
+      , Space
+      , Str "the"
+      , Space
+      , Str "introduction"
+      , Space
+      , Str "have"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "2"
+      , Space
+      , Str "headings."
+      , Space
+      , Str "A"
+      , Space
+      , Str "paragraph"
+      , Space
+      , Str "after"
+      , Space
+      , Str "a"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "2"
+      , Space
+      , Str "Heading"
+      , Space
+      , Str "is"
+      , Space
+      , Str "on"
+      , Space
+      , Str "a"
+      , Space
+      , Str "new"
+      , Space
+      , Str "line."
+      , Space
+      , Str "Regular"
+      , Space
+      , Str "paragraphs"
+      , Space
+      , Str "are"
+      , Space
+      , Str "indented,"
+      , Space
+      , Str "flush"
+      , Space
+      , Str "left,"
+      , Space
+      , Str "and"
+      , Space
+      , Str "double-spaced."
+      ]
+  , Para
+      [ Str "You"
+      , Space
+      , Str "do"
+      , Space
+      , Str "not"
+      , Space
+      , Str "need"
+      , Space
+      , Str "to"
+      , Space
+      , Str "put"
+      , Space
+      , Str "text"
+      , Space
+      , Str "after"
+      , Space
+      , Str "a"
+      , Space
+      , Str "heading."
+      , Space
+      , Str "You"
+      , Space
+      , Str "can"
+      , Space
+      , Str "put"
+      , Space
+      , Str "higher-level"
+      , Space
+      , Str "heading"
+      , Space
+      , Str "directly"
+      , Space
+      , Str "underneath"
+      , Space
+      , Str "if"
+      , Space
+      , Str "you"
+      , Space
+      , Str "want."
+      ]
+  , Header
+      2
+      ( "a-level-2-heading-without-text-below-it" , [] , [] )
+      [ Str "A"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "2"
+      , Space
+      , Str "Heading"
+      , Space
+      , Str "Without"
+      , Space
+      , Str "Text"
+      , Space
+      , Str "Below"
+      , Space
+      , Str "It"
+      ]
+  , Para [ Str "sdf" ]
+  , Header
+      3
+      ( "level-3-heading-flush-left-bold-italic-title-case"
+      , []
+      , []
+      )
+      [ Str "Level"
+      , Space
+      , Str "3"
+      , Space
+      , Str "Heading:"
+      , Space
+      , Str "Flush"
+      , Space
+      , Str "Left,"
+      , Space
+      , Str "Bold"
+      , Space
+      , Str "Italic,"
+      , Space
+      , Str "Title"
+      , Space
+      , Str "Case"
+      ]
+  , Para
+      [ Str "A"
+      , Space
+      , Str "paragraph"
+      , Space
+      , Str "after"
+      , Space
+      , Str "a"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "3"
+      , Space
+      , Str "Heading"
+      , Space
+      , Str "is"
+      , Space
+      , Str "on"
+      , Space
+      , Str "a"
+      , Space
+      , Str "new"
+      , Space
+      , Str "line."
+      ]
+  , Header
+      3
+      ( "another-level-3-heading" , [] , [] )
+      [ Str "Another"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "3"
+      , Space
+      , Str "Heading"
+      ]
+  , Para [ Str "sdf" ]
+  , Header
+      4
+      ( "level-4-heading-indented-flush-left-bold-title-case-ending-with-a-period."
+      , []
+      , []
+      )
+      [ Str "Level"
+      , Space
+      , Str "4"
+      , Space
+      , Str "Heading:"
+      , Space
+      , Str "Indented,"
+      , Space
+      , Str "Flush"
+      , Space
+      , Str "Left,"
+      , Space
+      , Str "Bold,"
+      , Space
+      , Str "Title"
+      , Space
+      , Str "Case,"
+      , Space
+      , Str "Ending"
+      , Space
+      , Str "With"
+      , Space
+      , Str "a"
+      , Space
+      , Str "Period."
+      ]
+  , Para
+      [ Str "A"
+      , Space
+      , Str "paragraph"
+      , Space
+      , Str "after"
+      , Space
+      , Str "a"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "4"
+      , Space
+      , Str "Heading"
+      , Space
+      , Str "is"
+      , Space
+      , Str "on"
+      , Space
+      , Str "a"
+      , Space
+      , Str "new"
+      , Space
+      , Str "line"
+      , Space
+      , Str "in"
+      , Space
+      , Str "this"
+      , Space
+      , Str "markdown"
+      , Space
+      , Str "document"
+      , Space
+      , Str "but"
+      , Space
+      , Str "will"
+      , Space
+      , Str "appear"
+      , Space
+      , Str "with"
+      , Space
+      , Str "the"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "4"
+      , Space
+      , Str "Heading"
+      , Space
+      , Str "in"
+      , Space
+      , Str "the"
+      , Space
+      , Str ".docx"
+      , Space
+      , Str "format."
+      , Space
+      , Str "If"
+      , Space
+      , Str "you"
+      , Space
+      , Str "forget"
+      , Space
+      , Str "the"
+      , Space
+      , Str "period,"
+      , Space
+      , Str "it"
+      , Space
+      , Str "will"
+      , Space
+      , Str "be"
+      , Space
+      , Str "added"
+      , Space
+      , Str "automatically."
+      , Space
+      , Str "A"
+      , Space
+      , Str "period"
+      , Space
+      , Str "will"
+      , Space
+      , Str "not"
+      , Space
+      , Str "be"
+      , Space
+      , Str "added"
+      , Space
+      , Str "if"
+      , Space
+      , Str "the"
+      , Space
+      , Str "heading"
+      , Space
+      , Str "ends"
+      , Space
+      , Str "with"
+      , Space
+      , Str "a"
+      , Space
+      , Str "question"
+      , Space
+      , Str "mark"
+      , Space
+      , Str "or"
+      , Space
+      , Str "an"
+      , Space
+      , Str "exclamation"
+      , Space
+      , Str "point."
+      ]
+  , Para
+      [ Str "Subsequent"
+      , Space
+      , Str "paragraphs"
+      , Space
+      , Str "go"
+      , Space
+      , Str "on"
+      , Space
+      , Str "their"
+      , Space
+      , Str "own"
+      , Space
+      , Str "lines."
+      ]
+  , Header
+      5
+      ( "level-5-heading-indented-flush-left-bold-italic-title-case-ending-with-a-period"
+      , []
+      , []
+      )
+      [ Str "Level"
+      , Space
+      , Str "5"
+      , Space
+      , Str "Heading:"
+      , Space
+      , Str "Indented,"
+      , Space
+      , Str "Flush"
+      , Space
+      , Str "Left,"
+      , Space
+      , Str "Bold"
+      , Space
+      , Str "Italic,"
+      , Space
+      , Str "Title"
+      , Space
+      , Str "Case,"
+      , Space
+      , Str "Ending"
+      , Space
+      , Str "With"
+      , Space
+      , Str "a"
+      , Space
+      , Str "Period"
+      ]
+  , Para
+      [ Str "A"
+      , Space
+      , Str "paragraph"
+      , Space
+      , Str "after"
+      , Space
+      , Str "a"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "4"
+      , Space
+      , Str "Heading"
+      , Space
+      , Str "is"
+      , Space
+      , Str "on"
+      , Space
+      , Str "a"
+      , Space
+      , Str "new"
+      , Space
+      , Str "line"
+      , Space
+      , Str "in"
+      , Space
+      , Str "this"
+      , Space
+      , Str "markdown"
+      , Space
+      , Str "document"
+      , Space
+      , Str "but"
+      , Space
+      , Str "will"
+      , Space
+      , Str "appear"
+      , Space
+      , Str "with"
+      , Space
+      , Str "the"
+      , Space
+      , Str "Level"
+      , Space
+      , Str "4"
+      , Space
+      , Str "Heading"
+      , Space
+      , Str "in"
+      , Space
+      , Str "the"
+      , Space
+      , Str ".docx"
+      , Space
+      , Str "format."
+      , Space
+      , Str "If"
+      , Space
+      , Str "you"
+      , Space
+      , Str "forget"
+      , Space
+      , Str "the"
+      , Space
+      , Str "period,"
+      , Space
+      , Str "it"
+      , Space
+      , Str "will"
+      , Space
+      , Str "be"
+      , Space
+      , Str "added"
+      , Space
+      , Str "automatically."
+      , Space
+      , Str "A"
+      , Space
+      , Str "period"
+      , Space
+      , Str "will"
+      , Space
+      , Str "not"
+      , Space
+      , Str "be"
+      , Space
+      , Str "added"
+      , Space
+      , Str "if"
+      , Space
+      , Str "the"
+      , Space
+      , Str "heading"
+      , Space
+      , Str "ends"
+      , Space
+      , Str "with"
+      , Space
+      , Str "a"
+      , Space
+      , Str "question"
+      , Space
+      , Str "mark"
+      , Space
+      , Str "or"
+      , Space
+      , Str "an"
+      , Space
+      , Str "exclamation"
+      , Space
+      , Str "point."
+      ]
+  , Para
+      [ Str "Subsequent"
+      , Space
+      , Str "paragraphs"
+      , Space
+      , Str "go"
+      , Space
+      , Str "on"
+      , Space
+      , Str "their"
+      , Space
+      , Str "own"
+      , Space
+      , Str "lines."
+      ]
+  , Header 1 ( "method" , [] , [] ) [ Str "Method" ]
+  , Para
+      [ Str "General"
+      , Space
+      , Str "remarks"
+      , Space
+      , Str "on"
+      , Space
+      , Str "method"
+      ]
+  , Header
+      2 ( "participants" , [] , [] ) [ Str "Participants" ]
+  , Header 2 ( "measures" , [] , [] ) [ Str "Measures" ]
+  , Header
+      3
+      ( "measure-a" , [] , [] )
+      [ Str "Measure" , Space , Str "A" ]
+  , Header 1 ( "results" , [] , [] ) [ Str "Results" ]
+  , Header 1 ( "discussion" , [] , [] ) [ Str "Discussion" ]
+  , Header 1 ( "references" , [] , [] ) [ Str "References" ]
+  , Header 1 ( "appendix" , [] , [] ) [ Str "Appendix" ]
+  ]

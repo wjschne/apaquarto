@@ -8,12 +8,44 @@ knitr:
 contributes:
   formats:
     common:
-      toc: true
+      csl: apa.csl
+      toc: false
+      fig-width: 6.5
+      fig-height: 6.5
       filters:
         - apaquarto.lua
-        - 
-    pdf:
-      include-in-header: header.tex
-    html:
-      css: styles.css
+        - apastriptitle.lua
+        - apafigtab.lua
+        - citeprocr.lua
+        - apaand.lua
+    docx: 
+      reference-doc: apa_processed.docx
+      filters: 
+        - docxstyler.lua
+# If blank, the running header is the title in upper case.
+runningheader: ~
+author-note:
+  blank-lines-above-author_note: 1
+  status-changes:
+    # Example: [Author name] is now at [affiliation].
+    affilation-change: ~
+    # Example: [Author name] is deceased.
+    deceased: ~
+  # Disclosures condensed to one paragraph, but you can start a field with two line breaks to break them up: \n\nNew Paragraph
+  disclosures:
+    # Example: This study was registered at ClinicalTrials.gov (Identifier NTC998877).
+    study-registration: ~
+    # Acknowledge and cite data/materials to be shared.
+    data-sharing: ~
+    # Example: This article is based on data published in Pulaski (2017).
+    # Example: This article is based on the dissertation completed by Graham (2018).
+    related-report: ~ 
+    # Example: Sally Jones earns royalties from the sale of Test X.
+    conflict-of-interest: The authors have no conflicts of interest to disclose.
+    # Example: This study was supported by Grant A123 from the National Science Foundation.
+    financial-support: ~
+    # Example: The authors are grateful for the technical assistance of Dr. X during the initial design and setup of our lab equipment.
+    gratitude: ~
+    # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
+    authorship-agreements: ~
 

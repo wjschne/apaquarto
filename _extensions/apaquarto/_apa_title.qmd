@@ -1,5 +1,6 @@
 ```{r}
 #| include: false
+#| label: apasetup
 options(tidyverse.quiet = TRUE)
 library(conflicted)
 library(tidyverse)
@@ -9,57 +10,6 @@ library(officer)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 
-
-if (file.exists("d_env.csv")) {
-  d_env <- read_csv("d_env.csv")
-} else {
-  d_env <- tibble(label = character(0),
-                title = character(0), 
-                caption = character(0),
-                env = character(0),
-                filename = character(0),
-                note = character(0))
-}
-
-
-# make_env <-
-#   function(label,
-#            caption,
-#            note = NA,
-#            env = "Figure",
-#            extension = ".svg",
-#            filename = paste0(label, extension)) {
-#     envtext <- env
-#     str_label <- label
-#     d_env <<- d_env |> filter(!(label == str_label)) |> unique() 
-#     dbl_possible <- d_env |> 
-#       filter(env == envtext) |> 
-#       nrow() %>%
-#       `+`(1) |> 
-#       seq()
-#     
-#     dbl_present <- d_env %>% filter(env == envtext) %>% 
-#                     separate(title, c("env2", "env_num")) |>
-#                      pull(env_num) |> 
-#                      as.numeric() |> 
-#       unique()
-#     
-#     env_number <- dbl_possible[!(dbl_possible %in% dbl_present)] |> 
-#       min()
-#     d_env <<- add_row(
-#       d_env,
-#       label = label,
-#       title = paste0(env, " ", env_number),
-#       caption = caption,
-#       env = env,
-#       filename = filename,
-#       note = note
-#     )
-#   }
-
-# ref_env <- function(l) {
-#   d_env %>% filter(label == l) %>% pull(title)
-# }
 
 knitr::knit_hooks$set(
   `apa-figtab` = function(before, options) {
@@ -145,16 +95,32 @@ knitr::knit_hooks$set(
 
 # write_rds(rmarkdown::metadata$author, file = "authors.rds")
 if (interactive()) {
-  yml_metadata <- rmarkdown::yaml_front_matter("asdf.qmd")
+  yml_metadata <- rmarkdown::yaml_front_matter("template.qmd")
 } else {
   yml_metadata <- rmarkdown::metadata
 }
 
-d_author_affiliation <-
+# quarto::quarto_inspect("template.qmd")
+
+d_author_affiliations <-
   yml_metadata$author |> 
-   map(\(x) if (is.character(x) & length(x) == 1) list(name = x) else x) %>% 
+   map(\(x) if (is.character(x) & length(x) == 1) {
+     list(name = x)
+     } else {
+      
+     if (is.null(x$affiliations)) {
+       x
+     } else {
+       if (is.character(x$affiliations) & length(x$affiliations) == 1) {
+         x$affiliations <- list(name = x$affiliations)
+         x
+       } else {
+         x
+       }
+     }
+   }) %>% 
    map_df(as_tibble) %>% 
-    mutate(affiliation = map(affiliation, \(x) if (is.character(x) & length(x) == 1) list(affiliation = x) else x)) %>% 
+    mutate(affiliations = map(affiliations, \(x) if (is.character(x) & length(x) == 1) list(affiliations = x) else x)) %>% 
     bind_rows(
       tibble(
         id = character(0),
@@ -162,7 +128,7 @@ d_author_affiliation <-
         name = character(0),
         url = character(0),
         email = character(0),
-        affiliation = list(0),
+        affiliations = list(0),
         fax = character(0),
         orcid = character(0),
         note = character(0),
@@ -178,12 +144,12 @@ d_author_affiliation <-
   mutate(author_id = row_number(), .before = 1L) %>% 
   unnest(data) %>% 
   mutate(author_row = row_number(), .by = author) %>% 
-  mutate(affiliation = map(affiliation, enframe)) |> 
-  unnest(affiliation) %>% 
+  mutate(affiliations = map(affiliations, enframe)) |> 
+  unnest(affiliations) %>% 
    mutate(value = as.character(value),
           name = factor(name, 
                         levels = c("id", 
-                                   "affiliation",
+                                   "affiliations",
                                    "number",
                                    "name",
                                    "department",
@@ -193,38 +159,38 @@ d_author_affiliation <-
                                    "postal-code", 
                                    "country",
                                    "url"))) |> 
-   pivot_wider(names_expand = TRUE, names_prefix = "affiliation_") %>% 
-    mutate(affiliation_name = ifelse(is.na(affiliation_name), affiliation_affiliation, affiliation_name)) %>% 
-  unite(regioncode, affiliation_region, `affiliation_postal-code`, remove = F, sep = " ", na.rm = TRUE) %>% 
-  unite(affiliation_default, affiliation_city, affiliation_region, affiliation_country, na.rm = TRUE, remove = F, sep = ", ") %>% 
-  unite(mailing, affiliation_address, affiliation_city, regioncode, affiliation_country, sep = ", ", na.rm = TRUE) %>% 
-  unite(affiliation, affiliation_department, affiliation_name, sep = ", ", na.rm = T) %>% 
+   pivot_wider(names_expand = TRUE, names_prefix = "affiliations_") %>% 
+    mutate(affiliations_name = ifelse(is.na(affiliations_name), affiliations_affiliations, affiliations_name)) %>% 
+  unite(regioncode, affiliations_region, `affiliations_postal-code`, remove = F, sep = " ", na.rm = TRUE) %>% 
+  unite(affiliations_default, affiliations_city, affiliations_region, affiliations_country, na.rm = TRUE, remove = F, sep = ", ") %>% 
+  unite(mailing, affiliations_address, affiliations_city, regioncode, affiliations_country, sep = ", ", na.rm = TRUE) %>% 
+  unite(affiliations, affiliations_department, affiliations_name, sep = ", ", na.rm = T) %>% 
   unique() %>% 
-  nest(.by = affiliation) %>% 
-  mutate(affiliation_row = row_number()) %>% 
+  nest(.by = affiliations) %>% 
+  mutate(affiliations_row = row_number()) %>% 
   unnest(data) %>% 
-  mutate(affs = paste0(affiliation_row, collapse = ","),.by = author) %>% 
+  mutate(affs = paste0(affiliations_row, collapse = ","),.by = author) %>% 
   mutate(max_author = max(author_id, na.rm = TRUE),
-         max_affiliation = max(affiliation_row,na.rm = TRUE),
+         max_affiliations = max(affiliations_row,na.rm = TRUE),
          count_affs = length(unique(affs)),
          author_display = ifelse(count_affs == 1 | max_author == 1, author, paste0(author, "^",affs, "^")),
          affiliation = ifelse(
-           is.na(affiliation) | affiliation == "",
+           is.na(affiliations) | affiliations == "",
            ifelse(
-             is.na(affiliation_default) | affiliation_default == "",
+             is.na(affiliations_default) | affiliations_default == "",
              "Unaffiliated",
-             affiliation_default
+             affiliations_default
              ), 
-           affiliation),
-         affiliation_display = ifelse(count_affs == 1 | max_author == 1, affiliation, paste0("^",affiliation_row, "^", affiliation))) 
+           affiliations),
+         affiliations_display = ifelse(count_affs == 1 | max_author == 1, affiliations, paste0("^",affiliations_row, "^", affiliations))) 
 
-display_authors <- d_author_affiliation %>% 
+display_authors <- d_author_affiliations %>% 
   pull(author_display) %>% 
   unique() %>% 
   knitr::combine_words()
 
-display_affiliations <- d_author_affiliation %>% 
-  pull(affiliation_display) %>% 
+display_affiliations <- d_author_affiliations %>% 
+  pull(affiliations_display) %>% 
   unique() %>% 
   paste0(collapse = "\n\n") 
 
@@ -243,19 +209,19 @@ if (all(c(display_authors, display_affiliations) == "")) {
 }
 
 
-display_orcids <-  d_author_affiliation %>% 
+display_orcids <-  d_author_affiliations %>% 
   select(author, orcid) %>% 
   unique() %>% 
   filter(!orcid == "NULL") %>% 
   mutate(orcid_display = paste0(
     author, 
-    " ![](ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
+    " ![Orchid ID Logo: A green circle with white letters ID](_extensions/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
     orcid)) %>% 
   pull(orcid_display) %>% 
   unique() %>% 
   paste0(collapse = "\n\n")
 
-display_corresponding_author <- d_author_affiliation %>% 
+display_corresponding_author <- d_author_affiliations %>% 
   filter(corresponding) %>% 
   slice(1) %>% 
   select(author, mailing, affiliation, email) %>% 
@@ -332,9 +298,28 @@ if (all(c(display_orcids,
 
 
 library(officer)
-read_docx("apa_pristine.docx") %>%
-  headers_replace_all_text("Running Header", str_to_upper(yml_metadata$runningheader)) %>%
+if (!is.null(yml_metadata$runningheader)) {
+  running_header <- str_to_upper(yml_metadata$runningheader)
+} else if (!is.null(yml_metadata$title)) {
+  running_header <- str_to_upper(yml_metadata$title)
+} else {
+  running_header <- "SHORT TITLE"
+}
+
+if (is.null(yml_metadata$keywords)) {
+  display_keywords <- NULL
+} else {
+  display_keywords <-  paste0("*Keywords*: ", paste0(yml_metadata$keywords, collapse = ", ")) 
+    
+}
+
+
+paste(NULL)
+read_docx("_extensions/apaquarto/apaquarto.docx") %>%
+  headers_replace_all_text("Running Header", running_header) %>%
   print("apa_processed.docx")
+
+
 
 ```
 
@@ -352,7 +337,7 @@ read_docx("apa_pristine.docx") %>%
 
 {{< meta abstract >}}
 
-*Keywords*: {{< meta keywords >}}
+`r display_keywords`
 :::
 
 {{< pagebreak >}}
