@@ -1,32 +1,77 @@
 ---
-title: "Template for the APAquarto Format:\n\n7th Edition APA Documents in Quarto"
-format:
-  apaquarto-docx: default
-  native: default
+title: "Using Quarto to Generate MS Word Documents in APA Style (7th Edition)"
+# If blank, the running header is the title in upper case.
+runningheader: Template for the APAquarto Format
+# Set names and affilations.
+# It is nice to specify everyone's orcid, if possible.
+# There can be only one corresponding author.
 author:
-  - name: Sarah Malloc
-    affiliations:
-      - name: An Organization
-        department: The Department
-        address: 1 Main St
-        city: Boston
-        country: USA
-        postal-code: 02210-1022
-      - A second affilication
+  - name: Ana Fulana
+    corresponding: true
     orcid: 0000-0000-0000-0000
     email: sm@example.org
     url: https://example.org/
-  - name: Eliza Dealloc
     affiliations:
-      - Another Affiliation
+      - name: Ana and Blanca's University
+        department: Department of Psychology
+        address: 1234 Capital St.
+        city: Albany
+        region: NY
+        postal-code: 12084-1234
+      - Ana's Secondary Affiliation
+  - name: Blanca Zutana
+    affiliations: 
+      - name: Ana and Blanca's University
+        department: Department of Psychology
+  - name: Carina Mengana
+    orcid: 0000-0000-0000-0001
+    affiliations:
+      - Carina's Primary Affiliation
+      - Carina's Secondary Affiliation
+    # Because Dolorita is unaffiliated, specify her city instead
+  - name: Dolorita Perengana
+    orcid: 0000-0000-0000-0003
+    affiliations:
+      - name: ~
+        city: Buffalo
+        region: NY
+author-note:
+  blank-lines-above-author_note: 5
+  status-changes:
+    # Example: [Author name] is now at [affiliation].
+    affilation-change: ~
+    # Example: [Author name] is deceased.
+    deceased: ~
+  # Disclosures condensed to one paragraph, but you can start a field with two line breaks to break them up: \n\nNew Paragraph
+  disclosures:
+    # Example: This study was registered at ClinicalTrials.gov (Identifier NTC998877).
+    study-registration: ~
+    # Acknowledge and cite data/materials to be shared.
+    data-sharing: ~
+    # Example: This article is based on data published in Pulaski (2017).
+    # Example: This article is based on the dissertation completed by Graham (2018).
+    related-report: ~ 
+    # Example: Sally Jones earns royalties from the sale of Test X.
+    conflict-of-interest: ~
+    # Example: This study was supported by Grant A123 from the National Science Foundation.
+    financial-support: ~
+    # Example: The authors are grateful for the technical assistance of Dr. X during the initial design and setup of our lab equipment.
+    gratitude: ~
+    # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
+    authorship-agreements: ~
 abstract: |
   This document is a template demonstrating the apaquarto format.
 keywords: [keyword, other keyword]
+# I like using Zotero with BetterBibTeX to output a continuously updated "Better CSL JSON" file. But BibTeX works, too.
 bibliography: bibliography.bib
+format:
+  apaquarto-docx: default
+  native: default
 ---
 
-The include statement
-{{< include _extensions/apaquarto/_apa_title.qmd >}}
+<!-- The include statement below creates the title page, abstract page,  -->
+<!-- and inserts the title in the first page -->
+{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
@@ -56,6 +101,26 @@ Subsequent paragraphs go on their own lines.
 
 Notice that there was no period after this level 5 heading in the markdown document, but it does appear in the rendered document.
 
+## How to Cite References
+
+I am going to cite a reference here in square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. Here are some variations on parenthetical citations:
+
+* Page references (or any other suffixes are placed after the reference. If you want a comma, you'll need to insert it yourself: [@CameronTrivedi2013, pp. 35--41]
+
+* Prefixes (with or without a comma) are placed before the reference: [e.g., @CameronTrivedi2013]
+
+* 2 or more citations separated by a semicolon [@CameronTrivedi2013; @cohen2003applied]
+
+* Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL\; @CameronTrivedi2013]
+
+Text references are possible, too. 
+
+* @CameronTrivedi2013 said some interesting things. 
+
+* @cohen2003applied [pp. 101--103] said specific things on specific pages.
+
+* Place the reference's year by itself with a minus sign: [-@CameronTrivedi2013]
+
 # Method
 
 General remarks on method. This paragraph is optional.
@@ -80,28 +145,121 @@ What did participants do?
 
 ### Analysis Plan 
 
-How are the data going to be analyized?
+How are the data going to be analyzed?
 
 # Results
 
 ## Descriptive Statistics
 
-## Add Additional Sections as Needed
+Here we describe the basic characteristics of our primary variables.
+
+Let's make a figure. A reference label for a figure in APA format must have the prefix `apafg-`. This is different from the usual quarto prefix `tbl-`, which will put the caption on one line below the table. For APA format, we can do this:
+
+```{r}
+#| label: apafg-myplot
+#| apa-cap: This is the figure caption.
+#| apa-note: This is a note below the figure.
+plot(1:10)
+```
+
+To refer to any figure or table, but the chunk label in curly braces. For example, see {apafg-myplot}. In {apafg-importedgraphic}, we import an image.
+
+
+```{r}
+#| label: apafg-importedgraphic
+#| apa-cap: This is an imported graphic.
+knitr::include_graphics("_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg")
+```
+
+
+We can make a table the same way as a figure except that the label prefix is `apatb-`. Again, this is different from the usual quarto prefix `tbl-`, which will put the table table caption in the wrong place and with non-APA formatting.
+
+```{r apatb-mytable}
+#| apa-cap: Here is the table caption.
+#| apa-note: Here is the note below the table.
+#| ft.align: left
+library(tidyverse)
+library(flextable)
+
+
+tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
+  flextable() %>% 
+  theme_apa() %>% 
+  line_spacing(part = "all") %>% 
+  padding(padding.top = 5, padding.bottom = 5)
+
+```
+
+To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
+
+What if you want the tables and figures to be at the end of the document? No problem. Just put them all at the end, in order. The reference labels will work no matter where they are in the text. In {apatb-myothertable}, I give an example of making a table at the end using markdown only. 
+
+<!-- Add Additional Sections as Needed -->
 
 # Discussion
 
-Describe results in non-statistical terms. Add sections as needed.
+Describe results in non-statistical terms.
+<!-- Add sections as needed. --> 
 
 ## Limitations and Future Directions
 
+Every study has limitations. Based on this study, some additional steps might include...
+
 ## Conclusion
+
+Let's sum this up.
 
 # References 
 
 <!-- References will auto-populate in the refs div below -->
+
 ::: {#refs}
+
 :::
 
+<!-- Delete any unnecessary sections or pagebreaks. -->
+{{< pagebreak >}}
 # Appendix 
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix A, and so forth.
+
+
+<!-- I like my tables and figures intermingled with the text, -->
+<!-- but all tables can go here. -->
+<!-- Uncomment the pagebreaks as needed-->
+{{< pagebreak >}}
+
+Here I show how to set up everything yourself in markdown instead of using a code chunk to generate the table.
+
+<!-- Set the table reference label with the #apatb- prefix -->
+::::{#apatb-myothertable}
+
+<!-- The Table # will appear here -->
+:::{.FigureTitle}
+{apatb-myothertable}
+:::
+
+<!-- Set your caption here -->
+:::{.Caption}
+This a a table caption.
+:::
+
+<!-- Table goes here -->
+<!-- Set class to .FigureWithoutNote if no note will appear below. -->
+:::{.FigureWithNote}
+
+Column 1 | Column 2
+:--------|:-------:
+A        | Yes
+B        | No
+
+:::
+
+<!-- Make a note below the table -->
+:::{.FigureNote}
+*Note*. This is a table note.
+:::
+::::
+
+<!-- Figures can go here. -->
+<!-- {{< pagebreak >}} -->

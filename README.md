@@ -1,14 +1,13 @@
 
-# <%= title %>
+# Quarto to .docx Format
 
 ## Creating a New Article
 
-To create a new article using this format:
+To create a new article using this format, run this command in the terminal:
 
-*TODO*: Replace the `<github-organization>` with your GitHub organization.
 
 ```bash
-quarto use template <github-organization>/<%= filesafename %>
+quarto use template wjschne/apaquarto
 ```
 
 This will create a new directory with an example document that uses this format.
@@ -17,17 +16,15 @@ This will create a new directory with an example document that uses this format.
 
 To add this format to an existing document:
 
-*TODO*: Replace the `<github-organization>` with your GitHub organization.
-
 ```bash
-quarto add <github-organization>/<%= filesafename %>
+quarto add wjschne/apaquarto
 ```
 
 Then, add the format to your document options:
 
 ```yaml
 format:
-  <%= filesafename %>-pdf: default
+  apaquarto-docx: default
 ```    
 
 ## Options

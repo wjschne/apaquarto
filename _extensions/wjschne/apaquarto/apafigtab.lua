@@ -31,11 +31,11 @@ function makefigrefs (s)
   if starts_with("{apafg", s.text) then
     local sfg = string.match(s.text, "%{(.-)%}")
     ---quarto.log.output(sfg)
-    return apafg[sfg] and pandoc.Str("Figure " .. apafg[sfg])
+    return apafg[sfg] and pandoc.Str("Figure\u{a0}" .. apafg[sfg])
   end
   if starts_with("{apatb", s.text) then
     local stb = string.match(s.text, "%{(.-)%}")
-    return apatb[stb] and pandoc.Str("Table " .. apatb[stb])
+    return apatb[stb] and pandoc.Str("Table\u{a0}" .. apatb[stb])
   end
 end
 
