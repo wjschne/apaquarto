@@ -444,13 +444,19 @@ author_note_third_paragraph <-
   
 }
 
-if (is.null(yml_metadata$`author-note`$`blank-lines-above-author_note`)) {
+if (is.null(yml_metadata$`author-note`$`blank-lines-above-author-note`)) {
   blanks <- 3
 } else {
-  blanks <- yml_metadata$`author-note`$`blank-lines-above-author_note`
+  blanks <- yml_metadata$`author-note`$`blank-lines-above-author-note`
 }
   
+if (is.null(yml_metadata$`blank-lines-above-title`)) {
+  title_blanks <- 2
+} else {
+  title_blanks <- yml_metadata$`blank-lines-above-title`
+}
 
+title_blank_display <- paste0(rep("<br>", title_blanks), collapse = "\n\n")
 
 if (all(c(display_orcids, 
           author_note_second_paragraph,
@@ -494,6 +500,8 @@ read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
 
 
 ```
+
+`r title_blank_display`
 
 # {{< meta title >}}
 

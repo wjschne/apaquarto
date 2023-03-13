@@ -1,5 +1,6 @@
 ---
 title: "Using Quarto to Generate MS Word Documents in APA Style (7th Edition)"
+blank-lines-above-title: 2
 # If blank, the running header is the title in upper case.
 runningheader: Template for the APAquarto Format
 # Set names and affilations.
@@ -18,7 +19,7 @@ author:
         city: Albany
         region: NY
         postal-code: 12084-1234
-      - Ana's Secondary Affiliation
+      - name: Ana's Secondary Affiliation
   - name: Blanca Zutana
     affiliations: 
       - name: Ana and Blanca's University
@@ -26,8 +27,8 @@ author:
   - name: Carina Mengana
     orcid: 0000-0000-0000-0001
     affiliations:
-      - Carina's Primary Affiliation
-      - Carina's Secondary Affiliation
+      - name: Carina's Primary Affiliation
+      - name: Carina's Secondary Affiliation
     # Because Dolorita is unaffiliated, specify her city instead
   - name: Dolorita Perengana
     orcid: 0000-0000-0000-0003
@@ -36,7 +37,7 @@ author:
         city: Buffalo
         region: NY
 author-note:
-  blank-lines-above-author_note: 5
+  blank-lines-above-author-note: 3
   status-changes:
     # Example: [Author name] is now at [affiliation].
     affilation-change: ~
@@ -72,6 +73,17 @@ format:
 <!-- The include statement below creates the title page, abstract page,  -->
 <!-- and inserts the title in the first page -->
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
+
+```{r setup}
+#| include: false
+options(tidyverse.quiet = TRUE)
+library(conflicted)
+library(tidyverse)
+library(officer)
+library(flextable)
+library(ftExtra)
+```
+
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
@@ -178,10 +190,6 @@ We can make a table the same way as a figure except that the label prefix is `ap
 #| apa-cap: Here is the table caption.
 #| apa-note: Here is the note below the table.
 #| ft.align: left
-library(tidyverse)
-library(flextable)
-
-
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
   flextable() %>% 
   theme_apa() %>% 
@@ -229,7 +237,7 @@ If there are multiple appendices, label them with level 1 headings as Appendix A
 <!-- Uncomment the pagebreaks as needed-->
 {{< pagebreak >}}
 
-Here I show how to set up everything yourself in markdown instead of using a code chunk to generate the table.
+<!-- Here I show how to set a table by hand in markdown instead of using a code chunk to generate the table. -->
 
 <!-- Set the table reference label with the #apatb- prefix -->
 ::::{#apatb-myothertable}
