@@ -399,7 +399,7 @@ if (is.null(yml_metadata$keywords)) {
     
 }
 
-read_docx("_extensions/apaquarto/apaquarto.docx") %>%
+read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
   headers_replace_all_text("Running Header", running_header) %>%
   print("apa_processed.docx")
 
