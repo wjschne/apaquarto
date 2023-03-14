@@ -1,0 +1,443 @@
+```{r}
+#| include: false
+#| label: apasetup
+options(tidyverse.quiet = TRUE)
+library(conflicted)
+library(tidyverse)
+library(flextable)
+library(ftExtra)
+library(officer)
+conflicts_prefer(dplyr::filter, .quiet = TRUE)
+conflicts_prefer(flextable::separate_header, .quiet = TRUE)
+
+
+knitr::knit_hooks$set(
+  `apa-figtab` = function(before, options) {
+    # Check if APA Figure or APA Table
+    if (str_starts(options$label, pattern = "apafg-") |
+        str_starts(options$label, pattern = "apatb-")) {
+      # Figure or Table
+      apatype <- ifelse(
+        str_starts(as.character(options$label)[1], 
+                   pattern = "apafg-"),
+        "Figure", 
+        "Table"
+        )
+      
+      temp_label <- knitr::opts_current$get("label")
+      
+
+      
+      
+
+
+      # Format Before Chunk
+      if (before) {
+        knitr::opts_current$set(label = NULL, output = "asis")
+        options$output <- "asis"
+
+        pre <-
+          paste0(
+            '\n\n:::{#',
+            options$label,
+            ' .FigureTitle}\n\n{',
+            options$label,
+            '}\n\n:::\n\n'
+          )
+        
+        if (!is.null(options$`apa-cap`)) {
+          pre <- paste0(
+            pre,
+            '\n\n:::{.Caption}\n\n',
+            options$`apa-cap`,
+            '\n\n:::\n\n'
+          )
+        } else
+          stop(
+            paste0(
+              "Chunk ",
+              options$label,
+              "is an APA figure/table chunk,  requires a caption. Set the `apa-cap` chunk option like so\n#| apa-cap: My caption"
+            )
+          )
+        if (!all(is.null(options$`apa-note`))) {
+        pre <- paste0(pre,'\n\n:::{.FigureWithNote}\n\n')
+        
+      } else {
+        pre <- paste0(pre,'\n\n:::{.FigureWithoutNote}\n\n')
+      }
+      }
+      else {
+        knitr::opts_current$set(label = temp_label)
+        post <- "\n\n:::\n\n"
+        
+        if (!all(is.null(options$`apa-note`))) {
+          post <- paste(
+            post,
+            '\n\n:::{.FigureNote custom-style="FigureNote"}\n*Note*. ',
+            options$`apa-note`,
+            '\n:::\n'
+          )
+        } else if (apatype == "Table") {
+          post <- paste0(post, '\n\n:::{custom-style="Body Text"}\n<br>\n:::')
+        }
+        
+        # post <- paste0(post, "\n\n:::\n\n")
+        post
+        
+        
+      }
+    }
+    
+  }
+)
+
+```
+
+```{r}
+#| label: metadatasetup
+#| echo: false
+
+
+get_metadata <- function(filename = "template.qmd") {
+  if (interactive()) {
+  yml_metadata <- rmarkdown::yaml_front_matter(filename)
+} else {
+  yml_metadata <- rmarkdown::metadata
+}
+}
+
+
+
+
+# If yaml is just a character, assign to a field called name
+character2name <- function(x) {
+  if (is.character(x)) {
+    list(list(name = x))
+  } else {
+    x
+  }
+}
+
+
+affiliation_namer <- function(d) {
+  # If affiliation is not given.
+  if (is.null(d$affiliations)) {
+    d$affiliations <- list(name = "Unaffiliated")
+  }
+  
+  d %>%
+    mutate(affiliations = map(affiliations, character2name))
+}  
+
+author_affilations <- function(yml) {
+  yml %>% 
+  map(character2name) %>% 
+  map(as_tibble) %>% 
+  map(affiliation_namer) %>% 
+  bind_rows() %>% 
+  bind_rows(
+    tibble(
+      id = character(0),
+      number = integer(0),
+      name = character(0),
+      url = character(0),
+      email = character(0),
+      affiliations = list(0),
+      fax = character(0),
+      orcid = character(0),
+      note = character(0),
+      acknowledgements = character(0),
+      corresponding = logical(0),
+      `equal-contributor` = logical(0),
+      deceased = logical(0)
+    )) %>% 
+    rename(author = name) %>% 
+      nest(.by = author) %>%
+  mutate(author_id = row_number(), .before = 1L) %>%
+  unnest(data) %>%  
+  mutate(affiliations = map(affiliations, enframe)) %>% 
+  mutate(affiliations_text = map_chr(affiliations, \(x) filter(x, name == "name") %>% pull(value) %>% as.character() %>% ifelse(. == "NULL", "Unaffiliated", .)), .before = 1) %>% 
+  unnest(affiliations) %>% 
+  mutate(value  = map_chr(value, \(x) if (is.null(x)) NA_character_ else as.character(x))) %>% 
+  rename(author_number = number,
+         author_url = url) |>
+  # mutate(author_row = row_number(), .by = author) %>%
+  mutate(value = as.character(value),
+         name = factor(
+           name,
+           levels = c(
+             "id",
+             "affiliations",
+             "number",
+             "name",
+             "department",
+             "address",
+             "city",
+             "region",
+             "postal-code",
+             "country",
+             "url"
+           )
+         )) %>% 
+  pivot_wider(names_expand = TRUE, names_prefix = "affiliations_") %>% 
+  unite(
+    regioncode,
+    affiliations_region,
+    `affiliations_postal-code`,
+    remove = F,
+    sep = " ",
+    na.rm = TRUE
+  ) %>% 
+  unite(
+    affiliations_default,
+    affiliations_city,
+    affiliations_region,
+    affiliations_country,
+    na.rm = TRUE,
+    remove = F,
+    sep = ", "
+  ) %>% 
+  unite(
+    mailing,
+    affiliations_address,
+    affiliations_city,
+    regioncode,
+    affiliations_country,
+    sep = ", ",
+    na.rm = TRUE
+  ) %>%
+  unite(
+    affiliations,
+    affiliations_department,
+    affiliations_name,
+    sep = ", ",
+    na.rm = T
+  ) %>%
+  unique() %>% 
+  mutate(affiliations = ifelse(
+      is.na(affiliations) | affiliations %in% c("NULL", "", "Unaffiliated"),
+      ifelse(
+        is.na(affiliations_default) | affiliations_default %in% c("NULL", "", "Unaffiliated"),
+        "Unaffiliated",
+        affiliations_default
+      ),
+      affiliations
+    )) %>% 
+  nest(.by = affiliations) %>%
+  mutate(affiliations_row = row_number()) %>% 
+  unnest(data) %>% 
+  mutate(affs = paste0(affiliations_row, collapse = ","),
+         .by = author) %>% 
+  mutate(
+    max_author = max(author_id, na.rm = TRUE),
+    max_affiliations = max(affiliations_row, na.rm = TRUE),
+    count_affs = length(unique(affs)),
+    author_display = ifelse(
+      count_affs == 1 | max_author == 1,
+      author,
+      paste0(author, "^", affs, "^")
+    ),
+    affiliations_display = ifelse(
+      count_affs == 1 |
+        max_author == 1,
+      affiliations,
+      paste0("^", affiliations_row, "^", affiliations)
+    )
+  ) 
+
+}
+yml_metadata <- get_metadata("tests/testthat/metadata/oneauthor.qmd")
+yml_metadata <- get_metadata()
+
+d_author_affiliations <- author_affilations(yml_metadata$author)
+  
+    
+
+display_authors <- d_author_affiliations %>%
+  arrange(author_id) %>% 
+  pull(author_display) %>%
+  unique() %>%
+  knitr::combine_words()
+
+display_affiliations <- d_author_affiliations %>% 
+  pull(affiliations_display) %>% 
+  unique() %>% 
+  paste0(collapse = "\n\n") 
+
+if (all(c(display_authors, display_affiliations) == "")) {
+  display_author_affiliations <- ""
+} else {
+  
+  display_author_affiliations <- paste(
+   "\n\n<br>\n\n:::{.Author}",
+    display_authors,
+    display_affiliations,
+   ":::",
+    sep = "\n\n"
+  )
+  
+}
+
+
+display_orcids <-  d_author_affiliations %>% 
+  select(author, orcid) %>% 
+  unique() %>% 
+  filter(!orcid == "NULL") %>% 
+  mutate(orcid_display = paste0(
+    author, 
+    " ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
+    orcid)) %>% 
+  pull(orcid_display) %>% 
+  unique() %>% 
+  paste0(collapse = "\n\n")
+
+correspondings <- d_author_affiliations %>% 
+  filter(corresponding) %>% 
+  select(author) %>% 
+  unique() %>% 
+  pull()
+
+if (length(correspondings) > 1) stop(paste0("More than one author is set as the corresponding author. Set corresponding to `true` for only one of these authors:\n", knitr::combine_words(correspondings), "."))
+
+if (length(correspondings) == 0) stop(paste0("No corresponding author has been set in the meta data at the top of the document. Under one of the authors' names, set the `corresponding` field to `true` like so:\nauthor:\n  -name: Fred Jones\n   corresponding: true"))
+
+display_corresponding_author <- d_author_affiliations %>% 
+  filter(corresponding) %>% 
+  slice(1) %>% 
+  select(author, mailing, affiliations, email) %>% 
+  mutate(email = ifelse(is.na(email), NA, paste0("Email: ", email)),
+         mailing = ifelse(mailing == "", NA, mailing),
+         corresponding_text = "Correspondence concerning this article should be addressed to ") %>% 
+  unite(corresponding_text, corresponding_text, author, sep = " ", na.rm = T, remove = T) %>% 
+   unite(corresponding_text, corresponding_text, affiliations, mailing, email, sep = ", ", na.rm = T, remove = T) %>% 
+  pull(corresponding_text)
+
+
+if (is.null(yml_metadata$`author-note`$`status-changes`)) {
+  author_note_second_paragraph <- ""
+} else {
+  author_note_second_paragraph <-
+  yml_metadata$`author-note`$`status-changes` %>%
+  map(\(x) ifelse(is.null(x), NA, x)) %>%
+  as_tibble() %>%
+  unite(
+    paragraph,
+    everything(),
+    sep = " ",
+    remove = T,
+    na.rm = T
+  ) %>%
+  pull(paragraph)
+  
+}
+
+
+if (is.null(yml_metadata$`author-note`$disclosures)) {
+  author_note_third_paragraph <- ""
+} else {
+author_note_third_paragraph <-
+  yml_metadata$`author-note`$disclosures %>%
+  map(\(x) ifelse(is.null(x), NA, x)) %>%
+  as_tibble() %>%
+  unite(
+    paragraph,
+    everything(),
+    sep = " ",
+    remove = T,
+    na.rm = T
+  ) %>%
+  pull(paragraph)
+  
+}
+
+if (is.null(yml_metadata$`author-note`$`blank-lines-above-author-note`)) {
+  blanks <- 3
+} else {
+  blanks <- yml_metadata$`author-note`$`blank-lines-above-author-note`
+}
+  
+if (is.null(yml_metadata$`blank-lines-above-title`)) {
+  title_blanks <- 2
+} else {
+  title_blanks <- yml_metadata$`blank-lines-above-title`
+}
+
+title_blank_display <- paste0(rep("<br>", title_blanks), collapse = "\n\n")
+
+if (all(c(display_orcids, 
+          author_note_second_paragraph,
+          author_note_third_paragraph,
+          display_corresponding_author) == "")) {
+  display_author_note <- ""
+} else {
+  display_author_note <- paste(
+    paste0(rep("<br>", blanks), collapse = "\n\n"),
+    ":::{.AuthorNote}",
+    "# Author Note",
+    display_orcids, 
+    author_note_second_paragraph,
+    author_note_third_paragraph,
+    display_corresponding_author, 
+    ":::",
+    sep = "\n\n")
+}
+
+
+library(officer)
+if (!is.null(yml_metadata$runningheader)) {
+  running_header <- str_to_upper(yml_metadata$runningheader)
+} else if (!is.null(yml_metadata$title)) {
+  running_header <- str_to_upper(yml_metadata$title)
+} else {
+  running_header <- "SHORT TITLE"
+}
+
+if (is.null(yml_metadata$keywords)) {
+  display_keywords <- NULL
+} else {
+  display_keywords <-  paste0("*Keywords*: ", paste0(yml_metadata$keywords, collapse = ", ")) 
+    
+}
+
+read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
+  headers_replace_all_text("Running Header", running_header) %>%
+  print("apa_processed.docx")
+
+
+
+```
+
+
+`r title_blank_display`
+
+# `r paste({{< meta title >}}, {{< meta subtitle >}}`
+
+`r display_author_affiliations`
+
+`r display_author_note`
+
+
+{{< pagebreak >}}
+
+
+
+:::{.Abstract}
+
+# Abstract
+
+
+{{< meta abstract >}}
+
+
+
+`r display_keywords`
+:::
+
+
+{{< pagebreak >}}
+
+
+
+
+# {{< meta title >}}

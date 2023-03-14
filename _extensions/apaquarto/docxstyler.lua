@@ -1,15 +1,19 @@
+--- This filter converts the class in customclasses
+
+--- This filter only runs on docx format
 if FORMAT ~= "docx" then
   return
 end
 
--- https://stackoverflow.com/a/2282542/4513316
+--- Is the class included in the customclasses table?
+--- https://stackoverflow.com/a/2282542/4513316
 function utils_Set(list)
     local set = {}
     for _, l in ipairs(list) do set[l] = true end
     return set
 end
 
--- your table here
+-- Classes that are converted. Add additional classes as needed.
 customclasses = { 
   "Author", 
   "AuthorNote",

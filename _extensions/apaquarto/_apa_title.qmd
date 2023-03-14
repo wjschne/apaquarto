@@ -97,27 +97,42 @@ knitr::knit_hooks$set(
 ```{r}
 #| label: metadatasetup
 #| echo: false
-if (interactive()) {
-  yml_metadata <- rmarkdown::yaml_front_matter("template.qmd")
+
+
+get_metadata <- function(filename = "template.qmd") {
+  if (interactive()) {
+  rmarkdown::yaml_front_matter(filename)
 } else {
-  yml_metadata <- rmarkdown::metadata
+  rmarkdown::metadata
+}
 }
 
 
 
-# quarto::quarto_inspect("template.qmd")
 
-  affiliation_namer <- function(d) {
-    if (is.null(d$affiliations)) {
-      d$affiliations <- list(name = "Unaffiliated")
-    }
-    
-    d %>% mutate(affiliations = map(affiliations, \(x) if (is.character(x)) list(name = x) else x))
-    
-  }  
+# If yaml is just a character, assign to a field called name
+character2name <- function(x) {
+  if (is.character(x)) {
+    list(list(name = x))
+  } else {
+    x
+  }
+}
 
-d_author_affiliations <-
-  yml_metadata$author %>% 
+
+affiliation_namer <- function(d) {
+  # If affiliation is not given.
+  if (is.null(d$affiliations)) {
+    d$affiliations <- list(name = "Unaffiliated")
+  }
+  
+  d %>%
+    mutate(affiliations = map(affiliations, character2name))
+}  
+
+author_affilations <- function(yml) {
+  yml %>% 
+  map(character2name) %>% 
   map(as_tibble) %>% 
   map(affiliation_namer) %>% 
   bind_rows() %>% 
@@ -231,121 +246,12 @@ d_author_affiliations <-
     )
   ) 
 
+}
+yml_metadata <- get_metadata()
+
+d_author_affiliations <- author_affilations(yml_metadata$author)
+  
     
-
-
-# d_author_affiliations <-
-#   yml_metadata$author %>% 
-#     map(\(x) if (pluck_exists(x, "name")) x  else list(name = x)) %>% 
-#     map(\(x) if (pluck_exists(x, "affiliations")) x  else {x$affiliations <- list(list(name = "Unaffiliated"));x}) %>% 
-#     map(\(x) if (is.character(x$affiliations)) {x$affiliations <-  map(x$affiliations, \(y) list(name = y)); x} else x) %>% 
-#     map(\(x) {if (is.null(x$affiliations[[1]]$name)) {x$affiliations[[1]]$name = "Unaffiliated";x} else x}) %>% 
-#     map(as_tibble) %>% 
-#     map(\(d) mutate(d, affiliations = map(affiliations, \(x) if (is.character(x)) list(name = x) else x))) %>% 
-#     bind_rows() %>% 
-#     bind_rows(
-#     tibble(
-#       id = character(0),
-#       number = integer(0),
-#       name = character(0),
-#       url = character(0),
-#       email = character(0),
-#       affiliations = list(0),
-#       fax = character(0),
-#       orcid = character(0),
-#       note = character(0),
-#       acknowledgements = character(0),
-#       corresponding = logical(0),
-#       `equal-contributor` = logical(0),
-#       deceased = logical(0)
-#     )) %>%
-#   rename(author = name,
-#          author_number = number,
-#          author_url = url) |>
-#   nest(.by = author) %>%
-#   mutate(author_id = row_number(), .before = 1L) %>%
-#   unnest(data) %>%
-#   mutate(author_row = row_number(), .by = author) %>%
-#   mutate(affiliations = map(affiliations, enframe)) |>
-#   unnest(affiliations) %>%
-#   mutate(value = as.character(value),
-#          name = factor(
-#            name,
-#            levels = c(
-#              "id",
-#              "affiliations",
-#              "number",
-#              "name",
-#              "department",
-#              "address",
-#              "city",
-#              "region",
-#              "postal-code",
-#              "country",
-#              "url"
-#            )
-#          )) |>
-#   pivot_wider(names_expand = TRUE, names_prefix = "affiliations_") %>% 
-#   unite(
-#     regioncode,
-#     affiliations_region,
-#     `affiliations_postal-code`,
-#     remove = F,
-#     sep = " ",
-#     na.rm = TRUE
-#   ) %>% 
-#   unite(
-#     affiliations_default,
-#     affiliations_city,
-#     affiliations_region,
-#     affiliations_country,
-#     na.rm = TRUE,
-#     remove = F,
-#     sep = ", "
-#   ) %>% 
-#   unite(
-#     mailing,
-#     affiliations_address,
-#     affiliations_city,
-#     regioncode,
-#     affiliations_country,
-#     sep = ", ",
-#     na.rm = TRUE
-#   ) %>%
-#   unite(
-#     affiliations,
-#     affiliations_department,
-#     affiliations_name,
-#     sep = ", ",
-#     na.rm = T
-#   ) %>%
-#   unique() %>% 
-#   mutate(affiliations = ifelse(
-#       is.na(affiliations) | affiliations %in% c("NULL", "", "Unaffiliated"),
-#       affiliations_default,
-#       affiliations
-#     )) %>% 
-#   nest(.by = affiliations) %>%
-#   mutate(affiliations_row = row_number()) %>% 
-#   unnest(data) %>% 
-#   mutate(affs = paste0(affiliations_row, collapse = ","),
-#          .by = author) %>% 
-#   mutate(
-#     max_author = max(author_id, na.rm = TRUE),
-#     max_affiliations = max(affiliations_row, na.rm = TRUE),
-#     count_affs = length(unique(affs)),
-#     author_display = ifelse(
-#       count_affs == 1 | max_author == 1,
-#       author,
-#       paste0(author, "^", affs, "^")
-#     ),
-#     affiliations_display = ifelse(
-#       count_affs == 1 |
-#         max_author == 1,
-#       affiliations,
-#       paste0("^", affiliations_row, "^", affiliations)
-#     )
-#   ) 
 
 display_authors <- d_author_affiliations %>%
   arrange(author_id) %>% 
@@ -379,7 +285,7 @@ display_orcids <-  d_author_affiliations %>%
   filter(!orcid == "NULL") %>% 
   mutate(orcid_display = paste0(
     author, 
-    " ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
+    " ![Orchid ID Logo: A green circle with white letters ID](_extensions/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
     orcid)) %>% 
   pull(orcid_display) %>% 
   unique() %>% 
@@ -493,17 +399,30 @@ if (is.null(yml_metadata$keywords)) {
     
 }
 
-read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
+read_docx("_extensions/apaquarto/apaquarto.docx") %>%
   headers_replace_all_text("Running Header", running_header) %>%
   print("apa_processed.docx")
 
+is_empty = function(x) {
+  is.null(x)  || is.na(x)  || is.nan(x) || length(x) == 0 || x == ""
+}
 
+
+title_display <- function(title, subtitle) {
+  if (is_empty(title)) return(NULL)
+  strtitle <- trimws(title) %>% str_remove(":$")
+  if (!is_empty(subtitle)) {
+    strtitle <- paste0(strtitle, ": ", subtitle)
+  } 
+  strtitle <- paste0("# ", strtitle, "{.title}")
+}
+
+
+display_title <- title_display(yml_metadata$title , yml_metadata$subtitle)
 
 ```
 
-`r title_blank_display`
-
-# {{< meta title >}}
+`r display_title`
 
 `r display_author_affiliations`
 
