@@ -70,7 +70,7 @@ format:
   native: default
 ---
 
-{{< include _extensions/apaquarto/_apa_title.qmd >}}
+{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 

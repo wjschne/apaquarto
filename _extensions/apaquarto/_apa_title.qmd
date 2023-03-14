@@ -285,7 +285,7 @@ display_orcids <-  d_author_affiliations %>%
   filter(!orcid == "NULL") %>% 
   mutate(orcid_display = paste0(
     author, 
-    " ![Orchid ID Logo: A green circle with white letters ID](_extensions/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
+    " ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
     orcid)) %>% 
   pull(orcid_display) %>% 
   unique() %>% 
