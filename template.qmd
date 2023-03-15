@@ -167,7 +167,7 @@ To refer to any figure or table, but the chunk label in curly braces. For exampl
 ```{r}
 #| label: apafg-importedgraphic
 #| apa-cap: This is an imported graphic.
-knitr::include_graphics("_extensions/apaquarto/ORCID-iD_icon-vector.svg")
+knitr::include_graphics("_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg")
 ```
 
 
