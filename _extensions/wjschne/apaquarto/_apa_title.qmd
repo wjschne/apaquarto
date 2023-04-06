@@ -84,32 +84,7 @@ knitr::knit_hooks$set(
         options$output <- "asis"
         if (is_pdf) {
           pre <- ""
-          # if (apatype == "figure") {
-          #   if (is.null(options$`fig.pos`)) fgpos <- "!h" else fgpos <- options$`fig.pos`
-          #   message(fgpos)
-          #   pre <- paste0(pre, "\n\\begin{figure}[",fgpos,"]\n")
-          #   fgalign <- knitr::opts_current$get("fig.align")
-          #   if (is.null(fgalign)) {
-          #     fgalign <- ""
-          #     } else {
-          #       if (fgalign == "left") {
-          #         fgalign <- "\n\n\\raggedright\n\n"
-          #       }
-          #       if (fgalign == "right") {
-          #         fgalign <- "\n\n\\raggedleft\n\n"
-          #       }
-          #       if (fgalign == "center") {
-          #         fgalign <- "\n\n\\centering\n\n"
-          #       }
-          #       if (fgalign == "default") {
-          #         fgalign <- ""
-          #       }
-          #     }
-          #   pre <- paste0(pre, fgalign)
-          # 
-          # }
-          # options$`fig-cap` <- options$`apa-cap`
-          
+
           if (apatype == "table") {
             pre <- paste0(pre, "```{=latex}\n\\begin{table}\n\\caption{",
                           options$`apa-cap`,
