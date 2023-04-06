@@ -96,6 +96,13 @@ format:
 
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 
+```{r}
+#| label: setup
+library(tidyverse)
+library(flextable)
+```
+
+
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
 Readers are better able to follow your ideas if you differentiate sections in your introduction with headings. Mostly stick to level 2 headers. Sometimes level 3 headings are needed, though. Be sparing to the point of stinginess with levels 4 and 5. 
@@ -232,9 +239,6 @@ We can make a table the same way as a figure except that the label prefix is `ap
 #| apa-cap: Here is the table caption.
 #| apa-note: Here is the note below the table.
 #| ft.align: left
-library(tidyverse)
-library(flextable)
-
 
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
   flextable() %>% 

@@ -3,7 +3,9 @@
 
 I am often required to submit documents in APA style in the .docx format. I made this extension for my own workflow. If it helps you, too, I am happy.
 
-If you want to type in markdown to create an APA formatted .pdf, I suggest using [papaja](https://frederikaust.com/papaja_man/). Or, you can  type straight-up $\LaTeX$ using the [apa7 document class](https://ctan.org/pkg/apa7).
+If you want to type in markdown to create an APA formatted 6th Edition, I suggest using [papaja](https://frederikaust.com/papaja_man/). 
+
+If you need all the flexibility of $\LaTeX$, I suggest using the [apa7 document class](https://ctan.org/pkg/apa7) with knitr's .Rnw format.
 
 # Implemented Features
 
@@ -28,7 +30,7 @@ The R code that processes the authors and affiliations metadata works for me, bu
 
 ## Author Notes
 
-The 
+The author notes have many optional parts.
 
 ## Abstract
 

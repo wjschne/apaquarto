@@ -8,7 +8,6 @@ contributes:
       execute:
         echo: false
       citeproc: false
-      keep-md: true
       fig-cap-location: top
       tbl-cap-location: top
       cap-location: top
@@ -41,7 +40,6 @@ contributes:
     pdf:
       documentclass: apa7
       pdf-engine: xelatex
-      keep-tex: true
       link-ciations: false
       citation-package: biblatex
       suppress-bibliography: false

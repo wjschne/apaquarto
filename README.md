@@ -1,5 +1,9 @@
 
-# Quarto to .docx Format
+# Quarto to APA 7 Style Document
+
+This is an experimental article template that creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
+
+
 
 ## Creating a New Article
 
@@ -26,10 +30,6 @@ Then, add the format to your document options:
 format:
   apaquarto-docx: default
 ```    
-
-## Options
-
-*TODO*: If your format has options that can be set via document metadata, describe them.
 
 ## Example
 
