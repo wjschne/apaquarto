@@ -1,0 +1,53 @@
+body {line-height: 2em; font-size: 12pt}
+
+p {text-indent: 0.5in; margin: 0pt; line-height: 2em}
+
+.FigureTitle {font-weight: bold; margin: 5pt 0pt; font-size: 12pt;}
+.Caption {font-style: italic; font-size: 12pt;}
+
+.Caption p {text-indent: 0pt; font-size: 12pt;}
+h1, h2, h3, h4, h5 {border: none; margin: 0pt; padding: 0pt;line-height: 2; text-indent: 0pt }
+
+h1 {text-align: center;}
+h3 {text-indent: 0.5in; font-style: italic}
+
+h4, h5 {
+text-indent: 0.5in;
+display:inline-block;
+margin: 0pt
+}
+
+h5 {
+  font-style: italic;
+}
+
+h4 + p, h5 + p {
+  display:inline;
+  text-indent: 0em;
+}
+
+
+
+
+
+.FigureTitle p {text-indent: 0pt}
+
+.FigureNote p {text-indent: 0pt}
+
+td p, th p, li p, blockquote p {text-indent: 0em; margin: 0pt;}
+
+
+
+li p {text-indent: 0em; margin: 0pt;}
+
+p.subtitle {font-size: 12pt; text-align: center; color: #303030; font-weight: bold;}
+
+blockquote, .blockquote {border: none; margin: 0pt 2em; padding: 0pt}
+
+.Author {text-align:center; text-indent: 0pt}
+
+.cell-output-display p {text-indent: 0pt}
+
+div.hanging-indent {margin-left: 0.5in; text-indent: -0.5in}
+
+div.hanging-indent div.csl-entry {margin-left: 0em; text-indent: -0.5in;}

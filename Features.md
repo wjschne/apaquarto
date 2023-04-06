@@ -1,8 +1,16 @@
+
+# A Quarto Extension for Making APA documents in .docx format
+
+I am often required to submit documents in APA style in the .docx format. I made this extension for my own workflow. If it helps you, too, I am happy.
+
+If you want to type in markdown to create an APA formatted .pdf, I suggest using [papaja](https://frederikaust.com/papaja_man/). Or, you can  type straight-up $\LaTeX$ using the [apa7 document class](https://ctan.org/pkg/apa7).
+
 # Implemented Features
 
 ## Front Matter
 
-If I were more knowledgeable about lua, I would have done everything with a filter. As things stand, I used an `include` statement to insert the front matter in the `_apa_title.qmd` file. This file sets up a knitr chunk hook
+If I were more knowledgeable about lua, I would have done everything with a lua filter. As things stand, I used an `include` statement to insert the front matter in the `_apa_title.qmd` file, which processes metadata with R. 
+
 
 ### Title
 
@@ -10,7 +18,7 @@ The title is extracted from the yaml metadata and then inserted both in the titl
 
 ### Running Header
 
-I could not find a pure Quarto/Pandoc solution to insert a running header into a .docx file. Thankfully David Gohel's [officer package]{https://davidgohel.github.io/officer/} exists. The _apa_title.qmd file uses officer to search for "Running Header" in the `apaquarto.docx` reference file and replace it with whatever is specified in the runningheader field of the metadata (converted to all caps). If nothing is specified, it will use the whole title in all caps. 
+I could not find a pure Quarto/Pandoc solution to insert a running header into a .docx file. Thankfully David Gohel's [officer package]{https://davidgohel.github.io/officer/} exists. The _apa_title.qmd file uses officer to search for "Running Header" in the `apaquarto.docx` reference file and replace it with whatever is specified in the `shorttitle` field of the metadata (converted to all caps). If nothing is specified, it will use the whole title in all caps. 
 
 The document is saved with the file name `apa_processed.docx`. This file then serves as the reference document. If you want to adjust the reference document, you need to make changes in the `apaquarto.docx` file because `apa_processed.docx` is re-written with every render.
 

@@ -1,0 +1,36 @@
+$if(title)$
+\title{$title$}
+$endif$
+$if(subtitle)$
+\subtitle{$subtitle$}
+$endif$
+$if(shorttitle)$
+\shorttitle{$shorttitle$}
+$endif$
+
+\authorsnames[$for(by-author)${$for(by-author.affiliations)$$it.number$$sep$,$endfor$}$sep$,$endfor$]{
+$for(by-author)$$by-author.name.literal$$sep$,$endfor$
+}
+
+\authorsaffiliations{
+$for(by-affiliation)$
+{$if(it.name)$$if(it.department)$$it.department$, $endif$$it.name$$else$$if(it.city)$$it.city$, $endif$$if(it.region)$$it.region$ $endif$$if(it.country)$$it.country$$endif$$endif$}$sep$,$endfor$}
+
+\date{$date$}
+$if(abstract)$
+\abstract{$abstract$}
+$endif$
+$if(bibliography)$
+\addbibresource{$bibliography$}
+$endif$
+
+$if(keywords)$\keywords{$for(keywords)$$it$$sep$, $endfor$}$endif$
+
+\authornote{$for(by-author)$$if(it.orcid)$\par{\addORCIDlink{$it.name.literal$}{$it.orcid$}}$endif$$endfor$
+\par{$for(author-note.status-changes.affiliation-change)$$it$$sep$$endfor$ $for(author-note.status-changes.deceased)$$it$$sep$$endfor$}
+\par{$for(author-note.disclosures.study-registration)$$it$$sep$$endfor$ $for(author-note.disclosures.data-sharing)$$it$$sep$$endfor$ $for(author-note.disclosures.related-report)$$it$$sep$$endfor$ $for(author-note.disclosures.conflict-of-interest)$$it$$sep$$endfor$ $for(author-note.disclosures.financial-support)$$it$$sep$$endfor$ $for(author-note.disclosures.gratitude)$$it$$sep$$endfor$ $for(author-note.disclosures.authorship-agreements)$$it$$sep$$endfor$}
+\par{Correspondence concerning this article should be addressed to $for(by-author)$$if(it.attributes.corresponding)$$it.name.literal$$for(by-author.affiliations)$$if(it.address)$$if(it.department)$, $it.department$$endif$$if(it.name)$, $it.name$$endif$$if(it.address)$, $it.address$$endif$$if(it.city)$, $it.city$$endif$$if(it.region)$, $it.region$$endif$$if(it.postal-code)$ $it.postal-code$$endif$$if(it.country)$, $it.country$$endif$$endif$$endfor$$if(it.email)$, Email: $it.email$$endif$$endif$$endfor$}}
+
+
+
+

@@ -30,12 +30,27 @@ end
 function makefigrefs (s)
   if starts_with("{apafg", s.text) then
     local sfg = string.match(s.text, "%{(.-)%}")
-    ---quarto.log.output(sfg)
-    return apafg[sfg] and pandoc.Str("Figure\u{a0}" .. apafg[sfg])
+    if FORMAT ~= "latex" then
+      local figtitle = apafg[sfg] and "Figure\u{a0}" .. apafg[sfg]
+      local new_s = s.text and figtitle and string.gsub(s.text, "%b{}", figtitle)
+      return new_s and pandoc.Str(new_s)
+    else 
+      local figtitle = "Figure~" .. "\\ref{" .. sfg .. "}"
+      return pandoc.RawInline('latex', string.gsub(s.text, "%b{}", figtitle))
+    end
+
+    
   end
   if starts_with("{apatb", s.text) then
     local stb = string.match(s.text, "%{(.-)%}")
-    return apatb[stb] and pandoc.Str("Table\u{a0}" .. apatb[stb])
+    if FORMAT ~= "latex" then
+      local tabtitle = apatb[stb] and "Table\u{a0}" .. apatb[stb]
+      local new_s = s.text and tabtitle and string.gsub(s.text, "%b{}", tabtitle)
+      return new_s and pandoc.Str(new_s)
+    else
+      local tabtitle = "Table~" .. "\\ref{" .. stb .. "}"
+      return pandoc.RawInline('latex', string.gsub(s.text, "%b{}", tabtitle))
+    end
   end
 end
 

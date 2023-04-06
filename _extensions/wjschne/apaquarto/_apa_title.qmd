@@ -7,8 +7,61 @@ library(tidyverse)
 library(flextable)
 library(ftExtra)
 library(officer)
+library(knitr)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
+
+is_docx <- knitr::pandoc_to("docx", exact = FALSE)
+is_pdf <- knitr::is_latex_output()
+
+if (is_pdf) {
+  knit_hooks$set(plot = function(x, options) {
+    if (!is.null(options$`out.width`)) {
+      figwidth <- options$`out.width`
+    } else {
+      if (!is.null(options$`fig.width`)) {
+        figwidth <- paste(options$`fig.width`, "in")
+      } else {
+        figwidth <- "\\columnwidth"
+      }
+      
+    }
+    
+    knitr::opts_current$set(output = "asis", fig.env = NULL)
+    
+    
+    filename <- paste0(opts_knit$get("base.url"), paste(x, collapse = "."))
+    
+    if (stringr::str_ends(filename, ".svg")) {
+      newname <- stringr::str_replace(filename, "svg$", "pdf")
+      if (Sys.which("rsvg-convert") == "") stop ("cannot find rsvg-convert")
+      convertcommand <- paste0('rsvg-convert --format=pdf "', filename, '" > "', newname,'"')
+      # print(convertcommand)
+      shell(convertcommand)
+      filename <- newname
+      
+    }
+
+    if (is.null(options$`apa-note`)) {
+      fignote <- NULL
+    } else {
+      fignote <-  paste0("\n\n\\figurenote{", options$`apa-note`, "}\n\n")
+    }
+
+
+    output <- paste0("\n\n\\begin{figure}[h!]\n",
+                   "\\caption{", options$`apa-cap`, "}\n",
+                   "\\label{", options$label, "}\n",
+      "\\includegraphics[width=",figwidth,"]{",
+      filename,
+      "}\n",
+      fignote,
+      "\n\\end{figure}\n\n"
+      )
+    # message(output)
+    output
+    })
+}
 
 
 knitr::knit_hooks$set(
@@ -17,73 +70,118 @@ knitr::knit_hooks$set(
     if (str_starts(options$label, pattern = "apafg-") |
         str_starts(options$label, pattern = "apatb-")) {
       # Figure or Table
-      apatype <- ifelse(
-        str_starts(as.character(options$label)[1], 
-                   pattern = "apafg-"),
-        "Figure", 
-        "Table"
-        )
+      apatype <- ifelse(str_starts(as.character(options$label)[1],
+                                   pattern = "apafg-"),
+                        "figure",
+                        "table")
       
       temp_label <- knitr::opts_current$get("label")
-      
-
-      
-      
 
 
       # Format Before Chunk
       if (before) {
         knitr::opts_current$set(label = NULL, output = "asis")
         options$output <- "asis"
-
-        pre <-
-          paste0(
-            '\n\n:::{#',
-            options$label,
-            ' .FigureTitle}\n\n{',
-            options$label,
-            '}\n\n:::\n\n'
-          )
-        
-        if (!is.null(options$`apa-cap`)) {
-          pre <- paste0(
-            pre,
-            '\n\n:::{.Caption}\n\n',
-            options$`apa-cap`,
-            '\n\n:::\n\n'
-          )
-        } else
-          stop(
+        if (is_pdf) {
+          pre <- ""
+          # if (apatype == "figure") {
+          #   if (is.null(options$`fig.pos`)) fgpos <- "!h" else fgpos <- options$`fig.pos`
+          #   message(fgpos)
+          #   pre <- paste0(pre, "\n\\begin{figure}[",fgpos,"]\n")
+          #   fgalign <- knitr::opts_current$get("fig.align")
+          #   if (is.null(fgalign)) {
+          #     fgalign <- ""
+          #     } else {
+          #       if (fgalign == "left") {
+          #         fgalign <- "\n\n\\raggedright\n\n"
+          #       }
+          #       if (fgalign == "right") {
+          #         fgalign <- "\n\n\\raggedleft\n\n"
+          #       }
+          #       if (fgalign == "center") {
+          #         fgalign <- "\n\n\\centering\n\n"
+          #       }
+          #       if (fgalign == "default") {
+          #         fgalign <- ""
+          #       }
+          #     }
+          #   pre <- paste0(pre, fgalign)
+          # 
+          # }
+          # options$`fig-cap` <- options$`apa-cap`
+          
+          if (apatype == "table") {
+            pre <- paste0(pre, "```{=latex}\n\\begin{table}\n\\caption{",
+                          options$`apa-cap`,
+                          "}\n\\label{",
+                          options$`label`,"}\n```\n")
+          }
+          
+        } else {
+          pre <-
             paste0(
-              "Chunk ",
+              '\n\n:::{#',
               options$label,
-              "is an APA figure/table chunk,  requires a caption. Set the `apa-cap` chunk option like so\n#| apa-cap: My caption"
+              ' .FigureTitle}\n\n{',
+              options$label,
+              '}\n\n:::\n\n'
             )
-          )
-        if (!all(is.null(options$`apa-note`))) {
-        pre <- paste0(pre,'\n\n:::{.FigureWithNote}\n\n')
-        
-      } else {
-        pre <- paste0(pre,'\n\n:::{.FigureWithoutNote}\n\n')
-      }
-      }
-      else {
-        knitr::opts_current$set(label = temp_label)
-        post <- "\n\n:::\n\n"
-        
-        if (!all(is.null(options$`apa-note`))) {
-          post <- paste(
-            post,
-            '\n\n:::{.FigureNote custom-style="FigureNote"}\n*Note*. ',
-            options$`apa-note`,
-            '\n:::\n'
-          )
-        } else if (apatype == "Table") {
-          post <- paste0(post, '\n\n:::{custom-style="Body Text"}\n<br>\n:::')
+          
+          if (!is.null(options$`apa-cap`)) {
+            pre <- paste0(pre,
+                          '\n\n:::{.Caption}\n\n',
+                          options$`apa-cap`,
+                          '\n\n:::\n\n')
+          } else
+            stop(
+              paste0(
+                "Chunk ",
+                options$label,
+                "is an APA figure/table chunk,  requires a caption. Set the `apa-cap` chunk option like so\n#| apa-cap: My caption"
+              )
+            )
+          if (!all(is.null(options$`apa-note`))) {
+            pre <- paste0(pre, '\n\n:::{.FigureWithNote}\n\n')
+            
+          } else {
+            pre <- paste0(pre, '\n\n:::{.FigureWithoutNote}\n\n')
+          }
+          
+          
         }
         
-        # post <- paste0(post, "\n\n:::\n\n")
+        pre
+      } else {
+        # post begins here ----
+        knitr::opts_current$set(label = temp_label)
+        post <- "\n\n"
+        
+        if (is_pdf) {
+          if (apatype == "table") {
+            if (!all(is.null(options$`apa-note`))) {
+              post <- paste0(post,"\\tablenote{", options$`apa-note`, "}\n\n")
+            }
+            post <- paste0("```{=latex}\n", post, "\\end{table}\n```\n")
+          }
+        } else {
+          if (!all(is.null(options$`apa-note`))) {
+            post <- paste(
+              post,
+              '\n\n:::{.FigureNote custom-style="FigureNote"}\n*Note*. ',
+              options$`apa-note`,
+              '\n:::\n'
+            )
+          } else if (apatype == "Table") {
+            post <- paste0(post,
+                           '\n\n:::{custom-style="Body Text"}\n<br>\n:::')
+          }
+          
+          post <- paste0(post, "\n\n:::\n\n")
+          
+          
+        }
         post
+        
         
         
       }
@@ -97,7 +195,6 @@ knitr::knit_hooks$set(
 ```{r}
 #| label: metadatasetup
 #| echo: false
-
 is_empty = function(x) {
   is.null(x)  || is.na(x)  || is.nan(x) || length(x) == 0 || x == ""
 }
@@ -142,7 +239,7 @@ affiliation_namer <- function(d) {
   
   
 
-author_affilations <- function(yml) {
+f_author_affiliations <- function(yml) {
   yml %>%
     compact() |> 
     map(character2name) %>% 
@@ -259,62 +356,71 @@ author_affilations <- function(yml) {
     )
   
 }
-yml_metadata <- get_metadata()
-yml <- yml_metadata$author
-# yml <- get_metadata("1author2affilations2unnamed.qmd")$author
 
-d_author_affiliations <- author_affilations(yml_metadata$author)
+
+
   
-    
-
-display_authors <- d_author_affiliations %>%
+f_author_display <- function(d) {
+  d %>%
   arrange(author_id) %>% 
   pull(author_display) %>%
   unique() %>%
   knitr::combine_words()
+}
 
-display_affiliations <- d_author_affiliations %>% 
+f_affiliations_display <- function(d) {
+  d |> 
   pull(affiliations_display) %>% 
   unique() %>% 
   paste0(collapse = "\n\n") 
+}
 
-if (all(c(display_authors, display_affiliations) == "")) {
-  display_author_affiliations <- ""
-} else {
-  
-  display_author_affiliations <- paste(
-   "\n\n<br>\n\n:::{.Author}",
-    display_authors,
-    display_affiliations,
-   ":::",
-    sep = "\n\n"
-  )
+f_author_affiliations_display <- function(authors, affiliations) {
+  if (all(c(authors, affiliations) == "")) {
+    s <- ""
+  } else {
+    s <- paste("\n\n<br>\n\n:::{.Author}",
+               authors,
+               affiliations,
+               ":::",
+               sep = "\n\n")
+  }
+  s
+}
+
+f_orcids_display <- function(author_affiliations) {
+  author_affiliations |>
+    select(author, orcid) %>%
+    unique() %>%
+    filter(!orcid == "NULL") %>%
+    mutate(
+      orcid_display = paste0(
+        author,
+        " ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
+        orcid
+      )
+    ) %>%
+    pull(orcid_display) %>%
+    unique() %>%
+    paste0(collapse = "\n\n")
 }
 
 
-display_orcids <-  d_author_affiliations %>% 
-  select(author, orcid) %>% 
-  unique() %>% 
-  filter(!orcid == "NULL") %>% 
-  mutate(orcid_display = paste0(
-    author, 
-    " ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
-    orcid)) %>% 
-  pull(orcid_display) %>% 
-  unique() %>% 
-  paste0(collapse = "\n\n")
 
-correspondings <- d_author_affiliations %>% 
-  filter(corresponding) %>% 
-  select(author) %>% 
-  unique() %>% 
-  pull()
+f_correspondings <- function(author_affiliations) {
+  s <- author_affiliations |>
+    filter(corresponding) %>%
+    select(author) %>%
+    unique() %>%
+    pull()
+  if (length(s) > 1) stop(paste0("More than one author is set as the corresponding author. Set corresponding to `true` for only one of these authors:\n", knitr::combine_words(s), "."))
 
-if (length(correspondings) > 1) stop(paste0("More than one author is set as the corresponding author. Set corresponding to `true` for only one of these authors:\n", knitr::combine_words(correspondings), "."))
+if (length(s) == 0) stop(paste0("No corresponding author has been set in the meta data at the top of the document. Under one of the authors' names, set the `corresponding` field to `true` like so:\nauthor:\n  -name: Fred Jones\n   corresponding: true"))
+  s
+}
 
-if (length(correspondings) == 0) stop(paste0("No corresponding author has been set in the meta data at the top of the document. Under one of the authors' names, set the `corresponding` field to `true` like so:\nauthor:\n  -name: Fred Jones\n   corresponding: true"))
-
-display_corresponding_author <- d_author_affiliations %>% 
+f_corresponding_author_display <- function(author_affiliations, corresponding) {
+  author_affiliations %>% 
   filter(corresponding) %>% 
   slice(1) %>% 
   select(author, mailing, affiliations, email) %>% 
@@ -324,115 +430,181 @@ display_corresponding_author <- d_author_affiliations %>%
   unite(corresponding_text, corresponding_text, author, sep = " ", na.rm = T, remove = T) %>% 
    unite(corresponding_text, corresponding_text, affiliations, mailing, email, sep = ", ", na.rm = T, remove = T) %>% 
   pull(corresponding_text)
+}
 
-
-if (is.null(yml_metadata$`author-note`$`status-changes`)) {
-  author_note_second_paragraph <- ""
-} else {
-  author_note_second_paragraph <-
-  yml_metadata$`author-note`$`status-changes` %>%
-  map(\(x) ifelse(is.null(x), NA, x)) %>%
-  as_tibble() %>%
-  unite(
-    paragraph,
-    everything(),
-    sep = " ",
-    remove = T,
-    na.rm = T
-  ) %>%
-  pull(paragraph)
-  
+f_author_note_second_paragraph <- function(yml) {
+  if (is.null(yml$`author-note`$`status-changes`)) {
+    s <- ""
+  } else {
+    s <-
+      yml$`author-note`$`status-changes` %>%
+      map(\(x) ifelse(is.null(x), NA, x)) %>%
+      as_tibble() %>%
+      unite(
+        paragraph,
+        everything(),
+        sep = " ",
+        remove = T,
+        na.rm = T
+      ) %>%
+      pull(paragraph)
+  }
+  s
 }
 
 
-if (is.null(yml_metadata$`author-note`$disclosures)) {
-  author_note_third_paragraph <- ""
-} else {
-author_note_third_paragraph <-
-  yml_metadata$`author-note`$disclosures %>%
-  map(\(x) ifelse(is.null(x), NA, x)) %>%
-  as_tibble() %>%
-  unite(
-    paragraph,
-    everything(),
-    sep = " ",
-    remove = T,
-    na.rm = T
-  ) %>%
-  pull(paragraph)
-  
-}
-
-if (is.null(yml_metadata$`author-note`$`blank-lines-above-author-note`)) {
-  blanks <- 3
-} else {
-  blanks <- yml_metadata$`author-note`$`blank-lines-above-author-note`
+f_author_note_third_paragraph <- function(yml) {
+  if (is.null(yml$`author-note`$disclosures)) {
+    s <- ""
+  } else {
+    s <- yml$`author-note`$disclosures %>%
+      map(\(x) ifelse(is.null(x), NA, x)) %>%
+      as_tibble() %>%
+      unite(
+        paragraph,
+        everything(),
+        sep = " ",
+        remove = T,
+        na.rm = T
+      ) %>%
+      pull(paragraph)
+  }
+  s
 }
   
-if (is.null(yml_metadata$`blank-lines-above-title`)) {
-  title_blanks <- 2
-} else {
-  title_blanks <- yml_metadata$`blank-lines-above-title`
+# yml_metadata <- get_metadata()
+# yml <- yml_metadata$author
+
+
+
+f_author_note_blanks <- function(yml) {
+  if (!is_docx) {
+    blanks <- 1
+  } else if (is.null(yml$`author-note`$`blank-lines-above-author-note`)) {
+    blanks <- 3
+  } else {
+    blanks <- yml$`author-note`$`blank-lines-above-author-note`
+  }
+  blanks  
 }
 
-title_blank_display <- paste0(rep("<br>", title_blanks), collapse = "\n\n")
-
-if (all(c(display_orcids, 
-          author_note_second_paragraph,
-          author_note_third_paragraph,
-          display_corresponding_author) == "")) {
-  display_author_note <- ""
-} else {
-  display_author_note <- paste(
-    paste0(rep("<br>", blanks), collapse = "\n\n"),
-    ":::{.AuthorNote}",
-    "# Author Note",
-    display_orcids, 
-    author_note_second_paragraph,
-    author_note_third_paragraph,
-    display_corresponding_author, 
-    ":::",
-    sep = "\n\n")
+f_title_blanks <- function(yml) {
+  if (!is_docx) {
+    blanks <- 1
+  } else if (is.null(yml$`blank-lines-above-title`)) {
+    blanks <- 2
+  } else {
+    blanks <- yml$`blank-lines-above-title`
+  }
+  paste0(rep("<br>", blanks), collapse = "\n\n")
 }
 
 
 
 
-if (is.null(yml_metadata$keywords)) {
-  display_keywords <- NULL
-} else {
-  display_keywords <-  paste0("*Keywords*: ", paste0(yml_metadata$keywords, collapse = ", ")) 
+f_author_note_display <- function(yml) {
+  
+  author_note_second_paragraph <- f_author_note_second_paragraph(yml)
+  author_note_third_paragraph <- f_author_note_third_paragraph(yml)
+  author_note_blanks <- f_author_note_blanks(yml)
+  title_blank_display <- f_title_blanks(yml)
+  
+  if (all(
+    c(
+      display_orcids,
+      author_note_second_paragraph,
+      author_note_third_paragraph,
+      display_corresponding_author
+    ) == ""
+  )) {
+    s <- ""
+  } else {
+    s <- paste(
+      paste0(rep("<br>", author_note_blanks), collapse = "\n\n"),
+      ":::{.AuthorNote}",
+      "# Author Note",
+      display_orcids,
+      author_note_second_paragraph,
+      author_note_third_paragraph,
+      display_corresponding_author,
+      ":::",
+      sep = "\n\n"
+    )
+  }
+  s
+}
+
+f_keywords_display <- function(yml) {
+  if (is.null(yml$keywords)) {
+    s <- NULL
+  } else {
+    s <-  paste0("*Keywords*: ", paste0(yml$keywords, collapse = ", "))
     
+  }
+  s
 }
 
-
-
-title_display <- function(title, subtitle) {
+f_title_display <- function(title, subtitle) {
   if (is_empty(title)) return(NULL)
   strtitle <- trimws(title) %>% str_remove(":$")
   if (!is_empty(subtitle)) {
     strtitle <- paste0(strtitle, ": ", subtitle)
   } 
-  strtitle <- paste0("# ", strtitle, "{.title}")
+  strtitle <- paste0("# ", strtitle, " {.title}")
 }
 
-display_title <- title_display(yml_metadata$title , yml_metadata$subtitle)
+yml_metadata <- get_metadata()
+d_author_affiliations <- f_author_affiliations(yml_metadata$author)
+
+display_authors <- f_author_display(d_author_affiliations)
+
+display_affiliations <- f_affiliations_display(d_author_affiliations) 
+  
+display_author_affiliations <- f_author_affiliations_display(
+  display_authors,
+  display_affiliations
+)
+
+display_orcids <-  f_orcids_display(d_author_affiliations)
+correspondings <- f_correspondings(d_author_affiliations)
+
+display_corresponding_author <- f_corresponding_author_display(
+  d_author_affiliations, 
+  correspondings)
+display_author_note <- f_author_note_display(yml_metadata)
 
 
-library(officer)
-if (!is.null(yml_metadata$runningheader)) {
-  running_header <- str_to_upper(yml_metadata$runningheader)
-} else if (!is.null(yml_metadata$title)) {
-  running_header <- str_to_upper(yml_metadata$title)
-} else {
-  running_header <- "SHORT TITLE"
+
+display_keywords <- f_keywords_display(yml_metadata)
+
+
+
+
+display_title <- f_title_display(yml_metadata$title , yml_metadata$subtitle)
+
+if (is_docx) {
+  if (!interactive()) {
+  library(officer)
+  if (!is.null(yml_metadata$shorttitle)) {
+    running_header <- str_to_upper(yml_metadata$shorttitle)
+  } else if (!is.null(yml_metadata$title)) {
+    running_header <- str_to_upper(yml_metadata$title)
+  } else {
+    running_header <- "SHORT TITLE"
+  }
+  
+  read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
+    headers_replace_all_text("Running Header", running_header) %>%
+    print("apa_processed.docx")
+  
+}
 }
 
-read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
-  headers_replace_all_text("Running Header", running_header) %>%
-  print("apa_processed.docx")
+
 
 ```
+
+::::{.content-visible unless-format="pdf"}
 
 `r display_title`
 
@@ -443,7 +615,6 @@ read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
 {{< pagebreak >}}
 
 :::{.Abstract}
-
 # Abstract
 
 {{< meta abstract >}}
@@ -455,3 +626,5 @@ read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
 
 
 # {{< meta title >}}
+
+::::

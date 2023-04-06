@@ -1,0 +1,33 @@
+\documentclass[
+$if(floatsintext)$
+  floatsintext,
+$endif$
+$if(mask)$
+  mask,
+$endif$
+$if(a4paper)$
+  a4paper,
+$endif$
+$if(nolmodern)$
+  nolmodern,
+$endif$
+$if(notxfonts)$
+  notxfonts,
+$endif$
+$if(nofontenc)$
+  nofontenc,
+$endif$
+$if(donotrepeattitle)$
+  donotrepeattitle,
+$endif$
+$if(biblatex)$
+  biblatex,
+$endif$
+$if(documentmode)$
+  $documentmode$,
+$endif$
+$for(classoption)$
+  $classoption$$sep$,
+$endfor$
+]{$documentclass$}
+

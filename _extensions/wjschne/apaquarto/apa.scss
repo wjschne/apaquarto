@@ -1,0 +1,17 @@
+/*-- scss:defaults --*/
+// Base document colors
+$body-bg: white;
+$body-color: #303030;
+$link-color: #75AADB;
+$font-family-serif: Times, "Times New Roman", serif;
+$font-family-sans-serif: Times, "Times New Roman", serif;
+$font-size-root: 12pt;
+$bs-body-font-size: 1rem;
+$h1-font-size: $font-size-root !default;
+$h2-font-size: $font-size-root !default;
+$h3-font-size: $font-size-root !default;
+$h4-font-size: $font-size-root !default;
+$h5-font-size: $font-size-root !default;
+$headings-font-family: Times, "Times New Roman", serif;
+// Code blocks
+$code-block-bg-alpha: -.8;

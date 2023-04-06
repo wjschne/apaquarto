@@ -8,6 +8,10 @@ contributes:
       execute:
         echo: false
       citeproc: false
+      keep-md: true
+      fig-cap-location: top
+      tbl-cap-location: top
+      cap-location: top
       knitr: 
         opts_chunk: 
           apa-figtab: true
@@ -21,6 +25,37 @@ contributes:
         - apafigtab.lua
         - citeprocr.lua
         - apaand.lua
+    html:
+      toc: true
+      anchor-sections: false
+      fig-cap-location: top
+      toc-location: left
+      grid: 
+        body-width: "7in"
+      css: apa.css
+      theme: 
+        - litera
+        - apa.scss
+      template-partials:
+        - title-block.html
+    pdf:
+      documentclass: apa7
+      pdf-engine: xelatex
+      keep-tex: true
+      link-ciations: false
+      citation-package: biblatex
+      suppress-bibliography: false
+      hyperrefoptions: 
+        - linktoc=none
+      block-headings: false
+      include-in-header: header.tex
+      template: template.tex
+      template-partials:
+        - doc-class.tex
+        - title.tex
+        - before-body.tex
+        - header.tex
+      classoption: "colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,biblatex"
     docx: 
       reference-doc: apa_processed.docx
       filters: 

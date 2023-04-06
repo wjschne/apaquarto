@@ -3,26 +3,24 @@ Pandoc
     { unMeta =
         fromList
           [ ( "abstract"
-            , MetaBlocks
-                [ Para
-                    [ Str "This"
-                    , Space
-                    , Str "document"
-                    , Space
-                    , Str "is"
-                    , Space
-                    , Str "a"
-                    , Space
-                    , Str "template"
-                    , Space
-                    , Str "demonstrating"
-                    , Space
-                    , Str "the"
-                    , Space
-                    , Str "apaquarto"
-                    , Space
-                    , Str "format."
-                    ]
+            , MetaInlines
+                [ Str "This"
+                , Space
+                , Str "document"
+                , Space
+                , Str "is"
+                , Space
+                , Str "a"
+                , Space
+                , Str "template"
+                , Space
+                , Str "demonstrating"
+                , Space
+                , Str "the"
+                , Space
+                , Str "apaquarto"
+                , Space
+                , Str "format."
                 ]
             )
           , ( "affiliations"
@@ -48,7 +46,7 @@ Pandoc
                              , Str "Psychology"
                              ]
                          )
-                       , ( "id" , MetaInlines [ Str "aff-1" ] )
+                       , ( "id" , MetaInlines [ Str "id1" ] )
                        , ( "letter" , MetaString "a" )
                        , ( "metadata" , MetaMap (fromList []) )
                        , ( "name"
@@ -86,27 +84,16 @@ Pandoc
                        ])
                 , MetaMap
                     (fromList
-                       [ ( "department"
-                         , MetaInlines
-                             [ Str "Department"
-                             , Space
-                             , Str "of"
-                             , Space
-                             , Str "Psychology"
-                             ]
-                         )
-                       , ( "id" , MetaInlines [ Str "aff-3" ] )
+                       [ ( "id" , MetaInlines [ Str "aff-3" ] )
                        , ( "letter" , MetaString "c" )
                        , ( "metadata" , MetaMap (fromList []) )
                        , ( "name"
                          , MetaInlines
-                             [ Str "Ana"
+                             [ Str "Carina\8217s"
                              , Space
-                             , Str "and"
+                             , Str "Primary"
                              , Space
-                             , Str "Blanca\8217s"
-                             , Space
-                             , Str "University"
+                             , Str "Affiliation"
                              ]
                          )
                        , ( "number" , MetaString "3" )
@@ -120,7 +107,7 @@ Pandoc
                          , MetaInlines
                              [ Str "Carina\8217s"
                              , Space
-                             , Str "Primary"
+                             , Str "Secondary"
                              , Space
                              , Str "Affiliation"
                              ]
@@ -129,28 +116,12 @@ Pandoc
                        ])
                 , MetaMap
                     (fromList
-                       [ ( "id" , MetaInlines [ Str "aff-5" ] )
+                       [ ( "city" , MetaInlines [ Str "Buffalo" ] )
+                       , ( "id" , MetaInlines [ Str "aff-5" ] )
                        , ( "letter" , MetaString "e" )
                        , ( "metadata" , MetaMap (fromList []) )
-                       , ( "name"
-                         , MetaInlines
-                             [ Str "Carina\8217s"
-                             , Space
-                             , Str "Secondary"
-                             , Space
-                             , Str "Affiliation"
-                             ]
-                         )
-                       , ( "number" , MetaString "5" )
-                       ])
-                , MetaMap
-                    (fromList
-                       [ ( "city" , MetaInlines [ Str "Buffalo" ] )
-                       , ( "id" , MetaInlines [ Str "aff-6" ] )
-                       , ( "letter" , MetaString "f" )
-                       , ( "metadata" , MetaMap (fromList []) )
                        , ( "name" , MetaString "" )
-                       , ( "number" , MetaString "6" )
+                       , ( "number" , MetaString "5" )
                        , ( "region" , MetaInlines [ Str "NY" ] )
                        ])
                 ]
@@ -202,7 +173,7 @@ Pandoc
                              [ MetaMap
                                  (fromList
                                     [ ( "ref"
-                                      , MetaInlines [ Str "aff-1" ]
+                                      , MetaInlines [ Str "id1" ]
                                       )
                                     ])
                              , MetaMap
@@ -260,7 +231,7 @@ Pandoc
                              [ MetaMap
                                  (fromList
                                     [ ( "ref"
-                                      , MetaInlines [ Str "aff-3" ]
+                                      , MetaInlines [ Str "id1" ]
                                       )
                                     ])
                              ]
@@ -295,13 +266,13 @@ Pandoc
                              [ MetaMap
                                  (fromList
                                     [ ( "ref"
-                                      , MetaInlines [ Str "aff-4" ]
+                                      , MetaInlines [ Str "aff-3" ]
                                       )
                                     ])
                              , MetaMap
                                  (fromList
                                     [ ( "ref"
-                                      , MetaInlines [ Str "aff-5" ]
+                                      , MetaInlines [ Str "aff-4" ]
                                       )
                                     ])
                              ]
@@ -339,7 +310,7 @@ Pandoc
                              [ MetaMap
                                  (fromList
                                     [ ( "ref"
-                                      , MetaInlines [ Str "aff-6" ]
+                                      , MetaInlines [ Str "aff-5" ]
                                       )
                                     ])
                              ]
@@ -399,7 +370,7 @@ Pandoc
                                               (fromList
                                                  [ ( "ref"
                                                    , MetaInlines
-                                                       [ Str "aff-1" ]
+                                                       [ Str "id1" ]
                                                    )
                                                  ])
                                           , MetaMap
@@ -459,6 +430,46 @@ Pandoc
                                           [ Str "https://example.org/" ]
                                       )
                                     ])
+                             , MetaMap
+                                 (fromList
+                                    [ ( "affiliations"
+                                      , MetaList
+                                          [ MetaMap
+                                              (fromList
+                                                 [ ( "ref"
+                                                   , MetaInlines
+                                                       [ Str "id1" ]
+                                                   )
+                                                 ])
+                                          ]
+                                      )
+                                    , ( "id" , MetaString "2" )
+                                    , ( "letter" , MetaString "b" )
+                                    , ( "metadata"
+                                      , MetaMap (fromList [])
+                                      )
+                                    , ( "name"
+                                      , MetaMap
+                                          (fromList
+                                             [ ( "family"
+                                               , MetaInlines
+                                                   [ Str "Zutana" ]
+                                               )
+                                             , ( "given"
+                                               , MetaInlines
+                                                   [ Str "Blanca" ]
+                                               )
+                                             , ( "literal"
+                                               , MetaInlines
+                                                   [ Str "Blanca"
+                                                   , Space
+                                                   , Str "Zutana"
+                                                   ]
+                                               )
+                                             ])
+                                      )
+                                    , ( "number" , MetaString "2" )
+                                    ])
                              ]
                          )
                        , ( "city" , MetaInlines [ Str "Albany" ] )
@@ -471,7 +482,7 @@ Pandoc
                              , Str "Psychology"
                              ]
                          )
-                       , ( "id" , MetaInlines [ Str "aff-1" ] )
+                       , ( "id" , MetaInlines [ Str "id1" ] )
                        , ( "letter" , MetaString "a" )
                        , ( "metadata" , MetaMap (fromList []) )
                        , ( "name"
@@ -503,7 +514,7 @@ Pandoc
                                               (fromList
                                                  [ ( "ref"
                                                    , MetaInlines
-                                                       [ Str "aff-1" ]
+                                                       [ Str "id1" ]
                                                    )
                                                  ])
                                           , MetaMap
@@ -594,10 +605,17 @@ Pandoc
                                                        [ Str "aff-3" ]
                                                    )
                                                  ])
+                                          , MetaMap
+                                              (fromList
+                                                 [ ( "ref"
+                                                   , MetaInlines
+                                                       [ Str "aff-4" ]
+                                                   )
+                                                 ])
                                           ]
                                       )
-                                    , ( "id" , MetaString "2" )
-                                    , ( "letter" , MetaString "b" )
+                                    , ( "id" , MetaString "3" )
+                                    , ( "letter" , MetaString "c" )
                                     , ( "metadata"
                                       , MetaMap (fromList [])
                                       )
@@ -606,32 +624,27 @@ Pandoc
                                           (fromList
                                              [ ( "family"
                                                , MetaInlines
-                                                   [ Str "Zutana" ]
+                                                   [ Str "Mengana" ]
                                                )
                                              , ( "given"
                                                , MetaInlines
-                                                   [ Str "Blanca" ]
+                                                   [ Str "Carina" ]
                                                )
                                              , ( "literal"
                                                , MetaInlines
-                                                   [ Str "Blanca"
+                                                   [ Str "Carina"
                                                    , Space
-                                                   , Str "Zutana"
+                                                   , Str "Mengana"
                                                    ]
                                                )
                                              ])
                                       )
-                                    , ( "number" , MetaString "2" )
+                                    , ( "number" , MetaString "3" )
+                                    , ( "orcid"
+                                      , MetaInlines
+                                          [ Str "0000-0000-0000-0001" ]
+                                      )
                                     ])
-                             ]
-                         )
-                       , ( "department"
-                         , MetaInlines
-                             [ Str "Department"
-                             , Space
-                             , Str "of"
-                             , Space
-                             , Str "Psychology"
                              ]
                          )
                        , ( "id" , MetaInlines [ Str "aff-3" ] )
@@ -639,13 +652,11 @@ Pandoc
                        , ( "metadata" , MetaMap (fromList []) )
                        , ( "name"
                          , MetaInlines
-                             [ Str "Ana"
+                             [ Str "Carina\8217s"
                              , Space
-                             , Str "and"
+                             , Str "Primary"
                              , Space
-                             , Str "Blanca\8217s"
-                             , Space
-                             , Str "University"
+                             , Str "Affiliation"
                              ]
                          )
                        , ( "number" , MetaString "3" )
@@ -662,14 +673,14 @@ Pandoc
                                               (fromList
                                                  [ ( "ref"
                                                    , MetaInlines
-                                                       [ Str "aff-4" ]
+                                                       [ Str "aff-3" ]
                                                    )
                                                  ])
                                           , MetaMap
                                               (fromList
                                                  [ ( "ref"
                                                    , MetaInlines
-                                                       [ Str "aff-5" ]
+                                                       [ Str "aff-4" ]
                                                    )
                                                  ])
                                           ]
@@ -714,7 +725,7 @@ Pandoc
                          , MetaInlines
                              [ Str "Carina\8217s"
                              , Space
-                             , Str "Primary"
+                             , Str "Secondary"
                              , Space
                              , Str "Affiliation"
                              ]
@@ -733,78 +744,7 @@ Pandoc
                                               (fromList
                                                  [ ( "ref"
                                                    , MetaInlines
-                                                       [ Str "aff-4" ]
-                                                   )
-                                                 ])
-                                          , MetaMap
-                                              (fromList
-                                                 [ ( "ref"
-                                                   , MetaInlines
                                                        [ Str "aff-5" ]
-                                                   )
-                                                 ])
-                                          ]
-                                      )
-                                    , ( "id" , MetaString "3" )
-                                    , ( "letter" , MetaString "c" )
-                                    , ( "metadata"
-                                      , MetaMap (fromList [])
-                                      )
-                                    , ( "name"
-                                      , MetaMap
-                                          (fromList
-                                             [ ( "family"
-                                               , MetaInlines
-                                                   [ Str "Mengana" ]
-                                               )
-                                             , ( "given"
-                                               , MetaInlines
-                                                   [ Str "Carina" ]
-                                               )
-                                             , ( "literal"
-                                               , MetaInlines
-                                                   [ Str "Carina"
-                                                   , Space
-                                                   , Str "Mengana"
-                                                   ]
-                                               )
-                                             ])
-                                      )
-                                    , ( "number" , MetaString "3" )
-                                    , ( "orcid"
-                                      , MetaInlines
-                                          [ Str "0000-0000-0000-0001" ]
-                                      )
-                                    ])
-                             ]
-                         )
-                       , ( "id" , MetaInlines [ Str "aff-5" ] )
-                       , ( "letter" , MetaString "e" )
-                       , ( "metadata" , MetaMap (fromList []) )
-                       , ( "name"
-                         , MetaInlines
-                             [ Str "Carina\8217s"
-                             , Space
-                             , Str "Secondary"
-                             , Space
-                             , Str "Affiliation"
-                             ]
-                         )
-                       , ( "number" , MetaString "5" )
-                       ])
-                , MetaMap
-                    (fromList
-                       [ ( "authors"
-                         , MetaList
-                             [ MetaMap
-                                 (fromList
-                                    [ ( "affiliations"
-                                      , MetaList
-                                          [ MetaMap
-                                              (fromList
-                                                 [ ( "ref"
-                                                   , MetaInlines
-                                                       [ Str "aff-6" ]
                                                    )
                                                  ])
                                           ]
@@ -843,11 +783,11 @@ Pandoc
                              ]
                          )
                        , ( "city" , MetaInlines [ Str "Buffalo" ] )
-                       , ( "id" , MetaInlines [ Str "aff-6" ] )
-                       , ( "letter" , MetaString "f" )
+                       , ( "id" , MetaInlines [ Str "aff-5" ] )
+                       , ( "letter" , MetaString "e" )
                        , ( "metadata" , MetaMap (fromList []) )
                        , ( "name" , MetaString "" )
-                       , ( "number" , MetaString "6" )
+                       , ( "number" , MetaString "5" )
                        , ( "region" , MetaInlines [ Str "NY" ] )
                        ])
                 ]
@@ -882,7 +822,7 @@ Pandoc
                                           ]
                                       )
                                     , ( "id"
-                                      , MetaInlines [ Str "aff-1" ]
+                                      , MetaInlines [ Str "id1" ]
                                       )
                                     , ( "letter" , MetaString "a" )
                                     , ( "metadata"
@@ -975,7 +915,19 @@ Pandoc
                          , MetaList
                              [ MetaMap
                                  (fromList
-                                    [ ( "department"
+                                    [ ( "address"
+                                      , MetaInlines
+                                          [ Str "1234"
+                                          , Space
+                                          , Str "Capital"
+                                          , Space
+                                          , Str "St."
+                                          ]
+                                      )
+                                    , ( "city"
+                                      , MetaInlines [ Str "Albany" ]
+                                      )
+                                    , ( "department"
                                       , MetaInlines
                                           [ Str "Department"
                                           , Space
@@ -985,9 +937,9 @@ Pandoc
                                           ]
                                       )
                                     , ( "id"
-                                      , MetaInlines [ Str "aff-3" ]
+                                      , MetaInlines [ Str "id1" ]
                                       )
-                                    , ( "letter" , MetaString "c" )
+                                    , ( "letter" , MetaString "a" )
                                     , ( "metadata"
                                       , MetaMap (fromList [])
                                       )
@@ -1002,7 +954,13 @@ Pandoc
                                           , Str "University"
                                           ]
                                       )
-                                    , ( "number" , MetaString "3" )
+                                    , ( "number" , MetaString "1" )
+                                    , ( "postal-code"
+                                      , MetaInlines [ Str "12084-1234" ]
+                                      )
+                                    , ( "region"
+                                      , MetaInlines [ Str "NY" ]
+                                      )
                                     ])
                              ]
                          )
@@ -1036,9 +994,9 @@ Pandoc
                              [ MetaMap
                                  (fromList
                                     [ ( "id"
-                                      , MetaInlines [ Str "aff-4" ]
+                                      , MetaInlines [ Str "aff-3" ]
                                       )
-                                    , ( "letter" , MetaString "d" )
+                                    , ( "letter" , MetaString "c" )
                                     , ( "metadata"
                                       , MetaMap (fromList [])
                                       )
@@ -1051,14 +1009,14 @@ Pandoc
                                           , Str "Affiliation"
                                           ]
                                       )
-                                    , ( "number" , MetaString "4" )
+                                    , ( "number" , MetaString "3" )
                                     ])
                              , MetaMap
                                  (fromList
                                     [ ( "id"
-                                      , MetaInlines [ Str "aff-5" ]
+                                      , MetaInlines [ Str "aff-4" ]
                                       )
-                                    , ( "letter" , MetaString "e" )
+                                    , ( "letter" , MetaString "d" )
                                     , ( "metadata"
                                       , MetaMap (fromList [])
                                       )
@@ -1071,7 +1029,7 @@ Pandoc
                                           , Str "Affiliation"
                                           ]
                                       )
-                                    , ( "number" , MetaString "5" )
+                                    , ( "number" , MetaString "4" )
                                     ])
                              ]
                          )
@@ -1111,14 +1069,14 @@ Pandoc
                                       , MetaInlines [ Str "Buffalo" ]
                                       )
                                     , ( "id"
-                                      , MetaInlines [ Str "aff-6" ]
+                                      , MetaInlines [ Str "aff-5" ]
                                       )
-                                    , ( "letter" , MetaString "f" )
+                                    , ( "letter" , MetaString "e" )
                                     , ( "metadata"
                                       , MetaMap (fromList [])
                                       )
                                     , ( "name" , MetaString "" )
-                                    , ( "number" , MetaString "6" )
+                                    , ( "number" , MetaString "5" )
                                     , ( "region"
                                       , MetaInlines [ Str "NY" ]
                                       )
@@ -1159,7 +1117,7 @@ Pandoc
                 , MetaInlines [ Str "other" , Space , Str "keyword" ]
                 ]
             )
-          , ( "runningheader"
+          , ( "shorttitle"
             , MetaInlines
                 [ Str "Template"
                 , Space
@@ -1201,7 +1159,336 @@ Pandoc
             )
           ]
     }
-  [ Para
+  [ Header
+      1
+      ( "using-quarto-to-generate-ms-word-documents-in-apa-style-7th-edition"
+      , [ "title" ]
+      , []
+      )
+      [ Str "Using"
+      , Space
+      , Str "Quarto"
+      , Space
+      , Str "to"
+      , Space
+      , Str "Generate"
+      , Space
+      , Str "MS"
+      , Space
+      , Str "Word"
+      , Space
+      , Str "Documents"
+      , Space
+      , Str "in"
+      , Space
+      , Str "APA"
+      , Space
+      , Str "Style"
+      , Space
+      , Str "(7th"
+      , Space
+      , Str "Edition)"
+      ]
+  , Para [ RawInline (Format "html") "<br>" ]
+  , Div
+      ( "" , [ "Author" ] , [] )
+      [ Para
+          [ Str "Ana"
+          , Space
+          , Str "Fulana"
+          , Superscript [ Str "1,2" ]
+          , Str ","
+          , Space
+          , Str "Blanca"
+          , Space
+          , Str "Zutana"
+          , Superscript [ Str "3" ]
+          , Str ","
+          , Space
+          , Str "Carina"
+          , Space
+          , Str "Mengana"
+          , Superscript [ Str "4,5" ]
+          , Str ","
+          , Space
+          , Str "and"
+          , Space
+          , Str "Dolorita"
+          , Space
+          , Str "Perengana"
+          , Superscript [ Str "6" ]
+          ]
+      , Para
+          [ Superscript [ Str "1" ]
+          , Str "Department"
+          , Space
+          , Str "of"
+          , Space
+          , Str "Psychology,"
+          , Space
+          , Str "Ana"
+          , Space
+          , Str "and"
+          , Space
+          , Str "Blanca\8217s"
+          , Space
+          , Str "University"
+          ]
+      , Para
+          [ Superscript [ Str "2" ]
+          , Str "Ana\8217s"
+          , Space
+          , Str "Secondary"
+          , Space
+          , Str "Affiliation"
+          ]
+      , Para [ Superscript [ Str "3" ] , Str "Unaffiliated" ]
+      , Para
+          [ Superscript [ Str "4" ]
+          , Str "Carina\8217s"
+          , Space
+          , Str "Primary"
+          , Space
+          , Str "Affiliation"
+          ]
+      , Para
+          [ Superscript [ Str "5" ]
+          , Str "Carina\8217s"
+          , Space
+          , Str "Secondary"
+          , Space
+          , Str "Affiliation"
+          ]
+      , Para
+          [ Superscript [ Str "6" ]
+          , Str "Buffalo,"
+          , Space
+          , Str "NY"
+          ]
+      ]
+  , Para [ RawInline (Format "html") "<br>" ]
+  , Div
+      ( "" , [ "AuthorNote" ] , [] )
+      [ Header
+          1
+          ( "author-note" , [] , [] )
+          [ Str "Author" , Space , Str "Note" ]
+      , Para
+          [ Str "Ana"
+          , Space
+          , Str "Fulana"
+          , Space
+          , Image
+              ( "" , [] , [ ( "width" , "16px" ) ] )
+              [ Str "Orchid"
+              , Space
+              , Str "ID"
+              , Space
+              , Str "Logo:"
+              , Space
+              , Str "A"
+              , Space
+              , Str "green"
+              , Space
+              , Str "circle"
+              , Space
+              , Str "with"
+              , Space
+              , Str "white"
+              , Space
+              , Str "letters"
+              , Space
+              , Str "ID"
+              ]
+              ( "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
+              , ""
+              )
+          , Space
+          , Str "https://orcid.org/0000-0000-0000-0000"
+          ]
+      , Para
+          [ Str "Carina"
+          , Space
+          , Str "Mengana"
+          , Space
+          , Image
+              ( "" , [] , [ ( "width" , "16px" ) ] )
+              [ Str "Orchid"
+              , Space
+              , Str "ID"
+              , Space
+              , Str "Logo:"
+              , Space
+              , Str "A"
+              , Space
+              , Str "green"
+              , Space
+              , Str "circle"
+              , Space
+              , Str "with"
+              , Space
+              , Str "white"
+              , Space
+              , Str "letters"
+              , Space
+              , Str "ID"
+              ]
+              ( "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
+              , ""
+              )
+          , Space
+          , Str "https://orcid.org/0000-0000-0000-0001"
+          ]
+      , Para
+          [ Str "Dolorita"
+          , Space
+          , Str "Perengana"
+          , Space
+          , Image
+              ( "" , [] , [ ( "width" , "16px" ) ] )
+              [ Str "Orchid"
+              , Space
+              , Str "ID"
+              , Space
+              , Str "Logo:"
+              , Space
+              , Str "A"
+              , Space
+              , Str "green"
+              , Space
+              , Str "circle"
+              , Space
+              , Str "with"
+              , Space
+              , Str "white"
+              , Space
+              , Str "letters"
+              , Space
+              , Str "ID"
+              ]
+              ( "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
+              , ""
+              )
+          , Space
+          , Str "https://orcid.org/0000-0000-0000-0003"
+          ]
+      , Para
+          [ Str "Correspondence"
+          , Space
+          , Str "concerning"
+          , Space
+          , Str "this"
+          , Space
+          , Str "article"
+          , Space
+          , Str "should"
+          , Space
+          , Str "be"
+          , Space
+          , Str "addressed"
+          , Space
+          , Str "to"
+          , Space
+          , Str "Ana"
+          , Space
+          , Str "Fulana,"
+          , Space
+          , Str "Department"
+          , Space
+          , Str "of"
+          , Space
+          , Str "Psychology,"
+          , Space
+          , Str "Ana"
+          , Space
+          , Str "and"
+          , Space
+          , Str "Blanca\8217s"
+          , Space
+          , Str "University,"
+          , Space
+          , Str "1234"
+          , Space
+          , Str "Capital"
+          , Space
+          , Str "St.,"
+          , Space
+          , Str "Albany,"
+          , Space
+          , Str "NY"
+          , Space
+          , Str "12084-1234,"
+          , Space
+          , Str "Email:"
+          , Space
+          , Str "sm@example.org"
+          ]
+      ]
+  , Para [ Str "\f" ]
+  , Div
+      ( "" , [ "Abstract" ] , [] )
+      [ Header 1 ( "abstract" , [] , [] ) [ Str "Abstract" ]
+      , Para
+          [ Str "This"
+          , Space
+          , Str "document"
+          , Space
+          , Str "is"
+          , Space
+          , Str "a"
+          , Space
+          , Str "template"
+          , Space
+          , Str "demonstrating"
+          , Space
+          , Str "the"
+          , Space
+          , Str "apaquarto"
+          , Space
+          , Str "format."
+          ]
+      , Para
+          [ Emph [ Str "Keywords" ]
+          , Str ":"
+          , Space
+          , Str "keyword,"
+          , Space
+          , Str "other"
+          , Space
+          , Str "keyword"
+          ]
+      ]
+  , Para [ Str "\f" ]
+  , Header
+      1
+      ( "meta-title" , [] , [] )
+      [ Str ""
+      , Str "Using"
+      , Space
+      , Str "Quarto"
+      , Space
+      , Str "to"
+      , Space
+      , Str "Generate"
+      , Space
+      , Str "MS"
+      , Space
+      , Str "Word"
+      , Space
+      , Str "Documents"
+      , Space
+      , Str "in"
+      , Space
+      , Str "APA"
+      , Space
+      , Str "Style"
+      , Space
+      , Str "(7th"
+      , Space
+      , Str "Edition)"
+      , Str ""
+      ]
+  , Para
       [ Str "This"
       , Space
       , Str "is"
@@ -1324,27 +1611,13 @@ Pandoc
       , Space
       , Str "3"
       , Space
-      , Str "heading"
+      , Str "headings"
       , Space
       , Str "are"
       , Space
-      , Str "needed."
+      , Str "needed,"
       , Space
-      , Str "Try"
-      , Space
-      , Str "not"
-      , Space
-      , Str "to"
-      , Space
-      , Str "use"
-      , Space
-      , Str "a"
-      , Space
-      , Str "level"
-      , Space
-      , Str "3"
-      , Space
-      , Str "heading"
+      , Str "though."
       , Space
       , Str "Be"
       , Space
@@ -1568,38 +1841,44 @@ Pandoc
       ]
   , Header
       4
-      ( "level-4-heading-indented-flush-left-bold-title-case-ending-with-a-period."
-      , []
-      , []
-      )
-      [ Str "Level"
+      ( "level-4-heading." , [] , [] )
+      [ Str "Level" , Space , Str "4" , Space , Str "Heading." ]
+  , Para
+      [ Str "A"
+      , Space
+      , Str "level"
       , Space
       , Str "4"
       , Space
-      , Str "Heading:"
+      , Str "heading"
       , Space
-      , Str "Indented,"
+      , Str "should"
       , Space
-      , Str "Flush"
+      , Str "be"
       , Space
-      , Str "Left,"
+      , Str "indented,"
       , Space
-      , Str "Bold,"
+      , Str "flush"
       , Space
-      , Str "Title"
+      , Str "left,"
       , Space
-      , Str "Case,"
+      , Str "bold,"
       , Space
-      , Str "Ending"
+      , Str "title"
       , Space
-      , Str "With"
+      , Str "case,"
+      , Space
+      , Str "and"
+      , Space
+      , Str "end"
+      , Space
+      , Str "with"
       , Space
       , Str "a"
       , Space
-      , Str "Period."
-      ]
-  , Para
-      [ Str "A"
+      , Str "period."
+      , Space
+      , Str "A"
       , Space
       , Str "paragraph"
       , Space
@@ -1615,7 +1894,7 @@ Pandoc
       , Space
       , Str "5"
       , Space
-      , Str "geading"
+      , Str "heading"
       , Space
       , Str "is"
       , Space
@@ -1780,40 +2059,46 @@ Pandoc
       ]
   , Header
       5
-      ( "level-5-heading-indented-flush-left-bold-italic-title-case-ending-with-a-period"
-      , []
-      , []
-      )
-      [ Str "Level"
+      ( "level-5-heading" , [] , [] )
+      [ Str "Level" , Space , Str "5" , Space , Str "Heading" ]
+  , Para
+      [ Str "A"
+      , Space
+      , Str "level"
       , Space
       , Str "5"
       , Space
-      , Str "Heading:"
+      , Str "heading"
       , Space
-      , Str "Indented,"
+      , Str "should"
       , Space
-      , Str "Flush"
+      , Str "be"
       , Space
-      , Str "Left,"
+      , Str "indented,"
       , Space
-      , Str "Bold"
+      , Str "flush"
       , Space
-      , Str "Italic,"
+      , Str "left,"
       , Space
-      , Str "Title"
+      , Str "bold"
       , Space
-      , Str "Case,"
+      , Str "italic,"
       , Space
-      , Str "Ending"
+      , Str "title"
       , Space
-      , Str "With"
+      , Str "case,"
+      , Space
+      , Str "and"
+      , Space
+      , Str "end"
+      , Space
+      , Str "with"
       , Space
       , Str "a"
       , Space
-      , Str "Period"
-      ]
-  , Para
-      [ Str "Notice"
+      , Str "period."
+      , Space
+      , Str "Notice"
       , Space
       , Str "that"
       , Space
@@ -1858,6 +2143,21 @@ Pandoc
       , Str "rendered"
       , Space
       , Str "document."
+      ]
+  , Para
+      [ Str "Subsequent"
+      , Space
+      , Str "paragraphs"
+      , Space
+      , Str "go"
+      , Space
+      , Str "on"
+      , Space
+      , Str "their"
+      , Space
+      , Str "own"
+      , Space
+      , Str "lines."
       ]
   , Header
       2
@@ -2322,6 +2622,30 @@ Pandoc
       , Str "optional."
       ]
   , Header
+      2
+      ( "inclusion-and-exclusion" , [] , [] )
+      [ Str "Inclusion"
+      , Space
+      , Str "and"
+      , Space
+      , Str "Exclusion"
+      ]
+  , Para
+      [ Str "Report"
+      , Space
+      , Str "criteria"
+      , Space
+      , Str "for"
+      , Space
+      , Str "participant"
+      , Space
+      , Str "inclusion"
+      , Space
+      , Str "and"
+      , Space
+      , Str "exclusion."
+      ]
+  , Header
       2 ( "participants" , [] , [] ) [ Str "Participants" ]
   , Para
       [ Str "Who"
@@ -2380,16 +2704,75 @@ Pandoc
       ]
   , Header
       2
-      ( "measures-or-materials-or-aparatus" , [] , [] )
+      ( "sampling-procedures" , [] , [] )
+      [ Str "Sampling" , Space , Str "Procedures" ]
+  , Header
+      2
+      ( "sample-size-power-and-precision" , [] , [] )
+      [ Str "Sample"
+      , Space
+      , Str "Size,"
+      , Space
+      , Str "Power,"
+      , Space
+      , Str "and"
+      , Space
+      , Str "Precision"
+      ]
+  , Header
+      2
+      ( "measures-and-covariates" , [] , [] )
       [ Str "Measures"
       , Space
-      , Str "(or"
+      , Str "and"
       , Space
-      , Str "Materials"
+      , Str "Covariates"
+      ]
+  , Para
+      [ Str "This"
+      , Space
+      , Str "section"
+      , Space
+      , Str "can"
+      , Space
+      , Str "also"
+      , Space
+      , Str "be"
+      , Space
+      , Str "titled"
+      , Space
+      , Strong [ Str "Materials" ]
       , Space
       , Str "or"
       , Space
-      , Str "Aparatus)"
+      , Strong [ Str "Apparatus" ]
+      , Str "."
+      , Space
+      , Str "Whatever"
+      , Space
+      , Str "tools,"
+      , Space
+      , Str "equipment,"
+      , Space
+      , Str "or"
+      , Space
+      , Str "measurement"
+      , Space
+      , Str "devices"
+      , Space
+      , Str "used"
+      , Space
+      , Str "in"
+      , Space
+      , Str "the"
+      , Space
+      , Str "study"
+      , Space
+      , Str "should"
+      , Space
+      , Str "be"
+      , Space
+      , Str "described."
       ]
   , Header
       3
@@ -2424,9 +2807,40 @@ Pandoc
       , Str "do?"
       ]
   , Header
+      2
+      ( "data-collection" , [] , [] )
+      [ Str "Data" , Space , Str "Collection" ]
+  , Header
+      2
+      ( "quality-of-measurements" , [] , [] )
+      [ Str "Quality"
+      , Space
+      , Str "of"
+      , Space
+      , Str "Measurements"
+      ]
+  , Header
+      2 ( "instrumentation" , [] , [] ) [ Str "Instrumentation" ]
+  , Header 2 ( "masking" , [] , [] ) [ Str "Masking" ]
+  , Header
+      2 ( "psychometrics" , [] , [] ) [ Str "Psychometrics" ]
+  , Header
+      2
+      ( "conditions-and-design" , [] , [] )
+      [ Str "Conditions"
+      , Space
+      , Str "and"
+      , Space
+      , Str "Design"
+      ]
+  , Header
+      2
+      ( "data-diagnostics" , [] , [] )
+      [ Str "Data" , Space , Str "Diagnostics" ]
+  , Header
       3
-      ( "analysis-plan" , [] , [] )
-      [ Str "Analysis" , Space , Str "Plan" ]
+      ( "analysis-strategy" , [] , [] )
+      [ Str "Analysis" , Space , Str "Strategy" ]
   , Para
       [ Str "How"
       , Space
@@ -2575,7 +2989,7 @@ Pandoc
           ( "" , [ "cell-output-display" ] , [] )
           [ Para
               [ Image
-                  ( "" , [] , [] )
+                  ( "" , [ "quarto-discovered-preview-image" ] , [] )
                   []
                   ( "template_files/figure-native/apafg-myplot-1.png"
                   , ""
@@ -2635,7 +3049,9 @@ Pandoc
   , Div
       ( ""
       , [ "cell" ]
-      , [ ( "apa-cap" , "This is an imported graphic." ) ]
+      , [ ( "layout-align" , "left" )
+        , ( "apa-cap" , "This is an imported graphic." )
+        ]
       )
       [ CodeBlock
           ( "" , [ "r" , "cell-code" ] , [] )
@@ -2644,7 +3060,13 @@ Pandoc
           ( "" , [ "cell-output-display" ] , [] )
           [ Para
               [ Image
-                  ( "" , [] , [] )
+                  ( ""
+                  , []
+                  , [ ( "fig-align" , "left" )
+                    , ( "width" , "2cm" )
+                    , ( "height" , "2cm" )
+                    ]
+                  )
                   []
                   ( "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
                   , ""
@@ -2750,24 +3172,8 @@ Pandoc
         ]
       )
       [ CodeBlock
-          ( "" , [ "r" , "cell-code" ] , [] ) "library(tidyverse)"
-      , Div
-          ( "" , [ "cell-output" , "cell-output-stderr" ] , [] )
-          [ CodeBlock
-              ( "" , [] , [] )
-              "\9472\9472 Attaching core tidyverse packages \9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472 tidyverse 2.0.0 \9472\9472\n\10004 dplyr     1.1.0     \10004 readr     2.1.4\n\10004 forcats   1.0.0     \10004 stringr   1.5.0\n\10004 ggplot2   3.4.1     \10004 tibble    3.2.0\n\10004 lubridate 1.9.2     \10004 tidyr     1.3.0\n\10004 purrr     1.0.1     \n\9472\9472 Conflicts \9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472\9472 tidyverse_conflicts() \9472\9472\n\10006 dplyr::filter() masks stats::filter()\n\10006 dplyr::lag()    masks stats::lag()\n\8505 Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors"
-          ]
-      , CodeBlock
-          ( "" , [ "r" , "cell-code" ] , [] ) "library(flextable)"
-      , Div
-          ( "" , [ "cell-output" , "cell-output-stderr" ] , [] )
-          [ CodeBlock
-              ( "" , [] , [] )
-              "\nAttaching package: 'flextable'\n\nThe following object is masked from 'package:purrr':\n\n    compose"
-          ]
-      , CodeBlock
           ( "" , [ "r" , "cell-code" ] , [] )
-          "# tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% \n#   flextable() %>% \n#   theme_apa() %>% \n#   line_spacing(part = \"all\") %>% \n#   padding(padding.top = 5, padding.bottom = 5)"
+          "library(tidyverse)\nlibrary(flextable)\n\n\ntibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% \n  flextable() %>% \n  theme_apa() %>% \n  line_spacing(part = \"all\") %>% \n  padding(padding.top = 5, padding.bottom = 5)"
       ]
   , Para
       [ Str "To"
@@ -3140,7 +3546,7 @@ Pandoc
       , Space
       , Str "Appendix"
       , Space
-      , Str "A,"
+      , Str "B,"
       , Space
       , Str "and"
       , Space

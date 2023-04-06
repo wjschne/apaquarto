@@ -94,7 +94,106 @@ format:
     keep-tex: true
 ---
 
-{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
+
+
+
+::: {.cell}
+
+:::
+
+
+
+::::{.content-visible unless-format="pdf"}
+
+# Using Quarto to Generate MS Word Documents in APA Style (7th Edition) {.title}
+
+
+
+<br>
+
+:::{.Author}
+
+Ana Fulana^1,2^, Blanca Zutana^3^, Carina Mengana^4,5^, and Dolorita Perengana^6^
+
+^1^Department of Psychology, Ana and Blanca's University
+
+^2^Ana's Secondary Affiliation
+
+^3^Unaffiliated
+
+^4^Carina's Primary Affiliation
+
+^5^Carina's Secondary Affiliation
+
+^6^Buffalo, NY
+
+:::
+
+<br>
+
+:::{.AuthorNote}
+
+# Author Note
+
+Ana Fulana ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/0000-0000-0000-0000
+
+Carina Mengana ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/0000-0000-0000-0001
+
+Dolorita Perengana ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/0000-0000-0000-0003
+
+Ana Fulana is now at X University. Carina Mengana is deceased.
+
+This article is based on data published in Pulaski (2017).
+
+Correspondence concerning this article should be addressed to  Ana Fulana, Department of Psychology, Ana and Blanca's University, 1234 Capital St., Albany, NY 12084-1234, Email: sm@example.org
+
+:::
+
+
+
+
+{{< pagebreak >}}
+
+
+
+
+
+
+
+:::{.Abstract}
+# Abstract
+
+
+
+
+{{< meta abstract >}}
+
+
+
+
+
+
+
+*Keywords*: keyword1, keyword2, keyword3
+:::
+
+
+
+
+{{< pagebreak >}}
+
+
+
+
+
+
+
+
+# {{< meta title >}}
+
+::::
+
+
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
@@ -204,45 +303,138 @@ Here we describe the basic characteristics of our primary variables.
 
 Let's make a figure. A reference label for a figure in APA format must have the prefix `apafg-`. This is different from the usual quarto prefix `tbl-`, which will put the caption on one line below the table. For APA format, we can do this:
 
-```{r}
-#| label: apafg-myplot
-#| apa-cap: This is the figure caption.
-#| apa-note: This is a note below the figure.
 
-plot(1:10)
-```
+
+
+::: {.cell apa-cap='This is the figure caption.' apa-note='This is a note below the figure.'}
+
+\begin{figure}[h!]
+\caption{This is the figure caption.}
+\label{apafg-myplot}
+\includegraphics[width=6.5 in]{template_files/figure-pdf/apafg-myplot-1.pdf}
+
+
+\figurenote{This is a note below the figure.}
+
+
+\end{figure}
+:::
+
+
+
 
 To refer to any figure or table, but the chunk label in curly braces. For example, see {apafg-myplot}. In {apafg-importedgraphic}, we import an image.
 
 
-```{r}
-#| label: apafg-importedgraphic
-#| apa-cap: This is an imported graphic.
-#| out-width: "2cm"
-#| out-height: "2cm"
-#| fig-align: left
-#| fig-width: 2
-knitr::include_graphics("ORCID.svg")
-```
+
+
+
+::: {.cell layout-align="left" apa-cap='This is an imported graphic.'}
+
+\begin{figure}[h!]
+\caption{This is an imported graphic.}
+\label{apafg-importedgraphic}
+\includegraphics[width=2cm]{ORCID.pdf}
+
+\end{figure}
+:::
+
+
+
 
 
 We can make a table the same way as a figure except that the label prefix is `apatb-`. Again, this is different from the usual quarto prefix `tbl-`, which will put the table table caption in the wrong place and with non-APA formatting.
 
-```{r apatb-mytable}
-#| apa-cap: Here is the table caption.
-#| apa-note: Here is the note below the table.
-#| ft.align: left
-library(tidyverse)
-library(flextable)
 
 
-tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
-  flextable() %>% 
-  theme_apa() %>% 
-  line_spacing(part = "all") %>% 
-  padding(padding.top = 5, padding.bottom = 5)
 
+::: {.cell apa-cap='Here is the table caption.' apa-note='Here is the note below the table.' ft.align='left'}
+
+```{=latex}
+\begin{table}
+\caption{Here is the table caption.}
+\label{apatb-mytable}
 ```
+
+::: {.cell-output-display}
+
+```{=latex}
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{0pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[l]{|p{0.75in}|p{0.75in}}
+
+
+
+\ascline{0.75pt}{000000}{1-2}
+
+\multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Numbers}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{Letters}}} \\
+
+\ascline{0.75pt}{000000}{1-2}\endhead
+
+
+
+\multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{1}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{A}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{2}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{B}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{3}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{C}}} \\
+
+
+
+
+
+\multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{4}}} & \multicolumn{1}{>{\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{D}}} \\
+
+\ascline{0.75pt}{000000}{1-2}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+```
+
+:::
+
+
+```{=latex}
+
+
+\tablenote{Here is the note below the table.}
+
+\end{table}
+```
+
+:::
+
+
+
 
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
 
@@ -275,7 +467,19 @@ Let's sum this up.
 :::
 
 <!-- Delete any unnecessary sections or pagebreaks. -->
+
+
+
+
 {{< pagebreak >}}
+
+
+
+
+
+
+
+
 # Appendix 
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.

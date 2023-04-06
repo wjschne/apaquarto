@@ -1,6 +1,3 @@
-if FORMAT ~= "docx" then
-  return
-end
 stringify = pandoc.utils.stringify
 
 ---http://lua-users.org/wiki/StringRecipes
@@ -14,11 +11,13 @@ function Header (hx)
     if not (ends_with(hx.content[#hx.content],".") or ends_with(hx.content[#hx.content],"?") or ends_with(hx.content[#hx .content],"?")) then
       hx.content[#hx.content + 1] = pandoc.Str(".")
     end 
-    local htext = stringify(hx.content)
-    local prefix = "<w:p><w:pPr><w:pStyle w:val=\"Heading" .. hx.level .. "\"/><w:rPr><w:vanish/><w:specVanish/></w:rPr></w:pPr><w:r><w:t>"
-		local suffix = "</w:t></w:r><w:r><w:t xml:space=\"preserve\"> </w:t></w:r></w:p>"
-
-    return pandoc.RawBlock('openxml', prefix .. htext .. suffix)
+    if FORMAT == "docx" then
+      local htext = stringify(hx.content)
+      local prefix = "<w:p><w:pPr><w:pStyle w:val=\"Heading" .. hx.level .. "\"/><w:rPr><w:vanish/><w:specVanish/></w:rPr></w:pPr><w:r><w:t>"
+		  local suffix = "</w:t></w:r><w:r><w:t xml:space=\"preserve\"> </w:t></w:r></w:p>"
+		  return pandoc.RawBlock('openxml', prefix .. htext .. suffix)
+    end
+    return hx
   end
 end
 
