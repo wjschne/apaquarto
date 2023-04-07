@@ -117,7 +117,7 @@ Readers are better able to follow your ideas if you differentiate sections in yo
 
 Subsections of the introduction have level 2 headings. A paragraph after a level 2 Heading is on a new line. Regular paragraphs are indented, flush left, and double-spaced.
 
-You do not need to put text after a heading. You can put higher-level heading directly underneath if you want.
+You do not need to put text after a heading. You can put a higher-level heading directly underneath if you want.
 
 ## A Level 2 Heading Without Text Below It
 
@@ -129,7 +129,7 @@ Subsections of a level 2 heading are placed under level 3 headings.
 
 #### Level 4 Heading.
 
-A level 4 heading should be indented, flush left, bold, title case, and end with a period. A paragraph after a level 4 or 5 heading is on a new line in this markdown document but will appear as if it were in the same paragraph .docx format. You need at least one paragraph after a level 4 or 5 heading. If you forget the period at the end of the level 4 or 5 heading, it will be added automatically. A period will not be added if the heading ends with a question mark or an exclamation point.
+A level 4 heading should be indented, flush left, bold, title case, and end with a period. A paragraph after a level 4 or 5 heading is on a new line in this markdown document but will appear as if it were in the same paragraph when rendered. You need at least one paragraph after a level 4 or 5 heading. If you forget the period at the end of the level 4 or 5 heading, it will be added automatically. A period will not be added if the heading ends with a question mark or an exclamation point.
 
 Subsequent paragraphs go on their own lines.
 
@@ -162,6 +162,8 @@ Text references are possible, too.
 # Method
 
 General remarks on method. This paragraph is optional.
+
+Not all papers require each of these subjects. Ed
 
 ## Inclusion and Exclusion
 
@@ -235,7 +237,7 @@ To refer to any figure or table, but the chunk label in curly braces. For exampl
 #| out-height: "2cm"
 #| fig-align: left
 #| fig-width: 2
-knitr::include_graphics("ORCID.svg")
+knitr::include_graphics("orcid.png")
 ```
 
 
