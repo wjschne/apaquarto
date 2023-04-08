@@ -1,4 +1,7 @@
 \documentclass[
+$if(documentmode)$
+  $documentmode$,
+$endif$
 $if(floatsintext)$
   floatsintext,
 $endif$
@@ -14,6 +17,9 @@ $endif$
 $if(notxfonts)$
   notxfonts,
 $endif$
+$if(notimes)$
+  notimes,
+$endif$
 $if(nofontenc)$
   nofontenc,
 $endif$
@@ -23,11 +29,27 @@ $endif$
 $if(biblatex)$
   biblatex,
 $endif$
-$if(documentmode)$
-  $documentmode$,
+$if(notab)$
+  notab,
+$endif$
+$if(helv)$
+  helv,
+$endif$
+$if(nosf)$
+  nosf,
+$endif$
+$if(tt)$
+  tt,
+$endif$
+$if(draftfirst)$
+  draftfirst,
+$endif$
+$if(draftall)$
+  draftall,
 $endif$
 $for(classoption)$
   $classoption$$sep$,
 $endfor$
 ]{$documentclass$}
+
 

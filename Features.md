@@ -1,11 +1,5 @@
 
-# A Quarto Extension for Making APA documents in .docx format
 
-I am often required to submit documents in APA style in the .docx format. I made this extension for my own workflow. If it helps you, too, I am happy.
-
-If you want to type in markdown to create an APA formatted 6th Edition, I suggest using [papaja](https://frederikaust.com/papaja_man/). 
-
-If you need all the flexibility of $\LaTeX$, I suggest using the [apa7 document class](https://ctan.org/pkg/apa7) with knitr's .Rnw format.
 
 # Implemented Features
 
@@ -116,12 +110,12 @@ The filter was taken from code posted by [Samuel Dodson]{https://github.com/cita
 
 # Desired Improvements
 
-* Running header is placed in template by officer. A Pandoc solution would be better.
-* 
-* 
+* Running header is placed in the .docx template by officer. A Pandoc solution would be better.
+* Figure and Table labels using Quarto's `fig-` and `tbl-` prefixes.
+* Figure and Tables in .pdf jou mode do not fit automatically.
 
 # Missing Features
 
-* Option to place intermingled tables and figures at the end.
+* For .docx and .html, there is no option to place intermingled tables and figures at the end like there is in .pdf documents. I imagine that a lua filter solution is possible.
 * Create landscape pages for wide figures and tables.
 * Masked references

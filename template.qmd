@@ -1,5 +1,7 @@
 ---
+keep-tex: true
 title: "Using Quarto to Generate MS Word Documents in APA Style (7th Edition)"
+# Lines above title in .docx format
 blank-lines-above-title: 2
 # If blank, the running header is the title in upper case.
 shorttitle: Template for the APAquarto Format
@@ -82,8 +84,22 @@ format:
     nofontenc: false
     # Suppress the title above the introduction
     donotrepeattitle: false
-    # In jou mode, use Computer Modern font instead of times
+    # In jou mode, use times or pslatex instead of txfonts
     notxfonts: false
+    # In jou mode, use Computer Modern font instead of times
+    notimes: false
+    # In jou mode, cancels automatic stretching of tables to column width 
+    notab: false
+    # Uses Helvetica font in stu and man mode
+    helv: false
+    # In man and stu mode, neutralizes the \helvetica command.
+    nosf: false
+    # In man and stu mode, uses typewriter font
+    tt: false
+    # Puts draft watermark on first page
+    draftfirst: false
+    # Puts draft watermakr on all pages
+    draftall: false
     # Masks references that are marked as the author's own
     mask: false
     journal: ~
@@ -91,7 +107,7 @@ format:
     course: ~
     professor: ~
     duedate: ~
-    keep-tex: true
+    
 ---
 
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
@@ -159,25 +175,21 @@ Text references are possible, too.
 
 * Place the reference's year by itself with a minus sign: [-@CameronTrivedi2013]
 
+## Hypotheses, Aims, and Objectives
+
+The last paragraph of the introduction usually states the specific hypotheses of the study, often in a way that links them to the research design.
+
 # Method
 
 General remarks on method. This paragraph is optional.
 
-Not all papers require each of these subjects. Ed
-
-## Inclusion and Exclusion
-
-Report criteria for participant inclusion and exclusion.
+Not all papers require each of these sections. Edit them as needed. Consult the [Journal Article Reporting Standards](https://apastyle.apa.org/jars) for what is needed for your type of article.
 
 ## Participants
 
-Who are they? How were they recruited? Perhaps some basic demographic stats are in order. A table is a great way to avoid repetition in statistical reporting.
+Who are they? How were they recruited? Report criteria for participant inclusion and exclusion. Perhaps some basic demographic stats are in order. A table is a great way to avoid repetition in statistical reporting.
 
-## Sampling Procedures
-
-## Sample Size, Power, and Precision
-
-## Measures and Covariates
+## Measures
 
 This section can also be titled **Materials** or **Apparatus**. Whatever tools, equipment, or measurement devices used in the  study should be described.
 
@@ -189,25 +201,9 @@ Describe Measure A.
 
 Describe Measure B.
 
-### Procedure
+## Procedure
 
 What did participants do?
-
-## Data Collection
-
-## Quality of Measurements
-
-## Instrumentation
-
-## Masking
-
-## Psychometrics
-
-## Conditions and Design
-
-## Data Diagnostics
-
-### Analysis Strategy 
 
 How are the data going to be analyzed?
 
@@ -217,7 +213,7 @@ How are the data going to be analyzed?
 
 Here we describe the basic characteristics of our primary variables.
 
-Let's make a figure. A reference label for a figure in APA format must have the prefix `apafg-`. This is different from the usual quarto prefix `tbl-`, which will put the caption on one line below the table. For APA format, we can do this:
+Let's make a figure. A reference label for a figure in APA format must have the prefix `apafg-`. This is different from the usual Quarto prefix `fig-`.
 
 ```{r}
 #| label: apafg-myplot
@@ -233,13 +229,9 @@ To refer to any figure or table, but the chunk label in curly braces. For exampl
 ```{r}
 #| label: apafg-importedgraphic
 #| apa-cap: This is an imported graphic.
-#| out-width: "2cm"
-#| out-height: "2cm"
-#| fig-align: left
-#| fig-width: 2
+#| apa-note: My note.
 knitr::include_graphics("orcid.png")
 ```
-
 
 We can make a table the same way as a figure except that the label prefix is `apatb-`. Again, this is different from the usual quarto prefix `tbl-`, which will put the table table caption in the wrong place and with non-APA formatting.
 
@@ -258,9 +250,9 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
 
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
 
-What if you want the tables and figures to be at the end of the document? No problem. Just put them all at the end, in order. The reference labels will work no matter where they are in the text. 
+What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text. 
 
-If you are rendering to pdf, you can place your figures and tables at the end by setting the `floatsintext` option to `false`.
+
 
 <!-- Add Additional Sections as Needed -->
 

@@ -86,6 +86,7 @@ knitr::knit_hooks$set(
           pre <- ""
 
           if (apatype == "table") {
+            
             pre <- paste0(pre, "```{=latex}\n\\begin{table}\n\\caption{",
                           options$`apa-cap`,
                           "}\n\\label{",

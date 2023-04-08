@@ -8,6 +8,24 @@ $if(shorttitle)$
 \shorttitle{$shorttitle$}
 $endif$
 
+$if(journal)$
+\journal{$journal$}
+$endif$
+$if(volume)$
+\volume{$volume$}
+$endif$
+$if(course)$
+\course{$course$}
+$endif$
+$if(professor)$
+\professor{$professor$}
+$endif$
+$if(duedate)$
+\duedate{$duedate$}
+$endif$
+
+
+
 \authorsnames[$for(by-author)${$for(by-author.affiliations)$$it.number$$sep$,$endfor$}$sep$,$endfor$]{
 $for(by-author)$$by-author.name.literal$$sep$,$endfor$
 }
