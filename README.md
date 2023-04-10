@@ -58,8 +58,8 @@ this line to the document right after its YAML metadata:
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 ```
 
-Here is an example of what the YAML metadata and include statement below
-it might look like:
+Here is an example of what the YAML metadata and the “include” statement
+below it might look like:
 
     ---
     title: "My Paper's Title: A Full Analysis of Everything"
