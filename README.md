@@ -58,7 +58,37 @@ this line to the document right after its YAML metadata:
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 ```
 
+Here is an example of what the YAML metadata and include statement below
+it might look like:
+
+    ---
+    title: "My Paper's Title: A Full Analysis of Everything"
+    shorttitle: "My Paper's Title"
+    author:
+      - name: W. Joel Schneider
+        corresponding: true
+        orcid: 0000-0002-8393-5316
+        email: schneider@temple.edu
+        affiliations:
+          - name: Temple University
+            department: College of Education and Human Development
+            address: 358 Ritter Hall
+            city: Philadelphia
+            region: PA
+            postal-code: 19122-6091
+    abstract: "This is my abstract."
+    keywords: [keyword1, keyword2]
+    author-note:
+      disclosures:
+        conflict of interest: The author has no conflict of interest to declare.
+    bibliograpy: mybibfile.bib     
+    format:
+      apaquarto-docx: default
+    ---
+    {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
+
 ## Example
 
-Here is the source code for a sample document:
-[template.qmd](template.qmd).
+This sample document has a fuller set of parameters specified and
+contains instructions for formatting figures, tables, cross-references,
+and more: [template.qmd](template.qmd).
