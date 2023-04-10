@@ -50,7 +50,7 @@ When adding this extension to an existing document, you will need to add this li
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 ```
 
-Here is an example of what the YAML metadata and include statement below it might look like:
+Here is an example of what the YAML metadata and the "include" statement below it might look like:
 
 ````
 ---
