@@ -56,7 +56,7 @@
 \floatstyle{ruled}
 \@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
 \floatname{codelisting}{Listing}\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}\makeatother\makeatletter\@ifpackageloaded{caption}{}{\usepackage{caption}}
-\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}\makeatother\makeatletter\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}\makeatother\makeatletter\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}\makeatother\makeatletter\makeatother
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}\makeatother\makeatletter\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}\makeatother\makeatletter\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}\makeatother\makeatletter\makeatother\makeatletter\makeatother
 
 
 
@@ -124,7 +124,7 @@ Capital St., Albany, NY 12084-1234, Email: sm@example.org}}
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, borderline west={3pt}{0pt}{shadecolor}, sharp corners, frame hidden, breakable, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, sharp corners, frame hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, interior hidden]}{\end{tcolorbox}}\fi
 This is my introductory paragraph. The title will be placed above it
 automatically. \emph{Do not start with an introductory heading} (e.g.,
 ``Introduction''). The title acts as your Level 1 heading for the
@@ -232,7 +232,7 @@ design.
 
 General remarks on method. This paragraph is optional.
 
-Not all papers require each of these subjects. Edit them as needed.
+Not all papers require each of these sections. Edit them as needed.
 Consult the \href{https://apastyle.apa.org/jars}{Journal Article
 Reporting Standards} for what is needed for your type of article.
 
@@ -327,7 +327,7 @@ the wrong place and with non-APA formatting.
 
 \providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
 
-\begin{longtable*}[c]{|p{0.75in}|p{0.75in}}
+\begin{longtable*}[l]{|p{0.75in}|p{0.75in}}
 
 
 
@@ -374,6 +374,27 @@ the wrong place and with non-APA formatting.
 \global\setlength{\tabcolsep}{\Oldtabcolsep}
 
 \renewcommand*{\arraystretch}{1}
+
+\tablenote{Here is the note below the table.}
+
+\end{table}
+
+\begin{table}
+\caption{Here is the table caption.}
+\label{apatb-mytable2}
+
+\begin{longtable}[]{@{}rl@{}}
+\toprule\noalign{}
+Numbers & Letters \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & A \\
+2 & B \\
+3 & C \\
+4 & D \\
+\end{longtable}
 
 \tablenote{Here is the note below the table.}
 

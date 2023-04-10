@@ -248,6 +248,8 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
 
 ```
 
+
+
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
 
 What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text. 
