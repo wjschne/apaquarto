@@ -3,3 +3,10 @@
 .Rdata
 .httr-oauth
 .DS_Store
+template.ttt
+template.tex
+template.html
+template.pdf
+template.fff
+template_files/
+README.qmd
