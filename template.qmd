@@ -5,7 +5,7 @@ title: "Using Quarto to Generate MS Word Documents in APA Style (7th Edition)"
 blank-lines-above-title: 2
 # If blank, the running header is the title in upper case.
 shorttitle: Template for the APAquarto Format
-# Set names and affilations.
+# Set names and affiliations.
 # It is nice to specify everyone's orcid, if possible.
 # There can be only one corresponding author.
 author:
