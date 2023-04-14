@@ -8,5 +8,10 @@ template.tex
 template.html
 template.pdf
 template.fff
+template.docx
+apa_processed.docx
+template.log
+template.aux
+template.bbl
 template_files/
 README.qmd
