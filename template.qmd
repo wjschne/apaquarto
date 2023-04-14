@@ -71,6 +71,7 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # can be jou (journal), man (manuscript), stu (student), or doc (document)
+    # for now, tables do not render in jou mode. 
     documentmode: man
     # can be 10pt, 11pt, or 12pt
     fontsize: 12pt

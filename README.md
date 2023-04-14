@@ -1,7 +1,7 @@
-# A Quarto Extension for Creating APA 7 Style Documents
+A Quarto Extension for Creating APA 7 Style Documents
+================
 
-<img src="lifecycle-experimental.svg"
-class="quarto-discovered-preview-image" alt="Experimental" />
+![Experimental](lifecycle-experimental.svg)
 
 This is an experimental article template that creates [APA Style 7th
 Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
@@ -92,3 +92,9 @@ below it might look like:
 This sample document has a fuller set of parameters specified and
 contains instructions for formatting figures, tables, cross-references,
 and more: [template.qmd](template.qmd).
+
+## Known Problems
+
+- Flextable tables do not render in jou mode for apaquarto-pdf.
+- Tables and figures do not fit automatically in jou mode for
+  apaquarto-pdf.

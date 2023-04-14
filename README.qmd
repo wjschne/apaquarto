@@ -85,3 +85,8 @@ format:
 
 This sample document has a fuller set of parameters specified and contains instructions for formatting figures, tables, cross-references, and more: [template.qmd](template.qmd).
 
+## Known Problems
+
+* Flextable tables do not render in jou mode for apaquarto-pdf.
+* Tables and figures do not fit automatically in jou mode for apaquarto-pdf.
+
