@@ -1,5 +1,4 @@
 ---
-keep-tex: true
 title: "Using Quarto to Generate MS Word Documents in APA Style (7th Edition)"
 # Lines above title in .docx format
 blank-lines-above-title: 2
