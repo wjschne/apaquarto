@@ -428,6 +428,26 @@ f_author_note_second_paragraph <- function(yml) {
   s
 }
 
+f_author_roles <- function(yml) {
+  s <- yml |> 
+    compact() |> 
+    map(character2name) |> 
+  map_df(\(x) tibble(author = pluck(x, "name"), role = list(pluck(x, "role") ))) |> 
+  mutate(role_length = map_dbl(role, length)) |> 
+  filter(role_length > 0) |> 
+  mutate(role_list = map_chr(role, knitr::combine_words),
+         role_author = paste0(author, ": ", role_list)) |> 
+  pull(role_author) |> 
+  paste0(collapse = "; ")
+  
+  if (s == "") {
+    s
+  } else {
+    if (length(yml) > 1) {
+      paste0("Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:\n",s)
+    }
+  }
+}
 
 f_author_note_third_paragraph <- function(yml) {
   if (is.null(yml$`author-note`$disclosures)) {
@@ -484,13 +504,15 @@ f_author_note_display <- function(yml) {
   author_note_third_paragraph <- f_author_note_third_paragraph(yml)
   author_note_blanks <- f_author_note_blanks(yml)
   title_blank_display <- f_title_blanks(yml)
+  author_role_display <- f_author_roles(yml$author)
   
   if (all(
     c(
       display_orcids,
       author_note_second_paragraph,
       author_note_third_paragraph,
-      display_corresponding_author
+      display_corresponding_author,
+      author_role_display
     ) == ""
   )) {
     s <- ""
@@ -502,6 +524,7 @@ f_author_note_display <- function(yml) {
       display_orcids,
       author_note_second_paragraph,
       author_note_third_paragraph,
+      author_role_display,
       display_corresponding_author,
       ":::",
       sep = "\n\n"
@@ -528,6 +551,25 @@ f_title_display <- function(title, subtitle) {
   } 
   strtitle <- paste0("# ", strtitle, " {.title}")
 }
+
+f_title_heading_display <- function(title, subtitle) {
+  if (is_empty(title)) return(NULL)
+  strtitle <- trimws(title) %>% str_remove(":$")
+  if (!is_empty(subtitle)) {
+    strtitle <- paste0(strtitle, ": ", subtitle)
+  } 
+  strtitle <- paste0("# ", strtitle)
+}
+
+f_abstract_display <- function(yml) {
+  if (is.null(yml$abstract)) {
+    s <- ""
+  } else {
+    s <- paste0("# Abstract\n\n", yml$abstract)
+  }
+}
+
+
 
 yml_metadata <- get_metadata()
 d_author_affiliations <- f_author_affiliations(yml_metadata$author)
@@ -557,6 +599,10 @@ display_keywords <- f_keywords_display(yml_metadata)
 
 
 display_title <- f_title_display(yml_metadata$title , yml_metadata$subtitle)
+display_title_heading <- f_title_heading_display(yml_metadata$title , yml_metadata$subtitle)
+display_abstract <- f_abstract_display(yml_metadata)
+
+
 
 if (is_docx) {
   if (!interactive()) {
@@ -577,11 +623,13 @@ if (is_docx) {
 }
 
 
+    
+
+
 
 ```
 
-::::{.content-visible unless-format="pdf"}
-
+::: {.content-visible unless-format="pdf"}
 `r display_title`
 
 `r display_author_affiliations`
@@ -590,17 +638,12 @@ if (is_docx) {
 
 {{< pagebreak >}}
 
-:::{.Abstract}
-# Abstract
-
-{{< meta abstract >}}
+::: Abstract
+`r display_abstract`
 
 `r display_keywords`
 :::
 
 {{< pagebreak >}}
-
-
-# {{< meta title >}}
-
-::::
+`r display_title_heading`
+:::

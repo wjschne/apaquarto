@@ -13,6 +13,14 @@ author:
     orcid: 0000-0000-0000-0000
     email: sm@example.org
     url: https://example.org/
+    # Roles are optional
+    # Select from the CRediT: Contributor Roles Taxonomy https://credit.niso.org/
+    # Conceptualization, Data curation, Formal Analysis, Funding acquisition, Investigation, 
+    # Methodology, Project administration, Resources, Software, Supervision, Validation, 
+    # Visualization, Writing – original draft, Writing – review & editing
+    role:
+      - Conceptualization
+      - Writing - original draft
     affiliations:
       - id: id1
         name: Ana and Blanca's University
@@ -21,24 +29,31 @@ author:
         city: Albany
         region: NY
         postal-code: 12084-1234
-      - name: Ana's Secondary Affiliation
   - name: Blanca Zutana
+    role:
+      - Project administration
     affiliations: 
       - ref: id1
   - name: Carina Mengana
     orcid: 0000-0000-0000-0001
+    role:
+      - Formal Analysis
     affiliations:
       - name: Carina's Primary Affiliation
       - name: Carina's Secondary Affiliation
     # Because Dolorita is unaffiliated, specify her city instead
   - name: Dolorita Perengana
     orcid: 0000-0000-0000-0003
+    role:
+      - Writing - review & editing
+      - Methodology
+      - Formal Analysis
     affiliations:
       - name: ~
         city: Buffalo
         region: NY
 author-note:
-  blank-lines-above-author-note: 3
+  blank-lines-above-author-note: 1
   status-changes: 
     # Example: [Author name] is now at [affiliation].
     affiliation-change: Ana Fulana is now at X University.
