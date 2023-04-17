@@ -1,7 +1,7 @@
-A Quarto Extension for Creating APA 7 Style Documents
-================
+# A Quarto Extension for Creating APA 7 Style Documents
 
-![Experimental](lifecycle-experimental.svg)
+<img src="lifecycle-experimental.svg"
+class="quarto-discovered-preview-image" alt="Experimental" />
 
 This is an experimental article template that creates [APA Style 7th
 Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.

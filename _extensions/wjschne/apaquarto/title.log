@@ -1,0 +1,1043 @@
+This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 20.11) (preloaded format=xelatex 2023.4.16)  16 APR 2023 12:54
+entering extended mode
+**./title.tex
+(title.tex
+LaTeX2e <2021-11-15>
+L3 programming layer <2021-11-22>
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 $
+     if(title)$
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 1.
+! Undefined control sequence.
+l.5 \subtitle
+             {$subtitle$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.8 \shorttitle
+               {$shorttitle$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (55.69939pt too wide) in paragraph at lines 1--10
+[]$\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 title\OT1/cmr/m/n/10 )$
+
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 1--10
+\OML/cmm/m/it/10 endif$
+ []
+
+
+Overfull \hbox (50.40312pt too wide) in paragraph at lines 1--10
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 subtitle\OT1/cmr/m/n/10 )$
+
+ []
+
+
+Overfull \hbox (33.20793pt too wide) in paragraph at lines 1--10
+\OML/cmm/m/it/10 subtitle$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 1--10
+\OML/cmm/m/it/10 endif$
+ []
+
+
+Overfull \hbox (59.39618pt too wide) in paragraph at lines 1--10
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 shorttitle\OT1/cmr/m/n/10 
+)$
+ []
+
+
+Overfull \hbox (42.20099pt too wide) in paragraph at lines 1--10
+\OML/cmm/m/it/10 shorttitle$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 1--10
+\OML/cmm/m/it/10 endif$ 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11 $
+      if(journal)$
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.12 \journal
+             {$journal$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.15 \volume
+            {$volume$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.18 \course
+            {$course$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.21 \professor
+               {$professor$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.24 \duedate
+             {$duedate$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (71.71567pt too wide) in paragraph at lines 11--26
+[]$\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 journal\OT1/cmr/m/n/10 
+)$
+ []
+
+
+Overfull \hbox (34.52048pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 journal$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 endif$
+ []
+
+
+Overfull \hbox (49.58998pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 volume\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (32.39479pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 volume$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 endif$
+ []
+
+
+Overfull \hbox (46.22769pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 course\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (29.0325pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 course$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 endif$
+ []
+
+
+Overfull \hbox (61.50316pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 professor\OT1/cmr/m/n/10 )
+$
+ []
+
+
+Overfull \hbox (44.30797pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 professor$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 endif$
+ []
+
+
+Overfull \hbox (51.53903pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 duedate\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (34.34384pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 duedate$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 11--26
+\OML/cmm/m/it/10 endif$ 
+ []
+
+! Undefined control sequence.
+l.29 \authorsnames
+                  [$for(by-author)${$for(by-author.affiliations)$$it.number$...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.29 \authorsnames[
+                   $for(by-author)${$for(by-author.affiliations)$$it.number$...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no , in font nullfont!
+
+Overfull \hbox (56.82881pt too wide) in paragraph at lines 29--32
+[]$\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 ^^
+@
+ []
+
+
+Overfull \hbox (70.73747pt too wide) in paragraph at lines 29--32
+\OML/cmm/m/it/10 author\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (
+\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (223.75108pt too wide) in paragraph at lines 29--32
+\OML/cmm/m/it/10 author:affiliations\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it:numb
+er$$sep$$endfor$$sep$$endfor$
+ []
+
+
+Overfull \hbox (36.82881pt too wide) in paragraph at lines 29--32
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (51.23972pt too wide) in paragraph at lines 29--32
+\OML/cmm/m/it/10 author\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 
+^^@
+ []
+
+
+Overfull \hbox (132.074pt too wide) in paragraph at lines 29--32
+\OML/cmm/m/it/10 author:name:literal$$sep$$endfor$
+ []
+
+! Undefined control sequence.
+l.33 \authorsaffiliations
+                         {
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.34 $
+      for(by-affiliation)$
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+
+Overfull \hbox (56.82881pt too wide) in paragraph at lines 34--36
+[]$\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 ^^
+@
+ []
+
+
+Overfull \hbox (54.38185pt too wide) in paragraph at lines 34--36
+\OML/cmm/m/it/10 affiliation\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (191.87434pt too wide) in paragraph at lines 34--36
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:name\OT1/cmr/m/n/10 )$$
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:department\OT1/cmr/m/n/
+10 )$$\OML/cmm/m/it/10 it:department$
+ []
+
+
+Overfull \hbox (147.1742pt too wide) in paragraph at lines 34--36
+\OML/cmm/m/it/10 endif$$it:name$$else$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:c
+ity\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it:city$
+ []
+
+
+Overfull \hbox (119.88173pt too wide) in paragraph at lines 34--36
+\OML/cmm/m/it/10 endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:region\OT1/cmr/m
+/n/10 )$$\OML/cmm/m/it/10 it:region$
+ []
+
+
+Overfull \hbox (226.01413pt too wide) in paragraph at lines 34--36
+\OML/cmm/m/it/10 endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:country\OT1/cmr/
+m/n/10 )$$\OML/cmm/m/it/10 it:country$$endif$$endif$$sep$$endfor$ 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38 $
+      if(abstract)$
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.39 \abstract
+              {$abstract$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.42 \addbibresource
+                    {$bibliography$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (73.08528pt too wide) in paragraph at lines 38--44
+[]$\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 abstract\OT1/cmr/m/n/10
+ )$
+ []
+
+
+Overfull \hbox (35.89009pt too wide) in paragraph at lines 38--44
+\OML/cmm/m/it/10 abstract$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 38--44
+\OML/cmm/m/it/10 endif$
+ []
+
+
+Overfull \hbox (71.95471pt too wide) in paragraph at lines 38--44
+\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 bibliography\OT1/cmr/m/n/1
+0 )$
+ []
+
+
+Overfull \hbox (54.75952pt too wide) in paragraph at lines 38--44
+\OML/cmm/m/it/10 bibliography$
+ []
+
+
+Overfull \hbox (25.28087pt too wide) in paragraph at lines 38--44
+\OML/cmm/m/it/10 endif$ 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.45 $
+      if(keywords)$\keywords{$for(keywords)$$it$$sep$, $endfor$}$endif$
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+l.45 $if(keywords)$\keywords
+                            {$for(keywords)$$it$$sep$, $endfor$}$endif$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no , in font nullfont!
+
+Overfull \hbox (166.80495pt too wide) in paragraph at lines 45--46
+[]$\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 keywords\OT1/cmr/m/n/10
+ )$$\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 keywords\OT1/cmr/m/n/
+10 )$$\OML/cmm/m/it/10 it$$sep$
+ []
+
+
+Overfull \hbox (55.08653pt too wide) in paragraph at lines 45--46
+\OML/cmm/m/it/10 endfor$$endif$ 
+ []
+
+! Undefined control sequence.
+l.47 \authornote
+                {$for(by-author)$$if(it.orcid)$\par{\addORCIDlink{$it.name.l...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47 \authornote{$
+                  for(by-author)$$if(it.orcid)$\par{\addORCIDlink{$it.name.l...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (56.82881pt too wide) in paragraph at lines 47--47
+[]$\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 ^^
+@
+ []
+
+
+Overfull \hbox (83.55203pt too wide) in paragraph at lines 47--47
+\OML/cmm/m/it/10 author\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\
+OML/cmm/m/it/10 it:orcid\OT1/cmr/m/n/10 )$ 
+ []
+
+! Undefined control sequence.
+l.47 ...y-author)$$if(it.orcid)$\par{\addORCIDlink
+                                                  {$it.name.literal$}{$it.or...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47 ...author)$$if(it.orcid)$\par{\addORCIDlink{$
+                                                  it.name.literal$}{$it.orci...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (173.02008pt too wide) in paragraph at lines 47--48
+[]$\OML/cmm/m/it/10 it:name:literal$$it:orcid$$endif$$endfor$ 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.48 \par{$
+           for(author-note.status-changes.affiliation-change)$$it$$sep$$endf...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (77.29532pt too wide) in paragraph at lines 48--49
+[]$\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/1
+0 ^^@
+ []
+
+
+Overfull \hbox (57.28024pt too wide) in paragraph at lines 48--49
+\OML/cmm/m/it/10 note:status \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (96.89815pt too wide) in paragraph at lines 48--49
+\OML/cmm/m/it/10 changes:affiliation \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (86.28793pt too wide) in paragraph at lines 48--49
+\OML/cmm/m/it/10 change\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$endfor$
+ []
+
+
+Overfull \hbox (57.29532pt too wide) in paragraph at lines 48--49
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/10 ^
+^@
+ []
+
+
+Overfull \hbox (57.28024pt too wide) in paragraph at lines 48--49
+\OML/cmm/m/it/10 note:status \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (132.4327pt too wide) in paragraph at lines 48--49
+\OML/cmm/m/it/10 changes:deceased\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$e
+ndfor$ 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49 \par{$
+           for(author-note.disclosures.study-registration)$$it$$sep$$endfor$...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no : in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no [ in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no ( in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no ) in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no [ in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+
+Overfull \hbox (77.29532pt too wide) in paragraph at lines 49--50
+[]$\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/1
+0 ^^@
+ []
+
+
+Overfull \hbox (107.17805pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 note:disclosures:study \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (109.42474pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 registration\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$endfo
+r$
+ []
+
+
+Overfull \hbox (57.29532pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/10 ^
+^@
+ []
+
+
+Overfull \hbox (102.07616pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 note:disclosures:data \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (90.2261pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 sharing\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$endfor$
+ []
+
+
+Overfull \hbox (57.29532pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/10 ^
+^@
+ []
+
+
+Overfull \hbox (114.07274pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 note:disclosures:related \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (82.85042pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 report\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$endfor$
+ []
+
+
+Overfull \hbox (57.29532pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/10 ^
+^@
+ []
+
+
+Overfull \hbox (118.40218pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 note:disclosures:conflict \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (18.59729pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 of \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (90.58493pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 interest\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$endfor$
+ []
+
+
+Overfull \hbox (57.29532pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/10 ^
+^@
+ []
+
+
+Overfull \hbox (125.63553pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 note:disclosures:financial \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (88.84811pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 support\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$endfor$
+ []
+
+
+Overfull \hbox (57.29532pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/10 ^
+^@
+ []
+
+
+Overfull \hbox (171.49321pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 note:disclosures:gratitude\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 
+it$$sep$$endfor$
+ []
+
+
+Overfull \hbox (57.29532pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 author \OMS/cmsy/m/n/10 ^
+^@
+ []
+
+
+Overfull \hbox (131.63362pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 note:disclosures:authorship \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (107.37944pt too wide) in paragraph at lines 49--50
+\OML/cmm/m/it/10 agreements\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 it$$sep$$endfor$
+
+ []
+
+
+Overfull \hbox (102.6872pt too wide) in paragraph at lines 49--50
+[]$
+ []
+
+
+Overfull \hbox (146.22267pt too wide) in paragraph at lines 49--50
+[]$$[] \OT1/cmr/m/n/10 :$
+ []
+
+
+Overfull \hbox (148.48781pt too wide) in paragraph at lines 49--50
+[]$$[]$$[]$
+ []
+
+
+Overfull \hbox (146.22267pt too wide) in paragraph at lines 49--50
+[]$$[] \OT1/cmr/m/n/10 :$
+ []
+
+
+Overfull \hbox (50.56174pt too wide) in paragraph at lines 49--50
+[]$$[]$ 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.50 \par{C
+           orrespondence concerning this article should be addressed to $for...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no C in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no E in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no : in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 50--51
+[]
+ []
+
+
+Overfull \hbox (36.82881pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (273.5025pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 author\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 if\OT1/cmr/m/n/10 (\
+OML/cmm/m/it/10 it:attributes:corresponding\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 
+it:name:literal$$for\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 by \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (231.51465pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 author:affiliations\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 if\OT1/
+cmr/m/n/10 (\OML/cmm/m/it/10 it:address\OT1/cmr/m/n/10 )$$\OML/cmm/m/it/10 if\O
+T1/cmr/m/n/10 (\OML/cmm/m/it/10 it:department\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (138.49738pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:department$$endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:n
+ame\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (121.38501pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:name$$endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:address
+\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (113.30577pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:address$$endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:city
+\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (107.65833pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:city$$endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:region\
+OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (121.54538pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:region$$endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:posta
+l \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (22.92482pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 code\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (44.25539pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:postal \OMS/cmsy/m/n/10 ^^@
+ []
+
+
+Overfull \hbox (105.9098pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 code$$endif$$if\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 it:country\OT
+1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (177.14244pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:country$$endif$$endif$$endfor$$if\OT1/cmr/m/n/10 (\OML/cmm/
+m/it/10 it:email\OT1/cmr/m/n/10 )$
+ []
+
+
+Overfull \hbox (115.54942pt too wide) in paragraph at lines 50--51
+\OML/cmm/m/it/10 it:email$$endif$$endif$$endfor$ 
+ []
+
+
+! LaTeX Error: \usepackage before \documentclass.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.53 \usepackage{
+                 xtab}
+\usepackage may only appear in the document preamble, i.e.,
+between \documentclass and \begin{document}.
+
+)
+! Emergency stop.
+<*> ./title.tex
+               
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 24 strings out of 411032
+ 393 string characters out of 2829315
+ 312017 words of memory out of 3000000
+ 20807 multiletter control sequences out of 15000+600000
+ 403430 words of font info for 27 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 18i,2n,12p,846b,56s stack positions out of 5000i,500n,10000p,200000b,80000s
+No pages of output.

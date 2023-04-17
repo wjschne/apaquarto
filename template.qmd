@@ -85,12 +85,12 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # can be jou (journal), man (manuscript), stu (student), or doc (document)
-    # for now, tables do not render in jou mode. 
+    # for now, tables and figures do not render properly in jou mode. 
     documentmode: man
     # can be 10pt, 11pt, or 12pt
     fontsize: 12pt
     # Integrate tables and figures in text
-    floatsintext: true
+    floatsintext: false
     # a4 paper if true, letter size if false
     a4paper: false
     # suppresses loading of the lmodern font package
@@ -238,7 +238,7 @@ Let's make a figure. A reference label for a figure in APA format must have the 
 plot(1:10)
 ```
 
-To refer to any figure or table, but the chunk label in curly braces. For example, see {apafg-myplot}. In {apafg-importedgraphic}, we import an image.
+To refer to any figure or table, put the chunk label in curly braces. For example, see {apafg-myplot}. In {apafg-importedgraphic}, we import an image.
 
 
 ```{r}
@@ -254,6 +254,7 @@ We can make a table the same way as a figure except that the label prefix is `ap
 #| apa-cap: Here is the table caption.
 #| apa-note: Here is the note below the table.
 #| ft.align: left
+
 
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
   flextable() %>% 
