@@ -262,7 +262,8 @@ f_author_affiliations <- function(yml) {
                region = character(0),
                `postal-code` = character(0),
                country = character(0),
-               url = character(0)
+               url = character(0),
+               ref = character(0)
       ) |>
         rename_with(\(x) paste0("affiliations_",x))
     ) |> 
@@ -301,8 +302,22 @@ f_author_affiliations <- function(yml) {
       remove = F
     ) %>%
     unique() %>% 
+    mutate(rowid = row_number()) |> 
+    nest(.by = affiliations) %>%
+    mutate(affiliations_row = row_number()) %>%
+    unnest(data) %>%
+    mutate(affiliations_id = ifelse(is.na(affiliations_id),
+                                    ifelse(!is.na(affiliations_ref), 
+                                           affiliations_ref,
+                                           paste0("aff_id_",affiliations_row)),
+                                    affiliations_id)) |> 
+    mutate(affiliations = ifelse(affiliations == "", NA_character_, affiliations)) |> 
+    arrange(affiliations_id, is.na(affiliations)) |> 
+   group_by(affiliations_id) |> 
+   tidyr::fill(starts_with("affiliations")) |> 
+   ungroup()  |> 
     mutate(affiliations = ifelse(
-      is.null(affiliations) | affiliations %in% c("NULL", "", "Unaffiliated"),
+      is.null(affiliations) | is.na(affiliations) | affiliations %in% c("NULL", "", "Unaffiliated"),
       ifelse(
         is.na(affiliations_default) |
           affiliations_default %in% c("NULL", "", "Unaffiliated"),
@@ -311,6 +326,9 @@ f_author_affiliations <- function(yml) {
       ),
       affiliations
     )) %>% 
+    select(-affiliations_row) |> 
+    arrange(rowid) |> 
+    select(-rowid) |> 
     nest(.by = affiliations) %>%
     mutate(affiliations_row = row_number()) %>%
     unnest(data) %>%
@@ -331,7 +349,8 @@ f_author_affiliations <- function(yml) {
         affiliations,
         paste0("^", affiliations_row, "^", affiliations)
       )
-    )
+    ) 
+
   
 }
 
@@ -571,7 +590,7 @@ f_abstract_display <- function(yml) {
   }
 }
 
-
+# yml <- yml_metadata$author
 
 yml_metadata <- get_metadata()
 d_author_affiliations <- f_author_affiliations(yml_metadata$author)
