@@ -122,7 +122,6 @@ format:
     course: ~
     professor: ~
     duedate: ~
-    
 ---
 
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
@@ -139,10 +138,9 @@ conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 ```
 
-
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
-Readers are better able to follow your ideas if you differentiate sections in your introduction with headings. Mostly stick to level 2 headers. Sometimes level 3 headings are needed, though. Be sparing to the point of stinginess with levels 4 and 5. 
+Readers are better able to follow your ideas if you differentiate sections in your introduction with headings. Mostly stick to level 2 headers. Sometimes level 3 headings are needed, though. Be sparing to the point of stinginess with levels 4 and 5.
 
 ## Level 2 Heading: Flush Left, Bold, Title Case
 
@@ -174,21 +172,21 @@ Subsequent paragraphs go on their own lines.
 
 I am going to cite a reference here in square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. Here are some variations on parenthetical citations:
 
-* Page references (or any other suffixes are placed after the reference. If you want a comma, you'll need to insert it yourself: [@CameronTrivedi2013, pp. 35--41]
+-   Page references (or any other suffixes are placed after the reference. If you want a comma, you'll need to insert it yourself: [@CameronTrivedi2013, pp. 35--41]
 
-* Prefixes (with or without a comma) are placed before the reference: [e.g., @CameronTrivedi2013]
+-   Prefixes (with or without a comma) are placed before the reference: [e.g., @CameronTrivedi2013]
 
-* 2 or more citations separated by a semicolon [@CameronTrivedi2013; @cohen2003applied]
+-   2 or more citations separated by a semicolon [@CameronTrivedi2013; @cohen2003applied]
 
-* Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL\; @CameronTrivedi2013]
+-   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL; @CameronTrivedi2013]
 
-Text references are possible, too. 
+Text references are possible, too.
 
-* @CameronTrivedi2013 said some interesting things. 
+-   @CameronTrivedi2013 said some interesting things.
 
-* @cohen2003applied [pp. 101--103] said specific things on specific pages.
+-   @cohen2003applied [pp. 101--103] said specific things on specific pages.
 
-* Place the reference's year by itself with a minus sign: [-@CameronTrivedi2013]
+-   Place the reference's year by itself with a minus sign: [-@CameronTrivedi2013]
 
 ## Hypotheses, Aims, and Objectives
 
@@ -206,7 +204,7 @@ Who are they? How were they recruited? Report criteria for participant inclusion
 
 ## Measures
 
-This section can also be titled **Materials** or **Apparatus**. Whatever tools, equipment, or measurement devices used in the  study should be described.
+This section can also be titled **Materials** or **Apparatus**. Whatever tools, equipment, or measurement devices used in the study should be described.
 
 ### Measure A
 
@@ -240,7 +238,6 @@ plot(1:10)
 
 To refer to any figure or table, put the chunk label in curly braces. For example, see {apafg-myplot}. In {apafg-importedgraphic}, we import an image.
 
-
 ```{r}
 #| label: apafg-importedgraphic
 #| apa-cap: This is an imported graphic.
@@ -264,20 +261,15 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
 
 ```
 
-
-
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
 
-What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text. 
-
-
+What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text.
 
 <!-- Add Additional Sections as Needed -->
 
 # Discussion
 
-Describe results in non-statistical terms.
-<!-- Add sections as needed. --> 
+Describe results in non-statistical terms. <!-- Add sections as needed. -->
 
 ## Limitations and Future Directions
 
@@ -287,27 +279,29 @@ Every study has limitations. Based on this study, some additional steps might in
 
 Let's sum this up.
 
-
-# References 
+# References
 
 <!-- References will auto-populate in the refs div below -->
 
 ::: {#refs}
-
 :::
 
 <!-- Delete any unnecessary sections or pagebreaks. -->
+
 {{< pagebreak >}}
-# Appendix 
+
+# Appendix
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
 
-
 <!-- I like my tables and figures intermingled with the text, -->
+
 <!-- but all tables can go here. -->
+
 <!-- Uncomment the pagebreaks as needed-->
+
 <!-- {{< pagebreak >}} -->
 
-
 <!-- Figures can go here. -->
+
 <!-- {{< pagebreak >}} -->
