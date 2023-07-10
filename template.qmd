@@ -278,6 +278,7 @@ In {apatb-mymarkdowntable}, there is an example of using a plain markdown table 
 | 12      | 12   |    12 |   12   |
 | 123     | 123  |   123 |  123   |
 | 1       | 1    |     1 |   1    |
+
 ```
 
 
