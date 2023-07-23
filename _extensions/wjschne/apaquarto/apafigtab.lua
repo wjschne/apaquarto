@@ -28,7 +28,7 @@ end
 
 
 function makefigrefs (s)
-  if starts_with("{apafg", s.text) then
+  if starts_with("{apafg", s.text) or starts_with("({apafg", s.text) then
     local sfg = string.match(s.text, "%{(.-)%}")
     if FORMAT ~= "latex" then
       local figtitle = apafg[sfg] and "Figure\u{a0}" .. apafg[sfg]
@@ -41,7 +41,7 @@ function makefigrefs (s)
 
     
   end
-  if starts_with("{apatb", s.text) then
+  if starts_with("{apatb", s.text) or starts_with("({apatb", s.text) then
     local stb = string.match(s.text, "%{(.-)%}")
     if FORMAT ~= "latex" then
       local tabtitle = apatb[stb] and "Table\u{a0}" .. apatb[stb]

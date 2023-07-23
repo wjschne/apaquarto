@@ -266,7 +266,6 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
 
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
 
-
 In {apatb-mymarkdowntable}, there is an example of using a plain markdown table via the `asis` engine.
 
 ```{asis}
