@@ -179,7 +179,7 @@ I am going to cite a reference here in square brackets [@CameronTrivedi2013]. Th
 
 -   2 or more citations separated by a semicolon [@CameronTrivedi2013; @cohen2003applied]
 
--   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL; @CameronTrivedi2013]
+-   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL\; @CameronTrivedi2013]
 
 Text references are possible, too.
 
