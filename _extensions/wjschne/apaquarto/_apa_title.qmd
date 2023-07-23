@@ -178,9 +178,9 @@ is_empty = function(x) {
 get_metadata <- function(filename = "template.qmd") {
   if (interactive()) {
   rmarkdown::yaml_front_matter(filename)
-} else {
+  } else {
   rmarkdown::metadata
-}
+  }
 }
 
 
@@ -419,8 +419,8 @@ f_correspondings <- function(author_affiliations) {
     pull()
   if (length(s) > 1) stop(paste0("More than one author is set as the corresponding author. Set corresponding to `true` for only one of these authors:\n", knitr::combine_words(s), "."))
 
-if (length(s) == 0) stop(paste0("No corresponding author has been set in the meta data at the top of the document. Under one of the authors' names, set the `corresponding` field to `true` like so:\nauthor:\n  -name: Fred Jones\n   corresponding: true"))
-  s
+if (length(s) == 0) 
+  return(FALSE)
 }
 
 f_corresponding_author_display <- function(author_affiliations, corresponding) {
@@ -614,9 +614,15 @@ display_author_affiliations <- f_author_affiliations_display(
 display_orcids <-  f_orcids_display(d_author_affiliations)
 correspondings <- f_correspondings(d_author_affiliations)
 
-display_corresponding_author <- f_corresponding_author_display(
-  d_author_affiliations, 
+# Skip corresponding author if none was defined.
+if(identical(correspondings, FALSE)) {
+  display_corresponding_author <- NULL
+} else {
+  display_corresponding_author <- f_corresponding_author_display(
+  d_author_affiliations,
   correspondings)
+}
+
 display_author_note <- f_author_note_display(yml_metadata)
 
 

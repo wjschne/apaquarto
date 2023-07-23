@@ -6,7 +6,7 @@ blank-lines-above-title: 2
 shorttitle: Template for the APAquarto Format
 # Set names and affiliations.
 # It is nice to specify everyone's orcid, if possible.
-# There can be only one corresponding author.
+# There can be only one corresponding author, but declaring one is optional.
 author:
   - name: Ana Fulana
     corresponding: true
@@ -107,13 +107,13 @@ format:
     notab: false
     # Uses Helvetica font in stu and man mode
     helv: false
-    # In man and stu mode, neutralizes the \helvetica command.
+    # In man and stu mode, neutralizes the \helvetica command
     nosf: false
     # In man and stu mode, uses typewriter font
     tt: false
     # Puts draft watermark on first page
     draftfirst: false
-    # Puts draft watermakr on all pages
+    # Puts draft watermark on all pages
     draftall: false
     # Masks references that are marked as the author's own
     mask: false
@@ -122,6 +122,8 @@ format:
     course: ~
     professor: ~
     duedate: ~
+    # Hides correspondence text
+    nocorrespondence: false
 ---
 
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
