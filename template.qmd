@@ -269,7 +269,7 @@ In {apatb-mymarkdowntable}, there is an example of using a plain markdown table 
 
 ```{asis}
 #| label: apatb-mymarkdowntable
-#| apa-cap: Figure caption of a markdown table
+#| apa-cap: Table caption of a markdown table
 #| apa-note: This is a note below the markdown table.
 #| echo: true
 
@@ -280,13 +280,6 @@ In {apatb-mymarkdowntable}, there is an example of using a plain markdown table 
 | 1       | 1    |     1 |   1    |
 
 ```
-
-
-
-
-
-
-
 
 What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text.
 
