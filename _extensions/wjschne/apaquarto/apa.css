@@ -27,7 +27,11 @@ h4 + p, h5 + p {
 }
 
 
-
+.Compact {
+  line-height: 1em;
+  text-indent: 0pt;
+  margin: 0pt;
+}
 
 
 .FigureTitle p {text-indent: 0pt}

@@ -24,6 +24,7 @@ contributes:
         - apafigtab.lua
         - citeprocr.lua
         - apaand.lua
+    native: default
     html:
       toc: true
       toc-location: left

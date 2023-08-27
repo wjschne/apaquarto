@@ -147,9 +147,9 @@ knitr::knit_hooks$set(
               options$`apa-note`,
               '\n:::\n'
             )
-          } else if (apatype == "Table") {
+          } else if (apatype == "table" & is_docx) {
             post <- paste0(post,
-                           '\n\n:::{custom-style="Body Text"}\n<br>\n:::')
+                           '\n\n:::{custom-style="Compact"}\n<br>\n:::')
           }
           
           post <- paste0(post, "\n\n:::\n\n")

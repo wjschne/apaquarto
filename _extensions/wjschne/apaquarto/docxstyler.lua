@@ -22,7 +22,8 @@ customclasses = {
   "FigureNote", 
   "FigureWithNote", 
   "FigureWithoutNote", 
-  "Caption"
+  "Caption",
+  "Compact"
 }
 
 -- Consult some value

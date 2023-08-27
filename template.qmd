@@ -266,6 +266,21 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
 
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
 
+{apatb-withoutnote} is an example of a table without a note beneath.
+
+```{r apatb-withoutnote}
+#| apa-cap: This is a table without a note.
+#| ft.align: left
+
+
+tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
+  flextable() %>% 
+  theme_apa() %>% 
+  line_spacing(part = "all") %>% 
+  padding(padding.top = 5, padding.bottom = 5)
+
+```
+
 In {apatb-mymarkdowntable}, there is an example of using a plain markdown table via the `asis` engine.
 
 ```{asis}
