@@ -27,7 +27,9 @@ if (is_pdf) {
       
     }
     
+    opts_current$lock(FALSE)
     knitr::opts_current$set(output = "asis", fig.env = NULL)
+    opts_current$lock(TRUE)
     
     
     filename <- paste0(opts_knit$get("base.url"), paste(x, collapse = "."))
