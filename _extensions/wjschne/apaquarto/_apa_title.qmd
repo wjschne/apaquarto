@@ -26,15 +26,15 @@ if (is_pdf) {
       }
       
     }
-    
+    knitr::opts_current$lock(FALSE)
     knitr::opts_current$set(output = "asis", fig.env = NULL)
-    
+    knitr::opts_current$lock(TRUE)
     
     filename <- paste0(opts_knit$get("base.url"), paste(x, collapse = "."))
     
     if (stringr::str_ends(filename, ".svg")) {
       newname <- stringr::str_replace(filename, "svg$", "pdf")
-      if (Sys.which("rsvg-convert") == "") stop ("cannot find rsvg-convert")
+      if (Sys.which("rsvg-convert") == "") stop("cannot find rsvg-convert")
       convertcommand <- paste0('rsvg-convert --format=pdf "', filename, '" > "', newname,'"')
       # print(convertcommand)
       shell(convertcommand)
@@ -80,7 +80,9 @@ knitr::knit_hooks$set(
 
       # Format Before Chunk
       if (before) {
+        knitr::opts_current$lock(FALSE)
         knitr::opts_current$set(label = NULL, output = "asis")
+        knitr::opts_current$lock(TRUE)
         options$output <- "asis"
         if (is_pdf) {
           pre <- ""
@@ -129,7 +131,9 @@ knitr::knit_hooks$set(
         pre
       } else {
         # post begins here ----
+        knitr::opts_current$lock(FALSE)
         knitr::opts_current$set(label = temp_label)
+        knitr::opts_current$lock(TRUE)
         post <- "\n\n"
         
         if (is_pdf) {
