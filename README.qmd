@@ -7,9 +7,9 @@ format: gfm
 
 
 
-This is an experimental article template that creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. I made this extension for my own workflow. If it helps you, too, I am happy.
+This article template creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
 
-If you want to type in markdown to create a document in the  APA 6th Edition format, I suggest using [papaja](https://frederikaust.com/papaja_man/). 
+If you want to type in markdown to create a document in the APA 6th Edition format, I suggest using [papaja](https://frederikaust.com/papaja_man/). 
 
 If you need all the flexibility of $\LaTeX$, I suggest using the [apa7 document class](https://ctan.org/pkg/apa7) with  knitr and the [.Rnw format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
 

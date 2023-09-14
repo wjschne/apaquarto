@@ -1,12 +1,9 @@
 # A Quarto Extension for Creating APA 7 Style Documents
 
-<img src="lifecycle-experimental.svg"
-class="quarto-discovered-preview-image" alt="Experimental" />
+![Experimental](lifecycle-experimental.svg)
 
-This is an experimental article template that creates [APA Style 7th
-Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
-I made this extension for my own workflow. If it helps you, too, I am
-happy.
+This article template creates [APA Style 7th Edition
+documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
 
 If you want to type in markdown to create a document in the APA 6th
 Edition format, I suggest using
@@ -52,10 +49,11 @@ format:
 ```
 
 When adding this extension to an existing document, you will need to add
-this line to the document right after its YAML metadata:
+this line to the document right after its YAML metadata: (Note: The
+[include statement](https://quarto.org/docs/authoring/includes.html)
+needs to be surrounded by empty lines.)
 
 ``` md
-{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 ```
 
 Here is an example of what the YAML metadata and the “include” statement
@@ -85,7 +83,6 @@ below it might look like:
     format:
       apaquarto-docx: default
     ---
-    {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 
 ## Example
 
