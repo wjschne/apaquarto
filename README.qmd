@@ -85,7 +85,7 @@ format:
   apaquarto-docx: default
 ---
 
-{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
+{{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}}
 
 ````
 

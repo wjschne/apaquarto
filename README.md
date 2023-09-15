@@ -87,6 +87,8 @@ below it might look like:
       apaquarto-docx: default
     ---
 
+    {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
+
 ## Example
 
 This sample document has a fuller set of parameters specified and
