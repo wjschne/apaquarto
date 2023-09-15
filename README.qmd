@@ -48,7 +48,7 @@ When adding this extension to an existing document, you will need to add this li
 (Note: The [include statement](https://quarto.org/docs/authoring/includes.html) needs to be surrounded by empty lines.)
 
 
-``` markdown
+```{markdown}
 
 {{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}}
 
