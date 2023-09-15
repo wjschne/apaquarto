@@ -53,7 +53,10 @@ this line to the document right after its YAML metadata: (Note: The
 [include statement](https://quarto.org/docs/authoring/includes.html)
 needs to be surrounded by empty lines.)
 
-``` md
+``` markdown
+
+{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
+
 ```
 
 Here is an example of what the YAML metadata and the “include” statement
