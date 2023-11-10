@@ -1,27 +1,22 @@
 ---
 title: "A Quarto Extension for Creating APA 7 Style Documents"
 format: gfm
+editor: source
 ---
 
 ![Experimental](lifecycle-experimental.svg)
 
-
-
 This article template creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
 
-If you want to type in markdown to create a document in the APA 6th Edition format, I suggest using [papaja](https://frederikaust.com/papaja_man/). 
+If you want to type in markdown to create a document in the APA 6th Edition format, I suggest using [papaja](https://frederikaust.com/papaja_man/).
 
-If you need all the flexibility of $\LaTeX$, I suggest using the [apa7 document class](https://ctan.org/pkg/apa7) with  knitr and the [.Rnw format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
-
-
-
-
+If you need all the flexibility of $\LaTeX$, I suggest using the [apa7 document class](https://ctan.org/pkg/apa7) with knitr and the [.Rnw format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
 
 ## Creating a New Article
 
 To create a new article using this format, run this command in the terminal:
 
-```bash
+``` bash
 quarto use template wjschne/apaquarto
 ```
 
@@ -33,20 +28,18 @@ Entering the command above will prompt a question about whether you trust the au
 
 To add this format to an existing document:
 
-```bash
+``` bash
 quarto add wjschne/apaquarto
 ```
 
 Then, add the format to your document options:
 
-```yaml
+``` yaml
 format:
   apaquarto-docx: default
 ```
 
-When adding this extension to an existing document, you will need to add this line to the document right after its YAML metadata:
-(Note: The [include statement](https://quarto.org/docs/authoring/includes.html) needs to be surrounded by empty lines.)
-
+When adding this extension to an existing document, you will need to add this line to the document right after its YAML metadata: (Note: The [include statement](https://quarto.org/docs/authoring/includes.html) needs to be surrounded by empty lines.)
 
 ```{markdown}
 
@@ -55,11 +48,9 @@ When adding this extension to an existing document, you will need to add this li
 
 ```
 
-
-
 Here is an example of what the YAML metadata and the "include" statement below it might look like:
 
-````
+```         
 ---
 title: "My Paper's Title: A Full Analysis of Everything"
 shorttitle: "My Paper's Title"
@@ -87,8 +78,7 @@ format:
 
 {{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}}
 
-````
-
+```
 
 ## Example
 
@@ -96,6 +86,5 @@ This sample document has a fuller set of parameters specified and contains instr
 
 ## Known Problems
 
-* Flextable tables do not render in jou mode for apaquarto-pdf.
-* Tables and figures do not fit automatically in jou mode for apaquarto-pdf.
-
+-   Flextable tables do not render in jou mode for apaquarto-pdf.
+-   Tables and figures do not fit automatically in jou mode for apaquarto-pdf.

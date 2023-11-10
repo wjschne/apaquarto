@@ -46,7 +46,7 @@ li p {text-indent: 0em; margin: 0pt;}
 
 p.subtitle {font-size: 12pt; text-align: center; color: #303030; font-weight: bold;}
 
-blockquote, .blockquote {border: none; margin: 0pt 2em; padding: 0pt}
+blockquote, .blockquote {border: none; margin: 0pt .5in; padding: 0pt; font-style: normal; color: black}
 
 .Author {text-align:center; text-indent: 0pt}
 
@@ -58,3 +58,5 @@ div.hanging-indent div.csl-entry {margin-left: 0em; text-indent: -0.5in;}
 
 .katex {font-size: 1em;}
 .katex-display {font-size: 1.1em;}
+
+div.NoIndent p {text-indent: 0in}

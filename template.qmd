@@ -18,7 +18,7 @@ author:
     # Conceptualization, Data curation, Formal Analysis, Funding acquisition, Investigation, 
     # Methodology, Project administration, Resources, Software, Supervision, Validation, 
     # Visualization, Writing – original draft, Writing – review & editing
-    role:
+    roles:
       - Conceptualization
       - Writing - original draft
     affiliations:
@@ -30,13 +30,13 @@ author:
         region: NY
         postal-code: 12084-1234
   - name: Blanca Zutana
-    role:
+    roles:
       - Project administration
     affiliations: 
       - ref: id1
   - name: Carina Mengana
     orcid: 0000-0000-0000-0001
-    role:
+    roles:
       - Formal Analysis
     affiliations:
       - name: Carina's Primary Affiliation
@@ -44,7 +44,7 @@ author:
     # Because Dolorita is unaffiliated, specify her city instead
   - name: Dolorita Perengana
     orcid: 0000-0000-0000-0003
-    role:
+    roles:
       - Writing - review & editing
       - Methodology
       - Formal Analysis
@@ -191,6 +191,18 @@ Text references are possible, too.
 
 -   Place the reference's year by itself with a minus sign: [-@CameronTrivedi2013]
 
+## Block Quotes
+
+Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the `>` character. For example, Jane Austen's [-@austenMansfieldPark1990] *Mansfield Park* has some memorable insights about the mind:
+
+> If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
+
+:::{.NoIndent}
+If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the *text* after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. This paragraph is an example of how to do so. 
+:::
+
+
+
 ## Hypotheses, Aims, and Objectives
 
 The last paragraph of the introduction usually states the specific hypotheses of the study, often in a way that links them to the research design.
@@ -313,6 +325,15 @@ Every study has limitations. Based on this study, some additional steps might in
 
 Let's sum this up.
 
+
+```{r}
+#| label: fig-myplot
+#| apa-cap: This is the figure caption.
+#| apa-note: This is a note below the figure.
+
+plot(1:10)
+```
+
 {{< pagebreak >}}
 
 # References
@@ -321,6 +342,8 @@ Let's sum this up.
 
 ::: {#refs}
 :::
+
+
 
 <!-- Delete any unnecessary sections or pagebreaks. -->
 
