@@ -191,7 +191,7 @@ Text references are possible, too.
 
 -   Place the reference's year by itself with a minus sign: [-@CameronTrivedi2013]
 
-## Block Quotes
+## Block Quotes and Suppressing Indentation
 
 Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the `>` character. For example, Jane Austen's [-@austenMansfieldPark1990] *Mansfield Park* has some memorable insights about the mind:
 
