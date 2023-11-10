@@ -198,7 +198,7 @@ Sometimes you want to give a longer quote that needs to go in its own paragraph.
 > If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
 
 :::{.NoIndent}
-If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the *text* after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. This paragraph is an example of how to do so. 
+If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. This paragraph is an example of how to do so. 
 :::
 
 
