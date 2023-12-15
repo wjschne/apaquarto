@@ -38,7 +38,7 @@ h4 + p, h5 + p {
 
 .FigureNote p {text-indent: 0pt}
 
-td p, th p, li p, blockquote p {text-indent: 0em; margin: 0pt;}
+td p, th p, li p {text-indent: 0em; margin: 0pt;}
 
 
 
@@ -60,3 +60,5 @@ div.hanging-indent div.csl-entry {margin-left: 0em; text-indent: -0.5in;}
 .katex-display {font-size: 1.1em;}
 
 div.NoIndent p {text-indent: 0in}
+
+blockquote p:nth-child(1) {text-indent: 0in}

@@ -177,11 +177,11 @@ I am going to cite a reference here in square brackets [@CameronTrivedi2013]. Th
 
 -   Page references (or any other suffixes are placed after the reference. If you want a comma, you'll need to insert it yourself: [@CameronTrivedi2013, pp. 35--41]
 
--   Prefixes (with or without a comma) are placed before the reference: [e.g., @CameronTrivedi2013]
+-   Prefixes (with or without a comma) are placed before the reference: [e.g., @CameronTrivedi2013].
 
--   2 or more citations separated by a semicolon [@CameronTrivedi2013; @cohen2003applied]
+-   2 or more citations separated by a semicolon [@CameronTrivedi2013; @cohen2003applied]. If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically. That is, [e.g., @CameronTrivedi2013; @cohen2003applied], not [e.g., @cohen2003applied;  @CameronTrivedi2013]
 
--   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL\; @CameronTrivedi2013]
+-   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL\; @CameronTrivedi2013].
 
 Text references are possible, too.
 
@@ -196,6 +196,8 @@ Text references are possible, too.
 Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the `>` character. For example, Jane Austen's [-@austenMansfieldPark1990] *Mansfield Park* has some memorable insights about the mind:
 
 > If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
+>
+>Second paragraph.
 
 :::{.NoIndent}
 If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. This paragraph is an example of how to do so. 
