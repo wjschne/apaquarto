@@ -23,7 +23,7 @@ author:
       - Writing - original draft
     affiliations:
       - id: id1
-        name: Ana and Blanca's University
+        name: "Ana and Blanca's University"
         department: Department of Psychology
         address: 1234 Capital St.
         city: Albany
@@ -39,8 +39,8 @@ author:
     roles:
       - Formal Analysis
     affiliations:
-      - name: Carina's Primary Affiliation
-      - name: Carina's Secondary Affiliation
+      - name: "Carina's Primary Affiliation"
+      - name: "Carina's Secondary Affiliation"
     # Because Dolorita is unaffiliated, specify her city instead
   - name: Dolorita Perengana
     orcid: 0000-0000-0000-0003
