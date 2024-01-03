@@ -22,6 +22,7 @@ contributes:
         - apaquarto.lua
         - apastriptitle.lua
         - apafigtab.lua
+        - apaquote.lua
         - citeprocr.lua
         - apaand.lua
         - latexnoindent.lua

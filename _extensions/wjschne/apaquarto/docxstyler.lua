@@ -24,7 +24,8 @@ customclasses = {
   "FigureWithoutNote", 
   "Caption",
   "Compact",
-  "NoIndent"
+  "NoIndent",
+  "NextBlockText"
 }
 
 -- Consult some value
