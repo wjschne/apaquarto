@@ -126,7 +126,6 @@ format:
     nocorrespondence: false
     # Numbered Lines
     numbered-lines: false
-    keep-tex: true
 ---
 
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
