@@ -329,14 +329,6 @@ Every study has limitations. Based on this study, some additional steps might in
 Let's sum this up.
 
 
-```{r}
-#| label: fig-myplot
-#| apa-cap: This is the figure caption.
-#| apa-note: This is a note below the figure.
-
-plot(1:10)
-```
-
 {{< pagebreak >}}
 
 # References
