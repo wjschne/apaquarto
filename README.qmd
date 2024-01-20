@@ -84,7 +84,7 @@ format:
 
 This sample document has a fuller set of parameters specified and contains instructions for formatting figures, tables, cross-references, and more: [template.qmd](template.qmd).
 
-The manuscript form in docx look like this:
+The apaquarto-docx form looks like this:
 
 ![Preview of .docx output](img/docx.png)
 
