@@ -14,7 +14,35 @@ conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 is_docx <- knitr::pandoc_to("docx", exact = FALSE)
 is_pdf <- knitr::is_latex_output()
 
+get_metadata <- function(filename = "template.qmd") {
+  if (interactive()) {
+  rmarkdown::yaml_front_matter(filename)
+  } else {
+  rmarkdown::metadata
+  }
+}
+
+journalmode <- get_metadata()$format$`apaquarto-pdf`$documentmode
+
+if (is.null(journalmode)) {
+  isjournalmode <- FALSE
+  knitr::opts_chunk$set(twocolumnmode = FALSE)
+} else {
+  isjournalmode <- journalmode == "jou"
+  if (isjournalmode) {
+    knitr::opts_chunk$set(twocolumnmode = TRUE)
+  } else {
+    knitr::opts_chunk$set(twocolumnmode = FALSE)
+  }
+}
+  
+
 if (is_pdf) {
+  
+  
+  
+
+  
   knit_hooks$set(plot = function(x, options) {
     if (!is.null(options$`out.width`)) {
       figwidth <- options$`out.width`
@@ -94,7 +122,7 @@ knitr::knit_hooks$set(
             pre <- paste0(pre, "```{=latex}\n\\begin{table}\n\\caption{",
                           options$`apa-cap`,
                           "}\n\\label{",
-                          options$`label`,"}\n```\n")
+                          options$`label`,"}\n","```\n")
           }
           
         } else {
@@ -140,9 +168,21 @@ knitr::knit_hooks$set(
         
         if (is_pdf) {
           if (apatype == "table") {
+            
             if (!all(is.null(options$`apa-note`))) {
-              post <- paste0(post,"\\tablenote{", options$`apa-note`, "}\n\n")
+              
+              columnmodepost <- ifelse(options$twocolumnmode | isjournalmode,
+                                       "\\vspace{.5em}",
+                                       "")
+              
+              post <- paste0(post, 
+                             columnmodepost,
+                             "\\tablenote{", 
+                             options$`apa-note`, 
+                             "}\n\n")
             }
+            
+
             post <- paste0("```{=latex}\n", post, "\\end{table}\n```\n")
           }
         } else {
@@ -181,13 +221,7 @@ is_empty = function(x) {
   is.null(x)  || is.na(x)  || is.nan(x) || length(x) == 0 || x == ""
 }
 
-get_metadata <- function(filename = "template.qmd") {
-  if (interactive()) {
-  rmarkdown::yaml_front_matter(filename)
-  } else {
-  rmarkdown::metadata
-  }
-}
+
 
 
 

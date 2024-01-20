@@ -18,6 +18,7 @@ contributes:
       toc: false
       fig-width: 6.5
       fig-height: 6.5
+      # "pre" filters:
       filters:
         - apaquarto.lua
         - apastriptitle.lua
@@ -26,6 +27,9 @@ contributes:
         - citeprocr.lua
         - apaand.lua
         - latexnoindent.lua
+        - journalmode.lua
+        - at: post-render
+          path: replacelongtable.lua
     native: default
     html:
       toc: true

@@ -34,7 +34,15 @@ $for(by-author)$$by-author.name.literal$$sep$,$endfor$
 $for(by-affiliation)$
 {$if(it.name)$$if(it.department)$$it.department$, $endif$$it.name$$else$$if(it.city)$$it.city$, $endif$$if(it.region)$$it.region$ $endif$$if(it.country)$$it.country$$endif$$endif$}$sep$,$endfor$}
 
+
+
+\leftheader{$if(by-author/allbutlast)$$for(by-author/allbutlast)$$by-author.name.family$$sep$, $endfor$$for(by-author/last)$ and $by-author.name.family$$endfor$$else$$for(by-author/last)$$by-author.name.family$$endfor$$endif$}
+
+
+$if(date)$
 \date{$date$}
+$endif$
+
 $if(abstract)$
 \abstract{$abstract$}
 $endif$

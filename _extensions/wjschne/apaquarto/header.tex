@@ -12,6 +12,37 @@
 \makeatother
 
 \usepackage{amsmath}
+
+
+\usepackage{longtable, booktabs, multirow, multicol, colortbl, hhline, caption, array, float}
+
+
+$if(journalmode)$
+
+\usepackage{supertabular}
+
+\renewenvironment{longtable}{\begin{supertabular}}{\end{supertabular}}
+\renewcommand{\endhead}{}
+\renewcommand{\endfirsthead}{}
+\renewcommand{\endlastfoot}{}
+\renewcommand{\toprule}[2]{\hline}
+\renewcommand{\midrule}[2]{\hline}
+\renewcommand{\bottomrule}[2]{\hline}
+
+$endif$
+
+
+\newlength\Oldarrayrulewidth
+\newlength\Oldtabcolsep
+
+
+\usepackage{hyperref}
+\usepackage{float}
+
+$if(nottimes)$
+$else$
+\usepackage{times}
+$endif$
 $if(numbered-lines)$
 \usepackage{lineno}
 $endif$

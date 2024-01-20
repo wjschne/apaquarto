@@ -1,6 +1,7 @@
 # A Quarto Extension for Creating APA 7 Style Documents
 
-![Experimental](lifecycle-experimental.svg)
+
+<img loading="lazy" alt="any text: you like" src="https://img.shields.io/badge/lifecycle-experimental-orange">
 
 This article template creates [APA Style 7th Edition
 documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
@@ -53,10 +54,9 @@ this line to the document right after its YAML metadata: (Note: The
 [include statement](https://quarto.org/docs/authoring/includes.html)
 needs to be surrounded by empty lines.)
 
-``` {markdown}
+``` markdown
 
-{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
-
+{{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}}
 ```
 
 Here is an example of what the YAML metadata and the “include” statement
@@ -95,8 +95,21 @@ This sample document has a fuller set of parameters specified and
 contains instructions for formatting figures, tables, cross-references,
 and more: [template.qmd](template.qmd).
 
+The manuscript form in docx look like this:
+
+![Preview of .docx output](img/docx.png)
+
+The .html and .pdf output (in manuscript mode) look similar. The .pdf in
+journal mode looks like this:
+
+![Preview of .docx output](img/journalmode.png)
+
 ## Known Problems
 
-- Flextable tables do not render in jou mode for apaquarto-pdf.
-- Tables and figures do not fit automatically in jou mode for
-  apaquarto-pdf.
+- In apaquarto-pdf documents, getting tables work in `jou` mode for can
+  be tricky. The problem is that any output that uses the `longtable`
+  environment will not work in `twocolumn` mode. My solution is a bit
+  hacky—I redefined `longtable` to use `supertablular` instead. This
+  works in simple cases but undercuts some of `longtable`’s functions.
+- In apaquarto-html documents, plain markdown tables do not render to
+  APA format.

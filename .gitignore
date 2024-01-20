@@ -15,6 +15,7 @@ template.log
 template.aux
 template.bbl
 template.native
+template.docx.md
 template_files/
 README.qmd
 try*

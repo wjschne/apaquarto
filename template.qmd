@@ -1,5 +1,5 @@
 ---
-title: "Using Quarto to Generate MS Word Documents in APA Style (7th Edition)"
+title: "Using Quarto to Generate Documents in APA Style (7th Edition)"
 # Lines above title in .docx format
 blank-lines-above-title: 2
 # If blank, the running header is the title in upper case.
@@ -68,7 +68,7 @@ author-note:
     # Example: This article is based on data published in Pulaski (2017).
     # Example: This article is based on the dissertation completed by Graham (2018).    
     related-report: This article is based on data published in Pulaski (2017). 
-    # Example: Sally Jones earns royalties from the sale of Test X.
+    # Example: Ana Fulana earns royalties from the sale of Test X.
     conflict-of-interest: ~
     # Example: This study was supported by Grant A123 from the National Science Foundation.
     financial-support: ~
@@ -78,7 +78,6 @@ author-note:
     authorship-agreements: ~
 abstract: "This document is a template demonstrating the apaquarto format."
 keywords: [keyword1, keyword2, keyword3]
-# I like using Zotero with BetterBibTeX to output a continuously updated "Better CSL JSON" file. But BibTeX works, too.
 bibliography: bibliography.bib
 format:
   apaquarto-docx: default
@@ -86,9 +85,9 @@ format:
   apaquarto-pdf:
     # can be jou (journal), man (manuscript), stu (student), or doc (document)
     # for now, tables and figures do not render properly in jou mode. 
-    documentmode: man
+    documentmode: man 
     # can be 10pt, 11pt, or 12pt
-    fontsize: 12pt
+    fontsize: "12pt"
     # Integrate tables and figures in text
     floatsintext: false
     # a4 paper if true, letter size if false
@@ -148,7 +147,11 @@ This is my introductory paragraph. The title will be placed above it automatical
 
 Readers are better able to follow your ideas if you differentiate sections in your introduction with headings. Mostly stick to level 2 headers. Sometimes level 3 headings are needed, though. Be sparing to the point of stinginess with levels 4 and 5.
 
-## Level 2 Heading: Flush Left, Bold, Title Case
+
+
+
+
+## Level 2 Heading
 
 Subsections of the introduction have level 2 headings. A paragraph after a level 2 Heading is on a new line. Regular paragraphs are indented, flush left, and double-spaced.
 
@@ -161,6 +164,8 @@ You do not need to put text after a heading. You can put a higher-level heading 
 Subsections of a level 2 heading are placed under level 3 headings.
 
 ### Another Level 3 Heading
+
+
 
 #### Level 4 Heading.
 
@@ -176,7 +181,12 @@ Subsequent paragraphs go on their own lines.
 
 ## How to Cite References
 
-I am going to cite a reference here in square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. Here are some variations on parenthetical citations:
+I am going to cite a reference here in square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. 
+
+
+### Parenthetical References
+
+Here are some variations on parenthetical citations:
 
 -   Page references (or any other suffixes are placed after the reference. If you want a comma, you'll need to insert it yourself: [@CameronTrivedi2013, pp. 35--41]
 
@@ -186,7 +196,7 @@ I am going to cite a reference here in square brackets [@CameronTrivedi2013]. Th
 
 -   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: [FOIL\; @CameronTrivedi2013].
 
-Text references are possible, too.
+### In-Text references
 
 -   @CameronTrivedi2013 said some interesting things.
 
@@ -250,34 +260,36 @@ Let's make a figure. A reference label for a figure in APA format must have the 
 #| label: apafg-myplot
 #| apa-cap: This is the figure caption.
 #| apa-note: This is a note below the figure.
+#| out-width: "100%"
 
 plot(1:10)
 ```
 
 To refer to any figure or table, put the chunk label in curly braces. For example, see {apafg-myplot}. In {apafg-importedgraphic}, we import an image.
 
-```{r}
-#| label: apafg-importedgraphic
+```{r apafg-importedgraphic}
 #| apa-cap: This is an imported graphic.
 #| apa-note: My note.
-knitr::include_graphics("orcid.png")
+#| out-width: "100%"
+knitr::include_graphics("sampleimage.png")
 ```
 
-We can make a table the same way as a figure except that the label prefix is `apatb-`. Again, this is different from the usual quarto prefix `tbl-`, which will put the table table caption in the wrong place and with non-APA formatting.
+
+We can make a table the same way as a figure except that the label prefix is `apatb-`. Again, this is different from the usual quarto prefix `tbl-`, which will put the table table caption in the wrong place and with non-APA formatting. Generating a table that conforms to APA format in all document formats can be tricky. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option.
 
 ```{r apatb-mytable}
-#| apa-cap: Here is the table caption.
+#| apa-cap: Here is the table caption. 
 #| apa-note: Here is the note below the table.
 #| ft.align: left
-
-
-tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
-  flextable() %>% 
-  theme_apa() %>% 
-  line_spacing(part = "all") %>% 
+tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |> 
+  flextable() %>%
+  theme_apa() %>%
+  line_spacing(part = "all") %>%
   padding(padding.top = 5, padding.bottom = 5)
 
 ```
+
+
 
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
 
@@ -286,15 +298,16 @@ To refer to this table in text, put the table's reference label in curly braces 
 ```{r apatb-withoutnote}
 #| apa-cap: This is a table without a note.
 #| ft.align: left
-
-
+#| twocolumnmode: true
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
-  flextable() %>% 
-  theme_apa() %>% 
-  line_spacing(part = "all") %>% 
+  flextable() %>%
+  theme_apa() %>%
+  line_spacing(part = "all") %>%
   padding(padding.top = 5, padding.bottom = 5)
 
 ```
+
+
 
 In {apatb-mymarkdowntable}, there is an example of using a plain markdown table via the `asis` engine.
 
@@ -328,9 +341,6 @@ Every study has limitations. Based on this study, some additional steps might in
 
 Let's sum this up.
 
-
-{{< pagebreak >}}
-
 # References
 
 <!-- References will auto-populate in the refs div below -->
@@ -342,11 +352,13 @@ Let's sum this up.
 
 <!-- Delete any unnecessary sections or pagebreaks. -->
 
-{{< pagebreak >}}
-
 # Appendix
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
+
+
+
+
 
 <!-- I like my tables and figures intermingled with the text, -->
 
