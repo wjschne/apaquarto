@@ -8,6 +8,7 @@ library(flextable)
 library(ftExtra)
 library(officer)
 library(knitr)
+
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 
@@ -38,7 +39,7 @@ if (is.null(journalmode)) {
   
 
 if (is_pdf) {
-  
+  library(openssl, quietly = TRUE)
   
   
 
@@ -75,18 +76,23 @@ if (is_pdf) {
     if (is.null(options$`apa-note`)) {
       fignote <- NULL
     } else {
-      fignote <-  paste0("\n\n\\figurenote{", options$`apa-note`, "}\n\n")
+      fignote <-  paste0("\n\n\\figurenote{\n\\QuartoMarkdownBase64{", openssl::base64_encode(options$`apa-note`), "}\n}\n\n")
+    }
+    
+    figure_enviornment <- "figure"
+    if (!is.null(options$`apa-twocolumn`)) {
+      figure_enviornment <- ifelse(options$`apa-twocolumn` == TRUE, "figure*", "figure")
     }
 
 
-    output <- paste0("\n\n\\begin{figure}[h!]\n",
-                   "\\caption{", options$`apa-cap`, "}\n",
+    output <- paste0("\n\n\\begin{", figure_enviornment, "}[h!]\n",
+                   "\\caption{\\QuartoMarkdownBase64{", openssl::base64_encode(options$`apa-cap`), "}}\n",
                    "\\label{", options$label, "}\n",
       "\\includegraphics[width=",figwidth,"]{",
       filename,
       "}\n",
       fignote,
-      "\n\\end{figure}\n\n"
+      "\n\\end{", figure_enviornment, "}\n\n"
       )
     # message(output)
     output
@@ -115,13 +121,23 @@ knitr::knit_hooks$set(
         knitr::opts_current$lock(TRUE)
         options$output <- "asis"
         if (is_pdf) {
+          
+          table_environment <- "table"
+    if (!is.null(options$`apa-twocolumn`)) {
+      table_environment <- ifelse(options$`apa-twocolumn` == TRUE, "table*", "table")
+    }
+          
           pre <- ""
 
           if (apatype == "table") {
             
-            pre <- paste0(pre, "```{=latex}\n\\begin{table}\n\\caption{",
-                          options$`apa-cap`,
-                          "}\n\\label{",
+            
+            
+            pre <- paste0(pre, "```{=latex}\n\\begin{", 
+                          table_environment, 
+                          "}\n\\caption{\\QuartoMarkdownBase64{", 
+                          openssl::base64_encode(options$`apa-cap`),
+                          "}}\n\\label{",
                           options$`label`,"}\n","```\n")
           }
           
@@ -167,6 +183,10 @@ knitr::knit_hooks$set(
         post <- "\n\n"
         
         if (is_pdf) {
+          table_environment <- "table"
+    if (!is.null(options$`apa-twocolumn`)) {
+      table_environment <- ifelse(options$`apa-twocolumn` == TRUE, "table*", "table")
+    }
           if (apatype == "table") {
             
             if (!all(is.null(options$`apa-note`))) {
@@ -177,13 +197,13 @@ knitr::knit_hooks$set(
               
               post <- paste0(post, 
                              columnmodepost,
-                             "\\tablenote{", 
-                             options$`apa-note`, 
-                             "}\n\n")
+                             "\\tablenote{\\QuartoMarkdownBase64{", 
+                             openssl::base64_encode(options$`apa-note`), 
+                             "}}\n\n")
             }
             
 
-            post <- paste0("```{=latex}\n", post, "\\end{table}\n```\n")
+            post <- paste0("```{=latex}\n", post, "\\end{", table_environment, "}\n```\n")
           }
         } else {
           if (!all(is.null(options$`apa-note`))) {
@@ -217,6 +237,7 @@ knitr::knit_hooks$set(
 ```{r}
 #| label: metadatasetup
 #| echo: false
+#| eval: false
 is_empty = function(x) {
   is.null(x)  || is.na(x)  || is.nan(x) || length(x) == 0 || x == ""
 }
@@ -262,6 +283,24 @@ f_author_affiliations <- function(yml) {
     map(affiliation_namer) %>% 
     map(as_tibble) %>%
     map(\(d) rename(d, any_of(c(roles = "role")))) %>%
+    map(\(d) {
+      if ("roles" %in% colnames(d)) {
+        if (is.list(d |> pull(roles))) {
+          # pull(d, roles) |> unlist() |> print()
+          d <- mutate(d, role_name = map(roles, \(x) {
+            if (is.list(x)) names(x) else x
+          })) |> 
+            unnest(role_name) |> 
+            mutate(role_degree = map(roles, \(x) {
+              if (is.list(x)) x[[1]] else "lead"
+            })) |> 
+            unnest(role_degree) |> 
+            select(-roles) |> 
+            rename(roles = role_name)
+          }
+      }
+      d
+    }) |> 
     bind_rows() %>% 
     bind_rows(
       tibble(
@@ -441,7 +480,7 @@ f_orcids_display <- function(author_affiliations) {
     mutate(
       orcid_display = paste0(
         author,
-        " ![Orchid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
+        " ![Orcid ID Logo: A green circle with white letters ID](_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg){width=16px} https://orcid.org/",
         orcid
       )
     ) %>%
@@ -678,24 +717,24 @@ display_title_heading <- f_title_heading_display(yml_metadata$title , yml_metada
 display_abstract <- f_abstract_display(yml_metadata)
 
 
-
-if (is_docx) {
-  if (!interactive()) {
-  library(officer)
-  if (!is.null(yml_metadata$shorttitle)) {
-    running_header <- str_to_upper(yml_metadata$shorttitle)
-  } else if (!is.null(yml_metadata$title)) {
-    running_header <- str_to_upper(yml_metadata$title)
-  } else {
-    running_header <- "SHORT TITLE"
-  }
-  
-  read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
-    headers_replace_all_text("Running Header", running_header) %>%
-    print("apa_processed.docx")
-  
-}
-}
+# 
+# if (is_docx) {
+#   if (!interactive()) {
+#   library(officer)
+#   if (!is.null(yml_metadata$shorttitle)) {
+#     running_header <- str_to_upper(yml_metadata$shorttitle)
+#   } else if (!is.null(yml_metadata$title)) {
+#     running_header <- str_to_upper(yml_metadata$title)
+#   } else {
+#     running_header <- "SHORT TITLE"
+#   }
+#   
+#   read_docx("_extensions/wjschne/apaquarto/apaquarto.docx") %>%
+#     headers_replace_all_text("Running Header", running_header) %>%
+#     print("apa_processed.docx")
+#   
+# }
+# }
 
 
     
@@ -704,21 +743,4 @@ if (is_docx) {
 
 ```
 
-::: {.content-visible unless-format="pdf"}
-`r display_title`
 
-`r display_author_affiliations`
-
-`r display_author_note`
-
-{{< pagebreak >}}
-
-::: Abstract
-`r display_abstract`
-
-`r display_keywords`
-:::
-
-{{< pagebreak >}}
-`r display_title_heading`
-:::

@@ -3,10 +3,6 @@
 
 # Implemented Features
 
-## Front Matter
-
-If I were more knowledgeable about lua, I would have done everything with a lua filter. As things stand, I used an `include` statement to insert the front matter in the `_apa_title.qmd` file, which processes metadata with R. 
-
 
 ### Title
 
@@ -14,17 +10,18 @@ The title is extracted from the yaml metadata and then inserted both in the titl
 
 ### Running Header
 
-I could not find a pure Quarto/Pandoc solution to insert a running header into a .docx file. Thankfully David Gohel's [officer package]{https://davidgohel.github.io/officer/} exists. The _apa_title.qmd file uses officer to search for "Running Header" in the `apaquarto.docx` reference file and replace it with whatever is specified in the `shorttitle` field of the metadata (converted to all caps). If nothing is specified, it will use the whole title in all caps. 
+The running header in .docx was tricky to implement. Before apaquarto 3.0.0, I set the running header with the officer package. This approach required the creation of a new reference document with every render. 
 
-The document is saved with the file name `apa_processed.docx`. This file then serves as the reference document. If you want to adjust the reference document, you need to make changes in the `apaquarto.docx` file because `apa_processed.docx` is re-written with every render.
+Now, a lua filter looks for the `shorttitle` field. If that is not found, the `title` and `subtitle` fields are used instead. The running header is assigned to the `description` field in the quarto metadata. This value will show up in the `Comments` field in the rendered .docx file, which is then inserted into the field box in the header.
+
 
 ### Authors and Affilations
 
-The R code that processes the authors and affiliations metadata works for me, but I am guessing that it is fragile and incomplete. I expect that changes will be necessary to account for different variations.
+After version 3.0.0, all these data are processed by Quarto and a lua filter.
 
 ## Author Notes
 
-The author notes have many optional parts.
+The author notes have many optional parts. These data are processed by a lua filter.
 
 ## Abstract
 
@@ -38,6 +35,8 @@ Figure titles, captions, and notes are composed with a custom knitr hook called 
 * Captions for either apagf- or apatb- chunks are set with the apa-cap chunk option. 
 * A note under a figure or a table is set with the apa-note chunk option. 
 
+````
+
 ```{r}
 #| label: apafg-myfigure
 #| apa-cap: This is my figure's caption.
@@ -46,6 +45,7 @@ Figure titles, captions, and notes are composed with a custom knitr hook called 
 # Code for figure goes here
 
 ```
+````
 
 I would have preferred to use the standard quarto fig- and tbl- prefixes, but quarto does some automatic formatting that I could find a way to convert to APA style. I believe a full quarto solution is in the works, but my hacky workaround will do for now.
 
@@ -110,7 +110,6 @@ The filter was taken from code posted by [Samuel Dodson]{https://github.com/cita
 
 # Desired Improvements
 
-* Running header is placed in the .docx template by officer. A Pandoc solution would be better.
 * Figure and Table labels using Quarto's `fig-` and `tbl-` prefixes.
 * Figure and Tables in .pdf jou mode do not fit automatically.
 

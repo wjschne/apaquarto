@@ -20,3 +20,8 @@ template_files/
 README.qmd
 try*
 nul
+template.pdf.native
+template.pdf.md
+tempate.docx.docx
+Features.html
+/.luarc.json

@@ -8,5 +8,7 @@ function Cite(elem)
             end})
         return elem.content
     end
-    return pandoc.Cite(elem.content, elem.citations, elem.tag)
+    --Originally looked like this, but lua interpreter did not like it
+    --return pandoc.Cite(elem.content, elem.citations, elem.tag)
+    return pandoc.Cite(elem.content, elem.citations)
 end

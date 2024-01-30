@@ -8,44 +8,48 @@ shorttitle: Template for the APAquarto Format
 # It is nice to specify everyone's orcid, if possible.
 # There can be only one corresponding author, but declaring one is optional.
 author:
-  - name: Ana Fulana
+  - name: Ana Fulano
     corresponding: true
     orcid: 0000-0000-0000-0000
     email: sm@example.org
     url: https://example.org/
-    # Roles are optional
+    # Roles are optional (note: The two writing roles have en dashes, not hyphens. You can use their aliases, w)
     # Select from the CRediT: Contributor Roles Taxonomy https://credit.niso.org/
     # Conceptualization, Data curation, Formal Analysis, Funding acquisition, Investigation, 
     # Methodology, Project administration, Resources, Software, Supervision, Validation, 
     # Visualization, Writing – original draft, Writing – review & editing
     roles:
-      - Conceptualization
+      - conceptualization: lead
       - Writing - original draft
     affiliations:
       - id: id1
         name: "Ana and Blanca's University"
+        group: Clinical Psychology Program
         department: Department of Psychology
         address: 1234 Capital St.
         city: Albany
         region: NY
         postal-code: 12084-1234
-  - name: Blanca Zutana
+  - name: Blanca Zutano
     roles:
       - Project administration
+      - Formal Analysis
     affiliations: 
       - ref: id1
-  - name: Carina Mengana
+  - name: Carina Mengano
     orcid: 0000-0000-0000-0001
+    deceased: true
     roles:
       - Formal Analysis
+      - Writing
     affiliations:
       - name: "Carina's Primary Affiliation"
       - name: "Carina's Secondary Affiliation"
     # Because Dolorita is unaffiliated, specify her city instead
-  - name: Dolorita Perengana
+  - name: Dolorita Perengano
     orcid: 0000-0000-0000-0003
     roles:
-      - Writing - review & editing
+      - Writing – review & editing
       - Methodology
       - Formal Analysis
     affiliations:
@@ -56,35 +60,35 @@ author-note:
   blank-lines-above-author-note: 1
   status-changes: 
     # Example: [Author name] is now at [affiliation].
-    affiliation-change: Ana Fulana is now at X University.
+    affiliation-change: Ana Fulano is now at X University.
     # Example: [Author name] is deceased.
-    deceased: Carina Mengana is deceased.
+    deceased: Carina Mengano is deceased.
   # Disclosures condensed to one paragraph, but you can start a field with two line breaks to break them up: \n\nNew Paragraph
   disclosures:
-    # Example: This study was registered at ClinicalTrials.gov (Identifier NTC998877).
-    study-registration: ~
+    # Example: This study was registered at X (Identifier Y).
+    study-registration: This study was registered at ClinicalTrials.gov (Identifier NTC998877).
     # Acknowledge and cite data/materials to be shared.
     data-sharing: ~
-    # Example: This article is based on data published in Pulaski (2017).
+    # Example: This article is based on data published in [Reference].
     # Example: This article is based on the dissertation completed by Graham (2018).    
-    related-report: This article is based on data published in Pulaski (2017). 
-    # Example: Ana Fulana earns royalties from the sale of Test X.
-    conflict-of-interest: ~
-    # Example: This study was supported by Grant A123 from the National Science Foundation.
-    financial-support: ~
-    # Example: The authors are grateful for the technical assistance of Dr. X during the initial design and setup of our lab equipment.
-    gratitude: ~
+    related-report: This article is based on data published in @austenMansfieldPark1990. 
+    # Example: [Author name] has been a paid consultant for Corporation X, which funded this study.
+    conflict-of-interest: Ana Fulano earns royalties from the sale of Test X, which was used in the study.
+    # Example: This study was supported by Grant [Grant Number] from [Funding Source].
+    financial-support: This study was supported by Grant ABC123 from Corporation X.
+    # Example: The authors are grateful to [Person] for [Reason].
+    gratitude: The authors are grateful for the technical assistance of Fernanda Ferenganamona during the initial design and setup of our lab equipment.
     # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
-    authorship-agreements: ~
+    authorship-agreements: Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
 abstract: "This document is a template demonstrating the apaquarto format."
 keywords: [keyword1, keyword2, keyword3]
 bibliography: bibliography.bib
 format:
+  # apaquarto-native: default
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf:
     # can be jou (journal), man (manuscript), stu (student), or doc (document)
-    # for now, tables and figures do not render properly in jou mode. 
     documentmode: man 
     # can be 10pt, 11pt, or 12pt
     fontsize: "12pt"
@@ -116,28 +120,39 @@ format:
     draftall: false
     # Masks references that are marked as the author's own
     mask: false
+    # Journal title (e.g., American Psychologist)
     journal: ~
+    # Date, volume, number, pages (e.g., "2024, Vol. 1, No. 1, 1--4")
     volume: ~
-    course: ~
-    professor: ~
-    duedate: ~
+    # copyright notice (e.g., 2024)
+    copyrightnotice: ~
+    # Additional copyright text (e.g., All rights reserved)
+    copyrighttext: ~
+    course: Introduction to Assessment
+    professor: W. Joel Schneider
+    duedate: 12/22/2024
     # Hides correspondence text
     nocorrespondence: false
     # Numbered Lines
     numbered-lines: false
+    include-in-header: 
+      text: |
+        \setcounter{secnumdepth}{5} 
+      
 ---
 
 {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 
 ```{r}
 #| label: setup
+#| include: false
 library(conflicted)
 library(tidyverse)
 library(flextable)
 library(ftExtra)
 library(officer)
 library(knitr)
-library(commonmark)
+library(openssl)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 
@@ -147,11 +162,12 @@ This is my introductory paragraph. The title will be placed above it automatical
 
 Readers are better able to follow your ideas if you differentiate sections in your introduction with headings. Mostly stick to level 2 headers. Sometimes level 3 headings are needed, though. Be sparing to the point of stinginess with levels 4 and 5.
 
-
-
+All headings should be in title case according to [these rules and exceptions](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case). 
 
 
 ## Level 2 Heading
+
+
 
 Subsections of the introduction have level 2 headings. A paragraph after a level 2 Heading is on a new line. Regular paragraphs are indented, flush left, and double-spaced.
 
@@ -159,7 +175,7 @@ You do not need to put text after a heading. You can put a higher-level heading 
 
 ## A Level 2 Heading Without Text Below It
 
-### Level 3 Heading: Flush Left, Bold Italic, Title Case
+### Level 3 Heading
 
 Subsections of a level 2 heading are placed under level 3 headings.
 
@@ -167,7 +183,7 @@ Subsections of a level 2 heading are placed under level 3 headings.
 
 
 
-#### Level 4 Heading.
+#### Level 4 Heading
 
 A level 4 heading should be indented, flush left, bold, title case, and end with a period. A paragraph after a level 4 or 5 heading is on a new line in this markdown document but will appear as if it were in the same paragraph when rendered. You need at least one paragraph after a level 4 or 5 heading. If you forget the period at the end of the level 4 or 5 heading, it will be added automatically. A period will not be added if the heading ends with a question mark or an exclamation point.
 
@@ -254,26 +270,31 @@ How are the data going to be analyzed?
 
 Here we describe the basic characteristics of our primary variables.
 
+## Displaying Figures
+
 Let's make a figure. A reference label for a figure in APA format must have the prefix `apafg-`. This is different from the usual Quarto prefix `fig-`.
 
 ```{r}
 #| label: apafg-myplot
-#| apa-cap: This is the figure caption.
-#| apa-note: This is a note below the figure.
+#| apa-cap: This is the&nbsp;figure caption.
+#| apa-note: "*g*&nbsp;=&nbsp;general ability true score"
 #| out-width: "100%"
-
 plot(1:10)
 ```
 
-To refer to any figure or table, put the chunk label in curly braces. For example, see {apafg-myplot}. In {apafg-importedgraphic}, we import an image.
+To refer to any figure or table, put the chunk label in curly braces. For example, see {apafg-myplot}. 
+
+The easiest way to import an existing graphic as a figure is to use `knitr::include_graphics` in a code chunk. For example, {apafg-importedgraphic} is an imported image. Note that in apaquarto-pdf documents, we can specify that that a figure or table should span both columns when in journal mode by setting the `apa-twocolumn` chunk option to `true`. For other formats, this distinction does not matter.
 
 ```{r apafg-importedgraphic}
 #| apa-cap: This is an imported graphic.
-#| apa-note: My note.
+#| apa-twocolumn: false
 #| out-width: "100%"
-knitr::include_graphics("sampleimage.png")
+knitr::include_graphics("img/sampleimage.png")
 ```
 
+
+## Displaying Tables
 
 We can make a table the same way as a figure except that the label prefix is `apatb-`. Again, this is different from the usual quarto prefix `tbl-`, which will put the table table caption in the wrong place and with non-APA formatting. Generating a table that conforms to APA format in all document formats can be tricky. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option.
 
@@ -281,6 +302,7 @@ We can make a table the same way as a figure except that the label prefix is `ap
 #| apa-cap: Here is the table caption. 
 #| apa-note: Here is the note below the table.
 #| ft.align: left
+#| apa-twocolumn: false
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |> 
   flextable() %>%
   theme_apa() %>%
@@ -291,14 +313,14 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |>
 
 
 
-To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, there is not much information.
+To refer to this table in text, put the table's reference label in curly braces like so: As seen in {apatb-mytable}, the first few numbers and letters of the alphabet are displayed.
 
 {apatb-withoutnote} is an example of a table without a note beneath.
 
 ```{r apatb-withoutnote}
 #| apa-cap: This is a table without a note.
 #| ft.align: left
-#| twocolumnmode: true
+#| apa-twocolumn: false
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>% 
   flextable() %>%
   theme_apa() %>%
@@ -316,6 +338,8 @@ In {apatb-mymarkdowntable}, there is an example of using a plain markdown table 
 #| apa-cap: Table caption of a markdown table
 #| apa-note: This is a note below the markdown table.
 #| echo: true
+#| apa-twocolumn: true
+
 
 | Default | Left | Right | Center |
 |---------|:-----|------:|:------:|

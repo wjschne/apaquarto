@@ -92,7 +92,15 @@ The .html and .pdf output (in manuscript mode) look similar. The .pdf in journal
 
 ![Preview of .docx output](img/journalmode.png)
 
+## New in apaquarto 3.0.0
+
+- The title page and abstract page are now processed using lua filters instead of R.
+- The .docx running header is set with a lua filter and a docx field that draws from the .docx metadata. 
+- The officer package is no longer required to create a new reference document every time the document is rendered.
+
+
+
 ## Known Problems
 
 - In apaquarto-pdf documents, getting tables work in `jou` mode for  can be tricky. The problem is that any output that uses the `longtable` environment will not work in `twocolumn` mode. My solution is a bit hacky---I redefined `longtable` to use `supertablular` instead. This works in simple cases but undercuts some of `longtable`'s functions.
-- In apaquarto-html documents, plain markdown tables do not render to APA format.
+

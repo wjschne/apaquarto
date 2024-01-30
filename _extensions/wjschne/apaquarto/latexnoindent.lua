@@ -6,6 +6,7 @@ if FORMAT:match 'latex' then
     if pandoc.utils.stringify(m.documentmode) == 'jou' then 
       indenter = '\\setlength\\parindent{0.15in}'
     end
+
   end
   
   Div = function (div)

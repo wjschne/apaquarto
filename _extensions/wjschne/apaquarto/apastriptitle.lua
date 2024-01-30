@@ -3,6 +3,11 @@ if FORMAT ~= "docx" then
 end
 
 function strip_meta(meta)
+  meta.apatitle = meta.title
+  meta.apasubtitle = meta.subtitle
+  meta.apaauthor = meta.author
+  meta.apadate =  meta.date
+  meta.apaabstract = meta.abstract
   meta.title = nil
   meta.subtitle = nil
   meta.author = nil
@@ -12,3 +17,4 @@ function strip_meta(meta)
 end
 
 return {{Meta = strip_meta}}
+
