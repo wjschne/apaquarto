@@ -8,7 +8,7 @@ shorttitle: Template for the APAquarto Format
 # It is nice to specify everyone's orcid, if possible.
 # There can be only one corresponding author, but declaring one is optional.
 author:
-  - name: Ana Fulana
+  - name: Ana Fulano
     corresponding: true
     orcid: 0000-0000-0000-0000
     email: sm@example.org
@@ -29,12 +29,12 @@ author:
         city: Albany
         region: NY
         postal-code: 12084-1234
-  - name: Blanca Zutana
+  - name: Blanca Zutano
     roles:
       - Project administration
     affiliations: 
       - ref: id1
-  - name: Carina Mengana
+  - name: Carina Mengano
     orcid: 0000-0000-0000-0001
     roles:
       - Formal Analysis
@@ -42,7 +42,7 @@ author:
       - name: "Carina's Primary Affiliation"
       - name: "Carina's Secondary Affiliation"
     # Because Dolorita is unaffiliated, specify her city instead
-  - name: Dolorita Perengana
+  - name: Dolorita Perengano
     orcid: 0000-0000-0000-0003
     roles:
       - Writing - review & editing
@@ -56,9 +56,9 @@ author-note:
   blank-lines-above-author-note: 1
   status-changes: 
     # Example: [Author name] is now at [affiliation].
-    affiliation-change: Ana Fulana is now at X University.
+    affiliation-change: Ana Fulano is now at X University.
     # Example: [Author name] is deceased.
-    deceased: Carina Mengana is deceased.
+    deceased: Carina Mengano is deceased.
   # Disclosures condensed to one paragraph, but you can start a field with two line breaks to break them up: \n\nNew Paragraph
   disclosures:
     # Example: This study was registered at ClinicalTrials.gov (Identifier NTC998877).
@@ -68,7 +68,7 @@ author-note:
     # Example: This article is based on data published in Pulaski (2017).
     # Example: This article is based on the dissertation completed by Graham (2018).    
     related-report: This article is based on data published in Pulaski (2017). 
-    # Example: Ana Fulana earns royalties from the sale of Test X.
+    # Example: Ana Fulano earns royalties from the sale of Test X.
     conflict-of-interest: ~
     # Example: This study was supported by Grant A123 from the National Science Foundation.
     financial-support: ~
