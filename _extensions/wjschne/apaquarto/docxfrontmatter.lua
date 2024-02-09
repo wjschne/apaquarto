@@ -1,14 +1,17 @@
+-- Handle frontmatter stuff for .docx and html formats
 if FORMAT:match 'latex' then
   return
 end
 
 local List = require 'pandoc.List'
+local stringify = pandoc.utils.stringify
 
 ---http://lua-users.org/wiki/StringRecipes
 local function ends_with(str, ending)
    return string.sub(str.text, -1) == ending
 end
 
+-- Check if meta is present or if it has length of 0
 local function chkmeta(meta_item)
     ispresent = false
     if meta_item then
@@ -19,18 +22,7 @@ local function chkmeta(meta_item)
     return ispresent
   end
 
-
-local function GetTableLng(tbl)
-  local getN = 0
-  for n in pairs(tbl) do 
-    getN = getN + 1 
-  end
-  return getN
-end
-
-local stringify = pandoc.utils.stringify
-
-
+-- Convert list to string with oxford comma
 local function oxfordcommalister(lists)
   local lastsep = pandoc.Str(", and ")
   local sep = pandoc.Str(", ")
@@ -58,12 +50,21 @@ local function oxfordcommalister(lists)
 end
 
 local get_document_title = function(mytitle, mysubtitle)
-  
-      mytitle = mytitle or "My Title"
+
+      if not mytitle then
+        mytitle = quarto.utils.string_to_inlines("My Title")
+      end
       
-      mysubtitle = mysubtitle or ": My Subtitle"
+      if mysubtitle then
+        if not ends_with(mytitle[#mytitle], ":") then
+          mytitle:insert(pandoc.Str(":"))
+        end
+        mytitle:insert(pandoc.Space())
+        mytitle:extend(mysubtitle)
+      end
+
   
-      title = pandoc.Header(1, mytitle)
+      local title = pandoc.Header(1, mytitle)
       title.classes = {"title", "unnumbered", "unlisted"}
       title.identifier="title"
       return title
@@ -157,12 +158,7 @@ return {
            
       local body = List:new{}
       local meta = doc.meta
-
-      local subtitle = meta.apasubtitle or meta.subtitle or ""
-
-      title = meta.apatitle or meta.title or ""
-
-      local documenttitle = get_document_title(stringify(title), stringify(subtitle))
+      local documenttitle = get_document_title(meta.apatitle, meta.apasubtitle)
       
       local byauthor = meta["by-author"]
       local affiliations = meta["affiliations"]
@@ -242,13 +238,13 @@ return {
       body:extend({documenttitle})
       body:extend({authordiv})
       
+      local authornoteheader = pandoc.Header(1, "Author Note")
+      authornoteheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
+      authornoteheader.identifier = "author-note"
+      
+      local intblank = 1
+      
       if authornote then
-        local authornoteheader = pandoc.Header(1, "Author Note")
-        authornoteheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
-        authornoteheader.identifier = "author-note"
-        
-        local intblank = 1
-        
         if FORMAT:match 'docx' then
           blanklines = authornote["blank-lines-above-author-note"]
           if blanklines then
@@ -257,14 +253,15 @@ return {
             end
           end
         end
-        
-        for i=1,intblank,1 do 
-          body:extend({newline})
-        end
-        
-        body:extend({authornoteheader})
-      
       end
+
+      for i=1,intblank,1 do 
+        body:extend({newline})
+      end
+        
+      body:extend({authornoteheader})
+      
+      
       local img
       
       for i, a in ipairs(byauthor) do
@@ -284,33 +281,35 @@ return {
       end
       
 
-      
-      if authornote["status-changes"] then
-        local second_paragraph = pandoc.Para(pandoc.Str(""))
-        
-        second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"]["affiliation-change"])
-        second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"].deceased)
-        
-        
-        if #second_paragraph.content > 1 then
-          body:extend({second_paragraph})
+      if authornote then
+        if authornote["status-changes"] then
+          local second_paragraph = pandoc.Para(pandoc.Str(""))
+          
+          second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"]["affiliation-change"])
+          second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"].deceased)
+          
+          
+          if #second_paragraph.content > 1 then
+            body:extend({second_paragraph})
+          end
         end
-      end
-      
-      if authornote.disclosures then
-        local third_paragraph = pandoc.Para(pandoc.Str(""))
         
-        third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["study-registration"])
-        third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["data-sharing"])
-        third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["related-report"])
-        third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["conflict-of-interest"])
-        third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["financial-support"])
-        third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures.gratitude)
-        third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["authorship-agreements"])
-        
-        if #third_paragraph.content > 1 then
-          body:extend({third_paragraph})
+        if authornote.disclosures then
+          local third_paragraph = pandoc.Para(pandoc.Str(""))
+          
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["study-registration"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["data-sharing"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["related-report"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["conflict-of-interest"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["financial-support"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures.gratitude)
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["authorship-agreements"])
+          
+          if #third_paragraph.content > 1 then
+            body:extend({third_paragraph})
+          end
         end
+      
       end
       
       local credit_paragraph = pandoc.Para(pandoc.Str(""))
@@ -418,16 +417,27 @@ return {
         if FORMAT:match 'docx' then
           body:extend({pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')})
         end
-      
-      local firstpageheader = get_document_title(stringify(title), stringify(subtitle))
+  
+      local firstpageheader = documenttitle:clone()
       firstpageheader.identifier = "firstheader"
       firstpageheader.classes = {"title"}
       body:extend({firstpageheader})
       
       if meta["shorttitle"] then
+        for i, v in ipairs(meta["shorttitle"]) do
+          if v.t == "Str" then
+            v.text = string.upper(v.text)
+          end
+        end
         meta.description = meta["shorttitle"]
       else
-        meta.description = documenttitle.content
+        local myshorttitle = meta["apatitle"]
+        for i, v in ipairs(myshorttitle) do
+          if v.t == "Str" then
+            v.text = string.upper(v.text)
+          end
+        end
+        meta.description = myshorttitle
       end
       
       body:extend(doc.blocks)

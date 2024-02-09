@@ -1,7 +1,3 @@
-project:
-  type: apaquarto
-  pre-render: precode.R
-
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
 version: 3.0.0
@@ -11,7 +7,7 @@ contributes:
     common:
       execute:
         echo: false
-      citeproc: false
+      citeproc: true
       fig-cap-location: top
       tbl-cap-location: top
       cap-location: top
@@ -23,17 +19,30 @@ contributes:
       fig-width: 6.5
       fig-height: 6.5
       filters:
-        - apaquarto.lua
+        - at: pre-ast
+          path: apafgtb.lua
+        - at: pre-ast
+          path: journalmode.lua
+        - at: pre-ast
+          path: apafigurelatex.lua
+        - apaheader.lua
         - apastriptitle.lua
         - docxfrontmatter.lua
-        - apafigtab.lua
         - apaquote.lua
-        - citeprocr.lua
-        - apaand.lua
+        - apaandcite.lua
         - latexnoindent.lua
-        - journalmode.lua
+        - at: post-quarto
+          path: apatablelatex.lua
         - at: post-render
-          path: replacelongtable.lua
+          path: apaextractfigure.lua
+        - at: post-render
+          path: apanote.lua
+        - at: post-render
+          path: apafloat.lua
+        - at: post-render
+          path: apacaption.lua
+        - at: post-render
+          path: apaafternote.lua
     native: default
     html:
       toc: true

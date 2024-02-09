@@ -1,1 +1,0 @@
-quarto.doc.include_file("before-body", "_apa_title.qmd")

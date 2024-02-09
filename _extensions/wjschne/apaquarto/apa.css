@@ -2,10 +2,12 @@ body {line-height: 2em; font-size: 12pt}
 
 p {text-indent: 0.5in; margin: 0; line-height: 2em}
 
-.FigureTitle {font-weight: bold; margin: 5pt 0; font-size: 12pt;}
-.Caption {font-style: italic; font-size: 12pt;}
-
+.FigureTitle {font-weight: bold; margin: 5pt 0; font-size: 12pt; color: black;}
+.FigureTitle p {text-indent: 0; text-align: left;}
+.FigureNote p {text-indent: 0; margin: 0; padding: 0}
+.Caption {font-style: italic; font-size: 12pt; color: black; text-align: left}
 .Caption p {text-indent: 0; font-size: 12pt;}
+.quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0}
 
 h1, h2, h3, h4, h5 {border: none; margin: 0; padding: 0;line-height: 2; text-indent: 0 }
 
@@ -35,9 +37,9 @@ h4 + p, h5 + p {
 }
 
 
-.FigureTitle p {text-indent: 0}
 
-.FigureNote p {text-indent: 0}
+
+
 
 td p, th p, li p {text-indent: 0; margin: 0;}
 
@@ -76,3 +78,5 @@ blockquote p:nth-child(1) {text-indent: 0}
 .table>:not(caption)>*>* {
   border-bottom: none;
 }
+
+.tabwid {padding: 0}

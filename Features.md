@@ -28,26 +28,23 @@ The author notes have many optional parts. These data are processed by a lua fil
 
 ## Captions and References for Figures and Tables
 
-Figure titles, captions, and notes are composed with a custom knitr hook called `apa-figtab`. 
+Figure titles, captions, and notes are composed with a series of lua filters.
 
-* APA style figures are specified for chunks that start with apafg- (e.g., agafg-myfigure). 
-* Any chunk with a apatb- prefix will be set inside an APA style table environment. 
-* Captions for either apagf- or apatb- chunks are set with the apa-cap chunk option. 
-* A note under a figure or a table is set with the apa-note chunk option. 
+A note under a figure or a table is set with the apa-note chunk option. 
 
 ````
 
 ```{r}
-#| label: apafg-myfigure
-#| apa-cap: This is my figure's caption.
-#| apa-note: This is 
+#| label: fig-myfigure
+#| fig-cap: This is my figure's caption.
+#| apa-note: This is a note.
 
 # Code for figure goes here
 
 ```
 ````
 
-I would have preferred to use the standard quarto fig- and tbl- prefixes, but quarto does some automatic formatting that I could find a way to convert to APA style. I believe a full quarto solution is in the works, but my hacky workaround will do for now.
+
 
 A reference to {apafg-myfigure} will be replaced by "Figure 1" (or "Figure 2", "Figure 3", etc.). Again, I would have liked to use the standard quarto reference system (i.e., {@apafg-myfigure}), but I could not any way around this problem.
 

@@ -25,7 +25,8 @@ customclasses = {
   "Caption",
   "Compact",
   "NoIndent",
-  "NextBlockText"
+  "NextBlockText",
+  "AfterWithoutNote"
 }
 
 -- Consult some value

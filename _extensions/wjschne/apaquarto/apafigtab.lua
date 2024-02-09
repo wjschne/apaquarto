@@ -2,14 +2,6 @@
 local apatb = {}
 local apafg = {}
 
-function GetTableLng(tbl)
-  local getN = 0
-  for n in pairs(tbl) do 
-    getN = getN + 1 
-  end
-  return getN
-end
-
 local function starts_with(start, str)
   return str:sub(1, #start) == start
 end
@@ -17,10 +9,10 @@ end
 function makefignums (s)
   if s.identifier then
     if starts_with("apafg", s.identifier) then
-      apafg[s.identifier]=GetTableLng(apafg)+1
+      apafg[s.identifier]= #apafg + 1
     end
     if starts_with("apatb", s.identifier) then
-      apatb[s.identifier]= GetTableLng(apatb)+1
+      apatb[s.identifier]= #apafg + 1
     end
   end
   return s

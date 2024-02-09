@@ -1,4 +1,3 @@
-% TODO: Add custom LaTeX header directives here
 \makeatletter
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
 	{0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
@@ -14,22 +13,22 @@
 \usepackage{amsmath}
 
 
-\usepackage{longtable, booktabs, multirow, multicol, colortbl, hhline, caption, array, float}
+\usepackage{longtable, booktabs, multirow, multicol, colortbl, hhline, caption, array, float, tcolorbox}
 
 
-$if(journalmode)$
-
-\usepackage{supertabular}
-
-\renewenvironment{longtable}{\begin{supertabular}}{\end{supertabular}}
-\renewcommand{\endhead}{}
-\renewcommand{\endfirsthead}{}
-\renewcommand{\endlastfoot}{}
-\renewcommand{\toprule}[2]{\hline}
-\renewcommand{\midrule}[2]{\hline}
-\renewcommand{\bottomrule}[2]{\hline}
-
-$endif$
+% $if(journalmode1)$
+% 
+% \usepackage{supertabular}
+% 
+% \renewenvironment{longtable}{\begin{supertabular}}{\end{supertabular}}
+% \renewcommand{\endhead}{}
+% \renewcommand{\endfirsthead}{}
+% \renewcommand{\endlastfoot}{}
+% \renewcommand{\toprule}[2]{\hline}
+% \renewcommand{\midrule}[2]{\hline}
+% \renewcommand{\bottomrule}[2]{\hline}
+% 
+% $endif$
 
 
 \newlength\Oldarrayrulewidth
@@ -39,10 +38,4 @@ $endif$
 \usepackage{hyperref}
 \usepackage{float}
 
-$if(nottimes)$
-$else$
-\usepackage{times}
-$endif$
-$if(numbered-lines)$
-\usepackage{lineno}
-$endif$
+

@@ -12,11 +12,16 @@ if FORMAT:match 'latex' then
   Div = function (div)
 
     if div.classes:includes 'NoIndent' then
-      return {
-        pandoc.RawBlock('latex', '\\setlength\\parindent{0in}'),
-        div,
-        pandoc.RawBlock('latex', indenter)
-      }
+        div.content = div.content:walk {
+          Para = function(p)
+            p.content:insert(1, pandoc.RawInline("latex", "\\noindent "))
+            return p
+          end
+        }
+        --pandoc.RawBlock('latex', '\\setlength\\parindent{0in}'),
+        --div,
+        --pandoc.RawBlock('latex', indenter)
+      return(div)
     end
   end
   

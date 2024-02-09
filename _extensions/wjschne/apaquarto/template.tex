@@ -1,49 +1,134 @@
 $doc-class.tex()$
 
+\RequirePackage{longtable}
+% \setlength\LTleft{0pt}
+\RequirePackage{threeparttablex}
 
-\usepackage{svg}
+% $if(floatsintext)$
+% $else$
+% $if(journalmode)$
+% 
+% $else$
+% \RequirePackage{rotating}
+% \RequirePackage{threeparttablex}
+% \DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
+% \DeclareDelayedFloatFlavor{sidewaystable}{table}
+% \DeclareDelayedFloatFlavor{longtable}{table}
+$if(floatsintext)$
+$else$
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+$endif$
+
+
+% $endif$
+% $endif$
+
+
 
 $header.tex()$
 
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
 
-% \usepackage[style=apa,backend=biber]{biblatex}
-% $for(bibliography)$
-% \addbibresource{$bibliography$}
-% $endfor$
+$tightlist.tex()$
+
+$tables.tex()$
+
+$graphics.tex()$
+
+$citations.tex()$
+  
+
+$if(notimes)$
+$else$
+$if(notxfonts)$
+    $else$
+\usepackage{times}
+    $endif$
+$endif$
+
+$if(numbered-lines)$
+\usepackage{lineno}
+$endif$
+
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
+
+$title.tex()$
+
+$if(journalmode)$
+\usepackage{float}
+\makeatletter
+\let\oldtpt\ThreePartTable
+\let\endoldtpt\endThreePartTable
+\def\ThreePartTable{\@ifnextchar[\ThreePartTable@i \ThreePartTable@ii}
+\def\ThreePartTable@i[#1]{\begin{figure}
+\onecolumn
+\begin{minipage}{0.5\textwidth}
+\oldtpt[#1]
+}
+\def\ThreePartTable@ii{\begin{figure}
+\onecolumn
+\begin{minipage}{0.5\textwidth}
+\oldtpt
+}
+\def\endThreePartTable{
+\endoldtpt
+\end{minipage}
+\twocolumn
+\end{figure}}
+\makeatother
 
 
+\makeatletter
+\let\endoldlt\endlongtable		
+\def\endlongtable{
+\hline
+\endoldlt}
+\makeatother
+$else$
+\makeatletter
+\let\endoldlt\endlongtable
+\def\endlongtable{
+\hline
+\endoldlt
+}
+\makeatother
+$if(floatsintext)$
+$else$
+\RequirePackage{longtable}
+\DeclareDelayedFloatFlavor{longtable}{table}
+% \RequirePackage{threeparttablex}
+% \DeclareDelayedFloatFlavor{ThreePartTable}{table}
+$endif$
+$endif$
+
+
+
+\begin{document}
+\maketitle
 $if(numbersections)$
 \setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
 $else$
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 $endif$
 
-$if(nocite-ids)$
-\nocite{$for(nocite-ids)$$it$$sep$, $endfor$}
-$endif$
-$if(csquotes)$
-\usepackage{csquotes}
-$endif$
-$citations.tex()$
+\setlength\LTleft{0pt}
 
-$title.tex()$
-\begin{document}
-$before-body.tex()$
-$for(include-before)$
-$include-before$
-$endfor$
-$if(linestretch)$
-\setstretch{$linestretch$}
-$endif$
-$if(has-frontmatter)$
-\mainmatter
-$endif$
 $body$
 
+$before-bib.tex()$
+
+
+$biblio.tex()$
 
 $for(include-after)$
 $include-after$
 
 $endfor$
 $after-body.tex()$
+
+
 \end{document}

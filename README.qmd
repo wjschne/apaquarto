@@ -43,7 +43,7 @@ When adding this extension to an existing document, you will need to add this li
 
 ```{markdown}
 
-{{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}}
+{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 
 
 ```
@@ -76,7 +76,7 @@ format:
   apaquarto-docx: default
 ---
 
-{{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}}
+{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
 
 ```
 

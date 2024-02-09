@@ -1,12 +1,13 @@
-$if(title)$
-\title{$title$}
-$endif$
-$if(subtitle)$
-\subtitle{$subtitle$}
+$if(apatitledisplay)$
+\title{$apatitledisplay$}
 $endif$
 $if(shorttitle)$
 \shorttitle{$shorttitle$}
 $endif$
+
+
+\usepackage{etoolbox}
+
 
 $if(journal)$
 \journal{$journal$}
