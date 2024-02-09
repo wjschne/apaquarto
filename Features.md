@@ -45,9 +45,6 @@ A note under a figure or a table is set with the apa-note chunk option.
 ````
 
 
-
-A reference to {apafg-myfigure} will be replaced by "Figure 1" (or "Figure 2", "Figure 3", etc.). Again, I would have liked to use the standard quarto reference system (i.e., {@apafg-myfigure}), but I could not any way around this problem.
-
 ## APA Level 4 and 5 Headings Appear with Subsequent Text
 
 Level 4 and 5 Headings remain as true headings that appear in the navigation tab in MS Word. Yet they appear as if they are in the same paragraph with subsequent text. This feature was implemented with apaquarto.lua filter that inserts openxml tags in the headers: 
@@ -102,16 +99,9 @@ The apa7.csl file works great, except that in-text citations separate author nam
 The filter was taken from code posted by [Samuel Dodson]{https://github.com/citation-style-language/styles/issues/3748#issuecomment-430871259}.
 
 
-
-
-
-# Desired Improvements
-
-* Figure and Table labels using Quarto's `fig-` and `tbl-` prefixes.
-* Figure and Tables in .pdf jou mode do not fit automatically.
-
 # Missing Features
 
 * For .docx and .html, there is no option to place intermingled tables and figures at the end like there is in .pdf documents. I imagine that a lua filter solution is possible.
 * Create landscape pages for wide figures and tables.
 * Masked references
+* Figure and Tables in .pdf jou mode do not fit automatically.

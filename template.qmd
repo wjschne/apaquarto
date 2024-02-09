@@ -88,9 +88,8 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf:
-    keep-tex: true
     # can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou 
+    documentmode: man 
     # can be 10pt, 11pt, or 12pt
     fontsize: "12pt"
     # Integrate tables and figures in text
@@ -137,8 +136,6 @@ format:
     # Numbered Lines
     numbered-lines: false
 ---
-
-<!-- {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}} -->
 
 ```{r}
 #| label: setup
