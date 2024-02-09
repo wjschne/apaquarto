@@ -71,6 +71,7 @@ author-note:
     data-sharing: ~
     # Example: This article is based on data published in [Reference].
     # Example: This article is based on the dissertation completed by Graham (2018).    
+<<<<<<< HEAD
     related-report: This article is based on data published in @austenMansfieldPark1990. 
     # Example: [Author name] has been a paid consultant for Corporation X, which funded this study.
     conflict-of-interest: Ana Fulano earns royalties from the sale of Test X, which was used in the study.
@@ -78,6 +79,15 @@ author-note:
     financial-support: This study was supported by Grant ABC123 from Corporation X.
     # Example: The authors are grateful to [Person] for [Reason].
     gratitude: The authors are grateful for the technical assistance of Fernanda Ferenganamona during the initial design and setup of our lab equipment.
+=======
+    related-report: This article is based on data published in Pulaski (2017). 
+    # Example: Ana Fulano earns royalties from the sale of Test X.
+    conflict-of-interest: ~
+    # Example: This study was supported by Grant A123 from the National Science Foundation.
+    financial-support: ~
+    # Example: The authors are grateful for the technical assistance of Dr. X during the initial design and setup of our lab equipment.
+    gratitude: ~
+>>>>>>> f4a46ea77d24d8dfbee3a100602a34fedd4c768f
     # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
     authorship-agreements: Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
 abstract: "This document is a template demonstrating the apaquarto format."
