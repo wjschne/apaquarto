@@ -14,6 +14,27 @@ If you need all the flexibility of $\LaTeX$, I suggest using the [apa7
 document class](https://ctan.org/pkg/apa7) with knitr and the [.Rnw
 format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
 
+## New in apaquarto 3.0.0
+
+### Breaking changes
+
+- The the `apafg-` and `apatb-` prefixes are no longer used for figures
+  and tables. Use the standard Quarto prefixes (`fig-` and `tbl-`), as
+  well as the standard quarto referencing syntax (e.g,. `@fig-myplot`
+  will reference the `fig-myplot` chunk.).
+- The include statement below the metadata must be deleted. Everything
+  is done with lua filter now. Thus, apaquarto should be completely
+  independent of R.
+
+### Improvements
+
+- The title page and abstract page are now processed using lua filters
+  instead of R.
+- The .docx running header is set with a lua filter and a docx field
+  that draws from the .docx metadata.
+- The officer package is no longer required to create a new reference
+  document every time the document is rendered.
+
 ## Creating a New Article
 
 To create a new article using this format, run this command in the
@@ -49,16 +70,6 @@ format:
   apaquarto-docx: default
 ```
 
-When adding this extension to an existing document, you will need to add
-this line to the document right after its YAML metadata: (Note: The
-[include statement](https://quarto.org/docs/authoring/includes.html)
-needs to be surrounded by empty lines.)
-
-``` markdown
-
-{{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}}
-```
-
 Here is an example of what the YAML metadata and the “include” statement
 below it might look like:
 
@@ -87,8 +98,6 @@ below it might look like:
       apaquarto-docx: default
     ---
 
-    {{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}
-
 ## Example
 
 This sample document has a fuller set of parameters specified and
@@ -103,13 +112,3 @@ The .html and .pdf output (in manuscript mode) look similar. The .pdf in
 journal mode looks like this:
 
 ![Preview of .docx output](img/journalmode.png)
-
-## Known Problems
-
-- In apaquarto-pdf documents, getting tables work in `jou` mode for can
-  be tricky. The problem is that any output that uses the `longtable`
-  environment will not work in `twocolumn` mode. My solution is a bit
-  hacky—I redefined `longtable` to use `supertablular` instead. This
-  works in simple cases but undercuts some of `longtable`’s functions.
-- In apaquarto-html documents, plain markdown tables do not render to
-  APA format.
