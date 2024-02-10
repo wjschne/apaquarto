@@ -1,6 +1,6 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 3.0.0
+version: 3.1.1
 quarto-required: ">=1.4.549"
 contributes:
   formats:
@@ -11,20 +11,21 @@ contributes:
       fig-cap-location: top
       tbl-cap-location: top
       cap-location: top
-      knitr: 
-        opts_chunk: 
-          apa-figtab: true
       csl: apa.csl
       toc: false
       fig-width: 6.5
       fig-height: 6.5
       filters:
         - at: pre-ast
+          path: apafloatstoend.lua
+        - at: pre-ast
           path: apafgtb.lua
         - at: pre-ast
           path: journalmode.lua
         - at: pre-ast
           path: apafigurelatex.lua
+        - at: post-ast
+          path: apatwocolumnlatex.lua
         - apaheader.lua
         - apastriptitle.lua
         - docxfrontmatter.lua
@@ -32,7 +33,7 @@ contributes:
         - apaandcite.lua
         - latexnoindent.lua
         - at: post-quarto
-          path: apatablelatex.lua
+          path: apafloatlatex.lua
         - at: post-render
           path: apaextractfigure.lua
         - at: post-render
@@ -58,6 +59,9 @@ contributes:
         - apa.scss
       template-partials:
         - title-block.html
+      knitr: 
+        opts_chunk: 
+          dev: svglite
     pdf:
       documentclass: apa7
       pdf-engine: xelatex
@@ -77,3 +81,6 @@ contributes:
       reference-doc: apaquarto.docx
       filters: 
         - docxstyler.lua
+      knitr: 
+        opts_chunk: 
+          dev: ragg_png

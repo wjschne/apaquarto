@@ -25,7 +25,7 @@ local caption_formatter = function(p)
 end
 
 Div = function(div)
-  if div.identifier:find("^tbl-") or div.identifier:find("^fig-") then
+  if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
     if FORMAT == "html" then
       div.content = div.content:walk {Plain = caption_formatter}
     end

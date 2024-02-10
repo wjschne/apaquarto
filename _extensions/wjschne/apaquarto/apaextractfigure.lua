@@ -8,7 +8,7 @@ function Table(tb)
   local mydivs = pandoc.List()
   tb:walk {
     Div = function(div)
-      if div.identifier:find("^tbl-") or div.identifier:find("^fig-") then
+      if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
         div.content = div.content:walk {RawInline = function(ri) return {} end}
         mydivs:insert(div)
       end

@@ -4,7 +4,11 @@
 <img loading="lazy" alt="any text: you like" src="https://img.shields.io/badge/lifecycle-experimental-orange">
 
 This article template creates [APA Style 7th Edition
-documents](https://apastyle.apa.org/) in .docx, .html. and .pdf.
+documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. Because
+the .docx format is still widely used—and often required—my main
+priority was to ensure compatibility for .docx. This is still a work in
+progress, and I encourage filing a “New Issue” on GitHub if something
+does not work of if there is a feature missing.
 
 If you want to type in markdown to create a document in the APA 6th
 Edition format, I suggest using
@@ -14,7 +18,11 @@ If you need all the flexibility of $\LaTeX$, I suggest using the [apa7
 document class](https://ctan.org/pkg/apa7) with knitr and the [.Rnw
 format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
 
-## New in apaquarto 3.0.0
+## New in apaquarto 3.1.0
+
+The main goal for version 3 was to do everything with lua filters
+instead of R. It was quite a journey, but apaquarto is now completely
+independent of R, which should help folks working with other languages.
 
 ### Breaking changes
 
@@ -22,18 +30,24 @@ format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-kn
   and tables. Use the standard Quarto prefixes (`fig-` and `tbl-`), as
   well as the standard quarto referencing syntax (e.g,. `@fig-myplot`
   will reference the `fig-myplot` chunk.).
-- The include statement below the metadata must be deleted. Everything
-  is done with lua filter now. Thus, apaquarto should be completely
-  independent of R.
+- The include statement below the metadata is no longer used and must be
+  deleted. An informative error will provide instruction if the include
+  statement remains.
 
 ### Improvements
 
+- The `floatsintext` option now works in docx and html. Setting it to
+  `true`, intermingles text, figures, and tables. Setting it to `false`
+  moves all figures and tables to the end of the document.
 - The title page and abstract page are now processed using lua filters
   instead of R.
 - The .docx running header is set with a lua filter and a docx field
   that draws from the .docx metadata.
 - The officer package is no longer required to create a new reference
   document every time the document is rendered.
+- The jou (journal) mode in .pdf is better supported.
+
+[Version History](NEWS.md)
 
 ## Creating a New Article
 

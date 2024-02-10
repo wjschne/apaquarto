@@ -88,6 +88,16 @@ $if(journalmode)$
 \hline
 \endoldlt}
 \makeatother
+
+\newenvironment{twocolumntable}% environment name
+{% begin code
+\begin{table*}%
+\onecolumn%
+}%
+{%
+\twocolumn%
+\end{table*}%
+}% end code
 $else$
 \makeatletter
 \let\endoldlt\endlongtable
@@ -105,7 +115,7 @@ $else$
 $endif$
 $endif$
 
-
+\urlstyle{same}
 
 \begin{document}
 \maketitle

@@ -15,14 +15,16 @@ function Pandoc(doc)
     local isfloatref = false
 
     for i = #doc.blocks - 1, 1, -1 do
-      --print(i)
+      if doc.blocks[i+1].t == "Para" then
+      end
       if doc.blocks[i+1].t == "Para" and doc.blocks[i].t == "Div" then
+        
         if doc.blocks[i].attributes["custom-style"] == "FigureWithoutNote" then
           doc.blocks[i+1] = makeafternote(doc.blocks[i+1])
           --print(makeafternote(doc.blocks[i+1]))
           
         end
-        if doc.blocks[i].identifier:find("^tbl-") then
+        if doc.blocks[i].identifier:find("^tbl%-") then
           doc.blocks[i+1] = makeafternote(doc.blocks[i+1])
         end
       end
