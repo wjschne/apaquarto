@@ -8,7 +8,7 @@
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
-# Version 3.1.0 (2024-09-02)
+# Version 3.1.0 (2024-02-09)
 
 - The `floatsintext` option now works in docx and html. Setting it to
   `true`, intermingles text, figures, and tables. Setting it to `false`

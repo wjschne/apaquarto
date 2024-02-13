@@ -159,10 +159,7 @@ Readers are better able to follow your ideas if you differentiate sections in yo
 
 All headings should be in title case according to [these rules and exceptions](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case). 
 
-
 ## Level 2 Heading
-
-
 
 Subsections of the introduction have level 2 headings. A paragraph after a level 2 Heading is on a new line. Regular paragraphs are indented, flush left, and double-spaced.
 
@@ -175,8 +172,6 @@ You do not need to put text after a heading. You can put a higher-level heading 
 Subsections of a level 2 heading are placed under level 3 headings.
 
 ### Another Level 3 Heading
-
-
 
 #### Level 4 Heading
 
@@ -193,7 +188,6 @@ Subsequent paragraphs go on their own lines.
 ## How to Cite References
 
 I am going to cite a reference here in square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. 
-
 
 ### Parenthetical References
 
@@ -224,8 +218,6 @@ Sometimes you want to give a longer quote that needs to go in its own paragraph.
 :::{.NoIndent}
 If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. This paragraph is an example of how to do so. 
 :::
-
-
 
 ## Hypotheses, Aims, and Objectives
 
@@ -265,12 +257,6 @@ How are the data going to be analyzed?
 
 Here we describe the basic characteristics of our primary variables.
 
-
-
-
-
-
-
 ## Displaying Figures
 
 Let's make a figure. A reference label for a figure must have the prefix `fig-`, and in a code chunk, the caption must be set with `fig-cap`.
@@ -293,7 +279,6 @@ ggplot(data.frame(x = c(0, 35)), aes(x)) +
 
 To refer to any figure or table, use the `@` symbol followed by the reference label, eg., @fig-myplot. 
 
-
 ## Updated Syntax for Figures and Tables
 
 A previous version of this extension used the `apafg-` prefix for figure chunk labels and `apatb-` prefix for tables. It was always in the plan to use standard Quarto syntax as soon as possible. It is now possible. Replace all instances of `apafg-` with the standard Quarto prefix `fig-`. Likewise, replace the non-standard `apatb-` prefix with the standard Quarto prefix `tbl-`.  
@@ -312,7 +297,6 @@ One way to import an existing graphic as a figure is to use `knitr::include_grap
 knitr::include_graphics("img/sampleimage.png")
 ```
 
-
 ## Displaying Tables
 
 We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
@@ -329,8 +313,6 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |>
   padding(padding.top = 5, padding.bottom = 5)
 
 ```
-
-
 
 To refer to this table in text, put the table's reference label in curly braces like so: As seen in @tbl-mytable, the first few numbers and letters of the alphabet are displayed.
 
@@ -350,6 +332,7 @@ Table caption of a markdown table
 
 :::
 
+What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text.
 
 <!-- Add Additional Sections as Needed -->
 
@@ -365,11 +348,6 @@ Every study has limitations. Based on this study, some additional steps might in
 
 Let's sum this up.
 
-
-
-What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text.
-
-
 # References
 
 <!-- References will auto-populate in the refs div below -->
@@ -377,26 +355,8 @@ What if you want the tables and figures to be at the end of the document? In the
 ::: {#refs}
 :::
 
-
-
-<!-- Delete any unnecessary sections or pagebreaks. -->
+<!-- Delete Appendix if not needed. -->
 
 # Appendix
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
-
-
-
-
-
-<!-- I like my tables and figures intermingled with the text, -->
-
-<!-- but all tables can go here. -->
-
-<!-- Uncomment the pagebreaks as needed-->
-
-<!-- {{< pagebreak >}} -->
-
-<!-- Figures can go here. -->
-
-<!-- {{< pagebreak >}} -->

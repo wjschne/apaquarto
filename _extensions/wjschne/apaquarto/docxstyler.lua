@@ -26,7 +26,9 @@ customclasses = {
   "Compact",
   "NoIndent",
   "NextBlockText",
-  "AfterWithoutNote"
+  "AfterWithoutNote",
+  "H4",
+  "H5"
 }
 
 -- Consult some value
@@ -34,7 +36,7 @@ _set = utils_Set(customclasses)
 
 
 -- https://jmablog.com/post/pandoc-filters/
-function Div (elem)
+local function customstyler(elem)
     if _set[elem.classes[1]] then
       elem.attributes['custom-style'] = elem.classes[1]
       return elem
@@ -42,3 +44,8 @@ function Div (elem)
       return elem
     end
 end
+
+return {
+  {Span = customstyler},
+  {Div = customstyler}
+}

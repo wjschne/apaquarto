@@ -12,7 +12,7 @@ engine: knitr
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
-# Version 3.1.0 (2024-09-02)
+# Version 3.1.0 (2024-02-09)
 
 - The `floatsintext` option now works in docx and html. Setting it to `true`, intermingles text, figures, and tables. Setting it to `false` moves all figures and tables to the end of the document.
 
@@ -27,7 +27,6 @@ The main goal for version 3 was to do everything with lua filters instead of R. 
 
 ## Improvements
 
-
 ### .docx
 
 - The title page and abstract page are now processed using lua filters instead of R.
@@ -37,8 +36,6 @@ The main goal for version 3 was to do everything with lua filters instead of R. 
 ### .pdf
 
 - The jou (journal) mode in .pdf is better supported. There are a few hacky solutions that need a bit of work. 
-
-
 
 # Version 2.0.0 (2023-11-10)
 
