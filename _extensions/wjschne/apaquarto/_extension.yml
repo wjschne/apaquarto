@@ -7,7 +7,7 @@ contributes:
     common:
       execute:
         echo: false
-      citeproc: true
+      citeproc: false
       fig-cap-location: top
       tbl-cap-location: top
       cap-location: top
@@ -32,7 +32,6 @@ contributes:
         - apastriptitle.lua
         - docxfrontmatter.lua
         - apaquote.lua
-        - apaandcite.lua
         - latexnoindent.lua
         - at: post-quarto
           path: apafloatlatex.lua
@@ -46,6 +45,10 @@ contributes:
           path: apacaption.lua
         - at: post-render
           path: apaafternote.lua
+        - at: post-render
+          path: citeprocr.lua
+        - at: post-render
+          path: apaandcite.lua
     native: default
     html:
       toc: true

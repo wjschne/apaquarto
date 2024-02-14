@@ -2,7 +2,7 @@ local maskedcitations = pandoc.List()
 
 local function getmasked(meta)
   
-  if meta["masked-citations"] then
+  if meta["masked-citations"] and meta["mask"] and pandoc.utils.stringify(meta["mask"]) == "true" then
     local maskedstrings = meta["masked-citations"]
     
     
