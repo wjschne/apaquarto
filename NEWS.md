@@ -3,10 +3,13 @@
 
 # Future Version Wishlist
 
-- Masked references
 - Create landscape pages for wide figures and tables.
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
+
+# Version 3.2.0 (2024-02-13)
+
+- Added support for masked references.
 
 # Version 3.1.0 (2024-02-09)
 

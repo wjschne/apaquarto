@@ -18,7 +18,7 @@ If you need all the flexibility of $\LaTeX$, I suggest using the [apa7
 document class](https://ctan.org/pkg/apa7) with knitr and the [.Rnw
 format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
 
-## New in apaquarto 3.1.0
+## New in apaquarto 3.2.0
 
 The main goal for version 3 was to do everything with lua filters
 instead of R. It was quite a journey, but apaquarto is now completely
@@ -46,6 +46,8 @@ independent of R, which should help folks working with other languages.
 - The officer package is no longer required to create a new reference
   document every time the document is rendered.
 - The jou (journal) mode in .pdf is better supported.
+- Setting the `mask` field to true will mask all citations listed in the
+  `masked-citations` field.
 
 [Version History](NEWS.md)
 

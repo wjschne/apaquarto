@@ -86,6 +86,11 @@ keywords: [keyword1, keyword2, keyword3]
 # If true, tables and figures are mingled with the text. If false, figures appear at end of the document (unless pdf is in jou mode)
 floatsintext: false
 bibliography: bibliography.bib
+# Masks references that appear in the masked-citations list
+mask: true
+masked-citations:
+  - schneider2012cattell
+  - schneider2015intelligence
 format:
   # apaquarto-native: default
   apaquarto-docx: default
@@ -119,8 +124,6 @@ format:
     draftfirst: false
     # Puts draft watermark on all pages
     draftall: false
-    # Masks references that are marked as the author's own
-    mask: false
     # Journal title (e.g., American Psychologist)
     journal: ~
     # Date, volume, number, pages (e.g., "2024, Vol. 1, No. 1, 1--4")
@@ -208,6 +211,14 @@ Here are some variations on parenthetical citations:
 -   @cohen2003applied [pp. 101--103] said specific things on specific pages.
 
 -   Place the reference's year by itself with a minus sign: [-@CameronTrivedi2013]
+
+### Masked references
+
+Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can "mask" any citation you wish by setting the `mask` field in the metadata yaml to `true`. Then list all citations that need to be masked in the `masked-citations` field as shown in this template. If the `mask` field is set to `false`, they will print as ususual. Depending if it is an inline or parenthetical citation,  will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". 
+
+I have set two of my publications to be masked. In previous studies, things were asserted  [@schneider2015intelligence]. @schneider2012cattell asserted them emphatically.
+
+You can mix masked and unmasked citations [@cohen2003applied; @schneider2015intelligence].
 
 ## Block Quotes and Suppressing Indentation
 
