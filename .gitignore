@@ -27,3 +27,5 @@ Features.html
 /.luarc.json
 test.*
 test_files/
+test_*
+testdocs.R

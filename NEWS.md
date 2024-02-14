@@ -7,6 +7,12 @@
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.2.1 (2024-02-13)
+
+- Fixed error when no citations are present [\#33](issues/33)
+- Fixed .pdf line number problem that crept back in somehow
+  [\#34](issues/34)
+
 # Version 3.2.0 (2024-02-13)
 
 - Added support for masked references.
@@ -22,6 +28,8 @@
 The main goal for version 3 was to do everything with lua filters
 instead of R. It was quite a journey, but apaquarto is now completely
 independent of R, which should help folks working with other languages.
+
+- fixed tightlist error [\#31](issues/31)
 
 ## Breaking changes
 
