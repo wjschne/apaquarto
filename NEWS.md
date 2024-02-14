@@ -7,7 +7,7 @@
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
-# Version 3.2.1 (2024-02-13)
+# Version 3.2.1 (2024-02-14)
 
 - Fixed error when no citations are present [\#33](issues/33)
 - Fixed .pdf line number problem that crept back in somehow
