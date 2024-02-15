@@ -14,12 +14,15 @@
 
 # Version 3.2.1 (2024-02-14)
 
-- Fixed error when no citations are present \[#33\]
-- Fixed .pdf line number problem that crept back in somehow (#34)
+- Fixed error when no citations are present
+  [\#33](https://github.com/wjschne/apaquarto/issues/33)
+- Fixed .pdf line number problem that crept back in somehow
+  [\#34](https://github.com/wjschne/apaquarto/issues/34)
 
 # Version 3.2.0 (2024-02-13)
 
-- Added support for masked references. (#27)
+- Added support for masked references.
+  [\#27](https://github.com/wjschne/apaquarto/issues/27)
 
 # Version 3.1.0 (2024-02-09)
 
@@ -50,7 +53,9 @@ independent of R, which should help folks working with other languages.
 - The title page and abstract page are now processed using lua filters
   instead of R.
 - The officer package is no longer required to create a new reference
-  document every time the document is rendered (#5 \#29). Now, a lua
+  document every time the document is rendered
+  [\#5](https://github.com/wjschne/apaquarto/issues/5)
+  [\#29](https://github.com/wjschne/apaquarto/issues/29). Now, a lua
   filter looks for the `shorttitle` field in your yaml. If that is not
   found, the `title` and `subtitle` fields are used instead. The running
   header is assigned to the `description` field in the quarto metadata.
@@ -61,17 +66,26 @@ independent of R, which should help folks working with other languages.
 
 ### .pdf
 
-- Can number lines (#25)
-- Fixed tightlist error (#31)
+- Can number lines
+  [\#25](https://github.com/wjschne/apaquarto/issues/25)
+- Fixed tightlist error
+  [\#31](https://github.com/wjschne/apaquarto/issues/31)
 - The jou (journal) mode in .pdf is better supported. There are a few
-  hacky solutions that need a bit of work. (#2 \#27)
+  hacky solutions that need a bit of work.
+  [\#2](https://github.com/wjschne/apaquarto/issues/2)
+  [\#27](https://github.com/wjschne/apaquarto/issues/27)
 
 # Version 2.0.0 (2023-11-10)
 
-- Many small fixes (#15)
-- Support for markdown tables (#9 \#21)
-- Support for .html and .pdf became more solid. (#22)
-- CReditT taxonomy added for author roles. (#3)
+- Many small fixes
+  [\#15](https://github.com/wjschne/apaquarto/issues/15)
+- Support for markdown tables
+  [\#9](https://github.com/wjschne/apaquarto/issues/9)
+  [\#21](https://github.com/wjschne/apaquarto/issues/21)
+- Support for .html and .pdf became more solid.
+  [\#22](https://github.com/wjschne/apaquarto/issues/22)
+- CReditT taxonomy added for author roles.
+  [\#3](https://github.com/wjschne/apaquarto/issues/3)
 
 # Version 1.0.0 (2023-03-05)
 
