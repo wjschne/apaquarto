@@ -14,7 +14,7 @@
 
 # Version 3.2.1 (2024-02-14)
 
-- Fixed error when no citations are present (#33)
+- Fixed error when no citations are present \#33
 - Fixed .pdf line number problem that crept back in somehow (#34)
 
 # Version 3.2.0 (2024-02-13)
