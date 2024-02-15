@@ -9,13 +9,12 @@
 
 # Version 3.2.1 (2024-02-14)
 
-- Fixed error when no citations are present [\#33](issues/33)
-- Fixed .pdf line number problem that crept back in somehow
-  [\#34](issues/34)
+- Fixed error when no citations are present (#33)
+- Fixed .pdf line number problem that crept back in somehow (#34)
 
 # Version 3.2.0 (2024-02-13)
 
-- Added support for masked references.
+- Added support for masked references. (#27)
 
 # Version 3.1.0 (2024-02-09)
 
@@ -28,8 +27,6 @@
 The main goal for version 3 was to do everything with lua filters
 instead of R. It was quite a journey, but apaquarto is now completely
 independent of R, which should help folks working with other languages.
-
-- fixed tightlist error [\#31](issues/31)
 
 ## Breaking changes
 
@@ -48,25 +45,28 @@ independent of R, which should help folks working with other languages.
 - The title page and abstract page are now processed using lua filters
   instead of R.
 - The officer package is no longer required to create a new reference
-  document every time the document is rendered. Now, a lua filter looks
-  for the `shorttitle` field in your yaml. If that is not found, the
-  `title` and `subtitle` fields are used instead. The running header is
-  assigned to the `description` field in the quarto metadata. This value
-  will show up in the `Comments` field in the rendered .docx file, which
-  is then inserted into the field box in the header.
+  document every time the document is rendered (#5 \#29). Now, a lua
+  filter looks for the `shorttitle` field in your yaml. If that is not
+  found, the `title` and `subtitle` fields are used instead. The running
+  header is assigned to the `description` field in the quarto metadata.
+  This value will show up in the `Comments` field in the rendered .docx
+  file, which is then inserted into the field box in the header.
 - The .docx running header is set with a lua filter and a docx field
   that draws from the .docx metadata.
 
 ### .pdf
 
+- Can number lines (#25)
+- Fixed tightlist error (#31)
 - The jou (journal) mode in .pdf is better supported. There are a few
-  hacky solutions that need a bit of work.
+  hacky solutions that need a bit of work. (#2 \#27)
 
 # Version 2.0.0 (2023-11-10)
 
-- Many small fixes
-- Support for .html and .pdf became more solid.
-- CReditT taxonomy added for author roles.
+- Many small fixes (#15)
+- Support for markdown tables (#9 \#21)
+- Support for .html and .pdf became more solid. (#22)
+- CReditT taxonomy added for author roles. (#3)
 
 # Version 1.0.0 (2023-03-05)
 

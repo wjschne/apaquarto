@@ -13,16 +13,16 @@ Pandoc = function(doc)
       if doc.blocks[i].identifier then
         if doc.blocks[i].identifier:find("^tbl%-") then
           if FORMAT == "docx" then
-             tbl[#tbl + 1] = pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
+             table.insert(tbl, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
           end
-          tbl[#tbl + 1] = doc.blocks[i]
+          table.insert(tbl, 1, doc.blocks[i])
           doc.blocks:remove(i)
         else
           if doc.blocks[i].identifier:find("^fig%-") then
             if FORMAT == "docx" then
-             fig[#fig + 1] = pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
+             table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
             end
-            fig[#fig + 1] = doc.blocks[i]
+            table.insert(fig, 1, doc.blocks[i])
             doc.blocks:remove(i)
           else
             local hasfig = false
@@ -37,9 +37,9 @@ Pandoc = function(doc)
             }
             if hasfig then
               if FORMAT == "docx" then
-                fig[#fig + 1] = pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
+                table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
               end
-              fig[#fig + 1] = doc.blocks[i]
+              table.insert(fig, 1, doc.blocks[i])
               doc.blocks:remove(i)
               hasfig = false
             end

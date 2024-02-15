@@ -92,7 +92,6 @@ masked-citations:
   - schneider2012cattell
   - schneider2015intelligence
 format:
-  # apaquarto-native: default
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf:
@@ -284,7 +283,7 @@ ggplot(data.frame(x = c(0, 35)), aes(x)) +
                 geom = "area",
                 n = 1000,
                 color = NA,
-                fill = "dodgerblue4") +
+                fill = "#41448780") +
   theme_void(base_size = 18)
 ```
 
@@ -319,9 +318,8 @@ We can make a table the same way as a figure. Generating a table that conforms t
 #| apa-twocolumn: true
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |> 
   flextable() %>%
-  theme_apa() %>%
-  line_spacing(part = "all") %>%
-  padding(padding.top = 5, padding.bottom = 5)
+  theme_apa() |> 
+  line_spacing(part = "all", space = 1)
 
 ```
 

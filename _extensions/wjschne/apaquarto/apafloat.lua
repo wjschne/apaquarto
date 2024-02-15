@@ -39,7 +39,6 @@ function Pandoc (doc)
         }
     end
     if isfigure or istable then
-      --print(doc.blocks[i])
       if istable and FORMAT == "docx" then
         doc.blocks[i].content = doc.blocks[i].content:walk {
         Table = function(tb) 
@@ -53,19 +52,7 @@ function Pandoc (doc)
                 
         end
             }
-            
---          local newdiv = pandoc.Div(doc.blocks[i])
---          newdiv.classes:insert("cell")
---          newdiv.attributes = doc.blocks[i].attributes
---          if doc.blocks[i].attributes["apa-note"] then
---            newdiv.classes:insert("FigureWithNote")
---            newdiv.attributes["custom-style"] = "FigureWithNote"
---          else
---            newdiv.classes:insert("FigureWithoutNote")
---            newdiv.attributes["custom-style"] = "FigureWithoutNote"
---          end 
---          
---          doc.blocks[i] = newdiv
+
       end
       
       

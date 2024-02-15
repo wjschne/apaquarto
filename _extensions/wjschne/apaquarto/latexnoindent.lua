@@ -18,9 +18,6 @@ if FORMAT:match 'latex' then
             return p
           end
         }
-        --pandoc.RawBlock('latex', '\\setlength\\parindent{0in}'),
-        --div,
-        --pandoc.RawBlock('latex', indenter)
       return(div)
     end
   end

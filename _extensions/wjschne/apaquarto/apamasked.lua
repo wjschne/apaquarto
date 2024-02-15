@@ -12,7 +12,6 @@ local function getmasked(meta)
     
 
     local convert2meta = false
-    --print(pandoc.utils.type(meta.bibliography))
     for i, v in ipairs(meta.bibliography or {}) do
       if pandoc.utils.type(v) == "Inline" then
         convert2meta = true
@@ -31,7 +30,6 @@ local function getmasked(meta)
       else
         meta.bibliography = {{pandoc.Str(maskedfile)}}
     end
-    --print(meta.bibliography)
     return (meta)
     
   end
