@@ -7,6 +7,10 @@
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.2.3 (2024-02-19)
+
+- Add support for callout boxes in .pdf
+
 # Version 3.2.2 (2024-02-15)
 
 - Fixed bug so that tables and figures appear in correct order when

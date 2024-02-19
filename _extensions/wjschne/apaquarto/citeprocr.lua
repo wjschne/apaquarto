@@ -39,6 +39,8 @@ return {
   },
   {
     Pandoc = function(doc) 
+      doc.meta.references = pandoc.utils.references(doc)
+      doc.meta.bibliography = nil
       return pandoc.utils.citeproc(doc) 
       end
     

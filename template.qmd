@@ -77,7 +77,7 @@ author-note:
     # Example: This study was supported by Grant [Grant Number] from [Funding Source].
     financial-support: This study was supported by Grant ABC123 from Corporation X.
     # Example: The authors are grateful to [Person] for [Reason].
-    gratitude: The authors are grateful for the technical assistance of Fernanda Ferenganamona during the initial design and setup of our lab equipment.
+    gratitude: The authors are grateful for the technical assistance of Fernanda Ferenganamono during the initial design and setup of our lab equipment.
     # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
     authorship-agreements: Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
 abstract: "This document is a template demonstrating the apaquarto format."

@@ -26,7 +26,7 @@ local function getmasked(meta)
 
     if meta.bibliography then
       local maskedfile = "_extensions/wjschne/apaquarto/maskedbibliography.bib"
-      meta.bibliography:insert({pandoc.Str(maskedfile)})
+        meta.bibliography:insert({pandoc.Str(maskedfile)})
       else
         meta.bibliography = {{pandoc.Str(maskedfile)}}
     end
