@@ -14,6 +14,7 @@ engine: knitr
 # Version 3.2.3 (2024-02-19)
 
 - Add support for callout boxes in .pdf
+- Fixed .pdf line number problem that crept back in somehow yet again [#34](https://github.com/wjschne/apaquarto/issues/34)
 
 # Version 3.2.2 (2024-02-15)
 
