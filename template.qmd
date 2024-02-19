@@ -137,7 +137,7 @@ format:
     # Hides correspondence text
     nocorrespondence: false
     # Numbered Lines
-    numbered-lines: true
+    numbered-lines: false
 ---
 
 ```{r}
