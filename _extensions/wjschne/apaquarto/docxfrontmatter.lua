@@ -426,7 +426,12 @@ return {
       if meta["shorttitle"] then
         for i, v in ipairs(meta["shorttitle"]) do
           if v.t == "Str" then
-            v.text = string.upper(v.text)
+            if v.text:match("’") then
+              v.text = v.text:gsub("’","fixcurlyquote")
+
+            end
+            v.text = string.gsub(string.upper(v.text), string.upper("fixcurlyquote"), "’")
+            
           end
         end
         meta.description = meta["shorttitle"]
