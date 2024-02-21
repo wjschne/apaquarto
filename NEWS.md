@@ -12,6 +12,7 @@
 - Add support for callout boxes in .pdf
 - Fixed .pdf line number problem that crept back in somehow yet again
   [\#34](https://github.com/wjschne/apaquarto/issues/34)
+- Fixed problem with curly single quote in .docx running header
 
 # Version 3.2.2 (2024-02-15)
 
