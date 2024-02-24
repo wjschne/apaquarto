@@ -80,11 +80,13 @@ local are_affiliations_different = function(authors)
       --Check if affilations are the name for each authors
       for i, a in ipairs(authors) do
         superii = ""
-        for j, aff in ipairs(a.affiliations) do
-          if j > 1 then
-            superii = superii .. ","
+        if a.affiliations then
+          for j, aff in ipairs(a.affiliations) do
+            if j > 1 then
+              superii = superii .. ","
+            end
+            superii = superii .. aff.number
           end
-          superii = superii .. aff.number
         end
 
         if (not hash[superii]) then
@@ -121,11 +123,13 @@ local get_author_paragraph = function(authors, different)
         authordisplay:extend({pandoc.Str(sep .. stringify(a.name.literal))})
         
         superii = ""
-        for j, aff in ipairs(a.affiliations) do
-          if j > 1 then
-            superii = superii .. ","
+        if a.affiliations then
+          for j, aff in ipairs(a.affiliations) do
+            if j > 1 then
+              superii = superii .. ","
+            end
+            superii = superii .. aff.number
           end
-          superii = superii .. aff.number
         end
         
         if different then
