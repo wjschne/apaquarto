@@ -11,6 +11,7 @@
 # Version 3.2.4 (2024-02-24)
 
 - Fixed problem with abstracts with multiple paragraphs  [\#36](https://github.com/wjschne/apaquarto/issues/36)
+- Fixed centering problem with author div in .html
 
 # Version 3.2.3 (2024-02-19)
 
