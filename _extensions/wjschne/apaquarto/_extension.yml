@@ -86,6 +86,8 @@ contributes:
       reference-doc: apaquarto.docx
       filters: 
         - docxstyler.lua
+        - at: post-render
+          path: docxlinenumber.lua
       knitr: 
         opts_chunk: 
           dev: ragg_png

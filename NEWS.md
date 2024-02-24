@@ -13,6 +13,7 @@
 - Fixed problem with abstracts with multiple paragraphs  [\#36](https://github.com/wjschne/apaquarto/issues/36)
 - Fixed centering problem with author div in .html
 - Fixed problem with authors with no affiliation
+- Numbered lists available for .docx format [\#25](https://github.com/wjschne/apaquarto/issues/25) [\#34](https://github.com/wjschne/apaquarto/issues/25)
 
 # Version 3.2.3 (2024-02-19)
 

@@ -18,7 +18,7 @@ If you need all the flexibility of $\LaTeX$, I suggest using the [apa7
 document class](https://ctan.org/pkg/apa7) with knitr and the [.Rnw
 format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
 
-## New in apaquarto 3.2.0
+## New in apaquarto 3.2.4
 
 The main goal for version 3 was to do everything with lua filters
 instead of R. It was quite a journey, but apaquarto is now completely
@@ -48,6 +48,8 @@ independent of R, which should help folks working with other languages.
 - The jou (journal) mode in .pdf is better supported.
 - Setting the `mask` field to true will mask all citations listed in the
   `masked-citations` field.
+- Numbered lines available in .docx and .pdf formats when the
+  `numbered-lines` field is set to `true`.
 
 [Version History](NEWS.md)
 
@@ -113,6 +115,16 @@ below it might look like:
     format:
       apaquarto-docx: default
     ---
+
+
+    ## Updating to the latest version of apaquarto
+
+    In the terminal, run
+
+    ``` bash
+    quarto update wjschne/apaquarto
+
+\`\`\`
 
 ## Example
 

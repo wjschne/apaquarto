@@ -91,6 +91,8 @@ mask: true
 masked-citations:
   - schneider2012cattell
   - schneider2015intelligence
+# Numbered lines (.pdf and .docx only)
+numbered-lines: false
 format:
   apaquarto-docx: default
   apaquarto-html: default
@@ -136,8 +138,6 @@ format:
     duedate: 12/22/2024
     # Hides correspondence text
     nocorrespondence: false
-    # Numbered Lines
-    numbered-lines: false
 ---
 
 ```{r}
