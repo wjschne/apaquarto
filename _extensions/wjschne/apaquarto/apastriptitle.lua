@@ -5,7 +5,6 @@ end
 
 Meta = function(meta)
   meta.apatitle = meta.title
-  local mytitle = meta.title
   meta.apatitledisplay = meta.title
   if meta.subtitle then
         if not ends_with(meta.apatitledisplay[#meta.apatitledisplay], ":") then

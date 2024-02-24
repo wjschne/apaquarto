@@ -1,7 +1,9 @@
 body {line-height: 2em; font-size: 12pt}
 
 p {text-indent: 0.5in; margin: 0; line-height: 2em}
-
+div.Author p {
+  text-indent: 0;
+}
 .FigureTitle {font-weight: bold; margin: 5pt 0; font-size: 12pt; color: black;}
 .FigureTitle p {text-indent: 0; text-align: left;}
 .FigureNote p {text-indent: 0; margin: 0; padding: 0}

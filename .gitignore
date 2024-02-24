@@ -29,3 +29,4 @@ test.*
 test_files/
 test_*
 testdocs.R
+NEWS.html
