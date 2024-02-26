@@ -1,0 +1,13 @@
+---
+title: "Alternatives to apaquarto"
+---
+
+
+The ability to automate APA style via $\LaTeX$ has been around for some time---first via [apa](https://ctan.org/pkg/apa) (APA Style, 5th Edition), then via [apa6](https://ctan.org/pkg/apa6) (APA Style, 6th Edition), and now via [apa7](https://ctan.org/pkg/apa7) (APA Style, 7th Edition). The apaquarto package uses [apa7](https://ctan.org/pkg/apa7) to create .pdf documents. When I need the full flexibility of $\LaTeX$, I use knitr with .Rnw files to create .pdf documents via apa7.
+
+Unfortunately, most psychology journals require submissions in MS Word (and most collaborators do as well). Learning $\LaTeX$ is fun for some people (e.g., me), but most will not bother. With the arrival of Rmarkdown, it became possible to automate document production with a system that takes just a few minutes to learn. 
+
+The [papaja](https://github.com/crsh/papaja) package by Frederick Aust uses Rmarkdown syntax and does a fantastic job of creating APA-style (6th Edition) documents in .pdf and [gets close to perfect .docx output](https://frederikaust.com/papaja_man/limitations.html#microsoft-word-documents). With a bit of tweaking, [papaja can do most of APA Style (7th Edition)](https://github.com/crsh/papaja/issues/342) for .pdf documents.
+
+Matti Vuore is working on an [APA-like quarto extension](https://github.com/mvuorre/quarto-apaish) that uses [Typst](https://typst.app/) instead of $\LaTeX$. As of 2024-02-25, there are aspects of APA style missing, but it looks promising. Because Typst offers many advantages over $\LaTeX$ (e.g., easy reconfiguration and much faster rendering), I would like to adapt apaquarto to use Typst as well.
+

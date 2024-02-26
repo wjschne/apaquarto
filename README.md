@@ -88,43 +88,34 @@ format:
   apaquarto-docx: default
 ```
 
-Here is an example of what the YAML metadata and the “include” statement
-below it might look like:
+Here is a minimal example of what the YAML metadata might look like:
 
-    ---
-    title: "My Paper's Title: A Full Analysis of Everything"
-    shorttitle: "My Paper's Title"
-    author:
-      - name: W. Joel Schneider
-        corresponding: true
-        orcid: 0000-0002-8393-5316
-        email: schneider@temple.edu
-        affiliations:
-          - name: Temple University
-            department: College of Education and Human Development
-            address: 358 Ritter Hall
-            city: Philadelphia
-            region: PA
-            postal-code: 19122-6091
-    abstract: "This is my abstract."
-    keywords: [keyword1, keyword2]
-    author-note:
-      disclosures:
-        conflict of interest: The author has no conflict of interest to declare.
-    bibliograpy: mybibfile.bib     
-    format:
-      apaquarto-docx: default
-    ---
-
-
-    ## Updating to the latest version of apaquarto
-
-    In the terminal, run
-
-    ``` bash
-    quarto update wjschne/apaquarto
-
-\`\`\`
+``` yaml
+---
+title: "My Paper's Title: A Full Analysis of Everything"
+shorttitle: "My Paper's Title"
+author:
+  - name: W. Joel Schneider
+    corresponding: true
+    orcid: 0000-0002-8393-5316
+    email: schneider@temple.edu
+    affiliations:
+      - name: Temple University
+        department: College of Education and Human Development
+        address: 358 Ritter Hall
+        city: Philadelphia
+        region: PA
+        postal-code: 19122-6091
+abstract: "This is my abstract."
+keywords: [keyword1, keyword2]
+author-note:
+  disclosures:
+    conflict of interest: The author has no conflict of interest to declare.
+bibliograpy: mybibfile.bib     
+format:
+  apaquarto-docx: default
+---
+```
 
 ## Example
 
@@ -140,3 +131,19 @@ The .html and .pdf output (in manuscript mode) look similar. The .pdf in
 journal mode looks like this:
 
 ![Preview of .docx output](img/journalmode.png)
+
+## Updating to the latest version of apaquarto
+
+In the terminal, run
+
+``` bash
+quarto update wjschne/apaquarto
+```
+
+## Removing apaquarto
+
+In the terminal, run
+
+``` bash
+quarto remove wjschne/apaquarto
+```

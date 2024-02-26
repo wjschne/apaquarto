@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+  render: 
+    - index.qmd
+    - installation.qmd
+    - alternatives.qmd
+
+website:
+  title: "APA Style Documents with apaquarto"
+  navbar:
+    left:
+      - text: Introduction
+        href: index.qmd
+      - installation.qmd
+      - alternatives.qmd
+
+bibliography: bibliography.bib
+
+knitr: true
+
+format:
+  html:
+    theme: spacelab
+
+
+

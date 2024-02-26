@@ -1,0 +1,127 @@
+---
+title: "Installation"
+engine: knitr
+---
+
+Installing apaquarto is not hard, but it takes a bit more effort than installing a standalone program. There are four main steps:
+
+1. Install Quarto
+2. Install a programming environment (e.g., RStudio, VS Code, Jupyter) along with a programming language (e.g., R, Python, Julia).
+3. Install apaquarto
+
+
+## Install Quarto
+
+The current stable version of Quarto can be installed [here](https://quarto.org/docs/get-started/). 
+
+:::{.callout-note .column-margin}
+The stable version of Quarto has everything apaquarto needs. However, if you are feeling bold and zesty, you can get the latest-but-not-fully-vetted features of Quarto via the [pre-release builds](https://quarto.org/docs/download/prerelease.html). This is what I use, and I update Quarto frequently. If it does not behave as expected, you can always revert back to the stable version. 
+:::
+
+## Select Your Environment for Using Quarto
+
+At the [same link for installing Quarto](https://quarto.org/docs/get-started/), there are links for selecting an environment for using Quarto. 
+
+[RStudio](https://posit.co/download/rstudio-desktop/) will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto. If you are an R user, you will probably want to select [RStudio](https://posit.co/download/rstudio-desktop/). Using the links there, 1) install R for your operation system (Windows, Mac, or Linux) and 2) install RStudio Desktop.
+
+If you use Python, Julia, or Observable as your primary tool for analyzing data, you can use RStudio, but using other tools you already know might be more comfortable (e.g., VS Code, Jupyter, NeoVim, or any other text editor). Some R users really like VS Code. Everyone has options---Quarto won't box you in.
+
+
+# Install apaquarto
+
+Open your chosen environment (e.g., RStudio, VS Code). Open the terminal. Unless you have configured your RStudio differently, it is in the lower left pane next to the console (see @fig-console). It is okay if your console looks different from mine.
+
+In RStudio, the terminal is different from the console. The console is for entering R commands. 
+
+![RStudio console](console.png){#fig-console}
+
+
+In the terminal, you can enter commands that affect your computer directly. Usually, the terminal tab is right beside the console (see @fig-terminal). It is okay if your terminal looks different from mine.
+
+
+:::{.callout-note .column-margin}
+If there is no terminal next to the console, then in the RStudio menu, select *Tools &rarr; Terminal &rarr; New Terminal.* The Alt-Shift-R shortcut also creates a new terminal.
+:::
+
+![RStudio terminal. ](terminal.png){#fig-terminal}
+
+### Creating a new project with apaquarto
+
+
+In the terminal, check if the directory is where you want to create a new folder. If you know your way around terminals (e.g., you know what `cd ..` means), you can navigate to wherever you need to go. If this is new to you, try this instead:
+
+1. In the RStudio menu, select *Session &rarr; Set Working Directory &rarr; Choose Working Directory*
+2. Navigate to a folder where you want to create a new folder.
+
+
+:::{.callout-note .column-margin}
+In many terminals, the "paste" shortcut is different from what you might be used to, so if your usual method does not work, try right-clicking and selecting `paste`. If all else fails, just type the command.
+:::
+
+
+
+In the terminal, paste the following command and enter:
+
+```{bash}
+#| eval: false
+quarto use template wjschne/apaquarto
+```
+
+
+Entering the command above will prompt a question about whether you trust the author of the extension to not run malicious code. If Yes, you will be prompted to name a new folder where the extension will be installed with an example document with the name of the folder and a file extension of .qmd. The example document has most of the instructions you will likely need.
+
+### Adding apaquarto to an Existing Document
+
+To add apquarto to an existing .qmd document:
+
+```{bash}
+#| eval: false
+quarto add wjschne/apaquarto
+```
+
+To make a .docx file, add this to your .qmd file's yaml `format` option:
+
+``` yaml
+format:
+  apaquarto-docx: default
+```
+
+You can also add .html and .pdf formats as needed:
+
+``` yaml
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf: default
+```
+
+
+Here is a minimal example of what the YAML metadata might look like:
+
+``` yaml
+---
+title: "My Paper's Title: A Full Analysis of Everything"
+shorttitle: "My Paper's Title"
+author:
+  - name: W. Joel Schneider
+    corresponding: true
+    orcid: 0000-0002-8393-5316
+    email: schneider@temple.edu
+    affiliations:
+      - name: Temple University
+        department: College of Education and Human Development
+        address: 358 Ritter Hall
+        city: Philadelphia
+        region: PA
+        postal-code: 19122-6091
+abstract: "This is my abstract."
+keywords: [keyword1, keyword2]
+author-note:
+  disclosures:
+    conflict of interest: The author has no conflict of interest to declare.
+bibliograpy: mybibfile.bib     
+format:
+  apaquarto-docx: default
+---
+```
+

@@ -62,9 +62,9 @@ format:
 
 
 
-Here is an example of what the YAML metadata and the "include" statement below it might look like:
+Here is a minimal example of what the YAML metadata might look like:
 
-```         
+``` yaml         
 ---
 title: "My Paper's Title: A Full Analysis of Everything"
 shorttitle: "My Paper's Title"
@@ -89,17 +89,11 @@ bibliograpy: mybibfile.bib
 format:
   apaquarto-docx: default
 ---
-
-
-## Updating to the latest version of apaquarto
-
-In the terminal, run
-
-``` bash
-quarto update wjschne/apaquarto
 ```
 
-```
+
+
+
 
 ## Example
 
@@ -114,8 +108,21 @@ The .html and .pdf output (in manuscript mode) look similar. The .pdf in journal
 ![Preview of .docx output](img/journalmode.png)
 
 
+## Updating to the latest version of apaquarto
+
+In the terminal, run
+
+``` bash
+quarto update wjschne/apaquarto
+```
 
 
+## Removing apaquarto
 
+In the terminal, run
+
+``` bash
+quarto remove wjschne/apaquarto
+```
 
 

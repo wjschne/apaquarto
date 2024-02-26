@@ -98,7 +98,7 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man 
+    documentmode: jou 
     # can be 10pt, 11pt, or 12pt
     fontsize: "12pt"
     # a4 paper if true, letter size if false

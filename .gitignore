@@ -19,7 +19,6 @@ template.docx.md
 template_files/
 README.qmd
 try*
-nul
 template.pdf.native
 template.pdf.md
 tempate.docx.docx
@@ -30,3 +29,4 @@ test_files/
 test_*
 testdocs.R
 NEWS.html
+/.quarto/
