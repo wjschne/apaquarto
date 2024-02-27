@@ -22,10 +22,15 @@ end
 local processfloat = function(float)
 
 
-  local floatposition = "[!htb]"
+  local floatposition = "[!htbp]"
   local p = {}
   if float.attributes["fig-pos"] then
-    floatposition = "[" .. float.attributes["fig-pos"] .. "]"
+    if pandoc.utils.stringify(float.attributes["fig-pos"]) == "false" then
+      floatposition = ""
+    else
+      floatposition = "[" .. float.attributes["fig-pos"] .. "]"
+    end
+    
   end
   
   if float.type == "Table" then

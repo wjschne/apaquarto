@@ -105,7 +105,7 @@ The apaquarto-docx form looks like this:
 
 The .html and .pdf output (in manuscript mode) look similar. The .pdf in journal mode looks like this:
 
-![Preview of .docx output](img/journalmode.png)
+![Preview of .pdf output in journal mode](img/journalmode.png)
 
 
 ## Updating to the latest version of apaquarto

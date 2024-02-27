@@ -169,6 +169,12 @@ return {
       
       local authornote = meta["author-note"]
       
+      local mask = false
+      
+      if meta["mask"] and stringify(meta["mask"]) == "true" then
+        mask = true
+      end
+      
       
       local affilations_different = are_affiliations_different(byauthor)
       
@@ -240,7 +246,10 @@ return {
       
       
       body:extend({documenttitle})
+      
+      if not mask then
       body:extend({authordiv})
+      end
       
       local authornoteheader = pandoc.Header(1, "Author Note")
       authornoteheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
@@ -263,8 +272,11 @@ return {
         body:extend({newline})
       end
         
-      body:extend({authornoteheader})
-      
+        
+        
+      if not mask then
+        body:extend({authornoteheader})
+      end
       
       local img
       
@@ -278,8 +290,10 @@ return {
           pp.content:extend({pandoc.Space(), img})
           pp.content:extend({pandoc.Space(), pandoc.Str("http://orcid.org/")})
           pp.content:extend(a.orcid)
-
-          body:extend({pp})
+          
+          if not mask then
+            body:extend({pp})
+          end
         end 
 
       end
@@ -294,7 +308,9 @@ return {
           
           
           if #second_paragraph.content > 1 then
-            body:extend({second_paragraph})
+            if not mask then
+              body:extend({second_paragraph})
+            end
           end
         end
         
@@ -310,7 +326,9 @@ return {
           third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["authorship-agreements"])
           
           if #third_paragraph.content > 1 then
-            body:extend({third_paragraph})
+            if not mask then
+              body:extend({third_paragraph})
+            end
           end
         end
       
@@ -350,7 +368,9 @@ return {
         
         if #credit_paragraph.content > 1 then
           credit_paragraph.content:insert(1, pandoc.Str("Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows: "))
-          body:extend({credit_paragraph})
+          if not mask then
+            body:extend({credit_paragraph})
+          end
         end
       
   
@@ -389,7 +409,9 @@ return {
       
         if #corresponding_paragraph.content > 1 then
           corresponding_paragraph.content:insert(1, pandoc.Str("Correspondence concerning this article should be addressed to "))
-          body:extend({corresponding_paragraph})
+          if not mask then
+            body:extend({corresponding_paragraph})
+          end
         end
         
       if meta.apaabstract or meta.abstract then
@@ -399,6 +421,7 @@ return {
         if FORMAT:match 'docx' then
           body:extend({pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')})
         end
+        
         body:extend({abstractheader})
         local abstract_paragraph = pandoc.Para(pandoc.Str(""))
         

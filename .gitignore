@@ -30,3 +30,8 @@ test_*
 testdocs.R
 NEWS.html
 /.quarto/
+index.qmd
+index_files/
+installation.qmd
+options.qmd
+alternatives.qmd

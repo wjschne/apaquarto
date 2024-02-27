@@ -4,6 +4,7 @@ project:
   render: 
     - index.qmd
     - installation.qmd
+    - options.qmd
     - alternatives.qmd
 
 website:

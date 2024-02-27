@@ -1,5 +1,5 @@
 ```{r}
-stop("As of apaquarto version 3.0.0, the 'include' line below the metadata is no longer used and must be deleted. Right below your yaml metadata, delete this line:\n\n`{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}`\n\nAlso, replace all non-standard prefixes like apafg- and apatb- with the standard Quarto prefixes. Also change references to tables and figures to standard Quarto syntax. For example, `{apafg-myplot}` should now be `@fig-myplot`.")
+stop("As of apaquarto version 3.0.0, the 'include' line below the metadata is no longer used and must be deleted. Right below your yaml metadata, delete this line:\n\n`{{< include _extensions/wjschne/apaquarto/_apa_title.qmd >}}`\n\nAlso, replace all non-standard prefixes like apafg- and apatb- with the standard Quarto prefixes (i.e., fig- and tbl-). Also change references to tables and figures to standard Quarto syntax. For example, `{apafg-myplot}` should now be `@fig-myplot`.")
 ```
 
 

@@ -153,11 +153,31 @@ div.csl-indent {
 </header>
 
 
-<p>Do you like writing in <a href="https://apastyle.apa.org/">APA style</a>? Me neither! Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten. I wrote <a href="https://github.com/wjschne/apaquarto">apaquarto</a> so that I would never have to worry about APA style ever again.</p>
-<p>Don’t get me wrong. Style guides are absolutely necessary. Scholarly writing is often about inherently difficult topics, and style guides remove many <em>avoidable</em> barriers to communication. Information is much easier to absorb when presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader’s end, style guides themselves often place unnecessary roadblocks before the writer. APA style is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age <span class="citation" data-cites="bentley1929instructions">(<a href="#ref-bentley1929instructions" role="doc-biblioref">Bentley et al. 1929</a>)</span>, its quirks and charms resist easy automation.</p>
-<section id="the-wonders-of-quarto" class="level1">
-<h1>The Wonders of Quarto!</h1>
-<p><a href="https://quarto.org/">Quarto</a> is an open-source publishing system specifically adapted for scientific and technical documents such as journal articles, books, blogs, slides, and dashboards, and websites. Not only does Quarto offer considerable flexibility by itself, it was designed to be extensible. Thus, Quarto can take care of most of the formatting, and an extension can be written to handle whatever specific formatting rules a style guide requires. The apaquarto extension takes care of all the fussy details of APA-style so that you can focus on the content of your writing.</p>
+<p>Style guides are absolutely necessary for scientific documents Scholarly writing is often about inherently difficult topics, and style guides remove many <em>avoidable</em> barriers to communication. Information is much easier to absorb when presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader’s end, style guides themselves often place unnecessary roadblocks before the writer.</p>
+<p><a href="https://apastyle.apa.org/">APA style</a> is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age <span class="citation" data-cites="bentley1929instructions">(<a href="#ref-bentley1929instructions" role="doc-biblioref">Bentley et al. 1929</a>)</span>, its quirks and charms resist easy automation. Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten. I wrote <a href="https://github.com/wjschne/apaquarto">apaquarto</a> so that I would never have to worry about APA style ever again. With very little extra effort, your documents are formatted according to APA style (See <a href="#fig-manuscript" class="quarto-xref">Figure&nbsp;1</a> for an example in “manuscript mode” and <a href="#fig-journal" class="quarto-xref">Figure&nbsp;2</a> for the same document formatted like an APA journal).</p>
+<div id="fig-manuscript" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-manuscript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><object data="template_manuscript.pdf" type="application/pdf" width="100%" height="800"><p>Unable to display PDF file. <a href="template_manuscript.pdf">Download</a> instead.</p></object></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-manuscript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Example document in manuscript mode
+</figcaption>
+</figure>
+</div>
+<div id="fig-journal" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-journal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><object data="template_journal.pdf" type="application/pdf" width="100%" height="800"><p>Unable to display PDF file. <a href="template_journal.pdf">Download</a> instead.</p></object></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-journal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Example document in journal mode
+</figcaption>
+</figure>
+</div>
+<section id="quarto-makes-writing-scientific-documents-easier" class="level1">
+<h1>Quarto makes writing scientific documents easier</h1>
+<p>The apaquarto extension is built on <a href="https://quarto.org/">Quarto</a>, an open-source publishing system specifically adapted for scientific and technical documents such as journal articles, books, blogs, slides, and dashboards, and websites. Not only does Quarto offer considerable flexibility by itself, it was designed to be extensible. Thus, Quarto can take care of most of the formatting, and an extension can be written to handle whatever specific formatting rules a style guide requires. The apaquarto extension takes care of all the fussy details of APA-style so that you can focus on the content of your writing.</p>
 <p><strong>You do not need to know any programming languages to use Quarto.</strong> You can use it in a completely non-technical way to write well-formatted text, tables, figures, and references. However, if your document communicates the results from data analyses, then Quarto offers you something quite remarkable. You can perform your analyses and communicate your findings in the same file! That is, you write text and code together in a source document and then you “render” the document into its final format (e.g., .html, .pdf, .docx). So instead of performing your analyses elsewhere (e.g., SPSS) and then copying the results into a word processor (e.g., MS Word), you build your document in one step.</p>
 <p>The advantages of this kind of workflow are profound. If you discover a mistake in your analysis, there is no need to find and replace the primary results and their downstream consequences scattered throughout the document. Instead, you just re-render the document, and everything in it is updated. When the document is published, the Quarto file serves as a fully reproducible record of your analysis. Making the Quarto file available in a public repository increases trust in your work because anyone can inspect it and trace any result you report back to the source code that created it.</p>
 
