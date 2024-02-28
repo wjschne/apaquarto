@@ -450,7 +450,7 @@ return {
       
       local myshorttitle = meta["apatitle"]
 
-      if meta["shorttitle"] then
+      if meta["shorttitle"] and #meta["shorttitle"] > 0 then
         myshorttitle = meta["shorttitle"]
       end
         
