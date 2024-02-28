@@ -4,8 +4,9 @@ local function ends_with(str, ending)
 end
 
 Meta = function(meta)
-  meta.apatitle = meta.title
-  meta.apatitledisplay = meta.title
+
+  meta.apatitle = meta.title:clone()
+  meta.apatitledisplay = meta.title:clone()
   if meta.subtitle then
         if not ends_with(meta.apatitledisplay[#meta.apatitledisplay], ":") then
           meta.apatitledisplay:insert(pandoc.Str(":"))

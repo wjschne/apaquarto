@@ -1,0 +1,103 @@
+---
+title: "Template Options"
+---
+
+Options are set in the metadata section at the top of the .qmd file. It uses [YAML](https://yaml.org/), a format that allows us to store data in a format that is easy to write and easy to read. In it simplest form it has a key and a value:
+
+``` yaml
+key: value
+```
+
+If the value is simple, it does not need any quotes. If it has any characters that have special meaning in yaml (e.g., `:`), you will need to put the value in quotes.
+
+``` yaml
+title: "This title needs quotes: Because there is a colon in it."
+```
+
+Any optional key you do not want can be deleted. If you would prefer to keep the key visible but empty, you can make the value `NULL` by putting the tilde symbol `~` like so:
+
+``` yaml
+key: ~
+```
+
+# General Options
+
++--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Field        | Explanation                                                                                                                                                                                      |
++:=============+:=================================================================================================================================================================================================+
+| `title`      | *Required*. Sets the title.                                                                                                                                                                      |
+|              |                                                                                                                                                                                                  |
+|              | Titles with no special characters can be raw text.                                                                                                                                               |
+|              |                                                                                                                                                                                                  |
+|              | ``` yaml                                                                                                                                                                                         |
+|              | title: My title                                                                                                                                                                                  |
+|              | ```                                                                                                                                                                                              |
+|              |                                                                                                                                                                                                  |
+|              | If your title has a colon in it, it will need to be quoted:                                                                                                                                      |
+|              |                                                                                                                                                                                                  |
+|              | ``` yaml                                                                                                                                                                                         |
+|              | title: "My Title: My Subtitle"                                                                                                                                                                   |
+|              | ```                                                                                                                                                                                              |
+|              |                                                                                                                                                                                                  |
+|              | You can list your title and subtitle separately, and they will be combined with a colon in the document:                                                                                         |
+|              |                                                                                                                                                                                                  |
+|              | ``` yaml                                                                                                                                                                                         |
+|              | title: My Title                                                                                                                                                                                  |
+|              | subtitle: My Subtitle                                                                                                                                                                            |
+|              | ```                                                                                                                                                                                              |
++--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `shorttitle` | *Optional*. A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (`~`), the running header will take its value from the `title` field. |
++--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `abstract`   | *Optional*. The abstract paragraph. If the abstract is a single paragraph, just put it on a single line like most of the other fields:                                                           |
+|              |                                                                                                                                                                                                  |
+|              | ``` yaml                                                                                                                                                                                         |
+|              | abstract: This is a single-paragraph abstract.                                                                                                                                                   |
+|              | ```                                                                                                                                                                                              |
+|              |                                                                                                                                                                                                  |
+|              | If the abstract has multiple paragraphs, separate them like so:                                                                                                                                  |
+|              |                                                                                                                                                                                                  |
+|              | ``` yaml                                                                                                                                                                                         |
+|              | abstract: |                                                                                                                                                                                      |
+|              |   | This is the first paragraph.                                                                                                                                                                 |
+|              |   | This is the second paragraph.                                                                                                                                                                |
+|              |   | This the third paragraph.                                                                                                                                                                    |
+|              | ```                                                                                                                                                                                              |
++--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| keywords     | *Optional*. Listed as an array on a single line (see @lst-keywordarray) or on multiple lines (see @lst-keywordlist).                                                                             |
++--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+: {.hover .primary}
+
+::: {#lst-abstract lst-cap="Example of a multi-paragraph abstract"}
+``` yaml
+abstract: |
+  | This is the first paragraph. 
+  | This is the second paragraph.
+  | This the third paragraph.
+```
+:::
+
+::: {#lst-keywordarray lst-cap="Example of keywords listed as an array on a single line"}
+``` yaml
+keywords: [First keyword, Second keyword, Third keyword]
+```
+:::
+
+::: {#lst-keywordlist lst-cap="Example of keywords listed as an array on multiple lines"}
+``` yaml
+keywords: 
+  - First keyword
+  - Second keyword
+  - Third keyword
+```
+:::
+
+## Options for .docx
+
+| Option                    | Explanation                           |
+|:--------------------------|:--------------------------------------|
+| `blank-lines-above-title` | Number of blank lines above the title |
+
+## Options for .pdf
+
+## Options for .html

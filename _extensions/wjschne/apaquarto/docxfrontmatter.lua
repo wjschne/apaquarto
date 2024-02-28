@@ -49,27 +49,6 @@ local function oxfordcommalister(lists)
   return result
 end
 
-local get_document_title = function(mytitle, mysubtitle)
-
-      if not mytitle then
-        mytitle = quarto.utils.string_to_inlines("My Title")
-      end
-      
-      if mysubtitle then
-        if not ends_with(mytitle[#mytitle], ":") then
-          mytitle:insert(pandoc.Str(":"))
-        end
-        mytitle:insert(pandoc.Space())
-        mytitle:extend(mysubtitle)
-      end
-
-  
-      local title = pandoc.Header(1, mytitle)
-      title.classes = {"title", "unnumbered", "unlisted"}
-      title.identifier="title"
-      return title
-end
-
 local are_affiliations_different = function(authors)
   
       local superii = ""
@@ -162,7 +141,9 @@ return {
            
       local body = List:new{}
       local meta = doc.meta
-      local documenttitle = get_document_title(meta.apatitle, meta.apasubtitle)
+      local documenttitle = pandoc.Header(1, meta.apatitledisplay)
+      documenttitle.classes = {"title", "unnumbered", "unlisted"}
+      documenttitle.identifier="title"
       
       local byauthor = meta["by-author"]
       local affiliations = meta["affiliations"]
@@ -467,27 +448,21 @@ return {
       firstpageheader.classes = {"title"}
       body:extend({firstpageheader})
       
-      if meta["shorttitle"] then
-        for i, v in ipairs(meta["shorttitle"]) do
-          if v.t == "Str" then
-            if v.text:match("’") then
-              v.text = v.text:gsub("’","fixcurlyquote")
+      local myshorttitle = meta["apatitle"]
 
-            end
-            v.text = string.gsub(string.upper(v.text), string.upper("fixcurlyquote"), "’")
-            
-          end
-        end
-        meta.description = meta["shorttitle"]
-      else
-        local myshorttitle = meta["apatitle"]
-        for i, v in ipairs(myshorttitle) do
-          if v.t == "Str" then
-            v.text = string.upper(v.text)
-          end
-        end
-        meta.description = myshorttitle
+      if meta["shorttitle"] then
+        myshorttitle = meta["shorttitle"]
       end
+        
+      for i, v in ipairs(myshorttitle) do
+        if v.t == "Str" then
+          if v.text:match("’") then
+            v.text = v.text:gsub("’","fixcurlyquote")
+          end
+          v.text = string.gsub(string.upper(v.text), string.upper("fixcurlyquote"), "’")
+        end
+      end
+      meta.description = myshorttitle
       
       body:extend(doc.blocks)
       return pandoc.Pandoc(body, meta)

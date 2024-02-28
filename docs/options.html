@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>APA Style Documents with apaquarto – Introduction to apaquarto</title>
+<title>APA Style Documents with apaquarto – Template Options</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -108,7 +122,7 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Introduction</span></a>
   </li>  
   <li class="nav-item">
@@ -116,7 +130,7 @@ div.csl-indent {
 <span class="menu-text">Installation</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./options.html"> 
+    <a class="nav-link active" href="./options.html" aria-current="page"> 
 <span class="menu-text">Template Options</span></a>
   </li>  
   <li class="nav-item">
@@ -140,7 +154,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction to apaquarto</h1>
+<h1 class="title">Template Options</h1>
 </div>
 
 
@@ -157,43 +171,121 @@ div.csl-indent {
 </header>
 
 
-<p>Style guides are absolutely necessary for scientific documents Scholarly writing is often about inherently difficult topics, and style guides remove many <em>avoidable</em> barriers to communication. Information is much easier to absorb when presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader’s end, style guides themselves often place unnecessary roadblocks before the writer.</p>
-<p><a href="https://apastyle.apa.org/">APA style</a> is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age <span class="citation" data-cites="bentley1929instructions">(<a href="#ref-bentley1929instructions" role="doc-biblioref">Bentley et al. 1929</a>)</span>, its quirks and charms resist easy automation. Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten. I wrote <a href="https://github.com/wjschne/apaquarto">apaquarto</a> so that I would never have to worry about APA style ever again. With very little extra effort, your documents are formatted according to APA style (See <a href="#fig-manuscript" class="quarto-xref">Figure&nbsp;1</a> for an example in “manuscript mode” and <a href="#fig-journal" class="quarto-xref">Figure&nbsp;2</a> for the same document formatted like an APA journal).</p>
-<div id="fig-manuscript" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-manuscript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<p><object data="template_manuscript.pdf" type="application/pdf" width="100%" height="800"><p>Unable to display PDF file. <a href="template_manuscript.pdf">Download</a> instead.</p></object></p>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-manuscript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Example document in manuscript mode
+<p>Options are set in the metadata section at the top of the .qmd file. It uses <a href="https://yaml.org/">YAML</a>, a format that allows us to store data in a format that is easy to write and easy to read. In it simplest form it has a key and a value:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">key</span><span class="kw">:</span><span class="at"> value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the value is simple, it does not need any quotes. If it has any characters that have special meaning in yaml (e.g., <code>:</code>), you will need to put the value in quotes.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"This title needs quotes: Because there is a colon in it."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Any optional key you do not want can be deleted. If you would prefer to keep the key visible but empty, you can make the value <code>NULL</code> by putting the tilde symbol <code>~</code> like so:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">~</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="general-options" class="level1">
+<h1>General Options</h1>
+<table class="table-hover table-primary table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 92%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>title</code></td>
+<td style="text-align: left;"><p><em>Required</em>. Sets the title.</p>
+<p>Titles with no special characters can be raw text.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If your title has a colon in it, it will need to be quoted:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Title: My Subtitle"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can list your title and subtitle separately, and they will be combined with a colon in the document:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My Title</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> My Subtitle</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>shorttitle</code></td>
+<td style="text-align: left;"><em>Optional</em>. A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (<code>~</code>), the running header will take its value from the <code>title</code> field.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>abstract</code></td>
+<td style="text-align: left;"><p><em>Optional</em>. The abstract paragraph. If the abstract is a single paragraph, just put it on a single line like most of the other fields:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> This is a single-paragraph abstract.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the abstract has multiple paragraphs, separate them like so:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  | This is the first paragraph.</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  | This is the second paragraph.</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  | This the third paragraph.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">keywords</td>
+<td style="text-align: left;"><em>Optional</em>. Listed as an array on a single line (see <a href="#lst-keywordarray" class="quarto-xref">Listing&nbsp;2</a>) or on multiple lines (see <a href="#lst-keywordlist" class="quarto-xref">Listing&nbsp;3</a>).</td>
+</tr>
+</tbody>
+</table>
+<div id="lst-abstract" class="listing quarto-float">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-abstract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;1: Example of a multi-paragraph abstract
 </figcaption>
+<div aria-describedby="lst-abstract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-abstract"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="lst-abstract-1"><a href="#lst-abstract-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="lst-abstract-2"><a href="#lst-abstract-2" aria-hidden="true" tabindex="-1"></a>  | This is the first paragraph. </span>
+<span id="lst-abstract-3"><a href="#lst-abstract-3" aria-hidden="true" tabindex="-1"></a>  | This is the second paragraph.</span>
+<span id="lst-abstract-4"><a href="#lst-abstract-4" aria-hidden="true" tabindex="-1"></a>  | This the third paragraph.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </figure>
 </div>
-<div id="fig-journal" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-journal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<p><object data="template_journal.pdf" type="application/pdf" width="100%" height="800"><p>Unable to display PDF file. <a href="template_journal.pdf">Download</a> instead.</p></object></p>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-journal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Example document in journal mode
+<div id="lst-keywordarray" class="listing quarto-float">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-keywordarray-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;2: Example of keywords listed as an array on a single line
 </figcaption>
+<div aria-describedby="lst-keywordarray-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-keywordarray"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="lst-keywordarray-1"><a href="#lst-keywordarray-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">First keyword</span><span class="kw">,</span><span class="at"> Second keyword</span><span class="kw">,</span><span class="at"> Third keyword</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </figure>
 </div>
-<section id="quarto-makes-writing-scientific-documents-easier" class="level1">
-<h1>Quarto makes writing scientific documents easier</h1>
-<p>The apaquarto extension is built on <a href="https://quarto.org/">Quarto</a>, an open-source publishing system specifically adapted for scientific and technical documents such as journal articles, books, blogs, slides, and dashboards, and websites. Not only does Quarto offer considerable flexibility by itself, it was designed to be extensible. Thus, Quarto can take care of most of the formatting, and an extension can be written to handle whatever specific formatting rules a style guide requires. The apaquarto extension takes care of all the fussy details of APA-style so that you can focus on the content of your writing.</p>
-<p><strong>You do not need to know any programming languages to use Quarto.</strong> You can use it in a completely non-technical way to write well-formatted text, tables, figures, and references. However, if your document communicates the results from data analyses, then Quarto offers you something quite remarkable. You can perform your analyses and communicate your findings in the same file! That is, you write text and code together in a source document and then you “render” the document into its final format (e.g., .html, .pdf, .docx). So instead of performing your analyses elsewhere (e.g., SPSS) and then copying the results into a word processor (e.g., MS Word), you build your document in one step.</p>
-<p>The advantages of this kind of workflow are profound. If you discover a mistake in your analysis, there is no need to find and replace the primary results and their downstream consequences scattered throughout the document. Instead, you just re-render the document, and everything in it is updated. When the document is published, the Quarto file serves as a fully reproducible record of your analysis. Making the Quarto file available in a public repository increases trust in your work because anyone can inspect it and trace any result you report back to the source code that created it.</p>
-
+<div id="lst-keywordlist" class="listing quarto-float">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-keywordlist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;3: Example of keywords listed as an array on multiple lines
+</figcaption>
+<div aria-describedby="lst-keywordlist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-keywordlist"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="lst-keywordlist-1"><a href="#lst-keywordlist-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="lst-keywordlist-2"><a href="#lst-keywordlist-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> First keyword</span></span>
+<span id="lst-keywordlist-3"><a href="#lst-keywordlist-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Second keyword</span></span>
+<span id="lst-keywordlist-4"><a href="#lst-keywordlist-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Third keyword</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+<section id="options-for-.docx" class="level2">
+<h2 class="anchored" data-anchor-id="options-for-.docx">Options for .docx</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Option</th>
+<th style="text-align: left;">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>blank-lines-above-title</code></td>
+<td style="text-align: left;">Number of blank lines above the title</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="options-for-.pdf" class="level2">
+<h2 class="anchored" data-anchor-id="options-for-.pdf">Options for .pdf</h2>
+</section>
+<section id="options-for-.html" class="level2">
+<h2 class="anchored" data-anchor-id="options-for-.html">Options for .html</h2>
 
 
 </section>
+</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-bentley1929instructions" class="csl-entry" role="listitem">
-Bentley, Madison, CA Peerenboom, FW Hodge, Edward B Passano, HC Warren, and MF Washburn. 1929. <span>“Instructions in Regard to Preparation of Manuscript.”</span> <em>Psychological Bulletin</em> 26 (2): 57.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -7,9 +7,11 @@ installation.qmd
 index.qmd
 index_files/
 alternatives.qmd
+options.qmd
 apa.csl
 _quarto.yml
 _extensions/jmgirard/
 template.pdf
 template_journal.pdf
 template_manuscript.pdf
+site_libs/
