@@ -104,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -148,7 +148,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#general-options" id="toc-general-options" class="nav-link active" data-scroll-target="#general-options">General Options</a>
+  <ul class="collapse">
+  <li><a href="#authors" id="toc-authors" class="nav-link" data-scroll-target="#authors">Authors</a></li>
+  <li><a href="#affiliations" id="toc-affiliations" class="nav-link" data-scroll-target="#affiliations">Affiliations</a>
+  <ul class="collapse">
+  <li><a href="#multiple-affiliations" id="toc-multiple-affiliations" class="nav-link" data-scroll-target="#multiple-affiliations">Multiple Affiliations</a></li>
+  <li><a href="#shared-affiliations" id="toc-shared-affiliations" class="nav-link" data-scroll-target="#shared-affiliations">Shared Affiliations</a></li>
+  <li><a href="#listing-authors-and-affiliations-separately" id="toc-listing-authors-and-affiliations-separately" class="nav-link" data-scroll-target="#listing-authors-and-affiliations-separately">Listing Authors and Affiliations Separately</a></li>
+  </ul></li>
+  <li><a href="#options-for-.docx" id="toc-options-for-.docx" class="nav-link" data-scroll-target="#options-for-.docx">Options for .docx</a></li>
+  <li><a href="#options-for-.pdf" id="toc-options-for-.pdf" class="nav-link" data-scroll-target="#options-for-.pdf">Options for .pdf</a></li>
+  <li><a href="#options-for-.html" id="toc-options-for-.html" class="nav-link" data-scroll-target="#options-for-.html">Options for .html</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -181,8 +201,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>General Options</h1>
 <table class="table-hover table-primary table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 92%">
+<col style="width: 8%">
+<col style="width: 91%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -193,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>title</code></td>
-<td style="text-align: left;"><p><em>Required</em>. Sets the title.</p>
+<td style="text-align: left;"><p>Sets the title.</p>
 <p>Titles with no special characters can be raw text.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If your title has a colon in it, it will need to be quoted:</p>
@@ -204,11 +224,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>shorttitle</code></td>
-<td style="text-align: left;"><em>Optional</em>. A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (<code>~</code>), the running header will take its value from the <code>title</code> field.</td>
+<td style="text-align: left;">A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (<code>~</code>), the running header will take its value from the <code>title</code> field (and will omit the <code>subtitle</code>).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>abstract</code></td>
-<td style="text-align: left;"><p><em>Optional</em>. The abstract paragraph. If the abstract is a single paragraph, just put it on a single line like most of the other fields:</p>
+<td style="text-align: left;"><p>The abstract paragraph.</p>
+<p>If the abstract is a single paragraph, put it on a single line like most of the other fields:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> This is a single-paragraph abstract.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If the abstract has multiple paragraphs, separate them like so:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">: </span><span class="ch">|</span></span>
@@ -217,47 +238,224 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  | This the third paragraph.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">keywords</td>
-<td style="text-align: left;"><em>Optional</em>. Listed as an array on a single line (see <a href="#lst-keywordarray" class="quarto-xref">Listing&nbsp;2</a>) or on multiple lines (see <a href="#lst-keywordlist" class="quarto-xref">Listing&nbsp;3</a>).</td>
+<td style="text-align: left;"><code>keywords</code></td>
+<td style="text-align: left;"><p>A list of topics your paper relates to. Can be single words or short phrases.</p>
+<p>There are two ways to format key words</p>
+<ol type="1">
+<li><p>Comma-separated list with square brackets</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">First keyword</span><span class="kw">,</span><span class="at"> Second keyword</span><span class="kw">,</span><span class="at"> Third keyword</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<!-- -->
+<ol start="2" type="1">
+<li><p>Multiline list with indented hyphens</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kewords</span><span class="kw">:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> First keyword</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Second keyword</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Third keyword</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>floatsintext</code></td>
+<td style="text-align: left;"><p>Specifies where floats (i.e., figures and tables) appear.</p>
+<ul>
+<li>If <code>true</code>, figures and tables will be intermingled in text.</li>
+<li>If <code>false</code>, figures and tables will appear at the end of the document.</li>
+<li>If omitted, defaults to <code>false</code>.</li>
+</ul>
+<p>The <code>floatsintext</code> field does not apply when a .pdf output is in journal mode.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>numbered-lines</code></td>
+<td style="text-align: left;">Numbered lines (.pdf and .docx only)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>bibliography</code></td>
+<td style="text-align: left;"><p>File(s) with references.</p>
+<p>If you have a single file, you can list it like so:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> mybibliography.bib</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you have multiple files, you can make an array:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">mybibliography.bib</span><span class="kw">,</span><span class="at"> myotherbibliography.bib</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mask</code></td>
+<td style="text-align: left;"><p>For anonymous peer review, removes identifying information: author names, author affiliations, author notes, correspondence information, and references listed in the <code>masked-citations</code> field.</p>
+<p>If <code>true</code>, identifying information is removed.</p>
+<p>If <code>false</code> or omitted, all information is left as is.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>masked-citations</code></td>
+<td style="text-align: left;"><p>A list of citation keys that should be masked if the <code>mask</code> field is <code>true</code>. For example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2020</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The citation keys should be as they appear in the bibliography file(s).</p></td>
 </tr>
 </tbody>
 </table>
-<div id="lst-abstract" class="listing quarto-float">
-<figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-abstract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;1: Example of a multi-paragraph abstract
-</figcaption>
-<div aria-describedby="lst-abstract-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="lst-abstract"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="lst-abstract-1"><a href="#lst-abstract-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="lst-abstract-2"><a href="#lst-abstract-2" aria-hidden="true" tabindex="-1"></a>  | This is the first paragraph. </span>
-<span id="lst-abstract-3"><a href="#lst-abstract-3" aria-hidden="true" tabindex="-1"></a>  | This is the second paragraph.</span>
-<span id="lst-abstract-4"><a href="#lst-abstract-4" aria-hidden="true" tabindex="-1"></a>  | This the third paragraph.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</figure>
-</div>
-<div id="lst-keywordarray" class="listing quarto-float">
-<figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-keywordarray-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;2: Example of keywords listed as an array on a single line
-</figcaption>
-<div aria-describedby="lst-keywordarray-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="lst-keywordarray"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="lst-keywordarray-1"><a href="#lst-keywordarray-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">First keyword</span><span class="kw">,</span><span class="at"> Second keyword</span><span class="kw">,</span><span class="at"> Third keyword</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</figure>
-</div>
-<div id="lst-keywordlist" class="listing quarto-float">
-<figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-keywordlist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Listing&nbsp;3: Example of keywords listed as an array on multiple lines
-</figcaption>
-<div aria-describedby="lst-keywordlist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="lst-keywordlist"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="lst-keywordlist-1"><a href="#lst-keywordlist-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="lst-keywordlist-2"><a href="#lst-keywordlist-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> First keyword</span></span>
-<span id="lst-keywordlist-3"><a href="#lst-keywordlist-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Second keyword</span></span>
-<span id="lst-keywordlist-4"><a href="#lst-keywordlist-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Third keyword</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</figure>
-</div>
+<section id="authors" class="level2">
+<h2 class="anchored" data-anchor-id="authors">Authors</h2>
+<p>The apaquarto uses the [standard Quarto schema for authors](https://quarto.org/docs/authoring/front-matter.html#author). It has a lot of options, some of which are not needed for the apaquarto extension (e.g., <code>fax</code>).</p>
+<p>The <code>author</code> field need contains author names, author affiliations, and author roles. The corresponding author is specified by setting the author’s corresponding field to true (i.e., <code>corresponding: true</code>). This author needs to list an email and list a mailing address in the affiliation data. Only one author can be the corresponding author. Detailed information about the remaining authors is fine to include, but is not needed. Where possible, specify each author’s [orcid](https://orcid.org/) for easy, unambiguous identification.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">corresponding</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0002-8393-5316</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> schneider@temple.edu</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fulano Zutano Mengano</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> Universidad de Dondequiera</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0001</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Thomas Richard Harris</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Department of Scholarly Studies</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0002</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wut C. Whosis</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> Whatchama College</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0003</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="affiliations" class="level2">
+<h2 class="anchored" data-anchor-id="affiliations">Affiliations</h2>
+<p>The apaquarto extenstion uses the [standard Quarto schema for affiliations](https://quarto.org/docs/journals/authors.html#affiliations-schema).</p>
+<table class="table-hover table-primary table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 88%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id</code></td>
+<td><p>A unique identifier for the affiliation. The <code>id</code> can be useful for specifying an affiliation shared by multiple authors:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Renée M. Tobin</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+</tr>
+<tr class="even">
+<td><code>name</code></td>
+<td><p>The name of the organization.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State Univeristy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the author is unaffiliated, list the author’s city and region/state instead:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">city</span><span class="kw">:</span><span class="at"> San Francisco</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> CA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+</tr>
+<tr class="odd">
+<td><code>department</code></td>
+<td>A specific division within the organization.</td>
+</tr>
+<tr class="even">
+<td><code>group</code></td>
+<td><p>A subdivision within the department</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State Univeristy</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Department of Psychology</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Counseling Psychology</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+</tr>
+<tr class="odd">
+<td><code>address</code></td>
+<td>The street address</td>
+</tr>
+<tr class="even">
+<td><code>city</code></td>
+<td>City</td>
+</tr>
+<tr class="odd">
+<td><code>region</code></td>
+<td><p>The region, state, or province.</p>
+<p>You may specify <code>state</code> instead, if you prefer.</p></td>
+</tr>
+<tr class="even">
+<td><code>country</code></td>
+<td>Country</td>
+</tr>
+<tr class="odd">
+<td><code>postal-code</code></td>
+<td>Postal code (zip code in the U.S.)</td>
+</tr>
+</tbody>
+</table>
+<section id="multiple-affiliations" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-affiliations">Multiple Affiliations</h3>
+<p>If an author has more than one affiliation:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> My Second Affiliation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="shared-affiliations" class="level3">
+<h3 class="anchored" data-anchor-id="shared-affiliations">Shared Affiliations</h3>
+<p>If two authors have the same affiliation, you can type the same affiliation twice. If you do this, make sure the affiliations are EXACTLY the same in every detail. Otherwise they will be listed as different. To make sure they are listed as the same affiliation, it is safer to use a reference id to make sure that there are no accidental differences that creep in to the editing process. In this example, the affiliation information was entered once, and the <code>id</code> was specified. For the second author with the same affiliation, the <code>ref</code> field is used to reference the previously specified <code>id</code>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Renée M. Tobin</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="listing-authors-and-affiliations-separately" class="level3">
+<h3 class="anchored" data-anchor-id="listing-authors-and-affiliations-separately">Listing Authors and Affiliations Separately</h3>
+<p>If there are a lot of authors with shared affiliations, it might be easier to list the affiliations separately and specify each affiliation’s <code>id</code>, which can be looked up with the <code>ref</code> field:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> tamu</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wanda James</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> ucb</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> tamu</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"Texas A&amp;M University"</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> ucb</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> University of California, Berkeley</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
 <section id="options-for-.docx" class="level2">
 <h2 class="anchored" data-anchor-id="options-for-.docx">Options for .docx</h2>
 <table class="table">

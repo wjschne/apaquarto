@@ -1,5 +1,6 @@
 ---
 title: "Template Options"
+toc: true
 ---
 
 Options are set in the metadata section at the top of the .qmd file. It uses [YAML](https://yaml.org/), a format that allows us to store data in a format that is easy to write and easy to read. In it simplest form it has a key and a value:
@@ -22,81 +23,293 @@ key: ~
 
 # General Options
 
-+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Field        | Explanation                                                                                                                                                                                                                     |
-+:=============+:================================================================================================================================================================================================================================+
-| `title`      | *Required*. Sets the title.                                                                                                                                                                                                     |
-|              |                                                                                                                                                                                                                                 |
-|              | Titles with no special characters can be raw text.                                                                                                                                                                              |
-|              |                                                                                                                                                                                                                                 |
-|              | ``` yaml                                                                                                                                                                                                                        |
-|              | title: My title                                                                                                                                                                                                                 |
-|              | ```                                                                                                                                                                                                                             |
-|              |                                                                                                                                                                                                                                 |
-|              | If your title has a colon in it, it will need to be quoted:                                                                                                                                                                     |
-|              |                                                                                                                                                                                                                                 |
-|              | ``` yaml                                                                                                                                                                                                                        |
-|              | title: "My Title: My Subtitle"                                                                                                                                                                                                  |
-|              | ```                                                                                                                                                                                                                             |
-|              |                                                                                                                                                                                                                                 |
-|              | You can list your title and subtitle separately, and they will be combined with a colon in the document:                                                                                                                        |
-|              |                                                                                                                                                                                                                                 |
-|              | ``` yaml                                                                                                                                                                                                                        |
-|              | title: My Title                                                                                                                                                                                                                 |
-|              | subtitle: My Subtitle                                                                                                                                                                                                           |
-|              | ```                                                                                                                                                                                                                             |
-+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `shorttitle` | *Optional*. A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (`~`), the running header will take its value from the `title` field (and will omit the `subtitle`). |
-+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `abstract`   | *Optional*. The abstract paragraph. If the abstract is a single paragraph, just put it on a single line like most of the other fields:                                                                                          |
-|              |                                                                                                                                                                                                                                 |
-|              | ``` yaml                                                                                                                                                                                                                        |
-|              | abstract: This is a single-paragraph abstract.                                                                                                                                                                                  |
-|              | ```                                                                                                                                                                                                                             |
-|              |                                                                                                                                                                                                                                 |
-|              | If the abstract has multiple paragraphs, separate them like so:                                                                                                                                                                 |
-|              |                                                                                                                                                                                                                                 |
-|              | ``` yaml                                                                                                                                                                                                                        |
-|              | abstract: |                                                                                                                                                                                                                     |
-|              |   | This is the first paragraph.                                                                                                                                                                                                |
-|              |   | This is the second paragraph.                                                                                                                                                                                               |
-|              |   | This the third paragraph.                                                                                                                                                                                                   |
-|              | ```                                                                                                                                                                                                                             |
-+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| keywords     | *Optional*. Listed as an array on a single line (see @lst-keywordarray) or on multiple lines (see @lst-keywordlist).                                                                                                            |
-+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Field              | Explanation                                                                                                                                                                                                         |
++:===================+:====================================================================================================================================================================================================================+
+| `title`            | Sets the title.                                                                                                                                                                                                     |
+|                    |                                                                                                                                                                                                                     |
+|                    | Titles with no special characters can be raw text.                                                                                                                                                                  |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | title: My title                                                                                                                                                                                                     |
+|                    | ```                                                                                                                                                                                                                 |
+|                    |                                                                                                                                                                                                                     |
+|                    | If your title has a colon in it, it will need to be quoted:                                                                                                                                                         |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | title: "My Title: My Subtitle"                                                                                                                                                                                      |
+|                    | ```                                                                                                                                                                                                                 |
+|                    |                                                                                                                                                                                                                     |
+|                    | You can list your title and subtitle separately, and they will be combined with a colon in the document:                                                                                                            |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | title: My Title                                                                                                                                                                                                     |
+|                    | subtitle: My Subtitle                                                                                                                                                                                               |
+|                    | ```                                                                                                                                                                                                                 |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `shorttitle`       | A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (`~`), the running header will take its value from the `title` field (and will omit the `subtitle`). |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `abstract`         | The abstract paragraph.                                                                                                                                                                                             |
+|                    |                                                                                                                                                                                                                     |
+|                    | If the abstract is a single paragraph, put it on a single line like most of the other fields:                                                                                                                       |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | abstract: This is a single-paragraph abstract.                                                                                                                                                                      |
+|                    | ```                                                                                                                                                                                                                 |
+|                    |                                                                                                                                                                                                                     |
+|                    | If the abstract has multiple paragraphs, separate them like so:                                                                                                                                                     |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | abstract: |                                                                                                                                                                                                         |
+|                    |   | This is the first paragraph.                                                                                                                                                                                    |
+|                    |   | This is the second paragraph.                                                                                                                                                                                   |
+|                    |   | This the third paragraph.                                                                                                                                                                                       |
+|                    | ```                                                                                                                                                                                                                 |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `keywords`         | A list of topics your paper relates to. Can be single words or short phrases.                                                                                                                                       |
+|                    |                                                                                                                                                                                                                     |
+|                    | There are two ways to format key words                                                                                                                                                                              |
+|                    |                                                                                                                                                                                                                     |
+|                    | 1.  Comma-separated list with square brackets                                                                                                                                                                       |
+|                    |                                                                                                                                                                                                                     |
+|                    |     ``` yaml                                                                                                                                                                                                        |
+|                    |     keywords: [First keyword, Second keyword, Third keyword]                                                                                                                                                        |
+|                    |     ```                                                                                                                                                                                                             |
+|                    |                                                                                                                                                                                                                     |
+|                    | <!-- -->                                                                                                                                                                                                            |
+|                    |                                                                                                                                                                                                                     |
+|                    | 2.  Multiline list with indented hyphens                                                                                                                                                                            |
+|                    |                                                                                                                                                                                                                     |
+|                    |     ``` yaml                                                                                                                                                                                                        |
+|                    |     kewords:                                                                                                                                                                                                        |
+|                    |       - First keyword                                                                                                                                                                                               |
+|                    |       - Second keyword                                                                                                                                                                                              |
+|                    |       - Third keyword                                                                                                                                                                                               |
+|                    |     ```                                                                                                                                                                                                             |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `floatsintext`     | Specifies where floats (i.e., figures and tables) appear.                                                                                                                                                           |
+|                    |                                                                                                                                                                                                                     |
+|                    | -   If `true`, figures and tables will be intermingled in text.                                                                                                                                                     |
+|                    | -   If `false`, figures and tables will appear at the end of the document.                                                                                                                                          |
+|                    | -   If omitted, defaults to `false`.                                                                                                                                                                                |
+|                    |                                                                                                                                                                                                                     |
+|                    | The `floatsintext` field does not apply when a .pdf output is in journal mode.                                                                                                                                      |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `numbered-lines`   | Numbered lines (.pdf and .docx only)                                                                                                                                                                                |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `bibliography`     | File(s) with references.                                                                                                                                                                                            |
+|                    |                                                                                                                                                                                                                     |
+|                    | If you have a single file, you can list it like so:                                                                                                                                                                 |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | bibliography: mybibliography.bib                                                                                                                                                                                    |
+|                    | ```                                                                                                                                                                                                                 |
+|                    |                                                                                                                                                                                                                     |
+|                    | If you have multiple files, you can make an array:                                                                                                                                                                  |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | bibliography: [mybibliography.bib, myotherbibliography.bib]                                                                                                                                                         |
+|                    | ```                                                                                                                                                                                                                 |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `mask`             | For anonymous peer review, removes identifying information: author names, author affiliations, author notes, correspondence information, and references listed in the `masked-citations` field.                     |
+|                    |                                                                                                                                                                                                                     |
+|                    | If `true`, identifying information is removed.                                                                                                                                                                      |
+|                    |                                                                                                                                                                                                                     |
+|                    | If `false` or omitted, all information is left as is.                                                                                                                                                               |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `masked-citations` | A list of citation keys that should be masked if the `mask` field is `true`. For example:                                                                                                                           |
+|                    |                                                                                                                                                                                                                     |
+|                    | ``` yaml                                                                                                                                                                                                            |
+|                    | mask: true                                                                                                                                                                                                          |
+|                    | masked-citations:                                                                                                                                                                                                   |
+|                    |   - mypublication2020                                                                                                                                                                                               |
+|                    |   - mypublication2024                                                                                                                                                                                               |
+|                    | ```                                                                                                                                                                                                                 |
+|                    |                                                                                                                                                                                                                     |
+|                    | The citation keys should be as they appear in the bibliography file(s).                                                                                                                                             |
++--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 : {.hover .primary}
 
-::: {#lst-abstract lst-cap="Example of a multi-paragraph abstract"}
-``` yaml
-abstract: |
-  | This is the first paragraph. 
-  | This is the second paragraph.
-  | This the third paragraph.
-```
-:::
+## Authors
 
-::: {#lst-keywordarray lst-cap="Example of keywords listed as an array on a single line"}
-``` yaml
-keywords: [First keyword, Second keyword, Third keyword]
-```
-:::
+The apaquarto uses the \[standard Quarto schema for authors\](https://quarto.org/docs/authoring/front-matter.html#author). It has a lot of options, some of which are not needed for the apaquarto extension (e.g., `fax`).
 
-::: {#lst-keywordlist lst-cap="Example of keywords listed as an array on multiple lines"}
+The `author` field need contains author names, author affiliations, and author roles. The corresponding author is specified by setting the author's corresponding field to true (i.e., `corresponding: true`). This author needs to list an email and list a mailing address in the affiliation data. Only one author can be the corresponding author. Detailed information about the remaining authors is fine to include, but is not needed. Where possible, specify each author's \[orcid\](https://orcid.org/) for easy, unambiguous identification.
+
 ``` yaml
-keywords: 
-  - First keyword
-  - Second keyword
-  - Third keyword
+author:
+  - name: W. Joel Schneider
+    corresponding: true
+    orcid: 0000-0002-8393-5316
+    email: schneider@temple.edu
+    affiliations:
+      - name: Temple University
+        department: College of Education and Human Development
+        address: 1301 Cecil B. Moore Ave.
+        city: Philadelphia
+        region: PA
+        postal-code: 19122-6091
+  - name: Fulano Zutano Mengano
+    affiliations: Universidad de Dondequiera
+    orcid: 0000-0000-0000-0001
+  - name: Thomas Richard Harris
+    affiliations: 
+      - name: Generic State University
+        department: Department of Scholarly Studies
+    orcid: 0000-0000-0000-0002
+  - name: Wut C. Whosis
+    affiliations: Whatchama College
+    orcid: 0000-0000-0000-0003
 ```
-:::
+
+## Affiliations
+
+The apaquarto extenstion uses the \[standard Quarto schema for affiliations\](https://quarto.org/docs/journals/authors.html#affiliations-schema).
+
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| Field         | Explanation                                                                                                               |
++===============+===========================================================================================================================+
+| `id`          | A unique identifier for the affiliation. The `id` can be useful for specifying an affiliation shared by multiple authors: |
+|               |                                                                                                                           |
+|               | ``` yaml                                                                                                                  |
+|               | author:                                                                                                                   |
+|               |   - name: William Joel Schneider                                                                                          |
+|               |     affiliations:                                                                                                         |
+|               |       - name: Temple University                                                                                           |
+|               |         department: College of Education and Human Development                                                            |
+|               |         address: 1301 Cecil B. Moore Ave.                                                                                 |
+|               |         city: Philadelphia                                                                                                |
+|               |         region: PA                                                                                                        |
+|               |         postal-code: 19122-6091                                                                                           |
+|               |         id: temple                                                                                                        |
+|               |   - name: Renée M. Tobin                                                                                                  |
+|               |     affiliations:                                                                                                         |
+|               |       - ref: temple                                                                                                       |
+|               | ```                                                                                                                       |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `name`        | The name of the organization.                                                                                             |
+|               |                                                                                                                           |
+|               | ``` yaml                                                                                                                  |
+|               | author:                                                                                                                   |
+|               |   - name: Fred Jones                                                                                                      |
+|               |     affiliation:                                                                                                          |
+|               |       - name: Generic State Univeristy                                                                                    |
+|               | ```                                                                                                                       |
+|               |                                                                                                                           |
+|               | If the author is unaffiliated, list the author's city and region/state instead:                                           |
+|               |                                                                                                                           |
+|               | ``` yaml                                                                                                                  |
+|               | author:                                                                                                                   |
+|               |   - name: Fred Jones                                                                                                      |
+|               |     affiliation:                                                                                                          |
+|               |       - city: San Francisco                                                                                               |
+|               |         region: CA                                                                                                        |
+|               | ```                                                                                                                       |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `department`  | A specific division within the organization.                                                                              |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `group`       | A subdivision within the department                                                                                       |
+|               |                                                                                                                           |
+|               | ``` yaml                                                                                                                  |
+|               | author:                                                                                                                   |
+|               |   - name: Fred Jones                                                                                                      |
+|               |     affiliation:                                                                                                          |
+|               |       - name: Generic State Univeristy                                                                                    |
+|               |         department: Department of Psychology                                                                              |
+|               |         group: Counseling Psychology                                                                                      |
+|               | ```                                                                                                                       |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `address`     | The street address                                                                                                        |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `city`        | City                                                                                                                      |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `region`      | The region, state, or province.                                                                                           |
+|               |                                                                                                                           |
+|               | You may specify `state` instead, if you prefer.                                                                           |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `country`     | Country                                                                                                                   |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+| `postal-code` | Postal code (zip code in the U.S.)                                                                                        |
++---------------+---------------------------------------------------------------------------------------------------------------------------+
+
+: {.hover .primary}
+
+### Multiple Affiliations
+
+If an author has more than one affiliation:
+
+``` yaml
+author:
+  - name: William Joel Schneider
+    affiliations:
+      - name: Temple University
+        department: College of Education and Human Development
+        address: 1301 Cecil B. Moore Ave.
+        city: Philadelphia
+        region: PA
+        postal-code: 19122-6091
+      - name: My Second Affiliation
+```
+
+### Shared Affiliations
+
+If two authors have the same affiliation, you can type the same affiliation twice. If you do this, make sure the affiliations are EXACTLY the same in every detail. Otherwise they will be listed as different. To make sure they are listed as the same affiliation, it is safer to use a reference id to make sure that there are no accidental differences that creep in to the editing process. In this example, the affiliation information was entered once, and the `id` was specified. For the second author with the same affiliation, the `ref` field is used to reference the previously specified `id`.
+
+``` yaml
+author:
+  - name: William Joel Schneider
+    affiliations:
+      - name: Temple University
+        department: College of Education and Human Development
+        address: 1301 Cecil B. Moore Ave.
+        city: Philadelphia
+        region: PA
+        postal-code: 19122-6091
+        id: temple
+  - name: Renée M. Tobin
+    affiliations:
+      - ref: temple
+```
+
+### Listing Authors and Affiliations Separately
+
+If there are a lot of authors with shared affiliations, it might be easier to list the affiliations separately and specify each affiliation's `id`, which can be looked up with the `ref` field:
+
+``` yaml
+author: 
+  - name: Fred Jones
+    affiliation: 
+      - ref: temple
+      - ref: tamu
+  - name: Wanda James
+    affiliation:
+      - ref: temple
+      - ref: ucb
+affiliations:
+  - id: temple
+    name: Temple University
+  - id: tamu
+    name: "Texas A&M University"
+  - id: ucb
+    name: University of California, Berkeley
+```
 
 ## Options for .docx
 
-| Option                    | Explanation                           |
-|:--------------------------|:--------------------------------------|
-| `blank-lines-above-title` | Number of blank lines above the title |
++---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| Option                          | Explanation                                                                                                                       |
++:================================+:==================================================================================================================================+
+| `blank-lines-above-title`       | Number of blank lines above the title.                                                                                            |
+|                                 |                                                                                                                                   |
+|                                 | If omitted, defaults to 2 double-spaced lines.                                                                                    |
+|                                 |                                                                                                                                   |
+|                                 | APA style requests that you put your title 3 to 4 lines (i.e., 1.5 to 2 double-spaced lines) down from the top of the title page. |
++---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| `blank-lines-above-author-note` | Number of double-spaced lines between author affiliations and author note.                                                        |
+|                                 |                                                                                                                                   |
+|                                 | APA style wants the note to start around the middle of the page. You can play with the number. It defaults to 1 if omitted.       |
++---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 ## Options for .pdf
 

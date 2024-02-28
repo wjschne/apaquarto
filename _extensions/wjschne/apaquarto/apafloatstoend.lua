@@ -2,7 +2,7 @@ if FORMAT == "latex" then
   return
 end
 Pandoc = function(doc)
-  if doc.meta.floatsintext then
+  if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
     return
   end
   local tbl = {}

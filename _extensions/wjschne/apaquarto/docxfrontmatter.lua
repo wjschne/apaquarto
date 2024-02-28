@@ -142,8 +142,22 @@ return {
       local body = List:new{}
       local meta = doc.meta
       
+      local documenttitle = ""
+      local intabovetitle = 2
+      local newline = pandoc.LineBreak()
+      if FORMAT:match 'docx' then
+         newline = pandoc.SoftBreak()
+      end
+      
       if meta.apatitledisplay then
-        local documenttitle = pandoc.Header(1, meta.apatitledisplay)
+        if meta["blank-lines-above-title"] and #meta["blank-lines-above-title"] > 0 then
+          local possiblenumber = stringify(meta["blank-lines-above-title"])
+          intabovetitle = math.floor(tonumber(possiblenumber)) or 2
+        end
+        for i=1,intabovetitle do 
+          body:extend({newline})
+        end
+        documenttitle = pandoc.Header(1, meta.apatitledisplay)
         documenttitle.classes = {"title", "unnumbered", "unlisted"}
         documenttitle.identifier="title"
         body:extend({documenttitle})
@@ -167,11 +181,9 @@ return {
       
       local affiliations_str = List()
 
-      local newline = pandoc.LineBreak()
+   
       
-      if FORMAT:match 'docx' then
-         newline = pandoc.SoftBreak()
-      end
+
       
       
       local authordiv = pandoc.Div({
@@ -242,22 +254,22 @@ return {
       authornoteheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
       authornoteheader.identifier = "author-note"
       
-      local intblank = 1
+      local intabovenote = 1
       
       if authornote then
         if FORMAT:match 'docx' then
           blanklines = authornote["blank-lines-above-author-note"]
-          if blanklines then
-            for i, v in ipairs(blanklines) do
-              intblank = tonumber(v.text)
-            end
+          if authornote["blank-lines-above-author-note"] and #authornote["blank-lines-above-author-note"] > 0 then
+            local possiblenumber = stringify(authornote["blank-lines-above-author-note"])
+            intabovenote = math.floor(tonumber(possiblenumber)) or 1
+          end
+          for i=1,intabovenote do 
+            body:extend({newline})
           end
         end
       end
 
-      for i=1,intblank,1 do 
-        body:extend({newline})
-      end
+
         
         
         

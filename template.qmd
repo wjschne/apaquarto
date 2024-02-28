@@ -53,12 +53,12 @@ author:
       - Writing – review & editing
       - Methodology
       - Formal Analysis
+    # List city and region/state for unaffiliated authors
     affiliations:
-      - name: ~
-        city: Buffalo
+      - city: Buffalo
         region: NY
 author-note:
-  blank-lines-above-author-note: 1
+  blank-lines-above-author-note: 3
   status-changes: 
     # Example: [Author name] is now at [affiliation].
     affiliation-change: Ana Fulano is now at X University.
@@ -86,14 +86,15 @@ abstract: "This document is a template demonstrating the apaquarto format."
 keywords: [keyword1, keyword2, keyword3]
 # If true, tables and figures are mingled with the text. If false, figures appear at end of the document (unless pdf is in jou mode)
 floatsintext: true
+# Numbered lines (.pdf and .docx only)
+numbered-lines: false
+# File with references
 bibliography: bibliography.bib
 # Masks references that appear in the masked-citations list
 mask: false
 masked-citations:
   - schneider2012cattell
   - schneider2015intelligence
-# Numbered lines (.pdf and .docx only)
-numbered-lines: false
 format:
   apaquarto-docx: default
   apaquarto-html: default
