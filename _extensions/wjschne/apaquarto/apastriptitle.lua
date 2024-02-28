@@ -4,16 +4,21 @@ local function ends_with(str, ending)
 end
 
 Meta = function(meta)
+  
+  meta.apatitle = nil
+  meta.apatitledisplay = nil
+  if meta.title then
+    meta.apatitle = meta.title:clone()
+    meta.apatitledisplay = meta.title:clone()
+  end
 
-  meta.apatitle = meta.title:clone()
-  meta.apatitledisplay = meta.title:clone()
   if meta.subtitle then
-        if not ends_with(meta.apatitledisplay[#meta.apatitledisplay], ":") then
-          meta.apatitledisplay:insert(pandoc.Str(":"))
-        end
-        meta.apatitledisplay:insert(pandoc.Space())
-        meta.apatitledisplay:extend(meta.subtitle)
-      end
+    if not ends_with(meta.apatitledisplay[#meta.apatitledisplay], ":") then
+      meta.apatitledisplay:insert(pandoc.Str(":"))
+    end
+    meta.apatitledisplay:insert(pandoc.Space())
+    meta.apatitledisplay:extend(meta.subtitle)
+  end
   meta.apasubtitle = meta.subtitle
   meta.apaauthor = meta.author
   meta.apadate =  meta.date

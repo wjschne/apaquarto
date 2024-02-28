@@ -141,9 +141,15 @@ return {
            
       local body = List:new{}
       local meta = doc.meta
-      local documenttitle = pandoc.Header(1, meta.apatitledisplay)
-      documenttitle.classes = {"title", "unnumbered", "unlisted"}
-      documenttitle.identifier="title"
+      
+      if meta.apatitledisplay then
+        local documenttitle = pandoc.Header(1, meta.apatitledisplay)
+        documenttitle.classes = {"title", "unnumbered", "unlisted"}
+        documenttitle.identifier="title"
+        body:extend({documenttitle})
+      end
+      
+
       
       local byauthor = meta["by-author"]
       local affiliations = meta["affiliations"]
@@ -226,7 +232,7 @@ return {
       
       
       
-      body:extend({documenttitle})
+
       
       if not mask then
       body:extend({authordiv})
@@ -395,7 +401,7 @@ return {
           end
         end
         
-      if meta.apaabstract or meta.abstract then
+      if meta.apaabstract and #meta.apaabstract > 0 then
         local abstractheader = pandoc.Header(1, "Abstract")
         abstractheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
         abstractheader.identifier = "abstract"
@@ -442,11 +448,15 @@ return {
         if FORMAT:match 'docx' then
           body:extend({pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')})
         end
+        
+      if meta.apatitledisplay then
+        local firstpageheader = documenttitle:clone()
+        firstpageheader.identifier = "firstheader"
+        firstpageheader.classes = {"title"}
+        body:extend({firstpageheader})
+      end
   
-      local firstpageheader = documenttitle:clone()
-      firstpageheader.identifier = "firstheader"
-      firstpageheader.classes = {"title"}
-      body:extend({firstpageheader})
+
       
       local myshorttitle = meta["apatitle"]
 

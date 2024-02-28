@@ -1,10 +1,16 @@
 $if(apatitledisplay)$
 \title{$apatitledisplay$}
+$else$
+\title{No Title Set: Set title field in yaml}
 $endif$
 $if(shorttitle)$
 \shorttitle{$shorttitle$}
 $else$
+$if(apatitle)$
 \shorttitle{$apatitle$}
+$else$
+\shorttitle{No Shorttitle Set: Set title or shorttitle in yaml}
+$endif$
 $endif$
 
 
