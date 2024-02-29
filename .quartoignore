@@ -15,3 +15,5 @@ template.pdf
 template_journal.pdf
 template_manuscript.pdf
 site_libs/
+_extensions/wjschne/embedpdf/
+_extensions/embedpdf/
