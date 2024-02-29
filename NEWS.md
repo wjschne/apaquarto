@@ -7,13 +7,16 @@
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.3.0 (2024-02-29)
 
-# Version 3.2.4 (2024-02-24)
-
-- Fixed problem with abstracts with multiple paragraphs  [\#36](https://github.com/wjschne/apaquarto/issues/36)
-- Fixed centering problem with author div in .html
-- Fixed problem with authors with no affiliation
-- Numbered lists available for .docx format [\#25](https://github.com/wjschne/apaquarto/issues/25) [\#34](https://github.com/wjschne/apaquarto/issues/25)
+- Added better documentation of [apaquarto template
+  options](https://wjschne.github.io/apaquarto/)
+- If mask option is true, remove author names, author affiliations, and
+  author notes from title page.
+- Fixed blank spaces above title and author note in .docx
+- Numbered lines for .docx
+- Support for multiline abstracts
+- Many minor fixes
 
 # Version 3.2.3 (2024-02-19)
 
@@ -21,7 +24,6 @@
 - Fixed .pdf line number problem that crept back in somehow yet again
   [\#34](https://github.com/wjschne/apaquarto/issues/34)
 - Fixed problem with curly single quote in .docx running header
-
 
 # Version 3.2.2 (2024-02-15)
 

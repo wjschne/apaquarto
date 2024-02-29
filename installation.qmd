@@ -18,7 +18,7 @@ The current stable version of Quarto can be installed [here](https://quarto.org/
 The stable version of Quarto has everything apaquarto needs. However, if you are feeling bold and zesty, you can get the latest-but-not-fully-vetted features of Quarto via the [pre-release builds](https://quarto.org/docs/download/prerelease.html). This is what I use, and I update Quarto frequently. If it does not behave as expected, you can always revert back to the stable version. 
 :::
 
-## Select Your Environment for Using Quarto
+## Select your environment for using Quarto
 
 At the [same link for installing Quarto](https://quarto.org/docs/get-started/), there are links for selecting an environment for using Quarto. 
 
@@ -70,7 +70,7 @@ quarto use template wjschne/apaquarto
 
 Entering the command above will prompt a question about whether you trust the author of the extension to not run malicious code. If Yes, you will be prompted to name a new folder where the extension will be installed with an example document with the name of the folder and a file extension of .qmd. The example document has most of the instructions you will likely need.
 
-### Adding apaquarto to an Existing Document
+### Adding apaquarto to an existing document
 
 To add apquarto to an existing .qmd document:
 
@@ -86,42 +86,5 @@ format:
   apaquarto-docx: default
 ```
 
-You can also add .html and .pdf formats as needed:
 
-``` yaml
-format:
-  apaquarto-docx: default
-  apaquarto-html: default
-  apaquarto-pdf: default
-```
-
-
-Here is a minimal example of what the YAML metadata might look like:
-
-``` yaml
----
-title: "My Paper's Title: A Full Analysis of Everything"
-shorttitle: "My Paper's Title"
-author:
-  - name: W. Joel Schneider
-    corresponding: true
-    orcid: 0000-0002-8393-5316
-    email: schneider@temple.edu
-    affiliations:
-      - name: Temple University
-        department: College of Education and Human Development
-        address: 358 Ritter Hall
-        city: Philadelphia
-        region: PA
-        postal-code: 19122-6091
-abstract: "This is my abstract."
-keywords: [keyword1, keyword2]
-author-note:
-  disclosures:
-    conflict of interest: The author has no conflict of interest to declare.
-bibliograpy: mybibfile.bib     
-format:
-  apaquarto-docx: default
----
-```
 

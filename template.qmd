@@ -1,7 +1,5 @@
 ---
 title: "Using Quarto to Generate Documents in APA Style (7th Edition)"
-# Lines above title in .docx format
-blank-lines-above-title: 2
 # If blank, the running header is the title in upper case.
 shorttitle: Template for the apaquarto Extension
 # Set names and affiliations.
@@ -13,14 +11,14 @@ author:
     orcid: 0000-0000-0000-0001
     email: sm@example.org
     url: https://example.org/
-    # Roles are optional (note: The two writing roles have en dashes, not hyphens. You can use their aliases, w)
+    # Roles are optional. 
     # Select from the CRediT: Contributor Roles Taxonomy https://credit.niso.org/
-    # Conceptualization, Data curation, Formal Analysis, Funding acquisition, Investigation, 
-    # Methodology, Project administration, Resources, Software, Supervision, Validation, 
-    # Visualization, Writing – original draft, Writing – review & editing
+    # conceptualization, data curation, formal Analysis, funding acquisition, investigation, 
+    # methodology, project administration, resources, software, supervision, validation, 
+    # visualization, writing, editing
     roles:
-      - conceptualization: lead
-      - Writing - original draft
+      - conceptualization
+      - writing
     affiliations:
       - id: id1
         name: "Ana and Blanca's University"
@@ -33,16 +31,16 @@ author:
   - name: Blanca Zutano
     orcid: 0000-0000-0000-0002
     roles:
-      - Project administration
-      - Formal Analysis
+      - project administration
+      - formal analysis
     affiliations: 
       - ref: id1
   - name: Carina Mengano
     orcid: 0000-0000-0000-0003
     deceased: true
     roles:
-      - Formal Analysis
-      - Writing
+      - formal analysis
+      - writing
     affiliations:
       - name: "Carina's Primary Affiliation"
       - name: "Carina's Secondary Affiliation"
@@ -50,41 +48,40 @@ author:
   - name: Dolorita Perengano
     orcid: 0000-0000-0000-0004
     roles:
-      - Writing – review & editing
-      - Methodology
-      - Formal Analysis
+      - writing
+      - methodology
+      - formal analysis
     # List city and region/state for unaffiliated authors
     affiliations:
       - city: Buffalo
         region: NY
 author-note:
-  blank-lines-above-author-note: 3
   status-changes: 
     # Example: [Author name] is now at [affiliation].
-    affiliation-change: Ana Fulano is now at X University.
+    affiliation-change: ~
     # Example: [Author name] is deceased.
-    deceased: Carina Mengano is deceased.
+    deceased: ~
   # Disclosures condensed to one paragraph, but you can start a field with two line breaks to break them up: \n\nNew Paragraph
   disclosures:
     # Example: This study was registered at X (Identifier Y).
-    study-registration: This study was registered at ClinicalTrials.gov (Identifier NTC998877).
+    study-registration: ~
     # Acknowledge and cite data/materials to be shared.
     data-sharing: ~
     # Example: This article is based on data published in [Reference].
-    # Example: This article is based on the dissertation completed by Graham (2018).  
-    related-report: This article is based on data published in @austenMansfieldPark1990. 
+    # Example: This article is based on the dissertation completed by [citation].  
+    related-report: ~
     # Example: [Author name] has been a paid consultant for Corporation X, which funded this study.
-    conflict-of-interest: Ana Fulano earns royalties from the sale of Test X, which was used in the study.
+    conflict-of-interest: ~
     # Example: This study was supported by Grant [Grant Number] from [Funding Source].
-    financial-support: This study was supported by Grant ABC123 from Corporation X.
+    financial-support: ~
     # Example: The authors are grateful to [Person] for [Reason].
-    gratitude: The authors are grateful for the technical assistance of Fernanda Ferenganamono during the initial design and setup of our lab equipment.
+    gratitude: ~
     # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
-    authorship-agreements: Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
+    authorship-agreements: ~
 abstract: "This document is a template demonstrating the apaquarto format."
 # Put as many keywords at you like, separated by commmas (e.g., [reliability, validity, generalizability])
 keywords: [keyword1, keyword2, keyword3]
-# If true, tables and figures are mingled with the text. If false, figures appear at end of the document (unless pdf is in jou mode)
+# If true, tables and figures are mingled with the text instead of listed at the end of the document.
 floatsintext: true
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
@@ -99,48 +96,8 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf:
-    keep-tex: true
-    # can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man 
-    # can be 10pt, 11pt, or 12pt
-    fontsize: "12pt"
-    # a4 paper if true, letter size if false
-    a4paper: false
-    # suppresses loading of the lmodern font package
-    nolmodern: false
-    # Suppresses loading of the fontenc package
-    nofontenc: false
-    # Suppress the title above the introduction
-    donotrepeattitle: false
-    # In jou mode, use times or pslatex instead of txfonts
-    notxfonts: false
-    # In jou mode, use Computer Modern font instead of times
-    notimes: false
-    # In jou mode, cancels automatic stretching of tables to column width 
-    notab: false
-    # Uses Helvetica font in stu and man mode
-    helv: false
-    # In man and stu mode, neutralizes the \helvetica command
-    nosf: false
-    # In man and stu mode, uses typewriter font
-    tt: false
-    # Puts draft watermark on first page
-    draftfirst: false
-    # Puts draft watermark on all pages
-    draftall: false
-    # Journal title (e.g., American Psychologist)
-    journal: ~
-    # Date, volume, number, pages (e.g., "2024, Vol. 1, No. 1, 1--4")
-    volume: ~
-    # copyright notice (e.g., 2024)
-    copyrightnotice: ~
-    # Additional copyright text (e.g., All rights reserved)
-    copyrighttext: ~
-    course: Introduction to Assessment
-    professor: W. Joel Schneider
-    duedate: 12/22/2024
-    # Hides correspondence text
-    nocorrespondence: false
+    # Can be jou (journal), man (manuscript), stu (student), or doc (document)
+    documentmode: man
 ---
 
 ```{r}

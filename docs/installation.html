@@ -197,7 +197,7 @@ Note
 </div>
 </div></div></section>
 <section id="select-your-environment-for-using-quarto" class="level2">
-<h2 class="anchored" data-anchor-id="select-your-environment-for-using-quarto">Select Your Environment for Using Quarto</h2>
+<h2 class="anchored" data-anchor-id="select-your-environment-for-using-quarto">Select your environment for using Quarto</h2>
 <p>At the <a href="https://quarto.org/docs/get-started/">same link for installing Quarto</a>, there are links for selecting an environment for using Quarto.</p>
 <p><a href="https://posit.co/download/rstudio-desktop/">RStudio</a> will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto. If you are an R user, you will probably want to select <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>. Using the links there, 1) install R for your operation system (Windows, Mac, or Linux) and 2) install RStudio Desktop.</p>
 <p>If you use Python, Julia, or Observable as your primary tool for analyzing data, you can use RStudio, but using other tools you already know might be more comfortable (e.g., VS Code, Jupyter, NeoVim, or any other text editor). Some R users really like VS Code. Everyone has options—Quarto won’t box you in.</p>
@@ -267,7 +267,7 @@ Note
 <p>Entering the command above will prompt a question about whether you trust the author of the extension to not run malicious code. If Yes, you will be prompted to name a new folder where the extension will be installed with an example document with the name of the folder and a file extension of .qmd. The example document has most of the instructions you will likely need.</p>
 </section>
 <section id="adding-apaquarto-to-an-existing-document" class="level3">
-<h3 class="anchored" data-anchor-id="adding-apaquarto-to-an-existing-document">Adding apaquarto to an Existing Document</h3>
+<h3 class="anchored" data-anchor-id="adding-apaquarto-to-an-existing-document">Adding apaquarto to an existing document</h3>
 <p>To add apquarto to an existing .qmd document:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add wjschne/apaquarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -275,36 +275,6 @@ Note
 <p>To make a .docx file, add this to your .qmd file’s yaml <code>format</code> option:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You can also add .html and .pdf formats as needed:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span><span class="at"> default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Here is a minimal example of what the YAML metadata might look like:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Paper's Title: A Full Analysis of Everything"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shorttitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Paper's Title"</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">corresponding</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0002-8393-5316</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> schneider@temple.edu</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 358 Ritter Hall</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> </span><span class="st">"This is my abstract."</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">keyword1</span><span class="kw">,</span><span class="at"> keyword2</span><span class="kw">]</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict of interest</span><span class="kw">:</span><span class="at"> The author has no conflict of interest to declare.</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliograpy</span><span class="kw">:</span><span class="at"> mybibfile.bib     </span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

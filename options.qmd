@@ -3,7 +3,7 @@ title: "Template Options"
 toc: true
 ---
 
-Options are set in the metadata section at the top of the .qmd file. It uses [YAML](https://yaml.org/), a format that allows us to store data in a format that is easy to write and easy to read. In it simplest form it has a key and a value:
+Options are set in the metadata section at the top of the .qmd file. It uses [YAML](https://yaml.org/), a format that allows us to store data in a format that is easy to write and easy to read. In its simplest form, it has a key and a value:
 
 ``` yaml
 key: value
@@ -15,11 +15,43 @@ If the value is simple, it does not need any quotes. If it has any characters th
 title: "This title needs quotes: Because there is a colon in it."
 ```
 
-Any optional key you do not want can be deleted. If you would prefer to keep the key visible but empty, you can make the value `NULL` by putting the tilde symbol `~` like so:
+Any optional key you do not use can be deleted or commented out. If you would prefer to keep the key visible but empty, you can make the value `NULL` with the tilde symbol `~` like so:
 
 ``` yaml
 key: ~
 ```
+
+Here is a minimal example of what the YAML metadata might look like:
+
+``` yaml
+---
+title: "My Paper's Title: A Full Analysis of Everything"
+shorttitle: "My Paper's Title"
+author:
+  - name: W. Joel Schneider
+    corresponding: true
+    orcid: 0000-0002-8393-5316
+    email: schneider@temple.edu
+    affiliations:
+      - name: Temple University
+        department: College of Education and Human Development
+        address: 358 Ritter Hall
+        city: Philadelphia
+        region: PA
+        postal-code: 19122-6091
+abstract: "This is my abstract."
+keywords: [keyword1, keyword2]
+author-note:
+  disclosures:
+    conflict of interest: The author has no conflict of interest to declare.
+bibliograpy: mybibfile.bib     
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf: default
+---
+```
+
 
 # General Options
 
@@ -129,13 +161,15 @@ key: ~
 |                    | The citation keys should be as they appear in the bibliography file(s).                                                                                                                                             |
 +--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-: {.hover .primary}
+: {.hover .primary tbl-colwidths="\[20,80\]"}
 
 ## Authors
 
 The apaquarto uses the \[standard Quarto schema for authors\](https://quarto.org/docs/authoring/front-matter.html#author). It has a lot of options, some of which are not needed for the apaquarto extension (e.g., `fax`).
 
-The `author` field need contains author names, author affiliations, and author roles. The corresponding author is specified by setting the author's corresponding field to true (i.e., `corresponding: true`). This author needs to list an email and list a mailing address in the affiliation data. Only one author can be the corresponding author. Detailed information about the remaining authors is fine to include, but is not needed. Where possible, specify each author's \[orcid\](https://orcid.org/) for easy, unambiguous identification.
+The `author` field contains author names, author affiliations, and author roles. Where possible, specify each author's \[orcid\](https://orcid.org/) for easy, unambiguous identification.
+
+The corresponding author is specified by setting the author's corresponding field to true (i.e., `corresponding: true`). This author needs to list an email and list a mailing address in the affiliation data. Only one author can be the corresponding author. Other authors do not need to list their addresses.
 
 ``` yaml
 author:
@@ -150,17 +184,31 @@ author:
         city: Philadelphia
         region: PA
         postal-code: 19122-6091
+    role:
+      - writing
+      - conceptualization
   - name: Fulano Zutano Mengano
     affiliations: Universidad de Dondequiera
     orcid: 0000-0000-0000-0001
+    role:
+      - formal anlaysis
+      - visualization
+      - editin
   - name: Thomas Richard Harris
     affiliations: 
       - name: Generic State University
         department: Department of Scholarly Studies
     orcid: 0000-0000-0000-0002
+    role:
+      - editing
+      - funding acquistion
   - name: Wut C. Whosis
     affiliations: Whatchama College
     orcid: 0000-0000-0000-0003
+    role:
+      - software
+      - methodology
+      - editing
 ```
 
 ## Affiliations
@@ -233,7 +281,7 @@ The apaquarto extenstion uses the \[standard Quarto schema for affiliations\](ht
 | `postal-code` | Postal code (zip code in the U.S.)                                                                                        |
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 
-: {.hover .primary}
+: {.hover .primary tbl-colwidths="\[20,80\]"}
 
 ### Multiple Affiliations
 
@@ -295,10 +343,195 @@ affiliations:
     name: University of California, Berkeley
 ```
 
+## Author Roles
+
+APA Style encourages but does not require papers with multiple authors to describe author roles using the \[Contributor Roles Taxonomy (CRediT)\](https://credit.niso.org/). There are 14 contributor roles:
+
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Role                                                                                          | Description                                                                                                                                                                                                     |
++===============================================================================================+=================================================================================================================================================================================================================+
+| [`conceptualization`](https://credit.niso.org/contributor-roles/conceptualization/)           | Ideas; formulation or evolution of overarching research goals and aims.                                                                                                                                         |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`data curation`](https://credit.niso.org/contributor-roles/data-curation/)                   | Management activities to annotate (produce metadata), scrub data and maintain research data (including software code, where it is necessary for interpreting the data itself) for initial use and later re-use. |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`formal analysis`](https://credit.niso.org/contributor-roles/formal-analysis/)               | Application of statistical, mathematical, computational, or other formal techniques to analyse or synthesize study data.                                                                                        |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`funding acquisition`](https://credit.niso.org/contributor-roles/funding-acquisition/)       | Acquisition of the financial support for the project leading to this publication.                                                                                                                               |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`investigation`](https://credit.niso.org/contributor-roles/investigation/)                   | Conducting a research and investigation process, specifically performing the experiments, or data/evidence collection.                                                                                          |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`methodology`](https://credit.niso.org/contributor-roles/methodology/)                       | Development or design of methodology; creation of models.                                                                                                                                                       |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`project administration`](https://credit.niso.org/contributor-roles/project-administration/) | Management and coordination responsibility for the research activity planning and execution.                                                                                                                    |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`resources`](https://credit.niso.org/contributor-roles/resources/)                           | Provision of study materials, reagents, materials, patients, laboratory samples, animals, instrumentation, computing resources, or other analysis tools.                                                        |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`software`](https://credit.niso.org/contributor-roles/software/)                             | Programming, software development; designing computer programs; implementation of the computer code and supporting algorithms; testing of existing code components.                                             |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`supervision`](https://credit.niso.org/contributor-roles/supervision/)                       | Oversight and leadership responsibility for the research activity planning and execution, including mentorship external to the core team.                                                                       |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`validation`](https://credit.niso.org/contributor-roles/validation/)                         | Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs.                                                      |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`visualization`](https://credit.niso.org/contributor-roles/visualization/)                   | Preparation, creation and/or presentation of the published work, specifically visualization/data presentation.                                                                                                  |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`writing`](https://credit.niso.org/contributor-roles/writing-original-draft/)                | Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation).                                                                    |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`editing`](https://credit.niso.org/contributor-roles/writing-review-editing/)                | reparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision -- including pre- or post-publication stages.    |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+: {.hover .primary tbl-colwidths="\[25,75\]"}
+
+It is possible to list the roles for each author:
+
+``` yaml
+author: 
+  - name: Fred Jones
+    role: 
+      - conceptualization
+      - funding acquisition
+      - writing
+  - name: Wanda James
+    role:
+      - conceptualization
+      - formal analysis
+      - visualization
+      - editing
+```
+
+When 2 or more authors have the same role, one may specify the degree of contribution (`lead`, `equal`, `supporting`):
+
+``` yaml
+author: 
+  - name: Fred Jones
+    role: 
+      - conceptualization: lead
+      - visualization: supporting
+      - investigation: equal
+      - funding acquisition
+      - writing
+  - name: Wanda James
+    role:
+      - conceptualization: supporting
+      - visualization: lead
+      - investigation: equal
+      - formal analysis
+      - editing
+```
+
+## Author Notes
+
+The first paragraph of the Author Note will be populated with all the ORCID IDs that have been specified.
+
+The second paragraph consists of status changes:
+
++----------------------+-----------------------------------------------------------------------+
+| Field                | Explanation                                                           |
++======================+=======================================================================+
+| `affiliation-change` | Describe author affiliation changes.                                  |
+|                      |                                                                       |
+|                      | Example:                                                              |
+|                      |                                                                       |
+|                      | ``` yaml                                                              |
+|                      | author-note:                                                          |
+|                      |   status-changes:                                                     |
+|                      |     affiliation-change: Fred Jones is now at Generic State University |
+|                      | ```                                                                   |
++----------------------+-----------------------------------------------------------------------+
+| `deceased`           | Disclose names of authors who are now deceased.                       |
+|                      |                                                                       |
+|                      | Example:                                                              |
+|                      |                                                                       |
+|                      | ``` yaml                                                              |
+|                      | author-note:                                                          |
+|                      |   status-changes:                                                     |
+|                      |     deceased: Fred Jones is deceased.                                 |
+|                      | ```                                                                   |
++----------------------+-----------------------------------------------------------------------+
+
+: {.hover .primary tbl-colwidths="\[20,80\]"}
+
+The third paragraph consists of study details and author disclosures:
+
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+| Field                   | Explanation                                                                                                                    |
++=========================+================================================================================================================================+
+| `study-registration`    | Describe where the study was registered.                                                                                       |
+|                         |                                                                                                                                |
+|                         | Example:                                                                                                                       |
+|                         |                                                                                                                                |
+|                         | ``` yaml                                                                                                                       |
+|                         | author-note:                                                                                                                   |
+|                         |   discloures:                                                                                                                  |
+|                         |     study-registration: This study was registered at ClinicalTrials.gov (Identifier NTC998877).                                |
+|                         | ```                                                                                                                            |
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+| `data-sharing`          | Data/materials that have been shared                                                                                           |
+|                         |                                                                                                                                |
+|                         | Example:                                                                                                                       |
+|                         |                                                                                                                                |
+|                         | ``` yaml                                                                                                                       |
+|                         | author-note:                                                                                                                   |
+|                         |   discloures:                                                                                                                  |
+|                         |     data-sharing: Data from this study can be accessed at https://academicdata.org/jones2024.                                  |
+|                         | ```                                                                                                                            |
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+| `related-report`        | Acknowledge and cite data/materials that were used previously                                                                  |
+|                         |                                                                                                                                |
+|                         | Example:                                                                                                                       |
+|                         |                                                                                                                                |
+|                         | ``` yaml                                                                                                                       |
+|                         | author-note:                                                                                                                   |
+|                         |   discloures:                                                                                                                  |
+|                         |     related-report: This article is based on the dissertation completed by Graham (2018)                                       |
+|                         | ```                                                                                                                            |
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+| `conflict-of-interest`  | Disclose author conflicts of interest                                                                                          |
+|                         |                                                                                                                                |
+|                         | Example:                                                                                                                       |
+|                         |                                                                                                                                |
+|                         | ``` yaml                                                                                                                       |
+|                         | author-note:                                                                                                                   |
+|                         |   discloures:                                                                                                                  |
+|                         |     conflict-of-interest: Fred Jones has been a paid consultant for Corporation X, which funded this study.                    |
+|                         | ```                                                                                                                            |
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+| `financial-support`     | Acknowledge funding sources                                                                                                    |
+|                         |                                                                                                                                |
+|                         | Example:                                                                                                                       |
+|                         |                                                                                                                                |
+|                         | ``` yaml                                                                                                                       |
+|                         | author-note:                                                                                                                   |
+|                         |   discloures:                                                                                                                  |
+|                         |     financial-support: This study was supported by Grant 123 from Academic Funders United.                                     |
+|                         | ```                                                                                                                            |
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+| `gratitude`             | Authors can express gratitude.                                                                                                 |
+|                         |                                                                                                                                |
+|                         | Example:                                                                                                                       |
+|                         |                                                                                                                                |
+|                         | ``` yaml                                                                                                                       |
+|                         | author-note:                                                                                                                   |
+|                         |   discloures:                                                                                                                  |
+|                         |     gratitude: The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper.               |
+|                         | ```                                                                                                                            |
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+| `authorship-agreements` | Authors can disclose any agreements they entered into regarding the paper.                                                     |
+|                         |                                                                                                                                |
+|                         | Example:                                                                                                                       |
+|                         |                                                                                                                                |
+|                         | ``` yaml                                                                                                                       |
+|                         | author-note:                                                                                                                   |
+|                         |   discloures:                                                                                                                  |
+|                         |     authorship-agreements: Because the authors are equal contributors, order of authorship was determined by a fair coin toss. |
+|                         | ```                                                                                                                            |
++-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+
+: {.hover .primary tbl-colwidths="\[20,80\]"}
+
 ## Options for .docx
 
 +---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
-| Option                          | Explanation                                                                                                                       |
+| Field                           | Explanation                                                                                                                       |
 +:================================+:==================================================================================================================================+
 | `blank-lines-above-title`       | Number of blank lines above the title.                                                                                            |
 |                                 |                                                                                                                                   |
@@ -308,9 +541,79 @@ affiliations:
 +---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 | `blank-lines-above-author-note` | Number of double-spaced lines between author affiliations and author note.                                                        |
 |                                 |                                                                                                                                   |
-|                                 | APA style wants the note to start around the middle of the page. You can play with the number. It defaults to 1 if omitted.       |
+|                                 | APA style wants the note to start around the middle of the page. You can play with the number. It defaults to 2 if omitted.       |
 +---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+
+: {.hover .primary tbl-colwidths="\[20,80\]"}
 
 ## Options for .pdf
 
+All of the .pdf-specfic options for apaquarto come directly from the \[apa7 $\LaTeX$ package\](https://ctan.org/pkg/apa7?lang=en). Consult the apa7 package documentation for greater detail.
+
++--------------------+---------------------------------------------------------------------------------------+
+| Field              | Explanation                                                                           |
++====================+=======================================================================================+
+| `documentmode`     | Alter the overall style of the document. Options incluce:                             |
+|                    |                                                                                       |
+|                    | -   `man` Manuscript: Similar to .docx format                                         |
+|                    | -   `jou` Journal: A polished two-column format similar to many APA journals.         |
+|                    | -   `doc` Document: Similar to default $\LaTeX$ articles.                             |
+|                    | -   `stu` Student: Formatted for student papers                                       |
++--------------------+---------------------------------------------------------------------------------------+
+| `course`           | Fields that are used only for student papers (`stu` mode).                            |
+|                    |                                                                                       |
+| `professor`        | Example:                                                                              |
+|                    |                                                                                       |
+| `duedate`          | ``` yaml                                                                              |
+|                    | course: Introduction to Statistics (EDUC 5101)                                        |
+|                    | professor: W. Joel Schneider                                                          |
+|                    | duedate: 12/22/2024                                                                   |
+|                    | ```                                                                                   |
++--------------------+---------------------------------------------------------------------------------------+
+| `journal`          | Fields that are used only for Journal (`jou`) mode.                                   |
+|                    |                                                                                       |
+| `volume`           | Example:                                                                              |
+|                    |                                                                                       |
+| `copyrightnotice`  | ``` yaml                                                                              |
+|                    | journal: Psychological Review                                                         |
+| `copyrightext`     | volume: 2024, Vol. 131, No. 2, 10--60                                                 |
+|                    | copyrightnotice: 2024                                                                 |
+|                    | copyrightext: All rights reserved                                                     |
+|                    | ```                                                                                   |
++--------------------+---------------------------------------------------------------------------------------+
+| `fontsize`         | Size of font.                                                                         |
+|                    |                                                                                       |
+|                    | Options include `10pt`, `11pt`, and `12pt`                                            |
++--------------------+---------------------------------------------------------------------------------------+
+| `nolmodern`        | If `true`, suppresses loading of the `lmodern` font package.                          |
++--------------------+---------------------------------------------------------------------------------------+
+| `helv`             | If `true`, use Helvetica font when in `stu` and `man` mode.                           |
++--------------------+---------------------------------------------------------------------------------------+
+| `notimes`          | If `true`, use Computer Modern font instead of Times when in `jou` mode.              |
++--------------------+---------------------------------------------------------------------------------------+
+| `nosf`             | If `true`, neutralizes the `\helvetica` command when in `man` and `stu` mode.         |
++--------------------+---------------------------------------------------------------------------------------+
+| `tt`               | If `true`, uses typewriter font when in `man` and `stu` mode.                         |
++--------------------+---------------------------------------------------------------------------------------+
+| `notxfonts`        | If `true`, use times or pslatex instead of txfonts when in `jou` mode.                |
++--------------------+---------------------------------------------------------------------------------------+
+| `notab`            | If `true`, cancels automatic stretching of tables to column width when in `jou` mode. |
++--------------------+---------------------------------------------------------------------------------------+
+| `nofontenc`        | If `true`, suppresses loading of the `fontenc` package.                               |
++--------------------+---------------------------------------------------------------------------------------+
+| `a4paper`          | If `true`, uses a4 paper size instead of 8.5 by 11 in. letter size.                   |
++--------------------+---------------------------------------------------------------------------------------+
+| `donotrepeattitle` | If `true`, suppresses title in the first page of text.                                |
++--------------------+---------------------------------------------------------------------------------------+
+| `draftfirst`       | If `true`, puts draft watermark on first page.                                        |
++--------------------+---------------------------------------------------------------------------------------+
+| `draftall`         | If `true`, puts draft watermark on all pages.                                         |
++--------------------+---------------------------------------------------------------------------------------+
+| `nocorrespondence` | If `true`, hides correspondence text                                                  |
++--------------------+---------------------------------------------------------------------------------------+
+
+: {.hover .primary tbl-colwidths="\[20,80\]"}
+
 ## Options for .html
+
+Everything that works for .docx should work for .html.

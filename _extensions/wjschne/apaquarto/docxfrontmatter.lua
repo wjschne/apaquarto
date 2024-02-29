@@ -254,14 +254,14 @@ return {
       authornoteheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
       authornoteheader.identifier = "author-note"
       
-      local intabovenote = 1
+      local intabovenote = 2
       
       if authornote then
         if FORMAT:match 'docx' then
           blanklines = authornote["blank-lines-above-author-note"]
           if authornote["blank-lines-above-author-note"] and #authornote["blank-lines-above-author-note"] > 0 then
             local possiblenumber = stringify(authornote["blank-lines-above-author-note"])
-            intabovenote = math.floor(tonumber(possiblenumber)) or 1
+            intabovenote = math.floor(tonumber(possiblenumber)) or 2
           end
           for i=1,intabovenote do 
             body:extend({newline})
@@ -302,10 +302,10 @@ return {
         if authornote["status-changes"] then
           local second_paragraph = pandoc.Para(pandoc.Str(""))
           
-          second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"]["affiliation-change"])
-          second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"].deceased)
-          
-          
+          second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"]["affiliation-change"] or authornote["affiliation-change"] or meta["affiliation-change"])
+          second_paragraph = extend_paragraph(second_paragraph, authornote["status-changes"].deceased or authornote.deceased or meta.deceased)
+      
+
           if #second_paragraph.content > 1 then
             if not mask then
               body:extend({second_paragraph})
@@ -316,13 +316,13 @@ return {
         if authornote.disclosures then
           local third_paragraph = pandoc.Para(pandoc.Str(""))
           
-          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["study-registration"])
-          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["data-sharing"])
-          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["related-report"])
-          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["conflict-of-interest"])
-          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["financial-support"])
-          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures.gratitude)
-          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["authorship-agreements"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["study-registration"] or authornote["study-registration"] or meta["study-registration"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["data-sharing"] or authornote["data-sharing"] or meta["data-sharing"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["related-report"] or authornote["related-report"] or meta["related-report"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["conflict-of-interest"] or authornote["conflict-of-interest"] or meta["conflict-of-interest"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["financial-support"] or authornote["financial-support"] or meta["financial-support"])
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures.gratitude or authornote.gratitude or meta.gratitude)
+          third_paragraph = extend_paragraph(third_paragraph, authornote.disclosures["authorship-agreements"] or authornote["authorship-agreements"] or meta["authorship-agreements"])
           
           if #third_paragraph.content > 1 then
             if not mask then

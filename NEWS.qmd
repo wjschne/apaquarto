@@ -11,6 +11,15 @@ engine: knitr
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.3.0 (2024-02-29)
+
+- Added better documentation of [apaquarto template options](https://wjschne.github.io/apaquarto/)
+- If mask option is true, remove author names, author affiliations, and author notes from title page.
+- Fixed blank spaces above title and author note in .docx
+- Numbered lines for .docx
+- Support for multiline abstracts
+- Many minor fixes
+
 # Version 3.2.3 (2024-02-19)
 
 - Add support for callout boxes in .pdf
