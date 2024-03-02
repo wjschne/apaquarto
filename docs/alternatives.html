@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>APA Style Documents with apaquarto – Alternatives to apaquarto</title>
+<title>APA Style Documents with apaquarto – APA Style Resources</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -130,7 +130,14 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./alternatives.html" aria-current="page"> 
-<span class="menu-text">Alternatives to apaquarto</span></a>
+<span class="menu-text">APA Style Resources</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/wjschne/apaquarto"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Source</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -142,14 +149,32 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#apa-style-books" id="toc-apa-style-books" class="nav-link active" data-scroll-target="#apa-style-books">APA-Style Books</a></li>
+  <li><a href="#apa-style-helper-functions-in-r" id="toc-apa-style-helper-functions-in-r" class="nav-link" data-scroll-target="#apa-style-helper-functions-in-r">APA-Style Helper Functions in R</a></li>
+  <li><a href="#alternatives-to-apaquarto" id="toc-alternatives-to-apaquarto" class="nav-link" data-scroll-target="#alternatives-to-apaquarto">Alternatives to apaquarto</a>
+  <ul class="collapse">
+  <li><a href="#apa-style-with-knitr-and-latex" id="toc-apa-style-with-knitr-and-latex" class="nav-link" data-scroll-target="#apa-style-with-knitr-and-latex">APA style with knitr and <span class="math inline">\(\LaTeX\)</span></a></li>
+  <li><a href="#apa-style-with-rmarkdown-and-papaja" id="toc-apa-style-with-rmarkdown-and-papaja" class="nav-link" data-scroll-target="#apa-style-with-rmarkdown-and-papaja">APA style with Rmarkdown and papaja</a></li>
+  <li><a href="#apa-style-with-quarto-and-typst" id="toc-apa-style-with-quarto-and-typst" class="nav-link" data-scroll-target="#apa-style-with-quarto-and-typst">APA style with Quarto and Typst</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Alternatives to apaquarto</h1>
+<h1 class="title">APA Style Resources</h1>
 </div>
 
 
@@ -166,12 +191,43 @@ window.Quarto = {
 </header>
 
 
+<section id="apa-style-books" class="level2">
+<h2 class="anchored" data-anchor-id="apa-style-books">APA-Style Books</h2>
+<ul>
+<li><span class="citation" data-cites="americanpsychologicalassociationPublicationManualAmerican2020">American Psychological Association (2020). <em>Publication manual of the <span>American Psychological Association</span></em> (7th ed.). Author. <a href="https://doi.org/10.1037/0000173-000" role="doc-biblioref">https://doi.org/10.1037/0000173-000</a></span></li>
+<li><span class="citation" data-cites="ConciseGuideAPA2020">American Psychological Association (2020). <em>Concise guide to <span>APA Style</span>: <span>The</span> official <span>APA Style</span> guide for students (7th ed.).</em> Author. <a href="https://doi.org/10.1037/0000173-000" role="doc-biblioref">https://doi.org/10.1037/0000173-000</a></span></li>
+<li><span class="citation" data-cites="americanpsychologicalassociationMasteringAPAStyle2021">American Psychological Association (2021). <em>Mastering <span>APA Style</span> student workbook.</em> Author. <a href="https://doi.org/10.1037/0000271-000" role="doc-biblioref">https://doi.org/10.1037/0000271-000</a></span></li>
+</ul>
+</section>
+<section id="apa-style-helper-functions-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="apa-style-helper-functions-in-r">APA-Style Helper Functions in R</h2>
+<p>Many packages have helper functions for reporting statistics in and creating tables and figures in APA Style. Here are a few:</p>
+<ul>
+<li><a href="https://rempsyc.remi-theriault.com/index.html">rempsyc</a></li>
+<li><a href="https://frederikaust.com/papaja_man/reporting.html">papaja</a></li>
+<li><a href="https://github.com/dgromer/apa">apa</a></li>
+<li><a href="https://dstanley4.github.io/apaTables/">apaTables</a></li>
+</ul>
+</section>
+<section id="alternatives-to-apaquarto" class="level2">
+<h2 class="anchored" data-anchor-id="alternatives-to-apaquarto">Alternatives to apaquarto</h2>
+<p>To my knowledge, there is no working quarto extension other than apaquarto that takes a comprehensive approach to APA style with output options in .docx, .html, and .pdf. However, there are other ways to automate the production of APA-style documents.</p>
+<section id="apa-style-with-knitr-and-latex" class="level3">
+<h3 class="anchored" data-anchor-id="apa-style-with-knitr-and-latex">APA style with knitr and <span class="math inline">\(\LaTeX\)</span></h3>
 <p>The ability to automate APA style via <span class="math inline">\(\LaTeX\)</span> has been around for some time—first via <a href="https://ctan.org/pkg/apa">apa</a> (APA Style, 5th Edition), then via <a href="https://ctan.org/pkg/apa6">apa6</a> (APA Style, 6th Edition), and now via <a href="https://ctan.org/pkg/apa7">apa7</a> (APA Style, 7th Edition). The apaquarto package uses <a href="https://ctan.org/pkg/apa7">apa7</a> to create .pdf documents. To intermingle R code and <span class="math inline">\(\LaTeX\)</span> code in the same document, R-users could write in an .Rnw file using <a href="https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr">sweave or knitr</a>. I still do so when I need the full flexibility of <span class="math inline">\(\LaTeX\)</span>.</p>
+</section>
+<section id="apa-style-with-rmarkdown-and-papaja" class="level3">
+<h3 class="anchored" data-anchor-id="apa-style-with-rmarkdown-and-papaja">APA style with Rmarkdown and papaja</h3>
 <p>Unfortunately, most psychology journals require submissions in MS Word (and most collaborators do as well). Learning <span class="math inline">\(\LaTeX\)</span> is fun for some people (e.g., me), but most will not bother. With the arrival of Rmarkdown, it became possible to automate document production with a system that takes just a few minutes to learn.</p>
 <p>The <a href="https://github.com/crsh/papaja">papaja</a> package by Frederick Aust uses Rmarkdown syntax and does a fantastic job of creating APA-style (6th Edition) documents in .pdf and <a href="https://frederikaust.com/papaja_man/limitations.html#microsoft-word-documents">gets close to perfect .docx output</a>. With a bit of tweaking, <a href="https://github.com/crsh/papaja/issues/342">papaja can do most of APA Style (7th Edition)</a> for .pdf documents.</p>
+</section>
+<section id="apa-style-with-quarto-and-typst" class="level3">
+<h3 class="anchored" data-anchor-id="apa-style-with-quarto-and-typst">APA style with Quarto and Typst</h3>
 <p>Matti Vuore is working on an <a href="https://github.com/mvuorre/quarto-apaish">APA-like quarto extension</a> that uses <a href="https://typst.app/">Typst</a> instead of <span class="math inline">\(\LaTeX\)</span>. As of 2024-02-27, there are aspects of APA style missing, but it looks promising. Because Typst offers many advantages over <span class="math inline">\(\LaTeX\)</span> (e.g., easy reconfiguration and much faster rendering), I would like to adapt apaquarto to use Typst as well. The development of Typst is fast and ongoing, so it will be interesting to see what the future holds.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -16,6 +16,10 @@ website:
       - installation.qmd
       - options.qmd
       - alternatives.qmd
+    right: 
+      - icon: github
+        href: https://github.com/wjschne/apaquarto
+        text: Source
 
 bibliography: bibliography.bib
 
@@ -25,6 +29,8 @@ format:
   html:
     theme: spacelab
     tbl-cap-location: top
+    toc: true
+    toc-location: left
 
 
 
