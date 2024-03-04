@@ -676,7 +676,7 @@ language:
   title-block-role-introduction: "Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"
 ```
 
-In addition, many terms translated automatically can be overridden. The full list is \[here\](https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/\_language.yml). For example, if I wanted "Figure" in figure captions to be "Plot" instead, I would specify the change like so:
+In addition, many terms translated automatically can be overridden. The full list is [here](https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml). For example, if I wanted "Figure" in figure captions to be "Plot" instead, I would specify the change like so:
 
 ``` yaml
 language: 
