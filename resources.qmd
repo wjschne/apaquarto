@@ -1,5 +1,5 @@
 ---
-title: "APA Style Resources"
+title: "Resources"
 csl: apa-cv.csl
 suppress-bibliography: true
 bibliography: bibliography.bib

@@ -1,59 +1,31 @@
 [
   {
-    "objectID": "alternatives.html",
-    "href": "alternatives.html",
-    "title": "APA Style Resources",
+    "objectID": "resources.html",
+    "href": "resources.html",
+    "title": "Resources",
     "section": "",
     "text": "American Psychological Association (2020). Publication manual of the American Psychological Association (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2020). Concise guide to APA Style: The official APA Style guide for students (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2021). Mastering APA Style student workbook. Author. https://doi.org/10.1037/0000271-000"
   },
   {
-    "objectID": "alternatives.html#apa-style-books",
-    "href": "alternatives.html#apa-style-books",
-    "title": "APA Style Resources",
+    "objectID": "resources.html#apa-style-books",
+    "href": "resources.html#apa-style-books",
+    "title": "Resources",
     "section": "",
     "text": "American Psychological Association (2020). Publication manual of the American Psychological Association (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2020). Concise guide to APA Style: The official APA Style guide for students (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2021). Mastering APA Style student workbook. Author. https://doi.org/10.1037/0000271-000"
   },
   {
-    "objectID": "alternatives.html#apa-style-helper-functions-in-r",
-    "href": "alternatives.html#apa-style-helper-functions-in-r",
-    "title": "APA Style Resources",
+    "objectID": "resources.html#apa-style-helper-functions-in-r",
+    "href": "resources.html#apa-style-helper-functions-in-r",
+    "title": "Resources",
     "section": "APA-Style Helper Functions in R",
     "text": "APA-Style Helper Functions in R\nMany packages have helper functions for reporting statistics in and creating tables and figures in APA Style. Here are a few:\n\nrempsyc\npapaja\napa\napaTables"
   },
   {
-    "objectID": "alternatives.html#alternatives-to-apaquarto",
-    "href": "alternatives.html#alternatives-to-apaquarto",
-    "title": "APA Style Resources",
+    "objectID": "resources.html#alternatives-to-apaquarto",
+    "href": "resources.html#alternatives-to-apaquarto",
+    "title": "Resources",
     "section": "Alternatives to apaquarto",
     "text": "Alternatives to apaquarto\nTo my knowledge, there is no working quarto extension other than apaquarto that takes a comprehensive approach to APA style with output options in .docx, .html, and .pdf. However, there are other ways to automate the production of APA-style documents.\n\nAPA style with knitr and \\(\\LaTeX\\)\nThe ability to automate APA style via \\(\\LaTeX\\) has been around for some time—first via apa (APA Style, 5th Edition), then via apa6 (APA Style, 6th Edition), and now via apa7 (APA Style, 7th Edition). The apaquarto package uses apa7 to create .pdf documents. To intermingle R code and \\(\\LaTeX\\) code in the same document, R-users could write in an .Rnw file using sweave or knitr. I still do so when I need the full flexibility of \\(\\LaTeX\\).\n\n\nAPA style with Rmarkdown and papaja\nUnfortunately, most psychology journals require submissions in MS Word (and most collaborators do as well). Learning \\(\\LaTeX\\) is fun for some people (e.g., me), but most will not bother. With the arrival of Rmarkdown, it became possible to automate document production with a system that takes just a few minutes to learn.\nThe papaja package by Frederick Aust uses Rmarkdown syntax and does a fantastic job of creating APA-style (6th Edition) documents in .pdf and gets close to perfect .docx output. With a bit of tweaking, papaja can do most of APA Style (7th Edition) for .pdf documents.\n\n\nAPA style with Quarto and Typst\nMatti Vuore is working on an APA-like quarto extension that uses Typst instead of \\(\\LaTeX\\). As of 2024-02-27, there are aspects of APA style missing, but it looks promising. Because Typst offers many advantages over \\(\\LaTeX\\) (e.g., easy reconfiguration and much faster rendering), I would like to adapt apaquarto to use Typst as well. The development of Typst is fast and ongoing, so it will be interesting to see what the future holds."
-  },
-  {
-    "objectID": "installation.html",
-    "href": "installation.html",
-    "title": "Installation",
-    "section": "",
-    "text": "Installing apaquarto is not hard, but it takes a bit more effort than installing a standalone program. There are four main steps:"
-  },
-  {
-    "objectID": "installation.html#install-quarto",
-    "href": "installation.html#install-quarto",
-    "title": "Installation",
-    "section": "Install Quarto",
-    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\n\n\n\n\n\n\n\nNote\n\n\n\nThe stable version of Quarto has everything apaquarto needs. However, if you are feeling bold and zesty, you can get the latest-but-not-fully-vetted features of Quarto via the pre-release builds. This is what I use, and I update Quarto frequently. If it does not behave as expected, you can always revert back to the stable version."
-  },
-  {
-    "objectID": "installation.html#select-your-environment-for-using-quarto",
-    "href": "installation.html#select-your-environment-for-using-quarto",
-    "title": "Installation",
-    "section": "Select your environment for using Quarto",
-    "text": "Select your environment for using Quarto\nAt the same link for installing Quarto, there are links for selecting an environment for using Quarto.\nRStudio will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto. If you are an R user, you will probably want to select RStudio. Using the links there, 1) install R for your operation system (Windows, Mac, or Linux) and 2) install RStudio Desktop.\nIf you use Python, Julia, or Observable as your primary tool for analyzing data, you can use RStudio, but using other tools you already know might be more comfortable (e.g., VS Code, Jupyter, NeoVim, or any other text editor). Some R users really like VS Code. Everyone has options—Quarto won’t box you in."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Introduction to apaquarto",
-    "section": "",
-    "text": "Style guides are absolutely necessary for scientific documents Scholarly writing is often about inherently difficult topics, and style guides remove many avoidable barriers to communication. Information is much easier to absorb when presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader’s end, style guides themselves often place unnecessary roadblocks before the writer.\nAPA style is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age (Bentley et al. 1929), its quirks and charms resist easy automation. Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten. I wrote apaquarto so that I would never have to worry about APA style ever again. With very little extra effort, your documents are formatted according to APA style (See Figure 1 for an example in “manuscript mode” and Figure 2 for the same document formatted like an APA journal).\n\n\n\nUnable to display PDF file. Download instead.\n\n\nFigure 1: Example document in manuscript mode\n\n\n\n\n\n\nUnable to display PDF file. Download instead.\n\n\nFigure 2: Example document in journal mode\n\n\n\n\nQuarto makes writing scientific documents easier\nThe apaquarto extension is built on Quarto, an open-source publishing system specifically adapted for scientific and technical documents such as journal articles, books, blogs, slides, and dashboards, and websites. Not only does Quarto offer considerable flexibility by itself, it was designed to be extensible. Thus, Quarto can take care of most of the formatting, and an extension can be written to handle whatever specific formatting rules a style guide requires. The apaquarto extension takes care of all the fussy details of APA-style so that you can focus on the content of your writing.\nYou do not need to know any programming languages to use Quarto. You can use it in a completely non-technical way to write well-formatted text, tables, figures, and references. However, if your document communicates the results from data analyses, then Quarto offers you something quite remarkable. You can perform your analyses and communicate your findings in the same file! That is, you write text and code together in a source document and then you “render” the document into its final format (e.g., .html, .pdf, .docx). So instead of performing your analyses elsewhere (e.g., SPSS) and then copying the results into a word processor (e.g., MS Word), you build your document in one step.\nThe advantages of this kind of workflow are profound. If you discover a mistake in your analysis, there is no need to find and replace the primary results and their downstream consequences scattered throughout the document. Instead, you just re-render the document, and everything in it is updated. When the document is published, the Quarto file serves as a fully reproducible record of your analysis. Making the Quarto file available in a public repository increases trust in your work because anyone can inspect it and trace any result you report back to the source code that created it.\n\n\n\n\n\nReferences\n\nBentley, Madison, CA Peerenboom, FW Hodge, Edward B Passano, HC Warren, and MF Washburn. 1929. “Instructions in Regard to Preparation of Manuscript.” Psychological Bulletin 26 (2): 57."
   },
   {
     "objectID": "options.html",
@@ -117,5 +89,61 @@
     "title": "Template Options",
     "section": "Language Options",
     "text": "Language Options\nYou can alter the names of Abstract, Figures, Tables, and References by setting the lang field to one of these languages:\n\n\n\n\n\n\n\nCode\nLanguage\n\n\n\n\nen\nEnglish\n\n\nzh\nChinese\n\n\nes\nSpanish\n\n\nfr\nFrench\n\n\nja\nJapanese\n\n\nde\nGerman\n\n\npt\nPortuguese\n\n\nru\nRussian\n\n\ncs\nCzech\n\n\nfi\nFinnish\n\n\nnl\nDutch\n\n\nit\nItalian\n\n\npl\nPolish\n\n\nko\nKorean\n\n\n\nHowever, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.\n\n\n\n\n\n\n\n\nField\nExplanation\nDefault\n\n\n\n\ncitation-last-author-separator\nAPA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word and before the last author.\nand\n\n\ncitation-masked-author\nThe phrase to replace author names in masked citations.\nMasked Citation\n\n\ncitation-masked-date\nThe abbreviated translation for “no date” in masked citations\nn.d.\n\n\ncitation-masked-title\nThe phrase to replace the title in a masked reference\nMasked Title\n\n\ntitle-block-author-note\nThe heading of the author note\nAuthor Note\n\n\ntitle-block-correspondence-note\nThe phrase introducing the correspondence note.\nCorrespondence concerning this article should be addressed to\n\n\ntitle-block-role-introduction\nThe phrase introducing the author roles.\nAuthor roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:\n\n\n\nAll these options must be listed under the language field . For example, if we set the lang field to en (Spanish), the remaining options can also be set:\nlang: es\nlanguage: \n  citation-last-author-separator: \"y\"\"\n  citation-masked-author: \"Cita Enmascarada\"\n  citation-masked-title: \"Título Enmascarado\"\n  citation-masked-date: \"n.f.\"\n  title-block-author-note: \"Nota de Autores\"\n  title-block-correspondence-note: \"La correspondencia relativa a este artículo debe dirigirse a\"\n  title-block-role-introduction: \"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:\"\nIn addition, many terms translated automatically can be overridden. The full list is here. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:\nlanguage: \n  crossref-fig-title: \"Plot\""
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introduction to apaquarto",
+    "section": "",
+    "text": "Style guides are absolutely necessary for scientific documents Scholarly writing is often about inherently difficult topics, and style guides remove many avoidable barriers to communication. Information is much easier to absorb when presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader’s end, style guides themselves often place unnecessary roadblocks before the writer.\nAPA style is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age (Bentley et al. 1929), its quirks and charms resist easy automation. Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten. I wrote apaquarto so that I would never have to worry about APA style ever again. With very little extra effort, your documents are formatted according to APA style (See Figure 1 for an example in “manuscript mode” and Figure 2 for the same document formatted like an APA journal).\n\n\n\nUnable to display PDF file. Download instead.\n\n\nFigure 1: Example document in manuscript mode\n\n\n\n\n\n\nUnable to display PDF file. Download instead.\n\n\nFigure 2: Example document in journal mode\n\n\n\n\nQuarto makes writing scientific documents easier\nThe apaquarto extension is built on Quarto, an open-source publishing system specifically adapted for scientific and technical documents such as journal articles, books, blogs, slides, and dashboards, and websites. Not only does Quarto offer considerable flexibility by itself, it was designed to be extensible. Thus, Quarto can take care of most of the formatting, and an extension can be written to handle whatever specific formatting rules a style guide requires. The apaquarto extension takes care of all the fussy details of APA-style so that you can focus on the content of your writing.\nYou do not need to know any programming languages to use Quarto. You can use it in a completely non-technical way to write well-formatted text, tables, figures, and references. However, if your document communicates the results from data analyses, then Quarto offers you something quite remarkable. You can perform your analyses and communicate your findings in the same file! That is, you write text and code together in a source document and then you “render” the document into its final format (e.g., .html, .pdf, .docx). So instead of performing your analyses elsewhere (e.g., SPSS) and then copying the results into a word processor (e.g., MS Word), you build your document in one step.\nThe advantages of this kind of workflow are profound. If you discover a mistake in your analysis, there is no need to find and replace the primary results and their downstream consequences scattered throughout the document. Instead, you just re-render the document, and everything in it is updated. When the document is published, the Quarto file serves as a fully reproducible record of your analysis. Making the Quarto file available in a public repository increases trust in your work because anyone can inspect it and trace any result you report back to the source code that created it.\n\n\n\n\n\nReferences\n\nBentley, Madison, CA Peerenboom, FW Hodge, Edward B Passano, HC Warren, and MF Washburn. 1929. “Instructions in Regard to Preparation of Manuscript.” Psychological Bulletin 26 (2): 57."
+  },
+  {
+    "objectID": "installation.html",
+    "href": "installation.html",
+    "title": "Installation",
+    "section": "",
+    "text": "Installing apaquarto is not hard, but it takes a bit more effort than installing a standalone program. There are four main steps:"
+  },
+  {
+    "objectID": "installation.html#install-quarto",
+    "href": "installation.html#install-quarto",
+    "title": "Installation",
+    "section": "Install Quarto",
+    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\n\n\n\n\n\n\n\nNote\n\n\n\nThe stable version of Quarto has everything apaquarto needs. However, if you are feeling bold and zesty, you can get the latest-but-not-fully-vetted features of Quarto via the pre-release builds. This is what I use, and I update Quarto frequently. If it does not behave as expected, you can always revert back to the stable version."
+  },
+  {
+    "objectID": "installation.html#select-your-environment-for-using-quarto",
+    "href": "installation.html#select-your-environment-for-using-quarto",
+    "title": "Installation",
+    "section": "Select your environment for using Quarto",
+    "text": "Select your environment for using Quarto\nAt the same link for installing Quarto, there are links for selecting an environment for using Quarto.\nRStudio will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto. If you are an R user, you will probably want to select RStudio. Using the links there, 1) install R for your operation system (Windows, Mac, or Linux) and 2) install RStudio Desktop.\nIf you use Python, Julia, or Observable as your primary tool for analyzing data, you can use RStudio, but using other tools you already know might be more comfortable (e.g., VS Code, Jupyter, NeoVim, or any other text editor). Some R users really like VS Code. Everyone has options—Quarto won’t box you in."
+  },
+  {
+    "objectID": "writing.html",
+    "href": "writing.html",
+    "title": "APA Style via Markdown",
+    "section": "",
+    "text": "(Under Construction)\nMarkdown makes writing in a consistent style straightforward and easy. Its plain-text format was designed to be easy to read and easy to write, yet also flexible and specific enough that it could be converted automatically into fully formatted documents.\nIf you are used to writing with a word processor (e.g., MS Word, Google Docs), it might feel disconcerting to not see what the document will look like as you type. This feeling will pass, and the benefits of typing in a plain-text format will become evident. Formatting inconsistencies are much easier to spot and fix."
+  },
+  {
+    "objectID": "writing.html#level-1",
+    "href": "writing.html#level-1",
+    "title": "APA Style via Markdown",
+    "section": "Level 1",
+    "text": "Level 1\nAPA-Style reserves a small number of level-1 headings with standard names:\n\nMethod\nResults\nDiscussion\nReferences\nAppendices\n\nThere should be no level-1 heading for the introduction. The title acts as the heading for the introduction, and apaquarto places it there automatically."
+  },
+  {
+    "objectID": "writing.html#levels-25",
+    "href": "writing.html#levels-25",
+    "title": "APA Style via Markdown",
+    "section": "Levels 2–5",
+    "text": "Levels 2–5\nReaders are better able to follow your ideas if you differentiate long sections in your document with headings. I try limit my writing to just levels 1 and 2, but sometimes level 3 headings are needed. I am sparing to the point of stinginess with levels 4 and 5."
+  },
+  {
+    "objectID": "writing.html#figures-in-code-chunks",
+    "href": "writing.html#figures-in-code-chunks",
+    "title": "APA Style via Markdown",
+    "section": "Figures in Code Chunks",
+    "text": "Figures in Code Chunks\nA code chunk (also known as code blocks) is a fenced section of a Quarto document that runs code. Quarto supports many languages, but I will focus on R.\nDirectly typing the three back ticks and the curly braces needed for a code chunk can be tedious. In RStudio, use the keyboard shortcut  to create chunks. If keyboard shortcuts are hard to remember, there is a green button with a white “C” in RStudio’s toolbar that creates code chunks. \nOnce created, an empty chunk has three backticks ```, curly braces enclosing the name of the programming language (in this case, R): {r}, and another line of three backticks ``` like so:\n```{r}\n\n```\n\n\nThose are not single quotes (') that fence in the code chunk. Those are backticks (`), which are usually above the Tab key on most keyboards in the US.\n\n\n\nKeyboard with backtick hightlighted\n\n\nAt a minimum, an APA-Style figure needs a unique label with the fig- prefix, a caption specified with fig-cap, and code for the plot.\n\n```{r}\n#| label: fig-myplot\n#| fig-cap: This is the figure caption.\nplot(1:10)\n```\n\n[Code chunk options]https://quarto.org/docs/computations/r.html#chunk-options) like label and and fig-cap options are preceded by #|. They tell Quarto about how to run the code and present it the document.\n\nNotes below Figures"
   }
 ]

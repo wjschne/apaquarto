@@ -128,35 +128,7 @@ conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
-Readers are better able to follow your ideas if you differentiate sections in your introduction with headings. Mostly stick to level 2 headers. Sometimes level 3 headings are needed, though. Be sparing to the point of stinginess with levels 4 and 5.
-
-All headings should be in title case according to [these rules and exceptions](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case). 
-
-## Level 2 Heading
-
-Subsections of the introduction have level 2 headings. A paragraph after a level 2 Heading is on a new line. Regular paragraphs are indented, flush left, and double-spaced.
-
-You do not need to put text after a heading. You can put a higher-level heading directly underneath if you want.
-
-## A Level 2 Heading Without Text Below It
-
-### Level 3 Heading
-
-Subsections of a level 2 heading are placed under level 3 headings.
-
-### Another Level 3 Heading
-
-#### Level 4 Heading
-
-A level 4 heading should be indented, flush left, bold, title case, and end with a period. A paragraph after a level 4 or 5 heading is on a new line in this markdown document but will appear as if it were in the same paragraph when rendered. You need at least one paragraph after a level 4 or 5 heading. If you forget the period at the end of the level 4 or 5 heading, it will be added automatically. A period will not be added if the heading ends with a question mark or an exclamation point.
-
-Subsequent paragraphs go on their own lines.
-
-##### Level 5 Heading
-
-A level 5 heading should be indented, flush left, bold italic, title case, and end with a period. Notice that there was no period after this level 5 heading in the markdown document, but it does appear in the rendered document.
-
-Subsequent paragraphs go on their own lines.
+Details about writing headings with markdown in APA-style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style).
 
 
 ## Displaying Figures

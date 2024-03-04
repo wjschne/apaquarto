@@ -5,7 +5,8 @@ project:
     - index.qmd
     - installation.qmd
     - options.qmd
-    - alternatives.qmd
+    - writing.qmd
+    - resources.qmd
 
 website:
   title: "APA Style Documents with apaquarto"
@@ -15,7 +16,8 @@ website:
         href: index.qmd
       - installation.qmd
       - options.qmd
-      - alternatives.qmd
+      - writing.qmd       
+      - resources.qmd
     right: 
       - icon: github
         href: https://github.com/wjschne/apaquarto

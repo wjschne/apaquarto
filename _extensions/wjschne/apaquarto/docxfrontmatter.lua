@@ -424,6 +424,9 @@ return {
           local correspondencenote = pandoc.Str("Correspondence concerning this article should be addressed to ")
           if meta.language and meta.language["title-block-correspondence-note"] then
             correspondencenote = meta.language["title-block-correspondence-note"]
+            if type(correspondencenote) == "string" then
+              correspondencenote = pandoc.Inlines(correspondencenote)
+            end
           end
           corresponding_paragraph.content:insert(1, pandoc.Space())
           for i,j in pairs(correspondencenote) do
