@@ -1,0 +1,75 @@
+---
+title: "APA Style via Markdown"
+editor: visual
+---
+
+[Markdown](https://daringfireball.net/projects/markdown/) makes writing in a consistent style straightforward and easy. Its plain-text format was designed to be easy to read and easy to write, yet also flexible and specific enough that it could be converted automatically into fully formatted documents.
+
+If you are used to writing with a word processor (e.g., MS Word, Google Docs), it might feel disconcerting to not see what the document will look like as you type. This feeling will pass, and the benefits of typing in a plain-text format will become evident. Formatting inconsistencies are much easier to spot and fix.
+
+
+# Headings
+
+## Level 1 Headings.
+
+APA-Style has a small number of level-1 headings with standard names:
+
+-   Method
+-   Results
+-   Discussion
+-   References
+-   Appendices
+
+There should be no level-1 heading for the introduction. The title acts as the heading for the introduction, and apaquarto places it there automatically.
+
+## Other Headings
+
+Readers are better able to follow your ideas if you differentiate sections in your introduction with headings. APA Style differentiates between \[headings at 5 levels\](https://apastyle.apa.org/style-grammar-guidelines/paper-format/headings).
+
+In markdown, a heading starts with the `#`, a space, and then the text of the heading. The number of `#`s in a row determines the level of the heading:
+
+``` md
+
+# Level 1 Heading
+
+## Level 2 Heading
+
+### Level 3 Heading
+
+#### Level 4 Heading
+
+##### Level 5 Heading
+```
+
+Quarto expects headings to have at least one blank line above and below them. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.
+
+Anything can follow immediately after headings at levels 1--3, including other headings. Headings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.
+
+``` md
+
+# Level 1 Heading
+
+This text paragraph will follow the level-1 heading.
+
+## Level 2 Heading 
+
+### This Level-3 Heading Directly Follows the Level-2 Heading.
+
+This text paragraph will follow the level-3 heading.
+
+#### Level 4 Heading
+
+This text paragraph will appear on the same line as the level-4 heading.
+
+##### Level 5 Heading
+
+This text paragraph will appear on the same line as the level-5 heading.
+```
+
+# Figures
+
+## Updated Syntax for Figures and Tables
+
+A previous version of this extension used the `apafg-` prefix for figure chunk labels and `apatb-` prefix for tables. It was always in the plan to use standard Quarto syntax as soon as possible. It is now possible. Replace all instances of `apafg-` with the standard Quarto prefix `fig-`. Likewise, replace the non-standard `apatb-` prefix with the standard Quarto prefix `tbl-`.
+
+Also replace all text references to figures and tables using standard Quarto syntax. For example, `{apafg-myplot}` should now be `@fig-myplot` instead.

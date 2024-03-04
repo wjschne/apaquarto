@@ -52,7 +52,6 @@ format:
 ---
 ```
 
-
 # General Options
 
 +--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -617,3 +616,69 @@ All of the .pdf-specfic options for apaquarto come directly from the \[apa7 $\La
 ## Options for .html
 
 Everything that works for .docx should work for .html.
+
+## Language Options
+
+You can alter the names of Abstract, Figures, Tables, and References by setting the `lang` field to one of these languages:
+
+| Code | Language   |
+|------|------------|
+| `en` | English    |
+| `zh` | Chinese    |
+| `es` | Spanish    |
+| `fr` | French     |
+| `ja` | Japanese   |
+| `de` | German     |
+| `pt` | Portuguese |
+| `ru` | Russian    |
+| `cs` | Czech      |
+| `fi` | Finnish    |
+| `nl` | Dutch      |
+| `it` | Italian    |
+| `pl` | Polish     |
+| `ko` | Korean     |
+
+: {.hover .primary tbl-colwidths="\[20,80\]"}
+
+However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.
+
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Field                             | Explanation                                                                                                                                           | Default                                                                                                           |
++===================================+=======================================================================================================================================================+===================================================================================================================+
+| `citation-last-author-separator`  | APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word *and* before the last author.  | *and*                                                                                                             |
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-author`          | The phrase to replace author names in masked citations.                                                                                               | *Masked Citation*                                                                                                 |
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-date`            | The abbreviated translation for "no date" in masked citations                                                                                         | *n.d.*                                                                                                            |
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-title`           | The phrase to replace the title in a masked reference                                                                                                 | *Masked Title*                                                                                                    |
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-author-note`         | The heading of the author note                                                                                                                        | *Author Note*                                                                                                     |
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-correspondence-note` | The phrase introducing the correspondence note.                                                                                                       | *Correspondence concerning this article should be addressed to*                                                   |
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-role-introduction`   | The phrase introducing the author roles.                                                                                                              | *Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:* |
++-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+
+: {.hover .primary tbl-colwidths="\[30,40,30\]"}
+
+All these options must be listed under the `language` field . For example, if we set the `lang` field to `en` (Spanish), the remaining options can also be set:
+
+``` yaml
+lang: es
+language: 
+  citation-last-author-separator: "y""
+  citation-masked-author: "Cita Enmascarada"
+  citation-masked-title: "Título Enmascarado"
+  citation-masked-date: "n.f."
+  title-block-author-note: "Nota de Autores"
+  title-block-correspondence-note: "La correspondencia relativa a este artículo debe dirigirse a"
+  title-block-role-introduction: "Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"
+```
+
+In addition, many terms translated automatically can be overridden. The full list is \[here\](https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/\_language.yml). For example, if I wanted "Figure" in figure captions to be "Plot" instead, I would specify the change like so:
+
+``` yaml
+language: 
+  crossref-fig-title: "Plot"
+```

@@ -202,6 +202,7 @@ window.Quarto = {
   <li><a href="#options-for-.docx" id="toc-options-for-.docx" class="nav-link" data-scroll-target="#options-for-.docx">Options for .docx</a></li>
   <li><a href="#options-for-.pdf" id="toc-options-for-.pdf" class="nav-link" data-scroll-target="#options-for-.pdf">Options for .pdf</a></li>
   <li><a href="#options-for-.html" id="toc-options-for-.html" class="nav-link" data-scroll-target="#options-for-.html">Options for .html</a></li>
+  <li><a href="#language-options" id="toc-language-options" class="nav-link" data-scroll-target="#language-options">Language Options</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -886,6 +887,145 @@ window.Quarto = {
 <section id="options-for-.html" class="level2">
 <h2 class="anchored" data-anchor-id="options-for-.html">Options for .html</h2>
 <p>Everything that works for .docx should work for .html.</p>
+</section>
+<section id="language-options" class="level2">
+<h2 class="anchored" data-anchor-id="language-options">Language Options</h2>
+<p>You can alter the names of Abstract, Figures, Tables, and References by setting the <code>lang</code> field to one of these languages:</p>
+<table class="table-hover table-primary table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Language</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>en</code></td>
+<td>English</td>
+</tr>
+<tr class="even">
+<td><code>zh</code></td>
+<td>Chinese</td>
+</tr>
+<tr class="odd">
+<td><code>es</code></td>
+<td>Spanish</td>
+</tr>
+<tr class="even">
+<td><code>fr</code></td>
+<td>French</td>
+</tr>
+<tr class="odd">
+<td><code>ja</code></td>
+<td>Japanese</td>
+</tr>
+<tr class="even">
+<td><code>de</code></td>
+<td>German</td>
+</tr>
+<tr class="odd">
+<td><code>pt</code></td>
+<td>Portuguese</td>
+</tr>
+<tr class="even">
+<td><code>ru</code></td>
+<td>Russian</td>
+</tr>
+<tr class="odd">
+<td><code>cs</code></td>
+<td>Czech</td>
+</tr>
+<tr class="even">
+<td><code>fi</code></td>
+<td>Finnish</td>
+</tr>
+<tr class="odd">
+<td><code>nl</code></td>
+<td>Dutch</td>
+</tr>
+<tr class="even">
+<td><code>it</code></td>
+<td>Italian</td>
+</tr>
+<tr class="odd">
+<td><code>pl</code></td>
+<td>Polish</td>
+</tr>
+<tr class="even">
+<td><code>ko</code></td>
+<td>Korean</td>
+</tr>
+</tbody>
+</table>
+<p>However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.</p>
+<table class="table-hover table-primary table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Explanation</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>citation-last-author-separator</code></td>
+<td>APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word <em>and</em> before the last author.</td>
+<td><em>and</em></td>
+</tr>
+<tr class="even">
+<td><code>citation-masked-author</code></td>
+<td>The phrase to replace author names in masked citations.</td>
+<td><em>Masked Citation</em></td>
+</tr>
+<tr class="odd">
+<td><code>citation-masked-date</code></td>
+<td>The abbreviated translation for “no date” in masked citations</td>
+<td><em>n.d.</em></td>
+</tr>
+<tr class="even">
+<td><code>citation-masked-title</code></td>
+<td>The phrase to replace the title in a masked reference</td>
+<td><em>Masked Title</em></td>
+</tr>
+<tr class="odd">
+<td><code>title-block-author-note</code></td>
+<td>The heading of the author note</td>
+<td><em>Author Note</em></td>
+</tr>
+<tr class="even">
+<td><code>title-block-correspondence-note</code></td>
+<td>The phrase introducing the correspondence note.</td>
+<td><em>Correspondence concerning this article should be addressed to</em></td>
+</tr>
+<tr class="odd">
+<td><code>title-block-role-introduction</code></td>
+<td>The phrase introducing the author roles.</td>
+<td><em>Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:</em></td>
+</tr>
+</tbody>
+</table>
+<p>All these options must be listed under the <code>language</code> field . For example, if we set the <code>lang</code> field to <code>en</code> (Spanish), the remaining options can also be set:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span><span class="er">"</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In addition, many terms translated automatically can be overridden. The full list is [here](https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml). For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

@@ -82,3 +82,5 @@ blockquote p:nth-child(1) {text-indent: 0}
 }
 
 .tabwid {padding: 0}
+
+.Abstract p {text-indent: 0}

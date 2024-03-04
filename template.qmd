@@ -92,6 +92,16 @@ mask: false
 masked-citations:
   - schneider2012cattell
   - schneider2015intelligence
+# Language options. See https://quarto.org/docs/authoring/language.html
+lang: en
+language:
+  citation-last-author-separator: "and"
+  citation-masked-author: "Masked Citation"
+  citation-masked-date: "n.d."
+  citation-masked-title: "Masked Title"
+  title-block-author-note: "Author Note"
+  title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
+  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
 format:
   apaquarto-docx: default
   apaquarto-html: default
@@ -174,11 +184,7 @@ ggplot(data.frame(x = c(0, 35)), aes(x)) +
 
 To refer to any figure or table, use the `@` symbol followed by the reference label, eg., @fig-myplot. 
 
-## Updated Syntax for Figures and Tables
 
-A previous version of this extension used the `apafg-` prefix for figure chunk labels and `apatb-` prefix for tables. It was always in the plan to use standard Quarto syntax as soon as possible. It is now possible. Replace all instances of `apafg-` with the standard Quarto prefix `fig-`. Likewise, replace the non-standard `apatb-` prefix with the standard Quarto prefix `tbl-`.  
-
-Also replace all text references to figures and tables using standard Quarto syntax. For example, `{apafg-myplot}` should now be `@fig-myplot` instead. 
 
 ## Imported Graphics
 
@@ -254,7 +260,7 @@ Here are some variations on parenthetical citations:
 
 Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can "mask" any citation you wish by setting the `mask` field in the metadata yaml to `true`. Then list all citations that need to be masked in the `masked-citations` field as shown in this template. If the `mask` field is set to `false`, they will print as usual. Depending if it is an inline or parenthetical citation,  will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". 
 
-I have set two of my publications to be masked. If you set `mask: true` in the yaml metadata, they will appear masked. In previous studies, things were asserted  [@schneider2015intelligence]. @schneider2012cattell asserted them emphatically.
+I have set two of my publications to be masked. If you set `mask: true` in the yaml metadata, they will appear masked. In previous studies, things were asserted  [@schneider2015intelligence]. @schneider2012cattell made additional points.
 
 You can mix masked and unmasked citations [@cohen2003applied; @schneider2015intelligence].
 

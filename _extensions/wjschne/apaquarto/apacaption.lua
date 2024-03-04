@@ -1,6 +1,27 @@
-local caption_formatter = function(p)
+-- Get names for Figure and Table in language specified in lang field
+local figureword = "Figure"
+local tableword = "Table"
 
-  if pandoc.utils.stringify(p.content[1]) == "Figure" or pandoc.utils.stringify(p.content[1]) == "Table" then
+local function gettablefig(m)
+ -- Get names for Figure and Table specified in language field
+    if m.language then
+      if m.language["crossref-fig-title"] then
+        figureword = pandoc.utils.stringify(m.language["crossref-fig-title"])
+      end
+      
+      if m.language["crossref-tbl-title"] then
+        tableword = pandoc.utils.stringify(m.language["crossref-tbl-title"])
+      end
+    else
+      
+    end
+end
+
+
+-- Format caption
+local caption_formatter = function(p)
+  if pandoc.utils.stringify(p.content[1]) == figureword or pandoc.utils.stringify(p.content[1]) == tableword then
+      --print(p.content[1])
             local figuretitle = pandoc.Para({})
             local figurecaption = pandoc.Para({})
             
@@ -24,7 +45,7 @@ local caption_formatter = function(p)
   end
 end
 
-Div = function(div)
+local divcaption = function(div)
   if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
     if FORMAT == "html" then
       div.content = div.content:walk {Plain = caption_formatter}
@@ -37,4 +58,9 @@ Div = function(div)
   end
 
 end
+
+return {
+  {Meta = gettablefig},
+  {Div = divcaption}
+}
 

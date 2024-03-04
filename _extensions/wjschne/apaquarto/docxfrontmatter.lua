@@ -250,7 +250,12 @@ return {
       body:extend({authordiv})
       end
       
-      local authornoteheader = pandoc.Header(1, "Author Note")
+      local authornoteheadertext = "Author Note"
+      if meta.language and meta.language["title-block-author-note"] then
+        authornoteheadertext = meta.language["title-block-author-note"]
+      end 
+      
+      local authornoteheader = pandoc.Header(1, authornoteheadertext)
       authornoteheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
       authornoteheader.identifier = "author-note"
       
@@ -366,7 +371,16 @@ return {
         
         
         if #credit_paragraph.content > 1 then
-          credit_paragraph.content:insert(1, pandoc.Str("Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows: "))
+          
+          local authorroleintroduction = pandoc.Str("Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:")
+          if meta.language and meta.language["title-block-role-introduction"] then
+            authorroleintroduction = meta.language["title-block-role-introduction"]
+          end
+          
+          credit_paragraph.content:insert(1, pandoc.Space())
+          for i,j in pairs(authorroleintroduction) do
+            credit_paragraph.content:insert(i, j)
+          end
           if not mask then
             body:extend({credit_paragraph})
           end
@@ -407,14 +421,26 @@ return {
       
       
         if #corresponding_paragraph.content > 1 then
-          corresponding_paragraph.content:insert(1, pandoc.Str("Correspondence concerning this article should be addressed to "))
+          local correspondencenote = pandoc.Str("Correspondence concerning this article should be addressed to ")
+          if meta.language and meta.language["title-block-correspondence-note"] then
+            correspondencenote = meta.language["title-block-correspondence-note"]
+          end
+          corresponding_paragraph.content:insert(1, pandoc.Space())
+          for i,j in pairs(correspondencenote) do
+            corresponding_paragraph.content:insert(i, j)
+          end
+          
           if not mask then
             body:extend({corresponding_paragraph})
           end
         end
         
       if meta.apaabstract and #meta.apaabstract > 0 then
-        local abstractheader = pandoc.Header(1, "Abstract")
+        local abstractheadertext = pandoc.Str("Abstract")
+        if meta.language and meta.language["section-title-abstract"] then
+          abstractheadertext = meta.language["section-title-abstract"]
+        end
+        local abstractheader = pandoc.Header(1, abstractheadertext)
         abstractheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
         abstractheader.identifier = "abstract"
         if FORMAT:match 'docx' then
@@ -426,26 +452,35 @@ return {
         
         if pandoc.utils.type(meta.apaabstract) == "Inlines" then
           abstract_paragraph.content:extend(meta.apaabstract or meta.abstract)
-          body:extend({abstract_paragraph})
+          local abstractdiv = pandoc.Div(abstract_paragraph)
+          abstractdiv.classes:insert("Abstract")
+          body:extend({abstractdiv})
         end
         
         if pandoc.utils.type(meta.apaabstract) == "Blocks" then
+          local abstractdiv = pandoc.Div()
           meta.apaabstract:walk {
             LineBlock = function(lb)
               lb:walk {
                 Inlines = function(el)
                     local lbpara = pandoc.Para(el)
-                    body:extend({lbpara})
+                    abstractdiv.content:extend({lbpara})
                 end
               }
             end
           }
+          body:extend({abstractdiv})
         end
 
       end
       
       if meta.keywords then
-        local keywords_paragraph = pandoc.Para({pandoc.Emph(pandoc.Str("Keywords")), pandoc.Str(":")})
+        local keywordsword = pandoc.Str("Keywords")
+        if meta.language and meta.language["title-block-keywords"] then
+          keywordsword = stringify(meta.language["title-block-keywords"])
+        end
+        
+        local keywords_paragraph = pandoc.Para({pandoc.Emph(keywordsword), pandoc.Str(":")})
         for i, k in ipairs(meta.keywords) do
           if i == 1 then
             keywords_paragraph = extend_paragraph(keywords_paragraph, k)

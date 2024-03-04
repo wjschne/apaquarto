@@ -11,26 +11,26 @@ local function getmasked(meta)
     end
     
 
-    local convert2meta = false
-    for i, v in ipairs(meta.bibliography or {}) do
-      if pandoc.utils.type(v) == "Inline" then
-        convert2meta = true
-      end
-    end
-    
-    if convert2meta then
-      local orig_bib = meta.bibliography
-      meta.bibliography = pandoc.MetaList{orig_bib}
-    end
-    
-
-    if meta.bibliography then
-      local maskedfile = "_extensions/wjschne/apaquarto/maskedbibliography.bib"
-        meta.bibliography:insert({pandoc.Str(maskedfile)})
-      else
-        meta.bibliography = {{pandoc.Str(maskedfile)}}
-    end
-    return (meta)
+    --local convert2meta = false
+    --for i, v in ipairs(meta.bibliography or {}) do
+    --  if pandoc.utils.type(v) == "Inline" then
+    --    convert2meta = true
+    --  end
+    --end
+    --
+    --if convert2meta then
+    --  local orig_bib = meta.bibliography
+    --  meta.bibliography = pandoc.MetaList{orig_bib}
+    --end
+    --
+--
+    --if meta.bibliography then
+    --  local maskedfile = "_extensions/wjschne/apaquarto/maskedbibliography.bib"
+    --    meta.bibliography:insert({pandoc.Str(maskedfile)})
+    --  else
+    --    meta.bibliography = {{pandoc.Str(maskedfile)}}
+    --end
+    --return (meta)
     
   end
 

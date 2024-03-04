@@ -7,6 +7,12 @@
 - Figure and Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.3.1 (2024-03-04)
+
+- Implemented [language
+  options](https://wjschne.github.io/apaquarto/options.html#language-options)
+  for internationalization and customization.
+
 # Version 3.3.0 (2024-02-29)
 
 - Added better documentation of [apaquarto template
