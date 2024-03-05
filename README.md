@@ -10,13 +10,8 @@ priority was to ensure compatibility for .docx. This is still a work in
 progress, and I encourage filing a “New Issue” on GitHub if something
 does not work of if there is a feature missing.
 
-If you want to type in markdown to create a document in the APA 6th
-Edition format, I suggest using
-[papaja](https://frederikaust.com/papaja_man/).
-
-If you need all the flexibility of $\LaTeX$, I suggest using the [apa7
-document class](https://ctan.org/pkg/apa7) with knitr and the [.Rnw
-format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
+See [instructions and template options for apaquarto
+here](https://wjschne.github.io/apaquarto/).
 
 ## New in apaquarto 3.2.4
 
@@ -130,7 +125,7 @@ The apaquarto-docx form looks like this:
 The .html and .pdf output (in manuscript mode) look similar. The .pdf in
 journal mode looks like this:
 
-![Preview of .docx output](img/journalmode.png)
+![Preview of .pdf output in journal mode](img/journalmode.png)
 
 ## Updating to the latest version of apaquarto
 

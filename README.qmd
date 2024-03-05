@@ -8,9 +8,7 @@ engine: knitr
 
 This article template creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. Because the .docx format is still widely used---and often required---my main priority was to ensure compatibility for .docx. This is still a work in progress, and I encourage filing a "New Issue" on GitHub if something does not work of if there is a feature missing.
 
-If you want to type in markdown to create a document in the APA 6th Edition format, I suggest using [papaja](https://frederikaust.com/papaja_man/).
-
-If you need all the flexibility of $\LaTeX$, I suggest using the [apa7 document class](https://ctan.org/pkg/apa7) with knitr and the [.Rnw format](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr).
+See [instructions and template options for apaquarto here](https://wjschne.github.io/apaquarto/).
 
 ## New in apaquarto 3.2.4
 
