@@ -181,7 +181,7 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |>
 
 ```
 
-To refer to this table in text, put the table's reference label in curly braces like so: As seen in @tbl-mytable, the first few numbers and letters of the alphabet are displayed.
+To refer to this table in text, use the `@` symbol followed by the reference label like so: As seen in @tbl-mytable, the first few numbers and letters of the alphabet are displayed.
 
 In @tbl-mymarkdowntable, there is an example of a plain markdown table with a note below it.
 
