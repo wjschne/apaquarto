@@ -107,7 +107,7 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou
+    documentmode: man
     keep-tex: true
 ---
 
@@ -152,7 +152,7 @@ ggplot(data.frame(x = c(0, 35)), aes(x)) +
 ```
 
 
-To refer to any figure or table, use the `@` symbol followed by the reference label, eg., @fig-myplot. 
+To refer to any figure or table, use the `@` symbol followed by the reference label (e.g., @fig-myplot). 
 
 
 

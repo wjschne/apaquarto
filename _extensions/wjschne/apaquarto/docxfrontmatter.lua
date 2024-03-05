@@ -375,6 +375,9 @@ return {
           local authorroleintroduction = pandoc.Str("Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:")
           if meta.language and meta.language["title-block-role-introduction"] then
             authorroleintroduction = meta.language["title-block-role-introduction"]
+            if type(authorroleintroduction) == "string" then
+              authorroleintroduction = pandoc.Inlines(authorroleintroduction)
+            end
           end
           
           credit_paragraph.content:insert(1, pandoc.Space())
@@ -461,7 +464,7 @@ return {
         end
         
         if pandoc.utils.type(meta.apaabstract) == "Blocks" then
-          local abstractdiv = pandoc.Div()
+          local abstractdiv = pandoc.Div({})
           meta.apaabstract:walk {
             LineBlock = function(lb)
               lb:walk {
