@@ -667,7 +667,7 @@ All these options must be listed under the `language` field . For example, if we
 ``` yaml
 lang: es
 language: 
-  citation-last-author-separator: "y""
+  citation-last-author-separator: "y"
   citation-masked-author: "Cita Enmascarada"
   citation-masked-title: "Título Enmascarado"
   citation-masked-date: "n.f."
