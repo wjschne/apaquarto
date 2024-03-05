@@ -107,7 +107,8 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    documentmode: jou
+    keep-tex: true
 ---
 
 ```{r}
@@ -122,9 +123,7 @@ library(knitr)
 
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
-
 ```
-
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
@@ -133,16 +132,15 @@ Details about writing headings with markdown in APA-style are [here](https://wjs
 
 ## Displaying Figures
 
-Let's make a figure. A reference label for a figure must have the prefix `fig-`, and in a code chunk, the caption must be set with `fig-cap`.
+Let's make a figure. A reference label for a figure must have the prefix `fig-`, and in a code chunk, the caption must be set with `fig-cap`. Captions are in [title case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
 
 
 ```{r}
 #| label: fig-myplot
-#| fig-cap: This is the figure caption.
-#| apa-note: "This is the note below the figure."
+#| fig-cap: The Figure Caption
+#| apa-note: This is the note below the figure.
 #| fig-height: 4
 #| fig-width: 6
-#| apa-twocolumn: true
 ggplot(data.frame(x = c(0, 35)), aes(x)) +
   stat_function(fun = dchisq, 
                 args = list(df = 10),
@@ -163,8 +161,7 @@ To refer to any figure or table, use the `@` symbol followed by the reference la
 One way to import an existing graphic as a figure is to use `knitr::include_graphics` in a code chunk. For example, @fig-importedgraphic is an imported image. Note that in apaquarto-pdf documents, we can specify that that a figure or table should span both columns when in journal mode by setting the `apa-twocolumn` chunk option to `true`. For other formats, this distinction does not matter.
 
 ```{r fig-importedgraphic}
-#| fig-cap: This is an imported graphic.
-#| out-width: 49%
+#| fig-cap: An Imported Graphic
 knitr::include_graphics("img/sampleimage.png")
 ```
 
@@ -174,8 +171,8 @@ knitr::include_graphics("img/sampleimage.png")
 We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
 
 ```{r tbl-mytable}
-#| tbl-cap: Here is the table caption. 
-#| apa-note: Here is the note below the table.
+#| tbl-cap: The Table Caption
+#| apa-note: The note below the table.
 #| ft.align: left
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |> 
   flextable() %>%
@@ -198,7 +195,7 @@ In @tbl-mymarkdowntable, there is an example of a plain markdown table with a no
 | 1       | 1    |     1 |   1    |
 
 
-Table caption of a markdown table
+Table Caption of a Markdown Table
 
 :::
 
@@ -287,9 +284,6 @@ How are the data going to be analyzed?
 ## Descriptive Statistics
 
 Here we describe the basic characteristics of our primary variables.
-
-
-
 
 <!-- Add Additional Sections as Needed -->
 

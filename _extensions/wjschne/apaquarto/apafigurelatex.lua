@@ -2,10 +2,9 @@ if FORMAT ~= "latex" then
   return 
 end
 
-
 Div = function(div)
-
-  if div.attributes then
+  
+   if div.attributes then
      
     if div.attributes["apa-note"] then
       if div.identifier:find("^fig%-") then
