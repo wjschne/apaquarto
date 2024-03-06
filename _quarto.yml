@@ -33,6 +33,8 @@ format:
     tbl-cap-location: top
     toc: true
     toc-location: left
+    filters: 
+      - embedpdf.lua
 
 
 

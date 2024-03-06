@@ -13,6 +13,8 @@ Installing apaquarto is not hard, but it takes a bit more effort than installing
 
 ## Install Quarto
 
+If you have installed RStudio recently
+
 The current stable version of Quarto can be installed [here](https://quarto.org/docs/get-started/). 
 
 :::{.callout-note .column-margin}

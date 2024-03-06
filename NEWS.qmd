@@ -11,6 +11,9 @@ engine: knitr
 - Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.4.2 (2024-03-06)
+- Fixed .pdf bug when only one author or one affiliation
+
 
 # Version 3.4.1 (2024-03-05)
 - Added "possessive" citations such that `@schneider2024 ['s]` will render as "Schneider's (2024)"

@@ -1,6 +1,4 @@
-_extensions/embedpdf/
-_extensions/jmgirard/
-_extensions/wjschne/embedpdf/
+embedpdf.lua
 _quarto.yml
 apa.csl
 apa-cv.csl

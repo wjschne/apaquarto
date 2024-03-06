@@ -44,6 +44,9 @@ Meta = function(m)
   end
   
   for i,x in ipairs(fields) do
+    if m[x.field] then
+      m.language[x.field] = m[x.field]
+    end
     if not m.language[x.field] then
       m.language[x.field] = param(x.field, x.default)
     end

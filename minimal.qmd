@@ -2,10 +2,10 @@
 title: My Title
 shorttitle: Running Header
 author:
-  - name: Jane Doe Smith
+  - name: Jane Doe
     corresponding: true
     orcid: 0000-0000-0000-0001
-    email: sm@example.org
+    email: janedoe@generic.edu
     affiliations:
       - name: Generic University
         department: Department of Scholarly Studies
@@ -14,7 +14,17 @@ author:
         region: NY
         postal-code: 12084-1234
 author-note:
-    conflict-of-interest: "The author has no conflict of interest to disclose."
+  status-changes: 
+    affiliation-change: ~
+    deceased: ~
+  disclosures:
+    study-registration: ~
+    data-sharing: ~
+    related-report: ~
+    conflict-of-interest: ~
+    financial-support: ~
+    gratitude: ~
+    authorship-agreements: ~
 abstract: "My abstract"
 keywords: [keyword1, keyword2, keyword3]
 bibliography: bibliography.bib
@@ -22,57 +32,25 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf:
-    documentmode: man
-    keep-tex: true
+    documentmode: jou
 ---
-
-This is my introductory paragraph [@CameronTrivedi2013].
 
 # Method
 
-General remarks on method.
-
 ## Participants
-
-Description of participants
 
 ## Measures
 
-Describe measures.
-
 ## Procedure
-
-Describe procedure.
 
 # Results
 
-Show results.
-
-:::{#tbl-mytable}
-
-| Letters | Numbers |
-|---------|---------|
-| A       | 1       |
-| B       | 2       |
-| C       | 3       |
-
-My Caption
-
-:::
-
 # Discussion
-
-Describe results.
 
 ## Limitations and Future Directions
 
-Describe limitations.
-
 ## Conclusion
-
-Summarize results.
 
 # References
 
-::: {#refs}
-:::
+# Appendix

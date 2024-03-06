@@ -1,25 +1,28 @@
 ---
 title: "Introduction to apaquarto"
 engine: knitr
-lightbox: 
-  loop: true
-  match: auto
 ---
 
 Style guides are absolutely necessary for scientific documents Scholarly writing is often about inherently difficult topics, and style guides remove many *avoidable* barriers to communication. Information is much easier to absorb when presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader's end, style guides themselves often place unnecessary roadblocks before the writer. 
 
 [APA style](https://apastyle.apa.org/) is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age [@bentley1929instructions], its quirks and charms resist easy automation. Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten. I wrote [apaquarto](https://github.com/wjschne/apaquarto) so that I would never have to worry about APA style ever again. With very little extra effort, your documents are formatted according to APA style (See @fig-manuscript for an example in "manuscript mode" and @fig-journal for the same document formatted like an APA journal).
 
+
+
+
 :::{#fig-manuscript fig-cap="Example document in manuscript mode"}
 
-{{< pdf template_manuscript.pdf width=100% height=800 >}}
+```{=html}
+<object data="template_manuscript.pdf" type="application/pdf" width=100% height=800 '><p>Unable to display PDF file. <a href="template_manuscript.pdf">Download</a> instead.</p></object>
+```
 
 :::
 
 :::{#fig-journal fig-cap="Example document in journal mode"}
 
-{{< pdf template_journal.pdf width=100% height=800 >}}
-
+```{=html}
+<object data="template_journal.pdf" type="application/pdf" width=100% height=800 '><p>Unable to display PDF file. <a href="template_journal.pdf">Download</a> instead.</p></object>
+```
 :::
 
 

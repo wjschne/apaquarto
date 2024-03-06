@@ -60,9 +60,15 @@ A good place to start learning about writing Quarto documents is [here](https://
 
 [Markdown](https://daringfireball.net/projects/markdown/) makes writing in a consistent style straightforward and easy. Its plain-text format was designed to be easy to read and easy to write, yet also flexible and specific enough that it could be converted automatically into fully formatted documents.
 
-If you are used to writing with a word processor (e.g., MS Word, Google Docs), it might feel disconcerting to not see what the document will look like as you type. This feeling will pass, and the benefits of typing in a plain-text format will become evident. Formatting inconsistencies are much easier to spot and fix.
+If you are used to writing with a word processor (e.g., MS Word, Google Docs), it might feel disconcerting to not see what the document will look like as you type. This feeling will pass, and the benefits of typing in a plain-text format will become evident. While writing in APA style, the plain-text Markdown approach prevents the introduction of many inconsistencies and makes it much easier to spot and fix any inconsistencies that are already present.
+
+# Create a Quarto Document
+
+In RStudio, we create a Quarto document (File &rarr; New File &rarr; Quarto Document). 
 
 # Basic Styling
+
+
 
 A comprehensive guide to Markdown conventions in Quarto is [here](https://quarto.org/docs/authoring/markdown-basics.html). Some highlights:
 
