@@ -1,0 +1,187 @@
+$doc-class.tex()$
+
+$if(lang)$
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+$if(babel-lang)$
+\babelprovide[main,import]{$babel-lang$}
+$if(title-block-keywords)$
+\StartBabelCommands{$babel-lang$}{captions} [unicode, fontenc=TU EU1 EU2, charset=utf8] \SetString{\keywordname}{$title-block-keywords$}
+\EndBabelCommands
+$endif$
+
+
+$if(mainfont)$
+\ifPDFTeX
+\else
+\babelfont{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+\fi
+$endif$
+$endif$
+$for(babel-otherlangs)$
+\babelprovide[import]{$babel-otherlangs$}
+$endfor$
+$for(babelfonts/pairs)$
+\babelfont[$babelfonts.key$]{rm}{$babelfonts.value$}
+$endfor$
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+$endif$
+
+\RequirePackage{longtable}
+% \setlength\LTleft{0pt}
+\RequirePackage{threeparttablex}
+
+% $if(floatsintext)$
+% $else$
+% $if(journalmode)$
+% 
+% $else$
+% \RequirePackage{rotating}
+% \RequirePackage{threeparttablex}
+% \DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
+% \DeclareDelayedFloatFlavor{sidewaystable}{table}
+% \DeclareDelayedFloatFlavor{longtable}{table}
+$if(floatsintext)$
+$else$
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+$endif$
+
+
+% $endif$
+% $endif$
+
+
+
+$header.tex()$
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+$tightlist.tex()$
+
+$tables.tex()$
+
+$graphics.tex()$
+
+
+$citations.tex()$
+
+
+$if(notimes)$
+$else$
+$if(notxfonts)$
+    $else$
+\usepackage{times}
+    $endif$
+$endif$
+
+$if(numbered-lines)$
+\usepackage[nolongtablepatch]{lineno}
+\linenumbers
+$endif$
+
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
+
+$title.tex()$
+
+$if(journalmode)$
+\usepackage{float}
+\makeatletter
+\let\oldtpt\ThreePartTable
+\let\endoldtpt\endThreePartTable
+\def\ThreePartTable{\@ifnextchar[\ThreePartTable@i \ThreePartTable@ii}
+\def\ThreePartTable@i[#1]{\begin{figure}
+\onecolumn
+\begin{minipage}{0.5\textwidth}
+\oldtpt[#1]
+}
+\def\ThreePartTable@ii{\begin{figure}
+\onecolumn
+\begin{minipage}{0.5\textwidth}
+\oldtpt
+}
+\def\endThreePartTable{
+\endoldtpt
+\end{minipage}
+\twocolumn
+\end{figure}}
+\makeatother
+
+
+\makeatletter
+\let\endoldlt\endlongtable		
+\def\endlongtable{
+\hline
+\endoldlt}
+\makeatother
+
+\newenvironment{twocolumntable}% environment name
+{% begin code
+\begin{table*}%
+\onecolumn%
+}%
+{%
+\twocolumn%
+\end{table*}%
+}% end code
+$else$
+\makeatletter
+\let\endoldlt\endlongtable
+\def\endlongtable{
+\hline
+\endoldlt
+}
+\makeatother
+$if(floatsintext)$
+$else$
+\RequirePackage{longtable}
+\DeclareDelayedFloatFlavor{longtable}{table}
+% \RequirePackage{threeparttablex}
+% \DeclareDelayedFloatFlavor{ThreePartTable}{table}
+$endif$
+$endif$
+
+\urlstyle{same}
+
+
+
+
+
+\begin{document}
+\maketitle
+$if(numbersections)$
+\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+$endif$
+
+\setlength\LTleft{0pt}
+
+$if(numbered-lines)$
+\resetlinenumber[1]
+$endif$
+
+$body$
+
+$before-bib.tex()$
+
+$if(zerocitations)$
+$biblio.tex()$
+$endif$
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+$after-body.tex()$
+
+
+\end{document}

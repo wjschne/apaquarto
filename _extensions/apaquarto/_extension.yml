@@ -81,7 +81,7 @@ contributes:
       hyperrefoptions: 
         - linktoc=none
       block-headings: false
-      template: template.tex
+      template: apatemplate.tex
       template-partials:
         - doc-class.tex
         - title.tex
