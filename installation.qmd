@@ -6,8 +6,9 @@ engine: knitr
 Installing apaquarto is not hard, but it takes a bit more effort than installing a standalone program. There are four main steps:
 
 1. Install Quarto
-2. Install a programming environment (e.g., RStudio, VS Code, Jupyter) along with a programming language (e.g., R, Python, Julia).
-3. Install apaquarto
+2. Install a programming langauge (e.g., R, Python, Julia)
+3. Install a programming environment (e.g., RStudio, VS Code, Jupyter) 
+4. Install apaquarto
 
 
 ## Install Quarto
@@ -18,7 +19,7 @@ The current stable version of Quarto can be installed [here](https://quarto.org/
 The stable version of Quarto has everything apaquarto needs. However, if you are feeling bold and zesty, you can get the latest-but-not-fully-vetted features of Quarto via the [pre-release builds](https://quarto.org/docs/download/prerelease.html). This is what I use, and I update Quarto frequently. If it does not behave as expected, you can always revert back to the stable version. 
 :::
 
-## Select your environment for using Quarto
+## Select your language and programming environment for using Quarto
 
 At the [same link for installing Quarto](https://quarto.org/docs/get-started/), there are links for selecting an environment for using Quarto. 
 

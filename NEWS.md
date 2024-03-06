@@ -7,6 +7,11 @@
 - Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.4.1 (2024-03-05)
+
+- Added “possessive” citations such that `@schneider2024 ['s]` will
+  render as “Schneider’s (2024)”
+
 # Version 3.4.0 (2024-03-04)
 
 - Implemented [language

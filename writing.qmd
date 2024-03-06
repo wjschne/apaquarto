@@ -1,27 +1,102 @@
 ---
 title: "APA Style via Markdown"
+format:
+  html: 
+    fig-cap-location: top
+    citeproc: false
+    filters:  
+      - at: post-render
+        path: _extensions/wjschne/apaquarto/apacaption.lua
+      - at: post-render
+        path: _extensions/wjschne/apaquarto/apaextractfigure.lua
+      - at: post-render
+        path: _extensions/wjschne/apaquarto/apanote.lua
+      - at: post-render
+        path: _extensions/wjschne/apaquarto/apafloat.lua
+      - at: post-render
+        path: _extensions/wjschne/apaquarto/apafloat.lua
+      - at: post-render
+        path: _extensions/wjschne/apaquarto/citeprocr.lua
+      - at: post-render
+        path: _extensions/wjschne/apaquarto/apaandcite.lua
+knitr: 
+  opts_chunk: 
+    dev: ragg_png
 editor: source
-execute: 
-  eval: false
+csl: apa.csl
 ---
+
+```{css, echo=FALSE}
+.FigureTitle {color:black; font-weight: bold; font-size: 12pt; text-align: left}
+.Caption {color:black; font-style: italic; font-size: 12pt; text-align: left}
+.FigureNote p {color:black; text-indent: 0; margin: 0; padding: 0; font-size: 11pt}
+.quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0}
+.table {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.table>thead {
+  border-bottom: 1px solid black;
+}
+
+.table>:not(caption)>*>* {
+  border-bottom: none;
+}
+
+#cb3-1 {text-wrap: wrap;}
+```
 
 ```{r}
 #| include: false
 #| label: setup
 library(tidyverse)
-
+library(flextable)
 ```
 
 (Under Construction)
+
+A good place to start learning about writing Quarto documents is [here](https://quarto.org/docs/get-started/authoring/rstudio.html). I will cover material needed to use apaquarto to write an APA Style document in Markdown text.
 
 [Markdown](https://daringfireball.net/projects/markdown/) makes writing in a consistent style straightforward and easy. Its plain-text format was designed to be easy to read and easy to write, yet also flexible and specific enough that it could be converted automatically into fully formatted documents.
 
 If you are used to writing with a word processor (e.g., MS Word, Google Docs), it might feel disconcerting to not see what the document will look like as you type. This feeling will pass, and the benefits of typing in a plain-text format will become evident. Formatting inconsistencies are much easier to spot and fix.
 
+# Basic Styling
+
+A comprehensive guide to Markdown conventions in Quarto is [here](https://quarto.org/docs/authoring/markdown-basics.html). Some highlights:
+
++---------------+-------------------------------------+-----------------------------------+
+| Formatting    | Markdown                            | Rendered Text                     |
++===============+=====================================+===================================+
+| *Italic*      | `*An italicized phrase*`            | *An italicized phrase*.           |
++---------------+-------------------------------------+-----------------------------------+
+| **Bold**      | `A **bolded** word`                 | A **bolded** word                 |
++---------------+-------------------------------------+-----------------------------------+
+| ~Subscript~   | `H~2~O`                             | H~2~O                             |
++---------------+-------------------------------------+-----------------------------------+
+| ^Superscript^ | `21^st^`                            | 21^st^                            |
++---------------+-------------------------------------+-----------------------------------+
+| En dash (--)  | `6--8 hours of sleep`               | 6--8 hours of sleep               |
++---------------+-------------------------------------+-----------------------------------+
+| Em dash (---) | `It wasn't good---it was the best!` | It wasn't good---it was the best! |
++---------------+-------------------------------------+-----------------------------------+
+| Bullet List   | ```                                 | -   Item A                        |
+|               | * Item A                            | -   Item B                        |
+|               | * Item B                            | -   Item C                        |
+|               | * Item C                            |                                   |
+|               | ```                                 |                                   |
++---------------+-------------------------------------+-----------------------------------+
+| Numeric List  | ```                                 | 1.  Item A                        |
+|               | 1. Item A                           | 2.  Item B                        |
+|               | 2. Item B                           | 3.  Item C                        |
+|               | 3. Item C                           |                                   |
+|               | ```                                 |                                   |
++---------------+-------------------------------------+-----------------------------------+
+
 # Headings in APA Style
 
-APA Style differentiates between [headings at 5 levels](https://apastyle.apa.org/style-grammar-guidelines/paper-format/headings). 
-All headings should be in title case according to [these rules and exceptions](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
+APA Style differentiates between [headings at 5 levels](https://apastyle.apa.org/style-grammar-guidelines/paper-format/headings). All headings should be in title case according to [these rules and exceptions](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
 
 In markdown, a heading starts with the `#`, followed by a space, and then the text of the heading. The number of `#`s in a row determines the level of the heading:
 
@@ -36,14 +111,13 @@ In markdown, a heading starts with the `#`, followed by a space, and then the te
 #### Level 4 Heading
 
 ##### Level 5 Heading
-
 ```
 
-Quarto works best when there is at least one blank line above and below the heading. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.
+Quarto works best when there is *at least one blank line above and below the heading*. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.
 
-## Level 1
+## Level 1 Headings
 
-APA-Style reserves a small number of level-1 headings with standard names:
+APA Style reserves a small number of level-1 headings with standard names:
 
 -   Method
 -   Results
@@ -57,14 +131,10 @@ There should be no level-1 heading for the introduction. The title acts as the h
 
 Readers are better able to follow your ideas if you differentiate long sections in your document with headings. I try limit my writing to just levels 1 and 2, but sometimes level 3 headings are needed. I am sparing to the point of stinginess with levels 4 and 5.
 
+## What Can Follow a Heading
 
-
-
-
-# What Can Follow a Heading
-
-* Anything can follow immediately after headings at levels 1--3, including other headings. 
-* Headings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.
+-   Anything can follow immediately after headings at levels 1--3, including other headings.
+-   Headings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.
 
 ``` md
 
@@ -89,51 +159,255 @@ Subsequent paragraphs go on their own lines.
 This paragraph will appear on the same line as the level-5 heading.
 
 Subsequent paragraphs go on their own lines.
+```
 
+## Block Quotes and Suppressing Indentation
+
+Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the `>` character. For example, Jane Austen's [-@austenMansfieldPark1990] *Mansfield Park* has some memorable insights about the mind:
+
+```{verbatim}
+#| label: myquote
+> If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
+```
+
+If the quote spans multiple paragraphs, put a `>` on its own line between them like so:
+
+``` md
+> First paragraph of the quote
+> 
+> Second paragraph of the quote
+```
+
+If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:
+
+``` md
+Initial paragraph
+
+> Block quote paragraph
+
+:::{.NoIndent}
+Because this sentence continues the intial paragraph, the indentation is suppresed.
+:::
 ```
 
 # Figures
 
-There are two ways to create figures: via code chunks or via markdown.
+Plots for figures can be created via code chunks. A pre-existing figure can be imported directly via markdown.
 
 ## Figures in Code Chunks
 
-A [code chunk](https://quarto.org/docs/computations/r.html) (also known as *code blocks*) is a fenced section of a Quarto document that runs code. Quarto supports many languages, but I will focus on R.
+[Code chunk](https://quarto.org/docs/computations/r.html) (also known as *code blocks*) are special sections of a Quarto document that run code. Quarto supports many programming languages, but I will focus on R.
 
-Directly typing the three back ticks and the curly braces needed for a code chunk can be tedious. In RStudio, use the keyboard shortcut {{< kbd win=Ctrl-Alt-I mac=Cmd+Option+I >}} to create chunks. If keyboard shortcuts are hard to remember, there is a green button with a white "C" in RStudio's toolbar that creates code chunks. ![Insert Code Chunk Button](insertchunk.png){style='margin:0!important;height:30px'}
+An empty code chunk looks like this:
 
-Once created, an empty chunk has three backticks <code>&grave;&grave;&grave;</code>, curly braces enclosing the name of the programming language (in this case, R): `{r}`, and another line of three backticks <code>&grave;&grave;&grave;</code> like so:
-
-````{verbatim}
-```{r}
-
+::: {.sourceCode .cell-code}
+```{=html}
+<pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown">&grave;&grave;&grave;{r}<br><br>&grave;&grave;&grave;</code></pre>
 ```
-````
-
-:::{.column-margin}
-Those are not single quotes (`'`) that fence in the code chunk. Those are backticks (<code>`</code>), which are usually above the Tab key on most keyboards in the US.
-
-![Keyboard with backtick hightlighted](keyboardwithbacktick.jpeg)
-
 :::
 
-At a minimum, an APA-Style figure needs a unique label with the `fig-` prefix, a caption specified with `fig-cap`, and code for the plot.
+::: column-margin
+Those are not single quotes (`'`) that fence in the code chunk. Those are backticks (<code>\`</code>), which are usually above the Tab key on most keyboards in the US.
+
+![Keyboard with backtick hightlighted](keyboardwithbacktick.jpeg){#fig-key}
+:::
+
+Directly typing the three backticks and the curly braces needed for a code chunk can be tedious. In RStudio, use the keyboard shortcut {{< kbd win=Ctrl-Alt-I mac=Cmd+Option+I >}} to create chunks. If keyboard shortcuts are hard to remember, there is a green button with a white "C" in RStudio's toolbar that creates code chunks. ![Insert Code Chunk Button](insertchunk.png){style="margin:0!important;height:30px"}
+
+At a minimum, an APA-Style figure needs a unique label with the `fig-` prefix, a caption in [title case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case) specified with `fig-cap`, and code for the plot.
 
 ```{r}
 #| echo: fenced
 #| label: fig-myplot
-#| fig-cap: This is the figure caption.
-plot(1:10)
+#| fig-cap: This Is the Figure Caption.
+library(tidyverse)
+tibble(x = seq(0, 8, .01),
+       y = dlnorm(x)) %>% 
+  ggplot(aes(x,y)) + 
+  geom_area(fill = "royalblue", alpha = .7)
+
 ```
 
-[Code chunk options]https://quarto.org/docs/computations/r.html#chunk-options) like `label` and and `fig-cap` options are preceded by `#|`. They tell Quarto about how to run the code and present it the document. 
+[Code chunk options](https://quarto.org/docs/computations/r.html#chunk-options) like `label` and and `fig-cap` options are preceded by `#|`. They tell Quarto about how to run the code and present it the document.
 
+## Notes below Figures and Tables
 
-
-### Notes below Figures
+You can add a note below a figure or table with the chunk option `apa-note`. The note can have markdown formatting (e.g, bolding and italics).
 
 ```{r}
-#| apa-note: "This is the note below the figure."
-#| apa-twocolumn: true
+#| echo: fenced
+#| label: fig-myplot2
+#| fig-cap: This Is the Figure Caption.
+#| apa-note: This is the note below the figure.
+
+library(tidyverse)
+tibble(x = seq(0, 1, .001),
+       y = dbeta(x,8,2)) %>% 
+  ggplot(aes(x,y)) + 
+  geom_area(fill = "royalblue", alpha = .7)
 ```
 
+## Importing Figures with Markdown
+
+Comprehensive details on importing and formatting figures with Markdown is [here](https://quarto.org/docs/authoring/figures.html).
+
+The Markdown syntax for creating a figure is
+
+`![caption](file){#fig-label}`
+
+For example,
+
+`![My Caption](myimage.png){#fig-myimage}`
+
+Note that in this context the figure label must start with `#fig-`. Additional information can be inserted into the curly braces. Some common options:
+
+-   `fig-alt` An accessible description of the image. It is usually not immediately visible, but it is available to a screen reader.
+-   `width` Image width
+-   `apa-note` A note below the figure
+
+For example, in the same same folder as my Quarto document, there is a folder called `img`, which contains an image file `sampleimage.png`. We can display this image like so:
+
+``` markdown
+![A Simple Mediation Model](img/sampleimage.png){
+  #fig-myimportedimage 
+  width="5in" 
+  fig-alt="A mediation model in which A causes B, and B causes C." 
+  apa-note="Variable A indirectly causes Variable C."
+  }
+```
+
+![A Simple Mediation Model](img/sampleimage.png){#fig-myimportedimage width="5in" fig-alt="A path diagram in which A causes B, and B causes C." apa-note="Variable A indirectly causes Variable C."}
+
+## Figure References
+
+In APA style, we often refer to specific tables and figures by their order in the text (e.g., Figure 2, Table 4). Keeping track of which is which is a pain, especially if you decide to reorder them. In Quarto documents, we instead refer to their labels, which are converted to the right numbers later. To refer to the figure created by the code above, we would type `@fig-myplot`, which will be converted to @fig-myplot.
+
+# Tables
+
+As with figures, we can create tables in code chunks or make them directly with Markdown.
+
+# Tables in Code Chunks
+
+The chunk label must begin with `tbl-` instead of `fig-`. The caption is set with `tbl-cap`. I like making tables with [flextable](https://ardata-fr.github.io/flextable-book/) because it ports to to the .docx format without hassle.
+
+```{r}
+#| echo: fenced
+#| label: tbl-mytable
+#| tbl-cap: My Table
+#| ft.align: left
+#| apa-note: A note below table
+library(tidyverse)
+library(flextable)
+
+tibble(Letters = c("A", "B", "C"), 
+       Numbers = 1:3) %>% 
+  flextable() %>% 
+  theme_apa() 
+
+```
+
+## Tables Made Directly with Markdown
+
+You can create tables with Markdown in several ways. See [here](https://quarto.org/docs/authoring/tables.html#markdown-tables) for details. If you need to make a more complex table in Markdown, I suggest using [RStudio's visual editor](https://quarto.org/docs/visual-editor/content.html#editing-tables). Here is an example of a simple table:
+
+``` markdown
+
+| Letters | Numbers |
+|:-------:|:-------:|
+| A       | 1       |
+| B       | 2       |
+| C       | 3       |
+
+: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}
+```
+
+| Letters | Numbers |
+|:-------:|:-------:|
+|    A    |    1    |
+|    B    |    2    |
+|    C    |    3    |
+
+: My Caption {#tbl-mytable2 apa-note="Note below table"}
+
+# Citations
+
+See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.
+
+I recommend managing your citations in [Zotero](https://www.zotero.org/) and exporting them to a file automatically using the [BetterBibTex addon](https://retorque.re/zotero-better-bibtex/). [Installation instructions](https://retorque.re/zotero-better-bibtex/installation/).
+
+The `apa.csl` file is already included in apaquarto so there is no need to supply a reference to it in your metadata.
+
+## Parenthetical Citations
+
+A parenthetical citation uses the reference label in square brackets and starts with `@` like so:
+
+`A sentence that needs a citation [@CameronTrivedi2013].`
+
+A sentence that needs a citation [@CameronTrivedi2013].
+
+### With Multiple Citations
+
+2 or more citations are separated by a semicolon: `[@CameronTrivedi2013; @cohen2003applied]` becomes [@CameronTrivedi2013; @cohen2003applied].
+
+### With Page Numbers
+
+Page references (or any other suffixes) are placed after the reference. If you want a comma, you'll need to insert it yourself: `[@CameronTrivedi2013, pp. 35--41]` becomes [@CameronTrivedi2013, pp. 35--41].
+
+### With Prefixes
+
+-   Prefixes (with or without a comma) are placed before the reference: `[e.g., @CameronTrivedi2013]` becomes [e.g., @CameronTrivedi2013].
+
+-    If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically [e.g., @CameronTrivedi2013; @cohen2003applied]. That is, `[e.g., @CameronTrivedi2013; @cohen2003applied]`, not `[e.g., @cohen2003applied; @CameronTrivedi2013]`.
+
+-   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: `First Outer Inner Last [FOIL\;@CameronTrivedi2013]` becomes First Outer Inner Last [FOIL\; @CameronTrivedi2013].
+
+:::{.callout-warning}
+This "escaped backslash in front of the semicolon trick" is a hack. When you switch to Visual Mode in RStudio, it thinks you made a mistake, and it removes the backslash. If the citation above looks wrong, it is because I forgot to fix it after switching to visual mode and back. I reported this bug to the developers of RStudio. I hope the bug will be fixed soon.
+:::
+
+## In-Text Citations
+
+Typically, a plain citation works without any fuss:
+
+`@CameronTrivedi2013 said some interesting things.`
+
+@CameronTrivedi2013 said some interesting things.
+
+:::{.callout-warning}
+Outside of apaquarto, a limitation of the `.csl` format requires a special filter to change the separator for multiple authors from `&` to`and`. If you render your document in a different format, `@CameronTrivedi2013` will be "Cameron & Trivedi (2013)."
+:::
+
+### With Page Numbers
+
+If you need to include page references, use square brackets afterwards:
+
+`@CameronTrivedi2013 [pp. 101--103] said some interesting things.`
+
+@CameronTrivedi2013 [pp. 101--103] said some interesting things.
+
+### Possessive Citations
+
+An experimental feature of apaquarto is automatic "possessive citations." `@CameronTrivedi2013 ['s] position` becomes @CameronTrivedi2013 ['s] position. 
+
+If you render your document in another format, you would need to supply the name in text like this: `Cameron and Trivedi's [-@CameronTrivedi2013] position`, which becomes Cameron and Trivedi's [-@CameronTrivedi2013] position. This works because putting a hyphen before the reference `[-@CameronTrivedi2013]` becomes [-@CameronTrivedi2013]. 
+
+## Masked Citations for Anonymous Peer Review
+
+Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can "mask" any citation you wish by setting the `mask` field in the metadata yaml to `true`. Then list all citations that need to be masked in the `masked-citations` field like so:
+
+``` yaml
+mask: true
+masked-citations:
+  - schneider2015intelligence
+  - schneider2012cattell
+```
+
+If the `mask` field is set to `false`, the masked citations will print as usual. When `mast` is `true`, depending if they are an inline or parenthetical citations, they will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". In parenthical citations, it is possible to mix masked and unmasked citations.
+
+Setting `mask` to `true` will also remove the authors, affiliations, and author notes from the title page.
+
+
+
+
+
+# References
