@@ -13,7 +13,7 @@ does not work of if there is a feature missing.
 See [instructions and template options for apaquarto
 here](https://wjschne.github.io/apaquarto/).
 
-[Version History](https://wjschne.github.io/apaquarto/NEWS.html)
+[Version History](https://wjschne.github.io/apaquarto/news.html)
 
 ## Example Outputs
 
