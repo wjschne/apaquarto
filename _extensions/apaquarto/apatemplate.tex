@@ -123,17 +123,18 @@ $endif$
 $title.tex()$
 
 $if(journalmode)$
+\usepackage{pbalance} 
 \usepackage{float}
 \makeatletter
 \let\oldtpt\ThreePartTable
 \let\endoldtpt\endThreePartTable
 \def\ThreePartTable{\@ifnextchar[\ThreePartTable@i \ThreePartTable@ii}
-\def\ThreePartTable@i[#1]{\begin{figure}
+\def\ThreePartTable@i[#1]{\begin{figure}[!htbp]
 \onecolumn
 \begin{minipage}{0.5\textwidth}
 \oldtpt[#1]
 }
-\def\ThreePartTable@ii{\begin{figure}
+\def\ThreePartTable@ii{\begin{figure}[!htbp]
 \onecolumn
 \begin{minipage}{0.5\textwidth}
 \oldtpt
@@ -155,7 +156,7 @@ $if(journalmode)$
 
 \newenvironment{twocolumntable}% environment name
 {% begin code
-\begin{table*}%
+\begin{table*}[!htbp]%
 \onecolumn%
 }%
 {%

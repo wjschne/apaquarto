@@ -110,7 +110,6 @@ format:
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
     documentmode: jou
-    keep-tex: true
 ---
 
 ```{r}
@@ -165,8 +164,8 @@ One way to import an existing graphic as a figure is to use `knitr::include_grap
 ```{r fig-import1}
 #| fig-cap: An Imported Graphic
 #| apa-note: A note below the figure
-#| apa-twocolumn: true
-#| out-width: "100%"
+#| fig-width: 3
+#| out-width: 50%
 knitr::include_graphics("img/sampleimage.png")
 ```
 

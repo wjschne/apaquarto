@@ -12,7 +12,7 @@ This article template creates [APA Style 7th Edition documents](https://apastyle
 
 See [instructions and template options for apaquarto here](https://wjschne.github.io/apaquarto/).
 
-[Version History](NEWS.md)
+[Version History](https://wjschne.github.io/apaquarto/NEWS.html)
 
 ## Example Outputs
 
