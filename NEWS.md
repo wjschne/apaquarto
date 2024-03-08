@@ -7,6 +7,17 @@
 - Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.4.3 (2024-03-08)
+
+- Allow for fonts other than Times in pdf documents.
+- Removed the `notimes` and `notxfonts` options for pdf documents. If
+  `mainfont` is not selected, then the [`newtx`
+  package](https://ctan.org/pkg/newtx) will be used.
+
+# Version 3.4.2 (2024-03-06)
+
+- Fixed .pdf bug when only one author or one affiliation
+
 # Version 3.4.1 (2024-03-05)
 
 - Added “possessive” citations such that `@schneider2024 ['s]` will

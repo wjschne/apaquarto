@@ -18,6 +18,7 @@ site_libs/
 template.pdf
 template_journal.pdf
 template_manuscript.pdf
+tempate.tex
 writing.qmd
 README.qmd
 terminal.png

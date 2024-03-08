@@ -1,11 +1,11 @@
 $doc-class.tex()$
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
 
 $if(lang)$
-\ifLuaTeX
-\usepackage[bidi=basic]{babel}
-\else
 \usepackage[bidi=default]{babel}
-\fi
 $if(babel-lang)$
 \babelprovide[main,import]{$babel-lang$}
 $if(title-block-keywords)$
@@ -15,10 +15,7 @@ $endif$
 
 
 $if(mainfont)$
-\ifPDFTeX
-\else
 \babelfont{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
-\fi
 $endif$
 $endif$
 $for(babel-otherlangs)$
@@ -73,14 +70,6 @@ $graphics.tex()$
 $citations.tex()$
 
 
-$if(notimes)$
-$else$
-$if(notxfonts)$
-    $else$
-\usepackage{times}
-    $endif$
-$endif$
-
 $if(numbered-lines)$
 \usepackage[nolongtablepatch]{lineno}
 \linenumbers
@@ -88,6 +77,47 @@ $endif$
 
 $if(linestretch)$
 \setstretch{$linestretch$}
+$endif$
+
+$if(mainfont)$
+\usepackage{mathspec}
+$else$
+\usepackage{newtx}
+$endif$
+
+\defaultfontfeatures{Scale=MatchLowercase}$-- must come before Beamer theme
+\defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+
+$if(fontfamily)$
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+$endif$
+$if(mainfont)$
+  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+$if(sansfont)$
+  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+$if(monofont)$
+  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
+$endif$
+
+$for(fontfamilies)$
+  \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
+$endfor$
+
+$if(mathfont)$
+\setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+
+$if(CJKmainfont)$
+    \usepackage{xeCJK}
+    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+    $if(CJKsansfont)$
+      \setCJKsansfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKsansfont$}
+    $endif$
+    $if(CJKmonofont)$
+      \setCJKmonofont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmonofont$}
+    $endif$
 $endif$
 
 $title.tex()$

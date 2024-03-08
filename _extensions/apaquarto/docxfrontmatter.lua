@@ -11,6 +11,17 @@ local function ends_with(str, ending)
    return string.sub(str.text, -1) == ending
 end
 
+local function file_exists(name)
+ 
+  local f = io.open(name, 'r')
+  if f ~= nil then
+    io.close(f)
+    return true
+  else
+    return false
+  end
+end
+
 -- Check if meta is present or if it has length of 0
 local function chkmeta(meta_item)
     ispresent = false
@@ -287,7 +298,11 @@ return {
       for i, a in ipairs(byauthor) do
         
         if a.orcid then
-          img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg")
+          local orcidfile = "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
+          if not file_exists(orcidfile) then
+            orcidfile = "_extensions/apaquarto/ORCID-iD_icon-vector.svg"
+          end 
+          img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile)
           img.attr = pandoc.Attr('orchid', {'img-fluid'},  {width='16px'})
           pp = pandoc.Para(pandoc.Str(""))
           pp.content:extend(a.name.literal)
@@ -519,10 +534,11 @@ return {
         
       for i, v in ipairs(myshorttitle) do
         if v.t == "Str" then
-          if v.text:match("’") then
-            v.text = v.text:gsub("’","fixcurlyquote")
-          end
-          v.text = string.gsub(string.upper(v.text), string.upper("fixcurlyquote"), "’")
+          --if v.text:match("’") then
+            --v.text = v.text:gsub("’","fixcurlyquote")
+          --end
+          -- v.text = string.gsub(string.upper(v.text), string.upper("fixcurlyquote"), "’")
+          v.text = pandoc.text.upper(v.text)
         end
       end
       meta.description = myshorttitle

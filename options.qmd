@@ -584,22 +584,6 @@ All of the .pdf-specfic options for apaquarto come directly from the \[apa7 $\La
 |                    |                                                                                       |
 |                    | Options include `10pt`, `11pt`, and `12pt`                                            |
 +--------------------+---------------------------------------------------------------------------------------+
-| `nolmodern`        | If `true`, suppresses loading of the `lmodern` font package.                          |
-+--------------------+---------------------------------------------------------------------------------------+
-| `helv`             | If `true`, use Helvetica font when in `stu` and `man` mode.                           |
-+--------------------+---------------------------------------------------------------------------------------+
-| `notimes`          | If `true`, use Computer Modern font instead of Times when in `jou` mode.              |
-+--------------------+---------------------------------------------------------------------------------------+
-| `nosf`             | If `true`, neutralizes the `\helvetica` command when in `man` and `stu` mode.         |
-+--------------------+---------------------------------------------------------------------------------------+
-| `tt`               | If `true`, uses typewriter font when in `man` and `stu` mode.                         |
-+--------------------+---------------------------------------------------------------------------------------+
-| `notxfonts`        | If `true`, use times or pslatex instead of txfonts when in `jou` mode.                |
-+--------------------+---------------------------------------------------------------------------------------+
-| `notab`            | If `true`, cancels automatic stretching of tables to column width when in `jou` mode. |
-+--------------------+---------------------------------------------------------------------------------------+
-| `nofontenc`        | If `true`, suppresses loading of the `fontenc` package.                               |
-+--------------------+---------------------------------------------------------------------------------------+
 | `a4paper`          | If `true`, uses a4 paper size instead of 8.5 by 11 in. letter size.                   |
 +--------------------+---------------------------------------------------------------------------------------+
 | `donotrepeattitle` | If `true`, suppresses title in the first page of text.                                |

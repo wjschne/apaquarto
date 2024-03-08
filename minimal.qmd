@@ -1,6 +1,6 @@
 ---
-title: My Title
-shorttitle: Running Header
+title: "My Title"
+shorttitle: "Short Title in Running Header"
 author:
   - name: Jane Doe
     corresponding: true
@@ -10,8 +10,9 @@ author:
       - name: Generic University
         department: Department of Scholarly Studies
         address: 1234 Capital St.
-        city: Albany
+        city: New York
         region: NY
+        country: USA
         postal-code: 12084-1234
 author-note:
   status-changes: 
@@ -25,14 +26,14 @@ author-note:
     financial-support: ~
     gratitude: ~
     authorship-agreements: ~
-abstract: "My abstract"
+abstract: "This document is a template"
 keywords: [keyword1, keyword2, keyword3]
 bibliography: bibliography.bib
 format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf:
-    documentmode: jou
+    documentmode: man
 ---
 
 # Method

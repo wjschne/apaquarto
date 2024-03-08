@@ -8,56 +8,123 @@ engine: knitr
 
 This article template creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. Because the .docx format is still widely used---and often required---my main priority was to ensure compatibility for .docx. This is still a work in progress, and I encourage filing a "New Issue" on GitHub if something does not work of if there is a feature missing.
 
+
+
 See [instructions and template options for apaquarto here](https://wjschne.github.io/apaquarto/).
-
-## New in apaquarto 3.2.4
-
-The main goal for version 3 was to do everything with lua filters instead of R. It was quite a journey, but apaquarto is now completely independent of R, which should help folks working with other languages.
-
-### Breaking changes
-
-* The the `apafg-` and `apatb-` prefixes are no longer used for figures and tables. Use the standard Quarto prefixes (`fig-` and `tbl-`), as well as the standard quarto referencing syntax (e.g,. `@fig-myplot` will reference the `fig-myplot` chunk.). 
-*  The include statement below the metadata is no longer used and must be deleted. An informative error will provide instruction if the include statement remains. 
-
-### Improvements
-
-- The `floatsintext` option now works in docx and html. Setting it to `true`, intermingles text, figures, and tables. Setting it to `false` moves all figures and tables to the end of the document.
-- The title page and abstract page are now processed using lua filters instead of R.
-- The .docx running header is set with a lua filter and a docx field that draws from the .docx metadata. 
-- The officer package is no longer required to create a new reference document every time the document is rendered.
-- The jou (journal) mode in .pdf is better supported.
-- Setting the `mask` field to true will mask all citations listed in the `masked-citations` field.
-- Numbered lines available in .docx and .pdf formats when the `numbered-lines` field is set to `true`.
 
 [Version History](NEWS.md)
 
+## Example Outputs
+
+The apaquarto-docx form looks like this:
+
+![Preview of .docx output](img/docx.png)
+
+The .html and .pdf output (in manuscript mode) look similar. The .pdf in journal mode looks like this:
+
+![Preview of .pdf output in journal mode](img/journalmode.png)
+
+
 ## Creating a New Article
 
-To create a new article using this format, run this command in the terminal:
+You can create a new article with apaquarto's template file. There are two ways to do so. 
+
+1. Via the R console
+2. Via the terminal
+
+If you are an R user, you might prefer the R console method. Anyone, including R users, can use the second method.
+
+
+
+### Using R via the R Console
+
+If you are an R user, you can install extensions with the [quarto package](https://quarto-dev.github.io/quarto-r/) (version = 1.4 or higher). The quarto package is not Quarto itself, but it provides convenient functions to  interact with Quarto.
+
+If the quarto package is not installed, you can can install it by running this code in the console:
+
+```{r}
+#| eval: false
+# latest release version 
+install.packages("quarto")
+```
+
+Once the quarto package is installed, you can install a quarto extension template by setting your working directory to the folder where you want the template to be installed (e.g., `setwd("path/to/my/folder")`) and then running this:
+
+```{r}
+#| eval: false
+quarto::quarto_use_template("wjschne/apaquarto")
+```
+
+A prompt will ask if you trust the author (me) not to run malicious code. To proceed, answer `Yes` or just `Y`.
+
+
+
+### Using the Terminal
+
+If you are not an R user, you can create a new article directly in the terminal. Navigate to the folder where you want to create your file (e.g., `cd path/to/my/folder`), and run this command:
 
 ``` bash
 quarto use template wjschne/apaquarto
 ```
 
-In RStudio, the terminal is a tab next to the console. If you cannot see a terminal tab next to the console, use the keyboard shortcut Alt-Shift-R to make a terminal appear.
+In RStudio, the terminal is in a tab next to the console. If you cannot see a terminal tab next to the console, use the keyboard shortcut Alt-Shift-R to make a terminal appear.
 
-Entering the command above will prompt a question about whether you trust the author of the extension to not run malicious code. If you answer Yes, you will be prompted to name a new folder where the extension will be installed with an example document with the name of the folder and a file extension of .qmd. The example document has most of the instructions you will likely need.
+Entering the command above will prompt a question about whether you trust the author of the extension to not run malicious code. If you answer Yes, you will be prompted to name a new folder where the extension will be installed. 
 
-## Using with an Existing Document
+## Template file
 
-To add this format to an existing document:
+After installation, you will see a template file in the folder you select. The template file will have the same name as the folder you installed the template to and ends with `.qmd`. This file has most of the options already filled out and explains how and why to change them. It also has a examples of how to use the extension in the text.
+
+If you prefer a minimal template, you can start with the `minimal.qmd` file instead.
+
+## Adding apaquarto to an Existing Document or Project
+
+You can add the apaquarto extension to an existing file or project in one of two ways:
+
+1. Via the R console
+2. Via the terminal
+
+### Creating a New Document Via the R console
+
+If you are an R user, you can install extensions with the [quarto package](https://quarto-dev.github.io/quarto-r/) (version = 1.4 or higher). The quarto package is not Quarto itself, but it provides convenient functions to  interact with Quarto.
+
+If the quarto package is not installed, you can can install it by running this code in the console:
+
+```{r}
+#| eval: false
+# latest release version 
+install.packages("quarto")
+```
+
+In RStudio, open the project that contains the file to which you want to add apaquarto. If your file is not part of a project, set the working directory to the same folder as the file (e.g., `setwd("path/to/my/folder")`). 
+
+Run this code in the console:
+
+```{r}
+#| eval: false
+quarto::quarto_use_template("wjschne/apaquarto")
+```
+
+### Creating a New Document Via the Terminal
+
+To add this format to an existing document, navigate to the folder where the existing .qmd you wish to use and then run:
 
 ``` bash
 quarto add wjschne/apaquarto
 ```
 
-Then, add the format to your document options:
+### Add apaquarto to the Document's Metadata:
+
+You can select one of three formats: .docx, .pdf, or .html. When writing, I prefer to output to .html, because it renders quickly. Then I switch to .docx or .pdf, depending on where I need to submit the paper.
+
+You can add all of these formats or any combination of them:
 
 ``` yaml
 format:
   apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf: default
 ```
-
 
 
 Here is a minimal example of what the YAML metadata might look like:
@@ -74,7 +141,7 @@ author:
     affiliations:
       - name: Temple University
         department: College of Education and Human Development
-        address: 358 Ritter Hall
+        address: 1301 Cecil B. Moore Ave.
         city: Philadelphia
         region: PA
         postal-code: 19122-6091
@@ -86,6 +153,8 @@ author-note:
 bibliograpy: mybibfile.bib     
 format:
   apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf: default
 ---
 ```
 
@@ -93,17 +162,6 @@ format:
 
 
 
-## Example
-
-This sample document has a fuller set of parameters specified and contains instructions for formatting figures, tables, cross-references, and more: [template.qmd](template.qmd).
-
-The apaquarto-docx form looks like this:
-
-![Preview of .docx output](img/docx.png)
-
-The .html and .pdf output (in manuscript mode) look similar. The .pdf in journal mode looks like this:
-
-![Preview of .pdf output in journal mode](img/journalmode.png)
 
 
 ## Updating to the latest version of apaquarto

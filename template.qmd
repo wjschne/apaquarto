@@ -1,12 +1,12 @@
 ---
 title: "Using Quarto to Generate Documents in APA Style (7th Edition)"
 # If blank, the running header is the title in upper case.
-shorttitle: Template for the apaquarto Extension
+shorttitle: "Template’s for the apaquarto Extension"
 # Set names and affiliations.
 # It is nice to specify everyone's orcid, if possible.
 # There can be only one corresponding author, but declaring one is optional.
 author:
-  - name: Ana Fulano
+  - name: Ana Carina Fulano
     corresponding: true
     orcid: 0000-0000-0000-0001
     email: sm@example.org
@@ -45,7 +45,9 @@ author:
       - name: "Carina's Primary Affiliation"
       - name: "Carina's Secondary Affiliation"
     # Because Dolorita is unaffiliated, specify her city instead
-  - name: Dolorita Perengano
+  - name: 
+      - given: Dolorita
+        family: Perengano
     orcid: 0000-0000-0000-0004
     roles:
       - writing
@@ -107,7 +109,7 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    documentmode: jou
     keep-tex: true
 ---
 

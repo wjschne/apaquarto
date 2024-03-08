@@ -6,19 +6,19 @@ format:
     citeproc: false
     filters:  
       - at: post-render
-        path: _extensions/wjschne/apaquarto/apacaption.lua
+        path: _extensions/apaquarto/apacaption.lua
       - at: post-render
-        path: _extensions/wjschne/apaquarto/apaextractfigure.lua
+        path: _extensions/apaquarto/apaextractfigure.lua
       - at: post-render
-        path: _extensions/wjschne/apaquarto/apanote.lua
+        path: _extensions/apaquarto/apanote.lua
       - at: post-render
-        path: _extensions/wjschne/apaquarto/apafloat.lua
+        path: _extensions/apaquarto/apafloat.lua
       - at: post-render
-        path: _extensions/wjschne/apaquarto/apafloat.lua
+        path: _extensions/apaquarto/apafloat.lua
       - at: post-render
-        path: _extensions/wjschne/apaquarto/citeprocr.lua
+        path: _extensions/apaquarto/citeprocr.lua
       - at: post-render
-        path: _extensions/wjschne/apaquarto/apaandcite.lua
+        path: _extensions/apaquarto/apaandcite.lua
 knitr: 
   opts_chunk: 
     dev: ragg_png
