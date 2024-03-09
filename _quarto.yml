@@ -7,7 +7,7 @@ project:
     - options.qmd
     - writing.qmd
     - resources.qmd
-    - news.qmd
+    - NEWS.qmd
 
 website:
   title: "APA Style Documents with apaquarto"
@@ -19,7 +19,7 @@ website:
       - options.qmd
       - writing.qmd       
       - resources.qmd
-      - news.qmd
+      - NEWS.qmd
     right: 
       - icon: github
         href: https://github.com/wjschne/apaquarto

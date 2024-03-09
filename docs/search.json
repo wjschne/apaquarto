@@ -189,22 +189,22 @@
     "text": "Language Options\nYou can alter the names of Abstract, Figures, Tables, and References by setting the lang field to one of these languages:\n\n\n\n\n\n\n\nCode\nLanguage\n\n\n\n\nen\nEnglish\n\n\nzh\nChinese\n\n\nes\nSpanish\n\n\nfr\nFrench\n\n\nja\nJapanese\n\n\nde\nGerman\n\n\npt\nPortuguese\n\n\nru\nRussian\n\n\ncs\nCzech\n\n\nfi\nFinnish\n\n\nnl\nDutch\n\n\nit\nItalian\n\n\npl\nPolish\n\n\nko\nKorean\n\n\n\nHowever, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.\n\n\n\n\n\n\n\n\nField\nExplanation\nDefault\n\n\n\n\ncitation-last-author-separator\nAPA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word and before the last author.\nand\n\n\ncitation-masked-author\nThe phrase to replace author names in masked citations.\nMasked Citation\n\n\ncitation-masked-date\nThe abbreviated translation for “no date” in masked citations\nn.d.\n\n\ncitation-masked-title\nThe phrase to replace the title in a masked reference\nMasked Title\n\n\ntitle-block-author-note\nThe heading of the author note\nAuthor Note\n\n\ntitle-block-correspondence-note\nThe phrase introducing the correspondence note.\nCorrespondence concerning this article should be addressed to\n\n\ntitle-block-role-introduction\nThe phrase introducing the author roles.\nAuthor roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:\n\n\n\nAll these options must be listed under the language field . For example, if we set the lang field to en (Spanish), the remaining options can also be set:\nlang: es\nlanguage: \n  citation-last-author-separator: \"y\"\n  citation-masked-author: \"Cita Enmascarada\"\n  citation-masked-title: \"Título Enmascarado\"\n  citation-masked-date: \"n.f.\"\n  title-block-author-note: \"Nota de Autores\"\n  title-block-correspondence-note: \"La correspondencia relativa a este artículo debe dirigirse a\"\n  title-block-role-introduction: \"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:\"\nIn addition, many terms translated automatically can be overridden. The full list is here. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:\nlanguage: \n  crossref-fig-title: \"Plot\""
   },
   {
-    "objectID": "news.html",
-    "href": "news.html",
+    "objectID": "NEWS.html",
+    "href": "NEWS.html",
     "title": "Changelog",
     "section": "",
     "text": "Create landscape pages for wide figures and tables.\nTables in .pdf jou mode should fit automatically.\nTypst version that would allow for easy customization"
   },
   {
-    "objectID": "news.html#breaking-changes",
-    "href": "news.html#breaking-changes",
+    "objectID": "NEWS.html#breaking-changes",
+    "href": "NEWS.html#breaking-changes",
     "title": "Changelog",
     "section": "Breaking changes",
     "text": "Breaking changes\n\nThe the apafg- and apatb- prefixes are no longer used for figures and tables. Use the standard Quarto prefixes (fig- and tbl-), as well as the standard quarto referencing syntax (e.g,. @fig-myplot will reference the fig-myplot chunk.).\nThe include statement below the metadata is no longer used and must be deleted. An informative error will provide instruction if the include statement remains."
   },
   {
-    "objectID": "news.html#improvements",
-    "href": "news.html#improvements",
+    "objectID": "NEWS.html#improvements",
+    "href": "NEWS.html#improvements",
     "title": "Changelog",
     "section": "Improvements",
     "text": "Improvements\n\n.docx\n\nThe title page and abstract page are now processed using lua filters instead of R.\nThe officer package is no longer required to create a new reference document every time the document is rendered #5 #29. Now, a lua filter looks for the shorttitle field in your yaml. If that is not found, the title and subtitle fields are used instead. The running header is assigned to the description field in the quarto metadata. This value will show up in the Comments field in the rendered .docx file, which is then inserted into the field box in the header.\nThe .docx running header is set with a lua filter and a docx field that draws from the .docx metadata.\n\n\n\n.pdf\n\nCan number lines #25\nFixed tightlist error #31\nThe jou (journal) mode in .pdf is better supported. There are a few hacky solutions that need a bit of work. #2 #27"
