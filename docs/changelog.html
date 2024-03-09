@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>APA Style Documents with apaquarto – Introduction to apaquarto</title>
+<title>APA Style Documents with apaquarto – Changelog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -108,7 +88,7 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Introduction</span></a>
   </li>  
   <li class="nav-item">
@@ -128,7 +108,7 @@ div.csl-indent {
 <span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./changelog.html"> 
+    <a class="nav-link active" href="./changelog.html" aria-current="page"> 
 <span class="menu-text">Changelog</span></a>
   </li>  
 </ul>
@@ -153,7 +133,28 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quarto-makes-writing-scientific-documents-easier" id="toc-quarto-makes-writing-scientific-documents-easier" class="nav-link active" data-scroll-target="#quarto-makes-writing-scientific-documents-easier">Quarto makes writing scientific documents easier</a></li>
+  <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-3.4.3-2024-03-08" id="toc-version-3.4.3-2024-03-08" class="nav-link" data-scroll-target="#version-3.4.3-2024-03-08">Version 3.4.3 (2024-03-08)</a></li>
+  <li><a href="#version-3.4.2-2024-03-06" id="toc-version-3.4.2-2024-03-06" class="nav-link" data-scroll-target="#version-3.4.2-2024-03-06">Version 3.4.2 (2024-03-06)</a></li>
+  <li><a href="#version-3.4.1-2024-03-05" id="toc-version-3.4.1-2024-03-05" class="nav-link" data-scroll-target="#version-3.4.1-2024-03-05">Version 3.4.1 (2024-03-05)</a></li>
+  <li><a href="#version-3.4.0-2024-03-04" id="toc-version-3.4.0-2024-03-04" class="nav-link" data-scroll-target="#version-3.4.0-2024-03-04">Version 3.4.0 (2024-03-04)</a></li>
+  <li><a href="#version-3.3.0-2024-02-29" id="toc-version-3.3.0-2024-02-29" class="nav-link" data-scroll-target="#version-3.3.0-2024-02-29">Version 3.3.0 (2024-02-29)</a></li>
+  <li><a href="#version-3.2.3-2024-02-19" id="toc-version-3.2.3-2024-02-19" class="nav-link" data-scroll-target="#version-3.2.3-2024-02-19">Version 3.2.3 (2024-02-19)</a></li>
+  <li><a href="#version-3.2.2-2024-02-15" id="toc-version-3.2.2-2024-02-15" class="nav-link" data-scroll-target="#version-3.2.2-2024-02-15">Version 3.2.2 (2024-02-15)</a></li>
+  <li><a href="#version-3.2.1-2024-02-14" id="toc-version-3.2.1-2024-02-14" class="nav-link" data-scroll-target="#version-3.2.1-2024-02-14">Version 3.2.1 (2024-02-14)</a></li>
+  <li><a href="#version-3.2.0-2024-02-13" id="toc-version-3.2.0-2024-02-13" class="nav-link" data-scroll-target="#version-3.2.0-2024-02-13">Version 3.2.0 (2024-02-13)</a></li>
+  <li><a href="#version-3.1.0-2024-02-09" id="toc-version-3.1.0-2024-02-09" class="nav-link" data-scroll-target="#version-3.1.0-2024-02-09">Version 3.1.0 (2024-02-09)</a></li>
+  <li><a href="#version-3.0.0-2024-01-20" id="toc-version-3.0.0-2024-01-20" class="nav-link" data-scroll-target="#version-3.0.0-2024-01-20">Version 3.0.0 (2024-01-20)</a>
+  <ul class="collapse">
+  <li><a href="#breaking-changes" id="toc-breaking-changes" class="nav-link" data-scroll-target="#breaking-changes">Breaking changes</a></li>
+  <li><a href="#improvements" id="toc-improvements" class="nav-link" data-scroll-target="#improvements">Improvements</a>
+  <ul class="collapse">
+  <li><a href="#docx" id="toc-docx" class="nav-link" data-scroll-target="#docx">.docx</a></li>
+  <li><a href="#pdf" id="toc-pdf" class="nav-link" data-scroll-target="#pdf">.pdf</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#version-2.0.0-2023-11-10" id="toc-version-2.0.0-2023-11-10" class="nav-link" data-scroll-target="#version-2.0.0-2023-11-10">Version 2.0.0 (2023-11-10)</a></li>
+  <li><a href="#version-1.0.0-2023-03-05" id="toc-version-1.0.0-2023-03-05" class="nav-link" data-scroll-target="#version-1.0.0-2023-03-05">Version 1.0.0 (2023-03-05)</a></li>
   </ul>
 </nav>
 </nav>
@@ -166,7 +167,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction to apaquarto</h1>
+<h1 class="title">Changelog</h1>
 </div>
 
 
@@ -183,43 +184,142 @@ div.csl-indent {
 </header>
 
 
-<p>Style guides are absolutely necessary for scientific documents Scholarly writing is often about inherently difficult topics, and style guides remove many <em>avoidable</em> barriers to communication. Information is much easier to absorb when presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader’s end, style guides themselves often place unnecessary roadblocks before the writer.</p>
-<p><a href="https://apastyle.apa.org/">APA style</a> is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age <span class="citation" data-cites="bentley1929instructions">(<a href="#ref-bentley1929instructions" role="doc-biblioref">Bentley et al. 1929</a>)</span>, its quirks and charms resist easy automation. Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten. I wrote <a href="https://github.com/wjschne/apaquarto">apaquarto</a> so that I would never have to worry about APA style ever again. With very little extra effort, your documents are formatted according to APA style (See <a href="#fig-manuscript" class="quarto-xref">Figure&nbsp;1</a> for an example in “manuscript mode” and <a href="#fig-journal" class="quarto-xref">Figure&nbsp;2</a> for the same document formatted like an APA journal).</p>
-<div id="fig-manuscript" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-manuscript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<object data="template_manuscript.pdf" type="application/pdf" width="100%" height="800" '=""><p>Unable to display PDF file. <a href="template_manuscript.pdf">Download</a> instead.</p></object>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-manuscript-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Example document in manuscript mode
-</figcaption>
-</figure>
-</div>
-<div id="fig-journal" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-journal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<object data="template_journal.pdf" type="application/pdf" width="100%" height="800" '=""><p>Unable to display PDF file. <a href="template_journal.pdf">Download</a> instead.</p></object>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-journal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Example document in journal mode
-</figcaption>
-</figure>
-</div>
-<section id="quarto-makes-writing-scientific-documents-easier" class="level1">
-<h1>Quarto makes writing scientific documents easier</h1>
-<p>The apaquarto extension is built on <a href="https://quarto.org/">Quarto</a>, an open-source publishing system specifically adapted for scientific and technical documents such as journal articles, books, blogs, slides, and dashboards, and websites. Not only does Quarto offer considerable flexibility by itself, it was designed to be extensible. Thus, Quarto can take care of most of the formatting, and an extension can be written to handle whatever specific formatting rules a style guide requires. The apaquarto extension takes care of all the fussy details of APA-style so that you can focus on the content of your writing.</p>
-<p><strong>You do not need to know any programming languages to use Quarto.</strong> You can use it in a completely non-technical way to write well-formatted text, tables, figures, and references. However, if your document communicates the results from data analyses, then Quarto offers you something quite remarkable. You can perform your analyses and communicate your findings in the same file! That is, you write text and code together in a source document and then you “render” the document into its final format (e.g., .html, .pdf, .docx). So instead of performing your analyses elsewhere (e.g., SPSS) and then copying the results into a word processor (e.g., MS Word), you build your document in one step.</p>
-<p>The advantages of this kind of workflow are profound. If you discover a mistake in your analysis, there is no need to find and replace the primary results and their downstream consequences scattered throughout the document. Instead, you just re-render the document, and everything in it is updated. When the document is published, the Quarto file serves as a fully reproducible record of your analysis. Making the Quarto file available in a public repository increases trust in your work because anyone can inspect it and trace any result you report back to the source code that created it.</p>
-
+<section id="future-version-wishlist" class="level1">
+<h1>Future Version Wishlist</h1>
+<ul>
+<li>Create landscape pages for wide figures and tables.</li>
+<li>Tables in .pdf jou mode should fit automatically.</li>
+<li>Typst version that would allow for easy customization</li>
+</ul>
+</section>
+<section id="version-3.4.3-2024-03-08" class="level1">
+<h1>Version 3.4.3 (2024-03-08)</h1>
+<ul>
+<li>Allow for fonts other than Times in pdf documents.</li>
+<li>Removed the <code>notimes</code> and <code>notxfonts</code> options for pdf documents. If <code>mainfont</code> is not selected, then the <a href="https://ctan.org/pkg/newtx"><code>newtx</code> package</a> will be used.</li>
+<li>Fixed balance of two columns in journal mode for pdf.</li>
+</ul>
+</section>
+<section id="version-3.4.2-2024-03-06" class="level1">
+<h1>Version 3.4.2 (2024-03-06)</h1>
+<ul>
+<li>Fixed .pdf bug when only one author or one affiliation</li>
+</ul>
+</section>
+<section id="version-3.4.1-2024-03-05" class="level1">
+<h1>Version 3.4.1 (2024-03-05)</h1>
+<ul>
+<li>Added “possessive” citations such that <code>@schneider2024 ['s]</code> will render as “Schneider’s (2024)”</li>
+</ul>
+</section>
+<section id="version-3.4.0-2024-03-04" class="level1">
+<h1>Version 3.4.0 (2024-03-04)</h1>
+<ul>
+<li>Implemented <a href="https://wjschne.github.io/apaquarto/options.html#language-options">language options</a> for internationalization and customization.</li>
+<li>Figures in <code>jou</code> mode fit to column width automatically. Can be overridden with <code>fig-width</code> or <code>out-width</code>.</li>
+</ul>
+</section>
+<section id="version-3.3.0-2024-02-29" class="level1">
+<h1>Version 3.3.0 (2024-02-29)</h1>
+<ul>
+<li>Added better documentation of <a href="https://wjschne.github.io/apaquarto/">apaquarto template options</a></li>
+<li>If mask option is true, remove author names, author affiliations, and author notes from title page.</li>
+<li>Fixed blank spaces above title and author note in .docx</li>
+<li>Numbered lines for .docx</li>
+<li>Support for multiline abstracts</li>
+<li>Many minor fixes</li>
+</ul>
+</section>
+<section id="version-3.2.3-2024-02-19" class="level1">
+<h1>Version 3.2.3 (2024-02-19)</h1>
+<ul>
+<li>Add support for callout boxes in .pdf</li>
+<li>Fixed .pdf line number problem that crept back in somehow yet again <a href="https://github.com/wjschne/apaquarto/issues/34">#34</a></li>
+<li>Fixed problem with curly single quote in .docx running header</li>
+</ul>
+</section>
+<section id="version-3.2.2-2024-02-15" class="level1">
+<h1>Version 3.2.2 (2024-02-15)</h1>
+<ul>
+<li>Fixed bug so that tables and figures appear in correct order when <code>floatsintext</code> is true.</li>
+</ul>
+</section>
+<section id="version-3.2.1-2024-02-14" class="level1">
+<h1>Version 3.2.1 (2024-02-14)</h1>
+<ul>
+<li>Fixed error when no citations are present <a href="https://github.com/wjschne/apaquarto/issues/33">#33</a></li>
+<li>Fixed .pdf line number problem that crept back in somehow <a href="https://github.com/wjschne/apaquarto/issues/34">#34</a></li>
+</ul>
+</section>
+<section id="version-3.2.0-2024-02-13" class="level1">
+<h1>Version 3.2.0 (2024-02-13)</h1>
+<ul>
+<li>Added support for masked references. <a href="https://github.com/wjschne/apaquarto/issues/27">#27</a></li>
+</ul>
+</section>
+<section id="version-3.1.0-2024-02-09" class="level1">
+<h1>Version 3.1.0 (2024-02-09)</h1>
+<ul>
+<li>The <code>floatsintext</code> option now works in docx and html. Setting it to <code>true</code>, intermingles text, figures, and tables. Setting it to <code>false</code> moves all figures and tables to the end of the document.</li>
+</ul>
+</section>
+<section id="version-3.0.0-2024-01-20" class="level1">
+<h1>Version 3.0.0 (2024-01-20)</h1>
+<p>The main goal for version 3 was to do everything with lua filters instead of R. It was quite a journey, but apaquarto is now completely independent of R, which should help folks working with other languages.</p>
+<section id="breaking-changes" class="level2">
+<h2 class="anchored" data-anchor-id="breaking-changes">Breaking changes</h2>
+<ul>
+<li>The the <code>apafg-</code> and <code>apatb-</code> prefixes are no longer used for figures and tables. Use the standard Quarto prefixes (<code>fig-</code> and <code>tbl-</code>), as well as the standard quarto referencing syntax (e.g,. <code>@fig-myplot</code> will reference the <code>fig-myplot</code> chunk.).</li>
+<li>The include statement below the metadata is no longer used and must be deleted. An informative error will provide instruction if the include statement remains.</li>
+</ul>
+</section>
+<section id="improvements" class="level2">
+<h2 class="anchored" data-anchor-id="improvements">Improvements</h2>
+<section id="docx" class="level3">
+<h3 class="anchored" data-anchor-id="docx">.docx</h3>
+<ul>
+<li>The title page and abstract page are now processed using lua filters instead of R.</li>
+<li>The officer package is no longer required to create a new reference document every time the document is rendered <a href="https://github.com/wjschne/apaquarto/issues/5">#5</a> <a href="https://github.com/wjschne/apaquarto/issues/29">#29</a>. Now, a lua filter looks for the <code>shorttitle</code> field in your yaml. If that is not found, the <code>title</code> and <code>subtitle</code> fields are used instead. The running header is assigned to the <code>description</code> field in the quarto metadata. This value will show up in the <code>Comments</code> field in the rendered .docx file, which is then inserted into the field box in the header.</li>
+<li>The .docx running header is set with a lua filter and a docx field that draws from the .docx metadata.</li>
+</ul>
+</section>
+<section id="pdf" class="level3">
+<h3 class="anchored" data-anchor-id="pdf">.pdf</h3>
+<ul>
+<li>Can number lines <a href="https://github.com/wjschne/apaquarto/issues/25">#25</a></li>
+<li>Fixed tightlist error <a href="https://github.com/wjschne/apaquarto/issues/31">#31</a></li>
+<li>The jou (journal) mode in .pdf is better supported. There are a few hacky solutions that need a bit of work. <a href="https://github.com/wjschne/apaquarto/issues/2">#2</a> <a href="https://github.com/wjschne/apaquarto/issues/27">#27</a></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="version-2.0.0-2023-11-10" class="level1">
+<h1>Version 2.0.0 (2023-11-10)</h1>
+<ul>
+<li>Many small fixes <a href="https://github.com/wjschne/apaquarto/issues/15">#15</a></li>
+<li>Support for markdown tables <a href="https://github.com/wjschne/apaquarto/issues/9">#9</a> <a href="https://github.com/wjschne/apaquarto/issues/21">#21</a></li>
+<li>Support for .html and .pdf became more solid. <a href="https://github.com/wjschne/apaquarto/issues/22">#22</a></li>
+<li>CReditT taxonomy added for author roles. <a href="https://github.com/wjschne/apaquarto/issues/3">#3</a></li>
+</ul>
+</section>
+<section id="version-1.0.0-2023-03-05" class="level1">
+<h1>Version 1.0.0 (2023-03-05)</h1>
+<p>Initial release. Basic functions worked, but relied on many hacks that I always intended to fix. Mostly just for .docx, but .html and .pdf supported to some degree.</p>
+<ul>
+<li>Most of the title page information was processed in R because I did not understand lua. UPDATE: As of version 3.0.0, all of the R code that used to be inserted, is not longer used. The lua filters take care of everything in the .html and .docx formats.</li>
+<li>Because I did not yet understand lua and Quarto, I processed figures and tables differently in a non-standard way. I wrestled with Quarto, but I could not stop it from formatting the captions the way it wanted to. Finally I gave up and processed them with non-standard syntax and knitr hooks. UPDATE: This was always intended to be a temporary solution. As of version 3.0.0, all non-standard syntax is gone.</li>
+<li>The ability to put simple markdown notes below figures and tables was important to me. The tricky part was to get them to travel with the figures and tables when they were part of floats or when they moved to the end of the document. Many headaches later, it works using the <code>apa-note</code> chunk option or <code>apa-note</code> as a custom attribute of a fenced div.</li>
+<li>APA level 4 and 5 headings should remain as true headings that appear in the navigation tab in MS Word. Yet they appear as if they are in the same paragraph with subsequent text. This feature was implemented with apaquarto.lua filter that inserts openxml tags in the headers:</li>
+</ul>
+<pre><code>```openxml
+&lt;w:vanish/&gt;&lt;w:specVanish/&gt;
+```</code></pre>
+<p>This creates a <em>Style Separator</em> character that you can see in MS Word by clicking the Show/Hide ¶ button. BTW, the CTRL+ALT+Enter keyboard shortcut in Word will insert a style separator. See https://www.cadmanediting.com/the-style-separator-a-hidden-gem-in-ms-word</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-bentley1929instructions" class="csl-entry" role="listitem">
-Bentley, Madison, CA Peerenboom, FW Hodge, Edward B Passano, HC Warren, and MF Washburn. 1929. <span>“Instructions in Regard to Preparation of Manuscript.”</span> <em>Psychological Bulletin</em> 26 (2): 57.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
