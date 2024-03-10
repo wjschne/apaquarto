@@ -188,12 +188,15 @@ quarto::quarto_use_template("wjschne/apaquarto", no_prompt = TRUE)
 
 #### How to inspect the code before installing it
 
-The apaquarto source code is in [this repository](https://github.com/wjschne/apaquarto). Installing the extension will install the contents of the `_extensions/apaquarto` folder. If you install the template, it will install the `template.qmd` file and rename it to the name of the folder you install the template to. In addition these files will the installed
+The apaquarto source code is in [this repository](https://github.com/wjschne/apaquarto). Installing the extension will install the contents of the `_extensions/apaquarto` folder. If you install the template, it will install the `template.qmd` file and rename it to the name of the folder you install the template to. In addition, these files will be installed:
 
 - apaquarto.Rproj
 - bibliography.bib
 - README.md
 - minimal.qmd
+- img/docx.png
+- img/journalmond.png
+- img/sampleimage.png
 
 :::
 

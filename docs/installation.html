@@ -428,12 +428,15 @@ How to inspect the code before installing it
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The apaquarto source code is in <a href="https://github.com/wjschne/apaquarto">this repository</a>. Installing the extension will install the contents of the <code>_extensions/apaquarto</code> folder. If you install the template, it will install the <code>template.qmd</code> file and rename it to the name of the folder you install the template to. In addition these files will the installed</p>
+<p>The apaquarto source code is in <a href="https://github.com/wjschne/apaquarto">this repository</a>. Installing the extension will install the contents of the <code>_extensions/apaquarto</code> folder. If you install the template, it will install the <code>template.qmd</code> file and rename it to the name of the folder you install the template to. In addition, these files will be installed:</p>
 <ul>
 <li>apaquarto.Rproj</li>
 <li>bibliography.bib</li>
 <li>README.md</li>
 <li>minimal.qmd</li>
+<li>img/docx.png</li>
+<li>img/journalmond.png</li>
+<li>img/sampleimage.png</li>
 </ul>
 </div>
 </div>
@@ -1005,7 +1008,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
