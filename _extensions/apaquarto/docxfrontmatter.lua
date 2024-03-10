@@ -60,34 +60,7 @@ local function oxfordcommalister(lists)
   return result
 end
 
-local are_affiliations_different = function(authors)
-  
-      local superii = ""
-      local hash = {}
-      local res = {}
-      
-      
-      --Check if affilations are the name for each authors
-      for i, a in ipairs(authors) do
-        superii = ""
-        if a.affiliations then
-          for j, aff in ipairs(a.affiliations) do
-            if j > 1 then
-              superii = superii .. ","
-            end
-            superii = superii .. aff.number
-          end
-        end
 
-        if (not hash[superii]) then
-          res[#res+1] = superii 
-          hash[superii] = true
-        end
-
-      end
-  
-  return #res > 1
-  end
 
 
 local get_author_paragraph = function(authors, different)
@@ -188,7 +161,8 @@ return {
       end
       
       
-      local affilations_different = are_affiliations_different(byauthor)
+      local affilations_different = meta.affiliationsdifferent
+      print(affilations_different)
       
       local affiliations_str = List()
 

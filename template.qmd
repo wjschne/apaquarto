@@ -46,7 +46,7 @@ author:
       - name: "Carina's Secondary Affiliation"
     # Because Dolorita is unaffiliated, specify her city instead
   - name: 
-      - given: Dolorita
+      - given: Dolorita C.
         family: Perengano
     orcid: 0000-0000-0000-0004
     roles:

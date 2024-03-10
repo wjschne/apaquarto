@@ -1,5 +1,6 @@
 Meta = function(meta)
   if meta["by-author"] then
+    
     if #meta["by-author"] == 1 then
       meta.oneauthor = true
     else

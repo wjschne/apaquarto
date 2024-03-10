@@ -23,6 +23,35 @@ local function prependspace(s)
   end
 end
 
+local are_affiliations_different = function(authors)
+  
+      local superii = ""
+      local hash = {}
+      local res = {}
+      
+      
+      --Check if affilations are the name for each authors
+      for i, a in ipairs(authors) do
+        superii = ""
+        if a.affiliations then
+          for j, aff in ipairs(a.affiliations) do
+            if j > 1 then
+              superii = superii .. ","
+            end
+            superii = superii .. aff.number
+          end
+        end
+
+        if (not hash[superii]) then
+          res[#res+1] = superii 
+          hash[superii] = true
+        end
+
+      end
+  
+  return #res > 1
+  end
+
 local function makeauthorname(a)
   local authorname = a.literal
   
@@ -51,6 +80,8 @@ Meta = function(meta)
   end
   
   if meta["by-author"] then
+    meta.affiliationsdifferent = are_affiliations_different(meta["by-author"])
+    
     for i,j in ipairs(meta["by-author"]) do
       --quarto.log.output(j.name)
       j.apaauthordisplay = makeauthorname(j.name)
