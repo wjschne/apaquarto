@@ -31,7 +31,9 @@ knitr: true
 
 format:
   html:
-    theme: spacelab
+    theme: 
+      - spacelab
+      - apaquarto.scss
     tbl-cap-location: top
     toc: true
     toc-location: left
