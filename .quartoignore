@@ -10,6 +10,7 @@ index.qmd
 insertchunk.png
 installation.qmd
 keyboardwithbacktick.jpeg
+newquartodocument.png
 options.qmd
 resources.qmd
 template.pdf
@@ -19,3 +20,4 @@ template.tex
 writing.qmd
 README.qmd
 terminal.png
+yamlmetadata.png

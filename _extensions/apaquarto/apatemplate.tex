@@ -187,7 +187,12 @@ $endif$
 
 
 \begin{document}
+
+$if(suppresstitlepage)$
+$else$
 \maketitle
+$endif$
+
 $if(numbersections)$
 \setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
 $else$

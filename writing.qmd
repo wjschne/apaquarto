@@ -4,6 +4,7 @@ format:
   html: 
     fig-cap-location: top
     citeproc: false
+    code-annotations: select
     filters:  
       - at: post-render
         path: _extensions/apaquarto/apacaption.lua
@@ -24,6 +25,7 @@ knitr:
     dev: ragg_png
 editor: source
 csl: apa.csl
+lightbox: true
 ---
 
 ```{css, echo=FALSE}
@@ -44,7 +46,11 @@ csl: apa.csl
   border-bottom: none;
 }
 
-#cb3-1 {text-wrap: wrap;}
+#austin .sourceCode {text-wrap: wrap;}
+
+.quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0;}
+
+.quarto-figure-center>figure>p, .quarto-figure-center>figure>div {text-align: left;}
 ```
 
 ```{r}
@@ -64,11 +70,32 @@ If you are used to writing with a word processor (e.g., MS Word, Google Docs), i
 
 # Create a Quarto Document
 
-In RStudio, we create a Quarto document (File &rarr; New File &rarr; Quarto Document). 
+To create an Quarto document in RStudio, in the menu (See @fig-newquarto), click *File → New File → Quarto Document*.
+
+![Create new Quarto docuemnt from the RStudio men](newquartodocument.png){#fig-newquarto}
+
+The resulting file can be edited. Here is an annotated example of a short Quarto document:
+
+````{verbatim}
+---                                
+title: "My Title"                  # <1>
+author: "W. Joel Schneider"        # <1>
+---                                
+
+This is plain text.                # <2>
+A pair asterisks makes *italics*.  # <2>
+Two asterisks will **bold** text.  # <2> 
+
+```{r}                             # <3>
+x <- 5                             # <3>
+```                                # <3>
+````
+
+1.  The yaml between pairs of three hyphens (`---`) contains "metadata" (information about the document). Yaml
+2.  Markdown text below the yaml becomes part of the document's content.
+3.  Anything between pairs of three backticks (```` ``` ````) is code. The r between the curly braces (`{r}`) means to run the code in R rather than some other language (e.g., Python or Julia). In this example, `x <- 5` means "Define a new variable `x` to be equal to 5."
 
 # Basic Styling
-
-
 
 A comprehensive guide to Markdown conventions in Quarto is [here](https://quarto.org/docs/authoring/markdown-basics.html). Some highlights:
 
@@ -97,6 +124,12 @@ A comprehensive guide to Markdown conventions in Quarto is [here](https://quarto
 |               | 1. Item A                           | 2.  Item B                        |
 |               | 2. Item B                           | 3.  Item C                        |
 |               | 3. Item C                           |                                   |
+|               | ```                                 |                                   |
++---------------+-------------------------------------+-----------------------------------+
+| > Block Quote | ``` markdown                        | > Short cuts make long delays.    |
+|               | > Short cuts make long delays.      |                                   |
+|               |                                     | --- J.R.R. Tolkien                |
+|               | --- J.R.R. Tolkien                  |                                   |
 |               | ```                                 |                                   |
 +---------------+-------------------------------------+-----------------------------------+
 
@@ -171,10 +204,13 @@ Subsequent paragraphs go on their own lines.
 
 Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the `>` character. For example, Jane Austen's [-@austenMansfieldPark1990] *Mansfield Park* has some memorable insights about the mind:
 
+:::{#austin}
+
 ```{verbatim}
-#| label: myquote
 > If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
 ```
+
+:::
 
 If the quote spans multiple paragraphs, put a `>` on its own line between them like so:
 
@@ -192,7 +228,8 @@ Initial paragraph
 > Block quote paragraph
 
 :::{.NoIndent}
-Because this sentence continues the intial paragraph, the indentation is suppresed.
+Because this sentence continues the intial paragraph, 
+the indentation is suppresed.
 :::
 ```
 
@@ -230,7 +267,7 @@ library(tidyverse)
 tibble(x = seq(0, 8, .01),
        y = dlnorm(x)) %>% 
   ggplot(aes(x,y)) + 
-  geom_area(fill = "royalblue", alpha = .7)
+  geom_area(fill = "royalblue", alpha = .5)
 
 ```
 
@@ -250,7 +287,7 @@ library(tidyverse)
 tibble(x = seq(0, 1, .001),
        y = dbeta(x,8,2)) %>% 
   ggplot(aes(x,y)) + 
-  geom_area(fill = "royalblue", alpha = .7)
+  geom_area(fill = "royalblue", alpha = .5)
 ```
 
 ## Importing Figures with Markdown
@@ -363,11 +400,11 @@ Page references (or any other suffixes) are placed after the reference. If you w
 
 -   Prefixes (with or without a comma) are placed before the reference: `[e.g., @CameronTrivedi2013]` becomes [e.g., @CameronTrivedi2013].
 
--    If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically [e.g., @CameronTrivedi2013; @cohen2003applied]. That is, `[e.g., @CameronTrivedi2013; @cohen2003applied]`, not `[e.g., @cohen2003applied; @CameronTrivedi2013]`.
+-   If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically [e.g., @CameronTrivedi2013; @cohen2003applied]. That is, `[e.g., @CameronTrivedi2013; @cohen2003applied]`, not `[e.g., @cohen2003applied; @CameronTrivedi2013]`.
 
--   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: `First Outer Inner Last [FOIL\;@CameronTrivedi2013]` becomes First Outer Inner Last [FOIL\; @CameronTrivedi2013].
+-   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: `First Outer Inner Last [FOIL\;@CameronTrivedi2013]` becomes First Outer Inner Last [FOIL; @CameronTrivedi2013].
 
-:::{.callout-warning}
+::: callout-warning
 This "escaped backslash in front of the semicolon trick" is a hack. When you switch to Visual Mode in RStudio, it thinks you made a mistake, and it removes the backslash. If the citation above looks wrong, it is because I forgot to fix it after switching to visual mode and back. I reported this bug to the developers of RStudio. I hope the bug will be fixed soon.
 :::
 
@@ -379,7 +416,7 @@ Typically, a plain citation works without any fuss:
 
 @CameronTrivedi2013 said some interesting things.
 
-:::{.callout-warning}
+::: callout-warning
 Outside of apaquarto, a limitation of the `.csl` format requires a special filter to change the separator for multiple authors from `&` to`and`. If you render your document in a different format, `@CameronTrivedi2013` will be "Cameron & Trivedi (2013)."
 :::
 
@@ -393,9 +430,9 @@ If you need to include page references, use square brackets afterwards:
 
 ### Possessive Citations
 
-An experimental feature of apaquarto is automatic "possessive citations." `@CameronTrivedi2013 ['s] position` becomes @CameronTrivedi2013 ['s] position. 
+An experimental feature of apaquarto is automatic "possessive citations." `@CameronTrivedi2013 ['s] position` becomes @CameronTrivedi2013 ['s] position.
 
-If you render your document in another format, you would need to supply the name in text like this: `Cameron and Trivedi's [-@CameronTrivedi2013] position`, which becomes Cameron and Trivedi's [-@CameronTrivedi2013] position. This works because putting a hyphen before the reference `[-@CameronTrivedi2013]` becomes [-@CameronTrivedi2013]. 
+If you render your document in another format, you would need to supply the name in text like this: `Cameron and Trivedi's [-@CameronTrivedi2013] position`, which becomes Cameron and Trivedi's [-@CameronTrivedi2013] position. This works because putting a hyphen before the reference `[-@CameronTrivedi2013]` becomes [-@CameronTrivedi2013].
 
 ## Masked Citations for Anonymous Peer Review
 
@@ -411,9 +448,5 @@ masked-citations:
 If the `mask` field is set to `false`, the masked citations will print as usual. When `mast` is `true`, depending if they are an inline or parenthetical citations, they will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". In parenthical citations, it is possible to mix masked and unmasked citations.
 
 Setting `mask` to `true` will also remove the authors, affiliations, and author notes from the title page.
-
-
-
-
 
 # References

@@ -110,7 +110,7 @@ local get_author_paragraph = function(authors, different)
           sep = ", "
         end
 
-        authordisplay:extend({pandoc.Str(sep .. stringify(a.name.literal))})
+        authordisplay:extend({pandoc.Str(sep .. stringify(a.apaauthordisplay))})
         
         superii = ""
         if a.affiliations then
@@ -305,7 +305,7 @@ return {
           img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile)
           img.attr = pandoc.Attr('orchid', {'img-fluid'},  {width='16px'})
           pp = pandoc.Para(pandoc.Str(""))
-          pp.content:extend(a.name.literal)
+          pp.content:extend(a.apaauthordisplay)
           pp.content:extend({pandoc.Space(), img})
           pp.content:extend({pandoc.Space(), pandoc.Str("http://orcid.org/")})
           pp.content:extend(a.orcid)
@@ -357,7 +357,8 @@ return {
       
       for i,a in ipairs(byauthor) do
         if a.roles then
-          credit_paragraph = extend_paragraph(credit_paragraph, {pandoc.Emph(a.name.literal)}, pandoc.Str(". "))
+
+          credit_paragraph = extend_paragraph(credit_paragraph, {pandoc.Emph(a.apaauthordisplay)}, pandoc.Str(". "))
           credit_paragraph.content:extend({pandoc.Strong(pandoc.Str(": "))})
           local rolelist = {}
           for j, role in ipairs(a.roles) do
@@ -412,10 +413,10 @@ return {
         if a.attributes then
           if a.attributes.corresponding and stringify(a.attributes.corresponding) == "true" then
             if check_corresponding then
-              error("There can only be one author marked as the corresponding author. " .. stringify(a.name.literal) .. " is the second author you have marked as the corresponding author.")
+              error("There can only be one author marked as the corresponding author. " .. stringify(makeauthorname(a.name)) .. " is the second author you have marked as the corresponding author.")
             end
             check_corresponding = true
-            corresponding_paragraph.content:extend(a.name.literal)
+            corresponding_paragraph.content:extend(a.apaauthordisplay)
             
             if a.affiliations then
               local address = a.affiliations[1]
@@ -542,6 +543,10 @@ return {
         end
       end
       meta.description = myshorttitle
+      
+      if meta.suppresstitlepage then
+        --body = List:new{}
+      end
       
       body:extend(doc.blocks)
       return pandoc.Pandoc(body, meta)

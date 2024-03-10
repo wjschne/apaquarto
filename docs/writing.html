@@ -95,6 +95,9 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/kbd/kbd.js"></script>
 <link href="site_libs/quarto-contrib/kbd/kbd.css" rel="stylesheet">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -278,7 +281,11 @@ div.csl-indent {
   border-bottom: none;
 }
 
-#cb3-1 {text-wrap: wrap;}
+#austin .sourceCode {text-wrap: wrap;}
+
+.quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0;}
+
+.quarto-figure-center>figure>p, .quarto-figure-center>figure>div {text-align: left;}
 </style>
 </div>
 <p>(Under Construction)</p>
@@ -287,7 +294,49 @@ div.csl-indent {
 <p>If you are used to writing with a word processor (e.g., MS Word, Google Docs), it might feel disconcerting to not see what the document will look like as you type. This feeling will pass, and the benefits of typing in a plain-text format will become evident. While writing in APA style, the plain-text Markdown approach prevents the introduction of many inconsistencies and makes it much easier to spot and fix any inconsistencies that are already present.</p>
 <section id="create-a-quarto-document" class="level1">
 <h1>Create a Quarto Document</h1>
-<p>In RStudio, we create a Quarto document (File → New File → Quarto Document).</p>
+<p>To create an Quarto document in RStudio, in the menu (See <a href="#fig-newquarto" class="quarto-xref">Figure&nbsp;1</a>), click <em>File → New File → Quarto Document</em>.</p>
+<div id="fig-newquarto" class="quarto-figure quarto-figure-center quarto-float FigureWithoutNote anchored" data-custom-style="FigureWithoutNote">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-newquarto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;1</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>Create new Quarto docuemnt from the RStudio men</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-newquarto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="newquartodocument.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Create new Quarto docuemnt from the RStudio men"><img src="newquartodocument.png" class="img-fluid figure-img"></a>
+</div>
+</figure>
+</div>
+<p>The resulting file can be edited. Here is an annotated example of a short Quarto document:</p>
+<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode default code-annotation-code code-with-copy code-annotated"><code class="sourceCode default"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>---                                </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>title: "My Title"</span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>author: "W. Joel Schneider"</span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>---                                </span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>This is plain text.</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>A pair asterisks makes *italics*.</span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>Two asterisks will **bold** text.</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>x &lt;- 5</span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>```</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,3" data-code-annotation="1">The yaml between pairs of three hyphens (<code>---</code>) contains “metadata” (information about the document). Yaml</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="6,7,8" data-code-annotation="2">Markdown text below the yaml becomes part of the document’s content.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="10,11,12" data-code-annotation="3">Anything between pairs of three backticks (<code>```</code>) is code. The r between the curly braces (<code>{r}</code>) means to run the code in R rather than some other language (e.g., Python or Julia). In this example, <code>x &lt;- 5</code> means “Define a new variable <code>x</code> to be equal to 5.”</span>
+</dd>
+</dl>
 </section>
 <section id="basic-styling" class="level1">
 <h1>Basic Styling</h1>
@@ -358,6 +407,18 @@ div.csl-indent {
 <li>Item C</li>
 </ol></td>
 </tr>
+<tr class="odd">
+<td><blockquote class="blockquote">
+<p>Block Quote</p>
+</blockquote></td>
+<td><div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Short cuts make long delays.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>--- J.R.R. Tolkien</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<td><blockquote class="blockquote">
+<p>Short cuts make long delays.</p>
+</blockquote>
+<p>— J.R.R. Tolkien</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -365,16 +426,16 @@ div.csl-indent {
 <h1>Headings in APA Style</h1>
 <p>APA Style differentiates between <a href="https://apastyle.apa.org/style-grammar-guidelines/paper-format/headings">headings at 5 levels</a>. All headings should be in title case according to <a href="https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case">these rules and exceptions</a>.</p>
 <p>In markdown, a heading starts with the <code>#</code>, followed by a space, and then the text of the heading. The number of <code>#</code>s in a row determines the level of the heading:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Level 1 Heading</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Level 2 Heading</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">### Level 3 Heading</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Level 1 Heading</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Level 2 Heading</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">### Level 3 Heading</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Quarto works best when there is <em>at least one blank line above and below the heading</em>. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.</p>
 <section id="level-1-headings" class="level2">
 <h2 class="anchored" data-anchor-id="level-1-headings">Level 1 Headings</h2>
@@ -398,45 +459,48 @@ div.csl-indent {
 <li>Anything can follow immediately after headings at levels 1–3, including other headings.</li>
 <li>Headings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Level 1 Heading</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>This paragraph follows the level-1 heading.</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Level 2 Heading </span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">### This Level-3 Heading Directly Follows the Level-2 Heading.</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>This paragraph follows the level-3 heading.</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>This paragraph will appear on the same line as the level-4 heading.</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Subsequent paragraphs go on their own lines.</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>This paragraph will appear on the same line as the level-5 heading.</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>Subsequent paragraphs go on their own lines.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Level 1 Heading</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>This paragraph follows the level-1 heading.</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Level 2 Heading </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">### This Level-3 Heading Directly Follows the Level-2 Heading.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>This paragraph follows the level-3 heading.</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>This paragraph will appear on the same line as the level-4 heading.</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>Subsequent paragraphs go on their own lines.</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>This paragraph will appear on the same line as the level-5 heading.</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>Subsequent paragraphs go on their own lines.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="block-quotes-and-suppressing-indentation" class="level2">
 <h2 class="anchored" data-anchor-id="block-quotes-and-suppressing-indentation">Block Quotes and Suppressing Indentation</h2>
 <p>Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the <code>&gt;</code> character. For example, Jane Austen’s <span class="citation" data-cites="austenMansfieldPark1990">(<a href="#ref-austenMansfieldPark1990" role="doc-biblioref">1814/1990</a>)</span> <em>Mansfield Park</em> has some memorable insights about the mind:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>&gt; If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="austin">
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>&gt; If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>If the quote spans multiple paragraphs, put a <code>&gt;</code> on its own line between them like so:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; First paragraph of the quote</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Second paragraph of the quote</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; First paragraph of the quote</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Second paragraph of the quote</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Initial paragraph</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Block quote paragraph</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>:::{.NoIndent}</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>Because this sentence continues the intial paragraph, the indentation is suppresed.</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Initial paragraph</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Block quote paragraph</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>:::{.NoIndent}</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>Because this sentence continues the intial paragraph, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>the indentation is suppresed.</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="figures" class="level1 page-columns page-full">
@@ -456,42 +520,42 @@ div.csl-indent {
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-key-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
-<p>Figure&nbsp;1</p>
+<p>Figure&nbsp;2</p>
 </div>
 <div class="Caption" data-custom-style="Caption">
 <p>Keyboard with backtick hightlighted</p>
 </div>
 </figcaption>
 <div aria-describedby="fig-key-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="keyboardwithbacktick.jpeg" class="img-fluid figure-img">
+<a href="keyboardwithbacktick.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Keyboard with backtick hightlighted"><img src="keyboardwithbacktick.jpeg" class="img-fluid figure-img"></a>
 </div>
 </figure>
 </div>
 </div></div><p>Directly typing the three backticks and the curly braces needed for a code chunk can be tedious. In RStudio, use the keyboard shortcut <kbd aria-hidden="true" data-mac="Cmd+Option+I" data-windows="Ctrl-Alt-I"></kbd><span class="visually-hidden"></span> to create chunks. If keyboard shortcuts are hard to remember, there is a green button with a white “C” in RStudio’s toolbar that creates code chunks. <img src="insertchunk.png" class="img-fluid" style="margin:0!important;height:30px" alt="Insert Code Chunk Button"></p>
 <p>At a minimum, an APA-Style figure needs a unique label with the <code>fig-</code> prefix, a caption in <a href="https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case">title case</a> specified with <code>fig-cap</code>, and code for the plot.</p>
 <div class="cell FigureWithoutNote" data-custom-style="FigureWithoutNote">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: This Is the Figure Caption.</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 8, .01),</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dlnorm(x)) %&gt;% </span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .7)</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 8, .01),</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dlnorm(x)) %&gt;% </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-myplot" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
-<p>Figure&nbsp;2</p>
+<p>Figure&nbsp;3</p>
 </div>
 <div class="Caption" data-custom-style="Caption">
 <p>This Is the Figure Caption.</p>
 </div>
 </figcaption>
 <div aria-describedby="fig-myplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="writing_files/figure-html/fig-myplot-1.png" class="img-fluid figure-img" width="672">
+<a href="writing_files/figure-html/fig-myplot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: This Is the Figure Caption."><img src="writing_files/figure-html/fig-myplot-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -503,30 +567,30 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="notes-below-figures-and-tables">Notes below Figures and Tables</h2>
 <p>You can add a note below a figure or table with the chunk option <code>apa-note</code>. The note can have markdown formatting (e.g, bolding and italics).</p>
 <div class="cell FigureWithNote" data-apa-note="This is the note below the figure." data-custom-style="FigureWithNote">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot2</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: This Is the Figure Caption.</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-note: This is the note below the figure.</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 1, .001),</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dbeta(x,8,2)) %&gt;% </span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .7)</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot2</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-note: This is the note below the figure.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 1, .001),</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dbeta(x,8,2)) %&gt;% </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-myplot2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
-<p>Figure&nbsp;3</p>
+<p>Figure&nbsp;4</p>
 </div>
 <div class="Caption" data-custom-style="Caption">
 <p>This Is the Figure Caption.</p>
 </div>
 </figcaption>
 <div aria-describedby="fig-myplot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="writing_files/figure-html/fig-myplot2-1.png" class="img-fluid figure-img" width="672">
+<a href="writing_files/figure-html/fig-myplot2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: This Is the Figure Caption."><img src="writing_files/figure-html/fig-myplot2-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 </figure>
 </div>
@@ -550,24 +614,24 @@ div.csl-indent {
 <li><code>apa-note</code> A note below the figure</li>
 </ul>
 <p>For example, in the same same folder as my Quarto document, there is a folder called <code>img</code>, which contains an image file <code>sampleimage.png</code>. We can display this image like so:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](img/sampleimage.png)</span>{</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  #fig-myimportedimage </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  width="5in" </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](img/sampleimage.png)</span>{</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  #fig-myimportedimage </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  width="5in" </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-myimportedimage" class="quarto-figure quarto-figure-center quarto-float FigureWithNote anchored" alt="A path diagram in which A causes B, and B causes C." data-apa-note="Variable A indirectly causes Variable C." data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
-<p>Figure&nbsp;4</p>
+<p>Figure&nbsp;5</p>
 </div>
 <div class="Caption" data-custom-style="Caption">
 <p>A Simple Mediation Model</p>
 </div>
 </figcaption>
 <div aria-describedby="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="img/sampleimage.png" class="img-fluid figure-img" style="width:5in" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C.">
+<a href="img/sampleimage.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: A Simple Mediation Model"><img src="img/sampleimage.png" class="img-fluid figure-img" style="width:5in" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C."></a>
 </div>
 </figure>
 </div>
@@ -577,7 +641,7 @@ div.csl-indent {
 </section>
 <section id="figure-references" class="level2">
 <h2 class="anchored" data-anchor-id="figure-references">Figure References</h2>
-<p>In APA style, we often refer to specific tables and figures by their order in the text (e.g., Figure 2, Table 4). Keeping track of which is which is a pain, especially if you decide to reorder them. In Quarto documents, we instead refer to their labels, which are converted to the right numbers later. To refer to the figure created by the code above, we would type <code>@fig-myplot</code>, which will be converted to <a href="#fig-myplot" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<p>In APA style, we often refer to specific tables and figures by their order in the text (e.g., Figure 2, Table 4). Keeping track of which is which is a pain, especially if you decide to reorder them. In Quarto documents, we instead refer to their labels, which are converted to the right numbers later. To refer to the figure created by the code above, we would type <code>@fig-myplot</code>, which will be converted to <a href="#fig-myplot" class="quarto-xref">Figure&nbsp;3</a>.</p>
 </section>
 </section>
 <section id="tables" class="level1">
@@ -588,20 +652,20 @@ div.csl-indent {
 <h1>Tables in Code Chunks</h1>
 <p>The chunk label must begin with <code>tbl-</code> instead of <code>fig-</code>. The caption is set with <code>tbl-cap</code>. I like making tables with <a href="https://ardata-fr.github.io/flextable-book/">flextable</a> because it ports to to the .docx format without hassle.</p>
 <div class="cell FigureWithNote" data-ft.align="left" data-apa-note="A note below table" data-custom-style="FigureWithNote">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-mytable</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: My Table</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| ft.align: left</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-note: A note below table</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="in">library(flextable)</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(Letters = c("A", "B", "C"), </span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="in">       Numbers = 1:3) %&gt;% </span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="in">  flextable() %&gt;% </span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_apa() </span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-mytable" class="cell quarto-float anchored" data-apa-note="A note below table" data-ft.align="left">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-mytable</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: My Table</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| ft.align: left</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-note: A note below table</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="in">library(flextable)</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(Letters = c("A", "B", "C"), </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">       Numbers = 1:3) %&gt;% </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">  flextable() %&gt;% </span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_apa() </span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-mytable" class="cell quarto-float anchored" data-ft.align="left" data-apa-note="A note below table">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -613,7 +677,7 @@ div.csl-indent {
 </figcaption>
 <div aria-describedby="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="tabwid tabwid_left"><style>.cl-ad8876dc{}.cl-ad809606{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ad83a634{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-ad83bc32{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ad83bc3c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ad83bc3d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-ad8876dc"><thead><tr style="overflow-wrap:break-word;"><th class="cl-ad83bc32"><p class="cl-ad83a634"><span class="cl-ad809606">Letters</span></p></th><th class="cl-ad83bc32"><p class="cl-ad83a634"><span class="cl-ad809606">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-ad83bc3c"><p class="cl-ad83a634"><span class="cl-ad809606">A</span></p></td><td class="cl-ad83bc3c"><p class="cl-ad83a634"><span class="cl-ad809606">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ad83bc3c"><p class="cl-ad83a634"><span class="cl-ad809606">B</span></p></td><td class="cl-ad83bc3c"><p class="cl-ad83a634"><span class="cl-ad809606">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-ad83bc3d"><p class="cl-ad83a634"><span class="cl-ad809606">C</span></p></td><td class="cl-ad83bc3d"><p class="cl-ad83a634"><span class="cl-ad809606">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid tabwid_left"><style>.cl-45ecd692{}.cl-45e489ce{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-45e7d11a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-45e7e7e0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45e7e7ea{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-45e7e7eb{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-45ecd692"><thead><tr style="overflow-wrap:break-word;"><th class="cl-45e7e7e0"><p class="cl-45e7d11a"><span class="cl-45e489ce">Letters</span></p></th><th class="cl-45e7e7e0"><p class="cl-45e7d11a"><span class="cl-45e489ce">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-45e7e7ea"><p class="cl-45e7d11a"><span class="cl-45e489ce">A</span></p></td><td class="cl-45e7e7ea"><p class="cl-45e7d11a"><span class="cl-45e489ce">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-45e7e7ea"><p class="cl-45e7d11a"><span class="cl-45e489ce">B</span></p></td><td class="cl-45e7e7ea"><p class="cl-45e7d11a"><span class="cl-45e489ce">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-45e7e7eb"><p class="cl-45e7d11a"><span class="cl-45e489ce">C</span></p></td><td class="cl-45e7e7eb"><p class="cl-45e7d11a"><span class="cl-45e489ce">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </figure>
@@ -625,14 +689,14 @@ div.csl-indent {
 <section id="tables-made-directly-with-markdown" class="level2">
 <h2 class="anchored" data-anchor-id="tables-made-directly-with-markdown">Tables Made Directly with Markdown</h2>
 <p>You can create tables with Markdown in several ways. See <a href="https://quarto.org/docs/authoring/tables.html#markdown-tables">here</a> for details. If you need to make a more complex table in Markdown, I suggest using <a href="https://quarto.org/docs/visual-editor/content.html#editing-tables">RStudio’s visual editor</a>. Here is an example of a simple table:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>| Letters | Numbers |</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>|:-------:|:-------:|</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>| A       | 1       |</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>| B       | 2       |</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>| C       | 3       |</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>| Letters | Numbers |</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>|:-------:|:-------:|</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>| A       | 1       |</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>| B       | 2       |</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>| C       | 3       |</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tbl-mytable2" class="quarto-float FigureWithNote anchored" data-apa-note="Note below table" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -697,7 +761,7 @@ div.csl-indent {
 <ul>
 <li><p>Prefixes (with or without a comma) are placed before the reference: <code>[e.g., @CameronTrivedi2013]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p></li>
 <li><p>If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically <span class="citation" data-cites="CameronTrivedi2013 cohen2003applied">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>; <a href="#ref-cohen2003applied" role="doc-biblioref">Cohen et al., 2003</a>)</span>. That is, <code>[e.g., @CameronTrivedi2013; @cohen2003applied]</code>, not <code>[e.g., @cohen2003applied; @CameronTrivedi2013]</code>.</p></li>
-<li><p>Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: <code>First Outer Inner Last [FOIL\;@CameronTrivedi2013]</code> becomes First Outer Inner Last <span class="citation" data-cites="CameronTrivedi2013">(FOIL; <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p></li>
+<li><p>Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: <code>First Outer Inner Last [FOIL\;@CameronTrivedi2013]</code> becomes First Outer Inner Last [FOIL; <span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span>].</p></li>
 </ul>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -747,10 +811,10 @@ Warning
 <section id="masked-citations-for-anonymous-peer-review" class="level2">
 <h2 class="anchored" data-anchor-id="masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</h2>
 <p>Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can “mask” any citation you wish by setting the <code>mask</code> field in the metadata yaml to <code>true</code>. Then list all citations that need to be masked in the <code>masked-citations</code> field like so:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2015intelligence</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2012cattell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2015intelligence</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2012cattell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If the <code>mask</code> field is set to <code>false</code>, the masked citations will print as usual. When <code>mast</code> is <code>true</code>, depending if they are an inline or parenthetical citations, they will be listed as “Masked Citations (n.d)” or “(Masked Citations, n.d)”. In parenthical citations, it is possible to mix masked and unmasked citations.</p>
 <p>Setting <code>mask</code> to <code>true</code> will also remove the authors, affiliations, and author notes from the title page.</p>
 </section>
@@ -1123,25 +1187,66 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         }
       };
     }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
           }
-        });
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          trigger: 'click',
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          positionFixed: true,
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
       }
   const findCites = (el) => {
     const parentEl = el.parentElement;
@@ -1183,6 +1288,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

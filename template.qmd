@@ -89,6 +89,7 @@ floatsintext: false
 numbered-lines: false
 # File with references
 bibliography: bibliography.bib
+# suppresstitlepage: true
 # Masks references that appear in the masked-citations list
 mask: false
 masked-citations:
@@ -109,7 +110,8 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou
+    documentmode: man
+    keep-tex: true
 ---
 
 ```{r}

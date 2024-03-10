@@ -3,6 +3,44 @@ local function ends_with(str, ending)
    return string.sub(str.text, -1) == ending
 end
 
+local function trim(s)
+  local l = 1
+  while string.sub(s,l,l) == ' ' do
+    l = l+1
+  end
+  local r = string.len(s)
+  while string.sub(s,r,r) == ' ' do
+    r = r-1
+  end
+  return string.sub(s,l,r)
+end
+
+local function prependspace(s)
+  if s then
+    return " " .. pandoc.utils.stringify(s)
+  else
+    return ""
+  end
+end
+
+local function makeauthorname(a)
+  local authorname = a.literal
+  
+  if pandoc.utils.type(a.literal) == "List" then
+    if a.literal[1].literal then
+      authorname = a[1].literal
+    else
+      authorname = ""
+      authorname = authorname .. prependspace(a.literal[1].given) 
+      authorname = authorname .. prependspace(a.literal[1]["dropping-particle"]) 
+      authorname = authorname .. prependspace(a.literal[1]["non-dropping-particle"]) 
+      authorname = authorname .. prependspace(a.literal[1].family) 
+      authorname = pandoc.Inlines(trim(authorname))
+    end
+  end
+  return authorname
+end
+
 Meta = function(meta)
   
   meta.apatitle = nil
@@ -10,6 +48,15 @@ Meta = function(meta)
   if meta.title then
     meta.apatitle = meta.title:clone()
     meta.apatitledisplay = meta.title:clone()
+  end
+  
+  if meta["by-author"] then
+    for i,j in ipairs(meta["by-author"]) do
+      --quarto.log.output(j.name)
+      j.apaauthordisplay = makeauthorname(j.name)
+      
+      --print(j.apaauthordisplay)
+    end
   end
 
   if meta.subtitle then
