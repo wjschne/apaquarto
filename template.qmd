@@ -6,7 +6,7 @@ shorttitle: "Template for the apaquarto Extension"
 # It is nice to specify everyone's orcid, if possible.
 # There can be only one corresponding author, but declaring one is optional.
 author:
-  - name: Ana Carina Fulano
+  - name: Ana Fulano
     corresponding: true
     orcid: 0000-0000-0000-0001
     email: sm@example.org
@@ -48,7 +48,6 @@ author:
   - name: 
       - given: Dolorita
         family: Perengano
-        dropping-particle: von
     orcid: 0000-0000-0000-0004
     roles:
       - writing
