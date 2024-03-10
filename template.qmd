@@ -48,6 +48,7 @@ author:
   - name: 
       - given: Dolorita
         family: Perengano
+        dropping-particle: von
     orcid: 0000-0000-0000-0004
     roles:
       - writing
@@ -90,7 +91,7 @@ numbered-lines: false
 # File with references
 bibliography: bibliography.bib
 # Suppress title page
-suppress-title-page: true
+suppress-title-page: false
 # Masks references that appear in the masked-citations list
 mask: false
 masked-citations:
