@@ -3,7 +3,9 @@ title: "Template Options"
 toc: true
 ---
 
-Options are set in the metadata section at the top of the .qmd file. It uses [YAML](https://yaml.org/), a format that allows us to store data in a format that is easy to write and easy to read. In its simplest form, it has a key and a value:
+Options are set in the YAML metadata section at the top of the .qmd file.
+
+t uses [YAML](https://yaml.org/), a format that allows us to store data in a format that is easy to write and easy to read. In its simplest form, it has a key and a value:
 
 ``` yaml
 key: value
@@ -549,51 +551,51 @@ The third paragraph consists of study details and author disclosures:
 
 All of the .pdf-specfic options for apaquarto come directly from the \[apa7 $\LaTeX$ package\](https://ctan.org/pkg/apa7?lang=en). Consult the apa7 package documentation for greater detail.
 
-+--------------------+---------------------------------------------------------------------------------------+
-| Field              | Explanation                                                                           |
-+====================+=======================================================================================+
-| `documentmode`     | Alter the overall style of the document. Options incluce:                             |
-|                    |                                                                                       |
-|                    | -   `man` Manuscript: Similar to .docx format                                         |
-|                    | -   `jou` Journal: A polished two-column format similar to many APA journals.         |
-|                    | -   `doc` Document: Similar to default $\LaTeX$ articles.                             |
-|                    | -   `stu` Student: Formatted for student papers                                       |
-+--------------------+---------------------------------------------------------------------------------------+
-| `course`           | Fields that are used only for student papers (`stu` mode).                            |
-|                    |                                                                                       |
-| `professor`        | Example:                                                                              |
-|                    |                                                                                       |
-| `duedate`          | ``` yaml                                                                              |
-|                    | course: Introduction to Statistics (EDUC 5101)                                        |
-|                    | professor: W. Joel Schneider                                                          |
-|                    | duedate: 12/22/2024                                                                   |
-|                    | ```                                                                                   |
-+--------------------+---------------------------------------------------------------------------------------+
-| `journal`          | Fields that are used only for Journal (`jou`) mode.                                   |
-|                    |                                                                                       |
-| `volume`           | Example:                                                                              |
-|                    |                                                                                       |
-| `copyrightnotice`  | ``` yaml                                                                              |
-|                    | journal: Psychological Review                                                         |
-| `copyrightext`     | volume: 2024, Vol. 131, No. 2, 10--60                                                 |
-|                    | copyrightnotice: 2024                                                                 |
-|                    | copyrightext: All rights reserved                                                     |
-|                    | ```                                                                                   |
-+--------------------+---------------------------------------------------------------------------------------+
-| `fontsize`         | Size of font.                                                                         |
-|                    |                                                                                       |
-|                    | Options include `10pt`, `11pt`, and `12pt`                                            |
-+--------------------+---------------------------------------------------------------------------------------+
-| `a4paper`          | If `true`, uses a4 paper size instead of 8.5 by 11 in. letter size.                   |
-+--------------------+---------------------------------------------------------------------------------------+
-| `donotrepeattitle` | If `true`, suppresses title in the first page of text.                                |
-+--------------------+---------------------------------------------------------------------------------------+
-| `draftfirst`       | If `true`, puts draft watermark on first page.                                        |
-+--------------------+---------------------------------------------------------------------------------------+
-| `draftall`         | If `true`, puts draft watermark on all pages.                                         |
-+--------------------+---------------------------------------------------------------------------------------+
-| `nocorrespondence` | If `true`, hides correspondence text                                                  |
-+--------------------+---------------------------------------------------------------------------------------+
++--------------------+-------------------------------------------------------------------------------+
+| Field              | Explanation                                                                   |
++====================+===============================================================================+
+| `documentmode`     | Alter the overall style of the document. Options incluce:                     |
+|                    |                                                                               |
+|                    | -   `man` Manuscript: Similar to .docx format                                 |
+|                    | -   `jou` Journal: A polished two-column format similar to many APA journals. |
+|                    | -   `doc` Document: Similar to default $\LaTeX$ articles.                     |
+|                    | -   `stu` Student: Formatted for student papers                               |
++--------------------+-------------------------------------------------------------------------------+
+| `course`           | Fields that are used only for student papers (`stu` mode).                    |
+|                    |                                                                               |
+| `professor`        | Example:                                                                      |
+|                    |                                                                               |
+| `duedate`          | ``` yaml                                                                      |
+|                    | course: Introduction to Statistics (EDUC 5101)                                |
+|                    | professor: W. Joel Schneider                                                  |
+|                    | duedate: 12/22/2024                                                           |
+|                    | ```                                                                           |
++--------------------+-------------------------------------------------------------------------------+
+| `journal`          | Fields that are used only for Journal (`jou`) mode.                           |
+|                    |                                                                               |
+| `volume`           | Example:                                                                      |
+|                    |                                                                               |
+| `copyrightnotice`  | ``` yaml                                                                      |
+|                    | journal: Psychological Review                                                 |
+| `copyrightext`     | volume: 2024, Vol. 131, No. 2, 10--60                                         |
+|                    | copyrightnotice: 2024                                                         |
+|                    | copyrightext: All rights reserved                                             |
+|                    | ```                                                                           |
++--------------------+-------------------------------------------------------------------------------+
+| `fontsize`         | Size of font.                                                                 |
+|                    |                                                                               |
+|                    | Options include `10pt`, `11pt`, and `12pt`                                    |
++--------------------+-------------------------------------------------------------------------------+
+| `a4paper`          | If `true`, uses a4 paper size instead of 8.5 by 11 in. letter size.           |
++--------------------+-------------------------------------------------------------------------------+
+| `donotrepeattitle` | If `true`, suppresses title in the first page of text.                        |
++--------------------+-------------------------------------------------------------------------------+
+| `draftfirst`       | If `true`, puts draft watermark on first page.                                |
++--------------------+-------------------------------------------------------------------------------+
+| `draftall`         | If `true`, puts draft watermark on all pages.                                 |
++--------------------+-------------------------------------------------------------------------------+
+| `nocorrespondence` | If `true`, hides correspondence text                                          |
++--------------------+-------------------------------------------------------------------------------+
 
 : {.hover .primary tbl-colwidths="\[20,80\]"}
 
@@ -626,23 +628,23 @@ You can alter the names of Abstract, Figures, Tables, and References by setting 
 
 However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.
 
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| Field                             | Explanation                                                                                                                                           | Default                                                                                                           |
-+===================================+=======================================================================================================================================================+===================================================================================================================+
-| `citation-last-author-separator`  | APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word *and* before the last author.  | *and*                                                                                                             |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| `citation-masked-author`          | The phrase to replace author names in masked citations.                                                                                               | *Masked Citation*                                                                                                 |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| `citation-masked-date`            | The abbreviated translation for "no date" in masked citations                                                                                         | *n.d.*                                                                                                            |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| `citation-masked-title`           | The phrase to replace the title in a masked reference                                                                                                 | *Masked Title*                                                                                                    |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| `title-block-author-note`         | The heading of the author note                                                                                                                        | *Author Note*                                                                                                     |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| `title-block-correspondence-note` | The phrase introducing the correspondence note.                                                                                                       | *Correspondence concerning this article should be addressed to*                                                   |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
-| `title-block-role-introduction`   | The phrase introducing the author roles.                                                                                                              | *Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:* |
-+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Field                             | Explanation                                                                                                                                          | Default                                                                                                           |
++===================================+======================================================================================================================================================+===================================================================================================================+
+| `citation-last-author-separator`  | APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word *and* before the last author. | *and*                                                                                                             |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-author`          | The phrase to replace author names in masked citations.                                                                                              | *Masked Citation*                                                                                                 |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-date`            | The abbreviated translation for "no date" in masked citations                                                                                        | *n.d.*                                                                                                            |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-title`           | The phrase to replace the title in a masked reference                                                                                                | *Masked Title*                                                                                                    |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-author-note`         | The heading of the author note                                                                                                                       | *Author Note*                                                                                                     |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-correspondence-note` | The phrase introducing the correspondence note.                                                                                                      | *Correspondence concerning this article should be addressed to*                                                   |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-role-introduction`   | The phrase introducing the author roles.                                                                                                             | *Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:* |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
 
 : {.hover .primary tbl-colwidths="\[30,40,30\]"}
 
