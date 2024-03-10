@@ -1,7 +1,7 @@
 ---
 title: "Using Quarto to Generate Documents in APA Style (7th Edition)"
 # If blank, the running header is the title in upper case.
-shorttitle: "Template’s for the apaquarto Extension"
+shorttitle: "Template for the apaquarto Extension"
 # Set names and affiliations.
 # It is nice to specify everyone's orcid, if possible.
 # There can be only one corresponding author, but declaring one is optional.
@@ -89,7 +89,8 @@ floatsintext: false
 numbered-lines: false
 # File with references
 bibliography: bibliography.bib
-# suppresstitlepage: true
+# Suppress title page
+suppress-title-page: true
 # Masks references that appear in the masked-citations list
 mask: false
 masked-citations:
@@ -111,7 +112,6 @@ format:
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
     documentmode: man
-    keep-tex: true
 ---
 
 ```{r}

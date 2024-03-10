@@ -544,8 +544,8 @@ return {
       end
       meta.description = myshorttitle
       
-      if meta.suppresstitlepage then
-        --body = List:new{}
+      if meta["suppress-title-page"] then
+        body = List:new{}
       end
       
       body:extend(doc.blocks)
