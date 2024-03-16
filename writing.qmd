@@ -4,7 +4,7 @@ format:
   html: 
     fig-cap-location: top
     citeproc: false
-    code-annotations: select
+    # code-annotations: hover
     filters:  
       - at: post-render
         path: _extensions/apaquarto/apacaption.lua
@@ -402,7 +402,7 @@ Page references (or any other suffixes) are placed after the reference. If you w
 
 -   If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically [e.g., @CameronTrivedi2013; @cohen2003applied]. That is, `[e.g., @CameronTrivedi2013; @cohen2003applied]`, not `[e.g., @cohen2003applied; @CameronTrivedi2013]`.
 
--   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: `First Outer Inner Last [FOIL\;@CameronTrivedi2013]` becomes First Outer Inner Last [FOIL; @CameronTrivedi2013].
+-   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: `First Outer Inner Last [FOIL\;@CameronTrivedi2013]` becomes First Outer Inner Last [FOIL\; @CameronTrivedi2013].
 
 ::: callout-warning
 This "escaped backslash in front of the semicolon trick" is a hack. When you switch to Visual Mode in RStudio, it thinks you made a mistake, and it removes the backslash. If the citation above looks wrong, it is because I forgot to fix it after switching to visual mode and back. I reported this bug to the developers of RStudio. I hope the bug will be fixed soon.
@@ -448,5 +448,30 @@ masked-citations:
 If the `mask` field is set to `false`, the masked citations will print as usual. When `mast` is `true`, depending if they are an inline or parenthetical citations, they will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". In parenthical citations, it is possible to mix masked and unmasked citations.
 
 Setting `mask` to `true` will also remove the authors, affiliations, and author notes from the title page.
+
+# Appendices
+
+If there is just just one appendix, put a level-1 header called `Appendix` after the references:
+
+``` markdown
+# Appendix
+
+Text in appendix
+
+```
+
+
+If there are multiple appendices, begin each with level-1 headers, called `Appendix A`, `Appendix B`, `Appendix C`, and so forth.
+
+``` markdown
+# Appendix A
+
+Text in Appendix A
+
+# Appendix B
+
+Text in Appendix B
+
+```
 
 # References

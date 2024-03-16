@@ -11,9 +11,12 @@ local maskeddate = "n.d."
 
 return {
   --{FloatRefTarget = function(float)},
-  {Cite = function(ct) 
+  {
+    Cite = function(ct) 
     n_citations = n_citations + 1 
-    end},
+    end
+    
+  },
   {
     Meta = function(meta) 
       if n_citations > 0 then

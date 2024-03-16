@@ -17,7 +17,11 @@ contributes:
       fig-height: 6.5
       filters:
         - at: pre-ast
+          path: appendix.lua
+        - at: pre-ast
           path: apalanguage.lua
+        - at: pre-ast
+          path: crossrefprefix.lua
         - at: pre-ast
           path: apafloatstoend.lua
         - at: pre-ast

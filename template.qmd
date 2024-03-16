@@ -290,3 +290,21 @@ Let's sum this up.
 # Appendix
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
+
+See @fig-appendfig
+
+![Appendix Figure](img/sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
+
+::: {#tbl-appendtb}
+
+
+| Default | Left | Right | Center |
+|---------|:-----|------:|:------:|
+| 12      | 12   |    12 |   12   |
+| 123     | 123  |   123 |  123   |
+| 1       | 1    |     1 |   1    |
+
+
+Appendix Table
+
+:::

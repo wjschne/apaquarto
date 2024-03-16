@@ -162,14 +162,8 @@ return {
       
       
       local affilations_different = meta.affiliationsdifferent
-      print(affilations_different)
       
       local affiliations_str = List()
-
-   
-      
-
-      
       
       local authordiv = pandoc.Div({
         newline, 
@@ -177,9 +171,6 @@ return {
       })
       authordiv.classes:insert("Author")
       
-      
-      
-
       for i, a in ipairs(affiliations) do
         
         affiliations_str = List()
@@ -495,7 +486,7 @@ return {
       if meta.apatitledisplay then
         local firstpageheader = documenttitle:clone()
         firstpageheader.identifier = "firstheader"
-        firstpageheader.classes = {"title"}
+        firstpageheader.classes = {"title", "unnumbered", "unlisted"}
         body:extend({firstpageheader})
       end
   

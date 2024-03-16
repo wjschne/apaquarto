@@ -29,6 +29,8 @@ local caption_formatter = function(p)
             --print(p.content)
             for i, v in ipairs(p.content) do
               if i > intStart and i < intStart + 4 then
+
+
                 figuretitle.content:extend({v})
               end
               if i > intStart + 5 then
@@ -47,6 +49,7 @@ end
 
 local divcaption = function(div)
   if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
+
     if FORMAT == "html" then
       div.content = div.content:walk {Plain = caption_formatter}
     end

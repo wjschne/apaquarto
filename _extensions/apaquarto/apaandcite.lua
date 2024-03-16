@@ -29,15 +29,13 @@ local function replace_and(elem)
                     end
                   end
                   if intLeftParen > 2 then
-                          elem.content.content[intLeftParen - 2].text = elem.content.content[intLeftParen - 2].text .. "’s"
+                    elem.content.content[intLeftParen - 2].text = elem.content.content[intLeftParen - 2].text .. "’s"
                   end
                 end
             end
         end
-        --print(elem.content)
         return elem.content
     end
-    --return pandoc.Cite(elem.content, elem.citations)
 end
 
 return {

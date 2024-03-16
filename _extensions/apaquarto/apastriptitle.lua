@@ -83,10 +83,7 @@ Meta = function(meta)
     meta.affiliationsdifferent = are_affiliations_different(meta["by-author"])
     
     for i,j in ipairs(meta["by-author"]) do
-      --quarto.log.output(j.name)
       j.apaauthordisplay = makeauthorname(j.name)
-      
-      --print(j.apaauthordisplay)
     end
   end
 

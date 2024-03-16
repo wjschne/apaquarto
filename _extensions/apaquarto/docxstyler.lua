@@ -37,12 +37,12 @@ _set = utils_Set(customclasses)
 
 -- https://jmablog.com/post/pandoc-filters/
 local function customstyler(elem)
-    if _set[elem.classes[1]] then
-      elem.attributes['custom-style'] = elem.classes[1]
-      return elem
-    else
-      return elem
-    end
+  if _set[elem.classes[1]] then
+    elem.attributes['custom-style'] = elem.classes[1]
+    return elem
+  else
+    return elem
+  end
 end
 
 return {

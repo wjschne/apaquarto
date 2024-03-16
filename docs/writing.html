@@ -232,6 +232,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#masked-citations-for-anonymous-peer-review" id="toc-masked-citations-for-anonymous-peer-review" class="nav-link" data-scroll-target="#masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</a></li>
   </ul></li>
+  <li><a href="#appendices" id="toc-appendices" class="nav-link" data-scroll-target="#appendices">Appendices</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -312,18 +313,18 @@ div.csl-indent {
 </div>
 <p>The resulting file can be edited. Here is an annotated example of a short Quarto document:</p>
 <div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode default code-annotation-code code-with-copy code-annotated"><code class="sourceCode default"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>---                                </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>title: "My Title"</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>title: "My Title"</span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>author: "W. Joel Schneider"</span>
 <span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>---                                </span>
 <span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>This is plain text.</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>This is plain text.</span>
 <span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>A pair asterisks makes *italics*.</span>
 <span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>Two asterisks will **bold** text.</span>
 <span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>```{r}</span>
 <span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>x &lt;- 5</span>
 <span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>```</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-cell="annotated-cell-1" data-code-lines="2,3" data-code-annotation="1">The yaml between pairs of three hyphens (<code>---</code>) contains “metadata” (information about the document). Yaml</span>
@@ -620,7 +621,7 @@ div.csl-indent {
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-myimportedimage" class="quarto-figure quarto-figure-center quarto-float FigureWithNote anchored" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C." data-custom-style="FigureWithNote">
+<div id="fig-myimportedimage" class="quarto-figure quarto-figure-center quarto-float FigureWithNote anchored" alt="A path diagram in which A causes B, and B causes C." data-apa-note="Variable A indirectly causes Variable C." data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -665,7 +666,7 @@ div.csl-indent {
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">  flextable() %&gt;% </span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_apa() </span></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-mytable" class="cell quarto-float anchored" data-ft.align="left" data-apa-note="A note below table">
+<div id="tbl-mytable" class="cell quarto-float anchored" data-apa-note="A note below table" data-ft.align="left">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -677,7 +678,7 @@ div.csl-indent {
 </figcaption>
 <div aria-describedby="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="tabwid tabwid_left"><style>.cl-79441de0{}.cl-793c3b48{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-793f3d7a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-793f5378{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-793f5382{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-793f5383{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-79441de0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-793f5378"><p class="cl-793f3d7a"><span class="cl-793c3b48">Letters</span></p></th><th class="cl-793f5378"><p class="cl-793f3d7a"><span class="cl-793c3b48">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-793f5382"><p class="cl-793f3d7a"><span class="cl-793c3b48">A</span></p></td><td class="cl-793f5382"><p class="cl-793f3d7a"><span class="cl-793c3b48">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-793f5382"><p class="cl-793f3d7a"><span class="cl-793c3b48">B</span></p></td><td class="cl-793f5382"><p class="cl-793f3d7a"><span class="cl-793c3b48">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-793f5383"><p class="cl-793f3d7a"><span class="cl-793c3b48">C</span></p></td><td class="cl-793f5383"><p class="cl-793f3d7a"><span class="cl-793c3b48">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid tabwid_left"><style>.cl-dc840ce6{}.cl-dc7c3bce{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-dc7f389c{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-dc7f4eea{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dc7f4ef4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dc7f4ef5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-dc840ce6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-dc7f4eea"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">Letters</span></p></th><th class="cl-dc7f4eea"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">A</span></p></td><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">B</span></p></td><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dc7f4ef5"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">C</span></p></td><td class="cl-dc7f4ef5"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </figure>
@@ -761,7 +762,7 @@ div.csl-indent {
 <ul>
 <li><p>Prefixes (with or without a comma) are placed before the reference: <code>[e.g., @CameronTrivedi2013]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p></li>
 <li><p>If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically <span class="citation" data-cites="CameronTrivedi2013 cohen2003applied">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>; <a href="#ref-cohen2003applied" role="doc-biblioref">Cohen et al., 2003</a>)</span>. That is, <code>[e.g., @CameronTrivedi2013; @cohen2003applied]</code>, not <code>[e.g., @cohen2003applied; @CameronTrivedi2013]</code>.</p></li>
-<li><p>Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: <code>First Outer Inner Last [FOIL\;@CameronTrivedi2013]</code> becomes First Outer Inner Last [FOIL; <span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span>].</p></li>
+<li><p>Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: <code>First Outer Inner Last [FOIL\;@CameronTrivedi2013]</code> becomes First Outer Inner Last <span class="citation" data-cites="CameronTrivedi2013">(FOIL; <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p></li>
 </ul>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -818,6 +819,21 @@ Warning
 <p>If the <code>mask</code> field is set to <code>false</code>, the masked citations will print as usual. When <code>mast</code> is <code>true</code>, depending if they are an inline or parenthetical citations, they will be listed as “Masked Citations (n.d)” or “(Masked Citations, n.d)”. In parenthical citations, it is possible to mix masked and unmasked citations.</p>
 <p>Setting <code>mask</code> to <code>true</code> will also remove the authors, affiliations, and author notes from the title page.</p>
 </section>
+</section>
+<section id="appendices" class="level1">
+<h1>Appendices</h1>
+<p>If there is just just one appendix, put a level-1 header called <code>Appendix</code> after the references:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>Text in appendix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If there are multiple appendices, begin each with level-1 headers, called <code>Appendix A</code>, <code>Appendix B</code>, <code>Appendix C</code>, and so forth.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix A</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Text in Appendix A</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix B</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>Text in Appendix B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="references" class="level1">
 
@@ -1187,66 +1203,25 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         }
       };
     }
-      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
-      for (let i=0; i<annoteTargets.length; i++) {
-        const annoteTarget = annoteTargets[i];
-        const targetCell = annoteTarget.getAttribute("data-target-cell");
-        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
-        const contentFn = () => {
-          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          if (content) {
-            const tipContent = content.cloneNode(true);
-            tipContent.classList.add("code-annotation-tip-content");
-            return tipContent.outerHTML;
-          }
-        }
-        const config = {
-          allowHTML: true,
-          content: contentFn,
-          onShow: (instance) => {
-            selectCodeLines(instance.reference);
-            instance.reference.classList.add('code-annotation-active');
-            window.tippy.hideAll();
-          },
-          onHide: (instance) => {
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
             unselectCodeLines();
-            instance.reference.classList.remove('code-annotation-active');
-          },
-          maxWidth: 300,
-          delay: [50, 0],
-          duration: [200, 0],
-          offset: [5, 10],
-          arrow: true,
-          trigger: 'click',
-          appendTo: function(el) {
-            return el.parentElement.parentElement.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'quarto',
-          placement: 'right',
-          positionFixed: true,
-          popperOptions: {
-            modifiers: [
-            {
-              name: 'flip',
-              options: {
-                flipVariations: false, // true by default
-                allowedAutoPlacements: ['right'],
-                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
-              },
-            },
-            {
-              name: 'preventOverflow',
-              options: {
-                mainAxis: false,
-                altAxis: false
-              }
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
             }
-            ]        
-          }      
-        };
-        window.tippy(annoteTarget, config); 
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
       }
   const findCites = (el) => {
     const parentEl = el.parentElement;
@@ -1288,7 +1263,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

@@ -39,7 +39,7 @@ function Pandoc (doc)
         }
     end
     if isfigure or istable then
-      if istable and FORMAT == "docx" then
+       if istable and FORMAT == "docx" then
         doc.blocks[i].content = doc.blocks[i].content:walk {
         Table = function(tb) 
              
@@ -55,7 +55,7 @@ function Pandoc (doc)
 
       end
       
-      
+
         if doc.blocks[i].attributes["apa-note"] then
           doc.blocks[i].classes:insert("FigureWithNote")
           doc.blocks[i].attributes["custom-style"] = "FigureWithNote"
