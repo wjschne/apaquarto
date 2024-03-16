@@ -21,9 +21,8 @@ function Pandoc(doc)
         
         if doc.blocks[i].attributes["custom-style"] == "FigureWithoutNote" then
           doc.blocks[i+1] = makeafternote(doc.blocks[i+1])
-          --print(makeafternote(doc.blocks[i+1]))
-          
         end
+        
         if doc.blocks[i].identifier:find("^tbl%-") then
           doc.blocks[i+1] = makeafternote(doc.blocks[i+1])
         end

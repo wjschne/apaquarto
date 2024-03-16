@@ -3,3 +3,6 @@
 
 /*-- scss:rules --*/
 
+p code:not(.sourceCode), li code:not(.sourceCode), td code:not(.sourceCode) {
+  background: white;
+}

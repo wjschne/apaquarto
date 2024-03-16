@@ -21,12 +21,12 @@ end
 -- Format caption
 local caption_formatter = function(p)
   if pandoc.utils.stringify(p.content[1]) == figureword or pandoc.utils.stringify(p.content[1]) == tableword then
-      --print(p.content[1])
+
             local figuretitle = pandoc.Para({})
             local figurecaption = pandoc.Para({})
             
             local intStart = 0
-            --print(p.content)
+
             for i, v in ipairs(p.content) do
               if i > intStart and i < intStart + 4 then
 
