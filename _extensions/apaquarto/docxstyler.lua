@@ -18,6 +18,7 @@ customclasses = {
   "Author", 
   "AuthorNote",
   "Abstract", 
+  "AbstractFirstParagraph", 
   "FigureTitle", 
   "FigureNote", 
   "FigureWithNote", 

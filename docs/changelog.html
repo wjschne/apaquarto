@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.24">
+<meta name="generator" content="quarto-1.5.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -134,6 +134,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-3.4.5-2024-03-10" id="toc-version-3.4.5-2024-03-10" class="nav-link" data-scroll-target="#version-3.4.5-2024-03-10">Version 3.4.5 (2024-03-10)</a></li>
   <li><a href="#version-3.4.4-2024-03-10" id="toc-version-3.4.4-2024-03-10" class="nav-link" data-scroll-target="#version-3.4.4-2024-03-10">Version 3.4.4 (2024-03-10)</a></li>
   <li><a href="#version-3.4.3-2024-03-08" id="toc-version-3.4.3-2024-03-08" class="nav-link" data-scroll-target="#version-3.4.3-2024-03-08">Version 3.4.3 (2024-03-08)</a></li>
   <li><a href="#version-3.4.2-2024-03-06" id="toc-version-3.4.2-2024-03-06" class="nav-link" data-scroll-target="#version-3.4.2-2024-03-06">Version 3.4.2 (2024-03-06)</a></li>
@@ -191,6 +192,13 @@ ul.task-list li input[type="checkbox"] {
 <li>Create landscape pages for wide figures and tables.</li>
 <li>Tables in .pdf jou mode should fit automatically.</li>
 <li>Typst version that would allow for easy customization</li>
+</ul>
+</section>
+<section id="version-3.4.5-2024-03-10" class="level1">
+<h1>Version 3.4.5 (2024-03-10)</h1>
+<ul>
+<li>Indent abstract with multiple paragraphs properly</li>
+<li>Title on first page of text is no longer numbered when <code>number-sections</code> is <code>true</code></li>
 </ul>
 </section>
 <section id="version-3.4.4-2024-03-10" class="level1">
@@ -364,18 +372,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -407,7 +404,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');

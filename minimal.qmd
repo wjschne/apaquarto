@@ -26,7 +26,7 @@ author-note:
     financial-support: ~
     gratitude: ~
     authorship-agreements: ~
-abstract: "This document is a template"
+abstract: "This document is a template."
 keywords: [keyword1, keyword2, keyword3]
 bibliography: bibliography.bib
 format:

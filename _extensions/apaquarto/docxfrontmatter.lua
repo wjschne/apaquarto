@@ -446,17 +446,39 @@ return {
         
         if pandoc.utils.type(meta.apaabstract) == "Blocks" then
           local abstractdiv = pandoc.Div({})
+          local abstractfirstparagraphdiv = pandoc.Div({})
+          local abstractlinecounter = 1
           meta.apaabstract:walk {
             LineBlock = function(lb)
               lb:walk {
                 Inlines = function(el)
                     local lbpara = pandoc.Para(el)
-                    abstractdiv.content:extend({lbpara})
+                    
+                    if abstractlinecounter == 1 then
+                      abstractfirstparagraphdiv.content:extend({lbpara})
+                      abstractfirstparagraphdiv.classes:insert("AbstractFirstParagraph")
+                      
+                    else
+                      abstractdiv.content:extend({lbpara})
+                      if abstractlinecounter == 2 then
+                        abstractdiv.classes:insert("Abstract")
+                      end
+                      
+                    end
+                    
+                    abstractlinecounter = abstractlinecounter + 1
                 end
               }
             end
           }
-          body:extend({abstractdiv})
+          if abstractlinecounter > 1 then
+            body:extend({abstractfirstparagraphdiv})
+          end
+          
+          if abstractlinecounter > 2 then
+            body:extend({abstractdiv})
+          end
+          
         end
 
       end
