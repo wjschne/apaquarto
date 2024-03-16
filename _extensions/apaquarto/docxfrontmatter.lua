@@ -451,6 +451,7 @@ return {
           meta.apaabstract:walk {
             LineBlock = function(lb)
               lb:walk {
+                traverse = "topdown",
                 Inlines = function(el)
                     local lbpara = pandoc.Para(el)
                     
@@ -467,6 +468,7 @@ return {
                     end
                     
                     abstractlinecounter = abstractlinecounter + 1
+                    return el, false
                 end
               }
             end
