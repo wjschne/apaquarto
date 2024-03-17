@@ -12,10 +12,11 @@ engine: knitr
 - Typst version that would allow for easy customization
 
 
-# Version 3.4.5 (2024-03-1+)
+# Version 3.4.5 (2024-03-16)
 
 - Indent abstract with multiple paragraphs properly
 - Title on first page of text is no longer numbered when `number-sections` is `true`
+- Remove indent from level 3 headers in .html output
 
 # Version 3.4.4 (2024-03-10)
 

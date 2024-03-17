@@ -14,7 +14,7 @@ div.Author p {
 h1, h2, h3, h4, h5 {border: none; margin: 0; padding: 0;line-height: 2; text-indent: 0 }
 
 h1 {text-align: center;}
-h3 {text-indent: 0.5in; font-style: italic}
+h3 {font-style: italic}
 
 h4, h5 {
 text-indent: 0.5in;

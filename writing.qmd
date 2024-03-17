@@ -4,6 +4,9 @@ format:
   html: 
     fig-cap-location: top
     citeproc: false
+    anchor-sections: false
+    link-external-icon: false
+    link-external-newwindow: false
     # code-annotations: hover
     filters:  
       - at: post-render
@@ -51,6 +54,43 @@ lightbox: true
 .quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0;}
 
 .quarto-figure-center>figure>p, .quarto-figure-center>figure>div {text-align: left;}
+
+.apa {font-family: Times, "Times New Roman", serif; line-height: 2em; font-size: 12pt}
+
+.apa p {text-indent: 0.5in; margin: 0; line-height: 2em; padding: 0; margin-block-start: 0px; margin-block-end: 0px;}
+.apa h1, .apa h2, .apa h3, .apa h4, .apa h5, .apa .h1, .apa .h2, .apa .h3, .apa .h4, .apa .h5 {
+font-size: 12pt; 
+border: none; 
+padding: 0; 
+margin: 0; 
+border: none; 
+line-height: 2; 
+text-indent: 0; 
+font-weight: bold;
+color: black;
+opacity: 100%;
+}
+
+.apa h1 {text-align: center;}
+.apa h3 {font-style: italic}
+
+.apa h4, .apa h5 {
+text-indent: 0.5in;
+display:inline-block;
+margin: 0;
+margin-block-start: 0px; 
+margin-block-end: 0px;
+}
+
+.apa h5 {
+  font-style: italic;
+  font-weight: normal;
+}
+
+.apa h4 + p, .apa h5 + p {
+  display:inline;
+  text-indent: 0;
+}
 ```
 
 ```{r}
@@ -137,7 +177,12 @@ A comprehensive guide to Markdown conventions in Quarto is [here](https://quarto
 
 APA Style differentiates between [headings at 5 levels](https://apastyle.apa.org/style-grammar-guidelines/paper-format/headings). All headings should be in title case according to [these rules and exceptions](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
 
+:::{.column-margin .callout-tip}
+Quarto works best when there is *at least one blank line above and below the heading*. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.
+:::
+
 In markdown, a heading starts with the `#`, followed by a space, and then the text of the heading. The number of `#`s in a row determines the level of the heading:
+
 
 ``` md
 
@@ -151,8 +196,6 @@ In markdown, a heading starts with the `#`, followed by a space, and then the te
 
 ##### Level 5 Heading
 ```
-
-Quarto works best when there is *at least one blank line above and below the heading*. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.
 
 ## Level 1 Headings
 
@@ -174,6 +217,7 @@ Readers are better able to follow your ideas if you differentiate long sections 
 
 -   Anything can follow immediately after headings at levels 1--3, including other headings.
 -   Headings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.
+
 
 ``` md
 
@@ -199,6 +243,31 @@ This paragraph will appear on the same line as the level-5 heading.
 
 Subsequent paragraphs go on their own lines.
 ```
+
+:::{.apa}
+
+# Level 1 Heading {.unlisted}
+
+This paragraph follows the level-1 heading.
+
+## Level 2 Heading {.unlisted} 
+
+### This Level-3 Heading Directly Follows the Level-2 Heading.  {.unlisted}
+
+This paragraph follows the level-3 heading.
+
+#### Level 4 Heading.  {.unlisted}
+
+This paragraph will appear on the same line as the level-4 heading.
+
+Subsequent paragraphs go on their own lines.
+
+##### Level 5 Heading.  {.unlisted}
+
+This paragraph will appear on the same line as the level-5 heading.
+
+Subsequent paragraphs go on their own lines.
+:::
 
 ## Block Quotes and Suppressing Indentation
 

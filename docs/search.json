@@ -175,6 +175,13 @@
     "text": "What Can Follow a Heading\n\nAnything can follow immediately after headings at levels 1–3, including other headings.\nHeadings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.\n\n\n# Level 1 Heading\n\nThis paragraph follows the level-1 heading.\n\n## Level 2 Heading \n\n### This Level-3 Heading Directly Follows the Level-2 Heading.\n\nThis paragraph follows the level-3 heading.\n\n#### Level 4 Heading\n\nThis paragraph will appear on the same line as the level-4 heading.\n\nSubsequent paragraphs go on their own lines.\n\n##### Level 5 Heading\n\nThis paragraph will appear on the same line as the level-5 heading.\n\nSubsequent paragraphs go on their own lines."
   },
   {
+    "objectID": "writing.html#level-2-heading",
+    "href": "writing.html#level-2-heading",
+    "title": "APA Style via Markdown",
+    "section": "Level 2 Heading",
+    "text": "Level 2 Heading\n\nThis Level-3 Heading Directly Follows the Level-2 Heading.\nThis paragraph follows the level-3 heading.\n\nLevel 4 Heading.\nThis paragraph will appear on the same line as the level-4 heading.\nSubsequent paragraphs go on their own lines.\n\nLevel 5 Heading.\nThis paragraph will appear on the same line as the level-5 heading.\nSubsequent paragraphs go on their own lines."
+  },
+  {
     "objectID": "writing.html#block-quotes-and-suppressing-indentation",
     "href": "writing.html#block-quotes-and-suppressing-indentation",
     "title": "APA Style via Markdown",

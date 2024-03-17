@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.24">
+<meta name="generator" content="quarto-1.5.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -87,7 +87,6 @@ div.csl-indent {
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -203,8 +202,8 @@ div.csl-indent {
   <li><a href="#level-1-headings" id="toc-level-1-headings" class="nav-link" data-scroll-target="#level-1-headings">Level 1 Headings</a></li>
   <li><a href="#levels-25" id="toc-levels-25" class="nav-link" data-scroll-target="#levels-25">Levels 2–5</a></li>
   <li><a href="#what-can-follow-a-heading" id="toc-what-can-follow-a-heading" class="nav-link" data-scroll-target="#what-can-follow-a-heading">What Can Follow a Heading</a></li>
-  <li><a href="#block-quotes-and-suppressing-indentation" id="toc-block-quotes-and-suppressing-indentation" class="nav-link" data-scroll-target="#block-quotes-and-suppressing-indentation">Block Quotes and Suppressing Indentation</a></li>
   </ul></li>
+  <li><a href="#block-quotes-and-suppressing-indentation" id="toc-block-quotes-and-suppressing-indentation" class="nav-link" data-scroll-target="#block-quotes-and-suppressing-indentation">Block Quotes and Suppressing Indentation</a></li>
   <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures">Figures</a>
   <ul class="collapse">
   <li><a href="#figures-in-code-chunks" id="toc-figures-in-code-chunks" class="nav-link" data-scroll-target="#figures-in-code-chunks">Figures in Code Chunks</a></li>
@@ -287,6 +286,43 @@ div.csl-indent {
 .quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0;}
 
 .quarto-figure-center>figure>p, .quarto-figure-center>figure>div {text-align: left;}
+
+.apa {font-family: Times, "Times New Roman", serif; line-height: 2em; font-size: 12pt}
+
+.apa p {text-indent: 0.5in; margin: 0; line-height: 2em; padding: 0; margin-block-start: 0px; margin-block-end: 0px;}
+.apa h1, .apa h2, .apa h3, .apa h4, .apa h5, .apa .h1, .apa .h2, .apa .h3, .apa .h4, .apa .h5 {
+font-size: 12pt; 
+border: none; 
+padding: 0; 
+margin: 0; 
+border: none; 
+line-height: 2; 
+text-indent: 0; 
+font-weight: bold;
+color: black;
+opacity: 100%;
+}
+
+.apa h1 {text-align: center;}
+.apa h3 {font-style: italic}
+
+.apa h4, .apa h5 {
+text-indent: 0.5in;
+display:inline-block;
+margin: 0;
+margin-block-start: 0px; 
+margin-block-end: 0px;
+}
+
+.apa h5 {
+  font-style: italic;
+  font-weight: normal;
+}
+
+.apa h4 + p, .apa h5 + p {
+  display:inline;
+  text-indent: 0;
+}
 </style>
 </div>
 <p>(Under Construction)</p>
@@ -296,7 +332,7 @@ div.csl-indent {
 <section id="create-a-quarto-document" class="level1">
 <h1>Create a Quarto Document</h1>
 <p>To create an Quarto document in RStudio, in the menu (See <a href="#fig-newquarto" class="quarto-xref">Figure&nbsp;1</a>), click <em>File → New File → Quarto Document</em>.</p>
-<div id="fig-newquarto" class="quarto-figure quarto-figure-center quarto-float FigureWithoutNote anchored" data-custom-style="FigureWithoutNote">
+<div id="fig-newquarto" class="quarto-figure quarto-figure-center quarto-float FigureWithoutNote" data-custom-style="FigureWithoutNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-newquarto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -423,10 +459,23 @@ div.csl-indent {
 </tbody>
 </table>
 </section>
-<section id="headings-in-apa-style" class="level1">
+<section id="headings-in-apa-style" class="level1 page-columns page-full">
 <h1>Headings in APA Style</h1>
 <p>APA Style differentiates between <a href="https://apastyle.apa.org/style-grammar-guidelines/paper-format/headings">headings at 5 levels</a>. All headings should be in title case according to <a href="https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case">these rules and exceptions</a>.</p>
-<p>In markdown, a heading starts with the <code>#</code>, followed by a space, and then the text of the heading. The number of <code>#</code>s in a row determines the level of the heading:</p>
+
+<div class="no-row-height column-margin column-container"><div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quarto works best when there is <em>at least one blank line above and below the heading</em>. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.</p>
+</div>
+</div></div><p>In markdown, a heading starts with the <code>#</code>, followed by a space, and then the text of the heading. The number of <code>#</code>s in a row determines the level of the heading:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># Level 1 Heading</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -437,9 +486,8 @@ div.csl-indent {
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Quarto works best when there is <em>at least one blank line above and below the heading</em>. If you forget to follow this advice, Quarto will try its best, but it might not parse the document correctly.</p>
 <section id="level-1-headings" class="level2">
-<h2 class="anchored" data-anchor-id="level-1-headings">Level 1 Headings</h2>
+<h2 data-anchor-id="level-1-headings">Level 1 Headings</h2>
 <p>APA Style reserves a small number of level-1 headings with standard names:</p>
 <ul>
 <li>Method</li>
@@ -451,11 +499,11 @@ div.csl-indent {
 <p>There should be no level-1 heading for the introduction. The title acts as the heading for the introduction, and apaquarto places it there automatically.</p>
 </section>
 <section id="levels-25" class="level2">
-<h2 class="anchored" data-anchor-id="levels-25">Levels 2–5</h2>
+<h2 data-anchor-id="levels-25">Levels 2–5</h2>
 <p>Readers are better able to follow your ideas if you differentiate long sections in your document with headings. I try limit my writing to just levels 1 and 2, but sometimes level 3 headings are needed. I am sparing to the point of stinginess with levels 4 and 5.</p>
 </section>
 <section id="what-can-follow-a-heading" class="level2">
-<h2 class="anchored" data-anchor-id="what-can-follow-a-heading">What Can Follow a Heading</h2>
+<h2 data-anchor-id="what-can-follow-a-heading">What Can Follow a Heading</h2>
 <ul>
 <li>Anything can follow immediately after headings at levels 1–3, including other headings.</li>
 <li>Headings at levels 4 and 5 must have text paragraphs below them. Why? When rendered, level-4 and level-5 headings appear on the same line as the paragraphs they summarize.</li>
@@ -483,8 +531,30 @@ div.csl-indent {
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>Subsequent paragraphs go on their own lines.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+</section>
+<section id="level-1-heading" class="level1 unlisted apa">
+<h1 class="unlisted">Level 1 Heading</h1>
+<p>This paragraph follows the level-1 heading.</p>
+<section id="level-2-heading" class="level2 unlisted">
+<h2 class="unlisted" data-anchor-id="level-2-heading">Level 2 Heading</h2>
+<section id="this-level-3-heading-directly-follows-the-level-2-heading." class="level3 unlisted">
+<h3 class="unlisted" data-anchor-id="this-level-3-heading-directly-follows-the-level-2-heading.">This Level-3 Heading Directly Follows the Level-2 Heading.</h3>
+<p>This paragraph follows the level-3 heading.</p>
+<section id="level-4-heading." class="level4 unlisted">
+<h4 class="unlisted" data-anchor-id="level-4-heading.">Level 4 Heading.</h4>
+<p>This paragraph will appear on the same line as the level-4 heading.</p>
+<p>Subsequent paragraphs go on their own lines.</p>
+<section id="level-5-heading." class="level5 unlisted">
+<h5 class="unlisted" data-anchor-id="level-5-heading.">Level 5 Heading.</h5>
+<p>This paragraph will appear on the same line as the level-5 heading.</p>
+<p>Subsequent paragraphs go on their own lines.</p>
+</section>
+</section>
+</section>
+</section>
+</section>
 <section id="block-quotes-and-suppressing-indentation" class="level2">
-<h2 class="anchored" data-anchor-id="block-quotes-and-suppressing-indentation">Block Quotes and Suppressing Indentation</h2>
+<h2 data-anchor-id="block-quotes-and-suppressing-indentation">Block Quotes and Suppressing Indentation</h2>
 <p>Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the <code>&gt;</code> character. For example, Jane Austen’s <span class="citation" data-cites="austenMansfieldPark1990">(<a href="#ref-austenMansfieldPark1990" role="doc-biblioref">1814/1990</a>)</span> <em>Mansfield Park</em> has some memorable insights about the mind:</p>
 <div id="austin">
 <div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>&gt; If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -503,12 +573,11 @@ div.csl-indent {
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>the indentation is suppresed.</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-</section>
 <section id="figures" class="level1 page-columns page-full">
 <h1>Figures</h1>
 <p>Plots for figures can be created via code chunks. A pre-existing figure can be imported directly via markdown.</p>
 <section id="figures-in-code-chunks" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="figures-in-code-chunks">Figures in Code Chunks</h2>
+<h2 data-anchor-id="figures-in-code-chunks">Figures in Code Chunks</h2>
 <p><a href="https://quarto.org/docs/computations/r.html">Code chunk</a> (also known as <em>code blocks</em>) are special sections of a Quarto document that run code. Quarto supports many programming languages, but I will focus on R.</p>
 <p>An empty code chunk looks like this:</p>
 <div class="sourceCode cell-code">
@@ -517,7 +586,7 @@ div.csl-indent {
 
 <div class="no-row-height column-margin column-container"><div class="FigureWithoutNote" data-custom-style="FigureWithoutNote">
 <p>Those are not single quotes (<code>'</code>) that fence in the code chunk. Those are backticks (<code>`</code>), which are usually above the Tab key on most keyboards in the US.</p>
-<div id="fig-key" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-key" class="quarto-figure quarto-figure-center quarto-float">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-key-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -545,7 +614,7 @@ div.csl-indent {
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-myplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-myplot" class="quarto-figure quarto-figure-center quarto-float">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -565,7 +634,7 @@ div.csl-indent {
 <p><a href="https://quarto.org/docs/computations/r.html#chunk-options">Code chunk options</a> like <code>label</code> and and <code>fig-cap</code> options are preceded by <code>#|</code>. They tell Quarto about how to run the code and present it the document.</p>
 </section>
 <section id="notes-below-figures-and-tables" class="level2">
-<h2 class="anchored" data-anchor-id="notes-below-figures-and-tables">Notes below Figures and Tables</h2>
+<h2 data-anchor-id="notes-below-figures-and-tables">Notes below Figures and Tables</h2>
 <p>You can add a note below a figure or table with the chunk option <code>apa-note</code>. The note can have markdown formatting (e.g, bolding and italics).</p>
 <div class="cell FigureWithNote" data-apa-note="This is the note below the figure." data-custom-style="FigureWithNote">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -580,7 +649,7 @@ div.csl-indent {
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-myplot2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-myplot2" class="quarto-figure quarto-figure-center quarto-float">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -602,7 +671,7 @@ div.csl-indent {
 </div>
 </section>
 <section id="importing-figures-with-markdown" class="level2">
-<h2 class="anchored" data-anchor-id="importing-figures-with-markdown">Importing Figures with Markdown</h2>
+<h2 data-anchor-id="importing-figures-with-markdown">Importing Figures with Markdown</h2>
 <p>Comprehensive details on importing and formatting figures with Markdown is <a href="https://quarto.org/docs/authoring/figures.html">here</a>.</p>
 <p>The Markdown syntax for creating a figure is</p>
 <p><code>![caption](file){#fig-label}</code></p>
@@ -621,7 +690,7 @@ div.csl-indent {
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-myimportedimage" class="quarto-figure quarto-figure-center quarto-float FigureWithNote anchored" alt="A path diagram in which A causes B, and B causes C." data-apa-note="Variable A indirectly causes Variable C." data-custom-style="FigureWithNote">
+<div id="fig-myimportedimage" class="quarto-figure quarto-figure-center quarto-float FigureWithNote" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C." data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -641,7 +710,7 @@ div.csl-indent {
 </div>
 </section>
 <section id="figure-references" class="level2">
-<h2 class="anchored" data-anchor-id="figure-references">Figure References</h2>
+<h2 data-anchor-id="figure-references">Figure References</h2>
 <p>In APA style, we often refer to specific tables and figures by their order in the text (e.g., Figure 2, Table 4). Keeping track of which is which is a pain, especially if you decide to reorder them. In Quarto documents, we instead refer to their labels, which are converted to the right numbers later. To refer to the figure created by the code above, we would type <code>@fig-myplot</code>, which will be converted to <a href="#fig-myplot" class="quarto-xref">Figure&nbsp;3</a>.</p>
 </section>
 </section>
@@ -666,7 +735,7 @@ div.csl-indent {
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">  flextable() %&gt;% </span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_apa() </span></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-mytable" class="cell quarto-float anchored" data-apa-note="A note below table" data-ft.align="left">
+<div id="tbl-mytable" class="cell quarto-float" data-apa-note="A note below table" data-ft.align="left">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -678,7 +747,7 @@ div.csl-indent {
 </figcaption>
 <div aria-describedby="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="tabwid tabwid_left"><style>.cl-dc840ce6{}.cl-dc7c3bce{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-dc7f389c{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-dc7f4eea{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dc7f4ef4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dc7f4ef5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-dc840ce6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-dc7f4eea"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">Letters</span></p></th><th class="cl-dc7f4eea"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">A</span></p></td><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">B</span></p></td><td class="cl-dc7f4ef4"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dc7f4ef5"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">C</span></p></td><td class="cl-dc7f4ef5"><p class="cl-dc7f389c"><span class="cl-dc7c3bce">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid tabwid_left"><style>.cl-d5db84fc{}.cl-d5d3822a{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d5d6a6da{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-d5d6bddc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d5d6bde6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d5d6bdf0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-d5db84fc"><thead><tr style="overflow-wrap:break-word;"><th class="cl-d5d6bddc"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">Letters</span></p></th><th class="cl-d5d6bddc"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-d5d6bde6"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">A</span></p></td><td class="cl-d5d6bde6"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-d5d6bde6"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">B</span></p></td><td class="cl-d5d6bde6"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-d5d6bdf0"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">C</span></p></td><td class="cl-d5d6bdf0"><p class="cl-d5d6a6da"><span class="cl-d5d3822a">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </figure>
@@ -688,7 +757,7 @@ div.csl-indent {
 </div>
 </div>
 <section id="tables-made-directly-with-markdown" class="level2">
-<h2 class="anchored" data-anchor-id="tables-made-directly-with-markdown">Tables Made Directly with Markdown</h2>
+<h2 data-anchor-id="tables-made-directly-with-markdown">Tables Made Directly with Markdown</h2>
 <p>You can create tables with Markdown in several ways. See <a href="https://quarto.org/docs/authoring/tables.html#markdown-tables">here</a> for details. If you need to make a more complex table in Markdown, I suggest using <a href="https://quarto.org/docs/visual-editor/content.html#editing-tables">RStudio’s visual editor</a>. Here is an example of a simple table:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>| Letters | Numbers |</span>
@@ -698,7 +767,7 @@ div.csl-indent {
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>| C       | 3       |</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-mytable2" class="quarto-float FigureWithNote anchored" data-apa-note="Note below table" data-custom-style="FigureWithNote">
+<div id="tbl-mytable2" class="quarto-float FigureWithNote" data-apa-note="Note below table" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -745,20 +814,20 @@ div.csl-indent {
 <p>I recommend managing your citations in <a href="https://www.zotero.org/">Zotero</a> and exporting them to a file automatically using the <a href="https://retorque.re/zotero-better-bibtex/">BetterBibTex addon</a>. <a href="https://retorque.re/zotero-better-bibtex/installation/">Installation instructions</a>.</p>
 <p>The <code>apa.csl</code> file is already included in apaquarto so there is no need to supply a reference to it in your metadata.</p>
 <section id="parenthetical-citations" class="level2">
-<h2 class="anchored" data-anchor-id="parenthetical-citations">Parenthetical Citations</h2>
+<h2 data-anchor-id="parenthetical-citations">Parenthetical Citations</h2>
 <p>A parenthetical citation uses the reference label in square brackets and starts with <code>@</code> like so:</p>
 <p><code>A sentence that needs a citation [@CameronTrivedi2013].</code></p>
 <p>A sentence that needs a citation <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p>
 <section id="with-multiple-citations" class="level3">
-<h3 class="anchored" data-anchor-id="with-multiple-citations">With Multiple Citations</h3>
+<h3 data-anchor-id="with-multiple-citations">With Multiple Citations</h3>
 <p>2 or more citations are separated by a semicolon: <code>[@CameronTrivedi2013; @cohen2003applied]</code> becomes <span class="citation" data-cites="CameronTrivedi2013 cohen2003applied">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>; <a href="#ref-cohen2003applied" role="doc-biblioref">Cohen et al., 2003</a>)</span>.</p>
 </section>
 <section id="with-page-numbers" class="level3">
-<h3 class="anchored" data-anchor-id="with-page-numbers">With Page Numbers</h3>
+<h3 data-anchor-id="with-page-numbers">With Page Numbers</h3>
 <p>Page references (or any other suffixes) are placed after the reference. If you want a comma, you’ll need to insert it yourself: <code>[@CameronTrivedi2013, pp. 35--41]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013, pp. 35–41</a>)</span>.</p>
 </section>
 <section id="with-prefixes" class="level3">
-<h3 class="anchored" data-anchor-id="with-prefixes">With Prefixes</h3>
+<h3 data-anchor-id="with-prefixes">With Prefixes</h3>
 <ul>
 <li><p>Prefixes (with or without a comma) are placed before the reference: <code>[e.g., @CameronTrivedi2013]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>)</span>.</p></li>
 <li><p>If you need a prefix at the beginning of 2 or more citations, you will have rearrange the citations so that the prefix accompanies the citation that is first alphabetically <span class="citation" data-cites="CameronTrivedi2013 cohen2003applied">(e.g., <a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013</a>; <a href="#ref-cohen2003applied" role="doc-biblioref">Cohen et al., 2003</a>)</span>. That is, <code>[e.g., @CameronTrivedi2013; @cohen2003applied]</code>, not <code>[e.g., @cohen2003applied; @CameronTrivedi2013]</code>.</p></li>
@@ -780,7 +849,7 @@ Warning
 </section>
 </section>
 <section id="in-text-citations" class="level2">
-<h2 class="anchored" data-anchor-id="in-text-citations">In-Text Citations</h2>
+<h2 data-anchor-id="in-text-citations">In-Text Citations</h2>
 <p>Typically, a plain citation works without any fuss:</p>
 <p><code>@CameronTrivedi2013 said some interesting things.</code></p>
 <p><span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span> said some interesting things.</p>
@@ -798,19 +867,19 @@ Warning
 </div>
 </div>
 <section id="with-page-numbers-1" class="level3">
-<h3 class="anchored" data-anchor-id="with-page-numbers-1">With Page Numbers</h3>
+<h3 data-anchor-id="with-page-numbers-1">With Page Numbers</h3>
 <p>If you need to include page references, use square brackets afterwards:</p>
 <p><code>@CameronTrivedi2013 [pp. 101--103] said some interesting things.</code></p>
 <p><span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013, pp. 101–103</a>)</span> said some interesting things.</p>
 </section>
 <section id="possessive-citations" class="level3">
-<h3 class="anchored" data-anchor-id="possessive-citations">Possessive Citations</h3>
+<h3 data-anchor-id="possessive-citations">Possessive Citations</h3>
 <p>An experimental feature of apaquarto is automatic “possessive citations.” <code>@CameronTrivedi2013 ['s] position</code> becomes <span class="citation" data-cites="CameronTrivedi2013">Cameron and Trivedi’s (<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span> position.</p>
 <p>If you render your document in another format, you would need to supply the name in text like this: <code>Cameron and Trivedi's [-@CameronTrivedi2013] position</code>, which becomes Cameron and Trivedi’s <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span> position. This works because putting a hyphen before the reference <code>[-@CameronTrivedi2013]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">2013</a>)</span>.</p>
 </section>
 </section>
 <section id="masked-citations-for-anonymous-peer-review" class="level2">
-<h2 class="anchored" data-anchor-id="masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</h2>
+<h2 data-anchor-id="masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</h2>
 <p>Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can “mask” any citation you wish by setting the <code>mask</code> field in the metadata yaml to <code>true</code>. Then list all citations that need to be masked in the <code>masked-citations</code> field like so:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
@@ -873,13 +942,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -888,18 +950,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -931,7 +982,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1263,7 +1336,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
