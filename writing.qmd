@@ -112,7 +112,7 @@ If you are used to writing with a word processor (e.g., MS Word, Google Docs), i
 
 To create an Quarto document in RStudio, in the menu (See @fig-newquarto), click *File → New File → Quarto Document*.
 
-![Create new Quarto docuemnt from the RStudio men](newquartodocument.png){#fig-newquarto}
+![Create new Quarto docuemnt from the RStudio men](img/newquartodocument.png){#fig-newquarto}
 
 The resulting file can be edited. Here is an annotated example of a short Quarto document:
 
@@ -321,10 +321,10 @@ An empty code chunk looks like this:
 ::: column-margin
 Those are not single quotes (`'`) that fence in the code chunk. Those are backticks (<code>\`</code>), which are usually above the Tab key on most keyboards in the US.
 
-![Keyboard with backtick hightlighted](keyboardwithbacktick.jpeg){#fig-key}
+![Keyboard with backtick hightlighted](img/keyboardwithbacktick.jpeg){#fig-key}
 :::
 
-Directly typing the three backticks and the curly braces needed for a code chunk can be tedious. In RStudio, use the keyboard shortcut {{< kbd win=Ctrl-Alt-I mac=Cmd+Option+I >}} to create chunks. If keyboard shortcuts are hard to remember, there is a green button with a white "C" in RStudio's toolbar that creates code chunks. ![Insert Code Chunk Button](insertchunk.png){style="margin:0!important;height:30px"}
+Directly typing the three backticks and the curly braces needed for a code chunk can be tedious. In RStudio, use the keyboard shortcut {{< kbd win=Ctrl-Alt-I mac=Cmd+Option+I >}} to create chunks. If keyboard shortcuts are hard to remember, there is a green button with a white "C" in RStudio's toolbar that creates code chunks. ![Insert Code Chunk Button](img/insertchunk.png){style="margin:0!important;height:30px"}
 
 At a minimum, an APA-Style figure needs a unique label with the `fig-` prefix, a caption in [title case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case) specified with `fig-cap`, and code for the plot.
 

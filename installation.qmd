@@ -114,7 +114,7 @@ A prompt will ask if you trust  [the author](https://wjschne.github.io/) not to 
 
 The console is for entering R commands.  In RStudio, it is in the lower left pane by default. See @fig-console. It is okay if your console looks different from mine.
 
-![RStudio console](console.png){#fig-console}
+![RStudio console](img/console.png){#fig-console}
 
 To use the console, type a command and press {{< kbd Enter >}}.
 :::
@@ -160,9 +160,9 @@ setwd("C:/Users/myname/Documents/MyProject/")
 
 Alternatively, you can set the working directory in the RStudio menu:
 
-1. Select *Session &rarr; Set Working Directory &rarr; Choose Working Directory*
+1. Select *Session &rarr; Set Working Directory &rarr; Choose Directory*
 
-![Set Working Directory Via RStudio Menu](menuworkingdirectory.png)
+![Set Working Directory Via RStudio Menu](img/menuworkingdirectory.png)
 
 2. Navigate to a folder where you want to create a new folder.
 
@@ -194,8 +194,6 @@ The apaquarto source code is in [this repository](https://github.com/wjschne/apa
 - bibliography.bib
 - README.md
 - minimal.qmd
-- img/docx.png
-- img/journalmond.png
 - img/sampleimage.png
 
 :::
@@ -232,7 +230,7 @@ Entering the command above will prompt a question about whether you trust [the a
 
 A terminal is an interface for telling your computer what to do. A terminal can be pulled up on most programming environments. For example, In RStudio, the terminal is in a tab next to the console (see @fig-console). If you cannot see a terminal tab next to the console, use the keyboard shortcut Alt-Shift-R to make a terminal appear (or  select *Tools &rarr; Terminal &rarr; New Terminal.* in the RStudio menu).
 
-![RStudio terminal. It is okay if your console looks different from mine.](terminal.png){#fig-terminal}
+![RStudio terminal. It is okay if your console looks different from mine.](img/terminal.png){#fig-terminal}
 
 Alternatively, you can open a terminal directly on any computer:
 

@@ -325,7 +325,7 @@ What is the R Console?
 <div id="fig-console" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="console.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: RStudio console"><img src="console.png" class="img-fluid figure-img"></a>
+<a href="img/console.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: RStudio console"><img src="img/console.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: RStudio console
@@ -383,11 +383,11 @@ How to set the working directory
 </div>
 <p>Alternatively, you can set the working directory in the RStudio menu:</p>
 <ol type="1">
-<li>Select <em>Session → Set Working Directory → Choose Working Directory</em></li>
+<li>Select <em>Session → Set Working Directory → Choose Directory</em></li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="menuworkingdirectory.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Set Working Directory Via RStudio Menu"><img src="menuworkingdirectory.png" class="img-fluid figure-img" alt="Set Working Directory Via RStudio Menu"></a></p>
+<p><a href="img/menuworkingdirectory.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Set Working Directory Via RStudio Menu"><img src="img/menuworkingdirectory.png" class="img-fluid figure-img" alt="Set Working Directory Via RStudio Menu"></a></p>
 <figcaption>Set Working Directory Via RStudio Menu</figcaption>
 </figure>
 </div>
@@ -434,8 +434,6 @@ How to inspect the code before installing it
 <li>bibliography.bib</li>
 <li>README.md</li>
 <li>minimal.qmd</li>
-<li>img/docx.png</li>
-<li>img/journalmond.png</li>
 <li>img/sampleimage.png</li>
 </ul>
 </div>
@@ -486,7 +484,7 @@ What is the terminal?
 <div id="fig-terminal" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="terminal.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2: RStudio terminal. It is okay if your console looks different from mine."><img src="terminal.png" class="img-fluid figure-img"></a>
+<a href="img/terminal.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2: RStudio terminal. It is okay if your console looks different from mine."><img src="img/terminal.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: RStudio terminal. It is okay if your console looks different from mine.
@@ -1019,7 +1017,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
