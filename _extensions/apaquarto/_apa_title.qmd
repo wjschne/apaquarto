@@ -73,7 +73,6 @@ if (is_pdf) {
       newname <- stringr::str_replace(filename, "svg$", "pdf")
       if (Sys.which("rsvg-convert") == "") stop("cannot find rsvg-convert")
       convertcommand <- paste0('rsvg-convert --format=pdf "', filename, '" > "', newname,'"')
-      # print(convertcommand)
       shell(convertcommand)
       filename <- newname
       

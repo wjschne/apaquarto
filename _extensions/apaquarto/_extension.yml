@@ -1,6 +1,6 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 3.4.5
+version: 3.4.6
 quarto-required: ">=1.4.549"
 contributes:
   formats:
@@ -18,6 +18,8 @@ contributes:
       filters:
         - at: pre-ast
           path: apalanguage.lua
+        - at: pre-ast
+          path: crossrefprefix.lua
         - at: pre-ast
           path: apafloatstoend.lua
         - at: pre-ast
@@ -37,6 +39,10 @@ contributes:
         - docxfrontmatter.lua
         - apaquote.lua
         - latexnoindent.lua
+        - at: pre-quarto
+          path: apafigtblappendix.lua
+        # - at: pre-quarto
+        #   path: appendix.lua          
         - at: post-quarto
           path: apafloatlatex.lua
         - at: post-quarto
@@ -55,6 +61,8 @@ contributes:
           path: citeprocr.lua
         - at: post-render
           path: apaandcite.lua
+        - at: post-render
+          path: apaappendixlatex.lua
     native: default
     html:
       toc: true

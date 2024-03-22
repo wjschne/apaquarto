@@ -1,12 +1,15 @@
 if FORMAT ~= "latex" then
   return 
 end
+
+-- Is the .pdf in journal mode?
 local journalmode = false
 local getmode = function(meta)
   local documentmode = pandoc.utils.stringify(meta["documentmode"])
   journalmode = documentmode == "jou"
 end
 
+-- Split string
 function string:split(delimiter)
   local result = { }
   local from  = 1
@@ -21,7 +24,7 @@ end
 
 local processfloat = function(float)
 
-
+  
   local floatposition = "[!htbp]"
   local p = {}
   if float.attributes["fig-pos"] then
@@ -34,6 +37,11 @@ local processfloat = function(float)
   end
   
   if float.type == "Table" then
+    
+    for i,j in pairs(float) do
+     -- print(i); print(j)
+    end
+    
     local latextableenv = "table"
     local beforenote = "\\vspace{-20pt}\n"
     if journalmode then
@@ -162,6 +170,10 @@ local processfloat = function(float)
         captionsubspan,
         pandoc.RawInline("latex", "}")
       })
+    
+    if float.attributes.prefix ~= "" then
+      floatposition = ""
+    end
   
       local returnblock = pandoc.Div({
         pandoc.RawBlock("latex", "\\begin{" .. latexenv .. "}" .. floatposition),

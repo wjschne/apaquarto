@@ -531,7 +531,7 @@ The third paragraph consists of study details and author disclosures:
 
 : {.hover .primary tbl-colwidths="\[20,80\]"}
 
-## Options for .docx
+# Options for .docx
 
 +---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 | Field                           | Explanation                                                                                                                       |
@@ -549,7 +549,7 @@ The third paragraph consists of study details and author disclosures:
 
 : {.hover .primary tbl-colwidths="\[20,80\]"}
 
-## Options for .pdf
+# Options for .pdf
 
 All of the .pdf-specfic options for apaquarto come directly from the \[apa7 $\LaTeX$ package\](https://ctan.org/pkg/apa7?lang=en). Consult the apa7 package documentation for greater detail.
 
@@ -601,11 +601,11 @@ All of the .pdf-specfic options for apaquarto come directly from the \[apa7 $\La
 
 : {.hover .primary tbl-colwidths="\[20,80\]"}
 
-## Options for .html
+# Options for .html
 
 Everything that works for .docx should work for .html.
 
-## Language Options
+# Language Options
 
 You can alter the names of Abstract, Figures, Tables, and References by setting the `lang` field to one of these languages:
 

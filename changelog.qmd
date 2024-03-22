@@ -11,6 +11,10 @@ engine: knitr
 - Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.4.6 (2024-03-19)
+
+- Figures and Tables in appendices have prefixes of A, B, C, etc.
+- Appendices appear after figures and tables when figures and tables appear at the end of the document.
 
 # Version 3.4.5 (2024-03-16)
 
