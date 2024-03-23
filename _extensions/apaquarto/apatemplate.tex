@@ -186,7 +186,9 @@ $endif$
 \urlstyle{same}
 
 
-
+$for(header-insert)$
+$header-insert$
+$endfor$
 
 
 \begin{document}
@@ -208,6 +210,8 @@ $if(numbered-lines)$
 \resetlinenumber[1]
 $endif$
 
+
+
 $body$
 
 $before-bib.tex()$
@@ -218,8 +222,8 @@ $endif$
 
 $for(include-after)$
 $include-after$
-
 $endfor$
+
 $after-body.tex()$
 
 
