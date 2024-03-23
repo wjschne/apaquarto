@@ -6,7 +6,7 @@ FloatRefTarget = function(ft)
         --print(i); print(j)
         
         if i == "order" then
-          j.order = "A1"
+          --j.order = "A1"
           --quarto.log.output(j)
         end
         if i == "__quarto_custom_node" then

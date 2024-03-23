@@ -111,8 +111,7 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou
-    keep-tex: true
+    documentmode: man
 ---
 
 ```{r}

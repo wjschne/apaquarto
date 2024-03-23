@@ -38,7 +38,6 @@ local function replace_and(ct)
         if ct.citations[1].suffix and #ct.citations[1].suffix > 0 then
 
             if ct.citations[1].suffix[1].text == "’s" or ct.citations[1].suffix[1].text == "'s" then
-                print(ct)
                 if ct.content then
                   local intLeftParen = 0
                   for i, j in pairs(ct.content) do

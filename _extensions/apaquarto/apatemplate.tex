@@ -79,8 +79,11 @@ $if(linestretch)$
 \setstretch{$linestretch$}
 $endif$
 
-$if(mainfont)$
+$if(mathspec)$
 \usepackage{mathspec}
+$endif$
+
+$if(mainfont)$
 $else$
 \usepackage{newtx}
 $endif$

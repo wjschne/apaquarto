@@ -50,7 +50,6 @@ local processfloat = function(float)
     end
     
     if float.attributes then
-
       if float.attributes["apa-twocolumn"] then
         if float.attributes["apa-twocolumn"] == "true" then
           if journalmode then
