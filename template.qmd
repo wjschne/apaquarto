@@ -289,28 +289,14 @@ Let's sum this up.
 
 <!-- Delete Appendix if not needed. -->
 
-# Appendix A
+# Appendix
 
-# The Title for Appendix A
+# The Title for Appendix
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
 
 See @fig-appendfig
 
-See @tbl-appendtb
-
 ![Appendix Figure](img/sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
 
-# Appendix B
 
-# The Title for Appendix B
-
-::: {#tbl-appendtb}
-| Default | Left | Right | Center |
-|---------|:-----|------:|:------:|
-| 12      | 12   |    12 | Figure |
-| 123     | 123  |   123 |  123   |
-| 1       | 1    |     1 |   1    |
-
-Appendix Table
-:::
