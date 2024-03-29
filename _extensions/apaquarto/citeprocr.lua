@@ -8,7 +8,8 @@ local referenceword = "References"
 local maskedauthor = "Masked Citation"
 local maskedtitle = "Masked Title"
 local maskeddate = "n.d."
-
+local metaanalysis = false
+local metareferencesentence = "References marked with an asterisk indicate studies included in the meta-analysis."
 return {
   --{FloatRefTarget = function(float)},
   {
@@ -25,6 +26,9 @@ return {
         zerocitations = true
       end
       meta.zerocitations = zerocitations
+      if meta["meta-analysis"] then
+        metaanalysis = true
+      end
       if meta.language then
         if meta.language["section-title-references"] then
           referenceword = pandoc.utils.stringify(meta.language["section-title-references"])
@@ -40,6 +44,9 @@ return {
         end
         if meta.language["citation-masked-date"] then
           maskeddate = pandoc.utils.stringify(meta.language["citation-masked-date"])
+        end
+        if meta.language["references-meta-analysis"] then
+          metareferencesentence = pandoc.utils.stringify(meta.language["references-meta-analysis"])
         end
      end
 
@@ -59,6 +66,9 @@ return {
       if n_citations == 0 and pandoc.utils.stringify(h.content) == referenceword then
         return {}
       end
+      if metaanalysis and pandoc.utils.stringify(h.content) == referenceword then
+        return {h, pandoc.Para(metareferencesentence)}
+      end
     end
   },
   {
@@ -73,6 +83,31 @@ return {
       }
       doc.meta.references:insert(maskedref)
       doc.meta.bibliography = nil
+      
+      --look up nocite references
+      local ct_meta = {}
+      if metaanalysis then
+        if doc.meta.nocite then
+          doc.meta.nocite:walk {
+            Cite = function(ct)
+              ct_meta[ct.citations[1].id] = true
+            end
+          }
+          
+          -- If reference is in nocite, then place an asterisk in front. 
+          for i,j in pairs(doc.meta.references) do
+            if ct_meta[j.id] then
+              if j.author[1].literal then
+                j.author[1].literal = "*" .. j.author[1].literal
+              else
+                if j.author[1].family then
+                  j.author[1].family = "*" .. j.author[1].family
+                end
+              end
+            end
+          end
+        end
+      end
       return pandoc.utils.citeproc(doc) 
     end
     

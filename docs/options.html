@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.5.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -279,15 +279,13 @@ window.Quarto = {
 <h1>General Options</h1>
 <table class="table-hover table-primary table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 44%">
-<col style="width: 44%">
+<col style="width: 20%">
+<col style="width: 80%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Field</th>
 <th style="text-align: left;">Explanation</th>
-<th></th>
 </tr>
 </thead>
 <tbody>
@@ -301,12 +299,10 @@ window.Quarto = {
 <p>You can list your title and subtitle separately, and they will be combined with a colon in the document:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My Title</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> My Subtitle</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
-<td></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>shorttitle</code></td>
 <td style="text-align: left;">A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (<code>~</code>), the running header will take its value from the <code>title</code> field (and will omit the <code>subtitle</code>).</td>
-<td></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>abstract</code></td>
@@ -318,12 +314,10 @@ window.Quarto = {
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  | This is the first paragraph.</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  | This is the second paragraph.</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  | This the third paragraph.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
-<td></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>keywords</code></td>
 <td style="text-align: left;">A list of topics your paper relates to. Can be single words or short phrases. | | There are two ways to format key words | | 1. Comma-separated list with square brackets | | <code>yaml                                                                                                                                                                                                        |     keywords: [First keyword, Second keyword, Third keyword]                                                                                                                                                        |</code> | | <!-- --> | | 2. Multiline list with indented hyphens | | <code>yaml                                                                                                                                                                                                        |     keywords:       - First keyword                                                                                                                                                                                               |       - Second keyword                                                                                                                                                                                              |       - Third keyword                                                                                                                                                                                               |</code> |</td>
-<td></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>floatsintext</code></td>
@@ -334,12 +328,10 @@ window.Quarto = {
 <li>If omitted, defaults to <code>false</code>.</li>
 </ul>
 <p>The <code>floatsintext</code> field does not apply when a .pdf output is in journal mode.</p></td>
-<td></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>numbered-lines</code></td>
 <td style="text-align: left;">Numbered lines (.pdf and .docx only)</td>
-<td></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>bibliography</code></td>
@@ -348,14 +340,12 @@ window.Quarto = {
 <div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> mybibliography.bib</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you have multiple files, you can make an array:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">mybibliography.bib</span><span class="kw">,</span><span class="at"> myotherbibliography.bib</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
-<td></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>mask</code></td>
 <td style="text-align: left;"><p>For anonymous peer review, removes identifying information: author names, author affiliations, author notes, correspondence information, and references listed in the <code>masked-citations</code> field.</p>
 <p>If <code>true</code>, identifying information is removed.</p>
 <p>If <code>false</code> or omitted, all information is left as is.</p></td>
-<td></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>masked-citations</code></td>
@@ -365,12 +355,14 @@ window.Quarto = {
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2020</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The citation keys should be as they appear in the bibliography file(s).</p></td>
-<td></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>suppress-title-page</code></td>
 <td style="text-align: left;">Suppress the title page if <code>true</code></td>
-<td></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>meta-analysis</code></td>
+<td style="text-align: left;">If <code>true</code>, all studies listed in the <code>nocite</code> field will be marked with asterisks in the References section</td>
 </tr>
 </tbody>
 </table>
@@ -991,6 +983,11 @@ window.Quarto = {
 <td><code>title-block-role-introduction</code></td>
 <td>The phrase introducing the author roles.</td>
 <td><em>Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:</em></td>
+</tr>
+<tr class="even">
+<td><code>references-meta-analysis</code></td>
+<td>The sentence explaining that citations marked with an asterisk were studies in the meta-analysis.</td>
+<td><em>References marked with an asterisk indicate studies included in the meta-analysis.</em></td>
 </tr>
 </tbody>
 </table>

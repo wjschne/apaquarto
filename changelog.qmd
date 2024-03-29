@@ -11,6 +11,10 @@ engine: knitr
 - Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.4.7 (2024-03-29)
+
+- Studies included in a meta-analysis are not usually cited in the text but are [included in the References section and flagged with an asterisk](https://apastyle.apa.org/style-grammar-guidelines/references/meta-analysis-references). When the `meta-analysis` field is set to `true`, citations listed in `nocite` are flagged with an asterisk in References section and a note to that effect is inserted below the References header.
+
 # Version 3.4.6 (2024-03-22)
 
 - Figures and Tables in appendices have prefixes of A, B, C, etc.
