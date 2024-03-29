@@ -98,9 +98,7 @@ masked-citations:
   - schneider2015intelligence
 # If meta-analysis, then references listed in nocite will 
 # be flagged with an asterisk.
-meta-analysis: true
-nocite: |
-  @schneider2015intelligence, @bentley1929instructions
+meta-analysis: false
 # Language options. See https://quarto.org/docs/authoring/language.html
 lang: en
 language:
