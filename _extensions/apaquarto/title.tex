@@ -106,7 +106,11 @@ $if(keywords)$\keywords{$for(keywords)$$it$$sep$, $endfor$}$endif$
 \par{$for(author-note.disclosures.study-registration)$$it$$sep$$endfor$ $for(author-note.disclosures.data-sharing)$$it$$sep$$endfor$ $for(author-note.disclosures.related-report)$$it$$sep$$endfor$ $for(author-note.disclosures.conflict-of-interest)$$it$$sep$$endfor$ $for(author-note.disclosures.financial-support)$$it$$sep$$endfor$ $for(author-note.disclosures.gratitude)$$it$$sep$$endfor$ $for(author-note.disclosures.authorship-agreements)$$it$$sep$$endfor$ ${for(by-author/first)}${if(it.roles)}Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows: ${for(by-author)}${if(it.roles)}${it.apaauthordisplay}:   ${for(it.roles)}${it.role}$sep$, ${endfor}${endif}${endfor}${endif}${endfor}${for(by-author/rest)}${if(it.roles)}${for(by-author)}${if(it.roles)}; ${it.apaauthordisplay}:   ${for(it.roles)}${it.role}$sep$, ${endfor}${endif}${endfor}${endif}${endfor}}
 $if(nocorrespondence)$
 $else$
+$if(author-note.correspondence-note)$
+\par{$author-note.correspondence-note$}
+$else$
 \par{$language.title-block-correspondence-note$ $for(by-author)$$if(it.attributes.corresponding)$$it.apaauthordisplay$$for(by-author.affiliations)$$if(it.address)$$if(it.department)$, $it.department$$endif$$if(it.name)$, $it.name$$endif$$if(it.address)$, $it.address$$endif$$if(it.city)$, $it.city$$endif$$if(it.region)$, $it.region$$endif$$if(it.postal-code)$ $it.postal-code$$endif$$if(it.country)$, $it.country$$endif$$endif$$endfor$$if(it.email)$, Email: $it.email$$endif$$endif$$endfor$}
+$endif$
 $endif$
 }
 

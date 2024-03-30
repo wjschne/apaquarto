@@ -373,7 +373,10 @@ return {
   
       local corresponding_paragraph = pandoc.Para(pandoc.Str(""))
       local check_corresponding = false
-      
+      if meta["author-note"]["correspondence-note"] then
+        corresponding_paragraph.content:extend(meta["author-note"]["correspondence-note"])
+      else
+        
       for i,a in ipairs(byauthor) do
         if a.attributes then
           if a.attributes.corresponding and stringify(a.attributes.corresponding) == "true" then
@@ -396,10 +399,8 @@ return {
                 corresponding_paragraph.content:extend({pandoc.Str(", Email:")})
                 corresponding_paragraph = extend_paragraph(corresponding_paragraph, a.email) 
               end
-              
             end
           end
-          
         end
       end
       
@@ -416,11 +417,12 @@ return {
           for i,j in pairs(correspondencenote) do
             corresponding_paragraph.content:insert(i, j)
           end
-          
-          if not mask then
-            body:extend({corresponding_paragraph})
-          end
         end
+      end
+      
+      if not mask then
+        body:extend({corresponding_paragraph})
+      end
         
       if meta.apaabstract and #meta.apaabstract > 0 then
         local abstractheadertext = pandoc.Str("Abstract")
