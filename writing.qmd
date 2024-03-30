@@ -503,6 +503,23 @@ An experimental feature of apaquarto is automatic "possessive citations." `@Came
 
 If you render your document in another format, you would need to supply the name in text like this: `Cameron and Trivedi's [-@CameronTrivedi2013] position`, which becomes Cameron and Trivedi's [-@CameronTrivedi2013] position. This works because putting a hyphen before the reference `[-@CameronTrivedi2013]` becomes [-@CameronTrivedi2013].
 
+## Citations for Articles Included in a Meta-Analysis
+
+In a meta-analysis, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the `nocite` field in the metadata. All articles listed in the `nocite` field will be marked with an asterisk in the References section.
+
+``` yaml
+nocite: |
+  @schneider2015intelligence, @schneider2012cattell
+```
+
+If marking `nocite` studies with asterisk is unwanted, set the `meta-analysis` field to `false`, 
+
+``` yaml
+meta-analysis: false
+nocite: |
+  @schneider2015intelligence, @schneider2012cattell
+```
+
 ## Masked Citations for Anonymous Peer Review
 
 Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can "mask" any citation you wish by setting the `mask` field in the metadata yaml to `true`. Then list all citations that need to be masked in the `masked-citations` field like so:

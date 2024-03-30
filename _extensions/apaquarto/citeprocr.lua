@@ -1,6 +1,7 @@
--- This filter does 2 things.
+-- This filter does 3 things.
 -- 1. It runs citeproc. Citeproc is needed so that the apaandcite.lua filter can do its job.
 -- 2. It removes the References Header if there are no citations and sets the zerocitations slot in the metadata
+-- 3. Makes citations in nocite have asterisks unless meta-analysis is false
 
 -- Counter for citation
 local n_citations = 0
@@ -8,7 +9,7 @@ local referenceword = "References"
 local maskedauthor = "Masked Citation"
 local maskedtitle = "Masked Title"
 local maskeddate = "n.d."
-local metaanalysis = false
+local metaanalysis = true
 local metareferencesentence = "References marked with an asterisk indicate studies included in the meta-analysis."
 return {
   --{FloatRefTarget = function(float)},
@@ -26,8 +27,8 @@ return {
         zerocitations = true
       end
       meta.zerocitations = zerocitations
-      if meta["meta-analysis"] then
-        metaanalysis = true
+      if meta["meta-analysis"] == false then
+        metaanalysis = false
       end
       if meta.language then
         if meta.language["section-title-references"] then

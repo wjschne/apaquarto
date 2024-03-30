@@ -3,6 +3,14 @@
 
 /*-- scss:rules --*/
 
+pre>code.sourceCode {white-space: pre-wrap;}
+
 p code:not(.sourceCode), li code:not(.sourceCode), td code:not(.sourceCode) {
-  background: white;
+  background: transparent;
+  
 }
+
+tr:nth-child(even) {
+  background-color: #e1e7ed;
+}
+

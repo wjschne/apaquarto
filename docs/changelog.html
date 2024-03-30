@@ -134,6 +134,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-3.4.8-2024-03-30" id="toc-version-3.4.8-2024-03-30" class="nav-link" data-scroll-target="#version-3.4.8-2024-03-30">Version 3.4.8 (2024-03-30)</a></li>
   <li><a href="#version-3.4.7-2024-03-29" id="toc-version-3.4.7-2024-03-29" class="nav-link" data-scroll-target="#version-3.4.7-2024-03-29">Version 3.4.7 (2024-03-29)</a></li>
   <li><a href="#version-3.4.6-2024-03-22" id="toc-version-3.4.6-2024-03-22" class="nav-link" data-scroll-target="#version-3.4.6-2024-03-22">Version 3.4.6 (2024-03-22)</a></li>
   <li><a href="#version-3.4.5-2024-03-16" id="toc-version-3.4.5-2024-03-16" class="nav-link" data-scroll-target="#version-3.4.5-2024-03-16">Version 3.4.5 (2024-03-16)</a></li>
@@ -196,11 +197,17 @@ ul.task-list li input[type="checkbox"] {
 <li>Typst version that would allow for easy customization</li>
 </ul>
 </section>
+<section id="version-3.4.8-2024-03-30" class="level1">
+<h1>Version 3.4.8 (2024-03-30)</h1>
+<ul>
+<li>Allow the correspondence note to be overridden by setting the <code>correspondence-note</code> subfield of the <code>author-note</code> field.</li>
+<li>The <code>meta-analysis</code> field is now set to <code>true</code> by default (and thus does not need to appear in the metadata). If marking studies in the <code>nocite</code> field with asterisks is not desired, set the <code>meta-analysis</code> field to <code>false</code>.</li>
+</ul>
+</section>
 <section id="version-3.4.7-2024-03-29" class="level1">
 <h1>Version 3.4.7 (2024-03-29)</h1>
 <ul>
 <li>Studies included in a meta-analysis are not usually cited in the text but are <a href="https://apastyle.apa.org/style-grammar-guidelines/references/meta-analysis-references">included in the References section and flagged with an asterisk</a>. When the <code>meta-analysis</code> field is set to <code>true</code>, citations listed in <code>nocite</code> are flagged with an asterisk in References section and a note to that effect is inserted below the References header.</li>
-<li>Allow the correspondence note to be overridden by setting the <code>correspondence-note</code> subfield of the <code>author-note</code> field.</li>
 </ul>
 </section>
 <section id="version-3.4.6-2024-03-22" class="level1">

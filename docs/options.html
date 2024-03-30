@@ -241,8 +241,7 @@ window.Quarto = {
 </header>
 
 
-<p>Options are set in the YAML metadata section at the top of the .qmd file.</p>
-<p>t uses <a href="https://yaml.org/">YAML</a>, a format that allows us to store data in a format that is easy to write and easy to read. In its simplest form, it has a key and a value:</p>
+<p>Options are set in the metadata section at the top of the .qmd file. Quarto metadata uses <a href="https://yaml.org/">YAML</a>, a format that allows us to store data in a format that is easy to write and easy to read. In its simplest form, it has a key and a value:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">key</span><span class="kw">:</span><span class="at"> value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If the value is simple, it does not need any quotes. If it has any characters that have special meaning in yaml (e.g., <code>:</code>), you will need to put the value in quotes.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"This title needs quotes: Because there is a colon in it."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -277,10 +276,10 @@ window.Quarto = {
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="general-options" class="level1">
 <h1>General Options</h1>
-<table class="table-hover table-primary table">
+<table class="table-primary table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -369,14 +368,14 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>meta-analysis</code></td>
-<td style="text-align: left;">If <code>true</code>, all studies listed in the <code>nocite</code> field will be marked with asterisks in the References section</td>
+<td style="text-align: left;">By default, all studies listed in the <code>nocite</code> field will be marked with asterisks in the References section. If this behavior is unwanted, set <code>meta-analysis</code> to false.</td>
 </tr>
 </tbody>
 </table>
 <section id="authors" class="level2">
 <h2 class="anchored" data-anchor-id="authors">Authors</h2>
-<p>The apaquarto uses the [standard Quarto schema for authors](https://quarto.org/docs/authoring/front-matter.html#author). It has a lot of options, some of which are not needed for the apaquarto extension (e.g., <code>fax</code>).</p>
-<p>The <code>author</code> field contains author names, author affiliations, and author roles. Where possible, specify each author’s [orcid](https://orcid.org/) for easy, unambiguous identification.</p>
+<p>The apaquarto uses the <a href="https://quarto.org/docs/authoring/front-matter.html#author">standard Quarto schema for authors</a>. It has a lot of options, some of which are not needed for the apaquarto extension (e.g., <code>fax</code>).</p>
+<p>The <code>author</code> field contains author names, author affiliations, and author roles. Where possible, specify each author’s <a href="https://orcid.org/">orcid</a> for easy, unambiguous identification.</p>
 <p>The corresponding author is specified by setting the author’s corresponding field to true (i.e., <code>corresponding: true</code>). This author needs to list an email and list a mailing address in the affiliation data. Only one author can be the corresponding author. Other authors do not need to list their addresses.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
@@ -418,11 +417,11 @@ window.Quarto = {
 </section>
 <section id="affiliations" class="level2">
 <h2 class="anchored" data-anchor-id="affiliations">Affiliations</h2>
-<p>The apaquarto extenstion uses the [standard Quarto schema for affiliations](https://quarto.org/docs/journals/authors.html#affiliations-schema).</p>
-<table class="table-hover table-primary table">
+<p>The apaquarto extenstion uses the <a href="https://quarto.org/docs/journals/authors.html#affiliations-schema">standard Quarto schema for affiliations</a>.</p>
+<table class="table-primary table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -553,8 +552,8 @@ window.Quarto = {
 </section>
 <section id="author-roles" class="level2">
 <h2 class="anchored" data-anchor-id="author-roles">Author Roles</h2>
-<p>APA Style encourages but does not require papers with multiple authors to describe author roles using the [Contributor Roles Taxonomy (CRediT)](https://credit.niso.org/). There are 14 contributor roles:</p>
-<table class="table-hover table-primary table">
+<p>APA Style encourages but does not require papers with multiple authors to describe author roles using the <a href="https://credit.niso.org/">Contributor Roles Taxonomy</a> (CRediT). There are 14 contributor roles:</p>
+<table class="table-primary table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -658,10 +657,10 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="author-notes">Author Notes</h2>
 <p>The first paragraph of the Author Note will be populated with all the ORCID IDs that have been specified.</p>
 <p>The second paragraph consists of status changes:</p>
-<table class="table-hover table-primary table">
+<table class="table-primary table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -689,10 +688,10 @@ window.Quarto = {
 </tbody>
 </table>
 <p>The third paragraph consists of study details and author disclosures:</p>
-<table class="table-hover table-primary table">
+<table class="table-primary table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -706,56 +705,56 @@ window.Quarto = {
 <td><p>Describe where the study was registered.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">discloures</span><span class="kw">:</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">study-registration</span><span class="kw">:</span><span class="at"> This study was registered at ClinicalTrials.gov (Identifier NTC998877).</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">study-registration</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was registered at ClinicalTrials.gov (Identifier NTC998877)."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 <tr class="even">
 <td><code>data-sharing</code></td>
 <td><p>Data/materials that have been shared</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">discloures</span><span class="kw">:</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">data-sharing</span><span class="kw">:</span><span class="at"> Data from this study can be accessed at https://academicdata.org/jones2024.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">data-sharing</span><span class="kw">:</span><span class="at"> </span><span class="st">"Data from this study can be accessed at https://academicdata.org/jones2024."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 <tr class="odd">
 <td><code>related-report</code></td>
 <td><p>Acknowledge and cite data/materials that were used previously</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">discloures</span><span class="kw">:</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">related-report</span><span class="kw">:</span><span class="at"> This article is based on the dissertation completed by Graham (2018)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">related-report</span><span class="kw">:</span><span class="at"> </span><span class="st">"This article is based on the dissertation completed by Graham (2018)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 <tr class="even">
 <td><code>conflict-of-interest</code></td>
 <td><p>Disclose author conflicts of interest</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">discloures</span><span class="kw">:</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict-of-interest</span><span class="kw">:</span><span class="at"> Fred Jones has been a paid consultant for Corporation X, which funded this study.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict-of-interest</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fred Jones has been a paid consultant for Corporation X, which funded this study."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 <tr class="odd">
 <td><code>financial-support</code></td>
 <td><p>Acknowledge funding sources</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">discloures</span><span class="kw">:</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">financial-support</span><span class="kw">:</span><span class="at"> This study was supported by Grant 123 from Academic Funders United.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">financial-support</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was supported by Grant 123 from Academic Funders United."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 <tr class="even">
 <td><code>gratitude</code></td>
 <td><p>Authors can express gratitude.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">discloures</span><span class="kw">:</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gratitude</span><span class="kw">:</span><span class="at"> The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gratitude</span><span class="kw">:</span><span class="at"> </span><span class="st">"The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 <tr class="odd">
 <td><code>authorship-agreements</code></td>
 <td><p>Authors can disclose any agreements they entered into regarding the paper.</p>
 <p>Example:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">discloures</span><span class="kw">:</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">authorship-agreements</span><span class="kw">:</span><span class="at"> Because the authors are equal contributors, order of authorship was determined by a fair coin toss.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">authorship-agreements</span><span class="kw">:</span><span class="at"> </span><span class="st">"Because the authors are equal contributors, order of authorship was determined by a fair coin toss."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></td>
 </tr>
 </tbody>
 </table>
@@ -766,10 +765,10 @@ window.Quarto = {
 </section>
 <section id="options-for-.docx" class="level1">
 <h1>Options for .docx</h1>
-<table class="table-hover table-primary table">
+<table class="table-primary table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -794,11 +793,11 @@ window.Quarto = {
 </section>
 <section id="options-for-.pdf" class="level1">
 <h1>Options for .pdf</h1>
-<p>All of the .pdf-specfic options for apaquarto come directly from the [apa7 <span class="math inline">\(\LaTeX\)</span> package](https://ctan.org/pkg/apa7?lang=en). Consult the apa7 package documentation for greater detail.</p>
-<table class="table-hover table-primary table">
+<p>All of the .pdf-specfic options for apaquarto come directly from the <a href="https://ctan.org/pkg/apa7?lang=en">apa7 <span class="math inline">\(\LaTeX\)</span> package</a>. Consult the apa7 package documentation for greater detail.</p>
+<table class="table-primary table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -874,10 +873,10 @@ window.Quarto = {
 <section id="language-options" class="level1">
 <h1>Language Options</h1>
 <p>You can alter the names of Abstract, Figures, Tables, and References by setting the <code>lang</code> field to one of these languages:</p>
-<table class="table-hover table-primary table">
+<table class="table-primary table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 80%">
+<col style="width: 25%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -945,7 +944,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.</p>
-<table class="table-hover table-primary table">
+<table class="table-primary table">
 <colgroup>
 <col style="width: 30%">
 <col style="width: 40%">

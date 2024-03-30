@@ -129,6 +129,10 @@ conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 ```
 
+
+
+
+
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
 Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style).
@@ -136,6 +140,10 @@ Details about writing headings with markdown in APA style are [here](https://wjs
 ## Displaying Figures
 
 A reference label for a figure must have the prefix `fig-`, and in a code chunk, the caption must be set with `fig-cap`. Captions are in [title case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
+
+
+
+
 
 ```{r}
 #| label: fig-myplot
@@ -153,11 +161,19 @@ ggplot(data.frame(x = c(0, 35)), aes(x)) +
   theme_void(base_size = 18)
 ```
 
+
+
+
+
 To refer to any figure or table, use the `@` symbol followed by the reference label (e.g., @fig-myplot).
 
 ## Imported Graphics
 
 One way to import an existing graphic as a figure is to use `knitr::include_graphics` in a code chunk. For example, @fig-import1 is an imported image. Note that in apaquarto-pdf documents, we can specify that that a figure or table should span both columns when in journal mode by setting the `apa-twocolumn` chunk option to `true`. For other formats, this distinction does not matter.
+
+
+
+
 
 ```{r fig-import1}
 #| fig-cap: An Imported Graphic
@@ -167,6 +183,10 @@ One way to import an existing graphic as a figure is to use `knitr::include_grap
 knitr::include_graphics("img/sampleimage.png")
 ```
 
+
+
+
+
 Figure graphics can be imported directly with Markdown:
 
 ![Another Way to Import Graphics](img/sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
@@ -174,6 +194,10 @@ Figure graphics can be imported directly with Markdown:
 ## Displaying Tables
 
 We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
+
+
+
+
 
 ```{r tbl-mytable}
 #| tbl-cap: The Table Caption
@@ -185,6 +209,10 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |>
   line_spacing(part = "all", space = 1)
 
 ```
+
+
+
+
 
 To refer to this table in text, use the `@` symbol followed by the reference label like so: As seen in @tbl-mytable, the first few numbers and letters of the alphabet are displayed.
 
@@ -299,5 +327,6 @@ If there are multiple appendices, label them with level 1 headings as Appendix A
 See @fig-appendfig
 
 ![Appendix Figure](img/sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
+
 
 
