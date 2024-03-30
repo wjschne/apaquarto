@@ -380,7 +380,7 @@ APA Style encourages but does not require papers with multiple authors to descri
 | [`editing`](https://credit.niso.org/contributor-roles/writing-review-editing/)                | reparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision -- including pre- or post-publication stages.    |
 +-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-: {.hover .primary tbl-colwidths="\[25,75\]"}
+: {.hover .primary tbl-colwidths="[25,75]"}
 
 It is possible to list the roles for each author:
 
@@ -449,7 +449,7 @@ The second paragraph consists of status changes:
 |                      | ```                                                                   |
 +----------------------+-----------------------------------------------------------------------+
 
-: {.hover .primary tbl-colwidths="\[20,80\]"}
+: {.hover .primary tbl-colwidths="[20,80]"}
 
 The third paragraph consists of study details and author disclosures:
 
@@ -527,7 +527,7 @@ The third paragraph consists of study details and author disclosures:
 |                         | ```                                                                                                                            |
 +-------------------------+--------------------------------------------------------------------------------------------------------------------------------+
 
-: {.hover .primary tbl-colwidths="\[20,80\]"}
+: {.hover .primary tbl-colwidths="[20,80]"}
 
 The fourth paragraph of the Author Note consists of the correspondence information. It will created automatically from the contact information from the author marked as the corresponding author. If you wish to override this paragraph with one entirely of your own, you can set it via the `correspondence-note` subfield in the `author-note` field.
 
@@ -552,7 +552,7 @@ author-note:
 |                                 | APA style wants the note to start around the middle of the page. You can play with the number. It defaults to 2 if omitted.       |
 +---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
-: {.hover .primary tbl-colwidths="\[20,80\]"}
+: {.hover .primary tbl-colwidths="[20,80]"}
 
 # Options for .pdf
 
@@ -604,7 +604,7 @@ All of the .pdf-specfic options for apaquarto come directly from the \[apa7 $\La
 | `nocorrespondence` | If `true`, hides correspondence text                                          |
 +--------------------+-------------------------------------------------------------------------------+
 
-: {.hover .primary tbl-colwidths="\[20,80\]"}
+: {.hover .primary tbl-colwidths="[20,80]"}
 
 # Options for .html
 
@@ -631,7 +631,7 @@ You can alter the names of Abstract, Figures, Tables, and References by setting 
 | `pl` | Polish     |
 | `ko` | Korean     |
 
-: {.hover .primary tbl-colwidths="\[20,80\]"}
+: {.hover .primary tbl-colwidths="[20,80]"}
 
 However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.
 
@@ -655,7 +655,7 @@ However, there are a few options that are specific to apaquarto and thus were no
 | `references-meta-analysis`        | The sentence explaining that citations marked with an asterisk were studies in the meta-analysis.                                                    | *References marked with an asterisk indicate studies included in the meta-analysis.*                              |
 +-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
 
-: {.hover .primary tbl-colwidths="\[30,40,30\]"}
+: {.hover .primary tbl-colwidths="[30,40,30]"}
 
 All these options must be listed under the `language` field . For example, if we set the `lang` field to `en` (Spanish), the remaining options can also be set:
 
@@ -669,6 +669,7 @@ language:
   title-block-author-note: "Nota de Autores"
   title-block-correspondence-note: "La correspondencia relativa a este artículo debe dirigirse a"
   title-block-role-introduction: "Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"
+  references-meta-analysis: "Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."
 ```
 
 In addition, many terms translated automatically can be overridden. The full list is [here](https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml). For example, if I wanted "Figure" in figure captions to be "Plot" instead, I would specify the change like so:
