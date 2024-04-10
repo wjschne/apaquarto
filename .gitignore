@@ -1,4 +1,3 @@
-
 .DS_Store
 .httr-oauth
 .Rdata
@@ -7,6 +6,13 @@
 /.luarc.json
 /.quarto/
 apa_processed.docx
+example.html
+example.docx
+example.pdf
+example.aux
+example.bbl
+example.ttt
+example_files/
 Features.html
 minimal.docx
 minimal.html
@@ -29,6 +35,7 @@ template.native
 template.pdf
 template.pdf.md
 template.pdf.native
+template.rmarkdown
 template.ttt
 template_files/
 test.*

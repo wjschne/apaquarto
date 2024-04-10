@@ -91,7 +91,7 @@ installed the template to and ends with `.qmd`. This file has most of
 the options already filled out and explains how and why to change them.
 It also has a examples of how to use the extension in the text.
 
-If you prefer a minimal template, you can start with the `minimal.qmd`
+If you prefer an example with explanations, you can start with the `example.qmd`
 file instead.
 
 ## Adding apaquarto to an Existing Document or Project

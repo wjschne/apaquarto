@@ -190,11 +190,9 @@ quarto::quarto_use_template("wjschne/apaquarto", no_prompt = TRUE)
 
 The apaquarto source code is in [this repository](https://github.com/wjschne/apaquarto). Installing the extension will install the contents of the `_extensions/apaquarto` folder. If you install the template, it will install the `template.qmd` file and rename it to the name of the folder you install the template to. In addition, these files will be installed:
 
-- apaquarto.Rproj
 - bibliography.bib
 - README.md
-- minimal.qmd
-- img/sampleimage.png
+- example.qmd
 
 :::
 
@@ -276,9 +274,11 @@ If you made a...
 
 #### A new file
 
-If you create a new apaquarto file, you will see a template file in the folder you select. The template file will have the same name as the folder you installed the template to and ends with `.qmd`. This file has most of the options already filled out and explains how and why to change them. It also has a examples of how to use the extension in the text.
+If you create a new apaquarto file, you will see a template file in the folder you select. The template file will have the same name as the folder you installed the template to and ends with `.qmd`. 
 
-If you prefer a minimal template, you can start with the `minimal.qmd` file instead.
+
+The example.qmd file has most of the options already filled out and explains how and why to change them. It also has a examples of how to use the extension in the text.
+
 
 
 #### An existing file

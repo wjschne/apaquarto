@@ -37,7 +37,7 @@ local function figtblconvert(ct)
       float = quarto._quarto.ast.custom_node_data[tostring(i)]
       
       --Is the float a table?
-      if string.find(float.identifier, "^tbl%-") then 
+      if float.identifier and string.find(float.identifier, "^tbl%-") then 
         -- is the table already in the array?
         if tbl[float.identifier] then
         else
@@ -46,7 +46,7 @@ local function figtblconvert(ct)
         end
       end
       --Is the float a figure?
-      if string.find(float.identifier, "^fig%-") then 
+      if float.identifier and string.find(float.identifier, "^fig%-") then 
         -- is the figure already in the array?
         if fig[float.identifier] then
         else

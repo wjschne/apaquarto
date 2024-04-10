@@ -430,11 +430,9 @@ How to inspect the code before installing it
 <div class="callout-body-container callout-body">
 <p>The apaquarto source code is in <a href="https://github.com/wjschne/apaquarto">this repository</a>. Installing the extension will install the contents of the <code>_extensions/apaquarto</code> folder. If you install the template, it will install the <code>template.qmd</code> file and rename it to the name of the folder you install the template to. In addition, these files will be installed:</p>
 <ul>
-<li>apaquarto.Rproj</li>
 <li>bibliography.bib</li>
 <li>README.md</li>
-<li>minimal.qmd</li>
-<li>img/sampleimage.png</li>
+<li>example.qmd</li>
 </ul>
 </div>
 </div>
@@ -550,8 +548,8 @@ Pasting commands into the terminal
 <p>If you made a…</p>
 <section id="a-new-file" class="level4">
 <h4 class="anchored" data-anchor-id="a-new-file">A new file</h4>
-<p>If you create a new apaquarto file, you will see a template file in the folder you select. The template file will have the same name as the folder you installed the template to and ends with <code>.qmd</code>. This file has most of the options already filled out and explains how and why to change them. It also has a examples of how to use the extension in the text.</p>
-<p>If you prefer a minimal template, you can start with the <code>minimal.qmd</code> file instead.</p>
+<p>If you create a new apaquarto file, you will see a template file in the folder you select. The template file will have the same name as the folder you installed the template to and ends with <code>.qmd</code>.</p>
+<p>The example.qmd file has most of the options already filled out and explains how and why to change them. It also has a examples of how to use the extension in the text.</p>
 </section>
 <section id="an-existing-file" class="level4">
 <h4 class="anchored" data-anchor-id="an-existing-file">An existing file</h4>
@@ -1017,7 +1015,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

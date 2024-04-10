@@ -1,10 +1,15 @@
 _quarto.yml
 apa.csl
 apa-cv.csl
+apaquarto.Rproj
 apaquarto.scss
 changelog.qmd
+example.html
+example_files/
 docs
 index.qmd
+img/
+img/sample_image
 img/console.png
 img/cover.png
 img/docx.png
@@ -22,7 +27,6 @@ resources.qmd
 template.pdf
 template_journal.pdf
 template_manuscript.pdf
+template.rmarkdown
 template.tex
 writing.qmd
-
-
