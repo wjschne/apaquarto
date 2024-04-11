@@ -15,7 +15,7 @@ engine: knitr
 
 - At mvuorre's suggestion [#41](https://github.com/wjschne/apaquarto/issues/41):
   * I moved the example/documentation text out of the template and into a file called `example.qmd`. The new template contains what used to be called `minimal.qmd`.
-  * I removed the `apaquarto.Rproj` file, `img` folder from being included by the `quarto use template` command. 
+  * I removed the `apaquarto.Rproj` file, `references.bib`, and `img` folder from being included by the `quarto use template` command. 
 - Fixed mainfont problem not loading fontspec package in time for .pdf [#40](https://github.com/wjschne/apaquarto/issues/40)
 - Fixed bug assocated with `{{< pagebreak >}}` [#41](https://github.com/wjschne/apaquarto/issues/41)
 - Fixed bug that occurs when no author note is included.
