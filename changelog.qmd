@@ -18,6 +18,7 @@ engine: knitr
   * I removed the `apaquarto.Rproj` file, `img` folder from being included by the `quarto use template` command. 
 - Fixed mainfont problem not loading fontspec package in time for .pdf [#40](https://github.com/wjschne/apaquarto/issues/40)
 - Fixed bug assocated with `{{< pagebreak >}}` [#41](https://github.com/wjschne/apaquarto/issues/41)
+- Fixed bug that occurs when no author note is included.
 
 # Version 3.4.8 (2024-03-30)
 

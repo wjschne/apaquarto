@@ -46,7 +46,7 @@ Block = function(b)
       b.attributes.prefix = prefix
       b.attributes.tblnum = tbllabel(b.identifier)
     else
-      if b.identifier:find("^fig%-") and b.tag == "Figure" then
+      if b.identifier:find("^fig%-") then
         b.attributes.prefix = prefix
         b.attributes.fignum = figlabel(b.identifier)
         b.content:walk {

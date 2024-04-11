@@ -373,7 +373,7 @@ return {
   
       local corresponding_paragraph = pandoc.Para(pandoc.Str(""))
       local check_corresponding = false
-      if meta["author-note"]["correspondence-note"] then
+      if meta["author-note"] and meta["author-note"]["correspondence-note"] then
         corresponding_paragraph.content:extend(meta["author-note"]["correspondence-note"])
       else
         
