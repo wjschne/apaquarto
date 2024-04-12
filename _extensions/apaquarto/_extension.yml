@@ -103,3 +103,7 @@ contributes:
       knitr: 
         opts_chunk: 
           dev: ragg_png
+    typst:
+      template-partials:
+        - typst/typst-template.typ
+        - typst/typst-show.typ
