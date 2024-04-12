@@ -3,7 +3,7 @@ if FORMAT ~= "docx" then
   return
 end
 
-
+-- Removes table environment inserted by Quarto
 function Table(tb)
   local mydivs = pandoc.List()
   tb:walk {

@@ -84,7 +84,7 @@ abstract: "This document is a template demonstrating the apaquarto format."
 # Put as many keywords at you like, separated by commmas (e.g., [reliability, validity, generalizability])
 keywords: [keyword1, keyword2, keyword3]
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
-floatsintext: false
+floatsintext: true
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
 # File with references
@@ -159,17 +159,24 @@ To refer to any figure or table, use the `@` symbol followed by the reference la
 
 One way to import an existing graphic as a figure is to use `knitr::include_graphics` in a code chunk. For example, @fig-import1 is an imported image. Note that in apaquarto-pdf documents, we can specify that that a figure or table should span both columns when in journal mode by setting the `apa-twocolumn` chunk option to `true`. For other formats, this distinction does not matter.
 
+
+
 ```{r fig-import1}
 #| fig-cap: An Imported Graphic
 #| apa-note: A note below the figure
 #| fig-width: 3
 #| out-width: 48%
-knitr::include_graphics("https://wjschne.github.io/apaquarto/img/sampleimage.png")
+knitr::include_graphics("sampleimage.png")
 ```
+
+
 
 Figure graphics can be imported directly with Markdown:
 
-![Another Way to Import Graphics](https://wjschne.github.io/apaquarto/img/sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
+![Another Way to Import Graphics](sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
+
+Which style of creating figures you choose depends on preference and need.
+
 
 ## Displaying Tables
 
@@ -288,7 +295,7 @@ Let's sum this up.
 ::: {#refs}
 :::
 
-{{< pagebreak >}}
+
 
 # Appendix
 
@@ -296,8 +303,8 @@ Let's sum this up.
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
 
-See @fig-appendfig
+See @fig-appendfig.
 
-![Appendix Figure](https://wjschne.github.io/apaquarto/img/sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
+![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
 
 

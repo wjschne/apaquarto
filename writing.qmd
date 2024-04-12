@@ -377,10 +377,10 @@ Note that in this context the figure label must start with `#fig-`. Additional i
 -   `width` Image width
 -   `apa-note` A note below the figure
 
-For example, in the same same folder as my Quarto document, there is a folder called `img`, which contains an image file `sampleimage.png`. We can display this image like so:
+For example, in the same same folder as my Quarto document, there is an image file `sampleimage.png`. We can display this image like so:
 
 ``` markdown
-![A Simple Mediation Model](img/sampleimage.png){
+![A Simple Mediation Model](sampleimage.png){
   #fig-myimportedimage 
   width="5in" 
   fig-alt="A mediation model in which A causes B, and B causes C." 
@@ -388,7 +388,7 @@ For example, in the same same folder as my Quarto document, there is a folder ca
   }
 ```
 
-![A Simple Mediation Model](img/sampleimage.png){#fig-myimportedimage width="5in" fig-alt="A path diagram in which A causes B, and B causes C." apa-note="Variable A indirectly causes Variable C."}
+![A Simple Mediation Model](sampleimage.png){#fig-myimportedimage width="5in" fig-alt="A path diagram in which A causes B, and B causes C." apa-note="Variable A indirectly causes Variable C."}
 
 ## Figure References
 

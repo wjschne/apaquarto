@@ -61,11 +61,11 @@ Block = function(b)
             if fg.identifier then
               if fg.identifier:find("^fig%-") then
                 fg.attributes.prefix = prefix
-                fg.attributes.fignum = figlabel(b.identifier)
+                fg.attributes.fignum = figlabel(fg.identifier)
                 fg.content:walk {
                   Image = function(img)
                     img.attributes.prefix = prefix
-                    img.attributes.fignum = figlabel(b.identifier)
+                    img.attributes.fignum = figlabel(fg.identifier)
                   end
                   }
               end

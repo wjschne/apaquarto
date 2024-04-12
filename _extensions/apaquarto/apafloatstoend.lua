@@ -8,8 +8,6 @@ Pandoc = function(doc)
   local tbl = {}
   local fig = {}
   for i = #doc.blocks, 1, -1 do
-    
-
       if doc.blocks[i].identifier then
         if doc.blocks[i].identifier:find("^tbl%-") then
           if doc.blocks[i].attributes and doc.blocks[i].attributes.prefix == "" then
@@ -34,7 +32,7 @@ Pandoc = function(doc)
               Figure = function(fg)
                 if fg.identifier then
                   if fg.identifier:find("^fig%-") then
-                    hasfig = true
+                       hasfig = true
                   end
                 end
               end

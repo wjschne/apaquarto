@@ -191,12 +191,28 @@ $for(header-insert)$
 $header-insert$
 $endfor$
 
+% From https://tex.stackexchange.com/a/645996/211326
+%%% apa7 doesn't want to add appendix section titles in the toc
+%%% let's make it do it
+\makeatletter
+\xpatchcmd{\appendix}
+  {\par}
+  {\addcontentsline{toc}{section}{\@currentlabelname}\par}
+  {}{}
+\makeatother
 
 \begin{document}
 
 $if(suppress-title-page)$
 $else$
 \maketitle
+$endif$
+
+$if(toc)$
+\hypertarget{toc}{}
+\tableofcontents
+\newpage
+\section[Introduction]{$title$}
 $endif$
 
 $if(numbersections)$

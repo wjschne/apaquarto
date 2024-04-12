@@ -11,6 +11,10 @@ engine: knitr
 - Tables in .pdf jou mode should fit automatically.
 - Typst version that would allow for easy customization
 
+# Version 3.5.0 (2024-04-12)
+
+- Added table of contents for pdf documents [#45](https://github.com/wjschne/apaquarto/issues/45)
+
 # Version 3.4.9 (2024-04-09)
 
 - At mvuorre's suggestion [#41](https://github.com/wjschne/apaquarto/issues/41):
@@ -19,6 +23,7 @@ engine: knitr
 - Fixed mainfont problem not loading fontspec package in time for .pdf [#40](https://github.com/wjschne/apaquarto/issues/40)
 - Fixed bug assocated with `{{< pagebreak >}}` [#41](https://github.com/wjschne/apaquarto/issues/41)
 - Fixed bug that occurs when no author note is included.
+- Fixed figure numbering bug for markdown figures.
 
 # Version 3.4.8 (2024-03-30)
 

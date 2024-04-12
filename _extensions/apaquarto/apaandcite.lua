@@ -1,4 +1,15 @@
+-- For now, apa.csl cannot handle different separators for in-text
+-- and parenthetical citations. Forthcoming updates to csl will handle 
+-- them automatically. 
+-- This filter finds in-text citations with multiple authors and converts
+-- the ampersand to "and" (or whatever separator specified in the yaml 
+-- language field "citation-last-author-separator")
+
+-- This filter also implements possessive citations. For example:
+-- Schneider's (2021) primary findings were replicated in our study.
+
 local andreplacement = "and"
+
 -- make string, if it exists, else return default
 local stringify = function(s, default)
   if s then
@@ -13,7 +24,7 @@ local stringify = function(s, default)
   return s
 end
 
-
+-- Get alternate separator, if it exists
 local function get_and(m)
   if m.language and m.language["citation-last-author-separator"] then
     andreplacement = stringify(
@@ -25,7 +36,9 @@ end
 ---Adapted from Samuel Dodson
 ---https://github.com/citation-style-language/styles/issues/3748#issuecomment-430871259
 local function replace_and(ct)
+    
     if ct.citations[1].mode == "AuthorInText" then
+      -- Replace ampersand
         ct.content = ct.content:walk {
             Str = function(s)
                 if s.text == "&" then
@@ -34,7 +47,8 @@ local function replace_and(ct)
                 return s
             end
         }
-            
+        
+        -- Make possessive citation if suffix = 's
         if ct.citations[1].suffix and #ct.citations[1].suffix > 0 then
 
             if ct.citations[1].suffix[1].text == "’s" or ct.citations[1].suffix[1].text == "'s" then
