@@ -1,16 +1,28 @@
+-- This filter creates prefixes for figures and tables in appedices.
+
+-- List of appendix names
 local abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+-- Default prefix
 local prefix = ""
+-- Prefix counter
 local intprefix = 0
+-- Table counter
 local tblnum = 0
+-- Figure counter
 local fignum = 0
+-- Table table
 local tbl = {}
+-- Figure table
 local fig = {}
 
+-- return table number associated with id
 local tbllabel = function(id)
   if id ~= "" then
+    -- Is id in tbl?
     if tbl[id] then
-    
+      -- Do nothing
     else
+      -- Add id to tbl
       tblnum = tblnum + 1
       tbl[id] = tblnum
     end
@@ -18,22 +30,25 @@ local tbllabel = function(id)
   end
 end
 
+-- return figure number associated with id
 local figlabel = function(id)
   if id ~= "" then
-     
+    -- Is id in fig?
     if fig[id] then
-    
+      -- Do nothing
     else
+      -- Add id to fig
       fignum = fignum + 1
       fig[id] = fignum
     end
-    --print(id);print(fignum)
   end
  
   return fig[id]
 end
 
+
 Block = function(b)
+  -- Increment prefix for every level-1 header starting with Appendix
   if b.tag == "Header" and b.level == 1 and pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8) == "Appendix" then
     intprefix = intprefix + 1
     tblnum = 0
@@ -41,6 +56,7 @@ Block = function(b)
     prefix = pandoc.text.sub(abc,intprefix,intprefix)
   end
   
+  -- Assign prefixes and numbers
   if b.identifier then
     if b.identifier:find("^tbl%-") then
       b.attributes.prefix = prefix

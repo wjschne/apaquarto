@@ -33,6 +33,7 @@ Pandoc = function(doc)
                 if fg.identifier then
                   if fg.identifier:find("^fig%-") then
                        hasfig = true
+                       print(fg)
                   end
                 end
               end
@@ -46,6 +47,8 @@ Pandoc = function(doc)
                 doc.blocks:remove(i)
                 hasfig = false
               end
+            else
+              
             end
           end
         end

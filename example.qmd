@@ -84,7 +84,7 @@ abstract: "This document is a template demonstrating the apaquarto format."
 # Put as many keywords at you like, separated by commmas (e.g., [reliability, validity, generalizability])
 keywords: [keyword1, keyword2, keyword3]
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
-floatsintext: true
+floatsintext: false
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
 # File with references
@@ -112,7 +112,7 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    documentmode: jou
 ---
 
 ```{r}
@@ -216,6 +216,7 @@ See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for i
 A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so: 
 
 @CameronTrivedi2013 make some important points ...
+
 
 See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
 

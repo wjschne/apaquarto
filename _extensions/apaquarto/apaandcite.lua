@@ -6,6 +6,8 @@
 -- language field "citation-last-author-separator")
 
 -- This filter also implements possessive citations. For example:
+-- @schneider2021 ['s] primary findings were replicated in our study.
+-- becomes:
 -- Schneider's (2021) primary findings were replicated in our study.
 
 local andreplacement = "and"
@@ -33,12 +35,12 @@ local function get_and(m)
   end
 end
 
----Adapted from Samuel Dodson
----https://github.com/citation-style-language/styles/issues/3748#issuecomment-430871259
 local function replace_and(ct)
     
     if ct.citations[1].mode == "AuthorInText" then
       -- Replace ampersand
+      ---Adapted from Samuel Dodson
+      ---https://github.com/citation-style-language/styles/issues/3748#issuecomment-430871259
         ct.content = ct.content:walk {
             Str = function(s)
                 if s.text == "&" then

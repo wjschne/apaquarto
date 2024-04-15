@@ -1,8 +1,11 @@
----http://lua-users.org/wiki/StringRecipes
+
+--- Does the string end with a specific character?
+--- http://lua-users.org/wiki/StringRecipes
 local function ends_with(str, ending)
    return string.sub(str.text, -1) == ending
 end
 
+--- Trim string
 local function trim(s)
   local l = 1
   while string.sub(s,l,l) == ' ' do
@@ -15,6 +18,7 @@ local function trim(s)
   return string.sub(s,l,r)
 end
 
+--- Put a space before the string
 local function prependspace(s)
   if s then
     return " " .. pandoc.utils.stringify(s)
@@ -23,14 +27,17 @@ local function prependspace(s)
   end
 end
 
+-- Are the affiliations different or same across authors?
 local are_affiliations_different = function(authors)
+  -- Superscript id
+  local superii = ""
   
-      local superii = ""
-      local hash = {}
-      local res = {}
+  -- List of superii
+  local hash = {}
+  -- index of superii
+  local res = {}
       
-      
-      --Check if affilations are the name for each authors
+      --Check if affilations are the same for each author
       for i, a in ipairs(authors) do
         superii = ""
         if a.affiliations then
@@ -50,11 +57,12 @@ local are_affiliations_different = function(authors)
       end
   
   return #res > 1
-  end
+end
 
 local function makeauthorname(a)
+
   local authorname = a.literal
-  
+  -- Make author name
   if pandoc.utils.type(a.literal) == "List" then
     if a.literal[1].literal then
       authorname = a[1].literal

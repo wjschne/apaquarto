@@ -1,7 +1,6 @@
 -- Formats level 4 and 5 headers for APA format.
 
-stringify = pandoc.utils.stringify
-
+-- Does the string end with a specific character?
 ---http://lua-users.org/wiki/StringRecipes
 local function ends_with(str, ending)
    return string.sub(str.text, -1) == ending
@@ -16,7 +15,7 @@ function Header (hx)
     end 
     if FORMAT == "docx" then
       -- Adds a "Style Separator" character that allows the headier to appear as if it were on the same line as the subsequent paragraph.
-      local htext = stringify(hx.content)
+      local htext = pandoc.utils.stringify(hx.content)
       local prefix = "<w:p><w:pPr><w:pStyle w:val=\"Heading" .. hx.level .. "\"/><w:rPr><w:vanish/><w:specVanish/></w:rPr></w:pPr><w:r><w:t>"
 		  local suffix = "</w:t></w:r><w:r><w:t xml:space=\"preserve\"> </w:t></w:r></w:p>"
 		  return pandoc.RawBlock('openxml', prefix .. htext .. suffix)

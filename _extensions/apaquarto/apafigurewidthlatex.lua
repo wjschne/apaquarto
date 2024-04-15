@@ -1,7 +1,7 @@
 if FORMAT ~= "latex" then
   return 
 end
-
+-- Insert column width for figures if not set
 Div = function(div)
   if div.identifier:find("^fig%-") then
     div.content = div.content:walk {

@@ -1,3 +1,4 @@
+-- Sets journalmode in latex. Latex templates only read logical values.
 if FORMAT:match 'latex' then
 -- Sets journal mode
 function Meta(m)

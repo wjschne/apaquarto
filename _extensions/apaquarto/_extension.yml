@@ -34,11 +34,16 @@ contributes:
           path: apamasked.lua
         - at: post-ast
           path: apatwocolumnlatex.lua
-        - apaheader.lua
-        - apastriptitle.lua
-        - docxfrontmatter.lua
-        - apaquote.lua
-        - latexnoindent.lua
+        - at: pre-quarto
+          path: apaheader.lua
+        - at: pre-quarto
+          path: apastriptitle.lua
+        - at: pre-quarto
+          path: docxfrontmatter.lua
+        - at: pre-quarto
+          path: apaquote.lua
+        - at: pre-quarto
+          path: latexnoindent.lua
         - at: pre-quarto
           path: apafigtblappendix.lua
         - at: post-quarto
