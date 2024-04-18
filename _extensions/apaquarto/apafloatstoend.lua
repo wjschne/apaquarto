@@ -33,7 +33,7 @@ Pandoc = function(doc)
                 if fg.identifier then
                   if fg.identifier:find("^fig%-") then
                        hasfig = true
-                       print(fg)
+                       --print(fg)
                   end
                 end
               end
