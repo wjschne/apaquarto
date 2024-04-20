@@ -108,7 +108,6 @@ return {
           if hasrefdiv then
             return refheader
           else
-            print("hello")
             local refdiv = pandoc.Div({})
             refdiv.identifier = "refs"
             return {refheader, refdiv}
