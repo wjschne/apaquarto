@@ -34,7 +34,10 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     documentmode: man
+    keep-tex: true
 ---
+
+@CameronTrivedi2013
 
 # Method
 
@@ -54,4 +57,11 @@ format:
 
 # References
 
+<!-- References will auto-populate in the refs div below -->
+
+::: {#refs}
+:::
+
 # Appendix
+
+# Title for Appendix

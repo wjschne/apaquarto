@@ -11,47 +11,68 @@ local maskedtitle = "Masked Title"
 local maskeddate = "n.d."
 local metaanalysis = true
 local metareferencesentence = "References marked with an asterisk indicate studies included in the meta-analysis."
+local hasrefdiv = false
+
 return {
-  --{FloatRefTarget = function(float)},
   {
     Cite = function(ct) 
-    n_citations = n_citations + 1 
+      -- count citations
+      n_citations = n_citations + 1 
     end
-    
   },
   {
     Meta = function(meta) 
-      if n_citations > 0 then
-        zerocitations = false
-      else
-        zerocitations = true
+      -- count references in nocite
+      if meta.nocite then
+        meta.nocite:walk {
+          Cite = function(ct)
+            n_citations = n_citations + 1 
+          end
+        }
       end
-      meta.zerocitations = zerocitations
+      
+      -- Need to tell latex if there are no citations
+      if n_citations == 0 then
+        meta.zerocitations = true
+      else
+        meta.zerocitations = false
+      end
+      -- Nocite citations are marked as part of meta-analysis unless
+      -- meta-analysis field set to false
       if meta["meta-analysis"] == false then
         metaanalysis = false
       else
+        -- If there are nocite citations (and meta-analysis field is
+        -- not false), then this is a meta-analysis
         if meta.nocite then
           metaanalysis = true
         else
           metaanalysis = false
         end
       end
+      
       if meta.language then
+        -- Is there another word for reference section?
         if meta.language["section-title-references"] then
           referenceword = pandoc.utils.stringify(meta.language["section-title-references"])
         end
+        -- Is there another phrase for masked references?
         if meta.language["citation-masked-author"] then
           maskedauthor = pandoc.utils.stringify(meta.language["citation-masked-author"])
         end
+        -- Is there another phrase for masked titles?
         if meta.language["citation-masked-title"] then
           maskedtitle = pandoc.utils.stringify(meta.language["citation-masked-title"])
         end
+        -- Is there another phrase for masked sources?
         if meta.language["citation-masked-source"] then
           maskedsource = pandoc.utils.stringify(meta.language["citation-masked-source"])
         end
+        -- Is there another phrase for masked dates?
         if meta.language["citation-masked-date"] then
           maskeddate = pandoc.utils.stringify(meta.language["citation-masked-date"])
         end
+        -- Is there another phrase for meta-analysis reference explanation?
         if meta.language["references-meta-analysis"] then
           metareferencesentence = pandoc.utils.stringify(meta.language["references-meta-analysis"])
         end
@@ -63,18 +84,36 @@ return {
   },
   {
     Div = function(div)
-      if div.identifier and div.identifier == "refs" and n_citations > 0 then
-        div = nil
+      if div.identifier and div.identifier == "refs" then
+        -- remove reference div if there are no citations
+        if n_citations == 0 then
+          return {}
+        else
+          -- There are references and there is a refdiv
+          hasrefdiv = true
+        end
       end
     end
   },
   {
     Header = function(h)
-      if n_citations == 0 and pandoc.utils.stringify(h.content) == referenceword then
-        return {}
-      end
-      if metaanalysis and pandoc.utils.stringify(h.content) == referenceword then
-        return {h, pandoc.Para(metareferencesentence)}
+      if pandoc.utils.stringify(h.content) == referenceword then
+        if n_citations == 0 then 
+          return {}
+        else
+          refheader = h
+          if metaanalysis then
+             refheader = {h, pandoc.Para(metareferencesentence)}
+          end
+          if hasrefdiv then
+            return refheader
+          else
+            print("hello")
+            local refdiv = pandoc.Div({})
+            refdiv.identifier = "refs"
+            return {refheader, refdiv}
+          end
+        end
       end
     end
   },
