@@ -29,6 +29,12 @@ return {
       meta.zerocitations = zerocitations
       if meta["meta-analysis"] == false then
         metaanalysis = false
+      else
+        if meta.nocite then
+          metaanalysis = true
+        else
+          metaanalysis = false
+        end
       end
       if meta.language then
         if meta.language["section-title-references"] then
