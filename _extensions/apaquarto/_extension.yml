@@ -30,6 +30,8 @@ contributes:
           path: apafigurewidthlatex.lua          
         - at: pre-ast
           path: apafigurelatex.lua
+        - at: pre-ast
+          path: apaomitrefsdiv.lua
         - at: post-ast
           path: apamasked.lua
         - at: post-ast
