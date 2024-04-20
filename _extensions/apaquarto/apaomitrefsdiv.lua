@@ -2,7 +2,7 @@ local hasrefdiv = false
 local referenceword = "References"
 return {
   {
-    Meta = function(m)
+    Meta = function(meta)
       if meta.language then
         -- Is there another word for reference section?
         if meta.language["section-title-references"] then

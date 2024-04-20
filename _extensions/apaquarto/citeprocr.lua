@@ -11,7 +11,6 @@ local maskedtitle = "Masked Title"
 local maskeddate = "n.d."
 local metaanalysis = true
 local metareferencesentence = "References marked with an asterisk indicate studies included in the meta-analysis."
-local hasrefdiv = false
 
 return {
   {
@@ -88,9 +87,6 @@ return {
         -- remove reference div if there are no citations
         if n_citations == 0 then
           return {}
-        else
-          -- There are references and there is a refdiv
-          hasrefdiv = true
         end
       end
     end
@@ -101,16 +97,8 @@ return {
         if n_citations == 0 then 
           return {}
         else
-          refheader = h
           if metaanalysis then
-             refheader = {h, pandoc.Para(metareferencesentence)}
-          end
-          if hasrefdiv then
-            return refheader
-          else
-            local refdiv = pandoc.Div({})
-            refdiv.identifier = "refs"
-            return {refheader, refdiv}
+            return {h, pandoc.Para(metareferencesentence)}
           end
         end
       end
