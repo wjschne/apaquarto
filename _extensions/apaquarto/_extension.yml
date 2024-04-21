@@ -95,6 +95,7 @@ contributes:
         - linktoc=none
       block-headings: false
       template: apatemplate.tex
+      mainfontfallback: Arial
       template-partials:
         - doc-class.tex
         - title.tex

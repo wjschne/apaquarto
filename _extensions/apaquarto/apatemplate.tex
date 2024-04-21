@@ -15,7 +15,7 @@ $endif$
 
 
 $if(mainfont)$
-\babelfont{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+\babelfont{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$$if(mainfontfallback)$,RawFeature={fallback=mainfontfallback}$endif$]{$mainfont$}
 $endif$
 $endif$
 $for(babel-otherlangs)$
@@ -96,17 +96,17 @@ $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $endif$
 $if(mainfont)$
-  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$$if(mainfontfallback)$,RawFeature={fallback=mainfontfallback}$endif$]{$mainfont$}
 $endif$
 $if(sansfont)$
-  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$$if(sansfontfallback)$,RawFeature={fallback=sansfontfallback}$endif$]{$sansfont$}
 $endif$
 $if(monofont)$
   \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
 $endif$
 
 $for(fontfamilies)$
-  \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
+  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$if(monofontfallback)$,RawFeature={fallback=monofontfallback}$endif$]{$monofont$}
 $endfor$
 
 $if(mathfont)$
