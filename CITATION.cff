@@ -1,0 +1,24 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: apaquarto
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: William Joel
+    family-names: Schneider
+    email: w.joel.schneider@gmail.com
+    affiliation: Temple University
+    orcid: 'https://orcid.org/0000-0002-8393-5316'
+repository-code: 'https://github.com/wjschne/apaquarto'
+url: 'https://wjschne.github.io/apaquarto/'
+abstract: >-
+  A quarto extension for creating APA7 documents in .docx,
+  .html, and .pdf formats
+keywords:
+  - APA-Style
+  - Quarto Extension
+license: CC0-1.0

@@ -442,7 +442,7 @@ return {
         if pandoc.utils.type(meta.apaabstract) == "Inlines" then
           abstract_paragraph.content:extend(meta.apaabstract or meta.abstract)
           local abstractdiv = pandoc.Div(abstract_paragraph)
-          abstractdiv.classes:insert("Abstract")
+          abstractdiv.classes:insert("AbstractFirstParagraph")
           body:extend({abstractdiv})
         end
         
@@ -458,6 +458,7 @@ return {
                     local lbpara = pandoc.Para(el)
                     
                     if abstractlinecounter == 1 then
+                      
                       abstractfirstparagraphdiv.content:extend({lbpara})
                       abstractfirstparagraphdiv.classes:insert("AbstractFirstParagraph")
                       
