@@ -196,13 +196,6 @@
     "text": "Tables Made Directly with Markdown\nYou can create tables with Markdown in several ways. See here for details. If you need to make a more complex table in Markdown, I suggest using RStudio’s visual editor. Here is an example of a simple table:\n\n| Letters | Numbers |\n|:-------:|:-------:|\n| A       | 1       |\n| B       | 2       |\n| C       | 3       |\n\n: My Caption {#tbl-mytable2 apa-note=\"Note below table\" data-quarto-disable-processing=\"true\"}\n\n\n\n\nTable \n\n\nMy Caption\n\n\n\n\n\n\nLetters\nNumbers\n\n\n\n\nA\n1\n\n\nB\n2\n\n\nC\n3\n\n\n\n\n\n\n\nNote. Note below table"
   },
   {
-    "objectID": "writing.html#tables-and-figures-in-journal-mode-.pdf",
-    "href": "writing.html#tables-and-figures-in-journal-mode-.pdf",
-    "title": "APA Style via Markdown",
-    "section": "Tables and Figures in Journal Mode (.pdf)",
-    "text": "Tables and Figures in Journal Mode (.pdf)\nWhen creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise sometimes makes them disappear (and sometimes takes large swaths of text with it).\nYou can make figures and tables span the two columns by setting the apa-twocolumn chunk option to true."
-  },
-  {
     "objectID": "writing.html#parenthetical-citations",
     "href": "writing.html#parenthetical-citations",
     "title": "APA Style via Markdown",

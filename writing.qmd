@@ -442,11 +442,24 @@ You can create tables with Markdown in several ways. See [here](https://quarto.o
 : My Caption {#tbl-mytable2 apa-note="Note below table"}
 
 
-## Tables and Figures in Journal Mode (.pdf)
+# Tables and Figures Spanning Two Columns in Journal Mode (.pdf)
 
 When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise \LaTeX sometimes makes them disappear (and sometimes takes large swaths of text with it). 
 
-You can make figures and tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
+You can make figures and tables span the two columns by setting the `apa-twocolumn` chunk option to `true`. This will only affect .pdf documents when in journal mode (i.e., `documentmode: jou`). 
+
+```{r}
+#| echo: fenced
+#| label: fig-myplot3
+#| fig-cap: A Figure that Will Span Two Columns in Journal Mode
+#| apa-twocolumn: true
+
+library(tidyverse)
+tibble(x = seq(0, 1, .001),
+       y = dbeta(x,2,8)) %>% 
+  ggplot(aes(x,y)) + 
+  geom_area(fill = "royalblue", alpha = .5)
+```
 
 # Citations
 
