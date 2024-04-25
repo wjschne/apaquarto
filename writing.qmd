@@ -441,6 +441,13 @@ You can create tables with Markdown in several ways. See [here](https://quarto.o
 
 : My Caption {#tbl-mytable2 apa-note="Note below table"}
 
+
+## Tables and Figures in Journal Mode (.pdf)
+
+When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise \LaTeX sometimes makes them disappear (and sometimes takes large swaths of text with it). 
+
+You can make figures and tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
+
 # Citations
 
 See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.

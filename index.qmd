@@ -11,13 +11,13 @@ I wrote [apaquarto](https://github.com/wjschne/apaquarto) so that I would never 
 
 ::: {#fig-manuscript fig-cap="Example document in manuscript mode"}
 ```{=html}
-<object data="template_manuscript.pdf" type="application/pdf" width=100% height=800 '><p>Unable to display PDF file. <a href="template_manuscript.pdf">Download</a> instead.</p></object>
+<object data="example_manuscript.pdf" type="application/pdf" width=100% height=800 '><p>Unable to display PDF file. <a href="example_manuscript.pdf">Download</a> instead.</p></object>
 ```
 :::
 
 ::: {#fig-journal fig-cap="Example document in journal mode"}
 ```{=html}
-<object data="template_journal.pdf" type="application/pdf" width=100% height=800 '><p>Unable to display PDF file. <a href="template_journal.pdf">Download</a> instead.</p></object>
+<object data="example_journal.pdf" type="application/pdf" width=100% height=800 '><p>Unable to display PDF file. <a href="example_journal.pdf">Download</a> instead.</p></object>
 ```
 :::
 
