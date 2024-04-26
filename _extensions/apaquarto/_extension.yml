@@ -89,7 +89,7 @@ contributes:
     pdf:
       documentclass: apa7
       pdf-engine: xelatex
-      link-ciations: false
+      link-citations: false
       suppress-bibliography: false
       hyperrefoptions: 
         - linktoc=none
