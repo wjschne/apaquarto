@@ -212,7 +212,7 @@ A parenthetical citation requires square brackets [@CameronTrivedi2013]. This re
 
 See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
 
-@schneider2012cattell ['s] position was ...
+@schneider2012cattell 's position was ...
 
 ## Masking Author Identity for Peer Review
 
