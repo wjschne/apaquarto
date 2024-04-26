@@ -36,7 +36,6 @@ contributes:
           path: apatwocolumnlatex.lua
         - apaheader.lua
         - apastriptitle.lua
-        - docxfrontmatter.lua
         - apaquote.lua
         - latexnoindent.lua
         - at: pre-quarto
@@ -55,8 +54,6 @@ contributes:
           path: apacaption.lua
         - at: post-render
           path: apaafternote.lua
-        - at: post-render
-          path: citeprocr.lua
         - at: post-render
           path: apaandcite.lua
         - at: post-render
@@ -79,6 +76,9 @@ contributes:
       knitr: 
         opts_chunk: 
           dev: svglite
+      filters:
+        - at: post-render
+          path: citeprocr.lua
     pdf:
       documentclass: apa7
       pdf-engine: xelatex
@@ -94,16 +94,23 @@ contributes:
         - before-body.tex
         - header.tex
       classoption: "colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue"
+      filters:
+        - at: post-render
+          path: citeprocr.lua
     docx: 
       reference-doc: apaquarto.docx
       filters: 
         - docxstyler.lua
+        - docxfrontmatter.lua
         - at: post-render
           path: docxlinenumber.lua
+        - at: post-render
+          path: citeprocr.lua
       knitr: 
         opts_chunk: 
           dev: ragg_png
     typst:
+      bibliographystyle: apa
       template-partials:
         - typst/typst-template.typ
         - typst/typst-show.typ
