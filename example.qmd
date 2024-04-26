@@ -164,12 +164,12 @@ One way to import an existing graphic as a figure is to use `knitr::include_grap
 #| apa-note: A note below the figure
 #| fig-width: 3
 #| out-width: 48%
-knitr::include_graphics("https://wjschne.github.io/apaquarto/img/sampleimage.png")
+knitr::include_graphics("img/sampleimage.png")
 ```
 
 Figure graphics can be imported directly with Markdown:
 
-![Another Way to Import Graphics](https://wjschne.github.io/apaquarto/img/sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
+![Another Way to Import Graphics](img/sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
 
 ## Displaying Tables
 
@@ -298,6 +298,6 @@ If there are multiple appendices, label them with level 1 headings as Appendix A
 
 See @fig-appendfig
 
-![Appendix Figure](https://wjschne.github.io/apaquarto/img/sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
+![Appendix Figure](img/sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
 
 
