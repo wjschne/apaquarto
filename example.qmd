@@ -159,23 +159,31 @@ To refer to any figure or table, use the `@` symbol followed by the reference la
 
 One way to import an existing graphic as a figure is to use `knitr::include_graphics` in a code chunk. For example, @fig-import1 is an imported image. Note that in apaquarto-pdf documents, we can specify that that a figure or table should span both columns when in journal mode by setting the `apa-twocolumn` chunk option to `true`. For other formats, this distinction does not matter.
 
-```{r fig-import1}
+
+
+```{r}
+#| label: fig-import1
 #| fig-cap: An Imported Graphic
 #| apa-note: A note below the figure
 #| fig-width: 3
 #| out-width: 48%
-knitr::include_graphics("img/sampleimage.png")
+knitr::include_graphics("sampleimage.png")
 ```
+
+
 
 Figure graphics can be imported directly with Markdown:
 
-![Another Way to Import Graphics](img/sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
+![Another Way to Import Graphics](sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
+
+Which style of creating figures you choose depends on preference and need.
 
 ## Displaying Tables
 
 We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
 
-```{r tbl-mytable}
+```{r}
+#| label: tbl-mytable
 #| tbl-cap: The Table Caption
 #| apa-note: The note below the table.
 #| ft.align: left
@@ -202,6 +210,30 @@ Table Caption of a Markdown Table
 
 What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text.
 
+## Tables and Figures Spanning Two Columns in Journal Mode
+
+When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise \LaTeX sometimes makes them disappear. 
+
+As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
+
+```{r}
+#| label: fig-twocolumn
+#| fig-cap: A Figure Spanning Two Columns When in Journal Mode
+#| apa-note: Figures in two-column mode are only different for jou mode in .pdf documents
+#| apa-twocolumn: true
+#| fig-height: 3
+#| fig-width: 6.4
+#| fig-align: center
+ggplot(data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, 
+                geom = "area",
+                n = 1000,
+                color = NA,
+                fill = "#41448780") +
+  theme_void()
+```
+
+
 ## Citations
 
 See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.
@@ -209,6 +241,7 @@ See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for i
 A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so: 
 
 @CameronTrivedi2013 make some important points ...
+
 
 See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
 
@@ -288,7 +321,7 @@ Let's sum this up.
 ::: {#refs}
 :::
 
-{{< pagebreak >}}
+
 
 # Appendix
 
@@ -296,8 +329,8 @@ Let's sum this up.
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
 
-See @fig-appendfig
+See @fig-appendfig.
 
-![Appendix Figure](img/sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
+![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
 
 

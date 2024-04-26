@@ -1,7 +1,5 @@
 -- Finds divs that are Tables and Figures.
 -- Adds FigureWithNote or FigureWithoutNote class to the Div
--- If docx, strips enclosing table and raw code
-
 function Pandoc (doc)
   local isfigure = false
   local istable = false

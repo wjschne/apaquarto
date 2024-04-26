@@ -1,3 +1,5 @@
+--- Makes numbered lines in docx if numbered-lines is true
+
 --- This filter only runs on docx format
 if FORMAT ~= "docx" then
   return

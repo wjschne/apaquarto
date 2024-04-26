@@ -40,6 +40,7 @@ local function figtblconvert(ct)
       if float.identifier and string.find(float.identifier, "^tbl%-") then 
         -- is the table already in the array?
         if tbl[float.identifier] then
+          -- Table is already in the array. Do not add.
         else
            --Add table to array
            tbl[float.identifier] = float.attributes.prefix .. float.attributes.tblnum
@@ -49,6 +50,7 @@ local function figtblconvert(ct)
       if float.identifier and string.find(float.identifier, "^fig%-") then 
         -- is the figure already in the array?
         if fig[float.identifier] then
+          -- Figure is already in the array. Do not add.
         else
           --Add figure to array
            fig[float.identifier] = float.attributes.prefix .. float.attributes.fignum
@@ -57,6 +59,7 @@ local function figtblconvert(ct)
 
        i = i + 1
     end
+  
   local floatreftext
     --Is the citation a reference to a table?
   if #ct.citations == 1 and string.find(ct.citations[1].id, "^tbl%-") then 
@@ -68,6 +71,7 @@ local function figtblconvert(ct)
     -- Text for figure reference
     floatreftext = pandoc.Inlines({pandoc.Str(figureword), pandoc.Str('\u{a0}'), pandoc.Str(fig[ct.citations[1].id])})
   end
+  
   --Is the citation a reference to a table or figure?
   if #ct.citations == 1 and string.find(ct.citations[1].id, "^fig%-") or string.find(ct.citations[1].id, "^tbl%-") then
     if refhyperlinks then
@@ -80,8 +84,6 @@ local function figtblconvert(ct)
       return floatreftext
     end
   end
-  
-
 end
 
 return{

@@ -8,8 +8,6 @@ Pandoc = function(doc)
   local tbl = {}
   local fig = {}
   for i = #doc.blocks, 1, -1 do
-    
-
       if doc.blocks[i].identifier then
         if doc.blocks[i].identifier:find("^tbl%-") then
           if doc.blocks[i].attributes and doc.blocks[i].attributes.prefix == "" then
@@ -34,20 +32,22 @@ Pandoc = function(doc)
               Figure = function(fg)
                 if fg.identifier then
                   if fg.identifier:find("^fig%-") then
-                    hasfig = true
+                    if fg.attributes and fg.attributes.prefix == "" then
+                      hasfig = true
+                    end
                   end
                 end
               end
             }
             if hasfig then
-              if doc.blocks[i].attributes and doc.blocks[i].attributes.prefix == "" then
-                if FORMAT == "docx" then
-                  table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
-                end
-                table.insert(fig, 1, doc.blocks[i])
-                doc.blocks:remove(i)
-                hasfig = false
+              if FORMAT == "docx" then
+                table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
               end
+              table.insert(fig, 1, doc.blocks[i])
+              doc.blocks:remove(i)
+              hasfig = false
+            else
+              
             end
           end
         end

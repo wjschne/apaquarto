@@ -11,7 +11,11 @@ example.docx
 example.pdf
 example.aux
 example.bbl
+example.rmarkdown
 example.ttt
+example.fff
+example.log
+example.tex
 example_files/
 Features.html
 minimal.docx
@@ -37,6 +41,8 @@ template.pdf.md
 template.pdf.native
 template.rmarkdown
 template.ttt
+template.tex
+template.out
 template_files/
 test.*
 test_*

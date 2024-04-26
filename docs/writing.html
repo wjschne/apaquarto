@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.26">
+<meta name="generator" content="quarto-1.5.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -216,6 +216,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#tables-made-directly-with-markdown" id="toc-tables-made-directly-with-markdown" class="nav-link" data-scroll-target="#tables-made-directly-with-markdown">Tables Made Directly with Markdown</a></li>
   </ul></li>
+  <li><a href="#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf" id="toc-tables-and-figures-spanning-two-columns-in-journal-mode-.pdf" class="nav-link" data-scroll-target="#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf">Tables and Figures Spanning Two Columns in Journal Mode (.pdf)</a></li>
   <li><a href="#citations" id="toc-citations" class="nav-link" data-scroll-target="#citations">Citations</a>
   <ul class="collapse">
   <li><a href="#parenthetical-citations" id="toc-parenthetical-citations" class="nav-link" data-scroll-target="#parenthetical-citations">Parenthetical Citations</a>
@@ -684,14 +685,14 @@ Tip
 <li><code>width</code> Image width</li>
 <li><code>apa-note</code> A note below the figure</li>
 </ul>
-<p>For example, in the same same folder as my Quarto document, there is a folder called <code>img</code>, which contains an image file <code>sampleimage.png</code>. We can display this image like so:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](img/sampleimage.png)</span>{</span>
+<p>For example, in the same same folder as my Quarto document, there is an image file <code>sampleimage.png</code>. We can display this image like so:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](sampleimage.png)</span>{</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  #fig-myimportedimage </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  width="5in" </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-myimportedimage" class="quarto-figure quarto-figure-center quarto-float FigureWithNote" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C." data-custom-style="FigureWithNote">
+<div id="fig-myimportedimage" class="quarto-figure quarto-figure-center quarto-float FigureWithNote" alt="A path diagram in which A causes B, and B causes C." data-apa-note="Variable A indirectly causes Variable C." data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -702,7 +703,7 @@ Tip
 </div>
 </figcaption>
 <div aria-describedby="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="img/sampleimage.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: A Simple Mediation Model"><img src="img/sampleimage.png" class="img-fluid figure-img" style="width:5in" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C."></a>
+<a href="sampleimage.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: A Simple Mediation Model"><img src="sampleimage.png" class="img-fluid figure-img" style="width:5in" data-apa-note="Variable A indirectly causes Variable C." alt="A path diagram in which A causes B, and B causes C."></a>
 </div>
 </figure>
 </div>
@@ -736,7 +737,7 @@ Tip
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">  flextable() %&gt;% </span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_apa() </span></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-mytable" class="cell quarto-float" data-apa-note="A note below table" data-ft.align="left">
+<div id="tbl-mytable" class="cell quarto-float" data-ft.align="left" data-apa-note="A note below table">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -748,7 +749,7 @@ Tip
 </figcaption>
 <div aria-describedby="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="tabwid tabwid_left"><style>.cl-cd6d7994{}.cl-cd6532de{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-cd686a12{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-cd68818c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cd688196{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cd688197{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-cd6d7994"><thead><tr style="overflow-wrap:break-word;"><th class="cl-cd68818c"><p class="cl-cd686a12"><span class="cl-cd6532de">Letters</span></p></th><th class="cl-cd68818c"><p class="cl-cd686a12"><span class="cl-cd6532de">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-cd688196"><p class="cl-cd686a12"><span class="cl-cd6532de">A</span></p></td><td class="cl-cd688196"><p class="cl-cd686a12"><span class="cl-cd6532de">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cd688196"><p class="cl-cd686a12"><span class="cl-cd6532de">B</span></p></td><td class="cl-cd688196"><p class="cl-cd686a12"><span class="cl-cd6532de">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cd688197"><p class="cl-cd686a12"><span class="cl-cd6532de">C</span></p></td><td class="cl-cd688197"><p class="cl-cd686a12"><span class="cl-cd6532de">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid tabwid_left"><style>.cl-df9b4a04{}.cl-df929b3e{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-df95fd56{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-df9614da{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df9614e4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df9614e5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-df9b4a04"><thead><tr style="overflow-wrap:break-word;"><th class="cl-df9614da"><p class="cl-df95fd56"><span class="cl-df929b3e">Letters</span></p></th><th class="cl-df9614da"><p class="cl-df95fd56"><span class="cl-df929b3e">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-df9614e4"><p class="cl-df95fd56"><span class="cl-df929b3e">A</span></p></td><td class="cl-df9614e4"><p class="cl-df95fd56"><span class="cl-df929b3e">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df9614e4"><p class="cl-df95fd56"><span class="cl-df929b3e">B</span></p></td><td class="cl-df9614e4"><p class="cl-df95fd56"><span class="cl-df929b3e">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-df9614e5"><p class="cl-df95fd56"><span class="cl-df929b3e">C</span></p></td><td class="cl-df9614e5"><p class="cl-df95fd56"><span class="cl-df929b3e">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </figure>
@@ -808,6 +809,41 @@ Tip
 <p><em>Note</em>. Note below table</p>
 </div>
 </section>
+</section>
+<section id="tables-and-figures-spanning-two-columns-in-journal-mode-.pdf" class="level1">
+<h1>Tables and Figures Spanning Two Columns in Journal Mode (.pdf)</h1>
+<p>When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise sometimes makes them disappear (and sometimes takes large swaths of text with it).</p>
+<p>You can make figures and tables span the two columns by setting the <code>apa-twocolumn</code> chunk option to <code>true</code>. This will only affect .pdf documents when in journal mode (i.e., <code>documentmode: jou</code>).</p>
+<div class="cell FigureWithoutNote" data-apa-twocolumn="true" data-custom-style="FigureWithoutNote">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot3</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: A Figure that Will Span Two Columns in Journal Mode</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-twocolumn: true</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 1, .001),</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dbeta(x,2,8)) %&gt;% </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-myplot3" class="quarto-figure quarto-figure-center quarto-float">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="FigureTitle" data-custom-style="FigureTitle">
+<p>Figure&nbsp;</p>
+</div>
+<div class="Caption" data-custom-style="Caption">
+<p>A Figure that Will Span Two Columns in Journal Mode</p>
+</div>
+</figcaption>
+<div aria-describedby="fig-myplot3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="writing_files/figure-html/fig-myplot3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: A Figure that Will Span Two Columns in Journal Mode"><img src="writing_files/figure-html/fig-myplot3-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="citations" class="level1">
 <h1>Citations</h1>
@@ -882,20 +918,20 @@ Warning
 <section id="citations-for-articles-included-in-a-meta-analysis" class="level2">
 <h2 data-anchor-id="citations-for-articles-included-in-a-meta-analysis">Citations for Articles Included in a Meta-Analysis</h2>
 <p>In a meta-analysis, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the <code>nocite</code> field in the metadata. All articles listed in the <code>nocite</code> field will be marked with an asterisk in the References section.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If marking <code>nocite</code> studies with asterisk is unwanted, set the <code>meta-analysis</code> field to <code>false</code>,</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="masked-citations-for-anonymous-peer-review" class="level2">
 <h2 data-anchor-id="masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</h2>
 <p>Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can “mask” any citation you wish by setting the <code>mask</code> field in the metadata yaml to <code>true</code>. Then list all citations that need to be masked in the <code>masked-citations</code> field like so:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2015intelligence</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2012cattell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2015intelligence</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2012cattell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If the <code>mask</code> field is set to <code>false</code>, the masked citations will print as usual. When <code>mast</code> is <code>true</code>, depending if they are an inline or parenthetical citations, they will be listed as “Masked Citations (n.d)” or “(Masked Citations, n.d)”. In parenthical citations, it is possible to mix masked and unmasked citations.</p>
 <p>Setting <code>mask</code> to <code>true</code> will also remove the authors, affiliations, and author notes from the title page.</p>
 </section>
@@ -903,25 +939,24 @@ Warning
 <section id="appendices" class="level1">
 <h1>Appendices</h1>
 <p>If there is just just one appendix, put a level-1 header called <code>Appendix</code> after the references:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Text in appendix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If there are multiple appendices, begin each with level-1 headers, called <code>Appendix A</code>, <code>Appendix B</code>, <code>Appendix C</code>, and so forth. You can place titles of appendices as level-1 headers.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix A</span></span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu"># Title of Appendix A</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>Text in Appendix A</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix B</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu"># Title of Appendix B</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>Text in Appendix B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Text in appendix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If there are multiple appendices, begin each with level-1 headers, called <code>Appendix A</code>, <code>Appendix B</code>, <code>Appendix C</code>, and so forth. You can place titles of appendices as level-1 headers.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix A</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu"># Title of Appendix A</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Text in Appendix A</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix B</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu"># Title of Appendix B</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>Text in Appendix B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="references" class="level1">
-<h1>References</h1>
-<p>References marked with an asterisk indicate studies included in the meta-analysis.</p>
+
 
 
 
@@ -1352,7 +1387,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

@@ -9,7 +9,7 @@ local getmode = function(meta)
   journalmode = documentmode == "jou"
 end
 
--- Split string
+-- Split string function
 function string:split(delimiter)
   local result = { }
   local from  = 1
@@ -23,8 +23,7 @@ function string:split(delimiter)
 end
 
 local processfloat = function(float)
-
-  
+  -- default float position
   local floatposition = "[!htbp]"
   local p = {}
   if float.attributes["fig-pos"] then
@@ -33,22 +32,21 @@ local processfloat = function(float)
     else
       floatposition = "[" .. float.attributes["fig-pos"] .. "]"
     end
-    
   end
   
   if float.type == "Table" then
-    
-    for i,j in pairs(float) do
-     -- print(i); print(j)
-    end
-    
+    -- Default table environment
     local latextableenv = "table"
+    -- Manuscript spacing before note needs adjustment ment
     local beforenote = "\\vspace{-20pt}\n"
     if journalmode then
+      -- No spacing in before note in journalmode
       beforenote = ""
+      -- Table environment in journal mode
       latextableenv = "ThreePartTable"
     end
     
+    -- Table enironment for apa-twocolumn floats
     if float.attributes then
       if float.attributes["apa-twocolumn"] then
         if float.attributes["apa-twocolumn"] == "true" then
@@ -59,33 +57,30 @@ local processfloat = function(float)
         end
       end
     end
-
     
-
-
+    -- Add note
     if float.attributes["apa-note"] then
-
       p = pandoc.Span({
         pandoc.RawInline("latex", beforenote .. "\\noindent \\emph{Note.} "),
         float.attributes["apa-note"]
       })
     end
       
+      -- Caption label
       local captionsubspan = pandoc.Span({
         pandoc.RawInline("latex", "\\label"),
         pandoc.RawInline("latex", "{"),
         pandoc.Str(float.identifier),
         pandoc.RawInline("latex", "}")
       })
-      --captionsubspan.classes:insert("quarto-scaffold")
-      
+
+      -- Adjust space after caption in manuscript mode
       local aftercaption = "\n\\vspace{-20pt}"
       if journalmode then
         aftercaption = ""
       end
       
-
-
+      -- Make caption
       local captionspan = pandoc.Span({
         pandoc.RawInline("latex", "\\caption"),
         pandoc.RawInline("latex", "{"),
@@ -94,9 +89,9 @@ local processfloat = function(float)
         pandoc.RawInline("latex", "}" .. aftercaption)
         
       })
-      --captionspan.classes:insert("quarto-scaffold")
 
-     
+
+     -- Make table
       local returnblock = pandoc.Div({
         pandoc.RawBlock("latex", "\\begin{" .. latextableenv .. "}"),
         captionspan,
@@ -125,6 +120,7 @@ local processfloat = function(float)
     local apanote
     local twocolumn = false
     local latexenv = "figure"
+    -- Get apa-note from image, if possible
     float.content:walk {
       Image = function(img)
         if img.attributes["apa-note"] then
@@ -135,17 +131,15 @@ local processfloat = function(float)
          if img.attributes["apa-twocolumn"] == "true" then
            twocolumn = true
          end
-          
         end
       end
     }
-    
-
     
     if twocolumn then
       latexenv = "figure*"
     end 
     
+    -- Make note
     if hasnote or twocolumn then
       if hasnote then
         p = pandoc.Span(pandoc.RawInline("latex", "\\noindent \\emph{Note.} "))
@@ -187,10 +181,6 @@ local processfloat = function(float)
     
   end
 end
-    
-    
-
-
 
 return {
 { Meta = getmode },

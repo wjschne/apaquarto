@@ -1,3 +1,5 @@
+-- Sets paragraph indenting
+
 if FORMAT:match 'latex' then
   
   local indenter = '\\setlength\\parindent{0.5in}'
