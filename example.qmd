@@ -113,6 +113,7 @@ format:
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
     documentmode: man
+    keep-tex: true
 ---
 
 ```{r}
@@ -122,9 +123,7 @@ library(conflicted)
 library(tidyverse)
 library(flextable)
 library(ftExtra)
-library(officer)
 library(knitr)
-
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 ```
@@ -186,11 +185,8 @@ We can make a table the same way as a figure. Generating a table that conforms t
 #| label: tbl-mytable
 #| tbl-cap: The Table Caption
 #| apa-note: The note below the table.
-#| ft.align: left
-tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) |> 
-  flextable() %>%
-  theme_apa() |> 
-  line_spacing(part = "all", space = 1)
+tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
+  knitr::kable()
 
 ```
 
@@ -212,7 +208,7 @@ What if you want the tables and figures to be at the end of the document? In the
 
 ## Tables and Figures Spanning Two Columns in Journal Mode
 
-When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise \LaTeX sometimes makes them disappear. 
+When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise $\LaTeX$ sometimes makes them disappear. 
 
 As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
 

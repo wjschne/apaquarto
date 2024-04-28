@@ -1,5 +1,5 @@
 -- Handle frontmatter stuff for .docx and html formats
-if FORMAT:match 'latex' then
+if FORMAT:match 'latex' or FORMAT:match 'typst' then
   return
 end
 

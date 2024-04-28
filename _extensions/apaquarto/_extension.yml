@@ -36,10 +36,16 @@ contributes:
           path: apamasked.lua
         - at: post-ast
           path: apatwocolumnlatex.lua
-        - apaheader.lua
-        - apastriptitle.lua
-        - apaquote.lua
-        - latexnoindent.lua
+        - at: pre-quarto
+          path: apaheader.lua
+        - at: pre-quarto
+          path: apastriptitle.lua
+        - at: pre-quarto
+          path: frontmatter.lua
+        - at: pre-quarto
+          path: apaquote.lua
+        - at: pre-quarto
+          path: latexnoindent.lua
         - at: pre-quarto
           path: apafigtblappendix.lua
         - at: post-quarto
@@ -56,6 +62,8 @@ contributes:
           path: apacaption.lua
         - at: post-render
           path: apaafternote.lua
+        - at: post-render
+          path: citeprocr.lua
         - at: post-render
           path: apaandcite.lua
         - at: post-render
@@ -103,8 +111,8 @@ contributes:
     docx: 
       reference-doc: apaquarto.docx
       filters: 
-        - docxstyler.lua
-        - docxfrontmatter.lua
+        - at: post-quarto
+          path: docxstyler.lua
         - at: post-render
           path: docxlinenumber.lua
         - at: post-render
