@@ -1,3 +1,5 @@
+-- This filter adds a refdiv if there is a Reference header but no refdiv
+
 local hasrefdiv = false
 local referenceword = "References"
 return {
@@ -13,7 +15,7 @@ return {
   },
   { Div = function(div) 
       if div.identifier and div.identifier == "refs" then
-          -- There are references and there is a refdiv
+          -- There is a refdiv
           hasrefdiv = true
       end
     end
@@ -21,7 +23,9 @@ return {
   { Header = function(h)
       if h.content and pandoc.utils.stringify(h.content) == referenceword then
         if hasrefdiv then
+          -- Do nothing because there is a refdiv
         else
+          -- Add refdiv after References header
           local refdiv = pandoc.Div({})
           refdiv.identifier = "refs"
           refdiv.classes:insert("references")

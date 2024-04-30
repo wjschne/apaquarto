@@ -34,10 +34,7 @@ format:
   apaquarto-html: default
   apaquarto-pdf:
     documentmode: man
-    keep-tex: true
 ---
-
-@CameronTrivedi2013
 
 # Method
 

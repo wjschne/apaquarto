@@ -86,9 +86,6 @@ contributes:
       knitr: 
         opts_chunk: 
           dev: svglite
-      filters:
-        - at: post-render
-          path: citeprocr.lua
     pdf:
       documentclass: apa7
       pdf-engine: xelatex
@@ -105,9 +102,6 @@ contributes:
         - before-body.tex
         - header.tex
       classoption: "colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue"
-      filters:
-        - at: post-render
-          path: citeprocr.lua
     docx: 
       reference-doc: apaquarto.docx
       filters: 
@@ -115,8 +109,6 @@ contributes:
           path: docxstyler.lua
         - at: post-render
           path: docxlinenumber.lua
-        - at: post-render
-          path: citeprocr.lua
       knitr: 
         opts_chunk: 
           dev: ragg_png

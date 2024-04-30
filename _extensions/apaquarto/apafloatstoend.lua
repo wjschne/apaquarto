@@ -1,4 +1,4 @@
-if FORMAT == "latex" then
+if FORMAT == "latex" or FORMAT == "typst" then
   return
 end
 Pandoc = function(doc)
