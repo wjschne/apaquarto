@@ -4,6 +4,7 @@ apa-cv.csl
 apaquarto.Rproj
 apaquarto.scss
 changelog.qmd
+CITATION.cff
 example.html
 example_files/
 docs
