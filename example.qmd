@@ -8,7 +8,7 @@ shorttitle: "Template for the apaquarto Extension"
 author:
   - name: Ana Fulano
     corresponding: true
-    orcid: 0000-0000-0000-0001
+    # orcid: 0000-0000-0000-0001
     email: sm@example.org
     url: https://example.org/
     # Roles are optional. 
@@ -29,14 +29,14 @@ author:
         region: NY
         postal-code: 12084-1234
   - name: Blanca Zutano
-    orcid: 0000-0000-0000-0002
+    # orcid: 0000-0000-0000-0002
     roles:
       - project administration
       - formal analysis
     affiliations: 
       - ref: id1
   - name: Carina Mengano
-    orcid: 0000-0000-0000-0003
+    # orcid: 0000-0000-0000-0003
     deceased: true
     roles:
       - formal analysis
@@ -48,7 +48,7 @@ author:
   - name: 
       - given: Dolorita C.
         family: Perengano
-    orcid: 0000-0000-0000-0004
+    # orcid: 0000-0000-0000-0004
     roles:
       - writing
       - methodology
@@ -110,6 +110,8 @@ language:
 format:
   apaquarto-docx: default
   apaquarto-html: default
+  apaquarto-typst: 
+    keep-typ: true
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
     documentmode: man
@@ -208,7 +210,7 @@ What if you want the tables and figures to be at the end of the document? In the
 
 ## Tables and Figures Spanning Two Columns in Journal Mode
 
-When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise $\LaTeX$ sometimes makes them disappear. 
+When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise LaTeX sometimes makes them disappear. 
 
 As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
 
@@ -253,7 +255,7 @@ The last paragraph of the introduction usually states the specific hypotheses of
 
 # Math and Equations
 
-Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
+Inline math uses LaTeX syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
 
 If you want to display and refer to a specific formula, enclose the formula in two dollar signs. After the second pair of dollar signs, place the label in curly braces. The label should have an `#eq-` prefix. To refer to the formula, use the same label but with the `@` symbol. For example, @eq-euler is Euler's Identity, which is much admired for its elegance.
 

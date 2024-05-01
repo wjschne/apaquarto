@@ -1,5 +1,5 @@
 -- Handle frontmatter stuff for .docx and html formats
-if FORMAT:match 'latex' or FORMAT:match 'typst' then
+if FORMAT:match 'latex' then
   return
 end
 
@@ -238,7 +238,7 @@ return {
       local intabovenote = 2
       
       if authornote then
-        if FORMAT:match 'docx' then
+        if FORMAT:match 'docx' or FORMAT:match 'typst' then
           blanklines = authornote["blank-lines-above-author-note"]
           if authornote["blank-lines-above-author-note"] and #authornote["blank-lines-above-author-note"] > 0 then
             local possiblenumber = stringify(authornote["blank-lines-above-author-note"])
@@ -436,6 +436,10 @@ return {
           body:extend({pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')})
         end
         
+        if FORMAT:match 'typst' then
+          body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
+        end
+        
         body:extend({abstractheader})
         local abstract_paragraph = pandoc.Para(pandoc.Str(""))
         
@@ -508,6 +512,10 @@ return {
 
         if FORMAT:match 'docx' then
           body:extend({pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')})
+        end
+        
+        if FORMAT:match 'typst' then
+          body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
         end
         
       if meta.apatitledisplay then
