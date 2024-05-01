@@ -48,34 +48,41 @@
   /* Redefine headings up to level 5 */
   show heading.where(
     level: 1
-  ): it => block(width: 100%, below: leading, above: leading)[
+  ): it => {block(width: 100%, below: leading, above: leading)[
     #set align(center)
     #set text(size: fontsize)
-    #it.body    
-  ]
+    #it.body
+   ]
+  par()[#text(size:0.5em)[#h(0.0em)]]
+  v(-2em)
+  }
 
   show heading.where(
     level: 2
-  ): it => block(width: 100%, below: leading, above: leading)[
+  ): it => {block(width: 100%, below: leading, above: leading)[
     #set align(left)
     #set text(size: fontsize)
     #it.body
   ]
-
+  par()[#text(size:0.5em)[#h(0.0em)]]
+  v(-2em)
+  }
   show heading.where(
     level: 3
-  ): it => block(width: 100%, below: leading, above: leading)[
+  ): it => {block(width: 100%, below: leading, above: leading)[
     #set align(left)
     #set text(size: fontsize, style: "italic")
     #it.body
   ]
-
+  par()[#text(size:0.5em)[#h(0.0em)]]
+  v(-2em)
+  }
   show heading.where(
     level: 4
   ): it => text(
     size: 1em,
     weight: "bold",
-    it.body + [.]
+    it.body
   )
 
   show heading.where(
@@ -84,7 +91,7 @@
     size: 1em,
     weight: "bold",
     style: "italic",
-    it.body + [.]
+    it.body
   )
 
   if cols == 1 {

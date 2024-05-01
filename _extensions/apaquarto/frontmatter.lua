@@ -268,7 +268,7 @@ return {
             orcidfile = "_extensions/apaquarto/ORCID-iD_icon-vector.svg"
           end 
           img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile)
-          img.attr = pandoc.Attr('orchid', {'img-fluid'},  {width='16px'})
+          img.attr = pandoc.Attr('orchid', {'img-fluid'},  {width='4.23mm'})
           pp = pandoc.Para(pandoc.Str(""))
           pp.content:extend(a.apaauthordisplay)
           pp.content:extend({pandoc.Space(), img})
