@@ -627,6 +627,7 @@ However, there are a few options that are specific to apaquarto and thus were no
 | `citation-masked-author`          | The phrase to replace author names in masked citations.                                                                                              | *Masked Citation*                                                                                                 |
 | `citation-masked-date`            | The abbreviated translation for "no date" in masked citations                                                                                        | *n.d.*                                                                                                            |
 | `citation-masked-title`           | The phrase to replace the title in a masked reference                                                                                                | *Masked Title*                                                                                                    |
+| `section-title-appendix`          | The heading for Appendices                                                                                                                           | *Appendix*                                                                                                        |
 | `title-block-author-note`         | The heading of the author note                                                                                                                       | *Author Note*                                                                                                     |
 | `title-block-correspondence-note` | The phrase introducing the correspondence note.                                                                                                      | *Correspondence concerning this article should be addressed to*                                                   |
 | `title-block-role-introduction`   | The phrase introducing the author roles.                                                                                                             | *Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:* |
@@ -643,6 +644,7 @@ language:
   citation-masked-author: "Cita Enmascarada"
   citation-masked-title: "Título Enmascarado"
   citation-masked-date: "n.f."
+  section-title-appendix: "Apéndice"
   title-block-author-note: "Nota de Autores"
   title-block-correspondence-note: "La correspondencia relativa a este artículo debe dirigirse a"
   title-block-role-introduction: "Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"
