@@ -2,11 +2,9 @@ if FORMAT == "latex" then
   return
 end
 Pandoc = function(doc)
-  if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
-    return
-  end
   local tbl = {}
   local fig = {}
+  if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
   for i = #doc.blocks, 1, -1 do
       if doc.blocks[i].identifier then
         if doc.blocks[i].identifier:find("^tbl%-") then
@@ -63,6 +61,7 @@ Pandoc = function(doc)
 
       end
 
+    end
   end
   
   
@@ -81,6 +80,10 @@ Pandoc = function(doc)
       end
     end 
   end
+  
+  if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
+  
+  
   
   -- Find block where appendices begin
   local appendixblock = 0
@@ -112,6 +115,7 @@ Pandoc = function(doc)
           doc.blocks:insert(appendixblock, tbl[i])
         end
       end
+    end
     end
 
 return doc

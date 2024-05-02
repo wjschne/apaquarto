@@ -12,8 +12,8 @@ $endif$
 $if(margin)$
   margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
 $endif$
-$if(font)$
-  font: ("$font$",),
+$if(mainfont)$
+  font: ("$mainfont$",),
 $endif$
 $if(fontsize)$
   fontsize: $fontsize$,
@@ -25,9 +25,6 @@ $endif$
 $if(spacing)$
   spacing: $spacing$,
   leading: $leading$
-$endif$
-$if(floatsintext)$
-  floatsintext: $floatsintext$,
 $endif$
 $if(cols)$
   cols: $cols$,

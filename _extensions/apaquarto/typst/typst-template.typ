@@ -1,12 +1,10 @@
+
+// counts how many appendixes there are
 #let appendixcounter = counter("appendix")
+// make article
 #let article(
   title: none,
   running-head: none,
-  authors: none,
-  affiliations: none,
-  authornote: none,
-  abstract: none,
-  keywords: none,
   margin: (x: 1in, y: 1in),
   paper: "us-letter",
   font: ("Times New Roman"),
@@ -15,7 +13,6 @@
   spacing: 18pt,
   first-line-indent: 0.5in,
   toc: false,
-  floatsintext: true,
   cols: 1,
   doc,
 ) = {
@@ -52,6 +49,7 @@ set table(
     size: fontsize
   )
 
+// format figure captions
 show figure.where(kind: "quarto-float-fig"): it => [
 
     #if appendixcounter.get().at(0) > 0 [
@@ -64,7 +62,7 @@ show figure.where(kind: "quarto-float-fig"): it => [
     #align(center)[#it.body]
   
 ]
-
+// format table captions
 show figure.where(kind: "quarto-float-tbl"): it => [
   
     #if appendixcounter.get().at(0) > 0 [
