@@ -13,6 +13,7 @@
   spacing: 18pt,
   first-line-indent: 0.5in,
   toc: false,
+  lang: "en",
   cols: 1,
   doc,
 ) = {
@@ -46,7 +47,8 @@ set table(
 
   set text(
     font: font,
-    size: fontsize
+    size: fontsize,
+    lang: lang
   )
 
 // format figure captions
