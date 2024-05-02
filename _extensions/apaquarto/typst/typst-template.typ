@@ -1,22 +1,47 @@
 
 // counts how many appendixes there are
 #let appendixcounter = counter("appendix")
+// make latex logo
+// https://github.com/typst/typst/discussions/1732#discussioncomment-6566999
+#let TeX = style(styles => {
+  set text(font: ("New Computer Modern", "Times", "Times New Roman"))
+  let e = measure("E", styles)
+  let T = "T"
+  let E = text(1em, baseline: e.height * 0.31, "E")
+  let X = "X"
+  box(T + h(-0.15em) + E + h(-0.125em) + X)
+})
+#let LaTeX = style(styles => {
+  set text(font: ("New Computer Modern", "Times", "Times New Roman"))
+  let a-size = 0.66em
+  let l = measure("L", styles)
+  let a = measure(text(a-size, "A"), styles)
+  let L = "L"
+  let A = box(scale(x: 105%, text(a-size, baseline: a.height - l.height, "A")))
+  box(L + h(-a.width * 0.67) + A + h(-a.width * 0.25) + TeX)
+})
+
+#let firstlineindent=0.5in
+
+
 // make article
 #let article(
   title: none,
-  running-head: none,
+  runninghead: none,
   margin: (x: 1in, y: 1in),
   paper: "us-letter",
-  font: ("Times New Roman"),
+  font: ("Times", "Times New Roman"),
   fontsize: 12pt,
   leading: 18pt,
   spacing: 18pt,
-  first-line-indent: 0.5in,
+  firstlineindent: 0.5in,
   toc: false,
   lang: "en",
   cols: 1,
   doc,
 ) = {
+
+ 
 
   set page(
     paper: paper,
@@ -24,7 +49,7 @@
     header-ascent: 50%,
     header: grid(
       columns: (9fr, 1fr),
-      align(left)[#upper[#running-head]],
+      align(left)[#upper[#runninghead]],
       align(right)[#counter(page).display()]
     )
   )
@@ -39,7 +64,7 @@ set table(
   set par(
     justify: false, 
     leading: leading,
-    first-line-indent: first-line-indent
+    first-line-indent: firstlineindent
   )
 
   // Also "leading" space between paragraphs
@@ -50,6 +75,10 @@ set table(
     size: fontsize,
     lang: lang
   )
+
+  // show LaTeX
+  show "TeX": TeX
+  show "LaTeX": LaTeX
 
 // format figure captions
 show figure.where(kind: "quarto-float-fig"): it => [

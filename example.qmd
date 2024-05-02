@@ -132,7 +132,9 @@ conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
+
 Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style).
+
 
 ## Displaying Figures
 
@@ -210,7 +212,7 @@ What if you want the tables and figures to be at the end of the document? In the
 
 ## Tables and Figures Spanning Two Columns in Journal Mode
 
-When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise LaTeX sometimes makes them disappear. 
+When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise $\LaTeX$ sometimes makes them disappear. 
 
 As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
 
@@ -255,7 +257,7 @@ The last paragraph of the introduction usually states the specific hypotheses of
 
 # Math and Equations
 
-Inline math uses LaTeX syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
+Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
 
 If you want to display and refer to a specific formula, enclose the formula in two dollar signs. After the second pair of dollar signs, place the label in curly braces. The label should have an `#eq-` prefix. To refer to the formula, use the same label but with the `@` symbol. For example, @eq-euler is Euler's Identity, which is much admired for its elegance.
 
@@ -338,14 +340,18 @@ Let's sum this up.
 
 
 
-# Appendix
+# Appendix 
 
 # The Title for Appendix
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
 
-See @fig-appendfig.
+Tables and figures in the first appendix automatically get the prefix "A", and the numbering starts again at 1. See @fig-appendfig.
+
+If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
 
 ![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
+
+
 
 

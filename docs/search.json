@@ -102,7 +102,7 @@
     "href": "changelog.html",
     "title": "Changelog",
     "section": "",
-    "text": "Create landscape pages for wide figures and tables.\nTables in .pdf jou mode should fit automatically.\nTypst version that would allow for easy customization"
+    "text": "Create landscape pages for wide figures and tables.\nTables in .pdf jou mode should fit automatically.\nImplement missing Typst features\n\nJournal format\nLine numbering\nFull language option support"
   },
   {
     "objectID": "changelog.html#breaking-changes",

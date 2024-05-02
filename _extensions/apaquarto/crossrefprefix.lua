@@ -4,8 +4,12 @@
 local abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 -- Default prefix
 local prefix = ""
+-- Default pre-prefex if appendices exceed 26
+local preprefix = ""
 -- Prefix counter
 local intprefix = 0
+-- Pre-prefix counter
+local intpreprefix = 0
 -- Table counter
 local tblnum = 0
 -- Figure counter
@@ -50,10 +54,15 @@ end
 Block = function(b)
   -- Increment prefix for every level-1 header starting with Appendix
   if b.tag == "Header" and b.level == 1 and pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8) == "Appendix" then
+    if intprefix == 26 then
+      intprefix = 0
+      intpreprefix = intpreprefix + 1
+      preprefix = preprefix .. pandoc.text.sub(abc,intpreprefix,intpreprefix)
+    end
     intprefix = intprefix + 1
     tblnum = 0
     fignum = 0
-    prefix = pandoc.text.sub(abc,intprefix,intprefix)
+    prefix = preprefix .. pandoc.text.sub(abc,intprefix,intprefix)
   end
   
   -- Assign prefixes and numbers

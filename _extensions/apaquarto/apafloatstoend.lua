@@ -4,7 +4,13 @@ end
 Pandoc = function(doc)
   local tbl = {}
   local fig = {}
+  local movefloatstoend = true
   if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
+    movefloatstoend = false
+  end
+
+
+  if movefloatstoend then
   for i = #doc.blocks, 1, -1 do
       if doc.blocks[i].identifier then
         if doc.blocks[i].identifier:find("^tbl%-") then
@@ -81,9 +87,7 @@ Pandoc = function(doc)
     end 
   end
   
-  if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
-  
-  
+  if movefloatstoend then  
   
   -- Find block where appendices begin
   local appendixblock = 0

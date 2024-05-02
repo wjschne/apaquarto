@@ -9,7 +9,21 @@ engine: knitr
 
 - Create landscape pages for wide figures and tables.
 - Tables in .pdf jou mode should fit automatically.
-- Typst version that would allow for easy customization
+- Implement missing Typst features
+    * Journal format
+    * Line numbering
+    * Full language option support
+
+
+# Version 4.0.1 (2024-05-01)
+
+- Improvemements for typst
+  * Render LaTeX logo correctly
+  * Implemented NoIndent feature for typst
+  * Proper indenting for multi-paragraph abstracts
+  * Fixed numbering of tables in appendices
+- Fixed bug that reversed floatsintext to the opposite of expectations.
+- On the remote chance that anyone needs more than 26 appendices, subsequent appendices are AA, AB, AC, ..., BA, BB, BC, ... AAA, AAB, ...
 
 # Version 4.0.0 (2024-05-01)
 

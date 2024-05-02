@@ -136,7 +136,13 @@ return {
       if meta.apatitledisplay then
         if meta["blank-lines-above-title"] and #meta["blank-lines-above-title"] > 0 then
           local possiblenumber = stringify(meta["blank-lines-above-title"])
-          intabovetitle = math.floor(tonumber(possiblenumber)) or 2
+          if type(possiblenumber) == "number" then
+            local intnumber = tonumber(possiblenumber) * 1
+            intabovetitle = math.floor(intnumber) or 2
+          else
+            intabovetitle = 2
+          end
+          
         end
         for i=1,intabovetitle do 
           body:extend({newline})
@@ -381,7 +387,7 @@ return {
         if a.attributes then
           if a.attributes.corresponding and stringify(a.attributes.corresponding) == "true" then
             if check_corresponding then
-              error("There can only be one author marked as the corresponding author. " .. stringify(makeauthorname(a.name)) .. " is the second author you have marked as the corresponding author.")
+              error("There can only be one author marked as the corresponding author. " .. stringify(a.apaauthordisplay) .. " is the second author you have marked as the corresponding author.")
             end
             check_corresponding = true
             corresponding_paragraph.content:extend(a.apaauthordisplay)
@@ -454,6 +460,9 @@ return {
           local abstractdiv = pandoc.Div({})
           local abstractfirstparagraphdiv = pandoc.Div({})
           local abstractlinecounter = 1
+          if FORMAT == "typst" then
+            abstractlinecounter = 2
+          end
           meta.apaabstract:walk {
             LineBlock = function(lb)
               lb:walk {

@@ -24,6 +24,6 @@ docx: $(SOURCE)
 typst-man: $(SOURCE)
 	quarto render $< --to apaquarto-typst \
 	--output example-$@.pdf
-
+	
 # Don't know yet how to use the documentmode: X trick with Typst
 # https://github.com/quarto-dev/quarto-cli/discussions/3733

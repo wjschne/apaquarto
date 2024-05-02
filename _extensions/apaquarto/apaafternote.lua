@@ -2,7 +2,7 @@ if FORMAT == "latex" then
   return 
 end
 
--- The spacing in paragraphs after a figure or table 
+-- The spacing in paragraphs after a figure or table
 -- without a note makes a special style necessary.
 
 -- Set custom style in paragraph by setting it in a custom div

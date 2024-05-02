@@ -1,9 +1,9 @@
 #show: doc => article(
 $if(shorttitle)$
-  running-head: "$shorttitle$",
+  runninghead: "$shorttitle$",
 $else$
 $if(title)$
-  running-head: "$title$",
+  runninghead: "$title$",
 $endif$
 $endif$
 $if(paper)$
