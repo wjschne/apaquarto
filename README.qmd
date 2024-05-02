@@ -6,7 +6,9 @@ engine: knitr
 ---
 <img loading="lazy" alt="any text: you like" src="https://img.shields.io/badge/lifecycle-experimental-orange">
 
-This article template creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. Because the .docx format is still widely used---and often required---my main priority was to ensure compatibility for .docx. This is still a work in progress, and I encourage filing a "New Issue" on GitHub if something does not work of if there is a feature missing.
+This article template creates [APA Style 7th Edition documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. The .pdf format can be rendered via Latex (i.e., apaquarto-pdf) or via Typst (apaquarto-typst). 
+
+Because the .docx format is still widely used---and often required---my main priority was to ensure compatibility for .docx. This is still a work in progress, and I encourage filing a "New Issue" on GitHub if something does not work of if there is a feature missing.
 
 
 
@@ -124,6 +126,7 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf: default
+  apaquarto-typst: default
 ```
 
 
@@ -155,6 +158,7 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf: default
+  apaquarto-typst: default
 ---
 ```
 

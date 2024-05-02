@@ -4,8 +4,11 @@
 <img loading="lazy" alt="any text: you like" src="https://img.shields.io/badge/lifecycle-experimental-orange">
 
 This article template creates [APA Style 7th Edition
-documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. Because
-the .docx format is still widely used—and often required—my main
+documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. The
+.pdf format can be rendered via Latex (i.e., apaquarto-pdf) or via Typst
+(apaquarto-typst).
+
+Because the .docx format is still widely used—and often required—my main
 priority was to ensure compatibility for .docx. This is still a work in
 progress, and I encourage filing a “New Issue” on GitHub if something
 does not work of if there is a feature missing.
@@ -91,7 +94,7 @@ installed the template to and ends with `.qmd`. This file has most of
 the options already filled out and explains how and why to change them.
 It also has a examples of how to use the extension in the text.
 
-If you prefer an example with explanations, you can start with the `example.qmd`
+If you prefer a minimal template, you can start with the `minimal.qmd`
 file instead.
 
 ## Adding apaquarto to an Existing Document or Project
@@ -150,6 +153,7 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf: default
+  apaquarto-typst: default
 ```
 
 Here is a minimal example of what the YAML metadata might look like:
@@ -180,6 +184,7 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf: default
+  apaquarto-typst: default
 ---
 ```
 
