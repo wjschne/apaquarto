@@ -1,4 +1,4 @@
-if FORMAT == "latex" or FORMAT == "typst" then
+if FORMAT == "latex" then
   return
 end
 Pandoc = function(doc)
@@ -14,6 +14,9 @@ Pandoc = function(doc)
             if FORMAT == "docx" then
                table.insert(tbl, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
             end
+            if FORMAT == "typst" then
+                table.insert(tbl, 1, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
+            end
             table.insert(tbl, 1, doc.blocks[i])
             doc.blocks:remove(i)
           end
@@ -22,6 +25,9 @@ Pandoc = function(doc)
             if doc.blocks[i].attributes and doc.blocks[i].attributes.prefix == "" then
               if FORMAT == "docx" then
                table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
+              end
+              if FORMAT == "typst" then
+                table.insert(fig, 1, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
               end
               table.insert(fig, 1, doc.blocks[i])
               doc.blocks:remove(i)
@@ -43,6 +49,9 @@ Pandoc = function(doc)
               if FORMAT == "docx" then
                 table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
               end
+              if FORMAT == "typst" then
+                table.insert(fig, 1, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
+              end
               table.insert(fig, 1, doc.blocks[i])
               doc.blocks:remove(i)
               hasfig = false
@@ -58,11 +67,16 @@ Pandoc = function(doc)
   
   
   -- Insert page breaks for each appendix in docx
-  if FORMAT == "docx" then
+  if FORMAT == "docx" or FORMAT == "typst" then
     for i = #doc.blocks, 1, -1 do
       if doc.blocks[i].tag == "Header" then
         if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == "Appendix" then
-          table.insert(doc.blocks, i, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
+          if FORMAT == "docx" then
+            table.insert(doc.blocks, i, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
+          end
+          if FORMAT == "typst" then
+            table.insert(doc.blocks, i, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
+          end
         end
       end
     end 

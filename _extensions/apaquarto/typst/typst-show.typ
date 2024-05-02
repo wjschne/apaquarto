@@ -1,6 +1,10 @@
 #show: doc => article(
-$if(running-head)$
-  running-head: "$running-head$",
+$if(shorttitle)$
+  running-head: "$shorttitle$",
+$else$
+$if(title)$
+  running-head: "$title$",
+$endif$
 $endif$
 $if(paper)$
   paper: "$paper$",
@@ -21,6 +25,9 @@ $endif$
 $if(spacing)$
   spacing: $spacing$,
   leading: $leading$
+$endif$
+$if(floatsintext)$
+  floatsintext: $floatsintext$,
 $endif$
 $if(cols)$
   cols: $cols$,

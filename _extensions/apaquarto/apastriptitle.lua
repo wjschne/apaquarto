@@ -79,7 +79,6 @@ local function makeauthorname(a)
 end
 
 Meta = function(meta)
-  
   meta.apatitle = nil
   meta.apatitledisplay = nil
   if meta.title then

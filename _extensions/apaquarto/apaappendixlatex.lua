@@ -3,6 +3,14 @@ if FORMAT ~= "latex" then
   return
 end
 
+-- Word for appendix
+local appendixword = "Appendix"
+getappendixword = function(meta)
+  if meta.lang and meta.lang["section-title-appendix"] then
+    appendixword = pandoc.utils.stringify(meta.lang["section-title-appendix"])
+  end
+end
+
 -- Count how many appendices there are
 local appendixcount = 0
 -- Count how many level 1 headers are in each appendix
@@ -10,7 +18,7 @@ local appendixheadercount = {}
 
 local count_headers_in_appendix = function(h)
   -- Is the level 1 header an appendix?
-  if h.level == 1 and h.content[1] and h.content[1].text == "Appendix" then
+  if h.level == 1 and h.content[1] and h.content[1].text == appendixword then
     appendixcount = appendixcount + 1
     appendixheadercount[appendixcount] = 0
   -- Is the level 1 header in an appendix?
@@ -25,7 +33,7 @@ local appendixcount2 = 0
 
 local make_appendix = function(h)
   
-  if h.level == 1 and h.content[1].text == "Appendix" then
+  if h.level == 1 and h.content[1].text == appendixword then
     appendixcount2 = appendixcount2 + 1
     -- If this is the first appendix, then start the appendix section
     if appendixcount2 == 1 then
@@ -47,6 +55,7 @@ local make_appendix = function(h)
 end
 
 return {
+  {Meta = getappendixword},
   {Header = count_headers_in_appendix},
   {Header = make_appendix},
 }

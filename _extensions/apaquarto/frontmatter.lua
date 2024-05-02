@@ -1,4 +1,4 @@
--- Handle frontmatter stuff for .docx and html formats
+-- Handle frontmatter stuff for .docx, html, and typst formats
 if FORMAT:match 'latex' then
   return
 end

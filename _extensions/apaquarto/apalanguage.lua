@@ -32,6 +32,7 @@ local fields = {
   {field = "citation-masked-date", default = "n.d."},
   {field = "figure-table-note", default = "Note"},  
   {field = "section-title-abstract", default = "Abstract"},
+  {field = "section-title-appendix", default = "Appendix"},
   {field = "section-title-references", default = "References"},
   {field = "title-block-author-note", default = "Author Note"},
   {field = "title-block-correspondence-note", default = "Correspondence concerning this article should be addressed to"},
