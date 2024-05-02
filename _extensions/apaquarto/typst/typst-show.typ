@@ -26,6 +26,9 @@ $if(spacing)$
   spacing: $spacing$,
   leading: $leading$
 $endif$
+$if(lang)$
+  lang: "$lang$",
+$endif$
 $if(cols)$
   cols: $cols$,
 $endif$
