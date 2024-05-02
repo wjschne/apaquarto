@@ -52,6 +52,7 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf: default
+  apaquarto-typst: default
 ---
 ```
 
@@ -522,7 +523,7 @@ author-note:
   correspondence-note: This will override the correspondence note that would otherwise be generated.
 ```
 
-# Options for .docx
+# Options for .docx and typst
 
 +---------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 | Field                           | Explanation                                                                                                                       |
