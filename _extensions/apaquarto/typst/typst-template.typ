@@ -76,6 +76,11 @@ set table(
     lang: lang
   )
 
+  show link: set text(blue)
+
+  show quote: set pad(x: 0.5in)
+  show quote: set par(leading: leading)
+  show quote: set block(spacing: spacing, above: spacing, below: spacing)
   // show LaTeX
   show "TeX": TeX
   show "LaTeX": LaTeX

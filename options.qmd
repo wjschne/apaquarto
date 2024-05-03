@@ -595,7 +595,7 @@ All of the .pdf-specfic options for apaquarto come directly from the [apa7 $\LaT
 
 # Options for .html
 
-Everything that works for .docx should work for .html.
+With one exeception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.
 
 # Language Options
 

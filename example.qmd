@@ -234,6 +234,12 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
 ```
 
 
+## Math and Equations
+
+Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
+
+If you want to display and refer to a specific formula, enclose the formula in two dollar signs. After the second pair of dollar signs, place the label in curly braces. The label should have an `#eq-` prefix. To refer to the formula, use the same label but with the `@` symbol. For example, @eq-euler is Euler's Identity, which is much admired for its elegance.
+
 ## Citations
 
 See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.
@@ -251,20 +257,33 @@ See [here](https://wjschne.github.io/apaquarto/writing.html#references) for expl
 
 Setting `mask` to `true` will remove author names, affiliations, and correspondence from the title page. Any references listed in the `masked-citations` field will be masked as well. See [here](https://wjschne.github.io/apaquarto/writing.html#masked-citations-for-anonymous-peer-review) for more information.
 
-## Hypotheses, Aims, and Objectives
 
-The last paragraph of the introduction usually states the specific hypotheses of the study, often in a way that links them to the research design.
-
-# Math and Equations
-
-Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
-
-If you want to display and refer to a specific formula, enclose the formula in two dollar signs. After the second pair of dollar signs, place the label in curly braces. The label should have an `#eq-` prefix. To refer to the formula, use the same label but with the `@` symbol. For example, @eq-euler is Euler's Identity, which is much admired for its elegance.
 
 
 $$
 e^{i\pi}+1=0
 $$ {#eq-euler}
+
+## Block Quotes
+
+Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the > character. For example, @austenMansfieldPark1990 ['s] *Mansfield Park* has some memorable insights about the mind:
+
+> If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
+
+
+If your quote has multiple paragraphs, like this passage from @brownHowKilledPluto2012, separate them with a lone `>` character  between the lines:
+
+> In the entire field of astronomy, there is no word other than *planet* that has a precise, lawyerly definition, in which certain criteria are specifically enumerated. Why does *planet* have such a definition but *star*, *galaxy*, and *giant molecular cloud* do not? Because in astronomy, as in most sciences, scientists work by concepts rather than by definitions. The concept of a star is clear; a star is a collection of gas with fusion reactions in the interior giving off energy. A galaxy is a large, bound collection of stars. A giant molecular cloud is a giant cloud of molecules. The concept of a planet---in the eight-planet solar system---is equally simple to state. A planet is a one of a small number of bodies that dominate a planetary system. That is a concept, not a definition. How would you write that down in a precise definition?
+>
+> I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)
+
+
+
+## Hypotheses, Aims, and Objectives
+
+The last paragraph of the introduction usually states the specific hypotheses of the study, often in a way that links them to the research design.
+
+
 
 # Method
 
@@ -307,15 +326,13 @@ A paragraph after a 5th-level header will appear on the same line as the header.
 
 ## Procedure
 
-What did participants do?
-
-How are the data going to be analyzed?
+What did participants do? How are the data going to be analyzed?
 
 # Results
 
 ## Descriptive Statistics
 
-Here we describe the basic characteristics of our primary variables.
+Describe the basic characteristics of the primary variables. My ideal is to describe the variables well enough that someone conducting a meta-analysis can include the study without needing to ask for additional information.
 
 <!-- Add Additional Sections as Needed -->
 
@@ -329,7 +346,7 @@ Every study has limitations. Based on this study, some additional steps might in
 
 ## Conclusion
 
-Let's sum this up.
+Describe the main point of the paper.
 
 # References
 

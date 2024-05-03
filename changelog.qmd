@@ -15,6 +15,7 @@ engine: knitr
     * Full language option support
 
 
+
 # Version 4.0.1 (2024-05-01)
 
 - Improvemements for typst
@@ -22,7 +23,9 @@ engine: knitr
   * Implemented NoIndent feature for typst
   * Proper indenting for multi-paragraph abstracts
   * Fixed numbering of tables in appendices
-- Fixed bug that reversed floatsintext to the opposite of expectations.
+  * Block quote indenting corrected
+  * Color links blue
+- Fixed bug that reversed `floatsintext` to the opposite of expectations.
 - On the remote chance that anyone needs more than 26 appendices, subsequent appendices are AA, AB, AC, ..., BA, BB, BC, ... AAA, AAB, ...
 
 # Version 4.0.0 (2024-05-01)

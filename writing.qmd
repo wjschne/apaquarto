@@ -281,12 +281,14 @@ Sometimes you want to give a longer quote that needs to go in its own paragraph.
 
 :::
 
-If the quote spans multiple paragraphs, put a `>` on its own line between them like so:
+If your quote has multiple paragraphs, like this passage from @brownHowKilledPluto2012, separate them with a lone `>` character  between the lines:
 
 ``` md
-> First paragraph of the quote
-> 
-> Second paragraph of the quote
+
+
+> In the entire field of astronomy, there is no word other than planet that has a precise, lawyerly definition, in which certain criteria are specifically enumerated. Why does planet have such a definition but star, galaxy, and giant molecular cloud do not? Because in astronomy, as in most sciences, scientists work by concepts rather than by definitions. The concept of a star is clear; a star is a collection of gas with fusion reactions in the interior giving off energy. A galaxy is a large, bound collection of stars. A giant molecular cloud is a giant cloud of molecules. The concept of a planet—in the eight-planet solar system—is equally simple to state. A planet is a one of a small number of bodies that dominate a planetary system. That is a concept, not a definition. How would you write that down in a precise definition?
+>
+> I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)
 ```
 
 If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:
