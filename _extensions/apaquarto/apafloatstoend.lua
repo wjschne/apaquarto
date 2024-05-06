@@ -4,7 +4,13 @@ end
 Pandoc = function(doc)
   local tbl = {}
   local fig = {}
+  local appendixword = "Appendix"
   local movefloatstoend = true
+  if doc.meta.lang and doc.meta.lang["section-title-appendix"] then
+    appendixword = pandoc.utils.stringify(doc.meta.lang["section-title-appendix"])
+  end
+  
+  
   if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
     movefloatstoend = false
   end
@@ -75,7 +81,7 @@ Pandoc = function(doc)
   if FORMAT == "docx" or FORMAT == "typst" then
     for i = #doc.blocks, 1, -1 do
       if doc.blocks[i].tag == "Header" then
-        if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == "Appendix" then
+        if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == appendixword then
           if FORMAT == "docx" then
             table.insert(doc.blocks, i, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
           end
@@ -93,7 +99,7 @@ Pandoc = function(doc)
   local appendixblock = 0
   for i = 1, #doc.blocks, 1 do
     if doc.blocks[i].tag == "Header" then
-      if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == "Appendix" and appendixblock== 0 then
+      if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == appendixword and appendixblock== 0 then
         appendixblock = i
       end
     end
