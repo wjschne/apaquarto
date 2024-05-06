@@ -1,6 +1,9 @@
 SOURCE = example.qmd
 
-tests: pdf-man pdf-doc pdf-jou docx typst-man
+tests: pdf typst
+
+pdf: pdf-man pdf-doc pdf-jou docx 
+typst: typst-man typst-doc typst-jou
 
 pdf-man: $(SOURCE)
 	quarto render $< --to apaquarto-pdf \
@@ -25,5 +28,10 @@ typst-man: $(SOURCE)
 	quarto render $< --to apaquarto-typst \
 	--output example-$@.pdf
 	
-# Don't know yet how to use the documentmode: X trick with Typst
-# https://github.com/quarto-dev/quarto-cli/discussions/3733
+typst-doc: $(SOURCE)
+	quarto render $< --to apaquarto-typst \
+	--output example-$@.pdf
+
+typst-jou: $(SOURCE)
+	quarto render $< --to apaquarto-typst \
+	--output example-$@.pdf
