@@ -4,9 +4,11 @@ end
 
 -- Is the .pdf in journal mode?
 local journalmode = false
+local manuscriptmode = true
 local getmode = function(meta)
   local documentmode = pandoc.utils.stringify(meta["documentmode"])
   journalmode = documentmode == "jou"
+  manuscriptmode = documentmode == "man"
 end
 
 -- Split string function
@@ -38,7 +40,10 @@ local processfloat = function(float)
     -- Default table environment
     local latextableenv = "table"
     -- Manuscript spacing before note needs adjustment ment
-    local beforenote = "\\vspace{-20pt}\n"
+    local beforenote = ""
+    if manuscriptmode then
+      beforenote = "\\vspace{-20pt}\n"
+    end
     if journalmode then
       -- No spacing in before note in journalmode
       beforenote = ""
@@ -75,9 +80,9 @@ local processfloat = function(float)
       })
 
       -- Adjust space after caption in manuscript mode
-      local aftercaption = "\n\\vspace{-20pt}"
-      if journalmode then
-        aftercaption = ""
+      local aftercaption = ""
+      if manuscriptmode then
+        aftercaption = "\n\\vspace{-20pt}"
       end
       
       -- Make caption
