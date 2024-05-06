@@ -5,12 +5,21 @@ function Meta(m)
   if m.documentmode then
     if pandoc.utils.stringify(m.documentmode) == 'jou' then 
       m.journalmode = true
-      return m
+      m.manuscriptmode = false
+    end
+    if pandoc.utils.stringify(m.documentmode) == 'man' then 
+      m.journalmode = false
+      m.manuscriptmode = true
+    end 
+    if pandoc.utils.stringify(m.documentmode) == 'doc' then
+      m.journalmode = false
+      m.manuscriptmode = false
     end
   else
     m.journalmode = false
-    return m
+    m.manuscriptmode = true
   end
+  return m
 end
 
 end

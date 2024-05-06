@@ -155,8 +155,10 @@ $else$
 \makeatother
 $if(floatsintext)$
 $else$
+$if(manuscriptmode)$
 \RequirePackage{longtable}
 \DeclareDelayedFloatFlavor{longtable}{table}
+$endif$
 % \RequirePackage{threeparttablex}
 % \DeclareDelayedFloatFlavor{ThreePartTable}{table}
 $endif$

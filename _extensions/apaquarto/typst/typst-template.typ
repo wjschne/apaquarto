@@ -53,7 +53,7 @@
   set table(
     stroke: (x, y) => (
         top: if y <= 1 { 0.5pt } else { 0pt },
-        bottom: 1pt,
+        bottom: .5pt,
       )
   )
 
