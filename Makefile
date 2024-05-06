@@ -1,8 +1,8 @@
 SOURCE = example.qmd
 
-tests: pdf typst
+all: pdf typst docx
 
-pdf: pdf-man pdf-doc pdf-jou docx 
+pdf: pdf-man pdf-doc pdf-jou
 typst: typst-man typst-doc typst-jou
 
 pdf-man: $(SOURCE)

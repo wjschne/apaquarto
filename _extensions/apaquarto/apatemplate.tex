@@ -30,29 +30,7 @@ $endfor$
 $endif$
 
 \RequirePackage{longtable}
-% \setlength\LTleft{0pt}
 \RequirePackage{threeparttablex}
-
-% $if(floatsintext)$
-% $else$
-% $if(journalmode)$
-% 
-% $else$
-% \RequirePackage{rotating}
-% \RequirePackage{threeparttablex}
-% \DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
-% \DeclareDelayedFloatFlavor{sidewaystable}{table}
-% \DeclareDelayedFloatFlavor{longtable}{table}
-$if(floatsintext)$
-$else$
-\DeclareDelayedFloatFlavor{ThreePartTable}{table}
-$endif$
-
-
-% $endif$
-% $endif$
-
-
 
 $header.tex()$
 
