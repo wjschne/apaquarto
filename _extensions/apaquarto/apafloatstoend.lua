@@ -6,8 +6,8 @@ Pandoc = function(doc)
   local fig = {}
   local appendixword = "Appendix"
   local movefloatstoend = true
-  if doc.meta.lang and doc.meta.lang["section-title-appendix"] then
-    appendixword = pandoc.utils.stringify(doc.meta.lang["section-title-appendix"])
+  if doc.meta.language and doc.meta.language["section-title-appendix"] then
+    appendixword = pandoc.utils.stringify(doc.meta.language["section-title-appendix"])
   end
   
   

@@ -6,8 +6,8 @@ end
 -- Word for appendix
 local appendixword = "Appendix"
 getappendixword = function(meta)
-  if meta.lang and meta.lang["section-title-appendix"] then
-    appendixword = pandoc.utils.stringify(meta.lang["section-title-appendix"])
+  if meta.language and meta.language["section-title-appendix"] then
+    appendixword = pandoc.utils.stringify(meta.language["section-title-appendix"])
   end
 end
 
