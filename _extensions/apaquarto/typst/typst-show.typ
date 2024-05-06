@@ -1,4 +1,4 @@
-#show: doc => article(
+#show: document => $documentmode$(
 $if(shorttitle)$
   runninghead: "$shorttitle$",
 $else$
@@ -32,5 +32,5 @@ $endif$
 $if(cols)$
   cols: $cols$,
 $endif$
-  doc,
+  document,
 )

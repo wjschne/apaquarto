@@ -1,4 +1,3 @@
-
 // counts how many appendixes there are
 #let appendixcounter = counter("appendix")
 // make latex logo
@@ -23,9 +22,8 @@
 
 #let firstlineindent=0.5in
 
-
-// make article
-#let article(
+// documentmode: man
+#let man(
   title: none,
   runninghead: none,
   margin: (x: 1in, y: 1in),
@@ -41,8 +39,6 @@
   doc,
 ) = {
 
- 
-
   set page(
     paper: paper,
     margin: margin,
@@ -54,12 +50,12 @@
     )
   )
 
-set table(
-  stroke: (_, y) => (
-      top: if y <= 1 { 0.5pt } else { 0pt },
-      bottom: 1pt,
-    )
-)
+  set table(
+    stroke: (x, y) => (
+        top: if y <= 1 { 0.5pt } else { 0pt },
+        bottom: 1pt,
+      )
+  )
 
   set par(
     justify: false, 
@@ -85,32 +81,27 @@ set table(
   show "TeX": TeX
   show "LaTeX": LaTeX
 
-// format figure captions
-show figure.where(kind: "quarto-float-fig"): it => [
-
+  // format figure captions
+  show figure.where(kind: "quarto-float-fig"): it => [
     #if appendixcounter.get().at(0) > 0 [
       #heading(level: 2)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
     ] else [
       #heading(level: 2)[#it.supplement #it.counter.display()]
     ]
-    
     #par[#emph[#it.caption.body]]
     #align(center)[#it.body]
+  ]
   
-]
-// format table captions
-show figure.where(kind: "quarto-float-tbl"): it => [
-  
+  // format table captions
+  show figure.where(kind: "quarto-float-tbl"): it => [
     #if appendixcounter.get().at(0) > 0 [
       #heading(level: 2)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
     ] else [
       #heading(level: 2)[#it.supplement #it.counter.display()]
     ]
-    
     #par[#emph[#it.caption.body]]
     #block[#it.body]
-    
-]
+  ]
 
  // Redefine headings up to level 5 
   show heading.where(
@@ -121,7 +112,6 @@ show figure.where(kind: "quarto-float-tbl"): it => [
     #it.body
   ]
   
-
   show heading.where(
     level: 2
   ): it => block(width: 100%, below: leading, above: leading)[
@@ -161,7 +151,4 @@ show figure.where(kind: "quarto-float-tbl"): it => [
     columns(cols, gutter: 4%, doc)
   }
 
-
-
-  
 }
