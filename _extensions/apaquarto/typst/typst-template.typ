@@ -1,3 +1,6 @@
+#assert(sys.version.at(1) >= 11 or sys.version.at(0) > 0, message: "This template requires Typst Version 0.11.0 or higher. See https://github.com/typst/typst for instructions on installing or updating typst.")
+
+
 // counts how many appendixes there are
 #let appendixcounter = counter("appendix")
 // make latex logo
@@ -50,7 +53,7 @@
     )
   )
 
-  set table(
+  set table(    
     stroke: (x, y) => (
         top: if y <= 1 { 0.5pt } else { 0pt },
         bottom: .5pt,

@@ -77,7 +77,8 @@ Pandoc = function(doc)
   end
   
   
-  -- Insert page breaks for each appendix in docx
+  -- Insert page breaks for each appendix in docx and typst
+  -- html does not need page breaks, and latex inserts pagebreaks automatically
   if FORMAT == "docx" or FORMAT == "typst" then
     for i = #doc.blocks, 1, -1 do
       if doc.blocks[i].tag == "Header" then

@@ -15,10 +15,15 @@ engine: knitr
     * Full language option support
 
 
+# Version 4.0.2 (2024-05-01)
+
+- For apaquarto-typst to run correctly, Typst version 0.11.0 or greater is required [#54](https://github.com/wjschne/apaquarto/issues/54). An error message now prompts the user to update Typst.
+
+
 
 # Version 4.0.1 (2024-05-01)
 
-- Improvemements for typst
+- Improvemements for typst 
   * Render LaTeX logo correctly
   * Implemented NoIndent feature for typst
   * Proper indenting for multi-paragraph abstracts

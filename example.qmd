@@ -134,7 +134,6 @@ This is my introductory paragraph. The title will be placed above it automatical
 
 Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style).
 
-
 ## Displaying Figures
 
 A reference label for a figure must have the prefix `fig-`, and in a code chunk, the caption must be set with `fig-cap`. Captions are in [title case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
