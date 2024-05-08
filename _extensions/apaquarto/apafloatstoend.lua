@@ -12,7 +12,7 @@ Pandoc = function(doc)
   
   
   if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
-    movefloatstoend = false
+    movefloatstoend = false    
   end
 
 
