@@ -1,4 +1,4 @@
-#assert(sys.version.at(1) >= 11 or sys.version.at(0) > 0, message: "This template requires Typst Version 0.11.0 or higher. See https://github.com/typst/typst for instructions on installing or updating typst.")
+//#assert(sys.version.at(1) >= 11 or sys.version.at(0) > 0, message: "This template requires Typst Version 0.11.0 or higher. The version of Quarto you are using uses Typst version is " + str(sys.version.at(0)) + "." + str(sys.version.at(1)) + "." + str(sys.version.at(2)) + ". You will need to upgrade to Quarto 1.5 or higher to use apaquarto-typst.")
 
 
 // counts how many appendixes there are
@@ -53,13 +53,15 @@
     )
   )
 
+
+if sys.version.at(1) >= 11 or sys.version.at(0) > 0 {
   set table(    
     stroke: (x, y) => (
         top: if y <= 1 { 0.5pt } else { 0pt },
         bottom: .5pt,
       )
   )
-
+}
   set par(
     justify: false, 
     leading: leading,
@@ -86,7 +88,7 @@
 
   // format figure captions
   show figure.where(kind: "quarto-float-fig"): it => [
-    #if appendixcounter.get().at(0) > 0 [
+    #if int(appendixcounter.display().at(0)) > 0 [
       #heading(level: 2)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
     ] else [
       #heading(level: 2)[#it.supplement #it.counter.display()]
@@ -97,7 +99,7 @@
   
   // format table captions
   show figure.where(kind: "quarto-float-tbl"): it => [
-    #if appendixcounter.get().at(0) > 0 [
+    #if int(appendixcounter.display().at(0)) > 0 [
       #heading(level: 2)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
     ] else [
       #heading(level: 2)[#it.supplement #it.counter.display()]

@@ -160,8 +160,6 @@ To refer to any figure or table, use the `@` symbol followed by the reference la
 
 One way to import an existing graphic as a figure is to use `knitr::include_graphics` in a code chunk. For example, @fig-import1 is an imported image. Note that in apaquarto-pdf documents, we can specify that that a figure or table should span both columns when in journal mode by setting the `apa-twocolumn` chunk option to `true`. For other formats, this distinction does not matter.
 
-
-
 ```{r}
 #| label: fig-import1
 #| fig-cap: An Imported Graphic
@@ -170,8 +168,6 @@ One way to import an existing graphic as a figure is to use `knitr::include_grap
 #| out-width: 48%
 knitr::include_graphics("sampleimage.png")
 ```
-
-
 
 Figure graphics can be imported directly with Markdown:
 
@@ -210,7 +206,7 @@ What if you want the tables and figures to be at the end of the document? In the
 
 ## Tables and Figures Spanning Two Columns in Journal Mode
 
-When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise $\LaTeX$ sometimes makes them disappear. 
+When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise $\LaTeX$ sometimes makes them disappear.
 
 As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
 
@@ -231,7 +227,6 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
   theme_void()
 ```
 
-
 ## Math and Equations
 
 Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
@@ -242,10 +237,9 @@ If you want to display and refer to a specific formula, enclose the formula in t
 
 See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.
 
-A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so: 
+A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so:
 
 @CameronTrivedi2013 make some important points ...
-
 
 See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
 
@@ -255,33 +249,25 @@ See [here](https://wjschne.github.io/apaquarto/writing.html#references) for expl
 
 Setting `mask` to `true` will remove author names, affiliations, and correspondence from the title page. Any references listed in the `masked-citations` field will be masked as well. See [here](https://wjschne.github.io/apaquarto/writing.html#masked-citations-for-anonymous-peer-review) for more information.
 
-
-
-
 $$
 e^{i\pi}+1=0
 $$ {#eq-euler}
 
 ## Block Quotes
 
-Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the > character. For example, @austenMansfieldPark1990 ['s] *Mansfield Park* has some memorable insights about the mind:
+Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the \> character. For example, @austenMansfieldPark1990 ['s] *Mansfield Park* has some memorable insights about the mind:
 
 > If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
 
-
-If your quote has multiple paragraphs, like this passage from @brownHowKilledPluto2012, separate them with a lone `>` character  between the lines:
+If your quote has multiple paragraphs, like this passage from @brownHowKilledPluto2012, separate them with a lone `>` character between the lines:
 
 > In the entire field of astronomy, there is no word other than *planet* that has a precise, lawyerly definition, in which certain criteria are specifically enumerated. Why does *planet* have such a definition but *star*, *galaxy*, and *giant molecular cloud* do not? Because in astronomy, as in most sciences, scientists work by concepts rather than by definitions. The concept of a star is clear; a star is a collection of gas with fusion reactions in the interior giving off energy. A galaxy is a large, bound collection of stars. A giant molecular cloud is a giant cloud of molecules. The concept of a planet---in the eight-planet solar system---is equally simple to state. A planet is a one of a small number of bodies that dominate a planetary system. That is a concept, not a definition. How would you write that down in a precise definition?
 >
 > I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)
 
-
-
 ## Hypotheses, Aims, and Objectives
 
 The last paragraph of the introduction usually states the specific hypotheses of the study, often in a way that links them to the research design.
-
-
 
 # Method
 
@@ -316,7 +302,6 @@ A paragraph after a 4th-level header will appear on the same line as the header.
 ##### Subscale B2a
 
 A paragraph after a 5th-level header will appear on the same line as the header.
-
 
 ##### Subscale B2b
 
@@ -353,9 +338,7 @@ Describe the main point of the paper.
 ::: {#refs}
 :::
 
-
-
-# Appendix 
+# Appendix
 
 # The Title for Appendix
 
@@ -366,7 +349,3 @@ Tables and figures in the first appendix automatically get the prefix "A", and t
 If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
 
 ![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
-
-
-
-

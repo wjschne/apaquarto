@@ -8,6 +8,9 @@ Meta = function(meta)
     else
       meta.oneauthor = false
     end
+  else
+    -- There are no authors
+    error("At least one author must be specified in your yaml metadata. \nFor example, \n\nauthor:\n  - name: Fred Jones\n    affiliations: Generic University")
   end
   
   -- Is the only one affiliation?
@@ -20,10 +23,12 @@ Meta = function(meta)
   end
   
   -- Does every author have an affiliation?
-  for i,j in pairs(meta["by-author"]) do
-    if not j.affiliations then
-      local au = pandoc.utils.stringify(j.name.literal)
-      error("No affiliation listed for " .. au .. "\nAll authors must have an affiliation.\nIf authors are unaffiliated, list a city, as well as a region and/or country.\nFor example, \n\nauthor:\n  - name: " .. au .. "\n    affiliations:\n      city: Los Angeles\n      region: CA")
+  if meta["by-author"] then
+    for i,j in pairs(meta["by-author"]) do
+      if not j.affiliations then
+        local au = pandoc.utils.stringify(j.name.literal)
+        error("No affiliation listed for " .. au .. "\nAll authors must have an affiliation.\nIf authors are unaffiliated, list a city, as well as a region and/or country.\nFor example, \n\nauthor:\n  - name: " .. au .. "\n    affiliations:\n      city: Los Angeles\n      region: CA")
+      end
     end
   end
   return(meta)
