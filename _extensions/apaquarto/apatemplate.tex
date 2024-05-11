@@ -159,8 +159,6 @@ $if(manuscriptmode)$
 \RequirePackage{longtable}
 \DeclareDelayedFloatFlavor{longtable}{table}
 $endif$
-% \RequirePackage{threeparttablex}
-% \DeclareDelayedFloatFlavor{ThreePartTable}{table}
 $endif$
 $endif$
 
@@ -169,6 +167,10 @@ $endif$
 
 $for(header-insert)$
 $header-insert$
+$endfor$
+
+$for(header-includes)$
+$header-includes$
 $endfor$
 
 % From https://tex.stackexchange.com/a/645996/211326
