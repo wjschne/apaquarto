@@ -15,6 +15,13 @@ engine: knitr
     * Full language option support
 
 
+# Version 4.0.3 (2024-05-11)
+
+- For apaquarto-typst to run correctly, Quarto 1.5 or greater is required [#54](https://github.com/wjschne/apaquarto/issues/54). An error message now prompts the user to update Typst.
+- Fixed link-citations for pdf [#64](https://github.com/wjschne/apaquarto/issues/64).
+- Fixed rendering of stylized $\LaTeX$ symbol in docx.
+- Updated to most recent version of [apa.cls](https://github.com/citation-style-language/styles/commit/fab696b6f365a770547df90b84a54691462b7c21)
+
 # Version 4.0.2 (2024-05-01)
 
 - For apaquarto-typst to run correctly, Typst version 0.11.0 or greater is required [#54](https://github.com/wjschne/apaquarto/issues/54). An error message now prompts the user to update Typst.

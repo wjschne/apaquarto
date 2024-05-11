@@ -11,6 +11,7 @@
 -- Schneider's (2021) primary findings were replicated in our study.
 
 local andreplacement = "and"
+local makelinks = false
 
 -- make string, if it exists, else return default
 local stringify = function(s, default)
@@ -32,6 +33,9 @@ local function get_and(m)
     andreplacement = stringify(
       m.language["citation-last-author-separator"], 
       andreplacement)
+  end
+  if m["link-citations"] then 
+    makelinks = true
   end
 end
 
@@ -68,8 +72,16 @@ local function replace_and(ct)
                   end
                 end
             end
-        end
-        return ct.content
+        end    
+        if FORMAT == "typst" then
+          return ct.content
+        else
+          return ct
+        end    
+        
+    end
+    if FORMAT == "typst" then
+      return ct.content
     end
 end
 

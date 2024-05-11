@@ -91,6 +91,8 @@ numbered-lines: false
 bibliography: bibliography.bib
 # Suppress title page
 suppress-title-page: false
+# Link citations to references
+link-citations: true
 # Masks references that appear in the masked-citations list
 mask: false
 masked-citations:

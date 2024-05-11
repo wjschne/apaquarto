@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.32">
+<meta name="generator" content="quarto-1.5.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -134,6 +163,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-4.0.3-2024-05-11" id="toc-version-4.0.3-2024-05-11" class="nav-link" data-scroll-target="#version-4.0.3-2024-05-11">Version 4.0.3 (2024-05-11)</a></li>
   <li><a href="#version-4.0.2-2024-05-01" id="toc-version-4.0.2-2024-05-01" class="nav-link" data-scroll-target="#version-4.0.2-2024-05-01">Version 4.0.2 (2024-05-01)</a></li>
   <li><a href="#version-4.0.1-2024-05-01" id="toc-version-4.0.1-2024-05-01" class="nav-link" data-scroll-target="#version-4.0.1-2024-05-01">Version 4.0.1 (2024-05-01)</a></li>
   <li><a href="#version-4.0.0-2024-05-01" id="toc-version-4.0.0-2024-05-01" class="nav-link" data-scroll-target="#version-4.0.0-2024-05-01">Version 4.0.0 (2024-05-01)</a></li>
@@ -209,6 +239,15 @@ ul.task-list li input[type="checkbox"] {
 <li>Line numbering</li>
 <li>Full language option support</li>
 </ul></li>
+</ul>
+</section>
+<section id="version-4.0.3-2024-05-11" class="level1">
+<h1>Version 4.0.3 (2024-05-11)</h1>
+<ul>
+<li>For apaquarto-typst to run correctly, Quarto 1.5 or greater is required <a href="https://github.com/wjschne/apaquarto/issues/54">#54</a>. An error message now prompts the user to update Typst.</li>
+<li>Fixed link-citations for pdf <a href="https://github.com/wjschne/apaquarto/issues/64">#64</a>.</li>
+<li>Fixed rendering of stylized <span class="math inline">\(\LaTeX\)</span> symbol in docx.</li>
+<li>Updated to most recent version of <a href="https://github.com/citation-style-language/styles/commit/fab696b6f365a770547df90b84a54691462b7c21">apa.cls</a></li>
 </ul>
 </section>
 <section id="version-4.0.2-2024-05-01" class="level1">

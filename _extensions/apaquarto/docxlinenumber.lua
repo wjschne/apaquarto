@@ -5,6 +5,17 @@ if FORMAT ~= "docx" then
   return
 end
 
+function Math(eq)
+  if eq.mathtype == "InlineMath" then
+    if eq.text == "\\LaTeX" then
+      return pandoc.Str("LaTeX")
+    end
+    if eq.text == "\\TeX" then
+      return pandoc.Str("TeX")
+    end
+  end
+end
+
 
 function Pandoc(doc)
   if doc.meta["numbered-lines"] then

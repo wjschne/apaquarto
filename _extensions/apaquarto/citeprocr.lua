@@ -141,7 +141,11 @@ return {
           end
         end
       end
-      return pandoc.utils.citeproc(doc) 
+      local d = pandoc.utils.citeproc(doc) 
+      if FORMAT == "typst" then
+        d.meta.citeproc = true
+      end
+      return d
     end
     
   }
