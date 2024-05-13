@@ -1,6 +1,5 @@
 //#assert(sys.version.at(1) >= 11 or sys.version.at(0) > 0, message: "This template requires Typst Version 0.11.0 or higher. The version of Quarto you are using uses Typst version is " + str(sys.version.at(0)) + "." + str(sys.version.at(1)) + "." + str(sys.version.at(2)) + ". You will need to upgrade to Quarto 1.5 or higher to use apaquarto-typst.")
 
-
 // counts how many appendixes there are
 #let appendixcounter = counter("appendix")
 // make latex logo
@@ -54,6 +53,7 @@
   )
 
 
+ 
 if sys.version.at(1) >= 11 or sys.version.at(0) > 0 {
   set table(    
     stroke: (x, y) => (
@@ -155,5 +155,6 @@ if sys.version.at(1) >= 11 or sys.version.at(0) > 0 {
   } else {
     columns(cols, gutter: 4%, doc)
   }
+
 
 }

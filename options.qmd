@@ -597,6 +597,36 @@ All of the .pdf-specfic options for apaquarto come directly from the [apa7 $\LaT
 
 With one exeception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.
 
+# Suppress Elements
+
+Any of the elements below can be selectively suppressed from the document.
+
+| Field                                      | Explanation                                                                                                                                                                                |
+|--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `suppress-title-page: true`                | Suppress the entire title page                                                                                                                                                             |
+| `suppress-title: true`                     | Suppress the title on the title page                                                                                                                                                       |
+| `suppress-short-title: true`               | Suppress the short title in the running header                                                                                                                                             |
+| `suppress-author: true`                    | Suppresses the author names below the title. Does not suppress author names in the author note.                                                                                            |
+| `suppress-affiliation: true`               | Suppress affiliations below the author names. Does not suppress the affiliation in the correspondence note.                                                                                |
+| `suppress-author-note: true`               | Suppress the entire author note                                                                                                                                                            |
+| `suppress-orcid: true`                     | Suppress the author ORCID numbers                                                                                                                                                          |
+| `suppress-status-change-paragraph: true`   | Suppress the paragraph about status changes (affiliation changes and deceased authors)                                                                                                     |
+| `suppress-disclosures-paragraph: true`     | Suppress the paragraph about disclosures (study registration, data sharing, related reports, conflicts of interest, financial support, statements of gratitude, and authorship agreements) |
+| `suppress-credit-statement: true`          | Suppress the credit statement                                                                                                                                                              |
+| `suppress-corresponding-paragraph: true`   | Suppress the entire correspondence paragraph                                                                                                                                               |
+| `suppress-corresponding-group: true`       | Suppress the group in the correspondence address                                                                                                                                           |
+| `suppress-corresponding-department: true`  | Suppress the department in the correspondence address                                                                                                                                      |
+| `suppress-corresponding-address: true`     | Suppress the street address in the correspondence address                                                                                                                                  |
+| `suppress-corresponding-city: true`        | Suppress the city in the correspondence address                                                                                                                                            |
+| `suppress-corresponding-region: true`      | Suppress the region/state in the correspondence address                                                                                                                                    |
+| `suppress-corresponding-postal-code: true` | Suppress the postal code in the correspondence address                                                                                                                                     |
+| `suppress-corresponding-email: true`       | Suppress the email address in the correspondence address                                                                                                                                   |
+| `suppress-abstract: true`                  | Suppress the abstract. In the .pdf document, this will also suppress the keywords.                                                                                                         |
+| `suppress-keywords: true`                  | Suppress the keywords below the abstract                                                                                                                                                   |
+| `suppress-title-introduction: true`        | Suppress the title in the introduction                                                                                                                                                     |
+
+: {.primary tbl-colwidths="\[50,50\]"}
+
 # Language Options
 
 You can alter the names of Abstract, Figures, Tables, and References by setting the `lang` field to one of these languages:

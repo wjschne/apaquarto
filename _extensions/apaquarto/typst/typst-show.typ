@@ -1,9 +1,12 @@
 #show: document => $documentmode$(
+$if(suppress-short-title)$
+$else$
 $if(shorttitle)$
   runninghead: "$shorttitle$",
 $else$
 $if(title)$
   runninghead: "$title$",
+$endif$
 $endif$
 $endif$
 $if(paper)$

@@ -1,3 +1,4 @@
+-- Do not run on latex
 if FORMAT == "latex" then
   return 
 end

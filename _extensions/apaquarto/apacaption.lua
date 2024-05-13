@@ -61,7 +61,6 @@ local caption_formatter = function(p)
 end
 
 local divcaption = function(div)
-  ---print(div)
   if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
     
     -- Get figure/table prefix and number

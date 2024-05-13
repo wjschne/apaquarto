@@ -27,9 +27,10 @@ local fields = {
   {field = "crossref-fig-title", default = "Figure"},
   {field = "crossref-tbl-title", default = "Table"},
   {field = "citation-last-author-separator", default = "and"},
-  {field = "citation-masked-author", default = "Masked Author"},
+  {field = "citation-masked-author", default = "Masked Citation"},
   {field = "citation-masked-title", default = "Masked Title"},
   {field = "citation-masked-date", default = "n.d."},
+  {field = "email", default = "Email"},
   {field = "figure-table-note", default = "Note"},  
   {field = "section-title-abstract", default = "Abstract"},
   {field = "section-title-appendix", default = "Appendix"},
@@ -38,6 +39,7 @@ local fields = {
   {field = "title-block-correspondence-note", default = "Correspondence concerning this article should be addressed to"},
   {field = "title-block-keywords", default = "Keywords"},
   {field = "title-block-role-introduction", default = "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"},
+  {field = "references-meta-analysis", default = "References marked with an asterisk indicate studies included in the meta-analysis."},
 }
 
 Meta = function(m)

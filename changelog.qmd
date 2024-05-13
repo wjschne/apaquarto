@@ -15,6 +15,10 @@ engine: knitr
     * Full language option support
 
 
+# Version 4.1.0 (2024-05-13)
+
+- [#68](https://github.com/wjschne/apaquarto/issues/68) Enable selective suppression of most elements of the title page and abstract page. 
+
 # Version 4.0.3 (2024-05-11)
 
 - For apaquarto-typst to run correctly, Quarto 1.5 or greater is required [#54](https://github.com/wjschne/apaquarto/issues/54). An error message now prompts the user to update Typst.

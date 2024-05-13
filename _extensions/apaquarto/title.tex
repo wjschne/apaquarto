@@ -1,8 +1,17 @@
+$if(suppress-title)$
+\title{}
+$else$
 $if(apatitledisplay)$
 \title{$apatitledisplay$}
 $else$
 \title{No Title Set: Set title field in yaml}
 $endif$
+$endif$
+
+
+$if(suppress-short-title)$
+\shorttitle{}
+$else$
 $if(shorttitle)$
 \shorttitle{$shorttitle$}
 $else$
@@ -10,6 +19,7 @@ $if(apatitle)$
 \shorttitle{$apatitle$}
 $else$
 \shorttitle{No Shorttitle Set: Set title or shorttitle in yaml}
+$endif$
 $endif$
 $endif$
 
@@ -41,6 +51,10 @@ $if(copyrighttext)$
 \copnum{$copyrighttext$}
 $endif$
 
+$if(suppress-author)$
+\author{~}
+$else$
+
 $if(oneauthor)$
 \author{$for(by-author)$$by-author.apaauthordisplay$$sep$,$endfor$}
 $else$
@@ -53,8 +67,11 @@ $else$
 
 $if(affiliationsdifferent)$
 
+$if(suppress-affiliation)$
+\authorsnames{$for(by-author)$$by-author.apaauthordisplay$$sep$,$endfor$}
+$else$
 \authorsnames[$for(by-author)${$for(by-author.affiliations)$$it.number$$sep$,$endfor$}$sep$,$endfor$]{$for(by-author)$$by-author.apaauthordisplay$$sep$,$endfor$}
-
+$endif$
 
 
 $else$
@@ -67,6 +84,11 @@ $endif$
 
 $endif$
 
+$endif$
+
+$if(suppress-affiliation)$
+\affiliation{}
+$else$
 $if(oneaffiliation)$
 
 \affiliation{
@@ -80,38 +102,47 @@ $for(by-affiliation)$
 {$if(it.name)$$if(it.department)$$it.department$, $endif$$it.name$$else$$if(it.city)$$it.city$, $endif$$if(it.region)$$it.region$ $endif$$if(it.country)$$it.country$$endif$$endif$}$sep$,$endfor$}
 
 $endif$
+$endif$
 
 
 
-
-
+$if(suppress-author)$
+$else$
 \leftheader{$if(by-author/allbutlast)$$for(by-author/allbutlast)$$by-author.name.family$$sep$, $endfor$$for(by-author/last)$ and $by-author.name.family$$endfor$$else$$for(by-author/last)$$by-author.name.family$$endfor$$endif$}
-
+$endif$
 
 $if(date)$
 \date{$date$}
 $endif$
 
+
+$if(suppress-abstract)$
+$else$
 $if(abstract)$
 \abstract{$abstract$}
 $endif$
-% $if(bibliography)$
-% \addbibresource{$bibliography$}
-% $endif$
+$endif$
 
+$if(suppress-keywords)$
+$else$
 $if(keywords)$\keywords{$for(keywords)$$it$$sep$, $endfor$}$endif$
+$endif$
 
-\authornote{$for(by-author)$$if(it.orcid)$\par{\addORCIDlink{$it.apaauthordisplay$}{$it.orcid$}}$endif$$endfor$
-\par{$for(author-note.status-changes.affiliation-change)$$it$$sep$$endfor$ $for(author-note.status-changes.deceased)$$it$$sep$$endfor$}
-\par{$for(author-note.disclosures.study-registration)$$it$$sep$$endfor$ $for(author-note.disclosures.data-sharing)$$it$$sep$$endfor$ $for(author-note.disclosures.related-report)$$it$$sep$$endfor$ $for(author-note.disclosures.conflict-of-interest)$$it$$sep$$endfor$ $for(author-note.disclosures.financial-support)$$it$$sep$$endfor$ $for(author-note.disclosures.gratitude)$$it$$sep$$endfor$ $for(author-note.disclosures.authorship-agreements)$$it$$sep$$endfor$ ${for(by-author/first)}${if(it.roles)}Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows: ${for(by-author)}${if(it.roles)}${it.apaauthordisplay}:   ${for(it.roles)}${it.role}$sep$, ${endfor}${endif}${endfor}${endif}${endfor}${for(by-author/rest)}${if(it.roles)}${for(by-author)}${if(it.roles)}; ${it.apaauthordisplay}:   ${for(it.roles)}${it.role}$sep$, ${endfor}${endif}${endfor}${endif}${endfor}}
+$if(suppress-author-note)$
+$else$
+\authornote{$if(suppress-orcid)$$else$$for(by-author)$$if(it.orcid)$\par{\addORCIDlink{$it.apaauthordisplay$}{$it.orcid$}}$endif$$endfor$$endif$ 
+$if(suppress-status-change-paragraph)$$else$$if(author-note.status-changes)$\par{$for(author-note.status-changes.affiliation-change)$$it$$sep$$endfor$ $for(author-note.status-changes.deceased)$$it$$sep$$endfor$}$endif$$endif$
+\par{$if(suppress-disclosures-paragraph)$$else$$for(author-note.disclosures.study-registration)$$it$$sep$$endfor$ $for(author-note.disclosures.data-sharing)$$it$$sep$$endfor$ $for(author-note.disclosures.related-report)$$it$$sep$$endfor$ $for(author-note.disclosures.conflict-of-interest)$$it$$sep$$endfor$ $for(author-note.disclosures.financial-support)$$it$$sep$$endfor$ $for(author-note.disclosures.gratitude)$$it$$sep$$endfor$ $for(author-note.disclosures.authorship-agreements)$$it$$sep$$endfor$$endif$ $if(suppress-credit-statement)$$else$${for(by-author/first)}${if(it.roles)}Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows: ${for(by-author)}${if(it.roles)}${it.apaauthordisplay}:   ${for(it.roles)}${it.role}$sep$, ${endfor}${endif}${endfor}${endif}${endfor}${for(by-author/rest)}${if(it.roles)}${for(by-author)}${if(it.roles)}; ${it.apaauthordisplay}:   ${for(it.roles)}${it.role}$sep$, ${endfor}${endif}${endfor}${endif}${endfor}$endif$}
 $if(nocorrespondence)$
+$else$
+$if(suppress-corresponding-paragraph)$
 $else$
 $if(author-note.correspondence-note)$
 \par{$author-note.correspondence-note$}
 $else$
-\par{$language.title-block-correspondence-note$ $for(by-author)$$if(it.attributes.corresponding)$$it.apaauthordisplay$$for(by-author.affiliations)$$if(it.address)$$if(it.department)$, $it.department$$endif$$if(it.name)$, $it.name$$endif$$if(it.address)$, $it.address$$endif$$if(it.city)$, $it.city$$endif$$if(it.region)$, $it.region$$endif$$if(it.postal-code)$ $it.postal-code$$endif$$if(it.country)$, $it.country$$endif$$endif$$endfor$$if(it.email)$, Email: $it.email$$endif$$endif$$endfor$}
+\par{$language.title-block-correspondence-note$ $for(by-author)$$if(it.attributes.corresponding)$$it.apaauthordisplay$$for(by-author.affiliations)$$if(it.address)$$if(suppress-corresponding-department)$$else$$if(it.department)$, $it.department$$endif$$endif$$if(suppress-corresponding-affiliation-name)$$else$$if(it.name)$, $it.name$$endif$$endif$$if(suppress-corresponding-address)$$else$$if(it.address)$, $it.address$$endif$$endif$$if(suppress-corresponding-city)$$else$$if(it.city)$, $it.city$$endif$$endif$$if(suppress-corresponding-region)$$else$$if(it.region)$, $it.region$$endif$$endif$$if(suppress-corresponding-postal-code)$$else$$if(it.postal-code)$ $it.postal-code$$endif$$endif$$if(suppress-corresponding-country)$$else$$if(it.country)$, $it.country$$endif$$endif$$endif$$endfor$$if(suppress-corresponding-email)$$else$$if(it.email)$, $language.email$: $it.email$$endif$$endif$$endif$$endfor$}
+$endif$
 $endif$
 $endif$
 }
-
-
+$endif$

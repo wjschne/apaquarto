@@ -211,6 +211,7 @@ window.Quarto = {
   <li><a href="#options-for-.docx-and-typst" id="toc-options-for-.docx-and-typst" class="nav-link" data-scroll-target="#options-for-.docx-and-typst">Options for .docx and typst</a></li>
   <li><a href="#options-for-.pdf" id="toc-options-for-.pdf" class="nav-link" data-scroll-target="#options-for-.pdf">Options for .pdf</a></li>
   <li><a href="#options-for-.html" id="toc-options-for-.html" class="nav-link" data-scroll-target="#options-for-.html">Options for .html</a></li>
+  <li><a href="#suppress-elements" id="toc-suppress-elements" class="nav-link" data-scroll-target="#suppress-elements">Suppress Elements</a></li>
   <li><a href="#language-options" id="toc-language-options" class="nav-link" data-scroll-target="#language-options">Language Options</a></li>
   </ul>
 </nav>
@@ -870,6 +871,108 @@ window.Quarto = {
 <section id="options-for-.html" class="level1">
 <h1>Options for .html</h1>
 <p>With one exeception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.</p>
+</section>
+<section id="suppress-elements" class="level1">
+<h1>Suppress Elements</h1>
+<p>Any of the elements below can be selectively suppressed from the document.</p>
+<table class="table-primary table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>suppress-title-page: true</code></td>
+<td>Suppress the entire title page</td>
+</tr>
+<tr class="even">
+<td><code>suppress-title: true</code></td>
+<td>Suppress the title on the title page</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-short-title: true</code></td>
+<td>Suppress the short title in the running header</td>
+</tr>
+<tr class="even">
+<td><code>suppress-author: true</code></td>
+<td>Suppresses the author names below the title. Does not suppress author names in the author note.</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-affiliation: true</code></td>
+<td>Suppress affiliations below the author names. Does not suppress the affiliation in the correspondence note.</td>
+</tr>
+<tr class="even">
+<td><code>suppress-author-note: true</code></td>
+<td>Suppress the entire author note</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-orcid: true</code></td>
+<td>Suppress the author ORCID numbers</td>
+</tr>
+<tr class="even">
+<td><code>suppress-status-change-paragraph: true</code></td>
+<td>Suppress the paragraph about status changes (affiliation changes and deceased authors)</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-disclosures-paragraph: true</code></td>
+<td>Suppress the paragraph about disclosures (study registration, data sharing, related reports, conflicts of interest, financial support, statements of gratitude, and authorship agreements)</td>
+</tr>
+<tr class="even">
+<td><code>suppress-credit-statement: true</code></td>
+<td>Suppress the credit statement</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-corresponding-paragraph: true</code></td>
+<td>Suppress the entire correspondence paragraph</td>
+</tr>
+<tr class="even">
+<td><code>suppress-corresponding-group: true</code></td>
+<td>Suppress the group in the correspondence address</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-corresponding-department: true</code></td>
+<td>Suppress the department in the correspondence address</td>
+</tr>
+<tr class="even">
+<td><code>suppress-corresponding-address: true</code></td>
+<td>Suppress the street address in the correspondence address</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-corresponding-city: true</code></td>
+<td>Suppress the city in the correspondence address</td>
+</tr>
+<tr class="even">
+<td><code>suppress-corresponding-region: true</code></td>
+<td>Suppress the region/state in the correspondence address</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-corresponding-postal-code: true</code></td>
+<td>Suppress the postal code in the correspondence address</td>
+</tr>
+<tr class="even">
+<td><code>suppress-corresponding-email: true</code></td>
+<td>Suppress the email address in the correspondence address</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-abstract: true</code></td>
+<td>Suppress the abstract. In the .pdf document, this will also suppress the keywords.</td>
+</tr>
+<tr class="even">
+<td><code>suppress-keywords: true</code></td>
+<td>Suppress the keywords below the abstract</td>
+</tr>
+<tr class="odd">
+<td><code>suppress-title-introduction: true</code></td>
+<td>Suppress the title in the introduction</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="language-options" class="level1">
 <h1>Language Options</h1>
