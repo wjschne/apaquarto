@@ -38,7 +38,7 @@ contributes:
       suppress-abstract: false
       suppress-keywords: false
       suppress-title-introduction: false
-      no-ampersand-parenthetical: true
+      no-ampersand-parenthetical: false
       language: 
         citation-last-author-separator: "and"
         citation-masked-author: "Masked Author"
