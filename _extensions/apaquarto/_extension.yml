@@ -8,6 +8,7 @@ contributes:
       execute:
         echo: false
       citeproc: false
+      link-citations: true
       fig-cap-location: top
       tbl-cap-location: top
       cap-location: top

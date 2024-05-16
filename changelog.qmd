@@ -18,7 +18,8 @@ engine: knitr
     
 # Version 4.2.0 (2024-05-16)
 
-- [#67](https://github.com/wjschne/apaquarto/issues/67) Setting `no-ampersand-parenthetical: true` will replace the ampersand in both parenthetical and narrative (in text) citations.     
+- [#67](https://github.com/wjschne/apaquarto/issues/67) Setting `no-ampersand-parenthetical: true` will replace the ampersand in both parenthetical and narrative (in text) citations.
+- Make `link-citations: true` the default. Can be set to `link-citations: false` in YAML.
 
 
 # Version 4.1.0 (2024-05-13)
