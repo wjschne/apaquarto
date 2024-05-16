@@ -39,14 +39,21 @@
     "href": "resources.html",
     "title": "Resources",
     "section": "",
-    "text": "American Psychological Association (2020). Publication manual of the American Psychological Association (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2020). Concise guide to APA Style: The official APA Style guide for students (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2021). Mastering APA Style student workbook. Author. https://doi.org/10.1037/0000271-000"
+    "text": "APA Style (apa.org)\nAPA Style Blog"
+  },
+  {
+    "objectID": "resources.html#apa-style-online",
+    "href": "resources.html#apa-style-online",
+    "title": "Resources",
+    "section": "",
+    "text": "APA Style (apa.org)\nAPA Style Blog"
   },
   {
     "objectID": "resources.html#apa-style-books",
     "href": "resources.html#apa-style-books",
     "title": "Resources",
-    "section": "",
-    "text": "American Psychological Association (2020). Publication manual of the American Psychological Association (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2020). Concise guide to APA Style: The official APA Style guide for students (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2021). Mastering APA Style student workbook. Author. https://doi.org/10.1037/0000271-000"
+    "section": "APA-Style Books",
+    "text": "APA-Style Books\n\nAmerican Psychological Association (2020). Publication manual of the American Psychological Association (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2020). Concise guide to APA Style: The official APA Style guide for students (7th ed.). Author. https://doi.org/10.1037/0000173-000\nAmerican Psychological Association (2021). Mastering APA Style student workbook. Author. https://doi.org/10.1037/0000271-000"
   },
   {
     "objectID": "resources.html#apa-style-helper-functions-in-r",
@@ -102,7 +109,7 @@
     "href": "changelog.html",
     "title": "Changelog",
     "section": "",
-    "text": "Create landscape pages for wide figures and tables.\nTables in .pdf jou mode should fit automatically.\nImplement missing Typst features\n\nJournal format\nLine numbering\nFull language option support"
+    "text": "Create landscape pages for wide figures and tables.\nTables in .pdf jou mode should fit automatically.\nAn appendix that consists solely of a table or figure should be called by the appendix title (not, for example, Figure A1).\nImplement missing Typst features\n\nJournal format\nLine numbering\nFull language option support"
   },
   {
     "objectID": "changelog.html#breaking-changes",
