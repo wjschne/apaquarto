@@ -102,7 +102,7 @@ masked-citations:
 # Language options. See https://quarto.org/docs/authoring/language.html
 lang: en
 language:
-  citation-last-author-separator: "et"
+  citation-last-author-separator: "and"
   citation-masked-author: "Masked Citation"
   citation-masked-date: "n.d."
   citation-masked-title: "Masked Title"
@@ -173,7 +173,7 @@ One way to import an existing graphic as a figure is to use `knitr::include_grap
 knitr::include_graphics("sampleimage.png")
 ```
 
-Figure graphics can be imported directly with Markdown:
+Figure graphics can be imported directly with Markdown, as with @fig-import2.
 
 ![Another Way to Import Graphics](sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
 

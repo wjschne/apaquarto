@@ -12,6 +12,7 @@
 
 local andreplacement = "and"
 local makelinks = false
+local no_ampersand_parenthetical = false
 
 -- make string, if it exists, else return default
 local stringify = function(s, default)
@@ -37,11 +38,15 @@ local function get_and(m)
   if m["link-citations"] then 
     makelinks = true
   end
+
+  if m["no-ampersand-parenthetical"] then 
+    no_ampersand_parenthetical = true
+  end
 end
 
 local function replace_and(ct)
     
-    if ct.citations[1].mode == "AuthorInText" then
+    if ct.citations[1].mode == "AuthorInText" or no_ampersand_parenthetical then
       -- Replace ampersand
       ---Adapted from Samuel Dodson
       ---https://github.com/citation-style-language/styles/issues/3748#issuecomment-430871259

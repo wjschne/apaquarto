@@ -66,7 +66,7 @@ Block = function(b)
   end
   
   -- Assign prefixes and numbers
-  if b.identifier then
+  if b.identifier then    
     if b.identifier:find("^tbl%-") then
       b.attributes.prefix = prefix
       b.attributes.tblnum = tbllabel(b.identifier)

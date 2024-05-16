@@ -5,6 +5,12 @@ suppress-bibliography: true
 bibliography: bibliography.bib
 ---
 
+## APA-Style Online
+
+* [APA Style (apa.org)](https://apastyle.apa.org/)
+* [APA Style Blog](https://apastyle.apa.org/blog)
+
+
 ## APA-Style Books
 
 * @americanpsychologicalassociationPublicationManualAmerican2020
