@@ -16,6 +16,10 @@ engine: knitr
     * Full language option support
     
     
+# Version 4.3.0 (2024-05-22)
+
+- [#69](https://github.com/wjschne/apaquarto/issues/69) Allow users to set custom margins using Quarto's `geometry` options.
+
 # Version 4.2.0 (2024-05-16)
 
 - [#67](https://github.com/wjschne/apaquarto/issues/67) Setting `no-ampersand-parenthetical: true` will replace the ampersand in both parenthetical and narrative (in text) citations.

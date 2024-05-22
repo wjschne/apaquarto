@@ -3,8 +3,19 @@ if FORMAT:match 'latex' then
   return
 end
 
+
+local andreplacement = "and"
+
+
+
 local List = require 'pandoc.List'
 local stringify = pandoc.utils.stringify
+
+local function get_and(m)
+  if m.language and m.language["citation-last-author-separator"] then
+    andreplacement = stringify(m.language["citation-last-author-separator"])
+  end
+end
 
 ---http://lua-users.org/wiki/StringRecipes
 local function ends_with(str, ending)
@@ -24,22 +35,22 @@ end
 
 -- Check if meta is present or if it has length of 0
 local function chkmeta(meta_item)
-    ispresent = false
-    if meta_item then
-      if #meta_item > 0 then
-        ispresent = true
-      end
+  ispresent = false
+  if meta_item then
+    if #meta_item > 0 then
+      ispresent = true
     end
-    return ispresent
   end
+  return ispresent
+end
 
 -- Convert list to string with oxford comma
 local function oxfordcommalister(lists)
-  local lastsep = pandoc.Str(", and ")
+  local lastsep = pandoc.Str(", " .. andreplacement .. " ")
   local sep = pandoc.Str(", ")
   
   if #lists == 2 then
-    lastsep = pandoc.Str(" and ")
+    lastsep = pandoc.Str(" " .. andreplacement .. " ")
   end
    
   local result = List:new{}
@@ -75,9 +86,9 @@ local get_author_paragraph = function(authors, different)
           sep = ""
         elseif i == #authors then
           if i == 2 then
-            sep = " and "
+            sep = " " .. andreplacement .. ""
           else
-            sep = ", and "
+            sep = ", " .. andreplacement .. " "
           end
         else 
           sep = ", "
@@ -120,6 +131,7 @@ local extend_paragraph = function(para, meta_item, sep)
 
 
 return {
+  { Meta = get_and },
   {
     Pandoc = function(doc)
            

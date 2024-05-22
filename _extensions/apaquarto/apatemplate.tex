@@ -2,7 +2,9 @@ $doc-class.tex()$
 \usepackage{amsmath}
 \usepackage{amssymb}
 
-
+$if(geometry)$
+\geometry{$for(geometry)$$geometry$$sep$,$endfor$}
+$endif$
 
 $if(lang)$
 \usepackage[bidi=default]{babel}
