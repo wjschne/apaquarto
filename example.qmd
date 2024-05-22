@@ -220,7 +220,7 @@ As demonstrated in @fig-twocolumn, you can make figures tables span the two colu
 #| apa-note: Figures in two-column mode are only different for jou mode in .pdf documents
 #| apa-twocolumn: true
 #| fig-height: 3
-#| fig-width: 6.4
+#| fig-width: 6.2
 #| fig-align: center
 ggplot(data.frame(x = c(-4, 4)), aes(x)) +
   stat_function(fun = dnorm, 
