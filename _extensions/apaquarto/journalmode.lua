@@ -6,14 +6,26 @@ function Meta(m)
     if pandoc.utils.stringify(m.documentmode) == 'jou' then 
       m.journalmode = true
       m.manuscriptmode = false
+      m.docmode = false
+      m.studentmode = false
     end
     if pandoc.utils.stringify(m.documentmode) == 'man' then 
       m.journalmode = false
       m.manuscriptmode = true
+      m.docmode = false
+      m.studentmode = false
     end 
     if pandoc.utils.stringify(m.documentmode) == 'doc' then
       m.journalmode = false
       m.manuscriptmode = false
+      m.docmode = true
+      m.studentmode = false
+    end
+    if pandoc.utils.stringify(m.documentmode) == 'stu' then
+      m.journalmode = false
+      m.manuscriptmode = false
+      m.docmode = false
+      m.studentmode = true
     end
   else
     m.journalmode = false
