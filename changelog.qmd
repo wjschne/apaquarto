@@ -16,6 +16,11 @@ engine: knitr
     * Full language option support
     
     
+# Version 4.3.1 (2024-05-28)
+
+- [#72](https://github.com/wjschne/apaquarto/issues/72) Fix bug while loading flextable in pdf.
+    
+    
 # Version 4.3.0 (2024-05-22)
 
 - [#69](https://github.com/wjschne/apaquarto/issues/69) Allow users to set custom margins using Quarto's `geometry` options.
