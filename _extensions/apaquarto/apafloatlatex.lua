@@ -71,11 +71,10 @@ local processfloat = function(float)
       })
     end
       
-      -- Caption label
       local captionsubspan = pandoc.Span({
         pandoc.RawInline("latex", "\\label"),
         pandoc.RawInline("latex", "{"),
-        pandoc.Str(float.identifier),
+        pandoc.RawInline("latex", float.identifier),
         pandoc.RawInline("latex", "}")
       })
 

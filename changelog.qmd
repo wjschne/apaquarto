@@ -19,6 +19,7 @@ engine: knitr
 # Version 4.3.1 (2024-05-28)
 
 - [#72](https://github.com/wjschne/apaquarto/issues/72) Fix bug while loading flextable in pdf.
+- [#73](https://github.com/wjschne/apaquarto/issues/73) Fix bug for figure labels with underscores in them.
     
     
 # Version 4.3.0 (2024-05-22)
