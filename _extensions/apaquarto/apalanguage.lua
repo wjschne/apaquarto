@@ -48,6 +48,8 @@ Meta = function(m)
     m.language = {}
   end
   
+  
+  
   -- Find word for "note"
   if not m.language["figure-table-note"] then
     if param("callout-note-title") then
@@ -63,6 +65,11 @@ Meta = function(m)
     -- If field not assisned, assign default
     if not m.language[x.field] then
       m.language[x.field] = param(x.field, x.default)
+      if m.crossref then
+        if m.crossref[x.field:gsub("^crossref%-", "")] then
+          m.language[x.field] = pandoc.utils.stringify(m.crossref[x.field:gsub("^crossref%-", "")])
+        end
+      end
     end
   end
 
