@@ -16,6 +16,11 @@ engine: knitr
     * Full language option support
     
 
+# Version 4.3.3 (2024-07-04)
+
+- Fixed `lang` option for abstract. Documented language options that are likely to be used in apaquarto.
+
+
 # Version 4.3.2 (2024-06-19)
 
 - [#76](https://github.com/wjschne/apaquarto/issues/76) Fixed bug that failed to account for user-specified terms in `crossref`

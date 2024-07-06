@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.37">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>APA Style Documents with apaquarto – Installation</title>
+<title>Installation – APA Style Documents with apaquarto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -282,184 +282,33 @@ What if I do not want to use any programming languages?
 </section>
 <section id="install-apaquarto" class="level1">
 <h1>Install apaquarto</h1>
-<p>What do you wish to do with apaquarto? You can create a new template file in a new project folder or you can add the apaquarto format to an existing Quarto file.</p>
+<p>What do you wish to do with apaquarto? You can create a new template file in a new project folder, or you can add the apaquarto format to an existing Quarto file.</p>
 <p>There are two ways to install Quarto extensions like apaquarto: If you are an R user, you might prefer the R console method. Anyone, including R users, can use the terminal method.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset nav-pills">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Via the R console</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Via the terminal</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Via the terminal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Via the R console</a></li></ul>
 <div class="tab-content nav-pills">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<p>If you are an R user, you can install extensions with the <a href="https://quarto-dev.github.io/quarto-r/">quarto package</a> using the R Console.</p>
-<ol type="1">
-<li>Set the working directory to the folder where you want the template to be installed.</li>
-<li>In the R console, run this code:</li>
-</ol>
-<div class="tabset-margin-container"></div><div class="panel-tabset nav-pills">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Create a new file</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Convert an existing document</a></li></ul>
-<div class="tab-content nav-pills">
+<p>In the terminal, navigate to the folder where you want to install apaquarto, and run this command:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset nav.pills">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">To create a new file</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Convert an existing document</a></li></ul>
+<div class="tab-content nav.pills">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_use_template</span>(<span class="st">"wjschne/apaquarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> use template wjschne/apaquarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_add_extension</span>(<span class="st">"wjschne/apaquarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-<p>A prompt will ask if you trust <a href="https://wjschne.github.io/">the author</a> not to place malicious code on your machine. To proceed, answer <code>Yes</code> or just <code>Y</code>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-What is the R Console?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The console is for entering R commands. In RStudio, it is in the lower left pane by default. See <a href="#fig-console" class="quarto-xref">Figure&nbsp;1</a>. It is okay if your console looks different from mine.</p>
-<div id="fig-console" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="img/console.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: RStudio console"><img src="img/console.png" class="img-fluid figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: RStudio console
-</figcaption>
-</figure>
-</div>
-<p>To use the console, type a command and press <kbd aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-What is the quarto package?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The quarto package is not Quarto itself, but it provides convenient functions to interact with Quarto. You will need a recent version of the quarto package (version 1.4 or higher).</p>
-<p>If the quarto package is not installed, you can can install it by running this code in the console:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Alternatively, in RStudio’s lower right pane:</p>
-<ol type="1">
-<li>Select the <strong>Packages</strong> tab.</li>
-<li>Click the <strong>Install</strong> button.</li>
-<li>Enter “quarto” in the input box.</li>
-<li>Click <strong>Install</strong>.</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-How to set the working directory
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Suppose there is a folder on your computer at this location:</p>
-<p><code>C:/Users/myname/Documents/MyProject/</code></p>
-<p>You can set the working directory in the R console with this command</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/myname/Documents/MyProject/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Alternatively, you can set the working directory in the RStudio menu:</p>
-<ol type="1">
-<li>Select <em>Session → Set Working Directory → Choose Directory</em></li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="img/menuworkingdirectory.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Set Working Directory Via RStudio Menu"><img src="img/menuworkingdirectory.png" class="img-fluid figure-img" alt="Set Working Directory Via RStudio Menu"></a></p>
-<figcaption>Set Working Directory Via RStudio Menu</figcaption>
-</figure>
-</div>
-<ol start="2" type="1">
-<li>Navigate to a folder where you want to create a new folder.</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-How to skip the prompts
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Run the <code>quarto_use_template</code> function with the <code>no_prompt</code> option set to <code>TRUE</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_use_template</span>(<span class="st">"wjschne/apaquarto"</span>, <span class="at">no_prompt =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-How to inspect the code before installing it
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The apaquarto source code is in <a href="https://github.com/wjschne/apaquarto">this repository</a>. Installing the extension will install the contents of the <code>_extensions/apaquarto</code> folder. If you install the template, it will install the <code>template.qmd</code> file and rename it to the name of the folder you install the template to. In addition, these files will be installed:</p>
-<ul>
-<li>bibliography.bib</li>
-<li>README.md</li>
-<li>example.qmd</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<p>In the terminal, navigate to the folder where you want to install apaquarto, and run this command:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset nav.pills">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">To create a new file</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Convert an existing document</a></li></ul>
-<div class="tab-content nav.pills">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> use template wjschne/apaquarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add wjschne/apaquarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add wjschne/apaquarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -467,7 +316,7 @@ How to inspect the code before installing it
 </div>
 <p>Entering the command above will prompt a question about whether you trust <a href="https://wjschne.github.io/">the author</a> of the extension to not run malicious code. If you answer Yes, you will be prompted to name a new folder where the extension will be installed.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -476,16 +325,16 @@ What is the terminal?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A terminal is an interface for telling your computer what to do. A terminal can be pulled up on most programming environments. For example, In RStudio, the terminal is in a tab next to the console (see <a href="#fig-console" class="quarto-xref">Figure&nbsp;1</a>). If you cannot see a terminal tab next to the console, use the keyboard shortcut Alt-Shift-R to make a terminal appear (or select <em>Tools → Terminal → New Terminal.</em> in the RStudio menu).</p>
+<p>A terminal is an interface for telling your computer what to do. A terminal can be pulled up on most programming environments. For example, In RStudio, the terminal is in a tab next to the console (see <a href="#fig-console" class="quarto-xref">Figure&nbsp;2</a>). If you cannot see a terminal tab next to the console, use the keyboard shortcut Alt-Shift-R to make a terminal appear (or select <em>Tools → Terminal → New Terminal.</em> in the RStudio menu).</p>
 <div id="fig-terminal" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="img/terminal.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;2: RStudio terminal. It is okay if your console looks different from mine."><img src="img/terminal.png" class="img-fluid figure-img"></a>
+<a href="img/terminal.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: RStudio terminal. It is okay if your console looks different from mine."><img src="img/terminal.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: RStudio terminal. It is okay if your console looks different from mine.
+Figure&nbsp;1: RStudio terminal. It is okay if your console looks different from mine.
 </figcaption>
 </figure>
 </div>
@@ -499,7 +348,7 @@ Figure&nbsp;2: RStudio terminal. It is okay if your console looks different from
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -508,7 +357,7 @@ How to nagivate to a folder
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Suppose there is a folder on your computer at this location:</p>
 <p><code>C:/Users/myname/Documents/MyProject/</code></p>
@@ -518,8 +367,154 @@ How to nagivate to a folder
 <div class="code-with-filename-file">
 <pre><strong>Terminal</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"C:/Users/myname/Documents/MyProject/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"C:/Users/myname/Documents/MyProject/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pasting commands into the terminal
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In many terminals, the “paste” shortcut is different from what you might be used to (i.e., <kbd aria-hidden="true">Ctrl+Shift+V</kbd><span class="visually-hidden">Ctrl+Shift+V</span> instead of <kbd aria-hidden="true">Ctrl+V</kbd><span class="visually-hidden">Ctrl+V</span>). If that does not work, try right-clicking and selecting <code>paste</code>. If all else fails, just type the command.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p>If you are an R user, you can install extensions with the <a href="https://quarto-dev.github.io/quarto-r/">quarto package</a> using the R Console.</p>
+<ol type="1">
+<li>Set the working directory to the folder where you want the template to be installed.</li>
+<li>In the R console, run this code:</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset nav-pills">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Create a new file</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Convert an existing document</a></li></ul>
+<div class="tab-content nav-pills">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_use_template</span>(<span class="st">"wjschne/apaquarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_add_extension</span>(<span class="st">"wjschne/apaquarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>A prompt will ask if you trust <a href="https://wjschne.github.io/">the author</a> not to place malicious code on your machine. To proceed, answer <code>Yes</code> or just <code>Y</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What is the R Console?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The console is for entering R commands. In RStudio, it is in the lower left pane by default. See <a href="#fig-console" class="quarto-xref">Figure&nbsp;2</a>. It is okay if your console looks different from mine.</p>
+<div id="fig-console" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/console.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: RStudio console"><img src="img/console.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-console-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: RStudio console
+</figcaption>
+</figure>
+</div>
+<p>To use the console, type a command and press <kbd aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What is the quarto package?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The quarto package is not Quarto itself, but it provides convenient functions to interact with Quarto. You will need a recent version of the quarto package (version 1.4 or higher).</p>
+<p>If the quarto package is not installed, you can can install it by running this code in the console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quarto"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Alternatively, in RStudio’s lower right pane:</p>
+<ol type="1">
+<li>Select the <strong>Packages</strong> tab.</li>
+<li>Click the <strong>Install</strong> button.</li>
+<li>Enter “quarto” in the input box.</li>
+<li>Click <strong>Install</strong>.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How to set the working directory
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Suppose there is a folder on your computer at this location:</p>
+<p><code>C:/Users/myname/Documents/MyProject/</code></p>
+<p>You can set the working directory in the R console with this command</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/myname/Documents/MyProject/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Alternatively, you can set the working directory in the RStudio menu:</p>
+<ol type="1">
+<li>Select <em>Session → Set Working Directory → Choose Directory</em></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/menuworkingdirectory.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Set Working Directory Via RStudio Menu"><img src="img/menuworkingdirectory.png" class="img-fluid figure-img" alt="Set Working Directory Via RStudio Menu"></a></p>
+<figcaption>Set Working Directory Via RStudio Menu</figcaption>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>Navigate to a folder where you want to create a new folder.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How to skip the prompts
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Run the <code>quarto_use_template</code> function with the <code>no_prompt</code> option set to <code>TRUE</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_use_template</span>(<span class="st">"wjschne/apaquarto"</span>, <span class="at">no_prompt =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -530,13 +525,18 @@ How to nagivate to a folder
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Pasting commands into the terminal
+How to inspect the code before installing it
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>In many terminals, the “paste” shortcut is different from what you might be used to (i.e., <kbd aria-hidden="true">Ctrl+Shift+V</kbd><span class="visually-hidden">Ctrl+Shift+V</span> instead of <kbd aria-hidden="true">Ctrl+V</kbd><span class="visually-hidden">Ctrl+V</span>). If that does not work, try right-clicking and selecting <code>paste</code>. If all else fails, just type the command.</p>
+<p>The apaquarto source code is in <a href="https://github.com/wjschne/apaquarto">this repository</a>. Installing the extension will install the contents of the <code>_extensions/apaquarto</code> folder. If you install the template, it will install the <code>template.qmd</code> file and rename it to the name of the folder you install the template to. In addition, these files will be installed:</p>
+<ul>
+<li>bibliography.bib</li>
+<li>README.md</li>
+<li>example.qmd</li>
+</ul>
 </div>
 </div>
 </div>
@@ -550,15 +550,17 @@ Pasting commands into the terminal
 <h4 class="anchored" data-anchor-id="a-new-file">A new file</h4>
 <p>If you create a new apaquarto file, you will see a template file in the folder you select. The template file will have the same name as the folder you installed the template to and ends with <code>.qmd</code>.</p>
 <p>The example.qmd file has most of the options already filled out and explains how and why to change them. It also has a examples of how to use the extension in the text.</p>
+<p>It is recommended for RStudio users to use apaquarto inside a project. To create project for an existing directory, see <a href="https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects">here</a>.</p>
 </section>
 <section id="an-existing-file" class="level4">
 <h4 class="anchored" data-anchor-id="an-existing-file">An existing file</h4>
 <p>Once the extension is installed, you still need to change the output format of your document. You can select one or more of three formats: .docx, .pdf, or .html. You can add all of these formats or any combination of them:</p>
-<p>To all all three formats, add this to your .qmd file’s yaml <code>format</code> option:</p>
+<p>To include all four formats, add this to your .qmd file’s yaml <code>format</code> option:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span><span class="at"> default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-typst</span><span class="kw">:</span><span class="at"> default</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>When writing, I prefer to output to .html, because it renders quickly. Then I switch to .docx or .pdf, depending on where I need to submit the paper.</p>
 <p>Here is a minimal example of what the YAML metadata might look like:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
@@ -586,7 +588,8 @@ Pasting commands into the terminal
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span>
 <span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span><span class="at"> default</span></span>
 <span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-typst</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -1015,30 +1018,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

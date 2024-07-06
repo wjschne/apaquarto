@@ -5,7 +5,7 @@
 -- global quarto params
 local paramsJson = quarto.base64.decode(os.getenv("QUARTO_FILTER_PARAMS"))
 local quartoParams = quarto.json.decode(paramsJson)
-
+quarto.log.output(quartoParams)
 local function param(name, default)
   -- get name from quartoParams, if possible
   local value = quartoParams[name]
@@ -56,7 +56,14 @@ Meta = function(m)
       m.language["figure-table-note"] = param("callout-note-title")
     end
   end
-  
+
+   -- Find word for "Appendix"
+   if not m.language["crossref-apx-prefix"] then
+    if param("crossref-apx-prefix") then
+      m.language["crossref-apx-prefix"] = param("crossref-apx-prefix")
+    end
+  end 
+
   for i,x in ipairs(fields) do
     -- In case someone assigned variable to top-level meta instead of to language
     if m[x.field] then

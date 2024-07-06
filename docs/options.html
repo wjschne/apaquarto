@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.37">
+<meta name="generator" content="quarto-1.5.53">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>APA Style Documents with apaquarto – Template Options</title>
+<title>Template Options – APA Style Documents with apaquarto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -278,7 +278,7 @@ window.Quarto = {
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="general-options" class="level1">
 <h1>General Options</h1>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -339,7 +339,8 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>numbered-lines</code></td>
-<td style="text-align: left;">Numbered lines (.pdf and .docx only)</td>
+<td style="text-align: left;"><p>Numbered lines (.pdf and .docx only)</p>
+<p>Default: <code>false</code></p></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>bibliography</code></td>
@@ -424,7 +425,7 @@ window.Quarto = {
 <section id="affiliations" class="level2">
 <h2 class="anchored" data-anchor-id="affiliations">Affiliations</h2>
 <p>The apaquarto extenstion uses the <a href="https://quarto.org/docs/journals/authors.html#affiliations-schema">standard Quarto schema for affiliations</a>.</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -559,7 +560,7 @@ window.Quarto = {
 <section id="author-roles" class="level2">
 <h2 class="anchored" data-anchor-id="author-roles">Author Roles</h2>
 <p>APA Style encourages but does not require papers with multiple authors to describe author roles using the <a href="https://credit.niso.org/">Contributor Roles Taxonomy</a> (CRediT). There are 14 contributor roles:</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -663,7 +664,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="author-notes">Author Notes</h2>
 <p>The first paragraph of the Author Note will be populated with all the ORCID IDs that have been specified.</p>
 <p>The second paragraph consists of status changes:</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -694,7 +695,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>The third paragraph consists of study details and author disclosures:</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -771,7 +772,7 @@ window.Quarto = {
 </section>
 <section id="options-for-.docx-and-typst" class="level1">
 <h1>Options for .docx and typst</h1>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -800,7 +801,7 @@ window.Quarto = {
 <section id="options-for-.pdf" class="level1">
 <h1>Options for .pdf</h1>
 <p>All of the .pdf-specfic options for apaquarto come directly from the <a href="https://ctan.org/pkg/apa7?lang=en">apa7 <span class="math inline">\(\LaTeX\)</span> package</a>. Consult the apa7 package documentation for greater detail.</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -879,7 +880,7 @@ window.Quarto = {
 <section id="suppress-elements" class="level1">
 <h1>Suppress Elements</h1>
 <p>Any of the elements below can be selectively suppressed from the document.</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 50%">
 <col style="width: 50%">
@@ -981,7 +982,7 @@ window.Quarto = {
 <section id="language-options" class="level1">
 <h1>Language Options</h1>
 <p>You can alter the names of Abstract, Figures, Tables, and References by setting the <code>lang</code> field to one of these languages:</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 75%">
@@ -1052,7 +1053,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.</p>
-<table class="table-primary table">
+<table class="table-primary caption-top table">
 <colgroup>
 <col style="width: 30%">
 <col style="width: 40%">
@@ -1080,16 +1081,6 @@ window.Quarto = {
 <td><code>citation-masked-date</code></td>
 <td>The abbreviated translation for “no date” in masked citations</td>
 <td><em>n.d.</em></td>
-</tr>
-<tr class="even">
-<td><code>citation-masked-title</code></td>
-<td>The phrase to replace the title in a masked reference</td>
-<td><em>Masked Title</em></td>
-</tr>
-<tr class="odd">
-<td><code>section-title-appendix</code></td>
-<td>The heading for Appendices</td>
-<td><em>Appendix</em></td>
 </tr>
 <tr class="even">
 <td><code>title-block-author-note</code></td>
@@ -1120,14 +1111,56 @@ window.Quarto = {
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">section-title-appendix</span><span class="kw">:</span><span class="at"> </span><span class="st">"Apéndice"</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In addition, many terms translated automatically can be overridden. The full list is <a href="https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml">here</a>. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:</p>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In addition, many terms that are translated automatically can be overridden. The full list is <a href="https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml">here</a>. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here are the language terms most likely to be used in apaquarto:</p>
+<table class="table-primary caption-top table">
+<colgroup>
+<col style="width: 60%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field: English Default</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>section-title-abstract: Abstract</code></td>
+<td>Abtract title</td>
+</tr>
+<tr class="even">
+<td><code>section-title-references: References</code></td>
+<td>References title</td>
+</tr>
+<tr class="odd">
+<td><code>title-block-keywords: Keywords</code></td>
+<td>Keywords</td>
+</tr>
+<tr class="even">
+<td><code>crossref-fig-title: Figure</code></td>
+<td>Figure title prefix</td>
+</tr>
+<tr class="odd">
+<td><code>crossref-tbl-title: Table</code></td>
+<td>Table title prefix</td>
+</tr>
+<tr class="even">
+<td><code>crossref-apx-prefix: Appendix</code></td>
+<td>Appendix title prefix</td>
+</tr>
+<tr class="odd">
+<td><code>crossref-eq-prefix: Equation</code></td>
+<td>Equation title prefix</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

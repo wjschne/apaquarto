@@ -15,7 +15,7 @@ tt <- function(x, y) {
 Installing apaquarto is not hard, but it takes a bit more effort than installing a standalone program. There are four main steps:
 
 1. Install Quarto
-2. Install a programming langauge (e.g., R, Python, Julia)
+2. Install a programming language (e.g., R, Python, Julia)
 3. Install a programming environment (e.g., RStudio, VS Code, Jupyter) 
 4. Install apaquarto
 
@@ -69,12 +69,89 @@ At the [same link for installing Quarto](https://quarto.org/docs/get-started/), 
 
 # Install apaquarto
 
-What do you wish to do with apaquarto? You can create a new template file in a new project folder or you can add the apaquarto format to an existing Quarto file.
+What do you wish to do with apaquarto? You can create a new template file in a new project folder, or you can add the apaquarto format to an existing Quarto file.
 
 There are two ways to install Quarto extensions like apaquarto: If you are an R user, you might prefer the R console method. Anyone, including R users, can use the terminal method.
 
 
 :::: {.panel-tabset .nav-pills}
+
+### Via the terminal
+
+First open the the terminal and navigate to the folder where you want to install apaquarto.
+
+
+
+
+:::{.panel-tabset .nav.pills}
+
+#### To create a new file
+
+Run this in the terminal:
+
+```{bash}
+#| filename: "Terminal"
+#| eval: false
+quarto use template wjschne/apaquarto
+```
+
+#### Convert an existing document
+
+Run this in the terminal:
+
+```{bash}
+#| eval: false
+#| filename: "Terminal"
+quarto add wjschne/apaquarto
+```
+
+:::
+
+Entering the command above will prompt a question about whether you trust [the author](https://wjschne.github.io/) of the extension to not run malicious code. If you answer Yes, you will be prompted to name a new folder where the extension will be installed. Do not enter a complete file path. Just supply a folder name. This folder will be created in the folder you have navigated to.
+
+:::{.callout-note collapse=true}
+
+#### What is the terminal?
+
+A terminal is an interface for telling your computer what to do. A terminal can be pulled up on most programming environments. For example, In RStudio, the terminal is in a tab next to the console (see @fig-console). If you cannot see a terminal tab next to the console, use the keyboard shortcut Alt-Shift-R to make a terminal appear (or  select *Tools &rarr; Terminal &rarr; New Terminal.* in the RStudio menu).
+
+![RStudio terminal. It is okay if your console looks different from mine.](img/terminal.png){#fig-terminal}
+
+Alternatively, you can open a terminal directly on any computer:
+
+1. [Mac](https://support.apple.com/en-in/guide/terminal/welcome/mac): Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal.
+2. [Windows](https://www.wikihow.com/Open-Terminal-in-Windows): Click the Windows Start Icon (or press the {{< kbd Win >}} key), type `cmd`, select Command Prompt.
+3. [Linux](https://www.wikihow.com/Open-a-Terminal-Window-in-Ubuntu): Press {{< kbd Ctrl+Alt+T >}}
+
+:::
+
+:::{.callout-note collapse=true}
+
+#### How to nagivate to a folder
+
+Suppose there is a folder on your computer at this location:
+
+`C:/Users/myname/Documents/MyProject/`
+
+The `cd` command means "change directory." Thus, entering this command will "navigate" you to your desired folder:
+
+```{bash}
+#| eval: false
+#| filename: "Terminal"
+cd "C:/Users/myname/Documents/MyProject/"
+```
+
+
+:::
+
+
+:::{.callout-note collapse=true}
+
+## Pasting commands into the terminal
+
+In many terminals, the "paste" shortcut is different from what you might be used to (i.e., {{< kbd Ctrl+Shift+V >}} instead of {{< kbd Ctrl+V >}}). If that does not work, try right-clicking and selecting `paste`. If all else fails, just type the command.
+
+:::
 
 ### Via the R console
 
@@ -196,79 +273,13 @@ The apaquarto source code is in [this repository](https://github.com/wjschne/apa
 
 :::
 
-### Via the terminal
 
-In the terminal, navigate to the folder where you want to install apaquarto, and run this command:
-
-:::{.panel-tabset .nav.pills}
-
-#### To create a new file
-
-```{bash}
-#| filename: "Terminal"
-#| eval: false
-quarto use template wjschne/apaquarto
-```
-
-#### Convert an existing document
-
-```{bash}
-#| eval: false
-#| filename: "Terminal"
-quarto add wjschne/apaquarto
-```
-
-:::
-
-Entering the command above will prompt a question about whether you trust [the author](https://wjschne.github.io/) of the extension to not run malicious code. If you answer Yes, you will be prompted to name a new folder where the extension will be installed. 
-
-:::{.callout-note collapse=true}
-
-#### What is the terminal?
-
-A terminal is an interface for telling your computer what to do. A terminal can be pulled up on most programming environments. For example, In RStudio, the terminal is in a tab next to the console (see @fig-console). If you cannot see a terminal tab next to the console, use the keyboard shortcut Alt-Shift-R to make a terminal appear (or  select *Tools &rarr; Terminal &rarr; New Terminal.* in the RStudio menu).
-
-![RStudio terminal. It is okay if your console looks different from mine.](img/terminal.png){#fig-terminal}
-
-Alternatively, you can open a terminal directly on any computer:
-
-1. [Mac](https://support.apple.com/en-in/guide/terminal/welcome/mac): Click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal.
-2. [Windows](https://www.wikihow.com/Open-Terminal-in-Windows): Click the Windows Start Icon (or press the {{< kbd Win >}} key), type `cmd`, select Command Prompt.
-3. [Linux](https://www.wikihow.com/Open-a-Terminal-Window-in-Ubuntu): Press {{< kbd Ctrl+Alt+T >}}
-
-:::
-
-:::{.callout-note collapse=true}
-
-#### How to nagivate to a folder
-
-Suppose there is a folder on your computer at this location:
-
-`C:/Users/myname/Documents/MyProject/`
-
-The `cd` command means "change directory." Thus, entering this command will "navigate" you to your desired folder:
-
-```{bash}
-#| eval: false
-#| filename: "Terminal"
-cd "C:/Users/myname/Documents/MyProject/"
-```
-
-
-:::
-
-
-:::{.callout-note collapse=true}
-
-## Pasting commands into the terminal
-
-In many terminals, the "paste" shortcut is different from what you might be used to (i.e., {{< kbd Ctrl+Shift+V >}} instead of {{< kbd Ctrl+V >}}). If that does not work, try right-clicking and selecting `paste`. If all else fails, just type the command.
-
-:::
 
 ::::
 
 ### After installing apaquarto
+
+
 
 If you made a...
 
@@ -279,19 +290,21 @@ If you create a new apaquarto file, you will see a template file in the folder y
 
 The example.qmd file has most of the options already filled out and explains how and why to change them. It also has a examples of how to use the extension in the text.
 
+It is recommended for RStudio users to use apaquarto inside a project. To create project for an existing directory, see  [here](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects). 
 
 
 #### An existing file
 
 Once the extension is installed, you still need to change the output format of your document. You can select one or more of three formats: .docx, .pdf, or .html. You can add all of these formats or any combination of them:
 
-To all all three formats, add this to your .qmd file's yaml `format` option:
+To include all four formats, add this to your .qmd file's yaml `format` option:
 
 ``` yaml
 format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf: default
+  apaquarto-typst: default
 ```
 
 When writing, I prefer to output to .html, because it renders quickly. Then I switch to .docx or .pdf, depending on where I need to submit the paper.
@@ -325,6 +338,7 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
   apaquarto-pdf: default
+  apaquarto-typst: default
 ---
 
 ```
