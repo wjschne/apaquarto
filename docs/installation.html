@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.53">
+<meta name="generator" content="quarto-1.6.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -211,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Installing apaquarto is not hard, but it takes a bit more effort than installing a standalone program. There are four main steps:</p>
 <ol type="1">
 <li>Install Quarto</li>
-<li>Install a programming langauge (e.g., R, Python, Julia)</li>
+<li>Install a programming language (e.g., R, Python, Julia)</li>
 <li>Install a programming environment (e.g., RStudio, VS Code, Jupyter)</li>
 <li>Install apaquarto</li>
 </ol>
@@ -288,11 +288,12 @@ What if I do not want to use any programming languages?
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Via the terminal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Via the R console</a></li></ul>
 <div class="tab-content nav-pills">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<p>In the terminal, navigate to the folder where you want to install apaquarto, and run this command:</p>
+<p>First open the the terminal and navigate to the folder where you want to install apaquarto.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset nav.pills">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">To create a new file</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Convert an existing document</a></li></ul>
 <div class="tab-content nav.pills">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Run this in the terminal:</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -303,6 +304,7 @@ What if I do not want to use any programming languages?
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Run this in the terminal:</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -314,7 +316,7 @@ What if I do not want to use any programming languages?
 </div>
 </div>
 </div>
-<p>Entering the command above will prompt a question about whether you trust <a href="https://wjschne.github.io/">the author</a> of the extension to not run malicious code. If you answer Yes, you will be prompted to name a new folder where the extension will be installed.</p>
+<p>Entering the command above will prompt a question about whether you trust <a href="https://wjschne.github.io/">the author</a> of the extension to not run malicious code. If you answer Yes, you will be prompted to name a new folder where the extension will be installed. Do not enter a complete file path. Just supply a folder name. This folder will be created in the folder you have navigated to.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1018,7 +1020,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
