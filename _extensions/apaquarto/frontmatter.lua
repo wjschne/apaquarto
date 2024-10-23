@@ -86,7 +86,7 @@ local get_author_paragraph = function(authors, different)
           sep = ""
         elseif i == #authors then
           if i == 2 then
-            sep = " " .. andreplacement .. ""
+            sep = " " .. andreplacement .. " "
           else
             sep = ", " .. andreplacement .. " "
           end
