@@ -99,6 +99,10 @@ mask: false
 masked-citations:
   - schneider2012cattell
   - schneider2015intelligence
+# If true, adds today's date below author affiliations. If text, can be any value.
+# This is not standard APA format, but it is convenient.
+# Works with docx, html, and typst. 
+draft-date: false
 # Language options. See https://quarto.org/docs/authoring/language.html
 lang: en
 language:
