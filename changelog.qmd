@@ -16,6 +16,14 @@ engine: knitr
     * Full language option support
     
 
+# Version 4.3.6 (2024-11-22)
+
+- [#98](https://github.com/wjschne/apaquarto/issues/98) The `mainfont` option now works for apaquarto-html.
+
+# Version 4.3.5 (2024-11-22)
+
+- [#97](https://github.com/wjschne/apaquarto/issues/97) Added a `draft-date` option.
+
 # Version 4.3.4 (2024-09-01)
 
 - [#85](https://github.com/wjschne/apaquarto/issues/85) Fixed longtable counter problem.
