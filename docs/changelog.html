@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-43a8791ba59a07f1700d0df6fc7179ab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -163,6 +163,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-4.3.7-2024-12-14" id="toc-version-4.3.7-2024-12-14" class="nav-link" data-scroll-target="#version-4.3.7-2024-12-14">Version 4.3.7 (2024-12-14)</a></li>
   <li><a href="#version-4.3.6-2024-11-22" id="toc-version-4.3.6-2024-11-22" class="nav-link" data-scroll-target="#version-4.3.6-2024-11-22">Version 4.3.6 (2024-11-22)</a></li>
   <li><a href="#version-4.3.5-2024-11-22" id="toc-version-4.3.5-2024-11-22" class="nav-link" data-scroll-target="#version-4.3.5-2024-11-22">Version 4.3.5 (2024-11-22)</a></li>
   <li><a href="#version-4.3.4-2024-09-01" id="toc-version-4.3.4-2024-09-01" class="nav-link" data-scroll-target="#version-4.3.4-2024-09-01">Version 4.3.4 (2024-09-01)</a></li>
@@ -240,7 +241,6 @@ window.Quarto = {
 <section id="future-version-wishlist" class="level1">
 <h1>Future Version Wishlist</h1>
 <ul>
-<li>Create landscape pages for wide figures and tables.</li>
 <li>Tables in .pdf jou mode should fit automatically.</li>
 <li>An appendix that consists solely of a table or figure should be called by the appendix title (not, for example, Figure A1).</li>
 <li>Implement missing Typst features
@@ -249,6 +249,12 @@ window.Quarto = {
 <li>Line numbering</li>
 <li>Full language option support</li>
 </ul></li>
+</ul>
+</section>
+<section id="version-4.3.7-2024-12-14" class="level1">
+<h1>Version 4.3.7 (2024-12-14)</h1>
+<ul>
+<li><a href="https://github.com/wjschne/apaquarto/issues/98">#101</a> Removed indentation from .docx abstract’s first paragraph</li>
 </ul>
 </section>
 <section id="version-4.3.6-2024-11-22" class="level1">
@@ -638,8 +644,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -750,7 +754,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
