@@ -584,14 +584,21 @@ return {
         end
         
         local keywords_paragraph = pandoc.Para({pandoc.Emph(keywordsword), pandoc.Str(":")})
-        for i, k in ipairs(meta.keywords) do
-          if i == 1 then
-            keywords_paragraph = extend_paragraph(keywords_paragraph, k)
-          else
-            keywords_paragraph = extend_paragraph(keywords_paragraph, k, pandoc.Str(", "))
+        
+        print(pandoc.utils.type(meta.keywords))
+        if pandoc.utils.type(meta.keywords) == "Inlines" then
+          keywords_paragraph = keywords_paragraph.content:extend(meta.keywords)
+        else
+          for i, k in ipairs(meta.keywords) do
+            if i == 1 then
+              keywords_paragraph = extend_paragraph(keywords_paragraph, k)
+            else
+              keywords_paragraph = extend_paragraph(keywords_paragraph, k, pandoc.Str(", "))
+            end
+            
           end
-          
         end
+        
         body:extend({keywords_paragraph})
       end
 
