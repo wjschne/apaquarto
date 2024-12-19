@@ -15,8 +15,11 @@ engine: knitr
     * Full language option support
     
 
+# Version 4.3.8 (2024-12-14)
+- [#102](https://github.com/wjschne/apaquarto/issues/102) Let `keywords` field be a string instead of an array
+
 # Version 4.3.7 (2024-12-14)
-- [#101](https://github.com/wjschne/apaquarto/issues/98) Removed indentation from .docx abstract's first paragraph
+- [#101](https://github.com/wjschne/apaquarto/issues/101) Removed indentation from .docx abstract's first paragraph
 
 # Version 4.3.6 (2024-11-22)
 
