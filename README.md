@@ -180,7 +180,7 @@ keywords: [keyword1, keyword2]
 author-note:
   disclosures:
     conflict of interest: The author has no conflict of interest to declare.
-bibliograpy: mybibfile.bib     
+bibliography: mybibfile.bib     
 format:
   apaquarto-docx: default
   apaquarto-html: default
