@@ -15,6 +15,10 @@ engine: knitr
     * Full language option support
     
 
+# Version 4.3.9 (2024-12-14)
+- Removed an unnecessary keyword print command used to debug 4.3.8.
+- Made html blockquote text the same color as body text.
+
 # Version 4.3.8 (2024-12-14)
 - [#102](https://github.com/wjschne/apaquarto/issues/102) Let `keywords` field be a string instead of an array
 

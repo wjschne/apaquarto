@@ -585,7 +585,6 @@ return {
         
         local keywords_paragraph = pandoc.Para({pandoc.Emph(keywordsword), pandoc.Str(":")})
         
-        print(pandoc.utils.type(meta.keywords))
         if pandoc.utils.type(meta.keywords) == "Inlines" then
           keywords_paragraph = keywords_paragraph.content:extend(meta.keywords)
         else
