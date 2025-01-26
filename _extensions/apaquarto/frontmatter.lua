@@ -325,7 +325,7 @@ return {
           pp = pandoc.Para(pandoc.Str(""))
           pp.content:extend(a.apaauthordisplay)
           pp.content:extend({pandoc.Space(), img})
-          pp.content:extend({pandoc.Space(), pandoc.Str("http://orcid.org/")})
+          pp.content:extend({pandoc.Space(), pandoc.Str("https://orcid.org/")})
           pp.content:extend(a.orcid)
           
           if not mask and not meta["suppress-orcid"] and authornote then
