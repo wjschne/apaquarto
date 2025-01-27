@@ -640,6 +640,16 @@ return {
         body:extend({pandoc.RawBlock('typst', '\n\n#outline(title: [Table of Contents])\n\n')})
         body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
       end
+      
+      if FORMAT:match 'typst' and meta["list-of-figures"] then
+        body:extend({pandoc.RawBlock('typst', '\n\n#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig"),)\n\n')})
+        body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
+      end
+      
+      if FORMAT:match 'typst' and meta["list-of-tables"] then
+        body:extend({pandoc.RawBlock('typst', '\n\n#outline(title: [List of Tables], target: figure.where(kind: "quarto-float-tbl"),)\n\n')})
+        body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
+      end
 
       if meta.apatitledisplay and not meta["suppress-title-introduction"] then
         local firstpageheader = documenttitle:clone()

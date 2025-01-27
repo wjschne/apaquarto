@@ -120,6 +120,8 @@ format:
   apaquarto-html: default
   apaquarto-typst: 
     keep-typ: true
+    list-of-figures: true
+    list-of-tables: true
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
     documentmode: man
