@@ -15,14 +15,22 @@ engine: knitr
     * Full language option support
     
 
+# Version 4.3.9 (2025-1-26)
+
+- [#109](https://github.com/wjschne/apaquarto/pull/109) Make ORCID have https link instead of http. [Thanks Kilian Sander!](https://github.com/KilianSander)
+- added table of contents to apaquarto-typst
+
 # Version 4.3.9 (2024-12-14)
+
 - Removed an unnecessary keyword print command used to debug 4.3.8.
 - Made html blockquote text the same color as body text.
 
 # Version 4.3.8 (2024-12-14)
+
 - [#102](https://github.com/wjschne/apaquarto/issues/102) Let `keywords` field be a string instead of an array
 
 # Version 4.3.7 (2024-12-14)
+
 - [#101](https://github.com/wjschne/apaquarto/issues/101) Removed indentation from .docx abstract's first paragraph
 
 # Version 4.3.6 (2024-11-22)
@@ -77,8 +85,6 @@ engine: knitr
 # Version 4.0.2 (2024-05-01)
 
 - For apaquarto-typst to run correctly, Typst version 0.11.0 or greater is required [#54](https://github.com/wjschne/apaquarto/issues/54). An error message now prompts the user to update Typst.
-
-
 
 # Version 4.0.1 (2024-05-01)
 

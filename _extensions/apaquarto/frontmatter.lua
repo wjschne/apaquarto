@@ -633,6 +633,13 @@ return {
       if meta["suppress-title-page"] then
         body = List:new{}
       end
+      
+      print(PANDOC_WRITER_OPTIONS["table_of_contents"])
+      
+      if FORMAT:match 'typst' and PANDOC_WRITER_OPTIONS["table_of_contents"] then
+        body:extend({pandoc.RawBlock('typst', '\n\n#outline(title: [Table of Contents])\n\n')})
+        body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
+      end
 
       if meta.apatitledisplay and not meta["suppress-title-introduction"] then
         local firstpageheader = documenttitle:clone()
@@ -640,6 +647,9 @@ return {
         firstpageheader.classes = {"title", "unnumbered", "unlisted"}
         body:extend({firstpageheader})
       end
+
+      
+
       
       body:extend(doc.blocks)
       return pandoc.Pandoc(body, meta)
