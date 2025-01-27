@@ -637,7 +637,7 @@ return {
       print(PANDOC_WRITER_OPTIONS["table_of_contents"])
       
       if FORMAT:match 'typst' and PANDOC_WRITER_OPTIONS["table_of_contents"] then
-        body:extend({pandoc.RawBlock('typst', '\n\n#outline(title: [Table of Contents])\n\n')})
+        body:extend({pandoc.RawBlock('typst', '\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n')})
         body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
       end
       
