@@ -15,10 +15,11 @@ engine: knitr
     * Full language option support
     
 
-# Version 4.3.9 (2025-1-26)
+# Version 4.3.10 (2025-1-26)
 
-- [#109](https://github.com/wjschne/apaquarto/pull/109) Make ORCID have https link instead of http. [Thanks Kilian Sander!](https://github.com/KilianSander)
-- added table of contents to apaquarto-typst
+- [#109](https://github.com/wjschne/apaquarto/pull/109) Make ORCID have https link instead of http. Thanks [Kilian Sander!](https://github.com/KilianSander)!
+- [#107](https://github.com/wjschne/apaquarto/issues/107) added table of contents, list of figures, and list of tables to apaquarto-typst. Thanks [bsgallih12](https://github.com/bsgallih12)!
+- Implemented Impact Statement. Thanks [franfrutos](https://github.com/franfrutos)!
 
 # Version 4.3.9 (2024-12-14)
 

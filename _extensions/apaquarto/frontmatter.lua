@@ -577,6 +577,24 @@ return {
 
       end
       
+      if meta["impact-statement"] and #meta["impact-statement"] > 0 and not meta["supress-impact-statement"] then
+        local impactheadertext = pandoc.Str("Impact Statement")
+        if meta.language and meta.language["title-impact-statement"] then
+          impactheadertext = meta.language["title-impact-statement"]
+        end
+        local impactheader = pandoc.Header(1, impactheadertext)
+        impactheader.classes = {"unnumbered", "unlisted", "AuthorNote"}
+        impactheader.identifier = "impact"
+        body:extend({impactheader})
+        local impact_paragraph = pandoc.Para(pandoc.Str(""))
+        if pandoc.utils.type(meta["impact-statement"]) == "Inlines" then
+          impact_paragraph.content:extend(meta["impact-statement"])
+          local impactdiv = pandoc.Div(impact_paragraph)
+          impactdiv.classes:insert("AbstractFirstParagraph")
+          body:extend({impactdiv})
+        end
+      end
+      
       if meta.keywords and not meta["suppress-keywords"] then
         local keywordsword = pandoc.Str("Keywords")
         if meta.language and meta.language["title-block-keywords"] then

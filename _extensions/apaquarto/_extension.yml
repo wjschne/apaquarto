@@ -37,6 +37,7 @@ contributes:
       suppress-corresponding-postal-code: false
       suppress-corresponding-email: false
       suppress-abstract: false
+      suppress-impact-statement: false
       suppress-keywords: false
       suppress-title-introduction: false
       no-ampersand-parenthetical: false
@@ -50,6 +51,7 @@ contributes:
         title-block-author-note: "Author Note"
         title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
         title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+        title-impact-statement: "Impact Statement"
         references-meta-analysis: "Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."
       filters:
         - at: pre-ast

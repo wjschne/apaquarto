@@ -85,6 +85,7 @@ abstract: "This document is a template demonstrating the apaquarto format."
 # Put as many keywords at you like, separated by commmas (e.g., [reliability, validity, generalizability])
 keywords: [keyword1, keyword2, keyword3]
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
+impact-statement: ~
 floatsintext: true
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
@@ -114,6 +115,7 @@ language:
   title-block-author-note: "Author Note"
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+  title-impact-statement: "Impact Statement"
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 format:
   apaquarto-docx: default
@@ -125,7 +127,7 @@ format:
     toc: true
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    documentmode: jou
     keep-tex: true
 ---
 
@@ -363,3 +365,19 @@ Tables and figures in the first appendix automatically get the prefix "A", and t
 If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
 
 ![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
+
+
+
+
+```{=typst} 
+#outline(title: [Table of Contents], indent: 1.5em)
+
+#pagebreak()
+#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig"))
+#pagebreak()
+
+#outline(title: [List of Tables], target: figure.where(kind: "quarto-float-tbl"))
+```
+
+
+

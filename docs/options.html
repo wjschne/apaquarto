@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.37">
+<meta name="generator" content="quarto-1.7.3">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,10 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-81b5c3e63835cfde897ecd3d35a35a41.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-43a8791ba59a07f1700d0df6fc7179ab.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6df5d5a5ee0e45f2903de4150438d49a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -376,6 +376,10 @@ window.Quarto = {
 <tr class="even">
 <td style="text-align: left;"><code>no-ampersand-parenthetical</code></td>
 <td style="text-align: left;">APA style uses ampersands in parenthetical citations (e.g., Schneider &amp; McGrew, 2018) but not in narrative (i.e., in-text) citations: Schneider and McGrew (2018). You can replace ampersands with “and” in parenthetical citations (e.g., Schneider and McGrew, 2018) by setting the <code>no-ampersand-parenthetical</code> option to <code>true</code>. A different replacement word other than “and” can be set in the <code>citation-last-author-separator</code> field in the <code>language</code> options.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>impact-statement</code></td>
+<td style="text-align: left;">A paragraph below the Abstract that describes the theoretical/practical importance of the work. The heading of the impact statement is “Impact Statement” by default but can be overridden using the <code>title-impact-statement</code> field in the <code>language</code> field.</td>
 </tr>
 </tbody>
 </table>
@@ -969,10 +973,14 @@ window.Quarto = {
 <td>Suppress the abstract. In the .pdf document, this will also suppress the keywords.</td>
 </tr>
 <tr class="even">
+<td><code>suppress-impact-statement: true</code></td>
+<td>Suppress the impact statement</td>
+</tr>
+<tr class="odd">
 <td><code>suppress-keywords: true</code></td>
 <td>Suppress the keywords below the abstract</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>suppress-title-introduction: true</code></td>
 <td>Suppress the title in the introduction</td>
 </tr>
@@ -1098,6 +1106,11 @@ window.Quarto = {
 <td><em>Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:</em></td>
 </tr>
 <tr class="odd">
+<td><code>title-impact-statement</code></td>
+<td>The heading for the impact statement</td>
+<td><em>Impact Statement</em></td>
+</tr>
+<tr class="even">
 <td><code>references-meta-analysis</code></td>
 <td>The sentence explaining that citations marked with an asterisk were studies in the meta-analysis.</td>
 <td><em>References marked with an asterisk indicate studies included in the meta-analysis.</em></td>
