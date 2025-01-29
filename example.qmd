@@ -369,15 +369,4 @@ If there were a second appendix, tables and figures would get the prefix "B", an
 
 
 
-```{=typst} 
-#outline(title: [Table of Contents], indent: 1.5em)
-
-#pagebreak()
-#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig"))
-#pagebreak()
-
-#outline(title: [List of Tables], target: figure.where(kind: "quarto-float-tbl"))
-```
-
-
 
