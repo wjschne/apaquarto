@@ -42,8 +42,8 @@
 ) = {
 
   set page(
-    paper: paper,
     margin: margin,
+    paper: paper,
     header-ascent: 50%,
     header: grid(
       columns: (9fr, 1fr),

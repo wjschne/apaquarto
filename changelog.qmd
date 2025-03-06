@@ -13,9 +13,14 @@ engine: knitr
     * Journal format
     * Line numbering
     * Full language option support
-    
 
-# Version 4.3.10 (2025-1-26)
+# Version 4.3.11 (2025-03-06)
+
+- [#113](https://github.com/wjschne/apaquarto/issues/113) Author note will show author correspondence information if author-note is absent. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+- [#115](https://github.com/wjschne/apaquarto/issues/115) The `title-block-role-introduction` field now works in apaquarto-pdf. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+- [#117](https://github.com/wjschne/apaquarto/issues/117) The `papersize` field now works in apaquarto-typst. Thanks [Clemens Brunner](https://github.com/cbrnr)!    
+
+# Version 4.3.10 (2025-01-26)
 
 - [#109](https://github.com/wjschne/apaquarto/pull/109) Make ORCID have https link instead of http. Thanks [Kilian Sander!](https://github.com/KilianSander)!
 - [#107](https://github.com/wjschne/apaquarto/issues/107) added table of contents, list of figures, and list of tables to apaquarto-typst. Thanks [bsgallih12](https://github.com/bsgallih12)!

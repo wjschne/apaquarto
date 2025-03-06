@@ -195,7 +195,7 @@ return {
       local affiliations_str = List()
       
       local authordiv = pandoc.Div({})    
-      if not meta["suppress-author"] then
+      if not meta["suppress-author"] and byauthor then
         authordiv = pandoc.Div({
           newline, 
           get_author_paragraph(byauthor, affilations_different)
@@ -204,54 +204,50 @@ return {
  
       authordiv.classes:insert("Author")
       
-      for i, a in ipairs(affiliations) do
-        
-        affiliations_str = List()
-        
-        mysep = pandoc.Str("")
-
-
-        if affilations_different and not meta["suppress-author"] then
-          affiliations_str:extend({pandoc.Superscript(stringify(a.number))})
-        end
-        
-         if chkmeta(a.group) then
-          affiliations_str:extend(a.group)
-          mysep = pandoc.Str(", ")
-        end
-        
-        
-        if chkmeta(a.department) then
-          affiliations_str:extend({mysep})
-          affiliations_str:extend(a.department)
-          mysep = pandoc.Str(", ")
-        end
-        
-        if chkmeta(a.name) then
-          affiliations_str:extend({mysep})
-          affiliations_str:extend(a.name)
-          mysep = pandoc.Str(", ")
-        end
-        
-
-        
-
-          if not (chkmeta(a.group) or chkmeta(a.department) or chkmeta(a.name)) then
-             mysep = pandoc.Str("")
-            if chkmeta(a.city) then 
-              affiliations_str:extend(a.city) 
-              mysep = pandoc.Str(", ")
-            end
-            if chkmeta(a.region) then
-              affiliations_str:extend({mysep})
-              affiliations_str:extend(a.region)
-            end
+      if byauthor then
+        for i, a in ipairs(affiliations) do
+          
+          affiliations_str = List()
+          
+          mysep = pandoc.Str("")
+          
+          if affilations_different and not meta["suppress-author"] then
+            affiliations_str:extend({pandoc.Superscript(stringify(a.number))})
           end
-        if not meta["suppress-affiliation"] then
-          authordiv.content:extend({pandoc.Para(pandoc.Inlines(affiliations_str))})
+          
+          if chkmeta(a.group) then
+            affiliations_str:extend(a.group)
+            mysep = pandoc.Str(", ")
+          end
+          
+          
+          if chkmeta(a.department) then
+            affiliations_str:extend({mysep})
+            affiliations_str:extend(a.department)
+            mysep = pandoc.Str(", ")
+          end
+          
+          if chkmeta(a.name) then
+            affiliations_str:extend({mysep})
+            affiliations_str:extend(a.name)
+            mysep = pandoc.Str(", ")
+          end
+  
+            if not (chkmeta(a.group) or chkmeta(a.department) or chkmeta(a.name)) then
+               mysep = pandoc.Str("")
+              if chkmeta(a.city) then 
+                affiliations_str:extend(a.city) 
+                mysep = pandoc.Str(", ")
+              end
+              if chkmeta(a.region) then
+                affiliations_str:extend({mysep})
+                affiliations_str:extend(a.region)
+              end
+            end
+          if not meta["suppress-affiliation"] then
+            authordiv.content:extend({pandoc.Para(pandoc.Inlines(affiliations_str))})
+          end
         end
-
-        
       end
       
       
@@ -307,32 +303,34 @@ return {
         
         
         
-      if not mask and not meta["suppress-author-note"] then
+      if not mask and not meta["suppress-author-note"] and (byauthor or authornote) then
         body:extend({authornoteheader})
       end
       
       local img
       
-      for i, a in ipairs(byauthor) do
-        
-        if a.orcid then
-          local orcidfile = "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
-          if not file_exists(orcidfile) then
-            orcidfile = "_extensions/apaquarto/ORCID-iD_icon-vector.svg"
-          end 
-          img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile)
-          img.attr = pandoc.Attr('orchid', {'img-fluid'},  {width='4.23mm'})
-          pp = pandoc.Para(pandoc.Str(""))
-          pp.content:extend(a.apaauthordisplay)
-          pp.content:extend({pandoc.Space(), img})
-          pp.content:extend({pandoc.Space(), pandoc.Str("https://orcid.org/")})
-          pp.content:extend(a.orcid)
+      if byauthor then
+        for i, a in ipairs(byauthor) do
           
-          if not mask and not meta["suppress-orcid"] and authornote then
-            body:extend({pp})
-          end
-        end 
-
+          if a.orcid then
+            local orcidfile = "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
+            if not file_exists(orcidfile) then
+              orcidfile = "_extensions/apaquarto/ORCID-iD_icon-vector.svg"
+            end 
+            img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile)
+            img.attr = pandoc.Attr('orchid', {'img-fluid'},  {width='4.23mm'})
+            pp = pandoc.Para(pandoc.Str(""))
+            pp.content:extend(a.apaauthordisplay)
+            pp.content:extend({pandoc.Space(), img})
+            pp.content:extend({pandoc.Space(), pandoc.Str("https://orcid.org/")})
+            pp.content:extend(a.orcid)
+            
+            if not mask and not meta["suppress-orcid"] then
+              body:extend({pp})
+            end
+          end 
+  
+        end
       end
       
 
@@ -373,32 +371,34 @@ return {
       
       local credit_paragraph = pandoc.Para(pandoc.Str(""))
       
-      for i,a in ipairs(byauthor) do
-        if a.roles then
-
-          credit_paragraph = extend_paragraph(credit_paragraph, {pandoc.Emph(a.apaauthordisplay)}, pandoc.Str(". "))
-          credit_paragraph.content:extend({pandoc.Strong(pandoc.Str(": "))})
-          local rolelist = {}
-          for j, role in ipairs(a.roles) do
-            if role.role == "Writing - original draft" or role.role == "writing - original draft" then
-              role["vocab-term"] = "writing – original draft"
-            end
-            if role.role == "Writing - reviewing & editing" or role.role == "writing - reviewing & editing" then
-              role["vocab-term"] = "Writing – reviewing & editing"
-            end
-          
-            if role["vocab-term"] then
-              role.display = role["vocab-term"]
-            else 
-              role.display = role.role
-            end
+      if byauthor then
+        for i,a in ipairs(byauthor) do
+          if a.roles then
+  
+            credit_paragraph = extend_paragraph(credit_paragraph, {pandoc.Emph(a.apaauthordisplay)}, pandoc.Str(". "))
+            credit_paragraph.content:extend({pandoc.Strong(pandoc.Str(": "))})
+            local rolelist = {}
+            for j, role in ipairs(a.roles) do
+              if role.role == "Writing - original draft" or role.role == "writing - original draft" then
+                role["vocab-term"] = "writing – original draft"
+              end
+              if role.role == "Writing - reviewing & editing" or role.role == "writing - reviewing & editing" then
+                role["vocab-term"] = "Writing – reviewing & editing"
+              end
             
-            if role["degree-of-contribution"] then
-              role.display = role.display .. " (" .. role["degree-of-contribution"] .. ")"
+              if role["vocab-term"] then
+                role.display = role["vocab-term"]
+              else 
+                role.display = role.role
+              end
+              
+              if role["degree-of-contribution"] then
+                role.display = role.display .. " (" .. role["degree-of-contribution"] .. ")"
+              end
+              table.insert(rolelist, pandoc.Str(role.display))
             end
-            table.insert(rolelist, pandoc.Str(role.display))
+            credit_paragraph.content:extend(oxfordcommalister(rolelist))
           end
-          credit_paragraph.content:extend(oxfordcommalister(rolelist))
         end
       end
         
@@ -418,7 +418,7 @@ return {
           for i,j in pairs(authorroleintroduction) do
             credit_paragraph.content:insert(i, j)
           end
-          if not mask and not meta["suppress-credit-statement"] and authornote then
+          if not mask and not meta["suppress-credit-statement"] then
             body:extend({credit_paragraph})
           end
         end
@@ -429,58 +429,60 @@ return {
       if meta["author-note"] and meta["author-note"]["correspondence-note"] then
         corresponding_paragraph.content:extend(meta["author-note"]["correspondence-note"])
       else
-        
-      for i,a in ipairs(byauthor) do
-        if a.attributes then
-          if a.attributes.corresponding and stringify(a.attributes.corresponding) == "true" then
-            if check_corresponding then
-              error("There can only be one author marked as the corresponding author. " .. stringify(a.apaauthordisplay) .. " is the second author you have marked as the corresponding author.")
-            end
-            check_corresponding = true
-            corresponding_paragraph.content:extend(a.apaauthordisplay)
-            
-            if a.affiliations then
-              local address = a.affiliations[1]
-              if not meta["suppress-corresponding-group"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.group, pandoc.Str(", "))
+      
+      if byauthor then
+        for i,a in ipairs(byauthor) do
+          if a.attributes then
+            if a.attributes.corresponding and stringify(a.attributes.corresponding) == "true" then
+              if check_corresponding then
+                error("There can only be one author marked as the corresponding author. " .. stringify(a.apaauthordisplay) .. " is the second author you have marked as the corresponding author.")
               end
-
-              if not meta["suppress-corresponding-department"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.department, pandoc.Str(", ")) 
-              end
-
-              if not meta["suppress-corresponding-affiliation-name"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.name, pandoc.Str(", ")) 
-              end   
-
-              if not meta["suppress-corresponding-address"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.address, pandoc.Str(", "))
-              end
-
-              if not meta["suppress-corresponding-city"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.city, pandoc.Str(", "))
-              end
-
-              if not meta["suppress-corresponding-region"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.region, pandoc.Str(", ")) 
-              end
-
-              if not meta["suppress-corresponding-postal-code"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address["postal-code"]) 
-              end
-
-              if not meta["suppress-corresponding-country"] then
-                corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.country, pandoc.Str(", ")) 
-              end
-
-              if not meta["suppress-corresponding-email"] then
-                if a.email then
-                  corresponding_paragraph.content:extend({pandoc.Str(", " .. emailword .. ":")})
-                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, a.email) 
+              check_corresponding = true
+              corresponding_paragraph.content:extend(a.apaauthordisplay)
+              
+              if a.affiliations then
+                local address = a.affiliations[1]
+                if not meta["suppress-corresponding-group"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.group, pandoc.Str(", "))
                 end
+  
+                if not meta["suppress-corresponding-department"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.department, pandoc.Str(", ")) 
+                end
+  
+                if not meta["suppress-corresponding-affiliation-name"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.name, pandoc.Str(", ")) 
+                end   
+  
+                if not meta["suppress-corresponding-address"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.address, pandoc.Str(", "))
+                end
+  
+                if not meta["suppress-corresponding-city"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.city, pandoc.Str(", "))
+                end
+  
+                if not meta["suppress-corresponding-region"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.region, pandoc.Str(", ")) 
+                end
+  
+                if not meta["suppress-corresponding-postal-code"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address["postal-code"]) 
+                end
+  
+                if not meta["suppress-corresponding-country"] then
+                  corresponding_paragraph = extend_paragraph(corresponding_paragraph, address.country, pandoc.Str(", ")) 
+                end
+  
+                if not meta["suppress-corresponding-email"] then
+                  if a.email then
+                    corresponding_paragraph.content:extend({pandoc.Str(", " .. emailword .. ":")})
+                    corresponding_paragraph = extend_paragraph(corresponding_paragraph, a.email) 
+                  end
+                end
+  
+  
               end
-
-
             end
           end
         end
@@ -502,7 +504,7 @@ return {
         end
       end
       
-      if (not mask) and (not meta["suppress-corresponding-paragraph"]) and authornote then
+      if (not mask) and (not meta["suppress-corresponding-paragraph"]) then
         body:extend({corresponding_paragraph})
       end
         
@@ -652,7 +654,7 @@ return {
         body = List:new{}
       end
       
-      print(PANDOC_WRITER_OPTIONS["table_of_contents"])
+      ---- print(PANDOC_WRITER_OPTIONS["table_of_contents"])
       
       if FORMAT:match 'typst' and PANDOC_WRITER_OPTIONS["table_of_contents"] then
         body:extend({pandoc.RawBlock('typst', '\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n')})

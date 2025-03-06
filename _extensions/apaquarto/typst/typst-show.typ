@@ -9,8 +9,8 @@ $if(title)$
 $endif$
 $endif$
 $endif$
-$if(paper)$
-  paper: "$paper$",
+$if(papersize)$
+  paper: "$papersize$",
 $endif$
 $if(margin)$
   margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
