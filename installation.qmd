@@ -16,7 +16,7 @@ Installing apaquarto is not hard, but it takes a bit more effort than installing
 
 1. Install Quarto
 2. Install a programming language (e.g., R, Python, Julia)
-3. Install a programming environment (e.g., RStudio, VS Code, Jupyter) 
+3. Install a programming environment (e.g., RStudio, Positron, VS Code, Jupyter) 
 4. Install apaquarto
 
 
@@ -62,10 +62,11 @@ If you just want to use apaquarto to make APA-style documents, but do not plan t
 At the [same link for installing Quarto](https://quarto.org/docs/get-started/), there are links for selecting an environment for using Quarto. Your options include:
 
 1. [RStudio](https://posit.co/download/rstudio-desktop/) will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto.
-2. [VS Code](https://code.visualstudio.com/) works for any language. Some R users really like VS Code. 
-3. [Jupyter](https://jupyter.org/), as its name indicates, works with `Ju`lia, `Pyt`hon, and `R`.
-4. [Neovim](https://neovim.io/), a hyperextensible Vim-based text editor
-5. [Any text editor](https://quarto.org/docs/get-started/hello/text-editor.html) will do. Everyone has options---Quarto won't box you in.
+2. [Positron](https://positron.posit.co/) is made by Posit, the same company that makes Quarto and RStudio. It inspired by RStudio but is multi-lingual by design. It works well, but Positron is still in beta testing and the experience of using it is not quite as smooth as that of RStudio. Positron will likely become the default recommendation on this list when it is further along in its development.
+3. [VS Code](https://code.visualstudio.com/) works for any language. Some R users really like VS Code, but those who do will likely migrate to Positron because Positron is a data-science-specific fork of VS Code.
+4. [Jupyter](https://jupyter.org/), as its name indicates, works with `Ju`lia, `Pyt`hon, and `R`.
+5. [Neovim](https://neovim.io/), a hyperextensible Vim-based text editor
+6. [Any text editor](https://quarto.org/docs/get-started/hello/text-editor.html) will do. Everyone has options---Quarto won't box you in.
 
 # Install apaquarto
 

@@ -58,6 +58,7 @@ author:
     affiliations:
       - city: Buffalo
         region: NY
+blank-lines-above-author-note: 2
 author-note:
   status-changes: 
     # Example: [Author name] is now at [affiliation].
@@ -114,17 +115,20 @@ language:
   email: "Email"
   title-block-author-note: "Author Note"
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
-  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
+  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; [credit.niso.org](https://credit.niso.org)) as follows:"
   title-impact-statement: "Impact Statement"
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 format:
-  apaquarto-docx: default
-  apaquarto-html: default
+  apaquarto-docx: 
+    toc: false
+  apaquarto-html: 
+    toc: true
   apaquarto-typst: 
     keep-typ: true
-    list-of-figures: true
-    list-of-tables: true
-    toc: true
+    list-of-figures: false
+    list-of-tables: false
+    toc: false
+    papersize: "us-letter"
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
     documentmode: jou

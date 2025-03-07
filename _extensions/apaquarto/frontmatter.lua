@@ -286,24 +286,29 @@ return {
       
       local intabovenote = 2
       
-      if authornote then
-        if FORMAT:match 'docx' or FORMAT:match 'typst' then
-          blanklines = authornote["blank-lines-above-author-note"]
+      local possiblenumber = 2
+      
+
+      
+
+      if not mask and not meta["suppress-author-note"] and (byauthor or authornote) then
+        
+        if authornote then
           if authornote["blank-lines-above-author-note"] and #authornote["blank-lines-above-author-note"] > 0 then
-            local possiblenumber = stringify(authornote["blank-lines-above-author-note"])
+            possiblenumber = stringify(authornote["blank-lines-above-author-note"])
             intabovenote = math.floor(tonumber(possiblenumber)) or 2
           end
-          for i=1,intabovenote do 
-            body:extend({newline})
-          end
         end
-      end
-
-
         
+        if meta["blank-lines-above-author-note"] and #meta["blank-lines-above-author-note"] > 0 then
+            possiblenumber = stringify(meta["blank-lines-above-author-note"])
+            intabovenote = math.floor(tonumber(possiblenumber)) or 2
+        end
         
+        for i=1,intabovenote do 
+          body:extend({newline})
+        end
         
-      if not mask and not meta["suppress-author-note"] and (byauthor or authornote) then
         body:extend({authornoteheader})
       end
       
@@ -322,8 +327,8 @@ return {
             pp = pandoc.Para(pandoc.Str(""))
             pp.content:extend(a.apaauthordisplay)
             pp.content:extend({pandoc.Space(), img})
-            pp.content:extend({pandoc.Space(), pandoc.Str("https://orcid.org/")})
-            pp.content:extend(a.orcid)
+            pp.content:extend({pandoc.Space(), pandoc.Link("https://orcid.org/" .. stringify(a.orcid), "https://orcid.org/" .. stringify(a.orcid))})
+
             
             if not mask and not meta["suppress-orcid"] then
               body:extend({pp})
