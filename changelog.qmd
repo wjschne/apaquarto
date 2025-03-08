@@ -17,7 +17,8 @@ engine: knitr
     
 # Version 4.3.12 (2025-03-07)
 
-- [#116](https://github.com/wjschne/apaquarto/issues/116) Orcid links now work in all formats. Thanks [Clemens Brunner](https://github.com/cbrnr)!  
+- [#116](https://github.com/wjschne/apaquarto/issues/116) Orcid links now work in all formats. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+- [#113](https://github.com/wjschne/apaquarto/issues/113) The `blank-lines-above-author-note` should work when `author-note` is omitted. Thanks [Clemens Brunner](https://github.com/cbrnr)!
 
 # Version 4.3.11 (2025-03-06)
 
