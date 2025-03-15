@@ -482,7 +482,7 @@ return {
                 if not meta["suppress-corresponding-email"] then
                   if a.email then
                     corresponding_paragraph.content:extend({pandoc.Str(", " .. emailword .. ":")})
-                    corresponding_paragraph = extend_paragraph(corresponding_paragraph, a.email) 
+                    corresponding_paragraph = extend_paragraph(corresponding_paragraph, {pandoc.Link(stringify(a.email), "mailto:" .. stringify(a.email))})
                   end
                 end
   
@@ -527,6 +527,10 @@ return {
         
         if FORMAT:match 'typst' then
           body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
+        end
+        
+        if FORMAT:match 'html' then
+          body:extend({pandoc.RawBlock('html', '<br>')})
         end
         
         body:extend({abstractheader})
@@ -632,6 +636,10 @@ return {
         
         if FORMAT:match 'typst' then
           body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
+        end
+        
+        if FORMAT:match 'html' then
+          body:extend({pandoc.RawBlock('html', '<br>')})
         end
         
 

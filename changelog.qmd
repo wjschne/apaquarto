@@ -14,7 +14,9 @@ engine: knitr
     * Line numbering
     * Full language option support
     
-    
+# Version 4.3.13 (2025-03-15)
+- [#118](https://github.com/wjschne/apaquarto/issues/118) Email in correspondence note is displayed as a link. HTML format has additional blank lines before and after Abstract. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+
 # Version 4.3.12 (2025-03-07)
 
 - [#116](https://github.com/wjschne/apaquarto/issues/116) Orcid links now work in all formats. Thanks [Clemens Brunner](https://github.com/cbrnr)!
