@@ -16,6 +16,7 @@ engine: knitr
     
 # Version 4.3.13 (2025-03-15)
 - [#118](https://github.com/wjschne/apaquarto/issues/118) Email in correspondence note is displayed as a link. HTML format has additional blank lines before and after Abstract. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+- [#119](https://github.com/wjschne/apaquarto/issues/119) Allow use of `beforenotespace` code chunk option in .pdf `jou` mode. Thanks [Ovande Furtado](https://github.com/drfurtado)!
 
 # Version 4.3.12 (2025-03-07)
 

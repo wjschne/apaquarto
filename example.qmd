@@ -212,7 +212,7 @@ To refer to this table in text, use the `@` symbol followed by the reference lab
 
 In @tbl-mymarkdowntable, there is an example of a plain markdown table with a note below it.
 
-::: {#tbl-mymarkdowntable apa-note="This is a note below the markdown table." onecolumn=true tbl-colwidths= "[25,25, 25, 25]"}
+::: {#tbl-mymarkdowntable apa-note="This is a note below the markdown table."}
 | Default | Left | Right | Center |
 |---------|:-----|------:|:------:|
 | 12      | 12   |    12 |   12   |

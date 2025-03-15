@@ -5,6 +5,8 @@ end
 -- Is the .pdf in journal mode?
 local journalmode = false
 local manuscriptmode = true
+local noteprefix = "\\noindent \\emph{Note.} "
+local beforenote = ""
 local getmode = function(meta)
   local documentmode = pandoc.utils.stringify(meta["documentmode"])
   journalmode = documentmode == "jou"
@@ -40,7 +42,6 @@ local processfloat = function(float)
     -- Default table environment
     local latextableenv = "table"
     -- Manuscript spacing before note needs adjustment ment
-    local beforenote = ""
     if manuscriptmode then
       beforenote = "\\vspace{-20pt}\n"
       if float.attributes["beforenotespace"] then
@@ -53,6 +54,9 @@ local processfloat = function(float)
     if journalmode then
       -- No spacing in before note in journalmode
       beforenote = ""
+      if float.attributes["beforenotespace"] then
+        beforenote = "\\vspace{" .. float.attributes["beforenotespace"] .. "}\n"
+      end
       -- Table environment in journal mode
       latextableenv = "ThreePartTable"
     end
@@ -141,6 +145,10 @@ local processfloat = function(float)
           hasnote = true
           apanote = img.attributes["apa-note"] 
         end
+      
+      if img.attributes["beforenotespace"] then
+        beforenote = "\\vspace{" .. img.attributes["beforenotespace"] .. "}\n"
+      end
        if img.attributes["apa-twocolumn"] then
          if img.attributes["apa-twocolumn"] == "true" then
            twocolumn = true
@@ -156,7 +164,8 @@ local processfloat = function(float)
     -- Make note
     if hasnote or twocolumn then
       if hasnote then
-        p = pandoc.Span(pandoc.RawInline("latex", "\\noindent \\emph{Note.} "))
+        
+        p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
         local apanotestr = quarto.utils.string_to_inlines(apanote)
         for i, v in ipairs(apanotestr) do
           p.content:insert(v)
