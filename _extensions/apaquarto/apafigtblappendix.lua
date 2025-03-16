@@ -62,29 +62,40 @@ local function figtblconvert(ct)
   
   local floatreftext
     --Is the citation a reference to a table?
-  if #ct.citations == 1 and string.find(ct.citations[1].id, "^tbl%-") then 
+  if #ct.citations == 1 and string.find(ct.citations[1].id, "^tbl%-")then 
+    
+    if tbl[ct.citations[1].id] then
     -- Text for table reference
-    floatreftext = pandoc.Inlines({pandoc.Str(tableword), pandoc.Str('\u{a0}'), pandoc.Str(tbl[ct.citations[1].id])})
+        floatreftext = pandoc.Inlines({pandoc.Str(tableword), pandoc.Str('\u{a0}'), pandoc.Str(tbl[ct.citations[1].id])})
+    end 
   end
   --Is the citation a reference to a figure?
   if #ct.citations == 1 and string.find(ct.citations[1].id, "^fig%-") then 
     -- Text for figure reference
-    floatreftext = pandoc.Inlines({pandoc.Str(figureword), pandoc.Str('\u{a0}'), pandoc.Str(fig[ct.citations[1].id])})
-  end
-  
-  --Is the citation a reference to a table or figure?
-  if #ct.citations == 1 and string.find(ct.citations[1].id, "^fig%-") or string.find(ct.citations[1].id, "^tbl%-") then
-    if refhyperlinks then
-      -- create link
-      reflink = pandoc.Link(floatreftext, "#" .. ct.citations[1].id)
-      reflink.classes = {"quarto-xref"}
-      reflink.attributes[kAriaExpanded] = "false"
-      return reflink
-    else
-      return floatreftext
+    if fig[ct.citations[1].id] then
+      floatreftext = pandoc.Inlines({pandoc.Str(figureword), pandoc.Str('\u{a0}'), pandoc.Str(fig[ct.citations[1].id])})
     end
   end
-end
+  
+  
+    --Is the citation a reference to a table or figure?
+    if #ct.citations == 1 and string.find(ct.citations[1].id, "^fig%-") or string.find(ct.citations[1].id, "^tbl%-") then
+      if floatreftext == nil then
+        quarto.log.warning("Cannot find @" .. ct.citations[1].id)
+        return floatreftext
+      end
+      if refhyperlinks then
+        -- create link
+        reflink = pandoc.Link(floatreftext, "#" .. ct.citations[1].id)
+        reflink.classes = {"quarto-xref"}
+        reflink.attributes[kAriaExpanded] = "false"
+        return reflink
+      else
+        return floatreftext
+      end
+    end
+  end
+
 
 return{
   {Meta = gettablefig},
