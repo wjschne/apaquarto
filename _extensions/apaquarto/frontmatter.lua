@@ -204,52 +204,53 @@ return {
  
       authordiv.classes:insert("Author")
       
-      if byauthor then
-        for i, a in ipairs(affiliations) do
-          
-          affiliations_str = List()
-          
-          mysep = pandoc.Str("")
-          
-          if affilations_different and not meta["suppress-author"] then
-            affiliations_str:extend({pandoc.Superscript(stringify(a.number))})
-          end
-          
-          if chkmeta(a.group) then
-            affiliations_str:extend(a.group)
-            mysep = pandoc.Str(", ")
-          end
-          
-          
-          if chkmeta(a.department) then
-            affiliations_str:extend({mysep})
-            affiliations_str:extend(a.department)
-            mysep = pandoc.Str(", ")
-          end
-          
-          if chkmeta(a.name) then
-            affiliations_str:extend({mysep})
-            affiliations_str:extend(a.name)
-            mysep = pandoc.Str(", ")
-          end
-  
-            if not (chkmeta(a.group) or chkmeta(a.department) or chkmeta(a.name)) then
-               mysep = pandoc.Str("")
-              if chkmeta(a.city) then 
-                affiliations_str:extend(a.city) 
-                mysep = pandoc.Str(", ")
-              end
-              if chkmeta(a.region) then
-                affiliations_str:extend({mysep})
-                affiliations_str:extend(a.region)
-              end
+      if affliations then
+        if byauthor then
+          for i, a in ipairs(affiliations) do
+            
+            affiliations_str = List()
+            
+            mysep = pandoc.Str("")
+            
+            if affilations_different and not meta["suppress-author"] then
+              affiliations_str:extend({pandoc.Superscript(stringify(a.number))})
             end
-          if not meta["suppress-affiliation"] then
-            authordiv.content:extend({pandoc.Para(pandoc.Inlines(affiliations_str))})
+            
+            if chkmeta(a.group) then
+              affiliations_str:extend(a.group)
+              mysep = pandoc.Str(", ")
+            end
+            
+            
+            if chkmeta(a.department) then
+              affiliations_str:extend({mysep})
+              affiliations_str:extend(a.department)
+              mysep = pandoc.Str(", ")
+            end
+            
+            if chkmeta(a.name) then
+              affiliations_str:extend({mysep})
+              affiliations_str:extend(a.name)
+              mysep = pandoc.Str(", ")
+            end
+    
+              if not (chkmeta(a.group) or chkmeta(a.department) or chkmeta(a.name)) then
+                 mysep = pandoc.Str("")
+                if chkmeta(a.city) then 
+                  affiliations_str:extend(a.city) 
+                  mysep = pandoc.Str(", ")
+                end
+                if chkmeta(a.region) then
+                  affiliations_str:extend({mysep})
+                  affiliations_str:extend(a.region)
+                end
+              end
+            if not meta["suppress-affiliation"] then
+              authordiv.content:extend({pandoc.Para(pandoc.Inlines(affiliations_str))})
+            end
           end
         end
       end
-      
       
       
 
@@ -646,7 +647,11 @@ return {
   
 
       
-      local myshorttitle = meta["apatitle"]
+      local myshorttitle = ""
+      
+      if meta["apatitle"] then
+        myshorttitle = meta["apatitle"]
+      end
 
       if meta["shorttitle"] and #meta["shorttitle"] > 0 then
         myshorttitle = meta["shorttitle"]
