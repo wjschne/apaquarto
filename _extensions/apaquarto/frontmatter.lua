@@ -203,8 +203,7 @@ return {
       end
  
       authordiv.classes:insert("Author")
-      
-      if affliations then
+      if affiliations then
         if byauthor then
           for i, a in ipairs(affiliations) do
             
