@@ -91,11 +91,32 @@
     "text": "Figure References\nIn APA style, we often refer to specific tables and figures by their order in the text (e.g., Figure 2, Table 4). Keeping track of which is which is a pain, especially if you decide to reorder them. In Quarto documents, we instead refer to their labels, which are converted to the right numbers later. To refer to the figure created by the code above, we would type @fig-myplot, which will be converted to Figure 3."
   },
   {
+    "objectID": "writing.html#tables-in-code-chunks",
+    "href": "writing.html#tables-in-code-chunks",
+    "title": "APA Style via Markdown",
+    "section": "Tables in Code Chunks",
+    "text": "Tables in Code Chunks\nThe chunk label must begin with tbl- instead of fig-. The caption is set with tbl-cap. I like making tables with flextable because it ports to to the .docx format without hassle.\n\n```{r}\n#| label: tbl-mytable\n#| tbl-cap: My Table\n#| ft.align: left\n#| apa-note: A note below table\nlibrary(tidyverse)\nlibrary(flextable)\n\ntibble(Letters = c(\"A\", \"B\", \"C\"), \n       Numbers = 1:3) %&gt;% \n  flextable() %&gt;% \n  theme_apa() \n```\n\n\n\n\nTable \n\n\nMy Table\n\n\n\n\nLettersNumbersA1B2C3\n\n\n\n\n\nNote. A note below table"
+  },
+  {
     "objectID": "writing.html#tables-made-directly-with-markdown",
     "href": "writing.html#tables-made-directly-with-markdown",
     "title": "APA Style via Markdown",
     "section": "Tables Made Directly with Markdown",
     "text": "Tables Made Directly with Markdown\nYou can create tables with Markdown in several ways. See here for details. If you need to make a more complex table in Markdown, I suggest using RStudio’s visual editor. Here is an example of a simple table:\n\n| Letters | Numbers |\n|:-------:|:-------:|\n| A       | 1       |\n| B       | 2       |\n| C       | 3       |\n\n: My Caption {#tbl-mytable2 apa-note=\"Note below table\" data-quarto-disable-processing=\"true\"}\n\n\n\n\nTable \n\n\nMy Caption\n\n\n\n\n\n\nLetters\nNumbers\n\n\n\n\nA\n1\n\n\nB\n2\n\n\nC\n3\n\n\n\n\n\n\n\nNote. Note below table"
+  },
+  {
+    "objectID": "writing.html#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf",
+    "href": "writing.html#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf",
+    "title": "APA Style via Markdown",
+    "section": "Tables and Figures Spanning Two Columns in Journal Mode (.pdf)",
+    "text": "Tables and Figures Spanning Two Columns in Journal Mode (.pdf)\nWhen creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise sometimes makes them disappear (and sometimes takes large swaths of text with it).\nYou can make figures and tables span the two columns by setting the apa-twocolumn chunk option to true. This will only affect .pdf documents when in journal mode (i.e., documentmode: jou).\n\n```{r}\n#| label: fig-myplot3\n#| fig-cap: A Figure that Will Span Two Columns in Journal Mode\n#| apa-twocolumn: true\n\nlibrary(tidyverse)\ntibble(x = seq(0, 1, .001),\n       y = dbeta(x,2,8)) %&gt;% \n  ggplot(aes(x,y)) + \n  geom_area(fill = \"royalblue\", alpha = .5)\n```\n\n\n\n\n\nFigure \n\n\nA Figure that Will Span Two Columns in Journal Mode"
+  },
+  {
+    "objectID": "writing.html#disable-apaquarto-processing-.pdf-only",
+    "href": "writing.html#disable-apaquarto-processing-.pdf-only",
+    "title": "APA Style via Markdown",
+    "section": "Disable apaquarto processing (.pdf only)",
+    "text": "Disable apaquarto processing (.pdf only)\nIf you want a long table to span multiple pages in .pdf format, the table might get cut off after the first page. Quarto makes .pdf tables using the longtable package, which allow for multi-page tables. Unfortunately, longtable does not always play nicely with the apa7 LaTeX package that aqaquarto uses to make .pdf documents. I have not yet found a fully satisfactory way get all of the features of apaquarto to be compatible with longtable’s multi-page tables. If you set disable-apaquarto-processing to true in the chunk or in markdown, you can get a multi-page table. The apa-note function, however, will not place a note below the table.\nTo disable apaquarto procesing directly in markdown:\n| Letters | Numbers |\n|:-------:|:-------:|\n|    A    |    1    |\n|    B    |    2    |\n|    C    |    3    |\n\n: My Caption {#tbl-disabledprocessing1 disable-apaquarto-processing=true}\nTo disable processing within a code chunk:\n\n```{r}\n#| label: tbl-disabledprocessing2\n#| tbl-cap: Table with apaquarto processing disabled (note does not appear below)\n#| ft.align: left\n#| disable-apaquarto-processing: true\ntibble(Letters = c(\"A\", \"B\", \"C\"), \n       Numbers = 1:3) %&gt;% \n  flextable() %&gt;% \n  theme_apa() \n```\n\n\n\n\nTable \n\n\nTable with apaquarto processing disabled (note does not appear below)\n\n\n\n\nLettersNumbersA1B2C3"
   },
   {
     "objectID": "writing.html#parenthetical-citations",

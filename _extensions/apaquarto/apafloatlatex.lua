@@ -27,6 +27,13 @@ function string:split(delimiter)
 end
 
 local processfloat = function(float)
+  if float.attributes["disable-apaquarto-processing"] then
+    
+    if not (float.attributes["disable-apaquarto-processing"] == "false") then
+      
+      return float
+    end
+  end
   -- default float position
   local floatposition = "[!htbp]"
   local p = {}

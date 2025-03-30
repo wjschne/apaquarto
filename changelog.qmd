@@ -14,7 +14,10 @@ engine: knitr
     * Line numbering
     * Full language option support
 
-# Version 4.3.15 (2025-03-16)
+# Version 4.3.16 (2025-03-30)
+- [#71](https://github.com/wjschne/apaquarto/issues/71) Workaround implemented for getting .pdf to allow multi-page tables. Thanks [Florian Kohrt](https://github.com/fkohrt)!
+
+# Version 4.3.15 (2025-03-29)
 - [#123](https://github.com/wjschne/apaquarto/issues/123) Fixed bug that omitted affiliations in docx, html, and typst output. Thanks [Stefany Coxe](https://github.com/stefanycoxe)!
     
 # Version 4.3.14 (2025-03-16)
