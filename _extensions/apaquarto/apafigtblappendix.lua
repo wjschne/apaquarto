@@ -35,7 +35,6 @@ local function figtblconvert(ct)
     -- Create arrays with figure and table information
     while quarto._quarto.ast.custom_node_data[tostring(i)] do
       float = quarto._quarto.ast.custom_node_data[tostring(i)]
-      
       --Is the float a table?
       if float.identifier and string.find(float.identifier, "^tbl%-") then 
         -- is the table already in the array?

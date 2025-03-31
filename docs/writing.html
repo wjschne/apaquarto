@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.3">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -88,7 +88,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-81b5c3e63835cfde897ecd3d35a35a41.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-6df5d5a5ee0e45f2903de4150438d49a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -610,13 +610,13 @@ Tip
 <p>At a minimum, an APA-Style figure needs a unique label with the <code>fig-</code> prefix, a caption in <a href="https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case">title case</a> specified with <code>fig-cap</code>, and code for the plot.</p>
 <div class="cell FigureWithoutNote" data-custom-style="FigureWithoutNote">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, .<span class="dv">01</span>),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dlnorm</span>(x)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 8, .01),</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dlnorm(x)) %&gt;% </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-myplot" class="quarto-float quarto-figure quarto-figure-center">
@@ -643,15 +643,15 @@ Tip
 <p>You can add a note below a figure or table with the chunk option <code>apa-note</code>. The note can have markdown formatting (e.g, bolding and italics).</p>
 <div class="cell FigureWithNote" data-apa-note="This is the note below the figure." data-custom-style="FigureWithNote">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot2</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: This is the note below the figure.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot2</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-note: This is the note below the figure.</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">8</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 1, .001),</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dbeta(x,8,2)) %&gt;% </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-myplot2" class="quarto-float quarto-figure quarto-figure-center">
@@ -727,19 +727,19 @@ Tip
 <p>The chunk label must begin with <code>tbl-</code> instead of <code>fig-</code>. The caption is set with <code>tbl-cap</code>. I like making tables with <a href="https://ardata-fr.github.io/flextable-book/">flextable</a> because it ports to to the .docx format without hassle.</p>
 <div class="cell FigureWithNote" data-ft.align="left" data-apa-note="A note below table" data-custom-style="FigureWithNote">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-mytable</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: My Table</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: A note below table</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-mytable</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: My Table</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| ft.align: left</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-note: A note below table</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="in">library(flextable)</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(Letters = c("A", "B", "C"), </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">       Numbers = 1:3) %&gt;% </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">  flextable() %&gt;% </span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_apa() </span></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-mytable" class="cell quarto-float quarto-figure quarto-figure-center" data-ft.align="left" data-apa-note="A note below table">
+<div id="tbl-mytable" class="cell quarto-float quarto-figure quarto-figure-center" data-apa-note="A note below table" data-ft.align="left">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -751,7 +751,7 @@ Tip
 </figcaption>
 <div aria-describedby="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="tabwid tabwid_left"><style>.cl-dda65ac6{}.cl-dd99a57e{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-dd9e1640{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-dd9e3756{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dd9e3760{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dd9e3761{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-dda65ac6"><thead><tr style="overflow-wrap:break-word;"><th class="cl-dd9e3756"><p class="cl-dd9e1640"><span class="cl-dd99a57e">Letters</span></p></th><th class="cl-dd9e3756"><p class="cl-dd9e1640"><span class="cl-dd99a57e">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-dd9e3760"><p class="cl-dd9e1640"><span class="cl-dd99a57e">A</span></p></td><td class="cl-dd9e3760"><p class="cl-dd9e1640"><span class="cl-dd99a57e">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dd9e3760"><p class="cl-dd9e1640"><span class="cl-dd99a57e">B</span></p></td><td class="cl-dd9e3760"><p class="cl-dd9e1640"><span class="cl-dd99a57e">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dd9e3761"><p class="cl-dd9e1640"><span class="cl-dd99a57e">C</span></p></td><td class="cl-dd9e3761"><p class="cl-dd9e1640"><span class="cl-dd99a57e">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid tabwid_left"><style>.cl-2800ff1a{}.cl-27f8c980{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-27fc0b68{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-27fc2bb6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-27fc2bb7{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-27fc2bc0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-2800ff1a"><thead><tr style="overflow-wrap:break-word;"><th class="cl-27fc2bb6"><p class="cl-27fc0b68"><span class="cl-27f8c980">Letters</span></p></th><th class="cl-27fc2bb6"><p class="cl-27fc0b68"><span class="cl-27f8c980">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-27fc2bb7"><p class="cl-27fc0b68"><span class="cl-27f8c980">A</span></p></td><td class="cl-27fc2bb7"><p class="cl-27fc0b68"><span class="cl-27f8c980">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-27fc2bb7"><p class="cl-27fc0b68"><span class="cl-27f8c980">B</span></p></td><td class="cl-27fc2bb7"><p class="cl-27fc0b68"><span class="cl-27f8c980">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-27fc2bc0"><p class="cl-27fc0b68"><span class="cl-27f8c980">C</span></p></td><td class="cl-27fc2bc0"><p class="cl-27fc0b68"><span class="cl-27f8c980">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </figure>
@@ -765,11 +765,11 @@ Tip
 <h2 data-anchor-id="tables-made-directly-with-markdown">Tables Made Directly with Markdown</h2>
 <p>You can create tables with Markdown in several ways. See <a href="https://quarto.org/docs/authoring/tables.html#markdown-tables">here</a> for details. If you need to make a more complex table in Markdown, I suggest using <a href="https://quarto.org/docs/visual-editor/content.html#editing-tables">RStudio’s visual editor</a>. Here is an example of a simple table:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A       <span class="pp">|</span> 1       <span class="pp">|</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> B       <span class="pp">|</span> 2       <span class="pp">|</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> C       <span class="pp">|</span> 3       <span class="pp">|</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>| Letters | Numbers |</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>|:-------:|:-------:|</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>| A       | 1       |</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>| B       | 2       |</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>| C       | 3       |</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tbl-mytable2" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" data-apa-note="Note below table" data-custom-style="FigureWithNote">
@@ -818,15 +818,15 @@ Tip
 <p>You can make figures and tables span the two columns by setting the <code>apa-twocolumn</code> chunk option to <code>true</code>. This will only affect .pdf documents when in journal mode (i.e., <code>documentmode: jou</code>).</p>
 <div class="cell FigureWithoutNote" data-apa-twocolumn="true" data-custom-style="FigureWithoutNote">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot3</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: A Figure that Will Span Two Columns in Journal Mode</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-twocolumn: true</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-myplot3</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: A Figure that Will Span Two Columns in Journal Mode</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| apa-twocolumn: true</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">2</span>,<span class="dv">8</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(x = seq(0, 1, .001),</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="in">       y = dbeta(x,2,8)) %&gt;% </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x,y)) + </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_area(fill = "royalblue", alpha = .5)</span></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-myplot3" class="quarto-float quarto-figure quarto-figure-center">
@@ -851,26 +851,26 @@ Tip
 <h2 data-anchor-id="disable-apaquarto-processing-.pdf-only">Disable apaquarto processing (.pdf only)</h2>
 <p>If you want a long table to span multiple pages in .pdf format, the table might get cut off after the first page. Quarto makes .pdf tables using the longtable package, which allow for multi-page tables. Unfortunately, longtable does not always play nicely with the apa7 LaTeX package that aqaquarto uses to make .pdf documents. I have not yet found a fully satisfactory way get all of the features of apaquarto to be compatible with longtable’s multi-page tables. If you set <code>disable-apaquarto-processing</code> to <code>true</code> in the chunk or in markdown, you can get a multi-page table. The <code>apa-note</code> function, however, will not place a note below the table.</p>
 <p>To disable apaquarto procesing directly in markdown:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    A    <span class="pp">|</span>    1    <span class="pp">|</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    B    <span class="pp">|</span>    2    <span class="pp">|</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    C    <span class="pp">|</span>    3    <span class="pp">|</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>| Letters | Numbers |</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>|:-------:|:-------:|</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>|    A    |    1    |</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>|    B    |    2    |</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>|    C    |    3    |</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-disabledprocessing1 disable-apaquarto-processing=true}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To disable processing within a code chunk:</p>
 <div class="cell FigureWithoutNote" data-ft.align="left" data-disable-apaquarto-processing="true" data-custom-style="FigureWithoutNote">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-disabledprocessing2</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Table with apaquarto processing disabled (note does not appear below)</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| disable-apaquarto-processing: true</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: tbl-disabledprocessing2</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| tbl-cap: Table with apaquarto processing disabled (note does not appear below)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| ft.align: left</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| disable-apaquarto-processing: true</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(Letters = c("A", "B", "C"), </span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="in">       Numbers = 1:3) %&gt;% </span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="in">  flextable() %&gt;% </span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_apa() </span></span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="tbl-disabledprocessing2" class="cell quarto-float quarto-figure quarto-figure-center" data-ft.align="left" data-disable-apaquarto-processing="true">
+<div id="tbl-disabledprocessing2" class="cell quarto-float quarto-figure quarto-figure-center" data-disable-apaquarto-processing="true" data-ft.align="left">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-disabledprocessing2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -882,7 +882,7 @@ Tip
 </figcaption>
 <div aria-describedby="tbl-disabledprocessing2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div class="tabwid tabwid_left"><style>.cl-de1ffbd8{}.cl-de137124{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-de191322{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-de193190{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-de193191{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-de19319a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-de1ffbd8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-de193190"><p class="cl-de191322"><span class="cl-de137124">Letters</span></p></th><th class="cl-de193190"><p class="cl-de191322"><span class="cl-de137124">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-de193191"><p class="cl-de191322"><span class="cl-de137124">A</span></p></td><td class="cl-de193191"><p class="cl-de191322"><span class="cl-de137124">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-de193191"><p class="cl-de191322"><span class="cl-de137124">B</span></p></td><td class="cl-de193191"><p class="cl-de191322"><span class="cl-de137124">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-de19319a"><p class="cl-de191322"><span class="cl-de137124">C</span></p></td><td class="cl-de19319a"><p class="cl-de191322"><span class="cl-de137124">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid tabwid_left"><style>.cl-28675260{}.cl-285fd508{font-family:'Times New Roman';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-28628154{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 2;background-color:transparent;}.cl-28629ca2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0.75pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-28629cac{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-28629cb6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-28675260"><thead><tr style="overflow-wrap:break-word;"><th class="cl-28629ca2"><p class="cl-28628154"><span class="cl-285fd508">Letters</span></p></th><th class="cl-28629ca2"><p class="cl-28628154"><span class="cl-285fd508">Numbers</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-28629cac"><p class="cl-28628154"><span class="cl-285fd508">A</span></p></td><td class="cl-28629cac"><p class="cl-28628154"><span class="cl-285fd508">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-28629cac"><p class="cl-28628154"><span class="cl-285fd508">B</span></p></td><td class="cl-28629cac"><p class="cl-28628154"><span class="cl-285fd508">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-28629cb6"><p class="cl-28628154"><span class="cl-285fd508">C</span></p></td><td class="cl-28629cb6"><p class="cl-28628154"><span class="cl-285fd508">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </figure>

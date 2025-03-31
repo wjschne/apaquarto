@@ -14,6 +14,9 @@ engine: knitr
     * Line numbering
     * Full language option support
 
+# Version 4.4.0 (2025-03-31)
+- [#121](https://github.com/wjschne/apaquarto/issues/121) Adding support for subfigures. Thanks [Clemens Brunner](https://github.com/cbrnr) for the suggestion!
+
 # Version 4.3.16 (2025-03-30)
 - [#71](https://github.com/wjschne/apaquarto/issues/71) Workaround implemented for getting .pdf to allow multi-page tables. Thanks [Florian Kohrt](https://github.com/fkohrt)!
 

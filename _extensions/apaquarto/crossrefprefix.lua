@@ -19,6 +19,7 @@ local tbl = {}
 -- Figure table
 local fig = {}
 
+
 -- return table number associated with id
 local tbllabel = function(id)
   if id ~= "" then
@@ -35,22 +36,31 @@ local tbllabel = function(id)
 end
 
 -- return figure number associated with id
-local figlabel = function(id)
+local figlabel = function(id, ss)
   if id ~= "" then
     -- Is id in fig?
     if fig[id] then
       -- Do nothing
     else
-      -- Add id to fig
-      fignum = fignum + 1
-      fig[id] = fignum
+      if ss then
+        -- Add id to fig
+        fig[id] = fignum .. ss
+      else
+        -- increment fignum
+        fignum = fignum + 1
+        -- Add id to fig
+        fig[id] = fignum
+      end
+      
+      
+      
     end
   end
  
   return fig[id]
 end
 
-
+traverse = "topdown"
 Block = function(b)
   -- Increment prefix for every level-1 header starting with Appendix
   if b.tag == "Header" and b.level == 1 and pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8) == "Appendix" then
@@ -71,16 +81,40 @@ Block = function(b)
       b.attributes.prefix = prefix
       b.attributes.tblnum = tbllabel(b.identifier)
     else
+     
       if b.identifier:find("^fig%-") then
-        b.attributes.prefix = prefix
-        b.attributes.fignum = figlabel(b.identifier)
+        
+
+          b.attributes.prefix = prefix
+          b.attributes.fignum = figlabel(b.identifier)
         b.content:walk {
-          Image = function(img)
-            img.attributes.prefix = prefix
-            img.attributes.fignum = figlabel(b.identifier)
+            Image = function(img)
+              img.attributes.prefix = prefix
+              img.attributes.fignum = figlabel(b.identifier)
+            end
+          }
+          
+        
+        
+        local subfigcount = 0
+        
+                 -- Find subfigures
+        b.content:walk {
+          Block = function(bb)
+            if bb.identifier then
+              if bb.identifier:find("^fig%-") then
+                subfigcount = subfigcount + 1
+                b.attributes.hassubfigs = "true"
+                bb.attributes.prefix = prefix
+                bb.attributes.subfigscript = pandoc.text.sub(abc,subfigcount,subfigcount)
+                bb.attributes.fignum = figlabel(bb.identifier, bb.attributes.subfigscript)
+              end
+            end
           end
         }
+
       else
+        
         b:walk {
           Figure = function(fg)
             if fg.identifier then

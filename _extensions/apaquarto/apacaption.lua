@@ -66,10 +66,11 @@ local divcaption = function(div)
     -- Get figure/table prefix and number
     if div.attributes.prefix then
       if div.attributes.fignum then
-        labelnum = div.attributes.prefix .. div.attributes.fignum
+        -- Have to remove subfigure letters if present
+        labelnum = div.attributes.prefix .. string.match(div.attributes.fignum, "%d+")
       end
       if div.attributes.tblnum then
-        labelnum = div.attributes.prefix .. div.attributes.tblnum
+        labelnum = div.attributes.prefix .. string.match(div.attributes.tblnum, "%d+")
       end
     end
     
