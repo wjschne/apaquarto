@@ -60,8 +60,11 @@ local figlabel = function(id, ss)
   return fig[id]
 end
 
+
+
 traverse = "topdown"
 Block = function(b)
+    --quarto.log.output(b)
   -- Increment prefix for every level-1 header starting with Appendix
   if b.tag == "Header" and b.level == 1 and pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8) == "Appendix" then
     if intprefix == 26 then
@@ -74,9 +77,10 @@ Block = function(b)
     fignum = 0
     prefix = preprefix .. pandoc.text.sub(abc,intprefix,intprefix)
   end
-  
+
   -- Assign prefixes and numbers
   if b.identifier then    
+        
     if b.identifier:find("^tbl%-") then
       b.attributes.prefix = prefix
       b.attributes.tblnum = tbllabel(b.identifier)
@@ -131,7 +135,7 @@ Block = function(b)
             end
           end
             }
-      end
+    end
     end
     return b
   end

@@ -15,6 +15,9 @@ engine: knitr
     * Full language option support
 
 # Version 4.4.0 (2025-03-31)
+- [#124](https://github.com/wjschne/apaquarto/issues/124) Cross-referencing now works for markdown tables outside of fenced divs. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+
+# Version 4.4.0 (2025-03-31)
 - [#121](https://github.com/wjschne/apaquarto/issues/121) Adding support for subfigures. Thanks [Clemens Brunner](https://github.com/cbrnr) for the suggestion!
 
 # Version 4.3.16 (2025-03-30)

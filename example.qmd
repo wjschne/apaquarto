@@ -210,7 +210,7 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
 
 To refer to this table in text, use the `@` symbol followed by the reference label like so: As seen in @tbl-mytable, the first few numbers and letters of the alphabet are displayed.
 
-In @tbl-mymarkdowntable, there is an example of a plain markdown table with a note below it.
+In @tbl-mymarkdowntable, there is an example of a plain markdown table in a fenced div.
 
 ::: {#tbl-mymarkdowntable apa-note="This is a note below the markdown table."}
 | Default | Left | Right | Center |
@@ -221,6 +221,16 @@ In @tbl-mymarkdowntable, there is an example of a plain markdown table with a no
 
 Table Caption of a Markdown Table
 :::
+
+@tbl-mymarkdowntable2 is an example of a plain markdown table without a fenced div. Note the that the caption begins with a colon.
+
+| Letters | Numbers |
+|:-------:|:-------:|
+| A       | 1       |
+| B       | 2       |
+| C       | 3       |
+
+: My Caption. {#tbl-mymarkdowntable2 apa-note="My note"}
 
 What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text.
 
