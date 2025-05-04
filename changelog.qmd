@@ -14,10 +14,14 @@ engine: knitr
     * Line numbering
     * Full language option support
 
-# Version 4.4.0 (2025-03-31)
-- [#124](https://github.com/wjschne/apaquarto/issues/124) Cross-referencing now works for markdown tables outside of fenced divs. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+# Version 4.4.1 (2025-05-03)
+- [#128](https://github.com/wjschne/apaquarto/issues/128) Table and figure notes using `apa-note` now translate to the other langauges in the .pdf format. Thanks [Guilherme Pinto](https://github.com/ggpinto)
+- Fixed .html level 4 heading bolding problem.
+- Upgraded to latest apa.csl format
+
 
 # Version 4.4.0 (2025-03-31)
+- [#124](https://github.com/wjschne/apaquarto/issues/124) Cross-referencing now works for markdown tables outside of fenced divs. Thanks [Clemens Brunner](https://github.com/cbrnr)!
 - [#121](https://github.com/wjschne/apaquarto/issues/121) Adding support for subfigures. Thanks [Clemens Brunner](https://github.com/cbrnr) for the suggestion!
 
 # Version 4.3.16 (2025-03-30)

@@ -106,7 +106,7 @@ masked-citations:
 # Works with docx, html, and typst. 
 draft-date: false
 # Language options. See https://quarto.org/docs/authoring/language.html
-lang: en
+lang: en-US
 language:
   citation-last-author-separator: "and"
   citation-masked-author: "Masked Citation"
@@ -131,7 +131,7 @@ format:
     papersize: "us-letter"
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou
+    documentmode: man
     keep-tex: true
 ---
 
@@ -150,9 +150,47 @@ conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
-Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style).
+Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style). In general, level 1 headings should be reserved for the Method, Results, Discussion, References, and Appendices sections. 
+
+
+
+
+## Citations
+
+See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.
+
+A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so:
+
+@CameronTrivedi2013 make some important points ...
+
+See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
+
+@schneider2012cattell ['s] position was ...
+
+## Masking Author Identity for Peer Review
+
+Setting `mask` to `true` will remove author names, affiliations, and correspondence from the title page. Any references listed in the `masked-citations` field will be masked as well. See [here](https://wjschne.github.io/apaquarto/writing.html#masked-citations-for-anonymous-peer-review) for more information.
+
+## Block Quotes
+
+Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the \> character. For example, @austenMansfieldPark1990 ['s] *Mansfield Park* has some memorable insights about the mind:
+
+> If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
+
+
+## Math and Equations
+
+Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
+
+If you want to display and refer to a specific formula, enclose the formula in two dollar signs. After the second pair of dollar signs, place the label in curly braces. The label should have an `#eq-` prefix. To refer to the formula, use the same label but with the `@` symbol. For example, @eq-euler is Euler's Identity, which is much admired for its elegance.
+
+$$
+e^{i\pi}+1=0
+$$ {#eq-euler}
 
 ## Displaying Figures
+
+If you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. The reference labels will work no matter where they are in the text.
 
 A reference label for a figure must have the prefix `fig-`, and in a code chunk, the caption must be set with `fig-cap`. Captions are in [title case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
 
@@ -174,25 +212,6 @@ ggplot(data.frame(x = c(0, 35)), aes(x)) +
 
 To refer to any figure or table, use the `@` symbol followed by the reference label (e.g., @fig-myplot).
 
-## Imported Graphics
-
-One way to import an existing graphic as a figure is to use `knitr::include_graphics` in a code chunk. For example, @fig-import1 is an imported image. Note that in apaquarto-pdf documents, we can specify that that a figure or table should span both columns when in journal mode by setting the `apa-twocolumn` chunk option to `true`. For other formats, this distinction does not matter.
-
-```{r}
-#| label: fig-import1
-#| fig-cap: An Imported Graphic
-#| apa-note: A note below the figure
-#| fig-width: 3
-#| out-width: 48%
-knitr::include_graphics("sampleimage.png")
-```
-
-Figure graphics can be imported directly with Markdown, as with @fig-import2.
-
-![Another Way to Import Graphics](sampleimage.png){#fig-import2 apa-note="A note below the figure" width="49%"}
-
-Which style of creating figures you choose depends on preference and need.
-
 ## Displaying Tables
 
 We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
@@ -207,38 +226,17 @@ tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
 
 ```
 
-
 To refer to this table in text, use the `@` symbol followed by the reference label like so: As seen in @tbl-mytable, the first few numbers and letters of the alphabet are displayed.
 
-In @tbl-mymarkdowntable, there is an example of a plain markdown table in a fenced div.
 
-::: {#tbl-mymarkdowntable apa-note="This is a note below the markdown table."}
-| Default | Left | Right | Center |
-|---------|:-----|------:|:------:|
-| 12      | 12   |    12 |   12   |
-| 123     | 123  |   123 |  123   |
-| 1       | 1    |     1 |   1    |
-
-Table Caption of a Markdown Table
-:::
-
-@tbl-mymarkdowntable2 is an example of a plain markdown table without a fenced div. Note the that the caption begins with a colon.
-
-| Letters | Numbers |
-|:-------:|:-------:|
-| A       | 1       |
-| B       | 2       |
-| C       | 3       |
-
-: My Caption. {#tbl-mymarkdowntable2 apa-note="My note"}
-
-What if you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. For .html and .docx documents, there is not yet an automatic way to put tables and figures at the end. You can, of course, just put them all at the end, in order. The reference labels will work no matter where they are in the text.
 
 ## Tables and Figures Spanning Two Columns in Journal Mode
 
 When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise $\LaTeX$ sometimes makes them disappear.
 
 As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
+
+
 
 ```{r}
 #| label: fig-twocolumn
@@ -248,6 +246,7 @@ As demonstrated in @fig-twocolumn, you can make figures tables span the two colu
 #| fig-height: 3
 #| fig-width: 6.2
 #| fig-align: center
+#| fig-pos: "tp"
 ggplot(data.frame(x = c(-4, 4)), aes(x)) +
   stat_function(fun = dnorm, 
                 geom = "area",
@@ -257,43 +256,8 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
   theme_void()
 ```
 
-## Math and Equations
 
-Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
 
-If you want to display and refer to a specific formula, enclose the formula in two dollar signs. After the second pair of dollar signs, place the label in curly braces. The label should have an `#eq-` prefix. To refer to the formula, use the same label but with the `@` symbol. For example, @eq-euler is Euler's Identity, which is much admired for its elegance.
-
-## Citations
-
-See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.
-
-A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so:
-
-@CameronTrivedi2013 make some important points ...
-
-See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
-
-@schneider2012cattell ['s] position was ...
-
-## Masking Author Identity for Peer Review
-
-Setting `mask` to `true` will remove author names, affiliations, and correspondence from the title page. Any references listed in the `masked-citations` field will be masked as well. See [here](https://wjschne.github.io/apaquarto/writing.html#masked-citations-for-anonymous-peer-review) for more information.
-
-$$
-e^{i\pi}+1=0
-$$ {#eq-euler}
-
-## Block Quotes
-
-Sometimes you want to give a longer quote that needs to go in its own paragraph. Block quotes are on their own line starting with the \> character. For example, @austenMansfieldPark1990 ['s] *Mansfield Park* has some memorable insights about the mind:
-
-> If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
-
-If your quote has multiple paragraphs, like this passage from @brownHowKilledPluto2012, separate them with a lone `>` character between the lines:
-
-> In the entire field of astronomy, there is no word other than *planet* that has a precise, lawyerly definition, in which certain criteria are specifically enumerated. Why does *planet* have such a definition but *star*, *galaxy*, and *giant molecular cloud* do not? Because in astronomy, as in most sciences, scientists work by concepts rather than by definitions. The concept of a star is clear; a star is a collection of gas with fusion reactions in the interior giving off energy. A galaxy is a large, bound collection of stars. A giant molecular cloud is a giant cloud of molecules. The concept of a planet---in the eight-planet solar system---is equally simple to state. A planet is a one of a small number of bodies that dominate a planetary system. That is a concept, not a definition. How would you write that down in a precise definition?
->
-> I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)
 
 ## Hypotheses, Aims, and Objectives
 
@@ -349,6 +313,16 @@ Describe the basic characteristics of the primary variables. My ideal is to desc
 
 <!-- Add Additional Sections as Needed -->
 
+@tbl-mymarkdowntable2 is an example of a plain markdown table. Note the that the caption begins with a colon.
+
+| Letters | Numbers |
+|:-------:|:-------:|
+| A       | 1       |
+| B       | 2       |
+| C       | 3       |
+
+: My Caption. {#tbl-mymarkdowntable2 apa-note="My note"}
+
 # Discussion
 
 Describe results in non-statistical terms. <!-- Add sections as needed. -->
@@ -356,6 +330,7 @@ Describe results in non-statistical terms. <!-- Add sections as needed. -->
 ## Limitations and Future Directions
 
 Every study has limitations. Based on this study, some additional steps might include...
+
 
 ## Conclusion
 
@@ -368,15 +343,12 @@ Describe the main point of the paper.
 ::: {#refs}
 :::
 
+\newpage
 # Appendix
 
-# The Title for Appendix
+# My Appendix Title
 
-If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth.
-
-Tables and figures in the first appendix automatically get the prefix "A", and the numbering starts again at 1. See @fig-appendfig.
-
-If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
+If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth. Tables and figures in the first appendix automatically get the prefix "A", and the numbering starts again at 1. See @fig-appendfig, an example of an imported graphic using markdown syntax. If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
 
 ![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A note below the figure"}
 

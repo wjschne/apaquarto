@@ -160,3 +160,5 @@ contributes:
       template-partials:
         - typst/typst-template.typ
         - typst/typst-show.typ
+      format-resources:
+        - apa.csl

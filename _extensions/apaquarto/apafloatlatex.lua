@@ -2,6 +2,30 @@ if FORMAT ~= "latex" then
   return 
 end
 
+
+local noteword = "Note"
+
+-- from quarto-cli/src/resources/pandoc/datadir/init.lua
+-- global quarto params
+local paramsJson = quarto.base64.decode(os.getenv("QUARTO_FILTER_PARAMS"))
+local quartoParams = quarto.json.decode(paramsJson)
+local function param(name, default)
+  -- get name from quartoParams, if possible
+  local value = quartoParams[name]
+  if value == nil then
+    -- get name from quartoParams.language, if possible
+    if quartoParams.language then
+      value = quartoParams.language[name]
+    end
+    -- If still nil, then assign default
+    if value == nil then
+      value = default
+    end
+  end
+  return value
+end
+
+
 -- Is the .pdf in journal mode?
 local journalmode = false
 local manuscriptmode = true
@@ -11,7 +35,17 @@ local getmode = function(meta)
   local documentmode = pandoc.utils.stringify(meta["documentmode"])
   journalmode = documentmode == "jou"
   manuscriptmode = documentmode == "man"
+    -- Find word for "note"
+  if not meta.language["figure-table-note"] then
+    if param("callout-note-title") then
+      meta.language["figure-table-note"] = param("callout-note-title")
+    end
+  end
+  noteprefix = "\\noindent \\emph{" .. meta.language["figure-table-note"] .. ".} "
+  
 end
+
+
 
 -- Split string function
 function string:split(delimiter)
@@ -39,7 +73,7 @@ local processfloat = function(float)
   local p = {}
   if float.attributes["fig-pos"] then
     if pandoc.utils.stringify(float.attributes["fig-pos"]) == "false" then
-      floatposition = ""
+      floatposition = "[!htbp]"
     else
       floatposition = "[" .. float.attributes["fig-pos"] .. "]"
     end
@@ -83,7 +117,7 @@ local processfloat = function(float)
     -- Add note
     if float.attributes["apa-note"] then
       p = pandoc.Span({
-        pandoc.RawInline("latex", beforenote .. "\\noindent \\emph{Note.} "),
+        pandoc.RawInline("latex", beforenote .. noteprefix),
         float.attributes["apa-note"]
       })
     end

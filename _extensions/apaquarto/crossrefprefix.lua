@@ -64,7 +64,6 @@ end
 
 traverse = "topdown"
 Block = function(b)
-    --quarto.log.output(b)
   -- Increment prefix for every level-1 header starting with Appendix
   if b.tag == "Header" and b.level == 1 and pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8) == "Appendix" then
     if intprefix == 26 then

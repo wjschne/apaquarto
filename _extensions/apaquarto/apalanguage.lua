@@ -5,7 +5,7 @@
 -- global quarto params
 local paramsJson = quarto.base64.decode(os.getenv("QUARTO_FILTER_PARAMS"))
 local quartoParams = quarto.json.decode(paramsJson)
-quarto.log.output(quartoParams)
+
 local function param(name, default)
   -- get name from quartoParams, if possible
   local value = quartoParams[name]

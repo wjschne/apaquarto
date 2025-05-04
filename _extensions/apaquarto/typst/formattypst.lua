@@ -37,7 +37,7 @@ return {
   } ,
   {
     Pandoc = function (doc)
-      -- typst aggressively wants to make first paragraphs after something not intented. 
+      -- typst aggressively wants to make first paragraphs after something not indented. 
       -- APA style wants almost all paragraphs to be indented.
       -- This function inserts a blank  paragraph and then negative vertical space
       -- before any first paragraph. Hoping that typst will fix this and that this function
