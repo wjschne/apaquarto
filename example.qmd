@@ -257,9 +257,6 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
   theme_void()
 ```
 
-
-
-
 ## Hypotheses, Aims, and Objectives
 
 The last paragraph of the introduction usually states the specific hypotheses of the study, often in a way that links them to the research design.
@@ -335,7 +332,7 @@ Every study has limitations. Based on this study, some additional steps might in
 
 ## Conclusion
 
-Describe the main point of the paper. Also see @sec-appendixa for additional information.
+Describe the main point of the paper. 
 
 # References
 
@@ -351,6 +348,8 @@ Describe the main point of the paper. Also see @sec-appendixa for additional inf
 # My Appendix Title
 
 If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth. Tables and figures in the first appendix automatically get the prefix "A", and the numbering starts again at 1. See @fig-appendfig, an example of an imported graphic using markdown syntax. If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
+
+To cite an appendix as a whole, place a section identifier with a `sec-` prefix beside the Appendix heading, as shown in this document. Then, cite that identifier in the text. For example, see @sec-appendixa.
 
 ![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure"}
 

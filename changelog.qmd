@@ -13,6 +13,9 @@ engine: knitr
     * Journal format
     * Line numbering
     * Full language option support
+    
+# Version 4.4.3 (2025-05-05)
+- [#129](https://github.com/wjschne/apaquarto/issues/129) Make it possible to cite appendices. Thanks [Robert Esposito](https://github.com/RobertEspo)!
 
 # Version 4.4.2 (2025-05-04)
 - Allow markdown formatting in `apa-note` for .pdf documents.

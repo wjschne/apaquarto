@@ -618,4 +618,25 @@ Text in Appendix B
 
 ```
 
+If you want to cite an entire appendix in your text, give the appendix a section identifier with a `sec-` prefix like so:
+
+``` markdown
+# Appendix A {#sec-a}
+
+# Title of Appendix A
+
+Text in Appendix A
+
+# Appendix B {#sec-b}
+
+# Title of Appendix B
+
+Text in Appendix B
+
+```
+
+Then cite the appendix in your text like so: See `@sec-b`.
+
+This will render as `Appendix B`.
+
 # References
