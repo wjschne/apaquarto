@@ -1,6 +1,6 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 4.4.3
+version: 5.0.0
 quarto-required: ">=1.4.549"
 contributes:
   formats:
@@ -56,24 +56,34 @@ contributes:
         title-impact-statement: "Impact Statement"
         references-meta-analysis: "Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."
       filters:
+        # Sets language defaults other than English
         - at: pre-ast
           path: apalanguage.lua
+        # Prepare plain markdown tables to be used by crossrefprefix.lua
         - at: pre-ast
           path: markdowntable.lua
+        # Give figures and tables appendix prefixes
         - at: pre-ast
           path: crossrefprefix.lua
+        # Move figures and tables to end of document
         - at: pre-ast
           path: apafloatstoend.lua
+        # Give error message to early versions of apaquarto
         - at: pre-ast
           path: apafgtb.lua
+        # Set latex document mode
         - at: pre-ast
           path: journalmode.lua
+        # Set latex images to column width by default
         - at: pre-ast
-          path: apafigurewidthlatex.lua          
+          path: apafigurewidthlatex.lua     
+        # Make apa-note an attribute of figure in latex
         - at: pre-ast
-          path: apafigurelatex.lua
+          path: apanotelatex.lua
+        # Make appendices citable with apx prefix
         - at: pre-ast
-          path: apaciteappendixlatex.lua
+          path: apaciteappendix.lua
+        # Add a refs div if it was omitted.
         - at: pre-ast
           path: apaomitrefsdiv.lua
         - at: post-ast

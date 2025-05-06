@@ -1,6 +1,3 @@
-if FORMAT ~= "latex" then
-  return 
-end
 
 local appendixcount = 0
 local app = {}
@@ -21,7 +18,7 @@ local function cite_appendix(ct)
   local floatreftext
     
     --Is the citation a reference to a section?
-  if #ct.citations == 1 and string.find(ct.citations[1].id, "^sec%-") and app[ct.citations[1].id] then 
+  if #ct.citations == 1 and (string.find(ct.citations[1].id, "^sec%-") or string.find(ct.citations[1].id, "^apx%-")) and app[ct.citations[1].id] then 
     
     
     

@@ -591,76 +591,27 @@ Setting `mask` to `true` will also remove the authors, affiliations, and author 
 
 # Appendices
 
-If there is just just one appendix, put a level-1 header called `Appendix` after the references:
+Appendices begin with level-1 headers after the references. The header should be in title case and should describe the content of the appendix. The identifier after the header should have a an `#apx-` prefix as shown here:
 
-``` markdown
-# Appendix
+```markdown
+# Reliability Analysis of the Individual Differences Scale {#apx-myappendix}
 
-Text in appendix
+The Individual Differences Scale's reliability coefficients can be seen in @tbl-idsrxx.
 
-```
-
-
-If there are multiple appendices, begin each with level-1 headers, called `Appendix A`, `Appendix B`, `Appendix C`, and so forth. You can place titles of appendices as level-1 headers.
-
-``` markdown
-# Appendix A
-
-# Title of Appendix A
-
-Text in Appendix A
-
-# Appendix B
-
-# Title of Appendix B
-
-Text in Appendix B
+...
 
 ```
 
-If you want to cite an entire appendix in your text, give the appendix a section identifier with a `sec-` prefix like so:
+Then cite the appendix in your text with the identifier you have chosen like so: `See @apx-myappendix`.
 
-``` markdown
-# Appendix A {#sec-a}
+There is no need to give the appendix a title of *Appendix*. the appropriate title will be inserted automatically---*Appendix* for a single appendix or *Appendix A*, *Appendix B*, and so forth for multiple appendixes. Tables and figures included in appendices will be given the appropriate prefixes automatically (e.g., Figure A1, Table B1, Table B2, and so forth).
 
-# Title of Appendix A
 
-Text in Appendix A
-
-# Appendix B {#sec-b}
-
-# Title of Appendix B
-
-Text in Appendix B
-
-```
-
-Then cite the appendix in your text like so: See `@sec-b`.
-
-This will render as `Appendix B`.
-
-If `lang` is set to a [supported language](https://quarto.org/docs/authoring/language.html), you can make the Appendix heading start with the word specified in the `crossref-apx-prefix` subfield of `language`. If you want to set it a word in a language that is not supported by Quarto or to any other word (e.g., *Addendum*), set the word for *Appendix* like so in the YAML header:
+If `lang` is set to a [supported language](https://quarto.org/docs/authoring/language.html), the Appendix heading will start with the word specified in the `crossref-apx-prefix` subfield of `language`. If you want to set it a word in a language that is not supported by Quarto or to any other word (e.g., *Addendum*), set the word for *Appendix* like so in the YAML header:
 
 ```yaml
 language:
   crossref-apx-prefix: "Addendum"
-```
-
-Whatever word specified in this manner will act as the Appendix header:
-
-``` markdown
-# Addendum A {#sec-a}
-
-# Title of Addendum A
-
-Text in Addendum A
-
-# Addendum B {#sec-b}
-
-# Title of Addendum B
-
-Text in Addendum B
-
 ```
 
 # References

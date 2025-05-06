@@ -20,6 +20,8 @@ local appnum = 0
 local tbl = {}
 -- Figure table
 local fig = {}
+-- New style already used
+local newsppendixstyle = true
 
 -- Word for appendix
 local appendixword = "Appendix"
@@ -76,8 +78,16 @@ local walkblock = function(b)
   -- Increment prefix for every level-1 header starting with Appendix
   
   if b.tag == "Header" and b.level == 1 then
-    local headerfirstword = pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8)
-    if headerfirstword == appendixword or headerfirstword == "Appendix"  then
+    
+    local headerfirstword = pandoc.utils.stringify(b.content[1])
+    if headerfirstword == appendixword or headerfirstword == "Appendix"  or (b.identifier and b.identifier:find("^apx%-")) then
+      
+      if (headerfirstword == appendixword or headerfirstword == "Appendix") and  newsppendixstyle then
+        print("This style of creating appendices is deprecated:\n\n# Appendix A\n\n#Relationship Descriptive Scale\n\nInstead, use a single descriptive level-1 heading,\nfollowed by a an identifier with the apx prefix:\n\n# Relationship Description Scale {@apx-relationship}\n")
+        newsppendixstyle = false
+      end
+      
+      
     appnum = appnum + 1
     if intprefix == 26 then
       intprefix = 0
@@ -114,7 +124,7 @@ end
             end
           }
           
-        
+
         
         local subfigcount = 0
         
@@ -153,13 +163,24 @@ end
             }
     end
     end
-    return b
+    
+    if b.identifier:find("^apx%-") then
+      local a = pandoc.Header(1,  appendixword .. " " .. prefix)
+        return pandoc.List({a,b})
+      else
+        return b
+    end
+    
   end
 end
+
+
 
 local filter = {traverse = 'topdown',
   Meta = getappendixword,
   Block = walkblock
   }
 
-return {filter}
+return filter
+  
+

@@ -341,16 +341,35 @@ Describe the main point of the paper.
 ::: {#refs}
 :::
 
-\newpage
 
-# Appendix {#sec-appendixa}
+# My Appendix Title {#apx-a}
 
-# My Appendix Title
+Appendices are created as level 1 headings with an identifier with an  `#apx-` prefix. Appendix titles should be in title case and should describe the content of the appendix.
 
-If there are multiple appendices, label them with level 1 headings as Appendix A, Appendix B, and so forth. Tables and figures in the first appendix automatically get the prefix "A", and the numbering starts again at 1. See @fig-appendfig, an example of an imported graphic using markdown syntax. If there were a second appendix, tables and figures would get the prefix "B", and the numbering starts again at 1. Make as many appendices as needed.
+If there is only one appendix, the label automatically inserted above the the appendix title will be **Appendix**. If there are multiple appendices, the labels **Appendix A**, **Appendix B**, **Appendix C** and so forth will be inserted above the titles.
 
-To cite an appendix as a whole, place a section identifier with a `sec-` prefix beside the Appendix heading, as shown in this document. Then, cite that identifier in the text. For example, see @sec-appendixa.
+To cite an appendix as a whole, reference it with the `@apx-` prefix. For example, see @apx-a and @apx-b.
+
+This is an appendix with a table using markdown (see @tbl-letters).
+
+
+| Col 1 | Col 2 | Col 3 |
+|-------|-------|-------|
+| A     | B     | C     |
+| E     | F     | G     |
+| A     | G     | G     |
+
+: My Caption {#tbl-letters apa-note="These are letters."}
+
+
+
+
+# Another Appendix {#apx-b}
+
+
+See @fig-appendfig, an example of an imported graphic using markdown syntax. 
+
+
 
 ![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure"}
-
 

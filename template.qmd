@@ -27,7 +27,7 @@ author-note:
     gratitude: ~
     authorship-agreements: ~
 abstract: "This document is a template."
-keywords: [keyword1, keyword2, keyword3]
+keywords: [Keyword 1, Keyword 2, Keyword 3]
 bibliography: bibliography.bib
 format:
   apaquarto-docx: default
@@ -36,6 +36,10 @@ format:
   apaquarto-pdf:
     documentmode: man
 ---
+
+<!-- The introduction should not have a level-1 heading such as Introduction. -->
+
+This is my first paragraph. Any section headings in the introduction should be in levels 2--5.
 
 # Method
 
@@ -60,6 +64,7 @@ format:
 ::: {#refs}
 :::
 
-# Appendix
+# This Section Is an Appendix {#apx-a}
 
-# Title for Appendix
+
+# Another Appendix {#apx-b}

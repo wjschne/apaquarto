@@ -3,6 +3,7 @@ if FORMAT ~= "latex" then
   return
 end
 
+local afterrefs = false
 
 -- Word for appendix
 local appendixword = "Appendix"
@@ -16,6 +17,8 @@ end
 local appendixcount = 0
 -- Count how many level 1 headers are in each appendix
 local appendixheadercount = {}
+
+
 
 local count_headers_in_appendix = function(h)
   -- Is the level 1 header an appendix?
@@ -58,7 +61,8 @@ end
 
 
 return {
-  {Meta = getappendixword},
-  {Header = count_headers_in_appendix},
-  {Header = make_appendix}
+  { Meta = getappendixword },
+  { Block = findappendixheader },
+  { Header = count_headers_in_appendix },
+  { Header = make_appendix }
 }
