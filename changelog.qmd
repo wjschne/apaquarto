@@ -14,6 +14,9 @@ engine: knitr
     * Line numbering
     * Full language option support
     
+# Version 5.0.0 (2025-05-06)
+- New style of [specifying appendices with the `#apx-` prefix](https://wjschne.github.io/apaquarto/writing.html#appendices).
+    
 # Version 4.4.3 (2025-05-05)
 - [#129](https://github.com/wjschne/apaquarto/issues/129) Make it possible to cite appendices. Thanks [Robert Esposito](https://github.com/RobertEspo)!
 
