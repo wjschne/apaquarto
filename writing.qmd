@@ -639,4 +639,28 @@ Then cite the appendix in your text like so: See `@sec-b`.
 
 This will render as `Appendix B`.
 
+If `lang` is set to a [supported language](https://quarto.org/docs/authoring/language.html), you can make the Appendix heading start with the word specified in the `crossref-apx-prefix` subfield of `language`. If you want to set it a word in a language that is not supported by Quarto or to any other word (e.g., *Addendum*), set the word for *Appendix* like so in the YAML header:
+
+```yaml
+language:
+  crossref-apx-prefix: "Addendum"
+```
+
+Whatever word specified in this manner will act as the Appendix header:
+
+``` markdown
+# Addendum A {#sec-a}
+
+# Title of Addendum A
+
+Text in Addendum A
+
+# Addendum B {#sec-b}
+
+# Title of Addendum B
+
+Text in Addendum B
+
+```
+
 # References
