@@ -1,4 +1,4 @@
--- This filter creates prefixes for figures and tables in appedices.
+-- This filter creates prefixes for figures and tables in appendices.
 
 -- List of appendix names
 local abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -14,10 +14,20 @@ local intpreprefix = 0
 local tblnum = 0
 -- Figure counter
 local fignum = 0
+-- Appendix counter
+local appnum = 0
 -- Table table
 local tbl = {}
 -- Figure table
 local fig = {}
+
+-- Word for appendix
+local appendixword = "Appendix"
+getappendixword = function(meta)
+  if meta.language and meta.language["crossref-apx-prefix"] then
+    appendixword = pandoc.utils.stringify(meta.language["crossref-apx-prefix"])
+  end
+end
 
 
 -- return table number associated with id
@@ -62,10 +72,13 @@ end
 
 
 
-traverse = "topdown"
-Block = function(b)
+local walkblock = function(b)
   -- Increment prefix for every level-1 header starting with Appendix
-  if b.tag == "Header" and b.level == 1 and pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8) == "Appendix" then
+  
+  if b.tag == "Header" and b.level == 1 then
+    local headerfirstword = pandoc.text.sub(pandoc.utils.stringify(b.content), 1, 8)
+    if headerfirstword == appendixword or headerfirstword == "Appendix"  then
+    appnum = appnum + 1
     if intprefix == 26 then
       intprefix = 0
       intpreprefix = intpreprefix + 1
@@ -75,7 +88,11 @@ Block = function(b)
     tblnum = 0
     fignum = 0
     prefix = preprefix .. pandoc.text.sub(abc,intprefix,intprefix)
-  end
+    if b.attr then
+      b.attr.attributes.appendixtitle = prefix
+    end
+    end
+end
 
   -- Assign prefixes and numbers
   if b.identifier then    
@@ -139,3 +156,10 @@ Block = function(b)
     return b
   end
 end
+
+local filter = {traverse = 'topdown',
+  Meta = getappendixword,
+  Block = walkblock
+  }
+
+return {filter}

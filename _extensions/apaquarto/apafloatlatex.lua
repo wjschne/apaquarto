@@ -116,10 +116,12 @@ local processfloat = function(float)
     
     -- Add note
     if float.attributes["apa-note"] then
-      p = pandoc.Span({
-        pandoc.RawInline("latex", beforenote .. noteprefix),
-        float.attributes["apa-note"]
-      })
+        p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
+        local apanotestr = quarto.utils.string_to_inlines(float.attributes["apa-note"])
+       
+        for i, v in ipairs(apanotestr) do
+          p.content:insert(v)
+        end
     end
       
       local captionsubspan = pandoc.Span({
@@ -208,6 +210,7 @@ local processfloat = function(float)
         
         p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
         local apanotestr = quarto.utils.string_to_inlines(apanote)
+       
         for i, v in ipairs(apanotestr) do
           p.content:insert(v)
         end
@@ -245,6 +248,7 @@ local processfloat = function(float)
     
   end
 end
+
 
 return {
 { Meta = getmode },

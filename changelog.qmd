@@ -14,6 +14,9 @@ engine: knitr
     * Line numbering
     * Full language option support
 
+# Version 4.4.2 (2025-05-04)
+- Allow markdown formatting in `apa-note` for .pdf documents.
+
 # Version 4.4.1 (2025-05-03)
 - [#128](https://github.com/wjschne/apaquarto/issues/128) Table and figure notes using `apa-note` now translate to the other langauges in the .pdf format. Thanks [Guilherme Pinto](https://github.com/ggpinto)
 - Fixed .html level 4 heading bolding problem.

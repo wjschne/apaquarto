@@ -3,11 +3,12 @@ if FORMAT ~= "latex" then
   return
 end
 
+
 -- Word for appendix
 local appendixword = "Appendix"
 getappendixword = function(meta)
-  if meta.language and meta.language["section-title-appendix"] then
-    appendixword = pandoc.utils.stringify(meta.language["section-title-appendix"])
+  if meta.language and meta.language["crossref-apx-prefix"] then
+    appendixword = pandoc.utils.stringify(meta.language["crossref-apx-prefix"])
   end
 end
 
@@ -54,8 +55,10 @@ local make_appendix = function(h)
   end
 end
 
+
+
 return {
   {Meta = getappendixword},
   {Header = count_headers_in_appendix},
-  {Header = make_appendix},
+  {Header = make_appendix}
 }
