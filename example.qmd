@@ -189,9 +189,21 @@ $$
 e^{i\pi}+1=0
 $$ {#eq-euler}
 
+A more practical example is the z-score equation seen in @eq-zscore.
+
+$$
+z=\frac{X-\mu}{\sigma}
+$$ {#eq-zscore}
+
+If no identifier label is given, a centered equation in display mode will have no identifying number:
+
+$$
+\sigma_e=\sigma_y\sqrt{1-r_{xy}^2}
+$$
+
 ## Displaying Figures
 
-If you want the tables and figures to be at the end of the document? In the .pdf format, you can set the `floatsintext` option to false. The reference labels will work no matter where they are in the text.
+Do you want the tables and figures to be at the end of the document? You can set the `floatsintext` option to false. The reference labels will work no matter where they are in the text.
 
 A reference label for a figure must have the prefix `fig-`, and in a code chunk, the caption must be set with `fig-cap`. Captions are in [title case](https://apastyle.apa.org/style-grammar-guidelines/capitalization/title-case).
 
@@ -220,7 +232,7 @@ We can make a table the same way as a figure. Generating a table that conforms t
 
 ```{r}
 #| label: tbl-mytable
-#| tbl-cap: The Table Caption
+#| tbl-cap: The Table Caption. 
 #| apa-note: The note below the table.
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
   knitr::kable()
@@ -256,6 +268,17 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
                 fill = "#41448780") +
   theme_void()
 ```
+
+
+## Footnotes
+
+A footnote is usually displayed at the bottom of the page on which the footnote occurs.  A short note can be specified with the `^[My note here]` syntax.^[Here is my short footnote!] A longer note can be specified with the `[^id]` syntax with the text specified on a separate line like so `[^id]: Text here`.[^mylongfootnote]
+
+[^mylongfootnote]: This is a longer footnote. If it has multiple paragraphs, subsequent paragraphs need to be indented with two tabs.
+
+    This paragraph is still part of the footnote because it is indented with two tabs.
+
+A regular paragraph without any indentation is not part of the footnote and will be part of the main body of the document.
 
 ## Hypotheses, Aims, and Objectives
 

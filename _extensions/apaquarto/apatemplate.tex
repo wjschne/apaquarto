@@ -114,19 +114,19 @@ $title.tex()$
 
 $if(journalmode)$
 \usepackage{pbalance}
-\usepackage{float}
+% \usepackage{float}
 \makeatletter
 \let\oldtpt\ThreePartTable
 \let\endoldtpt\endThreePartTable
 \def\ThreePartTable{\@ifnextchar[\ThreePartTable@i \ThreePartTable@ii}
 \def\ThreePartTable@i[#1]{\begin{figure}[!htbp]
 \onecolumn
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.485\textwidth}
 \oldtpt[#1]
 }
 \def\ThreePartTable@ii{\begin{figure}[!htbp]
 \onecolumn
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.48\textwidth}
 \oldtpt
 }
 \def\endThreePartTable{

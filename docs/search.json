@@ -4,7 +4,7 @@
     "href": "changelog.html",
     "title": "Changelog",
     "section": "",
-    "text": "Tables in .pdf jou mode should fit automatically.\nAn appendix that consists solely of a table or figure should be called by the appendix title (not, for example, Figure A1).\nImplement missing Typst features\n\nJournal format\nLine numbering\nFull language option support"
+    "text": "Implement missing .pdf features\n\nTables in .pdf jou mode should fit automatically.\nFigure out why text disappears whenever there are too many tables and figures too close together.\n\nImplement missing .docx features\n\nFull control of font, paper size\nRight-align equation numbers\n\nImplement missing Typst features\n\nJournal format\nLine numbering\nFull language option support"
   },
   {
     "objectID": "changelog.html#breaking-changes",
