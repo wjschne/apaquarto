@@ -32,7 +32,6 @@ local function processblocks(b)
 
   for _, block in ipairs(b) do
       if block.t == "Para" or block.t == "Plain" or block.t == "Header" or block.t == "BlockQuote" then
-        print(block)
         count_words_in_inlines(block.content)
       end
       if block.t == "Div" then
