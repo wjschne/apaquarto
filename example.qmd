@@ -87,6 +87,8 @@ abstract: "This document is a template demonstrating the apaquarto format."
 keywords: [keyword1, keyword2, keyword3]
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
 impact-statement: ~
+# If true, a word count will appear below the keywords (tables, figure captions, and references excluded in count.)
+word-count: false
 floatsintext: true
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
@@ -270,7 +272,16 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
 ```
 
 
-## Footnotes
+```{r}
+# remotes::install_github("wjschne/apa7")
+library(apa7)
+x <- mtcars[, c("vs", "am")] %>% 
+  apa_chisq(border_color = "black")
+```
+
+
+
+## Using Footnotes
 
 A footnote is usually displayed at the bottom of the page on which the footnote occurs.  A short note can be specified with the `^[My note here]` syntax.^[Here is my short footnote!] A longer note can be specified with the `[^id]` syntax with the text specified on a separate line like so `[^id]: Text here`.[^mylongfootnote]
 

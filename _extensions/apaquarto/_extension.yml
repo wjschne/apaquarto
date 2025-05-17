@@ -95,6 +95,8 @@ contributes:
         - at: pre-quarto
           path: apastriptitle.lua
         - at: pre-quarto
+          path: wordcount.lua
+        - at: pre-quarto
           path: frontmatter.lua
         - at: pre-quarto
           path: apaquote.lua

@@ -356,22 +356,37 @@ affiliations:
 
 APA Style encourages but does not require papers with multiple authors to describe author roles using the [Contributor Roles Taxonomy](https://credit.niso.org/) (CRediT). There are 14 contributor roles:
 
-| Role | Description |
-|----|----|
-| [`conceptualization`](https://credit.niso.org/contributor-roles/conceptualization/) | Ideas; formulation or evolution of overarching research goals and aims. |
-| [`data curation`](https://credit.niso.org/contributor-roles/data-curation/) | Management activities to annotate (produce metadata), scrub data and maintain research data (including software code, where it is necessary for interpreting the data itself) for initial use and later re-use. |
-| [`formal analysis`](https://credit.niso.org/contributor-roles/formal-analysis/) | Application of statistical, mathematical, computational, or other formal techniques to analyse or synthesize study data. |
-| [`funding acquisition`](https://credit.niso.org/contributor-roles/funding-acquisition/) | Acquisition of the financial support for the project leading to this publication. |
-| [`investigation`](https://credit.niso.org/contributor-roles/investigation/) | Conducting a research and investigation process, specifically performing the experiments, or data/evidence collection. |
-| [`methodology`](https://credit.niso.org/contributor-roles/methodology/) | Development or design of methodology; creation of models. |
-| [`project administration`](https://credit.niso.org/contributor-roles/project-administration/) | Management and coordination responsibility for the research activity planning and execution. |
-| [`resources`](https://credit.niso.org/contributor-roles/resources/) | Provision of study materials, reagents, materials, patients, laboratory samples, animals, instrumentation, computing resources, or other analysis tools. |
-| [`software`](https://credit.niso.org/contributor-roles/software/) | Programming, software development; designing computer programs; implementation of the computer code and supporting algorithms; testing of existing code components. |
-| [`supervision`](https://credit.niso.org/contributor-roles/supervision/) | Oversight and leadership responsibility for the research activity planning and execution, including mentorship external to the core team. |
-| [`validation`](https://credit.niso.org/contributor-roles/validation/) | Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs. |
-| [`visualization`](https://credit.niso.org/contributor-roles/visualization/) | Preparation, creation and/or presentation of the published work, specifically visualization/data presentation. |
-| [`writing`](https://credit.niso.org/contributor-roles/writing-original-draft/) | Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation). |
-| [`editing`](https://credit.niso.org/contributor-roles/writing-review-editing/) | reparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision -- including pre- or post-publication stages. |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Role                                                                                          | Description                                                                                                                                                                                                     |
++===============================================================================================+=================================================================================================================================================================================================================+
+| [`conceptualization`](https://credit.niso.org/contributor-roles/conceptualization/)           | Ideas; formulation or evolution of overarching research goals and aims.                                                                                                                                         |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`data curation`](https://credit.niso.org/contributor-roles/data-curation/)                   | Management activities to annotate (produce metadata), scrub data and maintain research data (including software code, where it is necessary for interpreting the data itself) for initial use and later re-use. |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`formal analysis`](https://credit.niso.org/contributor-roles/formal-analysis/)               | Application of statistical, mathematical, computational, or other formal techniques to analyse or synthesize study data.                                                                                        |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`funding acquisition`](https://credit.niso.org/contributor-roles/funding-acquisition/)       | Acquisition of the financial support for the project leading to this publication.                                                                                                                               |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`investigation`](https://credit.niso.org/contributor-roles/investigation/)                   | Conducting a research and investigation process, specifically performing the experiments, or data/evidence collection.                                                                                          |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`methodology`](https://credit.niso.org/contributor-roles/methodology/)                       | Development or design of methodology; creation of models.                                                                                                                                                       |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`project administration`](https://credit.niso.org/contributor-roles/project-administration/) | Management and coordination responsibility for the research activity planning and execution.                                                                                                                    |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`resources`](https://credit.niso.org/contributor-roles/resources/)                           | Provision of study materials, reagents, materials, patients, laboratory samples, animals, instrumentation, computing resources, or other analysis tools.                                                        |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`software`](https://credit.niso.org/contributor-roles/software/)                             | Programming, software development; designing computer programs; implementation of the computer code and supporting algorithms; testing of existing code components.                                             |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`supervision`](https://credit.niso.org/contributor-roles/supervision/)                       | Oversight and leadership responsibility for the research activity planning and execution, including mentorship external to the core team.                                                                       |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`validation`](https://credit.niso.org/contributor-roles/validation/)                         | Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs.                                                      |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`visualization`](https://credit.niso.org/contributor-roles/visualization/)                   | Preparation, creation and/or presentation of the published work, specifically visualization/data presentation.                                                                                                  |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`writing`](https://credit.niso.org/contributor-roles/writing-original-draft/)                | Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation).                                                                    |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| [`editing`](https://credit.niso.org/contributor-roles/writing-review-editing/)                | reparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision -- including pre- or post-publication stages.    |
++-----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 : {.primary tbl-colwidths="\[25,75\]"}
 
@@ -607,30 +622,53 @@ With one exeception, everything that works for .docx should work for .html. For 
 
 Any of the elements below can be selectively suppressed from the document.
 
-| Field | Explanation |
-|----|----|
-| `suppress-title-page: true` | Suppress the entire title page |
-| `suppress-title: true` | Suppress the title on the title page |
-| `suppress-short-title: true` | Suppress the short title in the running header |
-| `suppress-author: true` | Suppresses the author names below the title. Does not suppress author names in the author note. |
-| `suppress-affiliation: true` | Suppress affiliations below the author names. Does not suppress the affiliation in the correspondence note. |
-| `suppress-author-note: true` | Suppress the entire author note |
-| `suppress-orcid: true` | Suppress the author ORCID numbers |
-| `suppress-status-change-paragraph: true` | Suppress the paragraph about status changes (affiliation changes and deceased authors) |
-| `suppress-disclosures-paragraph: true` | Suppress the paragraph about disclosures (study registration, data sharing, related reports, conflicts of interest, financial support, statements of gratitude, and authorship agreements) |
-| `suppress-credit-statement: true` | Suppress the credit statement |
-| `suppress-corresponding-paragraph: true` | Suppress the entire correspondence paragraph |
-| `suppress-corresponding-group: true` | Suppress the group in the correspondence address |
-| `suppress-corresponding-department: true` | Suppress the department in the correspondence address |
-| `suppress-corresponding-address: true` | Suppress the street address in the correspondence address |
-| `suppress-corresponding-city: true` | Suppress the city in the correspondence address |
-| `suppress-corresponding-region: true` | Suppress the region/state in the correspondence address |
-| `suppress-corresponding-postal-code: true` | Suppress the postal code in the correspondence address |
-| `suppress-corresponding-email: true` | Suppress the email address in the correspondence address |
-| `suppress-abstract: true` | Suppress the abstract. In the .pdf document, this will also suppress the keywords. |
-| `suppress-impact-statement: true` | Suppress the impact statement |
-| `suppress-keywords: true` | Suppress the keywords below the abstract |
-| `suppress-title-introduction: true` | Suppress the title in the introduction |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Field                                      | Explanation                                                                                                                                                                                |
++============================================+============================================================================================================================================================================================+
+| `suppress-title-page: true`                | Suppress the entire title page                                                                                                                                                             |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-title: true`                     | Suppress the title on the title page                                                                                                                                                       |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-short-title: true`               | Suppress the short title in the running header                                                                                                                                             |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-author: true`                    | Suppresses the author names below the title. Does not suppress author names in the author note.                                                                                            |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-affiliation: true`               | Suppress affiliations below the author names. Does not suppress the affiliation in the correspondence note.                                                                                |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-author-note: true`               | Suppress the entire author note                                                                                                                                                            |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-orcid: true`                     | Suppress the author ORCID numbers                                                                                                                                                          |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-status-change-paragraph: true`   | Suppress the paragraph about status changes (affiliation changes and deceased authors)                                                                                                     |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-disclosures-paragraph: true`     | Suppress the paragraph about disclosures (study registration, data sharing, related reports, conflicts of interest, financial support, statements of gratitude, and authorship agreements) |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-credit-statement: true`          | Suppress the credit statement                                                                                                                                                              |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-paragraph: true`   | Suppress the entire correspondence paragraph                                                                                                                                               |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-group: true`       | Suppress the group in the correspondence address                                                                                                                                           |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-department: true`  | Suppress the department in the correspondence address                                                                                                                                      |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-address: true`     | Suppress the street address in the correspondence address                                                                                                                                  |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-city: true`        | Suppress the city in the correspondence address                                                                                                                                            |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-region: true`      | Suppress the region/state in the correspondence address                                                                                                                                    |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-postal-code: true` | Suppress the postal code in the correspondence address                                                                                                                                     |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-corresponding-email: true`       | Suppress the email address in the correspondence address                                                                                                                                   |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-abstract: true`                  | Suppress the abstract. In the .pdf document, this will also suppress the keywords.                                                                                                         |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-impact-statement: true`          | Suppress the impact statement                                                                                                                                                              |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-keywords: true`                  | Suppress the keywords below the abstract                                                                                                                                                   |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `suppress-title-introduction: true`        | Suppress the title in the introduction                                                                                                                                                     |
++--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 : {.primary tbl-colwidths="\[50,50\]"}
 
@@ -659,16 +697,27 @@ You can alter the names of Abstract, Figures, Tables, and References by setting 
 
 However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.
 
-| Field | Explanation | Default |
-|----|----|----|
-| `citation-last-author-separator` | APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word *and* before the last author. | *and* |
-| `citation-masked-author` | The phrase to replace author names in masked citations. | *Masked Citation* |
-| `citation-masked-date` | The abbreviated translation for "no date" in masked citations | *n.d.* |
-| `title-block-author-note` | The heading of the author note | *Author Note* |
-| `title-block-correspondence-note` | The phrase introducing the correspondence note. | *Correspondence concerning this article should be addressed to* |
-| `title-block-role-introduction` | The phrase introducing the author roles. | *Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:* |
-| `title-impact-statement` | The heading for the impact statement | *Impact Statement* |
-| `references-meta-analysis` | The sentence explaining that citations marked with an asterisk were studies in the meta-analysis. | *References marked with an asterisk indicate studies included in the meta-analysis.* |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| Field                             | Explanation                                                                                                                                          | Default                                                                                                           |
++===================================+======================================================================================================================================================+===================================================================================================================+
+| `citation-last-author-separator`  | APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word *and* before the last author. | *and*                                                                                                             |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-author`          | The phrase to replace author names in masked citations.                                                                                              | *Masked Citation*                                                                                                 |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `citation-masked-date`            | The abbreviated translation for "no date" in masked citations                                                                                        | *n.d.*                                                                                                            |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-author-note`         | The heading of the author note                                                                                                                       | *Author Note*                                                                                                     |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-correspondence-note` | The phrase introducing the correspondence note.                                                                                                      | *Correspondence concerning this article should be addressed to*                                                   |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-block-role-introduction`   | The phrase introducing the author roles.                                                                                                             | *Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:* |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-impact-statement`          | The heading for the impact statement                                                                                                                 | *Impact Statement*                                                                                                |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `title-word-count`                | The phrase before the word count when `word-count: true`                                                                                             | *Word Count*                                                                                                      |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
+| `references-meta-analysis`        | The sentence explaining that citations marked with an asterisk were studies in the meta-analysis.                                                    | *References marked with an asterisk indicate studies included in the meta-analysis.*                              |
++-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------+
 
 : {.primary tbl-colwidths="\[30,40,30\]"}
 
@@ -685,6 +734,8 @@ language:
   title-block-correspondence-note: "La correspondencia relativa a este artículo debe dirigirse a"
   title-block-role-introduction: "Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"
   references-meta-analysis: "Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."
+  title-impact-statement: "Declaración de Impacto"
+  title-word-count: "Recuento de Palabras"
 ```
 
 In addition, many terms that are translated automatically can be overridden. The full list is [here](https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml). For example, if I wanted "Figure" in figure captions to be "Plot" instead, I would specify the change like so:

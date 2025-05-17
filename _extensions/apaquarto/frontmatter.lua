@@ -629,6 +629,17 @@ return {
         
         body:extend({keywords_paragraph})
       end
+      
+      if meta["word-count"] then
+        local word_count_word = "Word Count"
+        if meta.language and meta.language["title-block-word-count"] then
+          word_count_word = stringify(meta.language["title-block-word-count"])
+        end
+        
+
+        local word_count_paragraph = pandoc.Para({pandoc.Emph(word_count_word), pandoc.Str(": " .. meta.wordn)})
+        body:extend({word_count_paragraph})
+      end
 
         if FORMAT:match 'docx' then
           body:extend({pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')})
