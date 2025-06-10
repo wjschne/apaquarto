@@ -71,6 +71,7 @@ local processfloat = function(float)
   -- default float position
   local floatposition = "[!htbp]"
   local p = {}
+  local apanotedivs = pandoc.Div(pandoc.Blocks{})
   if float.attributes["fig-pos"] then
     if pandoc.utils.stringify(float.attributes["fig-pos"]) == "false" then
       floatposition = "[!htbp]"
@@ -117,11 +118,24 @@ local processfloat = function(float)
     -- Add note
     if float.attributes["apa-note"] then
         p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
-        local apanotestr = quarto.utils.string_to_inlines(float.attributes["apa-note"])
-       
-        for i, v in ipairs(apanotestr) do
-          p.content:insert(v)
-        end
+        local apanoteparas = float.attributes["apa-note"]
+
+        
+
+        local cnt = 0
+        for v in string.gmatch(apanoteparas, "([^|]+)") do
+          local apanote = pandoc.Div({})
+          if (not(v == "[" or v == "]" or v == ",")) then
+            cnt = cnt + 1
+            if (cnt == 1) then
+              p.content:extend(quarto.utils.string_to_inlines(v))
+              apanote.content:extend({p})
+              else
+                apanote.content:extend(quarto.utils.string_to_blocks(v))
+            end
+            apanotedivs.content:extend({apanote})
+          end
+      end
     end
       
       local captionsubspan = pandoc.Span({
@@ -156,18 +170,21 @@ local processfloat = function(float)
       local returnblock = pandoc.Div({
         pandoc.RawBlock("latex", "\\begin{" .. latextableenv .. "}"),
         captionspan,
-        float.content,
-        p,
-        pandoc.RawBlock("latex", "\\end{" .. latextableenv .. "}")
+        float.content
+        
       }
       )
+      returnblock.content:extend({apanotedivs})
+
+      
+      returnblock.content:extend({pandoc.RawBlock("latex", "\\end{" .. latextableenv .. "}")})
       
       if journalmode then
         
         returnblock = pandoc.Div({
           pandoc.RawBlock("latex", "\\begin{" .. latextableenv .. "}"),
           float.__quarto_custom_node,
-          p,
+          apanotedivs,
           pandoc.RawBlock("latex", "\\end{" .. latextableenv .. "}")
         })
     
@@ -207,12 +224,27 @@ local processfloat = function(float)
     -- Make note
     if hasnote or twocolumn then
       if hasnote then
-        
-        p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
-        local apanotestr = quarto.utils.string_to_inlines(apanote)
-       
-        for i, v in ipairs(apanotestr) do
-          p.content:insert(v)
+        -- Add note
+        if float.attributes["apa-note"] then
+            p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
+            local apanoteparas = float.attributes["apa-note"]
+    
+            
+    
+            local cnt = 0
+            for v in string.gmatch(apanoteparas, "([^|]+)") do
+              local apanote = pandoc.Div({})
+              if (not(v == "[" or v == "]" or v == ",")) then
+                cnt = cnt + 1
+                if (cnt == 1) then
+                  p.content:extend(quarto.utils.string_to_inlines(v))
+                  apanote.content:extend({p})
+                  else
+                    apanote.content:extend(quarto.utils.string_to_blocks(v))
+                end
+                apanotedivs.content:extend({apanote})
+              end
+          end
         end
       end
     
@@ -239,7 +271,7 @@ local processfloat = function(float)
         pandoc.RawBlock("latex", "\\begin{" .. latexenv .. "}" .. floatposition),
         captionspan,
         float.content,
-        p,
+        apanotedivs,
         pandoc.RawBlock("latex", "\\end{" .. latexenv .. "}")
       })
   

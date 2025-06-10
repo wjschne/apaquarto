@@ -218,6 +218,7 @@ $else$
 \maketitle
 $endif$
 
+
 $if(toc)$
 \hypertarget{toc}{}
 \tableofcontents
@@ -243,6 +244,11 @@ $endif$
 $if(numbered-lines)$
 \resetlinenumber[1]
 $endif$
+
+$if(first-page)$
+\setcounter{page}{$first-page$}
+$endif$
+
 
 $body$
 

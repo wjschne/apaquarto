@@ -38,5 +38,11 @@ $endif$
 $if(toc)$
   toc: "true",
 $endif$
+$if(first-page)$
+  first-page: $first-page$,
+$endif$
+$if(suppress-title-page)$
+  suppresstitlepage: $suppress-title-page$,
+$endif$
   document,
 )

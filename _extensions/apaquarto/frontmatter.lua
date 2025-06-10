@@ -646,8 +646,14 @@ return {
         end
         
         if FORMAT:match 'typst' then
-          body:extend({pandoc.RawBlock('typst', '#pagebreak()\n\n')})
+          local pg = '#pagebreak()\n\n' 
+          if meta['first-page'] then
+            pg = '#counter(page).update(' .. stringify(meta['first-page']) .. ' - 1)\n #pagebreak()\n\n'
+          end
+          body:extend({pandoc.RawBlock('typst', pg)})
         end
+        
+
         
         if FORMAT:match 'html' then
           body:extend({pandoc.RawBlock('html', '<br>')})
@@ -705,6 +711,7 @@ return {
         firstpageheader.classes = {"title", "unnumbered", "unlisted"}
         body:extend({firstpageheader})
       end
+      
 
       
 

@@ -92,6 +92,8 @@ word-count: false
 floatsintext: true
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
+# Set first page number of body
+first-page: 9
 # File with references
 bibliography: bibliography.bib
 # Suppress title page
@@ -133,7 +135,7 @@ format:
     papersize: "us-letter"
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    documentmode: jou
     keep-tex: true
 ---
 
@@ -251,8 +253,6 @@ When creating tables and figures in journal mode, care must be taken not to make
 
 As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
 
-
-
 ```{r}
 #| label: fig-twocolumn
 #| fig-cap: A Figure Spanning Two Columns When in Journal Mode
@@ -272,11 +272,60 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
 ```
 
 
+
+```{r}
+knit_print.gt_tbl <- function (x, ..., inline = FALSE) {
+    if (gt:::knitr_is_rtf_output()) {
+        x <- gt:::as_rtf(x)
+    }
+    else if (knitr::is_latex_output()) {
+        x <- gt:::as_latex(x)
+    }
+    else if (gt:::knitr_is_word_output()) {
+       str <- gsub("</w:tbl>","</w:tbl><w:p></w:p>", as_word(x), fixed = TRUE)
+        x <- knitr::asis_output(paste("\n\n``````{=openxml}", str, 
+            "``````\n\n", sep = "\n"))
+    }
+    else {
+        x <- htmltools:::as.tags(x, ...)
+    }
+    knitr::knit_print(x, ..., inline = FALSE)
+}
+
+
+
+registerS3method(
+  "knit_print", 'gt_tbl', knit_print.gt_tbl, 
+  envir = asNamespace("gt") 
+  # important to overwrite {gt}s knit_print
+)
+```
+
+
 ```{r}
 # remotes::install_github("wjschne/apa7")
-library(apa7)
-x <- mtcars[, c("vs", "am")] %>% 
-  apa_chisq(border_color = "black")
+library(gt)
+mtcars %>% 
+  mutate(Engine = factor(vs, labels = c("V-Shaped", "Straight")),
+         Transmission = factor(am, labels = c("Automatic", "Manual"))) %>% 
+  count(Engine, Transmission) %>% 
+  pivot_wider(names_from = Transmission, 
+              names_prefix = "Transmission_", 
+              values_from = n) %>% 
+  gt() %>% 
+  tab_spanner_delim(delim = "_") %>% 
+  gt::cols_align("left", columns = "Engine") %>% 
+  apa7::apa_style() %>% 
+  gt::tab_options(table.font.names = "Times New Roman") %>% 
+  as_word() %>% 
+  # gsub(pattern = "</w:tbl>",replacement = "</w:tbl><w:p></w:p>", fixed = TRUE)
+  gsub(pattern = "<w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n", replacement = "", fixed = TRUE) %>% 
+  gsub(pattern = "<w:spacing w:before=\"0\" w:after=\"60\"/>\n ", replacement = "", fixed = TRUE) %>% 
+  knitr::asis_output(x = paste("\n\n``````{=openxml}", ., 
+            "``````\n\n", sep = "\n")) %>% 
+  knitr::knit_print(inline = F)
+
+
 ```
 
 
