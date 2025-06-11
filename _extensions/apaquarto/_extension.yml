@@ -123,19 +123,25 @@ contributes:
         # Removes surrounding table environment for docx figures and tables
         - at: post-render
           path: apaextractfigure.lua
-        
+        # Formats notes below figures and tables (docx, html, typst)
         - at: post-render
           path: apanote.lua
+        # Adds styles to figures and tables 
         - at: post-render
           path: apafloat.lua
+        # Formats captions for figures and tables 
         - at: post-render
           path: apacaption.lua
+        # Puts proper spacing for paragraphs after figures and tables
         - at: post-render
           path: apaafternote.lua
+        # Process citations, adds asterisks for meta-analysis citations
         - at: post-render
           path: citeprocr.lua
+        # Process APA in-text citations (ampersand to and, possessive citation)
         - at: post-render
           path: apaandcite.lua
+        # Process appendices in latex
         - at: post-render
           path: apaappendixlatex.lua
     native: default
@@ -174,8 +180,10 @@ contributes:
     docx: 
       reference-doc: apaquarto.docx
       filters: 
+        # Add custom styles to docx
         - at: post-quarto
           path: docxstyler.lua
+        # Add line numbers and format Latex symbol
         - at: post-render
           path: docxlinenumber.lua
       knitr: 
@@ -183,6 +191,7 @@ contributes:
           dev: ragg_png
     typst:
       filters: 
+        # Process typst-specific styles
         - at: post-quarto
           path: typst/formattypst.lua
       template-partials:

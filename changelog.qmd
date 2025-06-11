@@ -22,7 +22,7 @@ engine: knitr
 # Version 5.0.3
 
 - 2025-06-09
-- The `apa-note` code chunk can produce multiple paragraphs if separated by the `|` character.
+- The `apa-note` code chunk can produce multiple paragraphs using yaml sequences.
 - For .pdf and typst, the `first-page` option can set the first page to a different value.
 
 

@@ -14,6 +14,8 @@ local function getnote(m)
     end
 end
 
+local utilsapa = require("utilsapa")
+
 local function apanote(elem)
   if elem.attributes["apa-note"] then
       hasnote = true
@@ -27,27 +29,9 @@ local function apanote(elem)
       }
       if hasnote then
         -- Make note
-        local apanotepara = pandoc.Para({pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."),pandoc.Space()})
-        local apanoteparas = elem.attributes["apa-note"]
+        prefix = pandoc.Para({pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."),pandoc.Space()})
+        apanotedivs = utilsapa.make_note(elem.attributes["apa-note"], prefix)
 
-        local apanotedivs = pandoc.Div(pandoc.Blocks{})
-
-        local cnt = 0
-        for v in string.gmatch(apanoteparas, "([^|]+)") do
-          local apanote = pandoc.Div({})
-          apanote.attributes['custom-style'] = 'FigureNote'
-          apanote.classes:extend({"FigureNote"})
-          apanote.classes:extend({"NoIndent"})
-          if (not(v == "[" or v == "]" or v == ",")) then
-            cnt = cnt + 1
-            if (cnt == 1) then
-              apanote.content:extend(quarto.utils.string_to_blocks("*" .. beginapanote .. "*. "  .. v))
-            else
-                apanote.content:extend(quarto.utils.string_to_blocks(v))
-            end
-            apanotedivs.content:extend({apanote})
-          end
-      end
 
         return {elem, apanotedivs}
       end

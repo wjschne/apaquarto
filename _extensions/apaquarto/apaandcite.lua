@@ -14,24 +14,12 @@ local andreplacement = "and"
 local makelinks = false
 local no_ampersand_parenthetical = false
 
--- make string, if it exists, else return default
-local stringify = function(s, default)
-  if s then
-    s = pandoc.utils.stringify(s)
-  else
-    if default then
-      s = default
-    else
-      s = ""
-    end
-  end
-  return s
-end
+local utilsapa = require("utilsapa")
 
 -- Get alternate separator, if it exists
 local function get_and(m)
   if m.language and m.language["citation-last-author-separator"] then
-    andreplacement = stringify(
+    andreplacement = utilsapa.stringify(
       m.language["citation-last-author-separator"], 
       andreplacement)
   end

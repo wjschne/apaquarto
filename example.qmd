@@ -82,7 +82,7 @@ author-note:
     gratitude: ~
     # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
     authorship-agreements: ~
-abstract: "This document is a template demonstrating the apaquarto format."
+abstract: "This document is a template demonstrating the apaquarto format. The template demonstrates the use of citations, masked citations, block quotes, equations, figures, and tables. Creating appendices is demonstrated."
 # Put as many keywords at you like, separated by commmas (e.g., [reliability, validity, generalizability])
 keywords: [keyword1, keyword2, keyword3]
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
@@ -237,7 +237,7 @@ We can make a table the same way as a figure. Generating a table that conforms t
 ```{r}
 #| label: tbl-mytable
 #| tbl-cap: The Table Caption. 
-#| apa-note: The note below the table.
+#| apa-note: This is the first paragraph.|This is a second paragraph. It is separated with the pipe character.
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
   knitr::kable()
 
@@ -272,61 +272,6 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
 ```
 
 
-
-```{r}
-knit_print.gt_tbl <- function (x, ..., inline = FALSE) {
-    if (gt:::knitr_is_rtf_output()) {
-        x <- gt:::as_rtf(x)
-    }
-    else if (knitr::is_latex_output()) {
-        x <- gt:::as_latex(x)
-    }
-    else if (gt:::knitr_is_word_output()) {
-       str <- gsub("</w:tbl>","</w:tbl><w:p></w:p>", as_word(x), fixed = TRUE)
-        x <- knitr::asis_output(paste("\n\n``````{=openxml}", str, 
-            "``````\n\n", sep = "\n"))
-    }
-    else {
-        x <- htmltools:::as.tags(x, ...)
-    }
-    knitr::knit_print(x, ..., inline = FALSE)
-}
-
-
-
-registerS3method(
-  "knit_print", 'gt_tbl', knit_print.gt_tbl, 
-  envir = asNamespace("gt") 
-  # important to overwrite {gt}s knit_print
-)
-```
-
-
-```{r}
-# remotes::install_github("wjschne/apa7")
-library(gt)
-mtcars %>% 
-  mutate(Engine = factor(vs, labels = c("V-Shaped", "Straight")),
-         Transmission = factor(am, labels = c("Automatic", "Manual"))) %>% 
-  count(Engine, Transmission) %>% 
-  pivot_wider(names_from = Transmission, 
-              names_prefix = "Transmission_", 
-              values_from = n) %>% 
-  gt() %>% 
-  tab_spanner_delim(delim = "_") %>% 
-  gt::cols_align("left", columns = "Engine") %>% 
-  apa7::apa_style() %>% 
-  gt::tab_options(table.font.names = "Times New Roman") %>% 
-  as_word() %>% 
-  # gsub(pattern = "</w:tbl>",replacement = "</w:tbl><w:p></w:p>", fixed = TRUE)
-  gsub(pattern = "<w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n", replacement = "", fixed = TRUE) %>% 
-  gsub(pattern = "<w:spacing w:before=\"0\" w:after=\"60\"/>\n ", replacement = "", fixed = TRUE) %>% 
-  knitr::asis_output(x = paste("\n\n``````{=openxml}", ., 
-            "``````\n\n", sep = "\n")) %>% 
-  knitr::knit_print(inline = F)
-
-
-```
 
 
 

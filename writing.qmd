@@ -9,6 +9,10 @@ format:
     link-external-newwindow: false
     # code-annotations: hover
     filters:  
+      - at: pre-ast
+        path: _extensions/apaquarto/crossrefprefix.lua
+      - at: pre-ast
+        path: _extensions/apaquarto/apafigtblappendix.lua
       - at: post-render
         path: _extensions/apaquarto/apacaption.lua
       - at: post-render
@@ -100,8 +104,6 @@ library(tidyverse)
 library(flextable)
 ```
 
-(Under Construction)
-
 A good place to start learning about writing Quarto documents is [here](https://quarto.org/docs/get-started/authoring/rstudio.html). I will cover material needed to use apaquarto to write an APA Style document in Markdown text.
 
 [Markdown](https://daringfireball.net/projects/markdown/) makes writing in a consistent style straightforward and easy. Its plain-text format was designed to be easy to read and easy to write, yet also flexible and specific enough that it could be converted automatically into fully formatted documents.
@@ -110,30 +112,30 @@ If you are used to writing with a word processor (e.g., MS Word, Google Docs), i
 
 # Create a Quarto Document
 
-To create an Quarto document in RStudio, in the menu (See @fig-newquarto), click *File → New File → Quarto Document*.
+To create a Quarto document in RStudio, in the menu (See @fig-newquarto), click *File → New File → Quarto Document*.
 
-![Create new Quarto docuemnt from the RStudio men](img/newquartodocument.png){#fig-newquarto}
+![Create new Quarto docuemnt from the RStudio menu](img/newquartodocument.png){#fig-newquarto}
 
 The resulting file can be edited. Here is an annotated example of a short Quarto document:
 
-````{verbatim}
+````{verbatim basicquarto}
 ---                                
-title: "My Title"                  # <1>
-author: "W. Joel Schneider"        # <1>
+title: My Title                       # <1>
+author: W. Joel Schneider             # <1>
 ---                                
 
-This is plain text.                # <2>
-A pair asterisks makes *italics*.  # <2>
-Two asterisks will **bold** text.  # <2> 
+This is plain text.                   # <2>
+A pair of asterisks makes *italics*.  # <2>
+Two asterisks will **bold** text.     # <2> 
 
-```{r}                             # <3>
-x <- 5                             # <3>
-```                                # <3>
+```{r}                                # <3>
+x <- 5                                # <3>
+```                                   # <3>
 ````
 
-1.  The yaml between pairs of three hyphens (`---`) contains "metadata" (information about the document). Yaml
+1.  The yaml between pairs of three hyphens (`---`) contains "metadata" (information about the document) such as the document's title, author, format, and so forth. YAML (Yet Another Markup Language) has pairs of keys and values separated with colons. For example, `title: My Title` is has a key of `title` and a value of `My Title`.
 2.  Markdown text below the yaml becomes part of the document's content.
-3.  Anything between pairs of three backticks (```` ``` ````) is code. The r between the curly braces (`{r}`) means to run the code in R rather than some other language (e.g., Python or Julia). In this example, `x <- 5` means "Define a new variable `x` to be equal to 5."
+3.  Anything between pairs of three backticks (```` ``` ````) is code. The `r` between the curly braces (`{r}`) means to run the code in R rather than some other language (e.g., Python or Julia). In this example, `x <- 5` means "Define a new variable `x` and set it equal to 5."
 
 # Basic Styling
 
@@ -299,7 +301,7 @@ Initial paragraph
 > Block quote paragraph
 
 :::{.NoIndent}
-Because this sentence continues the intial paragraph, 
+Because this sentence continues the initial paragraph, 
 the indentation is suppresed.
 :::
 ```
@@ -346,7 +348,13 @@ tibble(x = seq(0, 8, .01),
 
 ## Notes below Figures and Tables
 
-You can add a note below a figure or table with the chunk option `apa-note`. The note can have markdown formatting (e.g, bolding and italics).
+APA style distinguishes between three types of table notes, each of which need to be in separate paragraphs:
+
+- *General Note.* Contains definitions, abbreviations, and other information needed to understand the table, as well as copyright information.
+- *Specific Note.* These are notes about specific cells in the table, often in form of footnotes with lowercase letters as markers. Each footnote is in the same paragraph. The *APA Manual* recommends making the the footnote marker in superscript. The space that separates the marker from the the explanatory text should also be in superscript, hence the `^&nbsp;^` at the beginning of th footnote text.
+- *Probability Note.* This note explains the meanings of probability markers (e.g., \* *p* < .05; \*\* *p* < .001; \*\*\* *p* < .001).
+
+You can add a general note below a figure or table with the chunk option `apa-note`. The note can have markdown formatting (e.g, bolding and italics).
 
 ```{r}
 #| echo: fenced
@@ -359,6 +367,57 @@ tibble(x = seq(0, 1, .001),
        y = dbeta(x,8,2)) %>% 
   ggplot(aes(x,y)) + 
   geom_area(fill = "royalblue", alpha = .5)
+```
+
+### Omit "Note" Prefix in apa-note
+
+By default, the first paragraph of the `apa-note` has a prefix added (*Note. *). If you wish to omit this prefix (i.e., for a specific note or a probability note), start the note with "NoNote " like so:
+
+```{r}
+#| echo: fenced
+#| label: fig-myplot4
+#| fig-cap: This Is the Figure Caption.
+#| apa-note: NoNote \\* *p* < .05; \\*\\* *p* < .01
+
+library(tidyverse)
+tibble(x = seq(0, 1, .001),
+       y = dbeta(x,8,2)) %>% 
+  ggplot(aes(x,y)) + 
+  geom_area(fill = "royalblue", alpha = .5)
+```
+
+
+### Multi-Paragraph Notes
+
+If you need multiple paragraphs in the note, separate them with a yaml sequence.
+
+
+
+```{r}
+#| echo: fenced
+#| label: tbl-penguins
+#| tbl-cap: Some Descriptives
+#| apa-note: 
+#|   - First paragraph.
+#|   - Second paragraph.
+
+library(flextable)
+
+penguins %>% 
+  select(-year, -island, -sex) %>% 
+    rename_with(
+    \(x) str_replace_all(x, c(len = "length", dep = "depth")) %>%
+      snakecase::to_title_case()) %>% 
+  na.omit() %>%
+  summarizor(by = "Species") %>% 
+  as_flextable()  %>% 
+  theme_apa() %>% 
+  valign(valign = "top") %>% 
+  surround(i = ~ stat == "mean_sd",
+           border.top = flextable::fp_border_default()) %>% 
+  set_header_labels(variable = "Variable", stat = "Descriptive")
+
+
 ```
 
 ## Importing Figures with Markdown
@@ -465,9 +524,9 @@ tibble(x = seq(0, 1, .001),
 
 ## Disable apaquarto processing (.pdf only)
 
-If you want a long table to span multiple pages in .pdf format, the table might get cut off after the first page. Quarto makes .pdf tables using the longtable package, which allow for multi-page tables. Unfortunately, longtable does not always play nicely with the apa7 LaTeX package that aqaquarto uses to make .pdf documents. I have not yet found a fully satisfactory way get all of the features of apaquarto to be compatible with longtable's multi-page tables. If you set `disable-apaquarto-processing` to `true` in the chunk or in markdown, you can get a multi-page table. The `apa-note` function, however, will not place a note below the table.
+If you want a long table to span multiple pages in .pdf format, the table might get cut off after the first page. Quarto makes .pdf tables using the longtable package, which allows for multi-page tables. Unfortunately, longtable does not always play nicely with the apa7 LaTeX package that aqaquarto uses to make .pdf documents. I have not yet found a fully satisfactory way get all of the features of apaquarto to be compatible with longtable's multi-page tables. If you set `disable-apaquarto-processing` to `true` in the chunk or in markdown, you can get a multi-page table. The `apa-note` function, however, will not place a note below the table.
 
-To disable apaquarto procesing directly in markdown:
+To disable apaquarto processing directly in markdown:
 
 ``` markdown
 | Letters | Numbers |
@@ -585,7 +644,7 @@ masked-citations:
   - schneider2012cattell
 ```
 
-If the `mask` field is set to `false`, the masked citations will print as usual. When `mast` is `true`, depending if they are an inline or parenthetical citations, they will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". In parenthical citations, it is possible to mix masked and unmasked citations.
+If the `mask` field is set to `false`, the masked citations will print as usual. When `mast` is `true`, depending if they are an inline or parenthetical citations, they will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". In parenthetical citations, it is possible to mix masked and unmasked citations.
 
 Setting `mask` to `true` will also remove the authors, affiliations, and author notes from the title page.
 

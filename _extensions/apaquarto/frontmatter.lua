@@ -9,7 +9,8 @@ local andreplacement = "and"
 
 
 local List = require 'pandoc.List'
-local stringify = pandoc.utils.stringify
+local utilsapa = require("utilsapa")
+local stringify = utilsapa.stringify
 
 local function get_and(m)
   if m.language and m.language["citation-last-author-separator"] then

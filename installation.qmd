@@ -62,7 +62,7 @@ If you just want to use apaquarto to make APA-style documents, but do not plan t
 At the [same link for installing Quarto](https://quarto.org/docs/get-started/), there are links for selecting an environment for using Quarto. Your options include:
 
 1. [RStudio](https://posit.co/download/rstudio-desktop/) will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto.
-2. [Positron](https://positron.posit.co/) is made by Posit, the same company that makes Quarto and RStudio. It inspired by RStudio but is multi-lingual by design. It works well, but Positron is still in beta testing and the experience of using it is not quite as smooth as that of RStudio. Positron will likely become the default recommendation on this list when it is further along in its development.
+2. [Positron](https://positron.posit.co/) is made by Posit, the same company that makes Quarto and RStudio. It is inspired by RStudio but is multi-lingual by design. It works well, but Positron is still in beta testing, and the experience of using it is not quite as smooth as that of RStudio. Positron will likely become the default recommendation on this list when it is further along in its development.
 3. [VS Code](https://code.visualstudio.com/) works for any language. Some R users really like VS Code, but those who do will likely migrate to Positron because Positron is a data-science-specific fork of VS Code.
 4. [Jupyter](https://jupyter.org/), as its name indicates, works with `Ju`lia, `Pyt`hon, and `R`.
 5. [Neovim](https://neovim.io/), a hyperextensible Vim-based text editor
@@ -167,7 +167,7 @@ If you are an R user, you can install extensions with the [quarto package](https
 
 ```{r consoletemplate}
 #| eval: false
-quarto::quarto_use_template("wjschne/apaquarto")
+quarto::quarto_use_template("wjschne/apaquarto", no_prompt = TRUE)
 ```
 
 
@@ -175,14 +175,14 @@ quarto::quarto_use_template("wjschne/apaquarto")
 
 ```{r}
 #| eval: false
-quarto::quarto_add_extension("wjschne/apaquarto")
+quarto::quarto_add_extension("wjschne/apaquarto", no_prompt = TRUE)
 ```
 
 :::
 
 
 
-A prompt will ask if you trust  [the author](https://wjschne.github.io/) not to place malicious code on your machine. To proceed, answer `Yes` or just `Y`.
+A prompt may ask if you trust  [the author](https://wjschne.github.io/) not to place malicious code on your machine. To proceed, answer `Yes` or just `Y`.
 
 
 

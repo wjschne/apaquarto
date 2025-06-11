@@ -2,6 +2,7 @@ if FORMAT ~= "latex" then
   return 
 end
 
+local utilsapa = require("utilsapa")
 
 local noteword = "Note"
 
@@ -117,25 +118,8 @@ local processfloat = function(float)
     
     -- Add note
     if float.attributes["apa-note"] then
-        p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
-        local apanoteparas = float.attributes["apa-note"]
-
-        
-
-        local cnt = 0
-        for v in string.gmatch(apanoteparas, "([^|]+)") do
-          local apanote = pandoc.Div({})
-          if (not(v == "[" or v == "]" or v == ",")) then
-            cnt = cnt + 1
-            if (cnt == 1) then
-              p.content:extend(quarto.utils.string_to_inlines(v))
-              apanote.content:extend({p})
-              else
-                apanote.content:extend(quarto.utils.string_to_blocks(v))
-            end
-            apanotedivs.content:extend({apanote})
-          end
-      end
+        note_prefix = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
+        apanotedivs =  utilsapa.make_note(float.attributes["apa-note"], note_prefix)
     end
       
       local captionsubspan = pandoc.Span({
@@ -226,25 +210,8 @@ local processfloat = function(float)
       if hasnote then
         -- Add note
         if float.attributes["apa-note"] then
-            p = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
-            local apanoteparas = float.attributes["apa-note"]
-    
-            
-    
-            local cnt = 0
-            for v in string.gmatch(apanoteparas, "([^|]+)") do
-              local apanote = pandoc.Div({})
-              if (not(v == "[" or v == "]" or v == ",")) then
-                cnt = cnt + 1
-                if (cnt == 1) then
-                  p.content:extend(quarto.utils.string_to_inlines(v))
-                  apanote.content:extend({p})
-                  else
-                    apanote.content:extend(quarto.utils.string_to_blocks(v))
-                end
-                apanotedivs.content:extend({apanote})
-              end
-          end
+            note_prefix = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
+           apanotedivs =  utilsapa.make_note(float.attributes["apa-note"], note_prefix)
         end
       end
     
