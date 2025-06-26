@@ -234,9 +234,7 @@ $endif$
 $endif$
 
 $if(numbersections)$
-\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
-$else$
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setcounter{secnumdepth}{$if(number-depth)$$number-depth$$else$3$endif$}
 $endif$
 
 \setlength\LTleft{0pt}

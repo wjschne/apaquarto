@@ -46,6 +46,10 @@ local fields = {
 }
 
 Meta = function(m)
+  
+  -- Set numbersections
+  m.numbersections = param("number-sections", false)
+  
   -- Make empty language table if it does not exist
   if not m.language then
     m.language = {}

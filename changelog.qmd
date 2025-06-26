@@ -18,12 +18,18 @@ engine: knitr
     * Line numbering
     * Full language option support
     
+# Version 5.0.4
+
+- 2025-06-26
+- The `apa-note` code chunk can produce multiple paragraphs using yaml sequences.
+- For .pdf and typst, the `first-page` option can set the first page to a different value.
+
+
 
 # Version 5.0.3
 
 - 2025-06-09
-- The `apa-note` code chunk can produce multiple paragraphs using yaml sequences.
-- For .pdf and typst, the `first-page` option can set the first page to a different value.
+- [#28](https://github.com/wjschne/apaquarto/issues/28). Allow section numbering with Quarto's `number-section` (and `number-depth`) fields. Thanks [juho7](https://github.com/juho7) for the feature request and to [Ladislas Nalborczyk](https://github.com/lnalborczyk) for the solution to the longstanding problem.
 
 
 # Version 5.0.2

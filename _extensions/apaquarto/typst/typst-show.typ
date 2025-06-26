@@ -41,6 +41,12 @@ $endif$
 $if(first-page)$
   first-page: $first-page$,
 $endif$
+$if(numbersections)$
+  numbersections: $numbersections$,
+$endif$
+$if(number-depth)$
+  numberdepth: $number-depth$,
+$endif$
 $if(suppress-title-page)$
   suppresstitlepage: $suppress-title-page$,
 $endif$
