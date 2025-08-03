@@ -41,6 +41,10 @@ format:
 
 This is my first paragraph. Any section headings in the introduction should be in levels 2--5.
 
+## Section in Introduction
+
+This is a reference [@cohen2003applied].
+
 # Method
 
 ## Participants

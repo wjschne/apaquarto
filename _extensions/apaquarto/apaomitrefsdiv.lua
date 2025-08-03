@@ -4,7 +4,8 @@ local hasrefdiv = false
 local referenceword = "References"
 local appendixword = "Appendix"
 local appendixcount = 0
-
+local n_citation = 0
+local hasrefheader = false
 
 -- Change Appendix A to Appendix if there is only one appendix.
 local fixloneappendix = function(h) 
@@ -23,6 +24,9 @@ end
 return {
   {
     Meta = function(meta)
+      if meta.nocite then
+        n_citation = 1
+      end
       if meta.language then
         -- Is there another word for reference section?
         if meta.language["section-title-references"] then
@@ -46,6 +50,7 @@ return {
         appendixcount = appendixcount + 1
       end
       if h.content and ((pandoc.utils.stringify(h.content) == referenceword) or (pandoc.utils.stringify(h.content) == "References"))  then
+        hasrefheader = true
         if hasrefdiv then
           -- Do nothing because there is a refdiv
         else
@@ -57,6 +62,20 @@ return {
         end
       end
   end },
-  { Header = fixloneappendix
+  { Header = fixloneappendix },
+  { Cite = function(c)
+        n_citation = n_citation + 1
+      end 
+  },
+  { Pandoc = function(doc)
+      if (n_citation > 0 and not(hasrefheader)) then
+        doc.blocks[#doc.blocks] = pandoc.Header(1, referenceword)
+        local refdiv = pandoc.Div({})
+        refdiv.identifier = "refs"
+        refdiv.classes:insert("references")
+        doc.blocks[#doc.blocks] = refdiv
+      end
+    
+    end
   }
 }
