@@ -12,8 +12,10 @@ getappendixword = function(meta)
   if meta.language and meta.language["crossref-apx-prefix"] then
     appendixword = pandoc.utils.stringify(meta.language["crossref-apx-prefix"])
   end
-  local documentmode = pandoc.utils.stringify(meta["documentmode"])
-  journalmode = documentmode == "jou"
+  if FORMAT == "latex" then
+    local documentmode = pandoc.utils.stringify(meta["documentmode"])
+    journalmode = documentmode == "jou"
+  end
 end
 
 local function cite_appendix(ct)
