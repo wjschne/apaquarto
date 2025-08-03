@@ -6,10 +6,14 @@ local refhyperlinks = true
 -- Word for appendix
 local appendixword = "Appendix"
 
+local journalmode = false
+
 getappendixword = function(meta)
   if meta.language and meta.language["crossref-apx-prefix"] then
     appendixword = pandoc.utils.stringify(meta.language["crossref-apx-prefix"])
   end
+  local documentmode = pandoc.utils.stringify(meta["documentmode"])
+  journalmode = documentmode == "jou"
 end
 
 local function cite_appendix(ct)
@@ -58,6 +62,13 @@ local function getappendix(h)
   if h.attr.attributes.appendixtitle then
     app[h.identifier] = h.attr.attributes.appendixtitle
     appendixcount = appendixcount + 1
+    if FORMAT == "latex" then
+      if journalmode then
+        local p = pandoc.RawBlock("latex", "\\setlength{\\parindent}{1em}")
+        return {h, p}
+      end
+    end
+    
   end
   
 end

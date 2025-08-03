@@ -82,9 +82,13 @@ author-note:
     gratitude: ~
     # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
     authorship-agreements: ~
-abstract: "This document is a template demonstrating the apaquarto format. The template demonstrates the use of citations, masked citations, block quotes, equations, figures, and tables. Creating appendices is demonstrated."
-# Put as many keywords at you like, separated by commmas (e.g., [reliability, validity, generalizability])
-keywords: [keyword1, keyword2, keyword3]
+abstract: "This document is a template demonstrating the apaquarto format. The template demonstrates the use of in-text citations, possessive citations, masked citations, meta-analytpic citations, block quotes, equations, figures, and tables. Creating appendices is demonstrated."
+# Put as many keywords at you like
+keywords: 
+  - APA Style
+  - Quarto
+  - Markdown
+  - apaquarto
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
 impact-statement: ~
 # If true, a word count will appear below the keywords (tables, figure captions, and references excluded in count.)
@@ -101,10 +105,14 @@ suppress-title-page: false
 # Link citations to references
 link-citations: true
 # Masks references that appear in the masked-citations list
-mask: false
+mask: true
 masked-citations:
   - schneider2012cattell
   - schneider2015intelligence
+# If true, nocite references are prefixed with asterisks
+meta-analysis: true
+nocite: |
+  @bentley1929instructions, @cohen2003applied
 # If true, adds today's date below author affiliations. If text, can be any value.
 # This is not standard APA format, but it is convenient.
 # Works with docx, html, and typst. 
@@ -123,10 +131,10 @@ language:
   title-impact-statement: "Impact Statement"
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 format:
-  apaquarto-docx: 
-    toc: false
   apaquarto-html: 
     toc: true
+  apaquarto-docx: 
+    toc: false
   apaquarto-typst: 
     keep-typ: true
     list-of-figures: false
@@ -170,11 +178,19 @@ A parenthetical citation requires square brackets [@CameronTrivedi2013]. This re
 
 See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
 
-@schneider2012cattell ['s] position was ...
+@brownHowKilledPluto2012 ['s] position was ...
 
-## Masking Author Identity for Peer Review
+### Masking Author Identity for Peer Review
 
 Setting `mask` to `true` will remove author names, affiliations, and correspondence from the title page. Any references listed in the `masked-citations` field will be masked as well. See [here](https://wjschne.github.io/apaquarto/writing.html#masked-citations-for-anonymous-peer-review) for more information.
+
+Here is a masked citation [@schneider2012cattell].
+
+### Meta-analytic citations
+
+By default, any references in the `nocite` field in your YAML heading will be assumed to be meta-analytic references that will appear in the reference section with an asterisk. If you want to use `nocite` but do not want references prefixed with asterisks, then set the  `meta-analysis` field to `false`. 
+
+It is possible to cite meta-analytic references in text. For example, @cohen2003applied is listed in the `nocite` field.
 
 ## Block Quotes
 
@@ -291,9 +307,7 @@ The last paragraph of the introduction usually states the specific hypotheses of
 
 # Method
 
-General remarks on method. This paragraph is optional.
-
-Not all papers require each of these sections. Edit them as needed. Consult the [Journal Article Reporting Standards](https://apastyle.apa.org/jars) for what is needed for your type of article.
+General remarks on method. This paragraph is optional. Not all papers require each of these sections. Edit them as needed. Consult the [Journal Article Reporting Standards](https://apastyle.apa.org/jars) for what is needed for your type of article.
 
 ## Participants
 
@@ -378,26 +392,43 @@ If there is only one appendix, the label automatically inserted above the the ap
 
 To cite an appendix as a whole, reference it with the `@apx-` prefix. For example, see @apx-a and @apx-b.
 
-This is an appendix with a table using markdown (see @tbl-letters).
+@apx-a is an appendix with a table using flextable (see @tbl-flextable).
 
+```{r}
+#| label: tbl-flextable
+#| tbl-cap: Demonstration of flextable functions
 
-| Col 1 | Col 2 | Col 3 |
-|-------|-------|-------|
-| A     | B     | C     |
-| E     | F     | G     |
-| A     | G     | G     |
-
-: My Caption {#tbl-letters apa-note="These are letters."}
-
-
+mtcars |>
+  select(Gears = gear, Transmission = am) |>
+  mutate(Gears = factor(Gears),
+         Transmission = factor(Transmission, 
+                               labels = c("Automatic", "Manual"))) |>
+  count(Transmission, Gears, .drop = FALSE) |>
+  mutate(p = scales::percent(n / sum(n)), .by = Transmission) |>
+  pivot_wider(
+    names_from = Transmission,
+    values_from = c(n, p),
+    names_glue = "{Transmission}_{.value}",
+    names_vary = "slowest"
+  ) |>
+  flextable() |>
+  separate_header() |>
+  surround(i = 2,
+           border.top = fp_border_default(),
+           part = "header") |>
+  italic(i = 2, part = "header") |>
+  theme_apa() |>
+  set_table_properties(align = "left") |> 
+  width(width = .6)
+```
 
 
 # Another Appendix {#apx-b}
 
+![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure"}
 
 See @fig-appendfig, an example of an imported graphic using markdown syntax. 
 
 
 
-![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure"}
 

@@ -137,7 +137,7 @@
     "href": "writing.html#citations-for-articles-included-in-a-meta-analysis",
     "title": "APA Style via Markdown",
     "section": "Citations for Articles Included in a Meta-Analysis",
-    "text": "Citations for Articles Included in a Meta-Analysis\nIn a meta-analysis, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the nocite field in the metadata. All articles listed in the nocite field will be marked with an asterisk in the References section.\nnocite: |\n  @schneider2015intelligence, @schneider2012cattell\nIf marking nocite studies with asterisk is unwanted, set the meta-analysis field to false,\nmeta-analysis: false\nnocite: |\n  @schneider2015intelligence, @schneider2012cattell"
+    "text": "Citations for Articles Included in a Meta-Analysis\nIn a meta-analytic study, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the nocite field in the metadata. All articles listed in the nocite field will be marked with an asterisk in the References section.\nnocite: |\n  @schneider2015intelligence, @schneider2012cattell\nIf marking nocite studies with an asterisk is unwanted, set the meta-analysis field to false,\nmeta-analysis: false\nnocite: |\n  @schneider2015intelligence, @schneider2012cattell"
   },
   {
     "objectID": "writing.html#masked-citations-for-anonymous-peer-review",
@@ -158,21 +158,21 @@
     "href": "installation.html#install-quarto",
     "title": "Installation",
     "section": "Install Quarto",
-    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\nIf you use a recent version of RStudio, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.\n\n\n\n\n\n\nHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
+    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\nIf you use a recent version of RStudio, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.\n\n\n\n\n\n\nNoteHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
   },
   {
     "objectID": "installation.html#install-a-programming-language",
     "href": "installation.html#install-a-programming-language",
     "title": "Installation",
     "section": "Install a Programming Language",
-    "text": "Install a Programming Language\nYour primary options are\n\nR\nPython\nJulia\n\n\n\n\n\n\n\nWhat if I do not want to use any programming languages?\n\n\n\n\n\nIf you just want to use apaquarto to make APA-style documents, but do not plan to do any analyses, install R and RStudio. You do not need R for anything, but the Quarto experience will be easier in RStudio with R installed."
+    "text": "Install a Programming Language\nYour primary options are\n\nR\nPython\nJulia\n\n\n\n\n\n\n\nTipWhat if I do not want to use any programming languages?\n\n\n\n\n\nIf you just want to use apaquarto to make APA-style documents, but do not plan to do any analyses, install R and RStudio. You do not need R for anything, but the Quarto experience will be easier in RStudio with R installed."
   },
   {
     "objectID": "installation.html#install-your-programming-environment",
     "href": "installation.html#install-your-programming-environment",
     "title": "Installation",
     "section": "Install your programming environment",
-    "text": "Install your programming environment\nAt the same link for installing Quarto, there are links for selecting an environment for using Quarto. Your options include:\n\nRStudio will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto.\nPositron is made by Posit, the same company that makes Quarto and RStudio. It is inspired by RStudio but is multi-lingual by design. It works well, but Positron is still in beta testing, and the experience of using it is not quite as smooth as that of RStudio. Positron will likely become the default recommendation on this list when it is further along in its development.\nVS Code works for any language. Some R users really like VS Code, but those who do will likely migrate to Positron because Positron is a data-science-specific fork of VS Code.\nJupyter, as its name indicates, works with Julia, Python, and R.\nNeovim, a hyperextensible Vim-based text editor\nAny text editor will do. Everyone has options—Quarto won’t box you in."
+    "text": "Install your programming environment\nAt the same link for installing Quarto, there are links for selecting an environment for using Quarto. Your options include:\n\nRStudio will probably give the smoothest experience to anyone new to data analysis. It is made by Posit, the same company that makes Quarto.\nPositron is made by Posit, the same company that makes Quarto and RStudio. It is inspired by RStudio but is multi-lingual by design. Positron will likely become the default recommendation on this list when it is further along in its development.\nVS Code works for any language. Some R users really like VS Code, but those who do will likely migrate to Positron because Positron is a data-science-specific fork of VS Code.\nJupyter, as its name indicates, works with Julia, Python, and R.\nNeovim, a hyperextensible Vim-based text editor\nAny text editor will do. Everyone has options—Quarto won’t box you in."
   },
   {
     "objectID": "index.html",

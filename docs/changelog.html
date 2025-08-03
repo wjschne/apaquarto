@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -32,14 +32,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-f98ea211b99fe8356d6469e598480a52.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-1f41107236bd320b13bcc3cd74ed15d5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-83e236c9c3d27d514f3ae9cc260cede3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,7 +83,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -107,6 +108,8 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">APA Style Documents with apaquarto</span>
     </a>
@@ -164,6 +167,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-5.0.5" id="toc-version-5.0.5" class="nav-link" data-scroll-target="#version-5.0.5">Version 5.0.5</a></li>
   <li><a href="#version-5.0.4" id="toc-version-5.0.4" class="nav-link" data-scroll-target="#version-5.0.4">Version 5.0.4</a></li>
   <li><a href="#version-5.0.3" id="toc-version-5.0.3" class="nav-link" data-scroll-target="#version-5.0.3">Version 5.0.3</a></li>
   <li><a href="#version-5.0.2" id="toc-version-5.0.2" class="nav-link" data-scroll-target="#version-5.0.2">Version 5.0.2</a></li>
@@ -278,6 +282,14 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
+<section id="version-5.0.5" class="level1">
+<h1>Version 5.0.5</h1>
+<ul>
+<li>2025-08-02</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/136">136</a>. Meta-analytic references incorrectly had asterisks if they were also cited in text. This problem is fixed. Thanks <a href="https://github.com/lalamilalami">lalamilalami</a> for pointing out the problem!</li>
+<li>Paragraph indentation in pdf journal mode was fixed.</li>
+</ul>
+</section>
 <section id="version-5.0.4" class="level1">
 <h1>Version 5.0.4</h1>
 <ul>
@@ -349,14 +361,14 @@ window.Quarto = {
 <section id="version-4.3.16" class="level1">
 <h1>Version 4.3.16</h1>
 <ul>
-<li>2025-03-30)</li>
+<li>2025-03-30</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/71">#71</a> Workaround implemented for getting .pdf to allow multi-page tables. Thanks <a href="https://github.com/fkohrt">Florian Kohrt</a>!</li>
 </ul>
 </section>
 <section id="version-4.3.15" class="level1">
 <h1>Version 4.3.15</h1>
 <ul>
-<li>2025-03-29)</li>
+<li>2025-03-29</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/123">#123</a> Fixed bug that omitted affiliations in docx, html, and typst output. Thanks <a href="https://github.com/stefanycoxe">Stefany Coxe</a>!</li>
 </ul>
 </section>
@@ -370,7 +382,7 @@ window.Quarto = {
 <section id="version-4.3.13" class="level1">
 <h1>Version 4.3.13</h1>
 <ul>
-<li>2025-03-15)</li>
+<li>2025-03-15</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/118">#118</a> Email in correspondence note is displayed as a link. HTML format has additional blank lines before and after Abstract. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/119">#119</a> Allow use of <code>beforenotespace</code> code chunk option in .pdf <code>jou</code> mode. Thanks <a href="https://github.com/drfurtado">Ovande Furtado</a>!</li>
 </ul>
@@ -378,18 +390,18 @@ window.Quarto = {
 <section id="version-4.3.12" class="level1">
 <h1>Version 4.3.12</h1>
 <ul>
-<li><p>2025-03-07)</p></li>
-<li><p><a href="https://github.com/wjschne/apaquarto/issues/116">#116</a> Orcid links now work in all formats. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
-<li><p><a href="https://github.com/wjschne/apaquarto/issues/113">#113</a> The <code>blank-lines-above-author-note</code> should work when <code>author-note</code> is omitted. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
+<li>2025-03-07</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/116">#116</a> Orcid links now work in all formats. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/113">#113</a> The <code>blank-lines-above-author-note</code> should work when <code>author-note</code> is omitted. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
 </ul>
 </section>
 <section id="version-4.3.11" class="level1">
 <h1>Version 4.3.11</h1>
 <ul>
-<li><p>2025-03-06)</p></li>
-<li><p><a href="https://github.com/wjschne/apaquarto/issues/113">#113</a> Author note will show author correspondence information if author-note is absent. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
-<li><p><a href="https://github.com/wjschne/apaquarto/issues/115">#115</a> The <code>title-block-role-introduction</code> field now works in apaquarto-pdf. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
-<li><p><a href="https://github.com/wjschne/apaquarto/issues/117">#117</a> The <code>papersize</code> field now works in apaquarto-typst. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</p></li>
+<li>2025-03-06</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/113">#113</a> Author note will show author correspondence information if author-note is absent. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/115">#115</a> The <code>title-block-role-introduction</code> field now works in apaquarto-pdf. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/117">#117</a> The <code>papersize</code> field now works in apaquarto-typst. Thanks <a href="https://github.com/cbrnr">Clemens Brunner</a>!</li>
 </ul>
 </section>
 <section id="version-4.3.10" class="level1">

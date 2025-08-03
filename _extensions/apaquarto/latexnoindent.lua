@@ -2,11 +2,11 @@
 
 if FORMAT:match 'latex' then
   
-  local indenter = '\\setlength\\parindent{0.5in}'
+  local indent = '\\setlength\\parindent{0.5in}'
   
   local setindent = function(m)
     if pandoc.utils.stringify(m.documentmode) == 'jou' then 
-      indenter = '\\setlength\\parindent{0.15in}'
+      indent = '\\setlength\\parindent{0.15in}'
     end
 
   end

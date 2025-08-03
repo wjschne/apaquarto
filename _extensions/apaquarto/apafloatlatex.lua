@@ -195,7 +195,9 @@ local processfloat = function(float)
       end
        if img.attributes["apa-twocolumn"] then
          if img.attributes["apa-twocolumn"] == "true" then
-           twocolumn = true
+           if journalmode then
+              twocolumn = true
+           end
          end
         end
       end

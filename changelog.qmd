@@ -17,6 +17,12 @@ engine: knitr
     * Journal format
     * Line numbering
     * Full language option support
+
+# Version 5.0.5
+
+- 2025-08-02
+- [136](https://github.com/wjschne/apaquarto/issues/136). Meta-analytic references incorrectly had asterisks if they were also cited in text. This problem is fixed. Thanks [lalamilalami](https://github.com/lalamilalami) for pointing out the problem!
+- Paragraph indentation in pdf journal mode was fixed.
     
 # Version 5.0.4
 
@@ -77,31 +83,34 @@ engine: knitr
 
 # Version 4.3.16
 
-- 2025-03-30)
+- 2025-03-30
 - [#71](https://github.com/wjschne/apaquarto/issues/71) Workaround implemented for getting .pdf to allow multi-page tables. Thanks [Florian Kohrt](https://github.com/fkohrt)!
 
 # Version 4.3.15
-- 2025-03-29)
+
+- 2025-03-29
 - [#123](https://github.com/wjschne/apaquarto/issues/123) Fixed bug that omitted affiliations in docx, html, and typst output. Thanks [Stefany Coxe](https://github.com/stefanycoxe)!
     
 # Version 4.3.14
+
 - 2025-03-16)
 - [#120](https://github.com/wjschne/apaquarto/issues/120) When a table or figure reference is not found, a more informative error is displayed. Thanks [Steffen Aasen](https://github.com/a-asen)!
     
 # Version 4.3.13
-- 2025-03-15)
+
+- 2025-03-15
 - [#118](https://github.com/wjschne/apaquarto/issues/118) Email in correspondence note is displayed as a link. HTML format has additional blank lines before and after Abstract. Thanks [Clemens Brunner](https://github.com/cbrnr)!
 - [#119](https://github.com/wjschne/apaquarto/issues/119) Allow use of `beforenotespace` code chunk option in .pdf `jou` mode. Thanks [Ovande Furtado](https://github.com/drfurtado)!
 
 # Version 4.3.12
-- 2025-03-07)
 
+- 2025-03-07
 - [#116](https://github.com/wjschne/apaquarto/issues/116) Orcid links now work in all formats. Thanks [Clemens Brunner](https://github.com/cbrnr)!
 - [#113](https://github.com/wjschne/apaquarto/issues/113) The `blank-lines-above-author-note` should work when `author-note` is omitted. Thanks [Clemens Brunner](https://github.com/cbrnr)!
 
 # Version 4.3.11
-- 2025-03-06)
 
+- 2025-03-06
 - [#113](https://github.com/wjschne/apaquarto/issues/113) Author note will show author correspondence information if author-note is absent. Thanks [Clemens Brunner](https://github.com/cbrnr)!
 - [#115](https://github.com/wjschne/apaquarto/issues/115) The `title-block-role-introduction` field now works in apaquarto-pdf. Thanks [Clemens Brunner](https://github.com/cbrnr)!
 - [#117](https://github.com/wjschne/apaquarto/issues/117) The `papersize` field now works in apaquarto-typst. Thanks [Clemens Brunner](https://github.com/cbrnr)!    

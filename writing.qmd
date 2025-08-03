@@ -114,7 +114,13 @@ If you are used to writing with a word processor (e.g., MS Word, Google Docs), i
 
 To create a Quarto document in RStudio, in the menu (See @fig-newquarto), click *File → New File → Quarto Document*.
 
-![Create new Quarto docuemnt from the RStudio menu](img/newquartodocument.png){#fig-newquarto}
+:::{#fig-newquarto}
+
+![](img/newquartodocument.png)
+
+Create new Quarto document from the RStudio menu
+
+:::
 
 The resulting file can be edited. Here is an annotated example of a short Quarto document:
 
@@ -618,14 +624,14 @@ If you render your document in another format, you would need to supply the name
 
 ## Citations for Articles Included in a Meta-Analysis
 
-In a meta-analysis, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the `nocite` field in the metadata. All articles listed in the `nocite` field will be marked with an asterisk in the References section.
+In a meta-analytic study, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the `nocite` field in the metadata. All articles listed in the `nocite` field will be marked with an asterisk in the References section.
 
 ``` yaml
 nocite: |
   @schneider2015intelligence, @schneider2012cattell
 ```
 
-If marking `nocite` studies with asterisk is unwanted, set the `meta-analysis` field to `false`, 
+If marking `nocite` studies with an asterisk is unwanted, set the `meta-analysis` field to `false`, 
 
 ``` yaml
 meta-analysis: false
