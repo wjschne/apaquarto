@@ -1,19 +1,19 @@
 if FORMAT ~= "latex" then
-  return 
+  return
 end
 -- If div if a figure with apa-note, then insert it into the image
 Div = function(div)
-   if div.attributes then
+  if div.attributes then
     if div.attributes["apa-note"] then
       if div.identifier:find("^fig%-") then
         div.content = div.content:walk {
           Image = function(img)
-                img.attributes["apa-note"] = div.attributes["apa-note"]
-                return img
-              end
+            img.attributes["apa-note"] = div.attributes["apa-note"]
+            return img
+          end
         }
       end
-      
+
       div.content = div.content:walk {
         Figure = function(fg)
           if fg.identifier:find("^fig%-") then
@@ -28,8 +28,6 @@ Div = function(div)
         end
       }
       return div
-    end 
+    end
   end
 end
-
-

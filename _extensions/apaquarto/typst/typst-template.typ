@@ -83,6 +83,7 @@
   )
   
   show link: set text(blue)
+  show "al.'s": "al.\u{2019}s"
 
   show quote: set pad(x: 0.5in)
   show quote: set par(leading: leading)

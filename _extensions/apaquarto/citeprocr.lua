@@ -14,22 +14,64 @@ local metareferencesentence = "References marked with an asterisk indicate studi
 
 return {
   {
-    Cite = function(ct) 
+    Cite = function(ct)
       -- count citations
-      n_citations = n_citations + 1 
+      n_citations = n_citations + 1
+      -- replaces possive and ampersand suffixes
+      local replace_possessive = false
+      local remove_ampersand_suffix = false
+
+      
+      if ct.citations and ct.citations[1].mode == "AuthorInText" then
+    if ct.citations[1].suffix and #ct.citations[1].suffix > 0 then
+      
+      for i = #ct.citations[1].suffix, 1, -1 do
+        if ct.citations[1].suffix[i].tag == "Str" then
+          if string.find(ct.citations[1].suffix[i].text, "’s") then
+            replace_possessive = true
+            if ct.citations[1].suffix[i + 1] and ct.citations[1].suffix[i + 1].tag == "Space" then
+              table.remove(ct.citations[1].suffix, i + 1)
+            end
+            table.remove(ct.citations[1].suffix, i)
+          else
+            if ct.citations[1].suffix[i] and string.find(ct.citations[1].suffix[i].text, "%&") then
+              remove_ampersand_suffix = true
+            if ct.citations[1].suffix[i + 1] and ct.citations[1].suffix[i + 1].tag == "Space" then
+              table.remove(ct.citations[1].suffix, i + 1)
+            end
+              table.remove(ct.citations[1].suffix, i)
+            end
+          end
+        end
+      end
+      if replace_possessive and remove_ampersand_suffix then
+        ct.citations[1].hash = 3
+      else
+        if replace_possessive then
+          ct.citations[1].hash = 1
+        end
+        if remove_ampersand_suffix then
+          ct.citations[1].hash = 2
+        end
+      end
+
+      return ct
+    end
+      end
+
     end
   },
   {
-    Meta = function(meta) 
+    Meta = function(meta)
       -- count references in nocite
       if meta.nocite then
         meta.nocite:walk {
           Cite = function(ct)
-            n_citations = n_citations + 1 
+            n_citations = n_citations + 1
           end
         }
       end
-      
+
       -- Need to tell latex if there are no citations
       if n_citations == 0 then
         meta.zerocitations = true
@@ -49,7 +91,7 @@ return {
           metaanalysis = false
         end
       end
-      
+
       if meta.language then
         -- Is there another word for reference section?
         if meta.language["section-title-references"] then
@@ -75,11 +117,11 @@ return {
         if meta.language["references-meta-analysis"] then
           metareferencesentence = pandoc.utils.stringify(meta.language["references-meta-analysis"])
         end
-     end
+      end
 
-      return meta 
+      return meta
     end
-    
+
   },
   {
     Div = function(div)
@@ -94,29 +136,29 @@ return {
   {
     Header = function(h)
       if pandoc.utils.stringify(h.content) == referenceword then
-        if n_citations == 0 then 
+        if n_citations == 0 then
           return {}
         else
           if metaanalysis then
-            return {h, pandoc.Para(metareferencesentence)}
+            return { h, pandoc.Para(metareferencesentence) }
           end
         end
       end
     end
   },
   {
-    Pandoc = function(doc) 
+    Pandoc = function(doc)
       doc.meta.references = pandoc.utils.references(doc)
       maskedref = {
-        author = pandoc.List:new({ {literal = maskedauthor}}),
+        author = pandoc.List:new({ { literal = maskedauthor } }),
         id = "maskedreference",
-        issued = {literal = maskeddate},
+        issued = { literal = maskeddate },
         title = pandoc.Inlines(maskedtitle),
         type = "book"
       }
       doc.meta.references:insert(maskedref)
       doc.meta.bibliography = nil
-      
+
       --look up nocite references
       local ct_meta = {}
       if metaanalysis then
@@ -126,9 +168,9 @@ return {
               ct_meta[ct.citations[1].id] = true
             end
           }
-          
-          -- If reference is in nocite, then place an asterisk in front. 
-          for i,j in pairs(doc.meta.references) do
+
+          -- If reference is in nocite, then place an asterisk in front.
+          for i, j in pairs(doc.meta.references) do
             if ct_meta[j.id] then
               if j.author[1].literal then
                 j.author[1].literal = "*" .. j.author[1].literal
@@ -141,15 +183,12 @@ return {
           end
         end
       end
-      local d = pandoc.utils.citeproc(doc) 
+      local d = pandoc.utils.citeproc(doc)
       if FORMAT == "typst" then
         d.meta.citeproc = true
       end
       return d
     end
-    
+
   }
 }
-
-
-

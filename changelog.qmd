@@ -17,13 +17,18 @@ engine: knitr
     * Journal format
     * Line numbering
     * Full language option support
-
+    
+# Version 5.0.6
+- 2025-08-05
+- added keep ampersands for narrative citations
+- Inserts references if References Header and refs div are omitted
+    
 # Version 5.0.5
 
 - 2025-08-02
 - [136](https://github.com/wjschne/apaquarto/issues/136). Meta-analytic references incorrectly had asterisks if they were also cited in text. This problem is fixed. Also, if a reference header was omitted and there are references, one will added at the end. Thanks [lalamilalami](https://github.com/lalamilalami) for pointing out the problem!
 - Paragraph indentation in pdf journal mode was fixed.
-    
+
 # Version 5.0.4
 
 - 2025-06-26

@@ -1,4 +1,4 @@
--- This filter allows English language defaults to be changed 
+-- This filter allows English language defaults to be changed
 -- to any other language (or any other English words)
 
 -- from quarto-cli/src/resources/pandoc/datadir/init.lua
@@ -24,39 +24,38 @@ end
 
 -- Fields and their defaults
 local fields = {
-  {field = "crossref-fig-title", default = "Figure"},
-  {field = "crossref-tbl-title", default = "Table"},
-  {field = "crossref-apx-title", default = "Appendix"},
-  {field = "citation-last-author-separator", default = "and"},
-  {field = "citation-masked-author", default = "Masked Citation"},
-  {field = "citation-masked-title", default = "Masked Title"},
-  {field = "citation-masked-date", default = "n.d."},
-  {field = "email", default = "Email"},
-  {field = "figure-table-note", default = "Note"},  
-  {field = "section-title-abstract", default = "Abstract"},
-  {field = "section-title-appendixes", default = "Appendices"},
-  {field = "section-title-references", default = "References"},
-  {field = "title-block-author-note", default = "Author Note"},
-  {field = "title-block-correspondence-note", default = "Correspondence concerning this article should be addressed to"},
-  {field = "title-block-keywords", default = "Keywords"},
-  {field = "title-block-role-introduction", default = "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"},
-  {field = "title-impact-statement", "Impact Statement"},
-  {field = "title-word-count", default = "Word Count"},
-  {field = "references-meta-analysis", default = "References marked with an asterisk indicate studies included in the meta-analysis."},
+  { field = "crossref-fig-title",              default = "Figure" },
+  { field = "crossref-tbl-title",              default = "Table" },
+  { field = "crossref-apx-title",              default = "Appendix" },
+  { field = "citation-last-author-separator",  default = "and" },
+  { field = "citation-masked-author",          default = "Masked Citation" },
+  { field = "citation-masked-title",           default = "Masked Title" },
+  { field = "citation-masked-date",            default = "n.d." },
+  { field = "email",                           default = "Email" },
+  { field = "figure-table-note",               default = "Note" },
+  { field = "section-title-abstract",          default = "Abstract" },
+  { field = "section-title-appendixes",        default = "Appendices" },
+  { field = "section-title-references",        default = "References" },
+  { field = "title-block-author-note",         default = "Author Note" },
+  { field = "title-block-correspondence-note", default = "Correspondence concerning this article should be addressed to" },
+  { field = "title-block-keywords",            default = "Keywords" },
+  { field = "title-block-role-introduction",   default = "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:" },
+  { field = "title-impact-statement",          default = "Impact Statement" },
+  { field = "title-word-count",                default = "Word Count" },
+  { field = "references-meta-analysis",        default = "References marked with an asterisk indicate studies included in the meta-analysis." },
 }
 
 Meta = function(m)
-  
   -- Set numbersections
   m.numbersections = param("number-sections", false)
-  
+
   -- Make empty language table if it does not exist
   if not m.language then
     m.language = {}
   end
-  
-  
-  
+
+
+
   -- Find word for "note"
   if not m.language["figure-table-note"] then
     if param("callout-note-title") then
@@ -64,14 +63,14 @@ Meta = function(m)
     end
   end
 
-   -- Find word for "Appendix"
-   if not m.language["crossref-apx-prefix"] then
+  -- Find word for "Appendix"
+  if not m.language["crossref-apx-prefix"] then
     if param("crossref-apx-prefix") then
       m.language["crossref-apx-prefix"] = param("crossref-apx-prefix")
     end
-  end 
+  end
 
-  for i,x in ipairs(fields) do
+  for i, x in ipairs(fields) do
     -- In case someone assigned variable to top-level meta instead of to language
     if m[x.field] then
       m.language[x.field] = m[x.field]

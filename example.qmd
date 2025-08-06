@@ -105,7 +105,7 @@ suppress-title-page: false
 # Link citations to references
 link-citations: true
 # Masks references that appear in the masked-citations list
-mask: true
+mask: false
 masked-citations:
   - schneider2012cattell
   - schneider2015intelligence
@@ -130,6 +130,8 @@ language:
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; [credit.niso.org](https://credit.niso.org)) as follows:"
   title-impact-statement: "Impact Statement"
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
+# Keep `false` to remain consistent with APA style. If `true`, replaces ampersands with `and` or word specified in `citation-last-author-separator` in parenthetical citations. 
+no-ampersand-parenthetical: false
 format:
   apaquarto-html: 
     toc: true
@@ -165,20 +167,15 @@ This is my introductory paragraph. The title will be placed above it automatical
 
 Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style). In general, level 1 headings should be reserved for the Method, Results, Discussion, References, and Appendices sections. 
 
-
-
-
 ## Citations
 
-See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references.
+See [here](https://quarto.org/docs/authoring/footnotes-and-citations.html) for instructions on setting up citations and references. A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so:
 
-A parenthetical citation requires square brackets [@CameronTrivedi2013]. This reference was in my bibliography file. An in-text citation is done like so:
+@CameronTrivedi2013 make some important points.
 
-@CameronTrivedi2013 make some important points ...
+See [here](https://wjschne.github.io/apaquarto/writing.html#citations) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
 
-See [here](https://wjschne.github.io/apaquarto/writing.html#references) for explanations, examples, and citation features exclusive to apaquarto. For example, apaquarto can automatically handle possessive citations:
-
-@brownHowKilledPluto2012 ['s] position was ...
+@CameronTrivedi2013 ['s] position differed from @brownHowKilledPluto2012 ['s, 1-2] take on the matter.
 
 ### Masking Author Identity for Peer Review
 
@@ -287,10 +284,6 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
   theme_void()
 ```
 
-
-
-
-
 ## Using Footnotes
 
 A footnote is usually displayed at the bottom of the page on which the footnote occurs.  A short note can be specified with the `^[My note here]` syntax.^[Here is my short footnote!] A longer note can be specified with the `[^id]` syntax with the text specified on a separate line like so `[^id]: Text here`.[^mylongfootnote]
@@ -386,9 +379,13 @@ Describe the main point of the paper.
 
 # My Appendix Title {#apx-a}
 
-Appendices are created as level 1 headings with an identifier with an  `#apx-` prefix. Appendix titles should be in title case and should describe the content of the appendix.
+Any level 1 heading after the reference section (if it exists) is an appendix. If you do not specify a reference section, you will need to give the level-1 heading an identifier with an `#apx-` prefix. For example,
 
-If there is only one appendix, the label automatically inserted above the the appendix title will be **Appendix**. If there are multiple appendices, the labels **Appendix A**, **Appendix B**, **Appendix C** and so forth will be inserted above the titles.
+`# My Appendix Title {#apx-firstappendix}`
+
+Appendices are created as level 1 headings with an  `#apx-` prefix in the identifier. Appendix titles should be in title case and should describe the content of the appendix.
+
+If there is only one appendix, the label inserted above the the appendix title will be **Appendix**. If there are multiple appendices, the labels **Appendix A**, **Appendix B**, **Appendix C** and so forth will be inserted above the titles.
 
 To cite an appendix as a whole, reference it with the `@apx-` prefix. For example, see @apx-a and @apx-b.
 

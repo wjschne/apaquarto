@@ -10,10 +10,10 @@ function Table(tb)
   tb:walk {
     Div = function(div)
       if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
-        div.content = div.content:walk {RawInline = function(ri) return {} end}
+        div.content = div.content:walk { RawInline = function(ri) return {} end }
         mydivs:insert(div)
       end
     end
-  } 
+  }
   if #mydivs > 0 then return mydivs end
 end

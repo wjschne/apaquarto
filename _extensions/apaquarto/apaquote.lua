@@ -6,14 +6,14 @@ if FORMAT ~= "docx" then
   return
 end
 
-BlockQuote = function (element)
+BlockQuote = function(element)
   local i = 0
   return pandoc.walk_block(element, {
-    Para = function (el)
+    Para = function(el)
       i = i + 1
       -- Is this after the first paragraph?
-      if i > 1 then 
-        return pandoc.Div({el}, pandoc.Attr("", {}, {["custom-style"]="NextBlockText"}))
+      if i > 1 then
+        return pandoc.Div({ el }, pandoc.Attr("", {}, { ["custom-style"] = "NextBlockText" }))
       else
         return el
       end

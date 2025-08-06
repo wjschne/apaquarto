@@ -8,21 +8,21 @@ end
 --- Is the class included in the customclasses table?
 --- https://stackoverflow.com/a/2282542/4513316
 function utils_Set(list)
-    local set = {}
-    for _, l in ipairs(list) do set[l] = true end
-    return set
+  local set = {}
+  for _, l in ipairs(list) do set[l] = true end
+  return set
 end
 
 -- Classes that are converted. Add additional classes as needed.
-customclasses = { 
-  "Author", 
+customclasses = {
+  "Author",
   "AuthorNote",
-  "Abstract", 
-  "AbstractFirstParagraph", 
-  "FigureTitle", 
-  "FigureNote", 
-  "FigureWithNote", 
-  "FigureWithoutNote", 
+  "Abstract",
+  "AbstractFirstParagraph",
+  "FigureTitle",
+  "FigureNote",
+  "FigureWithNote",
+  "FigureWithoutNote",
   "Caption",
   "Compact",
   "NoIndent",
@@ -45,6 +45,6 @@ local function customstyler(elem)
 end
 
 return {
-  {Span = customstyler},
-  {Div = customstyler}
+  { Span = customstyler },
+  { Div = customstyler }
 }

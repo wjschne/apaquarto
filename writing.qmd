@@ -593,12 +593,27 @@ Page references (or any other suffixes) are placed after the reference. If you w
 -   Any prefixes or suffixes needing a literal semicolon will confuse Quarto (actually Pandoc). To make it clear that you need to print a semicolon, put a backslash before the semicolon: `First Outer Inner Last [FOIL\;@CameronTrivedi2013]` becomes First Outer Inner Last [FOIL\; @CameronTrivedi2013].
 
 ::: callout-warning
-This "escaped backslash in front of the semicolon trick" is a hack. When you switch to Visual Mode in RStudio, it thinks you made a mistake, and it removes the backslash. If the citation above looks wrong, it is because I forgot to fix it after switching to visual mode and back. I reported this bug to the developers of RStudio. I hope the bug will be fixed soon.
+This "escaped backslash in front of the semicolon trick" is a hack. When you switch to Visual Mode in RStudio or Positron, it thinks you made a mistake, and it removes the backslash. If the citation above looks wrong, it is because I forgot to fix it after switching to visual mode and back. I reported this bug to the RStudio/Positron developers at Posit. I hope the bug will be fixed soon.
 :::
 
-## In-Text Citations
+### Suppressing Parenthetical Ampersands
 
-Typically, a plain citation works without any fuss:
+Strict APA style uses ampersands in parenthetical citations with multiple authors. If you want the word "and" instead, add this field to your YAML header:
+
+``` yaml
+no-ampersand-parenthetical: true
+```
+If you are not writing in English, you can set "and" to whatever is appropriate. For example, "and" in Spanish is "y", which can be set like so:
+
+``` yaml
+language:
+  citation-last-author-separator: "y"
+```
+
+
+## Narrative (In-Text) Citations
+
+Typically, a plain citation without any brackets works without any fuss:
 
 `@CameronTrivedi2013 said some interesting things.`
 
@@ -612,15 +627,41 @@ Outside of apaquarto, a limitation of the `.csl` format requires a special filte
 
 If you need to include page references, use square brackets afterwards:
 
-`@CameronTrivedi2013 [pp. 101--103] said some interesting things.`
+`@CameronTrivedi2013 [101-103] said some interesting things. So did @cohen2003applied [21].`
 
-@CameronTrivedi2013 [pp. 101--103] said some interesting things.
+@CameronTrivedi2013 [101-103] said some interesting things. So did @cohen2003applied [21].
+
+You do not not need to add "p." or "pp." Quarto will get it right automatically. A hyphen (-) between two page numbers will automatically be converted to an en dash (--).
 
 ### Possessive Citations
 
-An experimental feature of apaquarto is automatic "possessive citations." `@CameronTrivedi2013 ['s] position` becomes @CameronTrivedi2013 ['s] position.
+A useful feature specific to apaquarto is automatic "possessive citations."
 
-If you render your document in another format, you would need to supply the name in text like this: `Cameron and Trivedi's [-@CameronTrivedi2013] position`, which becomes Cameron and Trivedi's [-@CameronTrivedi2013] position. This works because putting a hyphen before the reference `[-@CameronTrivedi2013]` becomes [-@CameronTrivedi2013].
+`@CameronTrivedi2013 ['s] position` becomes @CameronTrivedi2013 ['s] position.
+
+You can add page numbers with possessive citations. `@CameronTrivedi2013 ['s, 35] idea was great. @CameronTrivedi2013 ['s, 124-125] other idea was good, too.`  becomes @CameronTrivedi2013 ['s, 35] idea was great. @CameronTrivedi2013 ['s, 124-125] other idea was good, too.
+
+If you render your document in another format, you would need to supply the name in text like this: `Cameron and Trivedi's [-@CameronTrivedi2013] position`, which becomes Cameron and Trivedi's [-@CameronTrivedi2013] position. This works because putting a hyphen before the reference suppresses the author name. That is, `[-@CameronTrivedi2013]` becomes [-@CameronTrivedi2013].
+
+### Narritive Citations with Ampersands
+
+If you have narrative citation in a table, APA Style encourages the use of ampersands to save space (Parenthetical citations already have ampersands.). To suppress the conversion of ampersands to "and", place an ampersand in brackets after the citation:
+
+`@CameronTrivedi2013 [&] said something` becomes @CameronTrivedi2013 [&] said something.
+
+This works with possessive citations and/or page numbers:
+
+`@CameronTrivedi2013 [&, 's] idea is interesting` becomes @CameronTrivedi2013 [&, 's] idea is interesting.
+
+The order of these tags is unimportant, but they must be separated by a space. The comma is optional.
+
+`@CameronTrivedi2013 ['s &] idea is interesting` becomes @CameronTrivedi2013 ['s &] idea is interesting.
+
+Put page numbers in the last position, separated by a space. The comma is optional.
+
+`@CameronTrivedi2013 [&, 35--36] have an interesting idea` becomes @CameronTrivedi2013 [&, 35--36] have an interesting idea.
+
+`@CameronTrivedi2013 [&, 's, 35--36] idea is interesting` becomes @CameronTrivedi2013 [&, 's, 35--36] idea is interesting.
 
 ## Citations for Articles Included in a Meta-Analysis
 
@@ -650,9 +691,27 @@ masked-citations:
   - schneider2012cattell
 ```
 
-If the `mask` field is set to `false`, the masked citations will print as usual. When `mast` is `true`, depending if they are an inline or parenthetical citations, they will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". In parenthetical citations, it is possible to mix masked and unmasked citations.
+If the `mask` field is set to `false`, the masked citations will print as usual. When `mast` is `true`, depending if they are narrative or parenthetical citations, they will be listed as "Masked Citations (n.d)" or "(Masked Citations, n.d)". In parenthetical citations, it is possible to mix masked and unmasked citations.
 
 Setting `mask` to `true` will also remove the authors, affiliations, and author notes from the title page.
+
+The text for masked citations have these defaults:
+
+``` yaml
+language:
+  citation-masked-author: "Masked Citation"
+  citation-masked-date: "n.d."
+  citation-masked-title: "Masked Title"
+```
+
+They can be changed to another language or alternate text in English in your YAML header. For example:
+
+``` yaml
+language:
+  citation-masked-author: "Author masked for review"
+  citation-masked-date: "Date masked"
+  citation-masked-title: "Title masked for review"
+```
 
 # Appendices
 

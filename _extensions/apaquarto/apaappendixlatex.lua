@@ -25,7 +25,7 @@ local count_headers_in_appendix = function(h)
   if h.level == 1 and h.content[1] and h.content[1].text == appendixword then
     appendixcount = appendixcount + 1
     appendixheadercount[appendixcount] = 0
-  -- Is the level 1 header in an appendix?
+    -- Is the level 1 header in an appendix?
   elseif appendixcount > 0 and h.level == 1 then
     appendixheadercount[appendixcount] = appendixheadercount[appendixcount] + 1
   end
@@ -36,16 +36,16 @@ end
 local appendixcount2 = 0
 
 local make_appendix = function(h)
-  
   if h.level == 1 and h.content[1].text == appendixword then
     appendixcount2 = appendixcount2 + 1
     -- If this is the first appendix, then start the appendix section
     if appendixcount2 == 1 then
       -- If user did not supply an appendix title, then make a blank title
       if appendixheadercount[appendixcount2] == 0 then
-        return {pandoc.RawBlock("latex", "\\appendix"), pandoc.RawBlock("latex", "\\section{}\\label{" .. h.identifier .. "}")}
+        return { pandoc.RawBlock("latex", "\\appendix"), pandoc.RawBlock("latex",
+          "\\section{}\\label{" .. h.identifier .. "}") }
       else
-        return {pandoc.RawBlock("latex", "\\appendix")}
+        return { pandoc.RawBlock("latex", "\\appendix") }
       end
     else
       -- If user did not supply an appendix title, then make a blank title

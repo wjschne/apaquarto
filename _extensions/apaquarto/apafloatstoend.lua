@@ -9,23 +9,23 @@ Pandoc = function(doc)
   if doc.meta.language and doc.meta.language["crossref-apx-prefix"] then
     appendixword = pandoc.utils.stringify(doc.meta.language["crossref-apx-prefix"])
   end
-  
-  
+
+
   if doc.meta.floatsintext and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
-    movefloatstoend = false    
+    movefloatstoend = false
   end
 
 
   if movefloatstoend then
-  for i = #doc.blocks, 1, -1 do
+    for i = #doc.blocks, 1, -1 do
       if doc.blocks[i].identifier then
         if doc.blocks[i].identifier:find("^tbl%-") then
           if doc.blocks[i].attributes and doc.blocks[i].attributes.prefix == "" then
             if FORMAT == "docx" then
-               table.insert(tbl, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
+              table.insert(tbl, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
             end
             if FORMAT == "typst" then
-                table.insert(tbl, 1, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
+              table.insert(tbl, 1, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
             end
             table.insert(tbl, 1, doc.blocks[i])
             doc.blocks:remove(i)
@@ -34,7 +34,7 @@ Pandoc = function(doc)
           if doc.blocks[i].identifier:find("^fig%-") then
             if doc.blocks[i].attributes and doc.blocks[i].attributes.prefix == "" then
               if FORMAT == "docx" then
-               table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
+                table.insert(fig, 1, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
               end
               if FORMAT == "typst" then
                 table.insert(fig, 1, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
@@ -66,17 +66,15 @@ Pandoc = function(doc)
               doc.blocks:remove(i)
               hasfig = false
             else
-              
+
             end
           end
         end
-
       end
-
     end
   end
-  
-  
+
+
   -- Insert page breaks for each appendix in docx and typst
   -- html does not need page breaks, and latex inserts pagebreaks automatically
   if FORMAT == "docx" or FORMAT == "typst" then
@@ -91,31 +89,30 @@ Pandoc = function(doc)
           end
         end
       end
-    end 
+    end
   end
-  
-  if movefloatstoend then  
-  
-  -- Find block where appendices begin
-  local appendixblock = 0
-  for i = 1, #doc.blocks, 1 do
-    if doc.blocks[i].tag == "Header" then
-      if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == appendixword and appendixblock== 0 then
-        appendixblock = i
+
+  if movefloatstoend then
+    -- Find block where appendices begin
+    local appendixblock = 0
+    for i = 1, #doc.blocks, 1 do
+      if doc.blocks[i].tag == "Header" then
+        if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == appendixword and appendixblock == 0 then
+          appendixblock = i
+        end
       end
     end
-  end 
-  
-  -- If there are no appendices, insert figures and tables at the end
+
+    -- If there are no appendices, insert figures and tables at the end
     if appendixblock == 0 then
-        if #tbl > 0 then
-          doc.blocks:extend(tbl)
-        end
-        if #fig > 0 then
-          doc.blocks:extend(fig)
-        end
+      if #tbl > 0 then
+        doc.blocks:extend(tbl)
+      end
+      if #fig > 0 then
+        doc.blocks:extend(fig)
+      end
     else
-    -- Insert figures and tables before appendices
+      -- Insert figures and tables before appendices
       if #fig > 0 then
         for i = #fig, 1, -1 do
           doc.blocks:insert(appendixblock, fig[i])
@@ -127,7 +124,7 @@ Pandoc = function(doc)
         end
       end
     end
-    end
+  end
 
-return doc
+  return doc
 end

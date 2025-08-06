@@ -22,10 +22,9 @@ local function maskcite(cite)
       v.id = maskid
       v.suffix = nil
       k = k + 1
-
     end
   end
-  
+
   if k > 0 then
     for i = #cite.citations, 1, -1 do
       if cite.citations[i].id == maskid then
@@ -41,6 +40,6 @@ end
 
 
 return {
-  {Meta = getmasked},
-  {Cite = maskcite}
+  { Meta = getmasked },
+  { Cite = maskcite }
 }

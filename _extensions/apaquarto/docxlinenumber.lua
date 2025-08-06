@@ -16,14 +16,13 @@ function Math(eq)
   end
 end
 
-
 function Pandoc(doc)
   if doc.meta["numbered-lines"] then
     if pandoc.utils.stringify(doc.meta["numbered-lines"]) == "true" then
       doc.blocks:insert(
-        pandoc.RawBlock("openxml", 
-         '<w:sectPr><w:lnNumType w:countBy="1" w:restart="continuous" /></w:sectPr>')
-        )
+        pandoc.RawBlock("openxml",
+          '<w:sectPr><w:lnNumType w:countBy="1" w:restart="continuous" /></w:sectPr>')
+      )
       return doc
     end
   end
