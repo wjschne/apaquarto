@@ -27,6 +27,7 @@ author-note:
     gratitude: ~
     authorship-agreements: ~
 abstract: "This document is a template."
+impact-statement: "This template helps you get started."
 keywords: [Keyword 1, Keyword 2, Keyword 3]
 bibliography: bibliography.bib
 format:

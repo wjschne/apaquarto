@@ -56,7 +56,7 @@ contributes:
         title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
         title-impact-statement: "Impact Statement"
         title-word-count: "Word Count"
-        references-meta-analysis: "Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."
+        references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
       filters:
         # Sets language defaults other than English
         - at: pre-ast

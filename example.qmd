@@ -89,10 +89,11 @@ keywords:
   - Quarto
   - Markdown
   - apaquarto
-# If true, tables and figures are mingled with the text instead of listed at the end of the document.
-impact-statement: ~
+# Optional statement about the importance of the paper. The heading can be customized in the language field.
+impact-statement: "The apaquarto template allow writers to apply APA style consistently with minimal fuss and bother."
 # If true, a word count will appear below the keywords (tables, figure captions, and references excluded in count.)
 word-count: false
+# If true, tables and figures are mingled with the text instead of listed at the end of the document.
 floatsintext: true
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
@@ -119,6 +120,7 @@ nocite: |
 draft-date: false
 # Language options. See https://quarto.org/docs/authoring/language.html
 lang: en
+# Additional language options
 language:
   citation-last-author-separator: "and"
   citation-masked-author: "Masked Citation"
