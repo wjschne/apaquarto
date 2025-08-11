@@ -17,6 +17,10 @@ engine: knitr
     * Journal format
     * Line numbering
     * Full language option support
+
+# Version 5.0.7
+- 2025-08-11
+- - [#137](https://github.com/wjschne/apaquarto/issues/137) Fixed error for when user does not supply a document mode for apaquarto-pdf documents. Thanks [Clemens Brunner](https://github.com/cbrnr)!
     
 # Version 5.0.6
 - 2025-08-05

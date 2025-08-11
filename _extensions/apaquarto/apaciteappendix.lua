@@ -6,13 +6,16 @@ local refhyperlinks = true
 local appendixword = "Appendix"
 
 local journalmode = false
+local documentmode = "man"
 
 getappendixword = function(meta)
   if meta.language and meta.language["crossref-apx-prefix"] then
     appendixword = pandoc.utils.stringify(meta.language["crossref-apx-prefix"])
   end
   if FORMAT == "latex" then
-    local documentmode = pandoc.utils.stringify(meta["documentmode"])
+    if meta.documentmode then
+       documentmode = pandoc.utils.stringify(meta["documentmode"])
+    end
     journalmode = documentmode == "jou"
   end
 end
