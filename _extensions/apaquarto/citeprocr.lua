@@ -171,7 +171,7 @@ return {
 
           -- If reference is in nocite, then place an asterisk in front.
           for i, j in pairs(doc.meta.references) do
-            if ct_meta[j.id] then
+            if ct_meta[j.id] and j.author and j.author[1] then
               if j.author[1].literal then
                 j.author[1].literal = "*" .. j.author[1].literal
               else
