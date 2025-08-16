@@ -6,39 +6,58 @@ shorttitle: "Template for the apaquarto Extension"
 # It is nice to specify everyone's orcid, if possible.
 # There can be only one corresponding author, but declaring one is optional.
 author:
-  - name: John Mohammad Smith
-    email: some@email.com
-    corresponding: 'true'
-    credit:
-      - data curation
-      - funding acquisition
-      - project administration
-    affiliation:
-      - Institute of Psychology, ELTE Eotvos Lorand University, Budapest, Hungary,
-        Doctoral School of Psychology
-      - LexCorp, Smallville, Kansas, US
-      - Institute for Interstellar Relations, Oxbridge University, UK
-  - name: Marton Kovacs
-    credit:
+  - name: Ana Fulano
+    corresponding: true
+    orcid: 0000-0000-0000-0001
+    email: sm@example.org
+    url: https://example.org/
+    # Roles are optional. 
+    # Select from the CRediT: Contributor Roles Taxonomy https://credit.niso.org/
+    # conceptualization, data curation, formal analysis, funding acquisition, investigation, 
+    # methodology, project administration, resources, software, supervision, validation, 
+    # visualization, writing, editing
+    roles:
       - conceptualization
-      - funding acquisition
-      - methodology
-      - supervision
-    affiliation:
-      - Institute of Psychology, ELTE Eotvos Lorand University, Budapest, Hungary,
-        Doctoral School of Psychology
-      - Department of Psychology
-      - tenzing.club
-  - name: Lex W Luthor
-    credit:
-      - data curation
-      - project administration
-      - resources
       - writing
-      - editing
-    affiliation:
-      - LexCorp, Smallville, Kansas, US
-      - Metropolis University
+    affiliations:
+      - id: id1
+        name: "Ana and Blanca's University"
+        group: Clinical Psychology Program
+        department: Department of Psychology
+        address: 1234 Capital St.
+        city: Albany
+        region: NY
+        country: USA
+        postal-code: 12084-1234
+  - name: Blanca Zutano
+    orcid: 0000-0000-0000-0002
+    roles:
+      - project administration
+      - formal analysis
+    affiliations: 
+      - ref: id1
+  - name: Carina Mengano
+    orcid: 0000-0000-0000-0003
+    deceased: true
+    roles:
+      - formal analysis
+      - writing
+    affiliations:
+      - name: "Carina's Primary Affiliation"
+      - name: "Carina's Secondary Affiliation"
+    # Because Dolorita is unaffiliated, specify her city instead
+  - name: 
+      - given: Dolorita C.
+        family: Perengano
+    orcid: 0000-0000-0000-0004
+    roles:
+      - writing
+      - methodology
+      - formal analysis
+    # List city and region/state for unaffiliated authors
+    affiliations:
+      - city: Buffalo
+        region: NY
 blank-lines-above-author-note: 2
 author-note:
   status-changes: 
