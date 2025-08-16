@@ -17,6 +17,10 @@ engine: knitr
     * Journal format
     * Line numbering
     * Full language option support
+
+# Version 5.0.9
+- 2025-08-16
+- Fixed bug in citeprocr.lua to allow nocite field to be specified but empty
     
 # Version 5.0.8
 - 2025-08-13
