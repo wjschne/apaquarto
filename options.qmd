@@ -371,7 +371,7 @@ APA Style encourages but does not require papers with multiple authors to descri
 | [`validation`](https://credit.niso.org/contributor-roles/validation/) | Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs. |
 | [`visualization`](https://credit.niso.org/contributor-roles/visualization/) | Preparation, creation and/or presentation of the published work, specifically visualization/data presentation. |
 | [`writing`](https://credit.niso.org/contributor-roles/writing-original-draft/) | Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation). |
-| [`editing`](https://credit.niso.org/contributor-roles/writing-review-editing/) | reparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision -- including pre- or post-publication stages. |
+| [`editing`](https://credit.niso.org/contributor-roles/writing-review-editing/) | Preparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision -- including pre- or post-publication stages. |
 
 : {.primary tbl-colwidths="\[25,75\]"}
 
