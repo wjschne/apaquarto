@@ -270,11 +270,11 @@ print_apaquarto_author <- function(contributors_table) {
     mutate(across(Firstname:Surname, \(x) tidyr::replace_na(x, replace = ""))) |> 
     unite(name, Firstname, `Middle name`, Surname, sep = " ") |> 
     mutate(name = str_squish(name)) |> 
-    pivot_longer(Conceptualization:`Writing - review & editing`, names_to = "credit") |> 
-    mutate(credit = str_replace_all(credit, v_credit)) |> 
-    nest(credit = c(value, credit)) |> 
-    mutate(credit = map(credit, \(x) {
-      filter(x, value) |> pull(credit)
+    pivot_longer(Conceptualization:`Writing - review & editing`, names_to = "roles") |> 
+    mutate(roles = str_replace_all(roles, v_credit)) |> 
+    nest(roles = c(value, roles)) |> 
+    mutate(roles = map(roles, \(x) {
+      filter(x, value) |> pull(roles)
     })) |> 
     pivot_longer(starts_with("Affiliation "), names_to = "affiliation_column", values_to = "affiliation") |> 
     select(-affiliation_column) |> 
@@ -282,19 +282,19 @@ print_apaquarto_author <- function(contributors_table) {
     mutate(affiliation = map(affiliation, \(x) {
       x[!is.na(x)]
     })) |> 
-    select(name, orcid, email, corresponding, credit, affiliation) |> 
+    select(name, orcid, email, corresponding, roles, affiliation) |> 
     mutate(corresponding = ifelse(corresponding, TRUE, NA)) |> 
     mutate(person = name) |> 
     nest(author = -person) |> 
     select(-person) |> 
     mutate(author = map(author, \(x) {
       isempty = apply(x, MARGIN = 2, \(xx) all(is.na(xx)))
-      x$credit <- list(x$credit[[1]])
+      x$roles <- list(x$roles[[1]])
       x$affiliation <- list(x$affiliation[[1]])
       # as.list(x[, !isempty])
       l <- as.list(x[, !isempty])
-      if (!all(is.na(x$credit))) {
-        l$credit <- x$credit[[1]]
+      if (!all(is.na(x$roles))) {
+        l$roles <- x$roles[[1]]
       }
       if (!all(is.na(x$affiliation))) {
         l$affiliation <- x$affiliation[[1]]

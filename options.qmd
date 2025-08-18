@@ -202,7 +202,7 @@ author:
     role:
       - formal anlaysis
       - visualization
-      - editin
+      - editing
   - name: Thomas Richard Harris
     affiliations: 
       - name: Generic State University
@@ -210,7 +210,7 @@ author:
     orcid: 0000-0000-0000-0002
     role:
       - editing
-      - funding acquistion
+      - funding acquisition
   - name: Wut C. Whosis
     affiliations: Whatchama College
     orcid: 0000-0000-0000-0003
@@ -222,7 +222,7 @@ author:
 
 ## Affiliations
 
-The apaquarto extenstion uses the [standard Quarto schema for affiliations](https://quarto.org/docs/journals/authors.html#affiliations-schema).
+The apaquarto extension uses the [standard Quarto schema for affiliations](https://quarto.org/docs/journals/authors.html#affiliations-schema).
 
 +---------------+---------------------------------------------------------------------------------------------------------------------------+
 | Field         | Explanation                                                                                                               |
@@ -251,7 +251,7 @@ The apaquarto extenstion uses the [standard Quarto schema for affiliations](http
 |               | author:                                                                                                                   |
 |               |   - name: Fred Jones                                                                                                      |
 |               |     affiliation:                                                                                                          |
-|               |       - name: Generic State Univeristy                                                                                    |
+|               |       - name: Generic State University                                                                                    |
 |               | ```                                                                                                                       |
 |               |                                                                                                                           |
 |               | If the author is unaffiliated, list the author's city and region/state instead:                                           |
@@ -272,7 +272,7 @@ The apaquarto extenstion uses the [standard Quarto schema for affiliations](http
 |               | author:                                                                                                                   |
 |               |   - name: Fred Jones                                                                                                      |
 |               |     affiliation:                                                                                                          |
-|               |       - name: Generic State Univeristy                                                                                    |
+|               |       - name: Generic State University                                                                                    |
 |               |         department: Department of Psychology                                                                              |
 |               |         group: Counseling Psychology                                                                                      |
 |               | ```                                                                                                                       |
@@ -549,12 +549,12 @@ author-note:
 
 # Options for .pdf
 
-All of the .pdf-specfic options for apaquarto come directly from the [apa7 $\LaTeX$ package](https://ctan.org/pkg/apa7?lang=en). Consult the apa7 package documentation for greater detail.
+All of the .pdf-specific options for apaquarto come directly from the [apa7 $\LaTeX$ package](https://ctan.org/pkg/apa7?lang=en). Consult the apa7 package documentation for greater detail.
 
 +--------------------+-------------------------------------------------------------------------------+
 | Field              | Explanation                                                                   |
 +====================+===============================================================================+
-| `documentmode`     | Alter the overall style of the document. Options incluce:                     |
+| `documentmode`     | Alter the overall style of the document. Options include:                     |
 |                    |                                                                               |
 |                    | -   `man` Manuscript: Similar to .docx format                                 |
 |                    | -   `jou` Journal: A polished two-column format similar to many APA journals. |
@@ -601,7 +601,7 @@ All of the .pdf-specfic options for apaquarto come directly from the [apa7 $\LaT
 
 # Options for .html
 
-With one exeception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.
+With one exception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.
 
 # Suppress Elements
 
@@ -701,7 +701,7 @@ Here are the language terms most likely to be used in apaquarto:
 
 | Field: English Default                 | Explanation           |
 |----------------------------------------|-----------------------|
-| `section-title-abstract: Abstract`     | Abtract title         |
+| `section-title-abstract: Abstract`     | Abstract title        |
 | `section-title-references: References` | References title      |
 | `title-block-keywords: Keywords`       | Keywords              |
 | `crossref-fig-title: Figure`           | Figure title prefix   |

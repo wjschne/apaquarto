@@ -18,13 +18,17 @@ engine: knitr
     * Line numbering
     * Full language option support
 
+# Version 5.0.10
+- 2025-08-18
+- Fixed spelling errors and a minor bug
+
 # Version 5.0.9
 - 2025-08-16
 - Fixed bug in citeprocr.lua to allow nocite field to be specified but empty
     
 # Version 5.0.8
 - 2025-08-13
-- Fixed bug in nocite metanalytic references with corporate authors.
+- Fixed bug in nocite meta-analytic references with corporate authors.
 
 # Version 5.0.7
 - 2025-08-11
@@ -87,7 +91,7 @@ engine: knitr
 # Version 4.4.1
 
 - 2025-05-03
-- [#128](https://github.com/wjschne/apaquarto/issues/128) Table and figure notes using `apa-note` now translate to the other langauges in the .pdf format. Thanks [Guilherme Pinto](https://github.com/ggpinto)
+- [#128](https://github.com/wjschne/apaquarto/issues/128) Table and figure notes using `apa-note` now translate to the other languages in the .pdf format. Thanks [Guilherme Pinto](https://github.com/ggpinto)
 - Fixed .html level 4 heading bolding problem.
 - Upgraded to latest apa.csl format
 
@@ -222,7 +226,7 @@ engine: knitr
 # Version 4.0.1
 
 - 2024-05-01
-- Improvemements for typst 
+- Improvements for typst 
   * Render LaTeX logo correctly
   * Implemented NoIndent feature for typst
   * Proper indenting for multi-paragraph abstracts
@@ -305,7 +309,7 @@ engine: knitr
 # Version 3.4.4
 
 - 2024-03-10
-- `supress-title-page` option to suppress title page
+- `suppress-title-page` option to suppress title page
 - Fix author names when specified by given, family, or literal fields
 - Fix author subscripts in pdf when affiliations are identical
 
@@ -381,7 +385,7 @@ The main goal for version 3 was to do everything with lua filters instead of R. 
 
 ## Breaking changes
 
-* The the `apafg-` and `apatb-` prefixes are no longer used for figures and tables. Use the standard Quarto prefixes (`fig-` and `tbl-`), as well as the standard quarto referencing syntax (e.g,. `@fig-myplot` will reference the `fig-myplot` chunk.). 
+* The `apafg-` and `apatb-` prefixes are no longer used for figures and tables. Use the standard Quarto prefixes (`fig-` and `tbl-`), as well as the standard quarto referencing syntax (e.g., `@fig-myplot` will reference the `fig-myplot` chunk.). 
 *  The include statement below the metadata is no longer used and must be deleted. An informative error will provide instruction if the include statement remains. 
 
 ## Improvements

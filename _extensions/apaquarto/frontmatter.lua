@@ -562,7 +562,7 @@ return {
         end
       end
 
-      if meta["impact-statement"] and #meta["impact-statement"] > 0 and not meta["supress-impact-statement"] then
+      if meta["impact-statement"] and #meta["impact-statement"] > 0 and not meta["suppress-impact-statement"] then
         local impactheadertext = pandoc.Str("Impact Statement")
         if meta.language and meta.language["title-impact-statement"] then
           impactheadertext = meta.language["title-impact-statement"]
