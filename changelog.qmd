@@ -21,7 +21,7 @@ engine: knitr
 
 # Version 5.0.11
 - 2025-08-21
-- Added support for the `note` field for student papers. Thanks [choc96208](https://github.com/choc96208)!
+- Added support for the `note` field for pdf in `stu` mode. Thanks [choc96208](https://github.com/choc96208)!
 
 # Version 5.0.10
 - 2025-08-18
