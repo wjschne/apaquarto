@@ -564,7 +564,7 @@ author-note:
 
 # Options for .pdf
 
-All of the .pdf-specific options for apaquarto come directly from the [apa7 $\LaTeX$ package](https://ctan.org/pkg/apa7?lang=en). Consult the apa7 package documentation for greater detail.
+All of the .pdf-specific options for apaquarto come directly from the [apa7 $\LaTeX$ package](https://ctan.org/pkg/apa7?lang=en). Consult the \[apa7 package documentation\](<https://ctan.org/pkg/apa7>) for greater detail.
 
 +--------------------+-------------------------------------------------------------------------------+
 | Field              | Explanation                                                                   |
