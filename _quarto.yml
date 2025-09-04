@@ -17,6 +17,7 @@ website:
       - text: Introduction
         href: index.qmd
       - installation.qmd
+      - apashiny.qmd
       - options.qmd
       - writing.qmd       
       - resources.qmd
