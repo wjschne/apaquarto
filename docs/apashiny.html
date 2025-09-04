@@ -196,11 +196,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Keeping track of apquarto’s many options can be difficult, and the list keeps growing with more features. To help make the initial setup of an apaquarto document a little easier, I have make a web app using Shiny. This app downloads code from GitHub and runs locally on your machine so there is no concern about private data:</p>
+<p>Keeping track of apquarto’s many options can be difficult, and the list keeps growing with more features. To help make the initial setup of an apaquarto document a little easier, I have make a web app using Shiny. This app uses code from GitHub and runs locally on your machine, meaning that your data stays private. It requires that the shiny package is installed. If not, run this code first:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runGitHub</span>(<span class="at">repo =</span> <span class="st">"apa7maker"</span>, <span class="at">username =</span> <span class="st">"wjschne"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(shiny)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The app is mostly self-explantory. You fill in necessary information or click options that apply to your document. After adding all the options you wish, click <code>Make Document</code> and then click <code>Update</code>. Either copy the resulting text into an existing Quarto file, or download the file to a directory of your choice.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runGitHub</span>(<span class="at">repo =</span> <span class="st">"apa7maker"</span>, <span class="at">username =</span> <span class="st">"wjschne"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The app is mostly self-explanatory. You fill in necessary information or click options that apply to your document. After adding all the options you wish, click <code>Make Document</code> and then click <code>Update</code>. Either copy the resulting text into an existing Quarto file, or download the file to a directory of your choice.</p>
 
 
 
