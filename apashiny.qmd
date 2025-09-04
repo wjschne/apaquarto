@@ -1,0 +1,15 @@
+---
+title: "Web App"
+format: html
+editor: source
+engine: knitr
+---
+
+Keeping track of apquarto's many options can be difficult, and the list keeps growing with more features. To help make the initial setup of an apaquarto document a little easier, I have make a web app using Shiny. This app downloads code from GitHub and runs locally on your machine so there is no concern about private data:
+
+
+```{r runshiny, eval=FALSE, echo=TRUE}
+shiny::runGitHub(repo = "apa7maker", username = "wjschne")
+```
+
+The app is mostly self-explantory. You fill in necessary information or click options that apply to your document. After adding all the options you wish, click `Make Document` and then click `Update`. Either copy the resulting text into an existing Quarto file, or download the file to a directory of your choice.

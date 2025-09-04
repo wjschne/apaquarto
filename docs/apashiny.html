@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Resources – APA Style Documents with apaquarto</title>
+<title>Web App – APA Style Documents with apaquarto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -69,35 +104,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -137,7 +143,7 @@ window.Quarto = {
 <span class="menu-text">APA Style via Markdown</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./resources.html" aria-current="page"> 
+    <a class="nav-link" href="./resources.html"> 
 <span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
@@ -162,20 +168,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#apa-style-online" id="toc-apa-style-online" class="nav-link active" data-scroll-target="#apa-style-online">APA-Style Online</a></li>
-  <li><a href="#apa-style-books" id="toc-apa-style-books" class="nav-link" data-scroll-target="#apa-style-books">APA-Style Books</a></li>
-  <li><a href="#apa-style-helper-functions-in-r" id="toc-apa-style-helper-functions-in-r" class="nav-link" data-scroll-target="#apa-style-helper-functions-in-r">APA-Style Helper Functions in R</a></li>
-  <li><a href="#alternatives-to-apaquarto" id="toc-alternatives-to-apaquarto" class="nav-link" data-scroll-target="#alternatives-to-apaquarto">Alternatives to apaquarto</a>
-  <ul class="collapse">
-  <li><a href="#apa-style-with-knitr-and-latex" id="toc-apa-style-with-knitr-and-latex" class="nav-link" data-scroll-target="#apa-style-with-knitr-and-latex">APA style with knitr and <span class="math inline">\(\LaTeX\)</span></a></li>
-  <li><a href="#apa-style-with-rmarkdown-and-papaja" id="toc-apa-style-with-rmarkdown-and-papaja" class="nav-link" data-scroll-target="#apa-style-with-rmarkdown-and-papaja">APA style with Rmarkdown and papaja</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -186,7 +179,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Resources</h1>
+<h1 class="title">Web App</h1>
 </div>
 
 
@@ -203,46 +196,13 @@ window.Quarto = {
 </header>
 
 
-<section id="apa-style-online" class="level2">
-<h2 class="anchored" data-anchor-id="apa-style-online">APA-Style Online</h2>
-<ul>
-<li><a href="https://apastyle.apa.org/">APA Style (apa.org)</a></li>
-<li><a href="https://apastyle.apa.org/blog">APA Style Blog</a></li>
-</ul>
-</section>
-<section id="apa-style-books" class="level2">
-<h2 class="anchored" data-anchor-id="apa-style-books">APA-Style Books</h2>
-<ul>
-<li><span class="citation" data-cites="americanpsychologicalassociationPublicationManualAmerican2020">American Psychological Association (2020). <em>Publication manual of the <span>American Psychological Association</span></em> (7th ed.). Author. <a href="https://doi.org/10.1037/0000173-000">https://doi.org/10.1037/0000173-000</a></span></li>
-<li><span class="citation" data-cites="ConciseGuideAPA2020">American Psychological Association (2020). <em>Concise guide to <span>APA Style</span>: <span>The</span> official <span>APA Style</span> guide for students (7th ed.).</em> Author. <a href="https://doi.org/10.1037/0000173-000">https://doi.org/10.1037/0000173-000</a></span></li>
-<li><span class="citation" data-cites="americanpsychologicalassociationMasteringAPAStyle2021">American Psychological Association (2021). <em>Mastering <span>APA Style</span> student workbook.</em> Author. <a href="https://doi.org/10.1037/0000271-000">https://doi.org/10.1037/0000271-000</a></span></li>
-</ul>
-</section>
-<section id="apa-style-helper-functions-in-r" class="level2">
-<h2 class="anchored" data-anchor-id="apa-style-helper-functions-in-r">APA-Style Helper Functions in R</h2>
-<p>Many packages have helper functions for reporting statistics in and creating tables and figures in APA Style. Here are a few:</p>
-<ul>
-<li><a href="https://rempsyc.remi-theriault.com/index.html">rempsyc</a></li>
-<li><a href="https://frederikaust.com/papaja_man/reporting.html">papaja</a></li>
-<li><a href="https://github.com/dgromer/apa">apa</a></li>
-<li><a href="https://dstanley4.github.io/apaTables/">apaTables</a></li>
-</ul>
-</section>
-<section id="alternatives-to-apaquarto" class="level2">
-<h2 class="anchored" data-anchor-id="alternatives-to-apaquarto">Alternatives to apaquarto</h2>
-<p>To my knowledge, there is no working quarto extension other than apaquarto that takes a comprehensive approach to APA style with output options in .docx, .html, and .pdf. However, there are other ways to automate the production of APA-style documents.</p>
-<section id="apa-style-with-knitr-and-latex" class="level3">
-<h3 class="anchored" data-anchor-id="apa-style-with-knitr-and-latex">APA style with knitr and <span class="math inline">\(\LaTeX\)</span></h3>
-<p>The ability to automate APA style via <span class="math inline">\(\LaTeX\)</span> has been around for some time—first via <a href="https://ctan.org/pkg/apa">apa</a> (APA Style, 5th Edition), then via <a href="https://ctan.org/pkg/apa6">apa6</a> (APA Style, 6th Edition), and now via <a href="https://ctan.org/pkg/apa7">apa7</a> (APA Style, 7th Edition). The apaquarto package uses <a href="https://ctan.org/pkg/apa7">apa7</a> to create .pdf documents. To intermingle R code and <span class="math inline">\(\LaTeX\)</span> code in the same document, R-users could write in an .Rnw file using <a href="https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr">sweave or knitr</a>. I still do so when I need the full flexibility of <span class="math inline">\(\LaTeX\)</span>.</p>
-</section>
-<section id="apa-style-with-rmarkdown-and-papaja" class="level3">
-<h3 class="anchored" data-anchor-id="apa-style-with-rmarkdown-and-papaja">APA style with Rmarkdown and papaja</h3>
-<p>Unfortunately, most psychology journals require submissions in MS Word (and most collaborators do as well). Learning <span class="math inline">\(\LaTeX\)</span> is fun for some people (e.g., me), but most will not bother. With the arrival of Rmarkdown, it became possible to automate document production with a system that takes just a few minutes to learn.</p>
-<p>The <a href="https://github.com/crsh/papaja">papaja</a> package by Frederick Aust uses Rmarkdown syntax and does a fantastic job of creating APA-style (6th Edition) documents in .pdf and <a href="https://frederikaust.com/papaja_man/limitations.html#microsoft-word-documents">gets close to perfect .docx output</a>. With a bit of tweaking, <a href="https://github.com/crsh/papaja/issues/342">papaja can do most of APA Style (7th Edition)</a> for .pdf documents.</p>
+<p>Keeping track of apquarto’s many options can be difficult, and the list keeps growing with more features. To help make the initial setup of an apaquarto document a little easier, I have make a web app using Shiny. This app downloads code from GitHub and runs locally on your machine so there is no concern about private data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runGitHub</span>(<span class="at">repo =</span> <span class="st">"apa7maker"</span>, <span class="at">username =</span> <span class="st">"wjschne"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The app is mostly self-explantory. You fill in necessary information or click options that apply to your document. After adding all the options you wish, click <code>Make Document</code> and then click <code>Update</code>. Either copy the resulting text into an existing Quarto file, or download the file to a directory of your choice.</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -87,7 +87,7 @@ local walkblock = function(b)
   -- Increment prefix for every level-1 header after References
   if b.tag == "Header" and b.level == 1 then
     local headerfirstword = pandoc.utils.stringify(b.content[1])
-    if headerword == referenceword or headerfirstword == "References" then
+    if headerfirstword == referenceword or headerfirstword == "References" then
       after_reference = true
       return nil
     end

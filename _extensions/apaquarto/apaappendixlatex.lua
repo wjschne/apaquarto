@@ -62,7 +62,6 @@ end
 
 return {
   { Meta = getappendixword },
-  { Block = findappendixheader },
   { Header = count_headers_in_appendix },
   { Header = make_appendix }
 }

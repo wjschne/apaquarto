@@ -134,6 +134,7 @@ language:
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 # Keep `false` to remain consistent with APA style. If `true`, replaces ampersands with `and` or word specified in `citation-last-author-separator` in parenthetical citations. 
 no-ampersand-parenthetical: false
+fontsize: 12pt
 format:
   apaquarto-html: 
     toc: true
@@ -162,7 +163,7 @@ library(knitr)
 library(tinytable)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
-
+conflicts_prefer(ggplot2::theme_void, .quiet = TRUE)
 ```
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
@@ -246,15 +247,18 @@ To refer to any figure or table, use the `@` symbol followed by the reference la
 
 ## Displaying Tables
 
-We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found that David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
+We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
 
 
 ```{r}
 #| label: tbl-mytable
 #| tbl-cap: The Table Caption. 
-#| apa-note: This is the first paragraph.|This is a second paragraph. It is separated with the pipe character.
+#| echo: true
+#| apa-note: 
+#|   - This is the first paragraph.
+#|   - This is a second paragraph. 
 tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
-  knitr::kable()
+  knitr::kable(align = "cc")
 
 ```
 
