@@ -5,12 +5,16 @@ editor: source
 engine: knitr
 ---
 
-Keeping track of apquarto's many options can be difficult, and the list keeps growing with more features. To help make the initial setup of an apaquarto document a little easier, I have make a web app using Shiny. This app uses code from GitHub and runs locally on your machine, meaning that your data stays private. It requires that the shiny package is installed. If not, run this code first:
+Keeping track of apquarto's many options can be difficult, and the list keeps growing with more features. To help make the initial setup of an apaquarto document a little easier, I have make a web app using Shiny. This app uses code from GitHub and runs locally on your machine, meaning that your data stays private. 
+
+The app requires that the shiny package is installed. If not, run this code in your R console first:
 
 ```{r installshiny, eval=FALSE, echo=TRUE}
 install.packages(shiny)
 ```
 
+
+When ready, run this code in your R console:
 
 
 ```{r runshiny, eval=FALSE, echo=TRUE}
