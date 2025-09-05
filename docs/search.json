@@ -151,7 +151,7 @@
     "href": "apashiny.html",
     "title": "Web App",
     "section": "",
-    "text": "Keeping track of apquarto’s many options can be difficult, and with each new feature, the list of options grows. I have make a small app that makes it easier to create the initial apaquarto document. Because this app runs locally on your machine, your data stays private.\nThe app requires that the shiny package is installed. If needed, install shiny by running this code in your R console first:\n\ninstall.packages(shiny)\n\nWhen ready, start the app by running this code in your R console:\n\nshiny::runGitHub(repo = \"apa7maker\", username = \"wjschne\")\n\nThe app is mostly self-explanatory. You fill in necessary information or select options that suit your purpose. When ready, click Make Document in the side menu and then click Update. Either copy the resulting text into an existing Quarto file, or download the file to a directory of your choice."
+    "text": "Keeping track of apquarto’s many options can be difficult, and with each new feature, the list of options grows. I have make a small app that makes it easier to create the initial apaquarto document.\nThe app can be accessed here.\nThe app is mostly self-explanatory. You fill in necessary information or select options that suit your purpose. When ready, click Make Document in the side menu and then click Update. Copy the resulting text into an existing Quarto file."
   },
   {
     "objectID": "index.html",
@@ -172,14 +172,14 @@
     "href": "installation.html#install-quarto",
     "title": "Installation",
     "section": "Install Quarto",
-    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\nIf you use a recent version of RStudio, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.\n\n\n\n\n\n\nNoteHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
+    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\nIf you use a recent version of RStudio, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.\n\n\n\n\n\n\nHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
   },
   {
     "objectID": "installation.html#install-a-programming-language",
     "href": "installation.html#install-a-programming-language",
     "title": "Installation",
     "section": "Install a Programming Language",
-    "text": "Install a Programming Language\nYour primary options are\n\nR\nPython\nJulia\n\n\n\n\n\n\n\nTipWhat if I do not want to use any programming languages?\n\n\n\n\n\nIf you just want to use apaquarto to make APA-style documents, but do not plan to do any analyses, install R and RStudio. You do not need R for anything, but the Quarto experience will be easier in RStudio with R installed."
+    "text": "Install a Programming Language\nYour primary options are\n\nR\nPython\nJulia\n\n\n\n\n\n\n\nWhat if I do not want to use any programming languages?\n\n\n\n\n\nIf you just want to use apaquarto to make APA-style documents, but do not plan to do any analyses, install R and RStudio. You do not need R for anything, but the Quarto experience will be easier in RStudio with R installed."
   },
   {
     "objectID": "installation.html#install-your-programming-environment",
