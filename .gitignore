@@ -56,3 +56,4 @@ lorem.bib
 apa.csl
 *.pptx
 contributors_table_template_tenzing.xlsx
+**/*.quarto_ipynb

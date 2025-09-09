@@ -7,8 +7,18 @@ engine: knitr
 
 Keeping track of apquarto's many options can be difficult, and with each new feature, the list of options grows. I have make a small app that makes it easier to create the initial apaquarto document. 
 
-The app can be accessed [here](https://wjschne.github.io/apa7maker/).
+The app can be accessed [here](https://wjschne.github.io/apa7maker/). Be patient as it loads.
+
+:::{#fig-apaquarto}
+
+[![](apa7maker.png)](https://wjschne.github.io/apa7maker/){target="_blank"}
+
+
+Screenshot of apaquarto web app
+:::
 
 The app is mostly self-explanatory. You fill in necessary information or select options that suit your purpose. When ready, click `Make Document` in the side menu and then click `Update`. Copy the resulting text into an existing Quarto file.
+
+
 
 
