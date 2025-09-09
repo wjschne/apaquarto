@@ -1,0 +1,15 @@
+{
+  "hash": "4fd8204f7732865c0705bb712d3a99fe",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Web App\"\nformat: html\neditor: source\nengine: knitr\n---\n\nKeeping track of apquarto's many options can be difficult, and with each new feature, the list of options grows. I have make a small app that makes it easier to create the initial apaquarto document. \n\nThe app can be accessed [here](https://wjschne.github.io/apa7maker/). Be patient as it loads.\n\n:::{#fig-apaquarto}\n\n[![](apa7maker.png)](https://wjschne.github.io/apa7maker/){target=\"_blank\"}\n\n\nScreenshot of apaquarto web app\n:::\n\nThe app is mostly self-explanatory. You fill in necessary information or select options that suit your purpose. When ready, click `Make Document` in the side menu and then click `Update`. Copy the resulting text into an existing Quarto file.\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

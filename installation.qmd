@@ -280,6 +280,9 @@ The apaquarto source code is in [this repository](https://github.com/wjschne/apa
 
 ### After installing apaquarto
 
+Setting up an initial file is most easily done with [this web app](https://wjschne.github.io/apa7maker/).
+
+Of course, you can always create an apaquarto file from scratch, 
 
 
 If you made a...

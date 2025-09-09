@@ -41,4 +41,5 @@ format:
     toc-location: left
 
 
-
+execute:
+  freeze: auto
