@@ -148,7 +148,7 @@ format:
     papersize: "us-letter"
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou
+    documentmode: man
     keep-tex: true
 ---
 
@@ -159,16 +159,25 @@ library(conflicted)
 library(tidyverse)
 library(flextable)
 library(ftExtra)
+library(apa7)
 library(knitr)
 library(tinytable)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 conflicts_prefer(ggplot2::theme_void, .quiet = TRUE)
+set_flextable_defaults(theme_fun = theme_apa, 
+                       font.family = "Times New Roman", 
+                       text.align = "center", 
+                       table_align = "left")
 ```
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
 Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style). In general, level 1 headings should be reserved for the Method, Results, Discussion, References, and Appendices sections. 
+
+## YAML metadata
+
+At the top of the apaquarto document, there is a lot of metadata (e.g., title, authors, affiliations, abstract, and so forth). Although the various options apaquarto are all documented, keeping track of them all can be difficult. Generating the inti
 
 ## Citations
 
@@ -247,22 +256,25 @@ To refer to any figure or table, use the `@` symbol followed by the reference la
 
 ## Displaying Tables
 
-We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but I have found David Gohel's [flextable](https://davidgohel.github.io/flextable/) to be the best option when I need something more complex.
+We can make a table the same way as a figure. Generating a table that conforms to APA format in all document formats can be tricky. When the table is simple, the `kable` function from knitr works well. Feel free to experiment with different methods, but my [apa7 package](https://wjschne.github.io/apa7/articles/apa7.html) adapts David Gohel's [flextable](https://davidgohel.github.io/flextable/) package to make a wide variety of APA-styled tables. In [this blog series](https://wjschne.github.io/posts/apatables/apa701.html), I used apa7 to  recreate the 24 example tables from chapter 7 of the *APA Publication Manual*.
 
 
 ```{r}
 #| label: tbl-mytable
 #| tbl-cap: The Table Caption. 
-#| echo: true
+#| echo: false
+#| apa-twocolumn: true
 #| apa-note: 
 #|   - This is the first paragraph.
 #|   - This is a second paragraph. 
-tibble(Numbers = seq(1,4), Letters = LETTERS[seq(Numbers)]) %>%
-  knitr::kable(align = "cc")
+
+lm(price ~ carat + depth + table, data = ggplot2::diamonds) |>  
+  apa_parameters() |> 
+  apa_flextable()
 
 ```
 
-To refer to this table in text, use the `@` symbol followed by the reference label like so: As seen in @tbl-mytable, the first few numbers and letters of the alphabet are displayed.
+To refer to this table in text, use the `@` symbol followed by the reference label like so: As seen in @tbl-mytable, the price of a diamond is related to several features of the diamond.
 
 
 
@@ -395,34 +407,18 @@ If there is only one appendix, the label inserted above the the appendix title w
 
 To cite an appendix as a whole, reference it with the `@apx-` prefix. For example, see @apx-a and @apx-b.
 
-@apx-a is an appendix with a table using flextable (see @tbl-flextable).
+@apx-a is an appendix with a contingency table (see @tbl-chisq).
 
 ```{r}
-#| label: tbl-flextable
-#| tbl-cap: Demonstration of flextable functions
-
+#| label: tbl-chisq
+#| tbl-cap: Contingency table
+#| apa-twocolumn: true
 mtcars |>
-  select(Gears = gear, Transmission = am) |>
+  select(Transmission = am, Gears = gear) |>
   mutate(Gears = factor(Gears),
          Transmission = factor(Transmission, 
                                labels = c("Automatic", "Manual"))) |>
-  count(Transmission, Gears, .drop = FALSE) |>
-  mutate(p = scales::percent(n / sum(n)), .by = Transmission) |>
-  pivot_wider(
-    names_from = Transmission,
-    values_from = c(n, p),
-    names_glue = "{Transmission}_{.value}",
-    names_vary = "slowest"
-  ) |>
-  flextable() |>
-  separate_header() |>
-  surround(i = 2,
-           border.top = fp_border_default(),
-           part = "header") |>
-  italic(i = 2, part = "header") |>
-  theme_apa() |>
-  set_table_properties(align = "left") |> 
-  width(width = .6)
+  apa_chisq()
 ```
 
 

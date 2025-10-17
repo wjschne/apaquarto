@@ -52,7 +52,6 @@ end
 
 local function getappendix(h)
   if h.attr.attributes.appendixtitle then
-    --print(h.identifier)
     app[h.identifier] = h.attr.attributes.appendixtitle
     appendixcount = appendixcount + 1
     if FORMAT == "latex" then

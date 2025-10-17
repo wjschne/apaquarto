@@ -19,6 +19,11 @@ engine: knitr
     * Full language option support
 
 
+# Version 5.0.12
+- 2025-10-17
+- [#139](https://github.com/wjschne/apaquarto/issues/139) Fixed but where typst note
+- [#142](https://github.com/wjschne/apaquarto/issues/142) Fixed bug where `apa-note` was sometimes being incorrectly interpreted as a list instead of a paragraph. Thanks [RDutschke](https://github.com/RDutschke)!
+
 # Version 5.0.11
 - 2025-08-21
 - Added support for the `note` field for pdf in `stu` mode. Thanks [choc96208](https://github.com/choc96208)!
@@ -37,7 +42,7 @@ engine: knitr
 
 # Version 5.0.7
 - 2025-08-11
-- - [#137](https://github.com/wjschne/apaquarto/issues/137) Fixed error for when user does not supply a document mode for apaquarto-pdf documents. Thanks [Clemens Brunner](https://github.com/cbrnr)!
+- [#137](https://github.com/wjschne/apaquarto/issues/137) Fixed error for when user does not supply a document mode for apaquarto-pdf documents. Thanks [Clemens Brunner](https://github.com/cbrnr)!
     
 # Version 5.0.6
 - 2025-08-05

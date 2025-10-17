@@ -19,7 +19,7 @@ function M.make_note(s, prefix)
     apanote.classes:extend({ "NoIndent" })
     cnt = cnt + 1
     if (cnt == 1 and includeprefix) then
-      apanote.content:extend(prefix.content:extend(quarto.utils.string_to_inlines(v)))
+      apanote.content:extend(prefix.content:extend(quarto.utils.string_to_inlines(v:gsub(" ", "\u{00A0}", 1))))
     else
       apanote.content:extend(quarto.utils.string_to_inlines(v))
     end
@@ -40,6 +40,16 @@ function M.stringify(s, default)
     end
   end
   return s
+end
+
+-- if any value in table
+function M.containsValue(tbl, value)
+  for _, v in pairs(tbl) do
+    if v == value then
+      return true
+    end
+  end
+  return false
 end
 
 return M

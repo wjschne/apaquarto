@@ -46,6 +46,7 @@ function Pandoc(doc)
 
 
       if doc.blocks[i].attributes["apa-note"] then
+        
         doc.blocks[i].classes:insert("FigureWithNote")
         doc.blocks[i].attributes["custom-style"] = "FigureWithNote"
       else
