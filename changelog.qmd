@@ -21,7 +21,7 @@ engine: knitr
 
 # Version 5.0.12
 - 2025-10-17
-- [#139](https://github.com/wjschne/apaquarto/issues/139) Fixed but where typst note
+- [#139](https://github.com/wjschne/apaquarto/issues/139) Fixed `apa-note` problem with Typst. Thanks [lalamilalami](https://github.com/lalamilalami), [jgeller112](https://github.com/jgeller112), and  [RDutschke](https://github.com/RDutschke)!
 - [#142](https://github.com/wjschne/apaquarto/issues/142) Fixed bug where `apa-note` was sometimes being incorrectly interpreted as a list instead of a paragraph. Thanks [RDutschke](https://github.com/RDutschke)!
 
 # Version 5.0.11
