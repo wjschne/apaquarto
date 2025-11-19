@@ -134,7 +134,7 @@ language:
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 # Keep `false` to remain consistent with APA style. If `true`, replaces ampersands with `and` or word specified in `citation-last-author-separator` in parenthetical citations. 
 no-ampersand-parenthetical: false
-fontsize: 12pt
+fontsize: 10pt
 format:
   apaquarto-html: 
     toc: true
@@ -148,7 +148,7 @@ format:
     papersize: "us-letter"
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    documentmode: jou
     keep-tex: true
 ---
 

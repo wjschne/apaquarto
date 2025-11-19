@@ -18,6 +18,10 @@ engine: knitr
     * Line numbering
     * Full language option support
 
+# Version 5.0.13
+- 2025-11-19
+- [#143](https://github.com/wjschne/apaquarto/issues/143) Allow `fontsize` to be set for .pdf. Options are `10pt`, `11pt`, and `12pt`. Thanks [Matthew Warburton](https://github.com/mwarb) for bringing this to my attention.
+
 
 # Version 5.0.12
 - 2025-10-17

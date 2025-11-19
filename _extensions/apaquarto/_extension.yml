@@ -1,6 +1,6 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 5.0.12
+version: 5.0.13
 quarto-required: ">=1.4.549"
 contributes:
   formats:

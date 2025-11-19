@@ -172,14 +172,14 @@
     "href": "installation.html#install-quarto",
     "title": "Installation",
     "section": "Install Quarto",
-    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\nIf you use a recent version of RStudio, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.\n\n\n\n\n\n\nNoteHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
+    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\nIf you use a recent version of RStudio, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.\n\n\n\n\n\n\nHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
   },
   {
     "objectID": "installation.html#install-a-programming-language",
     "href": "installation.html#install-a-programming-language",
     "title": "Installation",
     "section": "Install a Programming Language",
-    "text": "Install a Programming Language\nYour primary options are\n\nR\nPython\nJulia\n\n\n\n\n\n\n\nTipWhat if I do not want to use any programming languages?\n\n\n\n\n\nIf you just want to use apaquarto to make APA-style documents, but do not plan to do any analyses, install R and RStudio. You do not need R for anything, but the Quarto experience will be easier in RStudio with R installed."
+    "text": "Install a Programming Language\nYour primary options are\n\nR\nPython\nJulia\n\n\n\n\n\n\n\nWhat if I do not want to use any programming languages?\n\n\n\n\n\nIf you just want to use apaquarto to make APA-style documents, but do not plan to do any analyses, install R and RStudio. You do not need R for anything, but the Quarto experience will be easier in RStudio with R installed."
   },
   {
     "objectID": "installation.html#install-your-programming-environment",
