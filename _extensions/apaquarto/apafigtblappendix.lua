@@ -55,8 +55,10 @@ local function gettablefig(m)
       if fig[float.identifier] then
         -- Figure is already in the array. Do not add.
       else
-        --Add figure to array
-        fig[float.identifier] = float.attributes.prefix .. float.attributes.fignum
+        --Add figure to array (only if prefix and fignum exist)
+        if float.attributes.prefix and float.attributes.fignum then
+          fig[float.identifier] = float.attributes.prefix .. float.attributes.fignum
+        end
       end
     end
     i = i + 1
