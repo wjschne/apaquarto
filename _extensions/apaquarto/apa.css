@@ -90,3 +90,8 @@ table {
 .tabwid {padding: 0}
 
 .AbstractFirstParagraph p {text-indent: 0}
+
+.sourceCode {
+  font-family: Consolas, "Lucida Console", "Courier New", monospace;
+  font-size: 10pt;
+}

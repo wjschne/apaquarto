@@ -99,7 +99,7 @@ local walkblock = function(b)
       
       if (headerfirstword == appendixword or headerfirstword == "Appendix") and newsppendixstyle then
         print(
-        "This style of creating appendices is deprecated:\n\n# Appendix A\n\n#Relationship Descriptive Scale\n\nInstead, use a single descriptive level-1 heading,\nfollowed by a an identifier with the apx prefix:\n\n# Relationship Description Scale {@apx-relationship}\n")
+        "This style of creating appendices is deprecated:\n\n# Appendix A\n\n#Relationship Descriptive Scale\n\nInstead, use a single descriptive level-1 heading,\nfollowed by a an identifier with the apx prefix:\n\n# Relationship Description Scale {#apx-relationship}\n")
         newsppendixstyle = false
       end
 

@@ -83,7 +83,7 @@ local processfloat = function(float)
     local latextableenv = "table"
     -- Manuscript spacing before note needs adjustment ment
     if manuscriptmode then
-      beforenote = "\\vspace{-20pt}\n"
+      beforenote = "\\vspace{-12pt}\n"
       if float.attributes["beforenotespace"] then
         beforenote = "\\vspace{" .. float.attributes["beforenotespace"] .. "}\n"
       end

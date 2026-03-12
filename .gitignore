@@ -18,6 +18,7 @@ example.fff
 example.log
 example.tex
 example.typ
+example.out
 example-pdf-man.pdf
 example_files/
 Features.html
@@ -46,6 +47,7 @@ template.rmarkdown
 template.ttt
 template.tex
 template.out
+template.typ
 template_files/
 test.*
 test_*

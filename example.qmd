@@ -1,5 +1,5 @@
 ---
-title: "Using Quarto to Generate Documents in APA Style (7th Edition)"
+title: "Write APA Style Documents Using Quarto"
 # If blank, the running header is the title in upper case.
 shorttitle: "Template for the apaquarto Extension"
 # Set names and affiliations.
@@ -134,7 +134,7 @@ language:
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 # Keep `false` to remain consistent with APA style. If `true`, replaces ampersands with `and` or word specified in `citation-last-author-separator` in parenthetical citations. 
 no-ampersand-parenthetical: false
-fontsize: 10pt
+fontsize: 12pt
 format:
   apaquarto-html: 
     toc: true
@@ -148,7 +148,7 @@ format:
     papersize: "us-letter"
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou
+    documentmode: man
     keep-tex: true
 ---
 
@@ -177,7 +177,7 @@ Details about writing headings with markdown in APA style are [here](https://wjs
 
 ## YAML metadata
 
-At the top of the apaquarto document, there is a lot of metadata (e.g., title, authors, affiliations, abstract, and so forth). Although the various options apaquarto are all documented, keeping track of them all can be difficult. Generating the inti
+At the top of the apaquarto document, there is a lot of metadata (e.g., title, authors, affiliations, abstract, and so forth) written in YAML. Although the various options apaquarto are all documented, keeping track of them all can be difficult. Generating the initial YAML metadata can be easier if one begins with the the [apa7maker](https://wjschne.github.io/apa7maker/) web app.
 
 ## Citations
 
@@ -374,6 +374,8 @@ Describe the basic characteristics of the primary variables. My ideal is to desc
 
 : My Caption. {#tbl-mymarkdowntable2 apa-note="My note"}
 
+
+
 # Discussion
 
 Describe results in non-statistical terms. <!-- Add sections as needed. -->
@@ -395,11 +397,11 @@ Describe the main point of the paper.
 :::
 
 
-# My Appendix Title {#apx-a}
+# My Appendix {#apx-a}
 
 Any level 1 heading after the reference section (if it exists) is an appendix. If you do not specify a reference section, you will need to give the level-1 heading an identifier with an `#apx-` prefix. For example,
 
-`# My Appendix Title {#apx-firstappendix}`
+`# My Appendix {#apx-a}`
 
 Appendices are created as level 1 headings with an  `#apx-` prefix in the identifier. Appendix titles should be in title case and should describe the content of the appendix.
 

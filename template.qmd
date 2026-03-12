@@ -33,7 +33,8 @@ bibliography: bibliography.bib
 format:
   apaquarto-docx: default
   apaquarto-html: default
-  apaquarto-typst: default
+  apaquarto-typst: 
+    keep-typ: true
   apaquarto-pdf:
     documentmode: man
 ---

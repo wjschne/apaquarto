@@ -1,6 +1,6 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 5.0.13
+version: 5.0.15
 quarto-required: ">=1.4.549"
 contributes:
   formats:
@@ -151,6 +151,7 @@ contributes:
       fig-cap-location: top
       html-math-method: katex
       mainfont: Times, Times New Roman, serif
+      monofont: Consolas, Lucida Console, Courier New, monospace
       grid: 
         body-width: "7in"
       css: apa.css

@@ -1,7 +1,7 @@
 $doc-class.tex()$
 \usepackage{amsmath}
 \usepackage{amssymb}
-
+\usepackage{setspace}
 $if(docmode)$
 \geometry{inner=1in, outer=1in}
 \fancyhfoffset[LE,RO]{0cm}
@@ -39,6 +39,9 @@ $endif$
 
 \RequirePackage{longtable}
 \RequirePackage{threeparttablex}
+
+\usepackage{framed}
+
 
 $header.tex()$
 
@@ -247,12 +250,19 @@ $if(first-page)$
 \setcounter{page}{$first-page$}
 $endif$
 
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{snugshade}\begin{singlespace}}{\end{singlespace}\end{snugshade}}\fi
+
+$if(journalmode)$
+$else$
+\setlength{\cslhangindent}{0.5in}
+$endif$
 
 $body$
 
 $before-bib.tex()$
 
-$if(zeroitations)$
+$if(zerocitations)$
+$else$
 $biblio.tex()$
 $endif$
 
