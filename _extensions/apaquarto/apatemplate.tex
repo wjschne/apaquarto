@@ -60,7 +60,14 @@ $citations.tex()$
 
 
 $if(numbered-lines)$
+$if(journalmode)$
 \usepackage[nolongtablepatch]{lineno}
+\setlength\linenumbersep{5pt}
+\setlength\columnsep{25pt}
+$else$
+\usepackage[nolongtablepatch]{lineno}
+$endif$
+
 \linenumbers
 $endif$
 
