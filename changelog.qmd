@@ -18,6 +18,11 @@ engine: knitr
     * Line numbering
     * Full language option support
 
+# Version 5.0.16
+- 2026-03-25
+- [#152](https://github.com/wjschne/apaquarto/issues/152) Fix .pdf journal mode line numbers Thanks [Ana Neves](https://github.com/AnafNeves)
+
+
 # Version 5.0.15
 - 2026-03-11
 - [#150](https://github.com/wjschne/apaquarto/issues/150) Fix .pdf hanging indent for manuscript references. Thanks [Jillian Reynolds](https://github.com/jillianwreynolds)
