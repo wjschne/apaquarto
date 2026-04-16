@@ -1,0 +1,71 @@
+---
+title: "Long Table Reproducer"
+shorttitle: "Issue 71"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+bibliography: references.bib
+floatsintext: true
+keep-tex: true
+format:
+  apaquarto-pdf:
+    documentmode: man
+    include-in-header:
+      text: |
+        % Temporary workaround for a separate Quarto 1.9 / CSL length issue.
+        % This is not part of the longtable fix itself.
+        \newlength{\cslhangindent}
+        \newlength{\csllabelwidth}
+---
+
+This document reproduces the long-table clipping problem in manuscript-mode PDF output.
+
+| Row | Description | Value A | Value B | Value C |
+|-----|-------------|---------|---------|---------|
+| 1 | Lorem ipsum dolor sit amet consectetur | 0.123 | 0.456 | 0.789 |
+| 2 | Sed do eiusmod tempor incididunt ut labore | 0.234 | 0.567 | 0.890 |
+| 3 | Ut enim ad minim veniam quis nostrud | 0.345 | 0.678 | 0.901 |
+| 4 | Duis aute irure dolor in reprehenderit | 0.456 | 0.789 | 0.012 |
+| 5 | Excepteur sint occaecat cupidatat non proident | 0.567 | 0.890 | 0.123 |
+| 6 | Sunt in culpa qui officia deserunt mollit | 0.678 | 0.901 | 0.234 |
+| 7 | Nemo enim ipsam voluptatem quia voluptas sit | 0.789 | 0.012 | 0.345 |
+| 8 | Neque porro quisquam est qui dolorem ipsum | 0.890 | 0.123 | 0.456 |
+| 9 | Quis autem vel eum iure reprehenderit qui | 0.901 | 0.234 | 0.567 |
+| 10 | At vero eos et accusamus et iusto odio | 0.012 | 0.345 | 0.678 |
+| 11 | Nam libero tempore cum soluta nobis est | 0.111 | 0.444 | 0.777 |
+| 12 | Temporibus autem quibusdam et aut officiis | 0.222 | 0.555 | 0.888 |
+| 13 | Itaque earum rerum hic tenetur a sapiente | 0.333 | 0.666 | 0.999 |
+| 14 | Nisi ut aliquid ex ea commodi consequatur | 0.141 | 0.272 | 0.393 |
+| 15 | Ut aut reiciendis voluptatibus maiores alias | 0.151 | 0.282 | 0.303 |
+| 16 | Et harum quidem rerum facilis est expedita | 0.161 | 0.292 | 0.313 |
+| 17 | Similique sunt in culpa qui officia deserunt | 0.171 | 0.302 | 0.323 |
+| 18 | Nemo enim ipsam voluptatem quia voluptas sit | 0.181 | 0.312 | 0.333 |
+| 19 | Sed ut perspiciatis unde omnis iste natus | 0.191 | 0.322 | 0.343 |
+| 20 | Accusantium doloremque laudantium totam rem | 0.201 | 0.332 | 0.353 |
+| 21 | Inventore veritatis et quasi architecto beatae | 0.211 | 0.342 | 0.363 |
+| 22 | Vitae dicta sunt explicabo enim ipsam voluptatem | 0.221 | 0.352 | 0.373 |
+| 23 | Totam rem aperiam eaque ipsa quae ab illo | 0.231 | 0.362 | 0.383 |
+| 24 | Perspiciatis unde omnis iste natus error sit | 0.241 | 0.372 | 0.393 |
+| 25 | Voluptatem accusantium doloremque laudantium | 0.251 | 0.382 | 0.403 |
+| 26 | Beatae vitae dicta sunt explicabo nemo enim | 0.261 | 0.392 | 0.413 |
+| 27 | Ipsam voluptatem quia voluptas sit aspernatur | 0.271 | 0.402 | 0.423 |
+| 28 | Aut odit aut fugit sed quia consequuntur | 0.281 | 0.412 | 0.433 |
+| 29 | Magni dolores eos qui ratione voluptatem sequi | 0.291 | 0.422 | 0.443 |
+| 30 | Nesciunt neque porro quisquam est qui dolorem | 0.301 | 0.432 | 0.453 |
+| 31 | Ipsum quia dolor sit amet consectetur adipisci | 0.311 | 0.442 | 0.463 |
+| 32 | Velit sed quia non numquam eius modi tempora | 0.321 | 0.452 | 0.473 |
+| 33 | Incidunt ut labore et dolore magnam aliquam | 0.331 | 0.462 | 0.483 |
+| 34 | Quaerat voluptatem ut enim ad minima veniam | 0.341 | 0.472 | 0.493 |
+| 35 | Quis nostrum exercitationem ullam corporis | 0.351 | 0.482 | 0.503 |
+| 36 | Suscipit laboriosam nisi ut aliquid ex ea | 0.361 | 0.492 | 0.513 |
+| 37 | Commodi consequatur quis autem vel eum iure | 0.371 | 0.502 | 0.523 |
+| 38 | Reprehenderit qui in ea voluptate velit esse | 0.381 | 0.512 | 0.533 |
+| 39 | Quam nihil molestiae consequatur vel illum qui | 0.391 | 0.522 | 0.543 |
+| 40 | Dolorem eum fugiat quo voluptas nulla pariatur | 0.401 | 0.532 | 0.553 |
+
+: A very long table that should span multiple pages. {#tbl-long apa-note="This note should appear below the table." apa-longtable="true"}
+
+Some text after the table to confirm it rendered completely.
