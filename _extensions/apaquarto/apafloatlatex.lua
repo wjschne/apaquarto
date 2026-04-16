@@ -79,6 +79,30 @@ local processfloat = function(float)
   end
 
   if float.type == "Table" then
+    -- Long-table mode: skip float wrapper so longtable can page-break
+    if float.attributes["apa-longtable"] == "true" and not journalmode then
+      local blocks = pandoc.Blocks({})
+      -- Use Quarto's native longtable output (caption + label included)
+      if float.__quarto_custom_node then
+        blocks:insert(float.__quarto_custom_node)
+      else
+        blocks:extend(float.content)
+      end
+      -- Append apa-note if present
+      if float.attributes["apa-note"] then
+        local bn = ""
+        if manuscriptmode then
+          bn = "\\vspace{-12pt}\n"
+          if float.attributes["beforenotespace"] then
+            bn = "\\vspace{" .. float.attributes["beforenotespace"] .. "}\n"
+          end
+        end
+        local npfx = pandoc.Span(pandoc.RawInline("latex", bn .. noteprefix))
+        blocks:insert(utilsapa.make_note(float.attributes["apa-note"], npfx))
+      end
+      return pandoc.Div(blocks)
+    end
+
     -- Default table environment
     local latextableenv = "table"
     -- Manuscript spacing before note needs adjustment ment
