@@ -1,0 +1,19 @@
+---
+title: "CSL Length Compatibility Reproducer"
+shorttitle: "CSL lengths"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+bibliography: references.bib
+format:
+  apaquarto-pdf:
+    documentmode: man
+keep-tex: true
+---
+
+This document exercises the bibliography formatting path without any local header workaround.
+
+A citation should be enough to trigger CSL-related formatting [@schneiderCattellHornCarrollTheoryCognitive2018].

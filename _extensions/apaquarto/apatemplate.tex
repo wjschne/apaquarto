@@ -261,6 +261,8 @@ $endif$
 
 $if(journalmode)$
 $else$
+\ifdefined\cslhangindent\else\newlength{\cslhangindent}\fi
+\ifdefined\csllabelwidth\else\newlength{\csllabelwidth}\fi
 \setlength{\cslhangindent}{0.5in}
 $endif$
 
