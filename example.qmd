@@ -175,12 +175,6 @@ set_flextable_defaults(theme_fun = theme_apa,
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
-```{r}
-#| label: tbl-example
-#| tbl-cap: "example"
-data.frame(x = -1.5) |> knitr::kable()
-```
-
 Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style). In general, level 1 headings should be reserved for the Method, Results, Discussion, References, and Appendices sections. 
 
 ## YAML metadata
