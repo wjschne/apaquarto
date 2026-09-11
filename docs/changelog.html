@@ -304,8 +304,9 @@ window.Quarto = {
 <ul>
 <li>2026-09-11</li>
 <li><code>mainfont</code>, <code>monofont</code>, and <code>papersize</code> now work with docx via the <code>docxreferencedoc.lua</code> filter (credit to Claude)</li>
+<li>Fixed .docx 4th and 5th level headers with ampersands (credit to Claude).</li>
 <li>apaquarto-pdf uses lualatex (the new Quarto default engine).</li>
-<li><a href="https://github.com/wjschne/apaquarto/issues/157">#157</a> Because of the switch to the lualatex engine, users can specify screen reader accessibility via <a href="https://quarto.org/docs/output-formats/pdf-basics.html#pdf-accessibility-standards"><code>pdf-standard: ua-2</code></a> in their apaquarto-pdf options. Thanks <a href="https://github.com/wjschne/apaquarto/issues/157">Issac Petersen</a></li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/157">#157</a> Because of the switch to the lualatex engine, users can specify screen reader accessibility via <a href="https://quarto.org/docs/output-formats/pdf-basics.html#pdf-accessibility-standards"><code>pdf-standard: ua-2</code></a> in their apaquarto-pdf options. Unfortunately, flextable tables (and therefore apa7 tables) are not yet ua-2 compliant and will result in a compilation error if ua-2 standards are enforced. Thanks <a href="https://github.com/wjschne/apaquarto/issues/157">Issac Petersen</a></li>
 </ul>
 </section>
 <section id="version-5.0.18" class="level1">
