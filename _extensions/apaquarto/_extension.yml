@@ -62,6 +62,10 @@ contributes:
         # Sets language defaults other than English
         - at: pre-ast
           path: apalanguage.lua
+        # Recover the apa-note of a plain markdown table before quarto
+        # flattens it
+        - at: pre-ast
+          path: apatablenote.lua
         # Prepare plain markdown tables to be used by crossrefprefix.lua
         - at: pre-ast
           path: markdowntable.lua
@@ -75,6 +79,9 @@ contributes:
         # Set latex document mode
         - at: pre-ast
           path: journalmode.lua
+        # Put papersize in the form the latex document class wants
+        - at: pre-ast
+          path: apapapersize.lua
         # Set latex images to column width by default
         - at: pre-ast
           path: apafigurewidthlatex.lua     
@@ -114,6 +121,8 @@ contributes:
         # Inserts appendix prefixes to tables and figures
         - at: pre-quarto
           path: apafigtblappendix.lua
+        - at: post-quarto
+          path: floatwithsubfigure.lua
         # Process tables and figures in latex
         - at: post-quarto
           path: apafloatlatex.lua
@@ -144,6 +153,9 @@ contributes:
         # Process appendices in latex
         - at: post-render
           path: apaappendixlatex.lua
+        # Warn when a pdf standard cannot work with the document's tables
+        - at: post-render
+          path: apapdfstandard.lua
     native: default
     html:
       toc: true
@@ -165,7 +177,7 @@ contributes:
           dev: svglite
     pdf:
       documentclass: apa7
-      pdf-engine: xelatex
+      pdf-engine: lualatex
       suppress-bibliography: false
       hyperrefoptions: 
         - linktoc=none
@@ -186,6 +198,10 @@ contributes:
         # Add line numbers and format Latex symbol
         - at: post-render
           path: docxlinenumber.lua
+        # Set the docx fonts and page size from the mainfont, monofont
+        # and papersize options
+        - at: post-render
+          path: docxreferencedoc.lua
       knitr: 
         opts_chunk: 
           dev: ragg_png

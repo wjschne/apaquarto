@@ -30,19 +30,36 @@ end
 -- Is the .pdf in journal mode?
 local journalmode = false
 local manuscriptmode = true
-local noteprefix = "\\noindent\\textit{Note.}"
+-- A float resets the line spacing, so the note asks for the document's own
+-- spacing back. apatemplate.tex defines \apanotespacing.
+local notespacing = "\\ifdefined\\apanotespacing\\apanotespacing\\fi "
+local noteprefix = notespacing .. "\\noindent\\textit{Note.}"
 local beforenote = ""
+-- Notes recovered from markdown table captions by apatablenote.lua, keyed by
+-- the table identifier. Quarto flattens the note it puts on the table itself.
+local tablenotes = {}
+
+-- The note as written, preferring the recovered copy
+local function get_note(float)
+  return tablenotes[float.identifier] or float.attributes["apa-note"]
+end
+
 local getmode = function(meta)
   local documentmode = pandoc.utils.stringify(meta["documentmode"])
   journalmode = documentmode == "jou"
   manuscriptmode = documentmode == "man"
+  if meta["apa-table-notes"] then
+    for id, note in pairs(meta["apa-table-notes"]) do
+      tablenotes[id] = pandoc.utils.stringify(note)
+    end
+  end
   -- Find word for "note"
   if not meta.language["figure-table-note"] then
     if param("callout-note-title") then
       meta.language["figure-table-note"] = param("callout-note-title")
     end
   end
-  noteprefix = "\\noindent \\emph{" .. meta.language["figure-table-note"] .. ".} "
+  noteprefix = notespacing .. "\\noindent \\emph{" .. meta.language["figure-table-note"] .. ".} "
 end
 
 
@@ -100,7 +117,7 @@ local processfloat = function(float)
           end
         end
         local npfx = pandoc.Span(pandoc.RawInline("latex", bn .. noteprefix))
-        blocks:insert(utilsapa.make_note(float.attributes["apa-note"], npfx))
+        blocks:insert(utilsapa.make_note(get_note(float), npfx))
       end
       return pandoc.Div(blocks)
     end
@@ -137,7 +154,7 @@ local processfloat = function(float)
     -- Add note
     if float.attributes["apa-note"] then
       local note_prefix = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
-      apanotedivs = utilsapa.make_note(float.attributes["apa-note"], note_prefix)
+      apanotedivs = utilsapa.make_note(get_note(float), note_prefix)
     end
 
     local captionsubspan = pandoc.Span({
@@ -228,7 +245,7 @@ local processfloat = function(float)
         -- Add note
         if float.attributes["apa-note"] then
           local note_prefix = pandoc.Span(pandoc.RawInline("latex", beforenote .. noteprefix))
-          apanotedivs = utilsapa.make_note(float.attributes["apa-note"], note_prefix)
+          apanotedivs = utilsapa.make_note(get_note(float), note_prefix)
         end
       end
 

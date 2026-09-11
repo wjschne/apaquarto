@@ -24,10 +24,14 @@
 // documentmode: man
 #let man(
   title: none,
+  authors: (),
+  keywords: (),
   runninghead: none,
   margin: (x: 1in, y: 1in),
   paper: "us-letter",
   font: ("Times", "Times New Roman"),
+  // typst's own default monospace font
+  monofont: ("DejaVu Sans Mono",),
   fontsize: 12pt,
   leading: 18pt,
   spacing: 18pt,
@@ -42,8 +46,16 @@
   doc,
 ) = {
 
+  // Document metadata for pdf accessibility. A pdf has no title without
+  // this, which is one of the things pdf/ua conformance asks for.
+  set document(title: title, keywords: keywords)
+  set document(author: authors.map(content-to-string)) if authors != ()
+
   if suppresstitlepage {counter(page).update(first-page)}
   
+  // code blocks and inline code
+  show raw: set text(font: monofont)
+
    show raw.where(block: true): set par(
     spacing: 6pt,
     leading: 6pt
@@ -103,6 +115,9 @@
 
   // format figure captions
   show figure.where(kind: "quarto-float-fig"): it => block(width: 100%, breakable: false)[
+  #if type(it.numbering) == function [
+      #it
+    ] else [
     #if int(appendixcounter.display().at(0)) > 0 [
       #heading(level: 2, outlined: false)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
     ] else [
@@ -110,19 +125,27 @@
     ]
     #align(left)[#par[#emph[#it.caption.body]]]
     #align(center)[#it.body]
-  ]
+    
+  ]]
   
   // format table captions
-  show figure.where(kind: "quarto-float-tbl"): it => block(width: 100%, breakable: false)[#align(left)[
-  
-    #if int(appendixcounter.display().at(0)) > 0 [
-      #heading(level: 2, outlined: false, numbering: none)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
-    ] else [
-      #heading(level: 2, outlined: false, numbering: none)[#it.supplement #it.counter.display()]
-    ]
-    #par[#emph[#it.caption.body]]
-    #block[#it.body]
-  ]]
+  // skip custom formatting for sub-figures inside quarto_super (their numbering is set to a function)
+  show figure.where(kind: "quarto-float-tbl"): it => {
+    if type(it.numbering) == function {
+      it
+    } else {
+      block(width: 100%, breakable: false)[#align(left)[
+
+        #if int(appendixcounter.display().at(0)) > 0 [
+          #heading(level: 2, outlined: false, numbering: none)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
+        ] else [
+          #heading(level: 2, outlined: false, numbering: none)[#it.supplement #it.counter.display()]
+        ]
+        #par[#emph[#it.caption.body]]
+        #block[#it.body]
+      ]]
+    }
+  }
   
     set heading(numbering: "1.1")
     

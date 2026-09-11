@@ -11,12 +11,18 @@ engine: knitr
     * Tables in .pdf jou mode should fit automatically.
     * Figure out why text disappears whenever there are too many tables and figures too close together.
 - Implement missing .docx features
-    * Full control of font, paper size
     * Right-align equation numbers
 - Implement missing Typst features
     * Journal format
     * Line numbering
     * Full language option support
+
+# Version 6.0.0
+- 2026-09-11
+- `mainfont`, `monofont`, and `papersize` now work with docx via the `docxreferencedoc.lua` filter (credit to Claude)
+- apaquarto-pdf uses lualatex (the new Quarto default engine).
+- [#157](https://github.com/wjschne/apaquarto/issues/157) Because of the switch to the lualatex engine, users can specify screen reader accessibility via [`pdf-standard: ua-2`](https://quarto.org/docs/output-formats/pdf-basics.html#pdf-accessibility-standards) in their apaquarto-pdf options. Unfortunately, flextable tables (and therefore apa7 tables) are not yet ua-2 compliant and will result in a compilation error if ua-2 standards are enforced. Thanks [Issac Petersen](https://github.com/wjschne/apaquarto/issues/157)
+
 
 # Version 5.0.18
 - 2026-03-25
@@ -24,7 +30,7 @@ engine: knitr
     
 # Version 5.0.17
 - 2026-03-25
-- [#152](https://github.com/wjschne/apaquarto/issues/71) Fix .pdf longtable problem Thanks [drfurtado](https://github.com/drfurtado) for identifing the problem and [Michael Zehetleitner](https://github.com/michaelzehetleitner) posting a solution.
+- [#152](https://github.com/wjschne/apaquarto/issues/152) Fix .pdf longtable problem Thanks [drfurtado](https://github.com/drfurtado) for identifing the problem and [Michael Zehetleitner](https://github.com/michaelzehetleitner) posting a solution.
 - Allow 4th and 5th level headings to end with an exclamation point (credit to Claude)
 - Fixed minor coding bugs in Typst and Lua (credit to Claude)
 - Fixed minor documentation errors (credit to Claude)

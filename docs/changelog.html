@@ -171,6 +171,8 @@ window.Quarto = {
    
   <ul>
   <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-6.0.0" id="toc-version-6.0.0" class="nav-link" data-scroll-target="#version-6.0.0">Version 6.0.0</a></li>
+  <li><a href="#version-5.0.18" id="toc-version-5.0.18" class="nav-link" data-scroll-target="#version-5.0.18">Version 5.0.18</a></li>
   <li><a href="#version-5.0.17" id="toc-version-5.0.17" class="nav-link" data-scroll-target="#version-5.0.17">Version 5.0.17</a></li>
   <li><a href="#version-5.0.16" id="toc-version-5.0.16" class="nav-link" data-scroll-target="#version-5.0.16">Version 5.0.16</a></li>
   <li><a href="#version-5.0.15" id="toc-version-5.0.15" class="nav-link" data-scroll-target="#version-5.0.15">Version 5.0.15</a></li>
@@ -287,7 +289,6 @@ window.Quarto = {
 </ul></li>
 <li>Implement missing .docx features
 <ul>
-<li>Full control of font, paper size</li>
 <li>Right-align equation numbers</li>
 </ul></li>
 <li>Implement missing Typst features
@@ -298,11 +299,30 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
+<section id="version-6.0.0" class="level1">
+<h1>Version 6.0.0</h1>
+<ul>
+<li>2026-09-11</li>
+<li><code>mainfont</code>, <code>monofont</code>, and <code>papersize</code> now work with docx via the <code>docxreferencedoc.lua</code> filter (credit to Claude)</li>
+<li>apaquarto-pdf uses lualatex (the new Quarto default engine).</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/157">#157</a> Because of the switch to the lualatex engine, users can specify screen reader accessibility via <a href="https://quarto.org/docs/output-formats/pdf-basics.html#pdf-accessibility-standards"><code>pdf-standard: ua-2</code></a> in their apaquarto-pdf options. Thanks <a href="https://github.com/wjschne/apaquarto/issues/157">Issac Petersen</a></li>
+</ul>
+</section>
+<section id="version-5.0.18" class="level1">
+<h1>Version 5.0.18</h1>
+<ul>
+<li>2026-03-25</li>
+<li>Multiple pull requests from <a href="https://github.com/michaelzehetleitner">Michael Zehetleitner</a> to make the extension more robust.</li>
+</ul>
+</section>
 <section id="version-5.0.17" class="level1">
 <h1>Version 5.0.17</h1>
 <ul>
 <li>2026-03-25</li>
-<li><a href="https://github.com/wjschne/apaquarto/issues/71">#152</a> Fix .pdf longtable problem Thanks <a href="https://github.com/drfurtado">drfurtado</a> for identifing the problem and <a href="https://github.com/michaelzehetleitner">Michael Zehetleitner</a> posting a solution.</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/152">#152</a> Fix .pdf longtable problem Thanks <a href="https://github.com/drfurtado">drfurtado</a> for identifing the problem and <a href="https://github.com/michaelzehetleitner">Michael Zehetleitner</a> posting a solution.</li>
+<li>Allow 4th and 5th level headings to end with an exclamation point (credit to Claude)</li>
+<li>Fixed minor coding bugs in Typst and Lua (credit to Claude)</li>
+<li>Fixed minor documentation errors (credit to Claude)</li>
 </ul>
 </section>
 <section id="version-5.0.16" class="level1">

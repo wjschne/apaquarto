@@ -1,4 +1,16 @@
 #show: document => $documentmode$(
+$if(title)$
+  title: [$title$],
+$endif$
+$if(suppress-author)$
+$else$
+$if(by-author)$
+  authors: ($for(by-author)$$if(it.apaauthordisplay)$[$it.apaauthordisplay$],$endif$$endfor$),
+$endif$
+$endif$
+$if(keywords)$
+  keywords: ($for(keywords)$"$keywords$",$endfor$),
+$endif$
 $if(suppress-short-title)$
 $else$
 $if(shorttitle)$
@@ -16,7 +28,10 @@ $if(margin)$
   margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
 $endif$
 $if(mainfont)$
-  font: ("$mainfont$",),
+  font: ($for(mainfont)$"$mainfont$",$endfor$),
+$endif$
+$if(monofont)$
+  monofont: ($for(monofont)$"$monofont$",$endfor$),
 $endif$
 $if(fontsize)$
   fontsize: $fontsize$,

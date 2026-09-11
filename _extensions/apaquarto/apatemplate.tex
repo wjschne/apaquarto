@@ -1,4 +1,17 @@
+$-- \DocumentMetadata has to come before \documentclass. Quarto fills this in
+$-- from the pdf-standard option, and writes nothing without it.
+$document-metadata.latex()$
 $doc-class.tex()$
+$if(pdfstandard)$
+% latex's tagging code patches \@makefntext by looking in its definition for
+% \hbox, \hb@xt@, \makebox or \@makefnmark, and stops with an error when it
+% finds none. apa7 defines it with \@thefnmark instead, so it is given here in
+% the equivalent form the tagging code can work with. The footnote mark is
+% unchanged: \@makefnmark is itself the superscripted \@thefnmark.
+\makeatletter
+\long\def\@makefntext#1{\raggedright\@makefnmark~#1}
+\makeatother
+$endif$
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{setspace}
@@ -10,6 +23,43 @@ $endif$
 $if(geometry)$
 \geometry{$for(geometry)$$geometry$$sep$,$endfor$}
 \fancyhfoffset[LE,RO]{0cm}
+$endif$
+
+% Font fallback is a lualatex feature, and the fallback list has to be
+% registered before any font asks for it by name. That happens here rather
+% than next to each font because \babelfont below comes first. The fallback
+% fonts are asked for in harfbuzz mode because luaotfload only looks inside
+% a fallback font that was loaded that way; the fonts that use the list are
+% left alone, so their shaping is unchanged.
+$if(mainfont)$
+  $if(mainfontfallback)$
+    \ifLuaTeX
+      \usepackage{luaotfload}
+      \directlua{luaotfload.add_fallback("mainfontfallback",{
+        $for(mainfontfallback)$"$mainfontfallback$:mode=harf;"$sep$,$endfor$
+      })}
+    \fi
+  $endif$
+$endif$
+$if(sansfont)$
+  $if(sansfontfallback)$
+    \ifLuaTeX
+      \usepackage{luaotfload}
+      \directlua{luaotfload.add_fallback("sansfontfallback",{
+        $for(sansfontfallback)$"$sansfontfallback$:mode=harf;"$sep$,$endfor$
+      })}
+    \fi
+  $endif$
+$endif$
+$if(monofont)$
+  $if(monofontfallback)$
+    \ifLuaTeX
+      \usepackage{luaotfload}
+      \directlua{luaotfload.add_fallback("monofontfallback",{
+        $for(monofontfallback)$"$monofontfallback$:mode=harf;"$sep$,$endfor$
+      })}
+    \fi
+  $endif$
 $endif$
 
 $if(lang)$
@@ -75,6 +125,29 @@ $if(linestretch)$
 \setstretch{$linestretch$}
 $endif$
 
+% apa7 sets captions with the caption package, which single spaces them
+% whatever the rest of the document does. Manuscript and student mode are
+% double spaced throughout, and that includes the caption number line and
+% the caption title line.
+$if(manuscriptmode)$
+\captionsetup{font=$if(linestretch)${stretch=$linestretch$}$else$doublespacing$endif$}
+$endif$
+$if(studentmode)$
+\captionsetup{font=$if(linestretch)${stretch=$linestretch$}$else$doublespacing$endif$}
+$endif$
+
+% A float resets the line spacing, so notes below figures and tables come out
+% single spaced whatever the document does. \apanotespacing gives them the
+% document's own spacing back, and apafloatlatex.lua puts it at the start of
+% every note. The note is the last thing in the float, so there is nothing
+% after it to restore the spacing for.
+\makeatletter
+\AtBeginDocument{%
+  \edef\apaq@stretch{\baselinestretch}%
+  \ifx\apaq@stretch\@empty\def\apaq@stretch{1}\fi}
+\newcommand{\apanotespacing}{\setstretch{\apaq@stretch}}
+\makeatother
+
 $if(mathspec)$
 \usepackage{mathspec}
 $endif$
@@ -98,11 +171,11 @@ $if(sansfont)$
   \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$$if(sansfontfallback)$,RawFeature={fallback=sansfontfallback}$endif$]{$sansfont$}
 $endif$
 $if(monofont)$
-  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
+  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$if(monofontfallback)$,RawFeature={fallback=monofontfallback}$endif$]{$monofont$}
 $endif$
 
 $for(fontfamilies)$
-  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$if(monofontfallback)$,RawFeature={fallback=monofontfallback}$endif$]{$monofont$}
+  \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
 $endfor$
 
 $if(mathfont)$

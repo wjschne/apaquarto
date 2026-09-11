@@ -17,7 +17,6 @@ end
 local utilsapa = require("utilsapa")
 
 local function apanote(elem)
-
   
  -- If div contains image with note
     if FORMAT ==  "typst" then
@@ -38,20 +37,15 @@ local function apanote(elem)
   
   if elem.attributes["apa-note"] then
     hasnote = true
-    
-
 
     -- If div contains another div with apa-note, do nothing
     elem.content:walk {
       Div = function(div)
         if div.attributes["apa-note"] then
-              
           hasnote = false
         end
       end
     }
-    
-
 
     if hasnote then
       -- Make note

@@ -62,3 +62,4 @@ contributors_table_template_tenzing.xlsx
 .positai
 .claude
 example_cache/
+tests/_extensions/

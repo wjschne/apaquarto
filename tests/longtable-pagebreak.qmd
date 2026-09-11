@@ -7,7 +7,7 @@ author:
     email: test@example.com
     affiliations:
       - name: Test University
-bibliography: references.bib
+bibliography: ../references.bib
 floatsintext: true
 keep-tex: true
 format:
