@@ -18,6 +18,7 @@ engine: knitr
 
 # Version 6.0.0
 - 2026-09-11
+- `documentmode` now accepts the modes spelled out in full, in both apaquarto-pdf and apaquarto-typst: `journal`, `manuscript`, `document`, and `student` are aliases for `jou`, `man`, `doc`, and `stu`.
 - `mainfont`, `monofont`, and `papersize` now work with docx via the `docxreferencedoc.lua` filter (credit to Claude)
 - Fixed .docx 4th and 5th level headers with ampersands (credit to Claude).
 - apaquarto-pdf uses lualatex (the new Quarto default engine).

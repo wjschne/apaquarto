@@ -556,6 +556,9 @@ All of the .pdf-specific options for apaquarto come directly from the [apa7 $\La
 |                                                      | - `jou` Journal: A polished two-column format similar to many APA journals. |   |
 |                                                      | - `doc` Document: Similar to default $\LaTeX$ articles.                     |   |
 |                                                      | - `stu` Student: Formatted for student papers                               |   |
+|                                                      |                                                                             |   |
+|                                                      | Each mode may also be spelled out: `journal`, `manuscript`,                 |   |
+|                                                      | `document`, and `student`.                                                  |   |
 +------------------------------------------------------+-----------------------------------------------------------------------------+---+
 | `course`                                             | Fields that are used only for student papers (`stu` mode).                  |   |
 |                                                      |                                                                             |   |
@@ -598,7 +601,7 @@ All of the .pdf-specific options for apaquarto come directly from the [apa7 $\La
 
 # Document modes in typst
 
-The `documentmode` field works in `apaquarto-typst` as well as `apaquarto-pdf`. All four modes are supported: `man` (manuscript), `jou` (journal, two columns), `doc` (a plain continuous document), and `stu` (student paper).
+The `documentmode` field works in `apaquarto-typst` as well as `apaquarto-pdf`. All four modes are supported: `man` (manuscript), `jou` (journal, two columns), `doc` (a plain continuous document), and `stu` (student paper). In both formats each mode may also be named in full: `journal`, `manuscript`, `document`, and `student` are accepted as aliases for `jou`, `man`, `doc`, and `stu`.
 
 In `stu` mode the student-paper fields `course`, `professor`, `duedate`, and `note` are placed on the title page. In `jou` mode the journal metadata appears at the top of the article masthead: set the journal name as `journal: {title: "..."}` (Quarto reserves `journal` as an object), with top-level `volume`, `copyrightnotice`, and `copyrighttext`.
 

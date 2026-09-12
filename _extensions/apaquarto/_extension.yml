@@ -62,6 +62,10 @@ contributes:
         title-word-count: "Word Count"
         references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
       filters:
+        # Resolve documentmode aliases (journal, manuscript, document, student)
+        # before anything reads the field
+        - at: pre-ast
+          path: documentmode.lua
         # Sets language defaults other than English
         - at: pre-ast
           path: apalanguage.lua
