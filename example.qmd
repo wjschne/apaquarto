@@ -141,9 +141,9 @@ execute:
 # mainfont: Times New Roman
 # monofont: Consolas
 papersize: us-letter
-# journal:
-  # title: "Nonexistent Journal of Generic Psychology"
-  # volume: 42(2) 227--229
+journal:
+  title: "Nonexistent Journal of Generic Psychology"
+  volume: 42(2) 227--229
 format:
   apaquarto-html: 
     toc: true

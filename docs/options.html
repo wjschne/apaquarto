@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-38ba35db5379291e606daab6e431ed59.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a43c02650268bcea0ad2c24296deecb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -591,6 +591,10 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="author-roles">Author Roles</h2>
 <p>APA Style encourages but does not require papers with multiple authors to describe author roles using the <a href="https://credit.niso.org/">Contributor Roles Taxonomy</a> (CRediT). There are 14 contributor roles:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 70%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Role</th>
@@ -692,8 +696,8 @@ window.Quarto = {
 <p>The second paragraph consists of status changes:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 24%">
-<col style="width: 75%">
+<col style="width: 30%">
+<col style="width: 70%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -723,8 +727,8 @@ window.Quarto = {
 <p>The third paragraph consists of study details and author disclosures:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 83%">
+<col style="width: 30%">
+<col style="width: 70%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -800,8 +804,8 @@ window.Quarto = {
 <h1>Options for .docx and typst</h1>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 79%">
+<col style="width: 30%">
+<col style="width: 70%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -829,15 +833,13 @@ window.Quarto = {
 <p>All of the .pdf-specific options for apaquarto come directly from the <a href="https://ctan.org/pkg/apa7?lang=en">apa7 <span class="math inline">\(\LaTeX\)</span> package</a>. Consult the [apa7 package documentation](<a href="https://ctan.org/pkg/apa7" class="uri">https://ctan.org/pkg/apa7</a>) for greater detail.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 35%">
-<col style="width: 56%">
-<col style="width: 7%">
+<col style="width: 30%">
+<col style="width: 70%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Field</th>
 <th>Explanation</th>
-<th></th>
 </tr>
 </thead>
 <tbody>
@@ -851,7 +853,6 @@ window.Quarto = {
 <li><code>stu</code> Student: Formatted for student papers</li>
 </ul>
 <p>Each mode may also be spelled out: <code>journal</code>, <code>manuscript</code>, <code>document</code>, and <code>student</code>.</p></td>
-<td></td>
 </tr>
 <tr class="even">
 <td><p><code>course</code></p>
@@ -865,7 +866,6 @@ window.Quarto = {
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">duedate</span><span class="kw">:</span><span class="at"> 12/22/2024</span></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">note</span><span class="kw">: </span><span class="ch">|</span></span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  Student ID: 123456</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-<td></td>
 </tr>
 <tr class="odd">
 <td><code>journal</code> <code>volume</code> <code>copyrightnotice</code> <code>copyrighttext</code></td>
@@ -876,38 +876,31 @@ window.Quarto = {
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">volume</span><span class="kw">:</span><span class="at"> 2024, Vol. 131, No. 2, 10--60</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrightnotice</span><span class="kw">:</span><span class="at"> </span><span class="dv">2024</span></span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> All rights reserved</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-<td></td>
 </tr>
 <tr class="even">
 <td><code>fontsize</code></td>
 <td><p>Size of font.</p>
 <p>Options include <code>10pt</code>, <code>11pt</code>, and <code>12pt</code></p></td>
-<td></td>
 </tr>
 <tr class="odd">
 <td><code>a4paper</code></td>
 <td>If <code>true</code>, uses a4 paper size instead of 8.5 by 11 in. letter size.</td>
-<td></td>
 </tr>
 <tr class="even">
 <td><code>donotrepeattitle</code></td>
 <td>If <code>true</code>, suppresses title in the first page of text.</td>
-<td></td>
 </tr>
 <tr class="odd">
 <td><code>draftfirst</code></td>
 <td>If <code>true</code>, puts draft watermark on first page.</td>
-<td></td>
 </tr>
 <tr class="even">
 <td><code>draftall</code></td>
 <td>If <code>true</code>, puts draft watermark on all pages.</td>
-<td></td>
 </tr>
 <tr class="odd">
 <td><code>nocorrespondence</code></td>
 <td>If <code>true</code>, hides correspondence text</td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -925,11 +918,11 @@ window.Quarto = {
 </section>
 <section id="suppress-elements" class="level1">
 <h1>Suppress Elements</h1>
-<p>Any of the elements below can be selectively suppressed from the document.</p>
+<p>Any of the elements below can be selectively suppressed from the document by setting the field to <code>true</code>.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 80%">
+<col style="width: 30%">
+<col style="width: 70%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -939,95 +932,95 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>suppress-title-page: true</code></td>
+<td><code>suppress-title-page</code></td>
 <td>Suppress the entire title page</td>
 </tr>
 <tr class="even">
-<td><code>suppress-title: true</code></td>
+<td><code>suppress-title</code></td>
 <td>Suppress the title on the title page</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-short-title: true</code></td>
+<td><code>suppress-short-title</code></td>
 <td>Suppress the short title in the running header</td>
 </tr>
 <tr class="even">
-<td><code>suppress-author: true</code></td>
+<td><code>suppress-author</code></td>
 <td>Suppresses the author names below the title. Does not suppress author names in the author note.</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-affiliation: true</code></td>
+<td><code>suppress-affiliation</code></td>
 <td>Suppress affiliations below the author names. Does not suppress the affiliation in the correspondence note.</td>
 </tr>
 <tr class="even">
-<td><code>suppress-author-note: true</code></td>
+<td><code>suppress-author-note</code></td>
 <td>Suppress the entire author note</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-orcid: true</code></td>
+<td><code>suppress-orcid</code></td>
 <td>Suppress the author ORCID numbers</td>
 </tr>
 <tr class="even">
-<td><code>suppress-status-change-paragraph: true</code></td>
+<td><code>suppress-status-change-paragraph</code></td>
 <td>Suppress the paragraph about status changes (affiliation changes and deceased authors)</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-disclosures-paragraph: true</code></td>
+<td><code>suppress-disclosures-paragraph</code></td>
 <td>Suppress the paragraph about disclosures (study registration, data sharing, related reports, conflicts of interest, financial support, statements of gratitude, and authorship agreements)</td>
 </tr>
 <tr class="even">
-<td><code>suppress-credit-statement: true</code></td>
+<td><code>suppress-credit-statement</code></td>
 <td>Suppress the credit statement</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-corresponding-paragraph: true</code></td>
+<td><code>suppress-corresponding-paragraph</code></td>
 <td>Suppress the entire correspondence paragraph</td>
 </tr>
 <tr class="even">
-<td><code>suppress-corresponding-group: true</code></td>
+<td><code>suppress-corresponding-group</code></td>
 <td>Suppress the group in the correspondence address</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-corresponding-department: true</code></td>
+<td><code>suppress-corresponding-department</code></td>
 <td>Suppress the department in the correspondence address</td>
 </tr>
 <tr class="even">
-<td><code>suppress-corresponding-address: true</code></td>
+<td><code>suppress-corresponding-address</code></td>
 <td>Suppress the street address in the correspondence address</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-corresponding-city: true</code></td>
+<td><code>suppress-corresponding-city</code></td>
 <td>Suppress the city in the correspondence address</td>
 </tr>
 <tr class="even">
-<td><code>suppress-corresponding-region: true</code></td>
+<td><code>suppress-corresponding-region</code></td>
 <td>Suppress the region/state in the correspondence address</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-corresponding-postal-code: true</code></td>
+<td><code>suppress-corresponding-postal-code</code></td>
 <td>Suppress the postal code in the correspondence address</td>
 </tr>
 <tr class="even">
-<td><code>suppress-corresponding-email: true</code></td>
+<td><code>suppress-corresponding-email</code></td>
 <td>Suppress the email address in the correspondence address</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-abstract: true</code></td>
+<td><code>suppress-abstract</code></td>
 <td>Suppress the abstract. In the .pdf document, this will also suppress the keywords.</td>
 </tr>
 <tr class="even">
-<td><code>suppress-impact-statement: true</code></td>
+<td><code>suppress-impact-statement</code></td>
 <td>Suppress the impact statement</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-keywords: true</code></td>
+<td><code>suppress-keywords</code></td>
 <td>Suppress the keywords below the abstract</td>
 </tr>
 <tr class="even">
-<td><code>suppress-supplemental-materials: true</code></td>
+<td><code>suppress-supplemental-materials</code></td>
 <td>Suppress the supplemental materials line below the keywords</td>
 </tr>
 <tr class="odd">
-<td><code>suppress-title-introduction: true</code></td>
+<td><code>suppress-title-introduction</code></td>
 <td>Suppress the title in the introduction</td>
 </tr>
 </tbody>
@@ -1036,6 +1029,8 @@ window.Quarto = {
 <section id="language-options" class="level1">
 <h1>Language Options</h1>
 <p>You can alter the names of Abstract, Figures, Tables, and References by setting the <code>lang</code> field to one of these languages:</p>
+<div class="grid">
+<div class="{g-col-6}">
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1102,12 +1097,14 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <p>However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 49%">
-<col style="width: 38%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
