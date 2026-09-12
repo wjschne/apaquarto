@@ -219,6 +219,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#options-for-.docx-and-typst" id="toc-options-for-.docx-and-typst" class="nav-link" data-scroll-target="#options-for-.docx-and-typst">Options for .docx and typst</a></li>
   <li><a href="#options-for-.pdf" id="toc-options-for-.pdf" class="nav-link" data-scroll-target="#options-for-.pdf">Options for .pdf</a></li>
+  <li><a href="#document-modes-in-typst" id="toc-document-modes-in-typst" class="nav-link" data-scroll-target="#document-modes-in-typst">Document modes in typst</a></li>
   <li><a href="#options-for-.html" id="toc-options-for-.html" class="nav-link" data-scroll-target="#options-for-.html">Options for .html</a></li>
   <li><a href="#suppress-elements" id="toc-suppress-elements" class="nav-link" data-scroll-target="#suppress-elements">Suppress Elements</a></li>
   <li><a href="#language-options" id="toc-language-options" class="nav-link" data-scroll-target="#language-options">Language Options</a></li>
@@ -391,14 +392,18 @@ window.Quarto = {
 <td style="text-align: left;">A paragraph below the Abstract that describes the theoretical/practical importance of the work. The heading of the impact statement is “Impact Statement” by default but can be overridden using the <code>title-impact-statement</code> field in the <code>language</code> field.</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;"><code>supplemental-materials</code></td>
+<td style="text-align: left;">A line below the keywords pointing readers to supplemental materials (a repository, an archive, an OSF page). The prefix is “Supplemental materials” by default but can be overridden using the <code>title-supplemental-materials</code> field in the <code>language</code> field.</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"><code>mainfont</code></td>
 <td style="text-align: left;">Set font family for headings and body font. Default is Times New Roman</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><code>monofont</code></td>
 <td style="text-align: left;">Set font family for code output. Default is Consolas.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>papersize</code></td>
 <td style="text-align: left;">Set the paper size. Default is <code>us-letter</code>. Other options include <code>a3</code>, <code>a4</code>, <code>a5</code>, <code>b5</code>, <code>executive</code>, <code>legal</code>, <code>letter</code>, <code>tabloid</code></td>
 </tr>
@@ -824,9 +829,9 @@ window.Quarto = {
 <p>All of the .pdf-specific options for apaquarto come directly from the <a href="https://ctan.org/pkg/apa7?lang=en">apa7 <span class="math inline">\(\LaTeX\)</span> package</a>. Consult the [apa7 package documentation](<a href="https://ctan.org/pkg/apa7" class="uri">https://ctan.org/pkg/apa7</a>) for greater detail.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 86%">
-<col style="width: 12%">
-<col style="width: 0%">
+<col style="width: 36%">
+<col style="width: 59%">
+<col style="width: 2%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -844,7 +849,8 @@ window.Quarto = {
 <li><code>jou</code> Journal: A polished two-column format similar to many APA journals.</li>
 <li><code>doc</code> Document: Similar to default <span class="math inline">\(\LaTeX\)</span> articles.</li>
 <li><code>stu</code> Student: Formatted for student papers</li>
-</ul></td>
+</ul>
+<p>Each mode may also be spelled out: <code>journal</code>, <code>manuscript</code>, <code>document</code>, and <code>student</code>.</p></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -862,8 +868,14 @@ window.Quarto = {
 <td></td>
 </tr>
 <tr class="odd">
-<td><code>journal</code> | Fields that are used only for Journal (<code>jou</code>) mode. | | | <code>volume</code> | Example: | | | <code>copyrightnotice</code> | <code>yaml                                                                    |                    | journal: Psychological Review                                               | `copyrighttext`     | volume: 2024, Vol. 131, No. 2, 10--60                    | copyrightnotice: 2024                                                       |                    | copyrighttext: All rights reserved                    |</code> |</td>
-<td></td>
+<td><code>journal</code> <code>volume</code> <code>copyrightnotice</code> <code>copyrighttext</code></td>
+<td><p>Fields that are used only for journal articles (<code>jou</code> mode).</p>
+<p>Example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">journal</span><span class="kw">:</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Psychological Review</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">volume</span><span class="kw">:</span><span class="at"> 2024, Vol. 131, No. 2, 10--60</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrightnotice</span><span class="kw">:</span><span class="at"> </span><span class="dv">2024</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> All rights reserved</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -900,9 +912,16 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
+<section id="document-modes-in-typst" class="level1">
+<h1>Document modes in typst</h1>
+<p>The <code>documentmode</code> field works in <code>apaquarto-typst</code> as well as <code>apaquarto-pdf</code>. All four modes are supported: <code>man</code> (manuscript), <code>jou</code> (journal, two columns), <code>doc</code> (a plain continuous document), and <code>stu</code> (student paper). In both formats each mode may also be named in full: <code>journal</code>, <code>manuscript</code>, <code>document</code>, and <code>student</code> are accepted as aliases for <code>jou</code>, <code>man</code>, <code>doc</code>, and <code>stu</code>.</p>
+<p>In <code>stu</code> mode the student-paper fields <code>course</code>, <code>professor</code>, <code>duedate</code>, and <code>note</code> are placed on the title page. In <code>jou</code> mode the journal metadata appears at the top of the article masthead: set the journal name as <code>journal: {title: "..."}</code> (Quarto reserves <code>journal</code> as an object), with top-level <code>volume</code>, <code>copyrightnotice</code>, and <code>copyrighttext</code>.</p>
+<p>In typst <code>jou</code> and <code>doc</code> modes, figures and tables are placed in text by default (as they are in the equivalent <code>.pdf</code> output), while <code>man</code> and <code>stu</code> modes collect them at the end in the manuscript convention. Either default can be overridden with <code>floatsintext</code>: set it to <code>false</code> to move floats to the end, or <code>true</code> to keep them in text.</p>
+</section>
 <section id="options-for-.html" class="level1">
 <h1>Options for .html</h1>
 <p>With one exception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.</p>
+<p>Notebook previews are off (<code>notebook-view: false</code>). When a document pulls in a figure or table from another document with <code>{{&lt; embed other.qmd#fig-x &gt;}}</code>, Quarto ordinarily renders that other document a second time to build a standalone preview page for the “Source:” link beneath the embedded output. That second render resolves this format’s theme against a temporary directory instead of the project, so it cannot find the apaquarto stylesheet and builds the preview page with none of this format’s styling. The embedded figure or table itself is unaffected — it is placed in the article, which does have the styling. Set <code>notebook-view: true</code> if you want the “Source:” link back.</p>
 </section>
 <section id="suppress-elements" class="level1">
 <h1>Suppress Elements</h1>
@@ -1004,6 +1023,10 @@ window.Quarto = {
 <td>Suppress the keywords below the abstract</td>
 </tr>
 <tr class="even">
+<td><code>suppress-supplemental-materials: true</code></td>
+<td>Suppress the supplemental materials line below the keywords</td>
+</tr>
+<tr class="odd">
 <td><code>suppress-title-introduction: true</code></td>
 <td>Suppress the title in the introduction</td>
 </tr>
@@ -1145,11 +1168,16 @@ window.Quarto = {
 <td><em>Impact Statement</em></td>
 </tr>
 <tr class="odd">
+<td><code>title-supplemental-materials</code></td>
+<td>The phrase before the value of <code>supplemental-materials</code></td>
+<td><em>Supplemental materials</em></td>
+</tr>
+<tr class="even">
 <td><code>title-word-count</code></td>
 <td>The phrase before the word count when <code>word-count: true</code></td>
 <td><em>Word Count</em></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>references-meta-analysis</code></td>
 <td>The sentence explaining that citations marked with an asterisk were studies in the meta-analysis.</td>
 <td><em>References marked with an asterisk indicate studies included in the meta-analysis.</em></td>
@@ -1157,21 +1185,21 @@ window.Quarto = {
 </tbody>
 </table>
 <p>All these options must be listed under the <code>language</code> field . For example, if we set the <code>lang</code> field to <code>es</code> (Spanish), the remaining options can also be set:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In addition, many terms that are translated automatically can be overridden. The full list is <a href="https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml">here</a>. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here are the language terms most likely to be used in apaquarto:</p>
 <table class="caption-top table">
 <thead>

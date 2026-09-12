@@ -285,7 +285,6 @@ window.Quarto = {
 <li>Implement missing .pdf features
 <ul>
 <li>Tables in .pdf jou mode should fit automatically.</li>
-<li>Figure out why text disappears whenever there are too many tables and figures too close together.</li>
 </ul></li>
 <li>Implement missing .docx features
 <ul>
@@ -293,9 +292,9 @@ window.Quarto = {
 </ul></li>
 <li>Implement missing Typst features
 <ul>
-<li>Journal format</li>
 <li>Line numbering</li>
 <li>Full language option support</li>
+<li>Markdown in table notes is flattened to plain text</li>
 </ul></li>
 </ul>
 </section>
@@ -303,10 +302,30 @@ window.Quarto = {
 <h1>Version 6.0.0</h1>
 <ul>
 <li>2026-09-11</li>
+<li>apaquarto-html no longer builds standalone preview pages for documents pulled in with <code>{{&lt; embed &gt;}}</code>. Quarto resolved this format’s theme against its temporary embed directory rather than the project, so every render with an embed warned <code>Theme file not found</code> and produced a preview page with none of the apaquarto styling. The embedded figure or table itself was never affected. Set <code>notebook-view: true</code> to get the “Source:” link and its preview page back.</li>
+<li><code>documentmode</code> now accepts the modes spelled out in full, in both apaquarto-pdf and apaquarto-typst: <code>journal</code>, <code>manuscript</code>, <code>document</code>, and <code>student</code> are aliases for <code>jou</code>, <code>man</code>, <code>doc</code>, and <code>stu</code>.</li>
 <li><code>mainfont</code>, <code>monofont</code>, and <code>papersize</code> now work with docx via the <code>docxreferencedoc.lua</code> filter (credit to Claude)</li>
 <li>Fixed .docx 4th and 5th level headers with ampersands (credit to Claude).</li>
 <li>apaquarto-pdf uses lualatex (the new Quarto default engine).</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/157">#157</a> Because of the switch to the lualatex engine, users can specify screen reader accessibility via <a href="https://quarto.org/docs/output-formats/pdf-basics.html#pdf-accessibility-standards"><code>pdf-standard: ua-2</code></a> in their apaquarto-pdf options. Unfortunately, flextable tables (and therefore apa7 tables) are not yet ua-2 compliant and will result in a compilation error if ua-2 standards are enforced. Thanks <a href="https://github.com/wjschne/apaquarto/issues/157">Issac Petersen</a></li>
+<li>Make tinytable output left-aligned by default.</li>
+<li><a href="https://github.com/wjschne/apaquarto/pull/162">#162</a> <code>documentmode</code> now works in apaquarto-typst, with all four modes: <code>man</code>, <code>jou</code> (two columns, with column-spanning floats), <code>doc</code>, and <code>stu</code>. Thanks <a href="https://github.com/wjschne/apaquarto/pull/162">David Hagmann</a></li>
+<li>Typst documents with citations no longer fail on a bibliography style path that Typst cannot resolve.</li>
+<li><code>floatsintext: false</code> is no longer ignored.</li>
+<li>Plain markdown table captions now accept a full attribute block, not just <code>{#tbl-...}</code>.</li>
+<li>In jou mode, appendices run continuously instead of each starting on a new page.</li>
+<li>Fixed table notes appearing twice in typst jou mode.</li>
+<li>In typst jou mode, every body paragraph is now indented, including the one that opens a section, and appendix paragraphs use the same indent as the body. References take a hanging indent the size of the body indent rather than the manuscript’s half inch, and the ORCID lines of the author note are set flush left and unindented. Figure and table captions stay flush left.</li>
+<li>Fixed the body first-line indent being reset to the manuscript’s half inch after a reference list or a figure or table note in the typst jou and doc modes, which use a smaller indent.</li>
+<li>Typst jou mode now follows apa7’s journal masthead closely: 0.75 inch margins and 10 point body text, against the 12 point the other modes use; 11 point section headings with 9 points of space above and below them; a <code>\LARGE</code> roman (not bold) title; a byline larger than the affiliations below it, the two single spaced; an ORCID icon sized to the cap height of the text beside it, so it no longer stretches the line it sits on; no heading above the abstract; the abstract and impact statement set smaller and in a narrower block, as apa7 sets them in a 4.6875 inch parbox; and the author note at the foot of the first column under a rule, with no heading, its paragraphs indented and run on without extra space between them. Line spacing in jou mode was also about half again too large, because the <code>leading</code> the template asked for is the gap between lines in typst rather than the baseline-to-baseline distance; 10 point text now sits on the 12 point baseline apa7 uses.</li>
+<li>Fixed apaquarto-pdf hanging in <code>documentmode: jou</code>. The journal-mode float wrappers called <code>\onecolumn</code>/<code>\twocolumn</code> from inside a float body to get past longtable’s one-column requirement. Each of those begins with <code>\clearpage</code> and changes the column state globally, which made lualatex spin forever once enough floats were deferred at once. This also appears to be the cause of the longstanding jou-mode bug in which sections of the document went missing.</li>
+<li>The journal name is now given as <code>journal: {title: "..."}</code>, because Quarto reserves <code>journal</code> as an object.</li>
+<li>Typst jou mode now carries a journal running head: the short title centred on odd pages, the author surnames centred on even ones, both in 8 point capitals, with the page number in the outer corner (left on even pages, right on odd). The opening page carries neither. The surnames take serial commas and an ampersand, and become “et al.” after the first author once there are more than three of them.</li>
+<li>New <code>supplemental-materials</code> option. Its value is printed on the line below the keywords, after an italicized <em>Supplemental materials:</em>, in every format and document mode. The prefix can be changed with <code>title-supplemental-materials</code> in the <code>language</code> field, and the line can be turned off with <code>suppress-supplemental-materials: true</code>.</li>
+<li>In typst jou mode, the running head sits 12 points clear of the text block rather than at the foot of the margin.</li>
+<li>Level 1 to 3 headings are now set ragged right with hyphenation off, so a heading that runs to two lines in typst jou mode is neither stretched to the column edge nor broken across lines mid-word.</li>
+<li>In typst jou mode, the impact statement is set in a 1 point box with 5 points of padding, as wide as the abstract above it.</li>
+<li>Fixed <code>apa-twocolumn</code> tables losing their two-column span in apaquarto-pdf jou mode, where they overprinted the column text beside them. The <code>twocolumntable</code> wrapper sets <code>@twocolumn</code> false so that longtable will start inside the float, but <code>\end{table*}</code> tests that same flag: with it false, LaTeX files the float as an ordinary one-column float whose box is still the full text width. The flag is now put back before the environment closes.</li>
 </ul>
 </section>
 <section id="version-5.0.18" class="level1">

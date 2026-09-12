@@ -4,7 +4,7 @@
     "href": "changelog.html",
     "title": "Changelog",
     "section": "",
-    "text": "Implement missing .pdf features\n\nTables in .pdf jou mode should fit automatically.\nFigure out why text disappears whenever there are too many tables and figures too close together.\n\nImplement missing .docx features\n\nRight-align equation numbers\n\nImplement missing Typst features\n\nJournal format\nLine numbering\nFull language option support"
+    "text": "Implement missing .pdf features\n\nTables in .pdf jou mode should fit automatically.\n\nImplement missing .docx features\n\nRight-align equation numbers\n\nImplement missing Typst features\n\nLine numbering\nFull language option support\nMarkdown in table notes is flattened to plain text"
   },
   {
     "objectID": "changelog.html#breaking-changes",
@@ -105,11 +105,11 @@
     "text": "Tables Made Directly with Markdown\nYou can create tables with Markdown in several ways. See here for details. If you need to make a more complex table in Markdown, I suggest using RStudio’s visual editor. Here is an example of a simple table:\n\n| Letters | Numbers |\n|:-------:|:-------:|\n| A       | 1       |\n| B       | 2       |\n| C       | 3       |\n\n: My Caption {#tbl-mytable2 apa-note=\"Note below table\" data-quarto-disable-processing=\"true\"}\n\n\n\n\nTable 2\n\n\nMy Caption\n\n\n\n\n\n\nLetters\nNumbers\n\n\n\n\nA\n1\n\n\nB\n2\n\n\nC\n3\n\n\n\n\n\n\n\n\nNote. Note below table"
   },
   {
-    "objectID": "writing.html#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf",
-    "href": "writing.html#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf",
+    "objectID": "writing.html#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf-and-typst",
+    "href": "writing.html#tables-and-figures-spanning-two-columns-in-journal-mode-.pdf-and-typst",
     "title": "APA Style via Markdown",
-    "section": "Tables and Figures Spanning Two Columns in Journal Mode (.pdf)",
-    "text": "Tables and Figures Spanning Two Columns in Journal Mode (.pdf)\nWhen creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise sometimes makes them disappear (and sometimes takes large swaths of text with it).\nYou can make figures and tables span the two columns by setting the apa-twocolumn chunk option to true. This will only affect .pdf documents when in journal mode (i.e., documentmode: jou).\n\n```{r}\n#| label: fig-myplot3\n#| fig-cap: A Figure that Will Span Two Columns in Journal Mode\n#| apa-twocolumn: true\n\nlibrary(tidyverse)\ntibble(x = seq(0, 1, .001),\n       y = dbeta(x,2,8)) %&gt;% \n  ggplot(aes(x,y)) + \n  geom_area(fill = \"royalblue\", alpha = .5)\n```\n\n\n\n\n\nFigure 7\n\n\nA Figure that Will Span Two Columns in Journal Mode"
+    "section": "Tables and Figures Spanning Two Columns in Journal Mode (.pdf and Typst)",
+    "text": "Tables and Figures Spanning Two Columns in Journal Mode (.pdf and Typst)\nWhen creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise sometimes makes them disappear (and sometimes takes large swaths of text with it). Typst output handles wide floats more gracefully, but the same option applies.\nYou can make figures and tables span the two columns by setting the apa-twocolumn chunk option to true. This affects .pdf and Typst documents when in journal mode (i.e., documentmode: jou).\n\n```{r}\n#| label: fig-myplot3\n#| fig-cap: A Figure that Will Span Two Columns in Journal Mode\n#| apa-twocolumn: true\n\nlibrary(tidyverse)\ntibble(x = seq(0, 1, .001),\n       y = dbeta(x,2,8)) %&gt;% \n  ggplot(aes(x,y)) + \n  geom_area(fill = \"royalblue\", alpha = .5)\n```\n\n\n\n\n\nFigure 7\n\n\nA Figure that Will Span Two Columns in Journal Mode"
   },
   {
     "objectID": "writing.html#disable-apaquarto-processing-.pdf-only",
