@@ -12,6 +12,17 @@ $if(pdfstandard)$
 \long\def\@makefntext#1{\raggedright\@makefnmark~#1}
 \makeatother
 $endif$
+$if(journalmode)$
+% apa7 loads ftnright in journal mode to put the footnotes in the right hand
+% column. ftnright asks the output routine for \@makespecialcolbox, which the
+% latex kernel has since renamed to \@make@specialcolbox, so the page is made
+% with an undefined control sequence. The old name is given back here.
+\makeatletter
+\@ifundefined{@makespecialcolbox}{%
+  \@ifundefined{@make@specialcolbox}{}{%
+    \let\@makespecialcolbox\@make@specialcolbox}}{}
+\makeatother
+$endif$
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{setspace}
@@ -199,23 +210,37 @@ $if(journalmode)$
 \usepackage{pbalance}
 % \usepackage{float}
 \makeatletter
+% longtable refuses to start while the document is in two-column mode, and
+% flextable builds its tables out of longtable. The float bodies below used to
+% say \onecolumn to get past that check and \twocolumn to undo it, but those
+% two commands each begin with \clearpage and change the column state
+% globally. Run from inside a float box that is still being collected, the
+% \clearpage is reentrant: it can swallow the material waiting in the current
+% column (whole sections going missing in jou mode) and, once enough floats
+% are deferred at once, the output routine stops converging and lualatex spins
+% forever.
+%
+% Only two flags actually gate longtable, so set just those, and set them
+% locally: the float body is a group, so they revert on \end{figure} with no
+% \clearpage and no global side effects. That also makes the closing
+% \twocolumn unnecessary.
+\providecommand{\apaqonecolumnfloat}{\@twocolumnfalse\col@number\@ne}
 \let\oldtpt\ThreePartTable
 \let\endoldtpt\endThreePartTable
 \def\ThreePartTable{\@ifnextchar[\ThreePartTable@i \ThreePartTable@ii}
 \def\ThreePartTable@i[#1]{\begin{figure}[!htbp]
-\onecolumn
+\apaqonecolumnfloat
 \begin{minipage}{0.485\textwidth}
 \oldtpt[#1]
 }
 \def\ThreePartTable@ii{\begin{figure}[!htbp]
-\onecolumn
+\apaqonecolumnfloat
 \begin{minipage}{0.48\textwidth}
 \oldtpt
 }
 \def\endThreePartTable{
 \endoldtpt
 \end{minipage}
-\twocolumn
 \end{figure}}
 \makeatother
 
@@ -230,10 +255,9 @@ $if(journalmode)$
 \newenvironment{twocolumntable}% environment name
 {% begin code
 \begin{table*}[!htbp]%
-\onecolumn%
+\apaqonecolumnfloat% see the note above: never \onecolumn inside a float
 }%
 {%
-\twocolumn%
 \end{table*}%
 }% end code
 $else$

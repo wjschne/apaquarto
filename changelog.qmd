@@ -9,13 +9,12 @@ engine: knitr
 
 - Implement missing .pdf features
     * Tables in .pdf jou mode should fit automatically.
-    * Figure out why text disappears whenever there are too many tables and figures too close together.
 - Implement missing .docx features
     * Right-align equation numbers
 - Implement missing Typst features
-    * Journal format
     * Line numbering
     * Full language option support
+    * Markdown in table notes is flattened to plain text
 
 # Version 6.0.0
 - 2026-09-11
@@ -23,6 +22,15 @@ engine: knitr
 - Fixed .docx 4th and 5th level headers with ampersands (credit to Claude).
 - apaquarto-pdf uses lualatex (the new Quarto default engine).
 - [#157](https://github.com/wjschne/apaquarto/issues/157) Because of the switch to the lualatex engine, users can specify screen reader accessibility via [`pdf-standard: ua-2`](https://quarto.org/docs/output-formats/pdf-basics.html#pdf-accessibility-standards) in their apaquarto-pdf options. Unfortunately, flextable tables (and therefore apa7 tables) are not yet ua-2 compliant and will result in a compilation error if ua-2 standards are enforced. Thanks [Issac Petersen](https://github.com/wjschne/apaquarto/issues/157)
+- Make tinytable output left-aligned by default.
+- [#162](https://github.com/wjschne/apaquarto/pull/162) `documentmode` now works in apaquarto-typst, with all four modes: `man`, `jou` (two columns, with column-spanning floats), `doc`, and `stu`. Thanks [David Hagmann](https://github.com/wjschne/apaquarto/pull/162)
+- Typst documents with citations no longer fail on a bibliography style path that Typst cannot resolve.
+- `floatsintext: false` is no longer ignored.
+- Plain markdown table captions now accept a full attribute block, not just `{#tbl-...}`.
+- In jou mode, appendices run continuously instead of each starting on a new page.
+- Fixed table notes appearing twice in typst jou mode.
+- Fixed apaquarto-pdf hanging in `documentmode: jou`. The journal-mode float wrappers called `\onecolumn`/`\twocolumn` from inside a float body to get past longtable's one-column requirement. Each of those begins with `\clearpage` and changes the column state globally, which made lualatex spin forever once enough floats were deferred at once. This also appears to be the cause of the longstanding jou-mode bug in which sections of the document went missing.
+- The journal name is now given as `journal: {title: "..."}`, because Quarto reserves `journal` as an object.
 
 
 # Version 5.0.18

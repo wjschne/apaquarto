@@ -44,6 +44,76 @@ local function get_note(float)
   return tablenotes[float.identifier] or float.attributes["apa-note"]
 end
 
+-- Does the raw latex of the float's content say something about itself?
+local function content_says(float, text)
+  local found = false
+  float.content:walk {
+    RawBlock = function(raw)
+      if raw.format == "latex" or raw.format == "tex" then
+        found = found or raw.text:find(text, 1, true) ~= nil
+      end
+    end
+  }
+  return found
+end
+
+-- Is the float's content raw latex of its own making?
+local function content_is_raw(float)
+  local raw = false
+  float.content:walk {
+    RawBlock = function(block)
+      raw = raw or block.format == "latex" or block.format == "tex"
+    end
+  }
+  return raw
+end
+
+-- A table pandoc writes, and one flextable writes, are longtables, and a
+-- longtable brings its own space above it that the caption has to be pulled
+-- back over. A table written as a tabular, as tinytable writes them, has no
+-- such space, and the full pull back lifts it alongside its caption.
+local function caption_pullback(float)
+  if not content_is_raw(float) or content_says(float, "\\begin{longtable") then
+    return "-20pt"
+  end
+  return "-6pt"
+end
+
+-- The latex for tbl-align. Table makers centre their tables, so the centring
+-- they write is replaced; a longtable is moved with the lengths that hold it.
+local alignments = {
+  left = { "\\raggedright", "\\setlength\\LTleft{0pt}\\setlength\\LTright{\\fill}" },
+  right = { "\\raggedleft", "\\setlength\\LTleft{\\fill}\\setlength\\LTright{0pt}" },
+  center = { "\\centering", "\\setlength\\LTleft{\\fill}\\setlength\\LTright{\\fill}" }
+}
+
+local function align_content(float)
+  local align = alignments[float.attributes["tbl-align"]]
+  -- tinytable centres the tables it writes, and apa style wants them flush
+  -- left, which is where they already sit in the other formats
+  if not align and content_says(float, "\\begin{tblr}") then
+    align = alignments.left
+  end
+  if not align then
+    return float.content
+  end
+
+  local replaced = false
+  local content = float.content:walk {
+    RawBlock = function(raw)
+      if (raw.format == "latex" or raw.format == "tex") and
+        not replaced and raw.text:find("\\centering", 1, true) then
+        replaced = true
+        return pandoc.RawBlock(raw.format, (raw.text:gsub("\\centering", align[1], 1)))
+      end
+    end
+  }
+  if replaced then
+    return content
+  end
+  return pandoc.Blocks({ pandoc.RawBlock("latex", align[2]), content })
+end
+
 local getmode = function(meta)
   local documentmode = pandoc.utils.stringify(meta["documentmode"])
   journalmode = documentmode == "jou"
@@ -167,7 +237,7 @@ local processfloat = function(float)
     -- Adjust space after caption in manuscript mode
     local aftercaption = ""
     if manuscriptmode then
-      aftercaption = "\n\\vspace{-20pt}"
+      aftercaption = "\n\\vspace{" .. caption_pullback(float) .. "}"
       if float.attributes["after-caption-space"] then
         aftercaption = "\\vspace{" .. float.attributes["after-caption-space"] .. "}\n"
       end
@@ -188,7 +258,7 @@ local processfloat = function(float)
     local returnblock = pandoc.Div({
       pandoc.RawBlock("latex", "\\begin{" .. latextableenv .. "}"),
       captionspan,
-      float.content
+      align_content(float)
 
     }
     )
@@ -238,6 +308,7 @@ local processfloat = function(float)
     if twocolumn then
       latexenv = "figure*"
     end
+
 
     -- Make note
     if hasnote or twocolumn then

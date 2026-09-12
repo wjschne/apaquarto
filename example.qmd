@@ -94,7 +94,7 @@ impact-statement: "The apaquarto template allow writers to apply APA style consi
 # If true, a word count will appear below the keywords (tables, figure captions, and references excluded in count.)
 word-count: false
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
-floatsintext: true
+# floatsintext: true
 # Numbered lines (.pdf and .docx only)
 numbered-lines: false
 # File with references
@@ -134,10 +134,13 @@ language:
 no-ampersand-parenthetical: false
 fontsize: 12pt
 execute: 
-  cache: true
+  echo: false
+  # cache: true
 # mainfont: Times New Roman
 # monofont: Consolas
-papersize: a4
+papersize: us-letter
+# journal: 
+#   title: "Journal of Personality and Social Psychology"
 format:
   apaquarto-html: 
     toc: true
@@ -147,11 +150,12 @@ format:
     keep-typ: true
     list-of-figures: false
     list-of-tables: false
-    toc: true
-    numbersections: true
+    toc: false
+    numbersections: false
+    documentmode: jou
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    documentmode: jou
 ---
 
 ```{r}
@@ -163,7 +167,6 @@ library(flextable)
 library(ftExtra)
 library(apa7)
 library(knitr)
-library(tinytable)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 conflicts_prefer(ggplot2::theme_void, .quiet = TRUE)
@@ -172,6 +175,7 @@ set_flextable_defaults(theme_fun = theme_apa,
                        text.align = "center", 
                        table_align = "left")
 ```
+
 
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
@@ -231,6 +235,16 @@ If no identifier label is given, a centered equation in display mode will have n
 $$
 \sigma_e=\sigma_y\sqrt{1-r_{xy}^2}
 $$
+
+## Using Footnotes
+
+A footnote is usually displayed at the bottom of the page on which the footnote occurs.  A short note can be specified with the `^[My note here]` syntax.^[Here is my short footnote!] A longer note can be specified with the `[^id]` syntax with the text specified on a separate line like so `[^id]: Text here`.[^mylongfootnote]
+
+[^mylongfootnote]: This is a longer footnote. If it has multiple paragraphs, subsequent paragraphs need to be indented with two tabs.
+
+    This paragraph is still part of the footnote because it is indented with two tabs.
+
+A regular paragraph without any indentation is not part of the footnote and will be part of the main body of the document.
 
 ## Displaying Figures
 
@@ -304,15 +318,7 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
   theme_void()
 ```
 
-## Using Footnotes
 
-A footnote is usually displayed at the bottom of the page on which the footnote occurs.  A short note can be specified with the `^[My note here]` syntax.^[Here is my short footnote!] A longer note can be specified with the `[^id]` syntax with the text specified on a separate line like so `[^id]: Text here`.[^mylongfootnote]
-
-[^mylongfootnote]: This is a longer footnote. If it has multiple paragraphs, subsequent paragraphs need to be indented with two tabs.
-
-    This paragraph is still part of the footnote because it is indented with two tabs.
-
-A regular paragraph without any indentation is not part of the footnote and will be part of the main body of the document.
 
 ## Hypotheses, Aims, and Objectives
 
@@ -411,26 +417,27 @@ If there is only one appendix, the label inserted above the the appendix title w
 
 To cite an appendix as a whole, reference it with the `@apx-` prefix. For example, see @apx-a and @apx-b.
 
-@apx-a is an appendix with a contingency table (see @tbl-chisq).
+![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure" fig-alt="A path diagram in which A causes B, and B causes C."}
+
+See @fig-appendfig, an example of an imported graphic using markdown syntax. 
+
+
+
+# Another Appendix {#apx-b}
+
+@apx-b is an appendix with a contingency table (see @tbl-chisq).
 
 ```{r}
 #| label: tbl-chisq
 #| tbl-cap: Contingency table
-#| apa-twocolumn: true
 mtcars |>
   select(Transmission = am, Gears = gear) |>
   mutate(Gears = factor(Gears),
          Transmission = factor(Transmission, 
                                labels = c("Automatic", "Manual"))) |>
-  apa_chisq()
+  apa_chisq(table_width = .48)
 ```
 
-
-# Another Appendix {#apx-b}
-
-![Appendix Figure](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure" fig-alt="A path diagram in which A causes B, and B causes C."}
-
-See @fig-appendfig, an example of an imported graphic using markdown syntax. 
 
 
 

@@ -169,6 +169,8 @@ return {
           note,
           pandoc.RawBlock("typst", "]")
         })
+      end
+      if note then
         return float
       end
     end
@@ -195,7 +197,7 @@ return {
       
       -- Hanging indent on refs
       if div.identifier == "refs" then
-        return {pandoc.RawBlock("typst", "#set par(first-line-indent: 0in, hanging-indent: 0.5in)"), div, pandoc.RawBlock("typst","#set par(first-line-indent: 0.5in, hanging-indent: 0in)") }
+        return {pandoc.RawBlock("typst", "#set par(first-line-indent: 0in, hanging-indent: 0.5in)"), div, pandoc.RawBlock("typst","#set par(first-line-indent: firstlineindent, hanging-indent: 0in)") }
       end
       
       if div.classes:includes("NoIndent") then
@@ -214,13 +216,17 @@ return {
       if doc.meta.language and doc.meta.language["crossref-apx-prefix"] then
         appendixword = pandoc.utils.stringify(doc.meta.language["crossref-apx-prefix"])
       end
-      
+      -- The first-paragraph indent fix is for the manuscript body; in journal
+      -- mode it would land inside the masthead and author note, so skip it.
+      local journalmode = doc.meta.documentmode and
+        pandoc.utils.stringify(doc.meta.documentmode) == "jou"
+
       for i = #doc.blocks, 1, -1 do
-        if doc.blocks[i].t == "Para" and doc.blocks[i-1].t ~= "Para" then 
+        if i > 1 and not journalmode and doc.blocks[i].t == "Para" and doc.blocks[i-1].t ~= "Para" then
           if doc.blocks[i-1].t == "Header" and doc.blocks[i-1].level > 3 then
             --Do nothing
           else
-            doc.blocks:insert(i, pandoc.RawBlock("typst", "#par()[#text(size:0.5em)[#h(0.0em)]]\n#v(-18pt)"))
+            doc.blocks:insert(i, pandoc.RawBlock("typst", "#par()[#text(size:0.5em)[#h(0.0em)]]\n#v(apafirstparshift)"))
           end
         end       
         -- Count appendices

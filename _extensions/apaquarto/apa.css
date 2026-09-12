@@ -95,3 +95,7 @@ table {
   font-family: Consolas, "Lucida Console", "Courier New", monospace;
   font-size: 10pt;
 }
+
+.container {
+  padding: 0;
+}

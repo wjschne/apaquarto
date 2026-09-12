@@ -124,12 +124,145 @@ local extend_paragraph = function(para, meta_item, sep)
 end
 
 
+-- Typst document-mode helpers ------------------------------------------------
+
+local function is_typst_mode(meta, mode)
+  return FORMAT:match 'typst' and meta.documentmode and
+    stringify(meta.documentmode) == mode
+end
+
+-- Manuscript front matter uses explicit line and page breaks to space the title
+-- page; journal and document modes drop them for a continuous layout.
+local function is_frontmatter_spacing(block)
+  return block.t == "LineBreak" or block.t == "SoftBreak" or
+    (block.t == "RawBlock" and block.format == "typst" and
+      block.text:find("#pagebreak", 1, true) ~= nil)
+end
+
+-- Journal mode: split the front matter into the full-width masthead (title,
+-- byline, affiliations, abstract, keywords) and the author note. The caller
+-- wraps the masthead in place(scope: "parent", float: true) so it spans both
+-- columns; the author note then flows into the two-column body rather than
+-- crowding the masthead.
+local function split_jou_frontmatter(blocks)
+  local front = List:new {}
+  local notes = List:new {}
+  local tail = List:new {}
+  local in_notes = false
+  for _, block in ipairs(blocks) do
+    if block.t == "Header" and block.identifier == "author-note" then
+      in_notes = true
+      notes:extend({ block })
+    elseif block.t == "Header" and block.identifier == "abstract" then
+      in_notes = false
+      front:extend({ block })
+    elseif block.t == "Header" and block.identifier == "firstheader" then
+      -- The masthead already carries the title; do not repeat it.
+    elseif block.t == "RawBlock" and block.format == "typst" and
+        (block.text:find("#outline", 1, true) ~= nil or
+         block.text:find("#show outline", 1, true) ~= nil) then
+      -- A table of contents / list of figures or tables is too large for the
+      -- floating masthead; let it flow in the two-column body instead. Match
+      -- both the #outline call and any #show outline styling rule Quarto emits.
+      tail:extend({ block })
+    elseif is_frontmatter_spacing(block) then
+      -- No manuscript spacing in journal mode.
+    elseif in_notes then
+      notes:extend({ block })
+    else
+      front:extend({ block })
+    end
+  end
+  return front, notes, tail
+end
+
+-- Document mode: one continuous flow. Drop the repeated body-top title and the
+-- manuscript spacing/pagebreaks; keep everything else in order.
+local function strip_doc_frontmatter(blocks)
+  local out = List:new {}
+  for _, block in ipairs(blocks) do
+    if block.t == "Header" and block.identifier == "firstheader" then
+      -- Title already appears at the top of the document.
+    elseif is_frontmatter_spacing(block) then
+      -- Continuous flow: no manuscript breaks.
+    else
+      out:extend({ block })
+    end
+  end
+  return out
+end
+
+-- Student paper title fields (course, instructor, due date, note).
+local function add_student_field(body, meta, field)
+  local content = meta[field]
+  if not content or stringify(content) == "" then
+    return
+  end
+  local div
+  local content_type = pandoc.utils.type(content)
+  if content_type == "Blocks" then
+    div = pandoc.Div(content)
+  elseif content_type == "Inlines" then
+    div = pandoc.Div({ pandoc.Para(content) })
+  else
+    div = pandoc.Div({ pandoc.Para(pandoc.Inlines({ pandoc.Str(stringify(content)) })) })
+  end
+  div.classes:insert("Author")
+  body:extend({ div })
+end
+
+-- Coerce a metadata value to Inlines (or nil if empty).
+local function meta_inlines(meta_item)
+  if meta_item and stringify(meta_item) ~= "" then
+    if pandoc.utils.type(meta_item) == "Inlines" then
+      return meta_item
+    end
+    return pandoc.Inlines({ pandoc.Str(stringify(meta_item)) })
+  end
+end
+
+-- Journal masthead metadata (journal name, volume, copyright) for jou mode.
+local function typst_journal_metadata(meta)
+  local result = List:new {}
+  local journal_line = List:new {}
+  -- Quarto reserves `journal` as an object, so prefer journal.title.
+  local journal
+  if meta.journal then
+    journal = meta_inlines(meta.journal.title) or meta_inlines(meta.journal)
+  end
+  local volume = meta_inlines(meta.volume)
+
+  if journal then
+    journal_line:extend(journal)
+  end
+  if volume then
+    if #journal_line > 0 then
+      journal_line:extend({ pandoc.Str(", ") })
+    end
+    journal_line:extend(volume)
+  end
+  if #journal_line > 0 then
+    result:extend({ pandoc.Para(journal_line) })
+  end
+  if meta.copyrightnotice and stringify(meta.copyrightnotice) ~= "" then
+    result:extend({ pandoc.Para({ pandoc.Str("© " .. stringify(meta.copyrightnotice)) }) })
+  end
+  if meta.copyrighttext and stringify(meta.copyrighttext) ~= "" then
+    result:extend({ pandoc.Para(meta_inlines(meta.copyrighttext)) })
+  end
+  return result
+end
+
 return {
   { Meta = get_and },
   {
     Pandoc = function(doc)
       local body = List:new {}
       local meta = doc.meta
+
+      local typst_jou = is_typst_mode(meta, "jou")
+      local typst_doc = is_typst_mode(meta, "doc")
+      local typst_stu = is_typst_mode(meta, "stu")
 
       local documenttitle = ""
       local intabovetitle = 2
@@ -238,6 +371,13 @@ return {
 
       if not mask then
         body:extend({ authordiv })
+      end
+
+      if typst_stu and not mask then
+        add_student_field(body, meta, "course")
+        add_student_field(body, meta, "professor")
+        add_student_field(body, meta, "duedate")
+        add_student_field(body, meta, "note")
       end
 
       if meta["draft-date"] then
@@ -681,7 +821,42 @@ return {
         body:extend({ firstpageheader })
       end
 
-      body:extend(doc.blocks)
+      if typst_jou then
+        -- Masthead (title/byline/affiliations/abstract) spans both columns via
+        -- place(float); the author note flows into the two-column body beneath
+        -- it, set off by a thin rule, rather than crowding the masthead.
+        local front, notes, tail = split_jou_frontmatter(body)
+        local metadata = typst_journal_metadata(meta)
+        local out = List:new {}
+        out:extend({ pandoc.RawBlock('typst',
+          '#place(top, scope: "parent", float: true, clearance: 1.5em)[') })
+        if #metadata > 0 then
+          -- Journal name / volume / copyright above the title, small and centered.
+          out:extend({ pandoc.RawBlock('typst',
+            '#block(width: 100%, below: 0.5em)[\n#set align(center)\n' ..
+            '#set par(first-line-indent: 0pt)\n#set text(size: 8pt)') })
+          out:extend(metadata)
+          out:extend({ pandoc.RawBlock('typst', ']') })
+        end
+        out:extend(front)
+        out:extend({ pandoc.RawBlock('typst', ']') })
+        if #notes > 0 then
+          out:extend({ pandoc.RawBlock('typst',
+            '#block(width: 100%, above: 0.5em, below: 0.8em, inset: (top: 0.4em), stroke: (top: 0.5pt))[\n' ..
+            '#set par(first-line-indent: 0pt, leading: 9pt)\n' ..
+            '#set block(spacing: 4pt)\n#set text(size: 9pt)') })
+          out:extend(notes)
+          out:extend({ pandoc.RawBlock('typst', ']') })
+        end
+        out:extend(tail)
+        out:extend(doc.blocks)
+        body = out
+      elseif typst_doc then
+        body = strip_doc_frontmatter(body)
+        body:extend(doc.blocks)
+      else
+        body:extend(doc.blocks)
+      end
       return pandoc.Pandoc(body, meta)
     end
   }

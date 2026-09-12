@@ -13,12 +13,6 @@ keep-tex: true
 format:
   apaquarto-pdf:
     documentmode: man
-    include-in-header:
-      text: |
-        % Temporary workaround for a separate Quarto 1.9 / CSL length issue.
-        % This is not part of the longtable fix itself.
-        \newlength{\cslhangindent}
-        \newlength{\csllabelwidth}
 ---
 
 This document reproduces the long-table clipping problem in manuscript-mode PDF output.

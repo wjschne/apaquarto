@@ -1,0 +1,22 @@
+---
+title: "Typst Student Paper Fixture"
+shorttitle: "Student Paper"
+author:
+  - name: Sam Student
+    corresponding: true
+    email: sam@example.edu
+    affiliations:
+      - name: Example University
+course: "Introduction to Statistics (EDUC 5101)"
+professor: "Dr. W. Joel Schneider"
+duedate: "December 22, 2026"
+abstract: "Exercises Typst student mode (page-number-only header, student title fields)."
+format:
+  apaquarto-typst:
+    documentmode: stu
+    keep-typ: true
+---
+
+# Introduction
+
+Body text for the student paper fixture.

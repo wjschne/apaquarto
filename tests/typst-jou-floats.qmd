@@ -1,0 +1,34 @@
+---
+title: "Typst Journal Floats Fixture"
+shorttitle: "Journal Floats"
+author:
+  - name: Ana Author
+    corresponding: true
+    email: ana@example.org
+    affiliations:
+      - name: Example University
+abstract: "Exercises wide (apa-twocolumn) figures and tables, each with a note, in Typst journal mode."
+floatsintext: true
+format:
+  apaquarto-typst:
+    documentmode: jou
+    keep-typ: true
+---
+
+# Introduction
+
+Body text before the floats, with enough words to start filling the first
+column so the spanning floats have context around them in the layout.
+
+![A wide figure that spans both columns.](sampleimage.png){#fig-wide apa-twocolumn="true" apa-note="This figure spans both columns."}
+
+| Group | Mean |  SD |
+|-------|-----:|----:|
+| A     | 10.2 | 1.1 |
+| B     | 12.4 | 1.3 |
+
+: A wide table that spans both columns. {#tbl-wide apa-twocolumn="true" apa-note="This table spans both columns."}
+
+# Discussion
+
+More text after the floats to confirm the two-column body continues below them.

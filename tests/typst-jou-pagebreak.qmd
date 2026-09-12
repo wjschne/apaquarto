@@ -1,0 +1,25 @@
+---
+title: "Typst Journal Pagebreak Fixture"
+shorttitle: "Journal Pagebreak"
+author:
+  - name: Ana Author
+    corresponding: true
+    email: ana@example.org
+    affiliations:
+      - name: Example University
+abstract: "Confirms that a manual page break is legal in Typst journal mode (page-level columns, not a container)."
+format:
+  apaquarto-typst:
+    documentmode: jou
+    keep-typ: true
+---
+
+# Introduction
+
+First section, before an explicit page break.
+
+{{< pagebreak >}}
+
+# Method
+
+This section follows the manual page break.

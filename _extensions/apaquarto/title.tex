@@ -27,8 +27,12 @@ $endif$
 \usepackage{etoolbox}
 
 
+$if(journal.title)$
+\journal{$journal.title$}
+$else$
 $if(journal)$
 \journal{$journal$}
+$endif$
 $endif$
 $if(volume)$
 \volume{$volume$}

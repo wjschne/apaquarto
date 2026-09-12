@@ -1,0 +1,37 @@
+---
+title: "Typst Document Mode Fixture"
+shorttitle: "Document Mode"
+author:
+  - name: Dana Doc
+    corresponding: true
+    email: dana@example.edu
+    affiliations:
+      - name: Example University
+abstract: "Exercises Typst document (doc) mode: continuous one-column flow, no running head, page numbers at the foot."
+first-page: 3
+format:
+  apaquarto-typst:
+    documentmode: doc
+    keep-typ: true
+---
+
+# Introduction
+
+Body text for the document-mode fixture. Document mode runs as a single
+continuous column with no manuscript title page, so the title sits directly
+above this text and pages are numbered at the foot.
+
+## A Subsection
+
+A short table to confirm floats stay inline in document mode by default.
+
+| Group | Mean |
+|-------|-----:|
+| A     | 10.2 |
+| B     | 12.4 |
+
+: A table that should appear inline in document mode. {#tbl-doc}
+
+# Discussion
+
+More body text after the table to confirm the continuous flow continues below it.
