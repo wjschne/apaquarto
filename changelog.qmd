@@ -18,6 +18,7 @@ engine: knitr
 
 # Version 6.0.0
 - 2026-09-11
+- apaquarto-html no longer builds standalone preview pages for documents pulled in with `{{< embed >}}`. Quarto resolved this format's theme against its temporary embed directory rather than the project, so every render with an embed warned `Theme file not found` and produced a preview page with none of the apaquarto styling. The embedded figure or table itself was never affected. Set `notebook-view: true` to get the "Source:" link and its preview page back.
 - `documentmode` now accepts the modes spelled out in full, in both apaquarto-pdf and apaquarto-typst: `journal`, `manuscript`, `document`, and `student` are aliases for `jou`, `man`, `doc`, and `stu`.
 - `mainfont`, `monofont`, and `papersize` now work with docx via the `docxreferencedoc.lua` filter (credit to Claude)
 - Fixed .docx 4th and 5th level headers with ampersands (credit to Claude).

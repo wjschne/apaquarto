@@ -441,7 +441,3 @@ mtcars |>
   apa_chisq(table_width = .5, font_size = 10)
 ```
 
-
-
-
-

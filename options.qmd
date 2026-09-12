@@ -611,6 +611,8 @@ In typst `jou` and `doc` modes, figures and tables are placed in text by default
 
 With one exception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.
 
+Notebook previews are off (`notebook-view: false`). When a document pulls in a figure or table from another document with `{{< embed other.qmd#fig-x >}}`, Quarto ordinarily renders that other document a second time to build a standalone preview page for the "Source:" link beneath the embedded output. That second render resolves this format's theme against a temporary directory instead of the project, so it cannot find the apaquarto stylesheet and builds the preview page with none of this format's styling. The embedded figure or table itself is unaffected --- it is placed in the article, which does have the styling. Set `notebook-view: true` if you want the "Source:" link back.
+
 # Suppress Elements
 
 Any of the elements below can be selectively suppressed from the document.

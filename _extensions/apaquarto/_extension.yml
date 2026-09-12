@@ -182,6 +182,17 @@ contributes:
       anchor-sections: false
       fig-cap-location: top
       html-math-method: katex
+      # An {{< embed other.qmd#fig-x >}} makes quarto render the source
+      # document a second time, from a copy it writes to .quarto/embed, to
+      # build a standalone preview page for the "Source:" link. That render
+      # resolves the theme against .quarto/embed rather than the project, so
+      # it cannot find _extensions/apaquarto/apa.scss ("Theme file not found")
+      # and falls back to stock bootstrap -- a preview page with none of this
+      # format's styling. The embedded output itself is unaffected: it is
+      # inlined into the article, which has the theme. Turning the preview off
+      # drops the warning and the unstyled page; set notebook-view: true to
+      # get the "Source:" link back.
+      notebook-view: false
       mainfont: Times, Times New Roman, serif
       monofont: Consolas, Lucida Console, Courier New, monospace
       grid: 
