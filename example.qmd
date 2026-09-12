@@ -89,6 +89,8 @@ keywords:
   - Quarto
   - Markdown
   - apaquarto
+# Optional pointer to supplemental materials, shown on the line below the keywords.
+supplemental-materials: "Documentation and web app at  <https://wjschne.github.io/apaquarto/>"
 # Optional statement about the importance of the paper. The heading can be customized in the language field.
 impact-statement: "The apaquarto template allow writers to apply APA style consistently with minimal fuss and bother."
 # If true, a word count will appear below the keywords (tables, figure captions, and references excluded in count.)
@@ -129,6 +131,7 @@ language:
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; [credit.niso.org](https://credit.niso.org)) as follows:"
   title-impact-statement: "Impact Statement"
+  title-supplemental-materials: "Supplemental materials"
   references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
 # Keep `false` to remain consistent with APA style. If `true`, replaces ampersands with `and` or word specified in `citation-last-author-separator` in parenthetical citations. 
 no-ampersand-parenthetical: false
@@ -287,7 +290,7 @@ We can make a table the same way as a figure. Generating a table that conforms t
 
 lm(price ~ carat + depth + table, data = ggplot2::diamonds) |>  
   apa_parameters() |> 
-  apa_flextable()
+  apa_flextable(font_size = 10)
 
 ```
 
@@ -435,7 +438,7 @@ mtcars |>
   mutate(Gears = factor(Gears),
          Transmission = factor(Transmission, 
                                labels = c("Automatic", "Manual"))) |>
-  apa_chisq(table_width = .48)
+  apa_chisq(table_width = .5, font_size = 10)
 ```
 
 

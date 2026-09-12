@@ -21,6 +21,9 @@ $if(title)$
 $endif$
 $endif$
 $endif$
+$if(jou-running-authors)$
+  runningauthors: "$jou-running-authors$",
+$endif$
 $if(papersize)$
   paper: "$papersize$",
 $endif$

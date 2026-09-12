@@ -84,6 +84,18 @@
   authors: (),
   keywords: (),
   runninghead: none,
+  // Surnames for the journal even-page running head, already assembled by
+  // frontmatter.lua. none falls back to the short title on those pages.
+  runningauthors: none,
+  // Size of the running head. none follows the body.
+  headersize: none,
+  // Size of the page number, which a journal sets larger than the running head
+  // beside it. none follows the running head.
+  pagenumsize: none,
+  // How far the header is raised off the top of the text block, either as a
+  // share of the top margin or as an absolute length. 0% sits it at the foot of
+  // the margin, just above the text.
+  headerascent: 50%,
   margin: (x: 1in, y: 1in),
   paper: "us-letter",
   font: ("Times", "Times New Roman"),
@@ -142,12 +154,31 @@
   let pageheader = if headerstyle == "pagenum" {
     align(right)[#context counter(page).display()]
   } else if headerstyle == "jou" {
+    // A published article carries the short title on odd pages and the author
+    // surnames on even ones, centered and in caps, with the page number in the
+    // outer corner: left on even (verso) pages, right on odd (recto) ones. The
+    // opening page carries none of it.
     context {
-      if counter(page).get().at(0) > first-page {
+      let pg = counter(page).get().at(0)
+      if pg > first-page {
+        let verso = calc.even(pg)
+        let middle = if verso and runningauthors != none {
+          runningauthors
+        } else {
+          runninghead
+        }
+        let hs = if headersize == none { fontsize } else { headersize }
+        let num = text(size: if pagenumsize == none { hs } else { pagenumsize })[
+          #counter(page).display()
+        ]
+        set text(size: hs)
         grid(
-          columns: (9fr, 1fr),
-          align(left)[#upper[#runninghead]],
-          align(right)[#counter(page).display()],
+          columns: (1fr, auto, 1fr),
+          // The three cells sit on a common baseline, so the larger page
+          // number lines up with the running head rather than riding above it.
+          align(bottom + left)[#if verso [#num]],
+          align(bottom + center)[#upper[#middle]],
+          align(bottom + right)[#if not verso [#num]],
         )
       }
     }
@@ -166,7 +197,7 @@
     paper: paper,
     columns: cols,
     numbering: pagenumbering,
-    header-ascent: 50%,
+    header-ascent: headerascent,
     header: pageheader,
   )
   
@@ -263,10 +294,15 @@
 
 
  // Redefine headings up to level 5 
+  // Levels 1 to 3 are set ragged right with hyphenation off, even where the
+  // body is justified. Stretching a two-line heading to the column edge, or
+  // breaking a word in it, is not something a journal does.
   show heading.where(
     level: 1
   ): it => block(width: 100%, below: headspace(it), above: headspace(it))[
     #set align(center)
+    #set par(justify: false)
+    #set text(hyphenate: false)
     #if(numbersections and it.outlined and numberdepth > 0 and counter(heading).get().at(0) > 0) [#counter(heading).display()] #it.body
   ]
   
@@ -274,6 +310,8 @@
     level: 2
   ): it => block(width: 100%, below: headspace(it), above: headspace(it))[
     #set align(left)
+    #set par(justify: false)
+    #set text(hyphenate: false)
     #if(numbersections and it.outlined and numberdepth > 1 and counter(heading).get().at(0) > 0) [#counter(heading).display()] #it.body
   ]
   
@@ -281,7 +319,8 @@
     level: 3
   ): it => block(width: 100%, below: headspace(it), above: headspace(it))[
     #set align(left)
-    #set text(style: "italic")
+    #set par(justify: false)
+    #set text(hyphenate: false, style: "italic")
     #if(numbersections and it.outlined and numberdepth > 2 and counter(heading).get().at(0) > 0) [#counter(heading).display()] #it.body
   ]
 
@@ -317,7 +356,7 @@
 // suppressed on the first page. The full-width title/abstract masthead (so it
 // spans both columns) is assembled in frontmatter.lua.
 #let jou(..args) = apa-layout(
-  margin: (x: 0.75in, y: 0.75in),
+  margin: (x: 0.75in, y: 1in),
   // 10pt body text, against the 12pt the other modes take from apa-layout.
   fontsize: 10pt,
   // apa7 jou sets 10pt text on a 12pt baseline. Typst's leading is the gap
@@ -338,6 +377,10 @@
   cols: 2,
   justify: true,
   headerstyle: "jou",
+  headersize: 8pt,
+  pagenumsize: 10pt,
+  // Sit the running head in the top margin, 12pt clear of the text block.
+  headerascent: 12pt,
   updatepagecounter: true,
   ..args,
 )

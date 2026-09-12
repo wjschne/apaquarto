@@ -225,6 +225,13 @@ $if(journalmode)$
 % \clearpage and no global side effects. That also makes the closing
 % \twocolumn unnecessary.
 \providecommand{\apaqonecolumnfloat}{\@twocolumnfalse\col@number\@ne}
+% \end{table*} is \end@dblfloat, which tests \if@twocolumn and, when the flag
+% is false, hands the float to \end@float instead -- a \textwidth-wide box
+% filed as an ordinary one-column float, which then overprints the column
+% text beside it. So a float that spans both columns has to put the flags back
+% before its environment closes. A single-column float (the \ThreePartTable
+% wrapper below) ends with \end{figure} and needs no such restore.
+\providecommand{\apaqtwocolumnfloatend}{\@twocolumntrue\col@number\tw@}
 \let\oldtpt\ThreePartTable
 \let\endoldtpt\endThreePartTable
 \def\ThreePartTable{\@ifnextchar[\ThreePartTable@i \ThreePartTable@ii}
@@ -258,6 +265,7 @@ $if(journalmode)$
 \apaqonecolumnfloat% see the note above: never \onecolumn inside a float
 }%
 {%
+\apaqtwocolumnfloatend% \end{table*} only spans the page while @twocolumn holds
 \end{table*}%
 }% end code
 $else$

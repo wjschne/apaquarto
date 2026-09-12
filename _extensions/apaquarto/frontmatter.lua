@@ -144,6 +144,43 @@ end
 -- wraps the masthead in place(scope: "parent", float: true) so it spans both
 -- columns; the author note then flows into the two-column body rather than
 -- crowding the masthead.
+-- Surname for the journal running head. Quarto's parsed name.family is used
+-- when it really is the trailing surname of the displayed name, which keeps
+-- compound surnames ("van der Berg") whole. When an author writes the name as
+-- a given/family pair, Quarto can fold the two together and re-split on the
+-- last space, leaving family as a middle initial; in that case the last word
+-- of the display name is the better answer.
+local function author_surname(a)
+  local display = a.apaauthordisplay and stringify(a.apaauthordisplay) or ""
+  local family = a.name and a.name.family and stringify(a.name.family) or ""
+  if family ~= "" and display:sub(-#family) == family then
+    return family
+  end
+  return display:match("(%S+)%s*$") or family
+end
+
+-- Running head byline: surnames with serial commas, an ampersand before the
+-- last, and "et al." once there are more than three authors.
+local function running_authors(byauthor)
+  local names = List:new {}
+  for _, a in ipairs(byauthor) do
+    local surname = author_surname(a)
+    if surname ~= "" then
+      names:insert(surname)
+    end
+  end
+  if #names == 0 then
+    return nil
+  elseif #names == 1 then
+    return names[1]
+  elseif #names == 2 then
+    return names[1] .. " & " .. names[2]
+  elseif #names == 3 then
+    return names[1] .. ", " .. names[2] .. ", & " .. names[3]
+  end
+  return names[1] .. " et al."
+end
+
 -- The ORCID icon carries a width in millimetres, which next to the author
 -- note's smaller text is taller than the text itself and opens up every line
 -- it sits on. Typst measures a line from the cap height to the baseline, about
@@ -280,6 +317,35 @@ local function split_jou_frontmatter(blocks)
   return front, narrow, notes, tail
 end
 
+-- The impact statement is set off from the abstract above it and the keywords
+-- below it by a 1pt rule, 5pt clear of the text on every side. The box is
+-- emitted at width 100% inside the narrow block, so its outer edge lines up
+-- with the abstract rather than standing proud of it.
+local function box_jou_impact(blocks)
+  local out = List:new {}
+  local i = 1
+  while i <= #blocks do
+    local block = blocks[i]
+    if block.t == "Header" and block.identifier == "impact" then
+      out:extend({ pandoc.RawBlock('typst',
+        '#block(width: 100%, inset: 5pt, stroke: 1pt + black)[') })
+      out:extend({ block })
+      i = i + 1
+      -- The statement itself arrives as one or more Divs. The keywords line
+      -- that follows it is a Para, which closes the box.
+      while i <= #blocks and blocks[i].t == "Div" do
+        out:extend({ blocks[i] })
+        i = i + 1
+      end
+      out:extend({ pandoc.RawBlock('typst', ']') })
+    else
+      out:extend({ block })
+      i = i + 1
+    end
+  end
+  return out
+end
+
 -- Document mode: one continuous flow. Drop the repeated body-top title and the
 -- manuscript spacing/pagebreaks; keep everything else in order.
 local function strip_doc_frontmatter(blocks)
@@ -397,6 +463,17 @@ return {
       end
 
       local byauthor = meta["by-author"]
+
+      -- Byline for the journal-mode even-page running head. Left unset when
+      -- authorship is masked or suppressed, and the header falls back to the
+      -- short title.
+      if byauthor and not meta["suppress-author"] and
+          not (meta["mask"] and stringify(meta["mask"]) == "true") then
+        local line = running_authors(byauthor)
+        if line then
+          meta["jou-running-authors"] = pandoc.MetaString(line)
+        end
+      end
       local affiliations = meta["affiliations"]
 
       local authornote = false
@@ -847,6 +924,22 @@ return {
         body:extend({ keywords_paragraph })
       end
 
+      -- A pointer to supplemental materials (a repository, an OSF page, a data
+      -- archive) sits on its own line under the keywords, labelled the way the
+      -- keywords line is.
+      if meta["supplemental-materials"] and
+          stringify(meta["supplemental-materials"]) ~= "" and
+          not meta["suppress-supplemental-materials"] then
+        local supplementalword = pandoc.Str("Supplemental materials")
+        if meta.language and meta.language["title-supplemental-materials"] then
+          supplementalword = stringify(meta.language["title-supplemental-materials"])
+        end
+
+        local supplemental_paragraph = pandoc.Para({ pandoc.Emph(supplementalword), pandoc.Str(":"), pandoc.Space() })
+        supplemental_paragraph.content:extend(meta_inlines(meta["supplemental-materials"]))
+        body:extend({ supplemental_paragraph })
+      end
+
       if meta["word-count"] then
         local word_count_word = "Word Count"
         if meta.language and meta.language["title-block-word-count"] then
@@ -965,7 +1058,7 @@ return {
             '#set align(left)\n#set text(size: jouabstractsize)\n' ..
             '#set par(leading: jouabstractleading, first-line-indent: 0pt)\n' ..
             '#show heading.where(level: 1): set text(size: jouabstractsize)') })
-          out:extend(narrow)
+          out:extend(box_jou_impact(narrow))
           out:extend({ pandoc.RawBlock('typst', ']\n]') })
         end
         out:extend({ pandoc.RawBlock('typst', ']') })

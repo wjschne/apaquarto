@@ -44,6 +44,7 @@ contributes:
       suppress-abstract: false
       suppress-impact-statement: false
       suppress-keywords: false
+      suppress-supplemental-materials: false
       suppress-title-introduction: false
       no-ampersand-parenthetical: false
       language: 
@@ -57,6 +58,7 @@ contributes:
         title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
         title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
         title-impact-statement: "Impact Statement"
+        title-supplemental-materials: "Supplemental materials"
         title-word-count: "Word Count"
         references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
       filters:

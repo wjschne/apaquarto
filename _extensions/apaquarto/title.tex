@@ -129,13 +129,13 @@ $endif$
 $if(suppress-abstract)$
 $else$
 $if(abstract)$
-\abstract{$abstract$ $if(impact-statement)$ \section{$language.title-impact-statement$} \noindent $impact-statement$ $endif$}
+\abstract{$abstract$ $if(impact-statement)$ \section{$language.title-impact-statement$} \noindent $impact-statement$ $endif$$if(suppress-supplemental-materials)$$else$$if(supplemental-materials)$$if(suppress-keywords)$\par\vspace{0.12in}\textit{$language.title-supplemental-materials$:} $supplemental-materials$$else$$if(keywords)$$else$\par\vspace{0.12in}\textit{$language.title-supplemental-materials$:} $supplemental-materials$$endif$$endif$$endif$$endif$}
 $endif$
 $endif$
 
 $if(suppress-keywords)$
 $else$
-$if(keywords)$\keywords{$for(keywords)$$it$$sep$, $endfor$}$endif$
+$if(keywords)$\keywords{$for(keywords)$$it$$sep$, $endfor$$if(suppress-supplemental-materials)$$else$$if(supplemental-materials)$\par\textit{$language.title-supplemental-materials$:} $supplemental-materials$$endif$$endif$}$endif$
 $endif$
 
 $if(suppress-author-note)$
