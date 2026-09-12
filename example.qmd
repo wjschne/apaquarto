@@ -139,8 +139,9 @@ execute:
 # mainfont: Times New Roman
 # monofont: Consolas
 papersize: us-letter
-# journal: 
-#   title: "Journal of Personality and Social Psychology"
+journal:
+  title: "Journal of Personality and Social Psychology"
+volume: 42(2) 227--229
 format:
   apaquarto-html: 
     toc: true
