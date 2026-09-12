@@ -1,0 +1,132 @@
+---
+title: "Subfigure Layout Grid"
+shorttitle: "Subfigure grid"
+author:
+  - name: Test Author
+    affiliations:
+      - name: Test University
+floatsintext: true
+keep-tex: true
+format:
+  apaquarto-pdf:
+    documentmode: man
+---
+
+<!--
+A figure built out of sub-figures is laid out by quarto itself, in the grid
+that layout-ncol asks for. apafloatlatex.lua used to take such a float over
+and wrap it in a figure environment by hand as soon as any panel carried an
+apa-note, which replaced the float with a plain div and cost it that grid:
+the panels came out stacked one per row.
+
+Render from the tests directory:
+
+    quarto render subfigure-layout-grid.qmd
+
+A successful run produces a PDF in which
+
+  - every layout below is two panels wide, not one;
+  - each note appears exactly once, under the panel it belongs to, or under
+    the whole grid when it belongs to the figure;
+  - every figure is numbered and every reference resolves (no "Figure ??"),
+    including the layouts that have no caption text of their own.
+
+In the .tex, each of the five layouts should carry two \begin{minipage}
+wrappers, and every float a \caption with a \label.
+-->
+
+# Cases
+
+A: captioned layout, no notes (@fig-a).
+
+::: {#fig-a layout-ncol=2}
+![Left.](sampleimage.png){#fig-a-1 width="1.5in"}
+
+![Right.](sampleimage.png){#fig-a-2 width="1.5in"}
+
+An overall caption.
+:::
+
+B: caption-less layout, no notes (@fig-b). Quarto writes no `\caption` for a
+laid-out float whose caption is empty, and the `\label` goes with it, so this
+one used to render unnumbered with a dangling reference.
+
+::: {#fig-b layout-ncol=2}
+![Left.](sampleimage.png){#fig-b-1 width="1.5in"}
+
+![Right.](sampleimage.png){#fig-b-2 width="1.5in"}
+:::
+
+C: captioned layout, both panels noted (@fig-c).
+
+::: {#fig-c layout-ncol=2}
+![Left.](sampleimage.png){#fig-c-1 width="1.5in" apa-note="Note for the left panel."}
+
+![Right.](sampleimage.png){#fig-c-2 width="1.5in" apa-note="Note for the right panel."}
+
+An overall caption.
+:::
+
+D: caption-less layout, both panels noted (@fig-d). The case from issue #158,
+and the one that has to keep both the grid and its number.
+
+::: {#fig-d layout-ncol=2}
+![Left.](sampleimage.png){#fig-d-1 width="1.5in" apa-note="Note for the left panel."}
+
+![Right.](sampleimage.png){#fig-d-2 width="1.5in" apa-note="Note for the right panel."}
+:::
+
+E: layout with a note on the whole figure rather than on the panels
+(@fig-e). The note belongs to the figure, so it is printed once, below the
+grid, and not copied onto each panel.
+
+::: {#fig-e layout-ncol=2 apa-note="A note belonging to the whole figure."}
+![Left.](sampleimage.png){#fig-e-1 width="1.5in"}
+
+![Right.](sampleimage.png){#fig-e-2 width="1.5in"}
+
+An overall caption.
+:::
+
+H: layout with a whole-figure note and no layout attribute at all (@fig-h).
+
+::: {#fig-h apa-note="A note belonging to the whole figure."}
+![Left.](sampleimage.png){#fig-h-1 width="1.5in"}
+
+![Right.](sampleimage.png){#fig-h-2 width="1.5in"}
+
+An overall caption.
+:::
+
+I: three panels over two columns, with a whole-figure note (@fig-i).
+
+::: {#fig-i layout-ncol=2 apa-note="A note belonging to the whole three-panel figure, long enough to show whether it wraps inside half the figure width or runs the full width of it."}
+![One.](sampleimage.png){#fig-i-1 width="1.2in"}
+
+![Two.](sampleimage.png){#fig-i-2 width="1.2in"}
+
+![Three.](sampleimage.png){#fig-i-3 width="1.2in"}
+
+An overall caption.
+:::
+
+J: explicit layout matrix with a whole-figure note (@fig-j).
+
+::: {#fig-j layout="[[1,1]]" apa-note="A note belonging to the whole figure."}
+![Left.](sampleimage.png){#fig-j-1 width="1.5in"}
+
+![Right.](sampleimage.png){#fig-j-2 width="1.5in"}
+
+An overall caption.
+:::
+
+F: plain single figure with a note (@fig-f). Not a layout; it still takes the
+hand-built wrapper.
+
+![A single image.](sampleimage.png){#fig-f width="1.5in" apa-note="A single figure's note."}
+
+G: plain single figure, no note, no caption text (@fig-g).
+
+![](sampleimage.png){#fig-g width="1.5in"}
+
+End of document.

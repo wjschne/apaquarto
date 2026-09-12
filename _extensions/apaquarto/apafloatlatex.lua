@@ -280,6 +280,26 @@ local processfloat = function(float)
   end
 
   if float.type == "Figure" then
+    -- Don't wrap sub-figures in their own figure environment (nested figure
+    -- environments are illegal in latex); render natively and append the note
+    if float.parent_id then
+      if float.attributes["apa-note"] then
+        local subbeforenote = ""
+        float.content:walk {
+          Image = function(img)
+            if img.attributes["beforenotespace"] then
+              subbeforenote = "\\vspace{" .. img.attributes["beforenotespace"] .. "}\n"
+            end
+          end
+        }
+        local note_prefix = pandoc.Span(pandoc.RawInline("latex", subbeforenote .. noteprefix))
+        local subnote = utilsapa.make_note(float.attributes["apa-note"], note_prefix)
+        local newcontent = pandoc.Blocks(float.content)
+        newcontent:insert(subnote)
+        float.content = newcontent
+      end
+      return float
+    end
     local hasnote = false
     local apanote
     local twocolumn = false
@@ -309,6 +329,28 @@ local processfloat = function(float)
       latexenv = "figure*"
     end
 
+    -- A figure built out of sub-figures is laid out by quarto itself, in the
+    -- grid that layout-ncol and friends ask for. Wrapping it in a figure
+    -- environment by hand, the way a single figure is handled below, replaces
+    -- the float with a plain div, and quarto never gets to build that grid:
+    -- the panels come out stacked one per row. Hand it back instead. Its
+    -- panels' notes are attached by the sub-figure branch above, and a note
+    -- belonging to the whole figure by floatwithsubfigure.lua, so there is
+    -- nothing left here but the caption. A float that spans both columns
+    -- still needs figure*, which only the hand-built wrapper can give it, so
+    -- that one goes the long way round.
+    if float.attributes.hassubfigs and not twocolumn then
+      -- Quarto writes no \caption for a laid-out float whose caption is
+      -- empty, and the \label goes with it: the figure ends up unnumbered and
+      -- every reference to it renders as "Figure ??". An empty raw inline is
+      -- caption enough to bring both back.
+      if float.caption_long == nil then
+        float.caption_long = pandoc.Plain({ pandoc.RawInline("latex", "") })
+      elseif #float.caption_long.content == 0 then
+        float.caption_long.content = pandoc.Inlines({ pandoc.RawInline("latex", "") })
+      end
+      return float
+    end
 
     -- Make note
     if hasnote or twocolumn then
@@ -339,13 +381,14 @@ local processfloat = function(float)
         floatposition = ""
       end
 
+      -- splice content as Blocks (a layout figure's content is a list, not a Block)
       local returnblock = pandoc.Div({
         pandoc.RawBlock("latex", "\\begin{" .. latexenv .. "}" .. floatposition),
-        captionspan,
-        float.content,
-        apanotedivs,
-        pandoc.RawBlock("latex", "\\end{" .. latexenv .. "}")
+        captionspan
       })
+      returnblock.content:extend(pandoc.Blocks(float.content))
+      returnblock.content:insert(apanotedivs)
+      returnblock.content:insert(pandoc.RawBlock("latex", "\\end{" .. latexenv .. "}"))
 
       return returnblock
     end

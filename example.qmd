@@ -158,7 +158,7 @@ format:
     documentmode: jou
   apaquarto-pdf:
     # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: jou
+    documentmode: man
 ---
 
 ```{r}
