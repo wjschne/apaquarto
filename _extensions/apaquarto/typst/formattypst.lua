@@ -63,6 +63,25 @@ end
 
 local utilsapa = require("utilsapa")
 
+-- The body first-line indent differs by mode, and the template names each one.
+-- A block that suspends the indent (references, a note) has to put back the
+-- one belonging to this document rather than the manuscript default, and in
+-- journal mode has to put back the all: true form as well, so the expression
+-- is built once here.
+local bodyindent = "apaparindent(firstlineindent)"
+local hangingindent = "0.5in"
+
+local function set_body_indent(meta)
+  local mode = meta.documentmode and pandoc.utils.stringify(meta.documentmode) or "man"
+  if mode == "jou" then
+    bodyindent = "apaparindent(joufirstlineindent, all: true)"
+    hangingindent = "joufirstlineindent"
+  elseif mode == "doc" then
+    bodyindent = "apaparindent(docfirstlineindent)"
+    hangingindent = "docfirstlineindent"
+  end
+end
+
 -- Word for "note", and the notes apatablenote.lua recovered from markdown
 -- table captions, keyed by table identifier
 local noteword = "Note"
@@ -127,6 +146,7 @@ return {
       if meta.language and meta.language["figure-table-note"] then
         noteword = pandoc.utils.stringify(meta.language["figure-table-note"])
       end
+      set_body_indent(meta)
       if meta["apa-table-notes"] then
         for id, note in pairs(meta["apa-table-notes"]) do
           tablenotes[id] = pandoc.utils.stringify(note)
@@ -197,11 +217,11 @@ return {
       
       -- Hanging indent on refs
       if div.identifier == "refs" then
-        return {pandoc.RawBlock("typst", "#set par(first-line-indent: 0in, hanging-indent: 0.5in)"), div, pandoc.RawBlock("typst","#set par(first-line-indent: firstlineindent, hanging-indent: 0in)") }
+        return {pandoc.RawBlock("typst", "#set par(first-line-indent: 0in, hanging-indent: " .. hangingindent .. ")"), div, pandoc.RawBlock("typst","#set par(first-line-indent: " .. bodyindent .. ", hanging-indent: 0in)") }
       end
       
       if div.classes:includes("NoIndent") then
-        return {pandoc.RawBlock('typst', "#set par(first-line-indent: 0mm)"), div, pandoc.RawBlock('typst', "#set par(first-line-indent: firstlineindent)")}
+        return {pandoc.RawBlock('typst', "#set par(first-line-indent: 0mm)"), div, pandoc.RawBlock('typst', "#set par(first-line-indent: " .. bodyindent .. ")")}
       end
     end
   } ,

@@ -144,18 +144,120 @@ end
 -- wraps the masthead in place(scope: "parent", float: true) so it spans both
 -- columns; the author note then flows into the two-column body rather than
 -- crowding the masthead.
+-- The ORCID icon carries a width in millimetres, which next to the author
+-- note's smaller text is taller than the text itself and opens up every line
+-- it sits on. Typst measures a line from the cap height to the baseline, about
+-- 0.66em in Times, so sizing the icon to that keeps it level with the capitals
+-- beside it and leaves the line height alone. The height must be written as a
+-- literal dimension, since Pandoc parses this attribute rather than passing it
+-- through. Dropping the width keeps the icon square.
+local function fit_jou_orcid(blocks)
+  return pandoc.Blocks(blocks):walk {
+    Image = function(img)
+      if img.identifier == "orcid" then
+        img.attributes.width = nil
+        img.attributes.height = "0.66em"
+        return img
+      end
+    end
+  }
+end
+
+-- Each ORCID line is one short name-and-link paragraph, so justifying it
+-- stretches the gaps across the column and indenting it leaves the names out
+-- of line with each other. They are set flush left and unindented, while the
+-- prose paragraphs of the note keep the indent they are given.
+local function has_orcid(block)
+  local found = false
+  block:walk {
+    Image = function(img)
+      if img.identifier == "orcid" then
+        found = true
+      end
+    end
+  }
+  return found
+end
+
+local function set_off_jou_orcid(blocks)
+  local out = List:new {}
+  local open = false
+  for _, block in ipairs(blocks) do
+    local orcid = block.t == "Para" and has_orcid(block)
+    if orcid and not open then
+      out:extend({ pandoc.RawBlock("typst",
+        "#block[\n#set par(justify: false, first-line-indent: 0pt)") })
+      open = true
+    elseif open and not orcid then
+      out:extend({ pandoc.RawBlock("typst", "]") })
+      open = false
+    end
+    out:extend({ block })
+  end
+  if open then
+    out:extend({ pandoc.RawBlock("typst", "]") })
+  end
+  return out
+end
+
+-- apa7 sets the byline larger than the affiliations under it. Quarto emits
+-- both inside one Div, so the sizes are switched partway through its content:
+-- the byline is the first paragraph, and every paragraph after it is an
+-- affiliation.
+local function size_jou_byline(blocks)
+  for _, block in ipairs(blocks) do
+    if block.t == "Div" and block.classes:includes("Author") then
+      local content = List:new {
+        pandoc.RawBlock("typst", "#set par(..joubylinepar)"),
+        pandoc.RawBlock("typst", "#set block(spacing: 0.55em)")
+      }
+      local seen_byline = false
+      for _, inner in ipairs(block.content) do
+        if inner.t == "Para" and not seen_byline then
+          seen_byline = true
+          content:extend({ pandoc.RawBlock("typst", "#set text(size: jouauthorsize)") })
+          content:extend({ inner })
+          content:extend({ pandoc.RawBlock("typst", "#set text(size: jouaffiliationsize)") })
+        else
+          content:extend({ inner })
+        end
+      end
+      block.content = content
+    end
+  end
+  return blocks
+end
+
+-- The masthead is set in three pieces. "front" is the title and authors, at
+-- the sizes apa7 gives them. "narrow" is everything from the abstract on --
+-- abstract, impact statement, keywords -- which apa7 sets smaller and in a
+-- block narrower than the masthead. "notes" is the author note, which is
+-- separated by a rule below both.
 local function split_jou_frontmatter(blocks)
   local front = List:new {}
+  local narrow = List:new {}
   local notes = List:new {}
   local tail = List:new {}
   local in_notes = false
+  local in_narrow = false
   for _, block in ipairs(blocks) do
     if block.t == "Header" and block.identifier == "author-note" then
+      -- The note sits alone at the foot of the column under a rule, the way
+      -- apa7 sets it, so it needs no heading to introduce it.
       in_notes = true
-      notes:extend({ block })
+      in_narrow = false
     elseif block.t == "Header" and block.identifier == "abstract" then
+      -- apa7 prints no heading above the abstract in journal mode; the small
+      -- narrow block is what marks it out.
       in_notes = false
-      front:extend({ block })
+      in_narrow = true
+    elseif block.t == "Header" and block.identifier == "impact" then
+      -- The impact statement does keep its heading. Everything from here to
+      -- the author note belongs in the narrow block, including the keywords
+      -- line that trails the abstract.
+      in_notes = false
+      in_narrow = true
+      narrow:extend({ block })
     elseif block.t == "Header" and block.identifier == "firstheader" then
       -- The masthead already carries the title; do not repeat it.
     elseif block.t == "RawBlock" and block.format == "typst" and
@@ -169,11 +271,13 @@ local function split_jou_frontmatter(blocks)
       -- No manuscript spacing in journal mode.
     elseif in_notes then
       notes:extend({ block })
+    elseif in_narrow then
+      narrow:extend({ block })
     else
       front:extend({ block })
     end
   end
-  return front, notes, tail
+  return front, narrow, notes, tail
 end
 
 -- Document mode: one continuous flow. Drop the repeated body-top title and the
@@ -825,7 +929,7 @@ return {
         -- Masthead (title/byline/affiliations/abstract) spans both columns via
         -- place(float); the author note flows into the two-column body beneath
         -- it, set off by a thin rule, rather than crowding the masthead.
-        local front, notes, tail = split_jou_frontmatter(body)
+        local front, narrow, notes, tail = split_jou_frontmatter(body)
         local metadata = typst_journal_metadata(meta)
         local out = List:new {}
         out:extend({ pandoc.RawBlock('typst',
@@ -838,15 +942,45 @@ return {
           out:extend(metadata)
           out:extend({ pandoc.RawBlock('typst', ']') })
         end
-        out:extend(front)
+        -- The title and authors. The template's heading rule pins every
+        -- heading to the body size, so the title size is restated here in a
+        -- show rule of its own, which being the later rule wins inside this
+        -- block only.
+        -- apa7's journal title is \LARGE but not bold, so the weight is reset
+        -- along with the size; typst headings are bold by default.
+        out:extend({ pandoc.RawBlock('typst',
+          '#block(width: 100%)[\n' ..
+          '#show heading.where(level: 1): set text(size: joutitlesize, weight: "regular")') })
+        out:extend(size_jou_byline(front))
+        out:extend({ pandoc.RawBlock('typst', ']') })
+        if #narrow > 0 then
+          -- Abstract, impact statement and keywords: smaller, and set in a
+          -- block narrower than the masthead, centered under the authors.
+          -- Leading is set in em so it follows the smaller text at the same
+          -- ratio the body uses, rather than keeping the body's absolute
+          -- leading and looking slack at this size.
+          out:extend({ pandoc.RawBlock('typst',
+            '#align(center)[\n' ..
+            '#block(width: jouabstractwidth, above: 1em, below: 0.6em)[\n' ..
+            '#set align(left)\n#set text(size: jouabstractsize)\n' ..
+            '#set par(leading: jouabstractleading, first-line-indent: 0pt)\n' ..
+            '#show heading.where(level: 1): set text(size: jouabstractsize)') })
+          out:extend(narrow)
+          out:extend({ pandoc.RawBlock('typst', ']\n]') })
+        end
         out:extend({ pandoc.RawBlock('typst', ']') })
         if #notes > 0 then
+          -- apa7 sets the author note as a footnote at the foot of the first
+          -- column. place(bottom, float: true) does the same here: the scope
+          -- defaults to the column, and emitting it at the head of the body
+          -- puts it in column one of the first page.
           out:extend({ pandoc.RawBlock('typst',
+            '#place(bottom, float: true)[\n' ..
             '#block(width: 100%, above: 0.5em, below: 0.8em, inset: (top: 0.4em), stroke: (top: 0.5pt))[\n' ..
-            '#set par(first-line-indent: 0pt, leading: 9pt)\n' ..
-            '#set block(spacing: 4pt)\n#set text(size: 9pt)') })
-          out:extend(notes)
-          out:extend({ pandoc.RawBlock('typst', ']') })
+            '#set par(..jounotepar)\n' ..
+            '#set block(spacing: 0.55em)\n#set text(size: 9pt)') })
+          out:extend(set_off_jou_orcid(fit_jou_orcid(notes)))
+          out:extend({ pandoc.RawBlock('typst', ']\n]') })
         end
         out:extend(tail)
         out:extend(doc.blocks)
