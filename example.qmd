@@ -92,7 +92,7 @@ keywords:
 # Optional pointer to supplemental materials, shown on the line below the keywords.
 supplemental-materials: "Documentation and web app at  <https://wjschne.github.io/apaquarto/>"
 # Optional statement about the importance of the paper. The heading can be customized in the language field.
-impact-statement: "The apaquarto template allow writers to apply APA style consistently with minimal fuss and bother."
+impact-statement: "The apaquarto template allows writers to apply APA style consistently with minimal fuss and bother."
 # If true, a word count will appear below the keywords (tables, figure captions, and references excluded in count.)
 word-count: false
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
@@ -137,13 +137,13 @@ language:
 no-ampersand-parenthetical: false
 execute: 
   echo: false
-  # cache: true
+  cache: true
 # mainfont: Times New Roman
 # monofont: Consolas
 papersize: us-letter
-journal:
-  title: "Journal of Personality and Social Psychology"
-volume: 42(2) 227--229
+# journal:
+  # title: "Nonexistent Journal of Generic Psychology"
+  # volume: 42(2) 227--229
 format:
   apaquarto-html: 
     toc: true
@@ -155,10 +155,11 @@ format:
     list-of-tables: false
     toc: false
     numbersections: false
-    documentmode: jou
+    # Options: journal, manuscript, student, document
+    documentmode: journal
   apaquarto-pdf:
-    # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-    documentmode: man
+    # Options: journal, manuscript, student, document
+    documentmode: manuscript
 ---
 
 ```{r}
@@ -183,6 +184,8 @@ set_flextable_defaults(theme_fun = theme_apa,
 This is my introductory paragraph. The title will be placed above it automatically. *Do not start with an introductory heading* (e.g., "Introduction"). The title acts as your Level 1 heading for the introduction.
 
 Details about writing headings with markdown in APA style are [here](https://wjschne.github.io/apaquarto/writing.html#headings-in-apa-style). In general, level 1 headings should be reserved for the Method, Results, Discussion, References, and Appendices sections. 
+
+
 
 ## YAML metadata
 
@@ -305,7 +308,7 @@ As demonstrated in @fig-twocolumn, you can make figures tables span the two colu
 ```{r}
 #| label: fig-twocolumn
 #| fig-cap: A Figure Spanning Two Columns When in Journal Mode
-#| apa-note: Figures in two-column mode are only different for jou mode in .pdf documents
+#| apa-note: Figures in two-column mode are only different for journal mode in .pdf and typst documents
 #| apa-twocolumn: true
 #| fig-height: 3
 #| fig-width: 6.2

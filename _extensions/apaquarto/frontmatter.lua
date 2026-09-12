@@ -318,9 +318,10 @@ local function split_jou_frontmatter(blocks)
 end
 
 -- The impact statement is set off from the abstract above it and the keywords
--- below it by a 1pt rule, 5pt clear of the text on every side. The box is
--- emitted at width 100% inside the narrow block, so its outer edge lines up
--- with the abstract rather than standing proud of it.
+-- below it by a 1pt rule, 5pt clear of the text on every side and 9pt clear
+-- of the abstract and the keywords. The box is emitted at width 100% inside
+-- the narrow block, so its outer edge lines up with the abstract rather than
+-- standing proud of it.
 local function box_jou_impact(blocks)
   local out = List:new {}
   local i = 1
@@ -328,7 +329,7 @@ local function box_jou_impact(blocks)
     local block = blocks[i]
     if block.t == "Header" and block.identifier == "impact" then
       out:extend({ pandoc.RawBlock('typst',
-        '#block(width: 100%, inset: 5pt, stroke: 1pt + black)[') })
+        '#block(width: 100%, inset: 6pt, above: 9pt, below: 9pt, stroke: .75pt + black)[') })
       out:extend({ block })
       i = i + 1
       -- The statement itself arrives as one or more Divs. The keywords line
@@ -397,11 +398,22 @@ local function typst_journal_metadata(meta)
   local journal_line = List:new {}
   -- Quarto reserves `journal` as an object, so prefer journal.title.
   local journal
+  local volume 
   if meta.journal then
     journal = meta_inlines(meta.journal.title) or meta_inlines(meta.journal)
+    if meta.journal.volume then
+      volume = meta_inlines(meta.journal.volume)
+    else 
+      if meta.volume then
+        volume = meta_inlines(meta.volume)
+      end
+    end
+  else
+    if meta.volume then
+      volume = meta_inlines(meta.volume)
+    end
   end
-  local volume = meta_inlines(meta.volume)
-
+  
   if journal then
     journal_line:extend(journal)
   end

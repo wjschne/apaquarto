@@ -46,6 +46,12 @@
 #let joutitlesize = 17.28pt
 #let jouauthorsize = 12pt
 #let jouaffiliationsize = 10pt
+// apa7 jou sets 10pt text on a 12pt baseline. Typst's leading is the gap
+// between lines rather than the baseline-to-baseline distance, so the 11pt
+// this once said produced about 17.5pt of line spacing, half again what a
+// journal article uses; 5.5pt measures as the 12pt apa7 gives. Named because
+// the block quotations run their paragraphs on at exactly this spacing.
+#let jouleading = 5.5pt
 #let jouabstractsize = 9pt
 #let jouabstractwidth = 4.6875in
 // Kept in em so it tracks the smaller abstract text at the same ratio the jou
@@ -113,6 +119,21 @@
   headingsize: none,
   headingspace: none,
   quoteinset: 0.5in,
+  // Block quotations. none follows the body: its size, its line spacing, its
+  // space above and below a block, and its rule about whether the paragraph
+  // that opens a block is indented. quoteparspace is the exception: none
+  // leaves the space between the paragraphs of a quotation to typst rather
+  // than setting it to anything of ours.
+  quotesize: none,
+  quoteleading: none,
+  quoteparspace: none,
+  quotespace: none,
+  quoteindentall: none,
+  // Space above a figure or table, ahead of its "Figure 1" / "Table 1" title.
+  // none follows the body's space between blocks. Typst takes the larger of
+  // this and whatever the element above asks for below itself, so a float
+  // after a section heading keeps the heading's space.
+  floatspace: none,
   toc: false,
   lang: "en",
   cols: 1,
@@ -231,15 +252,41 @@
   show link: set text(blue)
   show "al.'s": "al.\u{2019}s"
 
+  // A block quotation takes the body's measurements unless a mode overrides
+  // them. quotespace is the space that sets the quotation off from the text
+  // around it; the paragraphs inside it are separated by their own leading
+  // and nothing more, so a quotation of several paragraphs reads as one
+  // passage rather than as a run of separate blocks.
+  let qsize = if quotesize == none { fontsize } else { quotesize }
+  let qleading = if quoteleading == none { leading } else { quoteleading }
+  let qspace = if quotespace == none { spacing } else { quotespace }
+  let qindentall = if quoteindentall == none { indentall } else { quoteindentall }
+  let fspace = if floatspace == none { spacing } else { floatspace }
+
   show quote: set pad(x: quoteinset)
-  show quote: set par(leading: leading)
-  show quote: set block(spacing: spacing, above: spacing, below: spacing)
+  show quote: set text(size: qsize)
+  // The gap between two paragraphs is par's spacing, not block's: a paragraph
+  // is not a block, so a set block rule never reaches it. Setting spacing to
+  // the leading is what runs the paragraphs of a quotation on, the way the
+  // author note is run on in journal mode. It is only set at all when a mode
+  // asks for it, because naming it at the body's value is not the same as
+  // leaving it alone: typst's own default is 1.2em, which is what a quotation
+  // takes when nothing here says otherwise.
+  let qpar = (
+    leading: qleading,
+    first-line-indent: apaparindent(firstlineindent, all: qindentall)
+  )
+  let qpar = if quoteparspace == none { qpar } else {
+    qpar + (spacing: quoteparspace)
+  }
+  show quote: set par(..qpar)
+  show quote: set block(spacing: qspace, above: qspace, below: qspace)
   // show LaTeX
   show "TeX": TeX
   show "LaTeX": LaTeX
 
   // format figure captions
-  show figure.where(kind: "quarto-float-fig"): it => block(width: 100%, breakable: false)[
+  show figure.where(kind: "quarto-float-fig"): it => block(width: 100%, breakable: false, above: fspace)[
   #if type(it.numbering) == function [
       #it
     ] else [
@@ -259,7 +306,7 @@
     if type(it.numbering) == function {
       it
     } else {
-      block(width: 100%, breakable: false)[#align(left)[
+      block(width: 100%, breakable: false, above: fspace)[#align(left)[
 
         #if int(appendixcounter.display().at(0)) > 0 [
           #heading(level: 2, outlined: false, numbering: none)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
@@ -359,11 +406,7 @@
   margin: (x: 0.75in, y: 1in),
   // 10pt body text, against the 12pt the other modes take from apa-layout.
   fontsize: 10pt,
-  // apa7 jou sets 10pt text on a 12pt baseline. Typst's leading is the gap
-  // between lines rather than the baseline-to-baseline distance, so the 11pt
-  // this used to say produced about 17.5pt of line spacing, half again what a
-  // journal article uses. 5.5pt measures as the 12pt apa7 gives.
-  leading: 5.5pt,
+  leading: jouleading,
   spacing: 5pt,
   firstlineindent: joufirstlineindent,
   // Every body paragraph is indented in a journal article, including the one
@@ -374,6 +417,20 @@
   headingsize: 11pt,
   headingspace: 9pt,
   quoteinset: 0.25in,
+  // apa7 sets a block quotation smaller than the text around it. The
+  // paragraph that opens the quotation runs flush left and the ones after it
+  // are indented, the way a quoted passage is set, and they are separated by
+  // nothing more than the line spacing so the passage reads as one quotation.
+  // The quotation as a whole is given the same 9 points of air the section
+  // headings get.
+  quotesize: 9pt,
+  quoteparspace: jouleading,
+  quotespace: 9pt,
+  quoteindentall: false,
+  // A figure or table title stands off the text above it by the same 9 points
+  // the section headings and the block quotations get, rather than by the
+  // body's tighter space between paragraphs.
+  floatspace: 9pt,
   cols: 2,
   justify: true,
   headerstyle: "jou",

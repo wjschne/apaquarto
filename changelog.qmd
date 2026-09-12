@@ -45,7 +45,9 @@ engine: knitr
 - New `supplemental-materials` option. Its value is printed on the line below the keywords, after an italicized *Supplemental materials:*, in every format and document mode. The prefix can be changed with `title-supplemental-materials` in the `language` field, and the line can be turned off with `suppress-supplemental-materials: true`.
 - In typst jou mode, the running head sits 12 points clear of the text block rather than at the foot of the margin.
 - Level 1 to 3 headings are now set ragged right with hyphenation off, so a heading that runs to two lines in typst jou mode is neither stretched to the column edge nor broken across lines mid-word.
-- In typst jou mode, the impact statement is set in a 1 point box with 5 points of padding, as wide as the abstract above it.
+- In typst jou mode, the impact statement is set in a 1 point box with 5 points of padding, as wide as the abstract above it, with 9 points of space between the box and the abstract above and the keywords below.
+- In typst jou mode, block quotations follow apa7 more closely: set 2 points smaller than the body, with the paragraph that opens the quotation flush left and the ones after it indented, the paragraphs separated by nothing more than the line spacing, and 9 points of space between the quotation and the text around it.
+- In typst jou mode, a figure or table title ("Figure 1", "Table 1") stands at least 9 points clear of whatever is above it, rather than taking the body's tighter space between paragraphs.
 - Fixed `apa-twocolumn` tables losing their two-column span in apaquarto-pdf jou mode, where they overprinted the column text beside them. The `twocolumntable` wrapper sets `@twocolumn` false so that longtable will start inside the float, but `\end{table*}` tests that same flag: with it false, LaTeX files the float as an ordinary one-column float whose box is still the full text width. The flag is now put back before the environment closes.
 
 
