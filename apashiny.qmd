@@ -11,7 +11,7 @@ The app can be accessed [here](https://wjschne.github.io/apa7maker/). Be patient
 
 :::{#fig-apaquarto}
 
-[![](apa7maker.png)](https://wjschne.github.io/apa7maker/){target="_blank"}
+[![](img/apa7maker.png)](https://wjschne.github.io/apa7maker/){target="_blank"}
 
 
 Screenshot of apaquarto web app
