@@ -26,14 +26,25 @@
 --- carry the line numbering, as apaquarto once did, splits the document into
 --- a section with no header and takes the running head away (issue #104).
 ---
+--- The running head is held in a content control in word/header2.xml, bound
+--- to the document's description, which frontmatter.lua sets to the short
+--- title. Word fills such a control in from its binding when it opens the
+--- file, but a viewer that does not resolve data bindings shows the control's
+--- placeholder instead, so the running head came out as "[Comments]" or as
+--- nothing at all. The text is written into the control as well, which leaves
+--- the binding in place for Word and gives every other viewer something to
+--- show.
+---
 --- Pandoc reads the reference document when it writes the output, which
 --- happens after all filters have run, so patching the reference document
 --- here is picked up by the writer.
 ---
---- The fonts, page size and line numbering the reference document shipped
---- with are recorded in xml comments the first time it is patched, so that a
---- later render without mainfont, monofont, papersize or numbered-lines
---- restores them.
+--- The fonts, page size, line numbering and running-head control the
+--- reference document shipped with are recorded in xml comments the first
+--- time it is patched, so that a later render without mainfont, monofont,
+--- papersize or numbered-lines restores them, and so that every render
+--- rewrites the shipped running-head control rather than its own last
+--- attempt at one.
 
 --- This filter only runs on docx format
 if FORMAT ~= "docx" then
@@ -43,6 +54,7 @@ end
 local theme_path = "word/theme/theme1.xml"
 local styles_path = "word/styles.xml"
 local document_path = "word/document.xml"
+local header_pattern = "^word/header%d*%.xml$"
 
 --- Styles that hold code but take their font from the theme by default
 local code_styles = {
@@ -283,6 +295,74 @@ local function patch_document(document, papersize, linenumbers)
   return set_line_numbers(patched, linenumbers) or patched
 end
 
+local function escape_xml(text)
+  return (text:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
+end
+
+--- The running-head control is the one bound to the description of the
+--- document, which its w:dataBinding names in the dublin core namespace.
+local binding_field = "ns0:description"
+
+--- Where that control begins and ends. Content controls can hold other
+--- content controls, so the closing tag is found by counting the tags in
+--- between rather than by taking the first one.
+local function find_running_head(header)
+  local from = 1
+  while true do
+    local first = header:find("<w:sdt[%s>]", from)
+    if not first then return nil end
+    local depth, at, last = 0, first, nil
+    while true do
+      local s, e, tag = header:find("<(/?w:sdt)[%s>]", at)
+      if not s then break end
+      depth = depth + (tag == "w:sdt" and 1 or -1)
+      at = e
+      if depth == 0 then last = header:find(">", e, true) break end
+    end
+    if not last then return nil end
+    if header:sub(first, last):find(binding_field, 1, true) then
+      return first, last
+    end
+    from = last + 1
+  end
+end
+
+--- Put the running head inside the control, in place of the placeholder it
+--- shows until something fills it in. The w:dataBinding is left alone, so
+--- word still keeps the control and the document's description in step.
+local function fill_running_head(sdt, runninghead)
+  local filled = (sdt:gsub("<w:showingPlcHdr%s*/>", ""))
+  local _, opened = filled:find("<w:sdtContent[^>]*>")
+  local closed = opened and filled:find("</w:sdtContent>", opened, true)
+  if not closed then return nil end
+
+  local run = "<w:r><w:t xml:space=\"preserve\">" ..
+    escape_xml(runninghead) .. "</w:t></w:r>"
+  return filled:sub(1, opened) .. run .. filled:sub(closed)
+end
+
+local function patch_header(header, runninghead)
+  --- A document with no description at all is one this filter knows nothing
+  --- about, so its header is left as its reference document wrote it.
+  if not runninghead then return nil end
+
+  local stripped = strip_marker(header, "runninghead")
+  local first, last = find_running_head(stripped)
+  if not first then return nil end
+
+  --- The control as the reference document shipped it, so that each render
+  --- rewrites that rather than the text the render before it left behind
+  local original = get_marker(header, "runninghead") or stripped:sub(first, last)
+
+  --- A suppressed short title empties the control rather than putting the
+  --- placeholder back: an empty header is what suppressing it asks for, and
+  --- the placeholder is exactly the "[Comments]" a reader should never see.
+  local wanted = fill_running_head(original, runninghead) or original
+
+  local marker = wanted ~= original and make_marker("runninghead", original) or ""
+  return stripped:sub(1, first - 1) .. marker .. wanted .. stripped:sub(last + 1)
+end
+
 function Pandoc(doc)
   local refdoc = PANDOC_WRITER_OPTIONS.reference_doc
   if not refdoc then return nil end
@@ -293,6 +373,12 @@ function Pandoc(doc)
     trim(pandoc.utils.stringify(doc.meta.papersize)) or ""
   local linenumbers = doc.meta["numbered-lines"] ~= nil and
     pandoc.utils.stringify(doc.meta["numbered-lines"]) == "true"
+  --- frontmatter.lua has already put the short title, upper cased, in the
+  --- description, or a single space when the short title is suppressed. nil
+  --- rather than "" when there is no description at all, which tells
+  --- patch_header to leave the header alone.
+  local runninghead = doc.meta.description ~= nil and
+    trim(pandoc.utils.stringify(doc.meta.description)) or nil
 
   local data = read_file(refdoc)
   if not data then
@@ -334,6 +420,11 @@ function Pandoc(doc)
         quarto.log.warning("Reference document " .. refdoc ..
           " has no page size, so papersize and numbered-lines were not applied.")
       end
+    elseif entry.path:match(header_pattern) then
+      --- Only the header holding the running-head control is changed; the
+      --- others have no such control and patch_header leaves them alone.
+      xml = entry:contents()
+      patched = patch_header(xml, runninghead)
     end
     if patched and patched ~= xml then
       changed = true
