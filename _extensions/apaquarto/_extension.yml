@@ -225,6 +225,9 @@ contributes:
         # Add custom styles to docx
         - at: post-quarto
           path: docxstyler.lua
+        # Set code listings flush left in docx rather than centered
+        - at: post-quarto
+          path: docxlisting.lua
         # Format Latex symbol
         - at: post-render
           path: docxformatlatexsymbol.lua
@@ -236,6 +239,10 @@ contributes:
         opts_chunk: 
           dev: ragg_png
     typst:
+      # One column, two columns, or auto to let the length of the note
+      # decide. Journal mode only; the other modes do not float the
+      # author note.
+      author-note-columns: auto
       filters: 
         # Process typst-specific styles
         - at: post-quarto

@@ -611,6 +611,8 @@ The `documentmode` field works in `apaquarto-typst` as well as `apaquarto-pdf`. 
 
 In `stu` mode the student-paper fields `course`, `professor`, `duedate`, and `note` are placed on the title page. In `jou` mode the journal metadata appears at the top of the article masthead: set the journal name as `journal: {title: "..."}` (Quarto reserves `journal` as an object), with top-level `volume`, `copyrightnotice`, and `copyrighttext`.
 
+In `jou` mode the author note sits at the foot of the first column, under a thin rule, the way apa7 sets it. A note long enough to fill much of that column would leave the article nowhere to start, so once it passes a third of the column it runs across the foot of the page in two columns instead, as the journals themselves set a long author note. Nothing needs to be set for this; it follows from the length of the note. To decide it yourself rather than by length, set `author-note-columns` to `1` for one column or `2` for two; `auto`, the default, measures the note.
+
 In typst `jou` and `doc` modes, figures and tables are placed in text by default (as they are in the equivalent `.pdf` output), while `man` and `stu` modes collect them at the end in the manuscript convention. Either default can be overridden with `floatsintext`: set it to `false` to move floats to the end, or `true` to keep them in text.
 
 # Options for .html

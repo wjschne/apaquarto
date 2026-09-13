@@ -17,7 +17,10 @@ engine: knitr
     * Markdown in table notes is flattened to plain text
 
 # Version 6.0.0
-- 2026-09-11
+- 2026-09-12
+- [#149](https://github.com/wjschne/apaquarto/issues/149) Cross-referenced code listings are set flush left in .docx rather than centered.
+- In typst jou mode, an author note too long for one column now runs across the foot of the page in two columns, the way a journal sets a long author note, instead of filling the first column and leaving the article to start in what little was left above it. A note of ordinary length is unchanged: it stays at the foot of the first column. The turning point is a third of the column.
+- New `author-note-columns` option for apaquarto-typst. `1` keeps the author note in one column however long it runs, `2` sends it across the foot of the page however short it is, and `auto`, the default, decides by the length of the note. Journal mode only; the other document modes do not float the author note.
 - [#104](https://github.com/wjschne/apaquarto/issues/104) `numbered-lines: true` no longer takes the running head out of a .docx. Line numbering is now written into the reference document's own section properties, next to the page size, so the running head, the margins and the numbered lines all belong to one section.
 - [#104](https://github.com/wjschne/apaquarto/issues/104) The running head is written into the .docx header as text, so it shows in viewers that do not resolve data bindings.
 - [#160](https://github.com/wjschne/apaquarto/pull/160) Fixed apaquarto-pdf crashing on a subfigure layout whose panels carry an `apa-note` ("Block, list of Blocks, or compatible element expected, got table"). A sub-figure is no longer wrapped in a `figure` environment of its own, which latex does not allow inside another one, and the outer float splices its content as `Blocks` rather than nesting a list where a single block was expected. Thanks [David Hagmann](https://github.com/wjschne/apaquarto/pull/160).

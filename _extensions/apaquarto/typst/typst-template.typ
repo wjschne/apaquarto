@@ -76,6 +76,91 @@
   (leading: 0.55em, spacing: 0.55em, first-line-indent: joufirstlineindent)
 }
 
+// The journal-mode author note. apa7 sets it at the foot of the first column,
+// under a thin rule, and that is where a note of ordinary length goes here.
+// A long note fills that column and leaves the article with nowhere to start:
+// the body text is pushed into what little is left above it while the second
+// column stands empty. Past a third of the column the note runs across the
+// foot of the page in two columns instead, which is what the journals
+// themselves do with a long note. cols overrides that reading: 1 keeps the
+// note in one column however long it runs, 2 sends it across the page however
+// short it is, and auto measures it.
+//
+// The two-column block is given half the height the note takes in one column.
+// Both columns are that same width, so the note breaks into the same lines
+// either way and half its height is what each column needs; naming that
+// height is also what makes typst fill the first column and carry the rest
+// into the second, since columns of automatic height put everything in the
+// first.
+//
+// Half of a height is rarely a whole number of lines, though, and the line the
+// first column cannot fit has to go somewhere: too little height does not clip
+// the note, it spills it up across the rule. That rounding is a line or so
+// however long the note is, which against the fifteen lines or more it takes
+// to reach two columns on its own comes out in the wash, but against the four
+// or five lines of a short note somebody has asked for in two columns is the
+// difference between setting and spilling. So a short note is given two lines
+// to round into and a long one is left to balance exactly.
+#let jounotethreshold = 1 / 3
+
+// One column as a share of the width of the text, with the 4% gutter typst
+// puts between columns by default.
+#let jounotecolumn = 0.48
+
+#let jouauthornote(body, cols: auto) = context {
+  let m = page.margin
+  let mx = if type(m) == dictionary { m.at("x", default: 1in) } else { m }
+  let my = if type(m) == dictionary { m.at("y", default: 1in) } else { m }
+  let textwidth = page.width - 2 * mx
+  let textheight = page.height - 2 * my
+  let columnwidth = jounotecolumn * textwidth
+
+  // The note as it is set: smaller than the body, its paragraphs indented and
+  // run on. The styling goes inside the measured content, so that the height
+  // measured is the height the note will take.
+  let note = {
+    set text(size: 9pt)
+    set par(..jounotepar)
+    set block(spacing: 0.55em)
+    body
+  }
+
+  let ruled(content) = block(
+    width: 100%, above: 0.5em, below: 0.8em,
+    inset: (top: 0.4em), stroke: (top: 0.5pt),
+    content
+  )
+
+  let height = measure(block(width: columnwidth, note)).height
+  let line = measure(block(width: columnwidth, {
+    set text(size: 9pt)
+    [X]
+  })).height
+
+  // Long enough to fill a column on its own, which is both what sends a note
+  // across the page when nobody has said otherwise and what makes its halves
+  // round cleanly.
+  let long = height > textheight * jounotethreshold
+  let twocolumn = if cols == auto { long } else { cols == 2 }
+  let slack = if long { 0pt } else { 2 * line }
+
+  if twocolumn {
+    // scope: "parent" spans the page rather than the column. It only works
+    // from the flow itself, so this is written inside context and never
+    // inside layout, which would tie the float back to its column.
+    // place(bottom, ..) hands its alignment down to what it holds, which
+    // would settle both columns against the foot of the block and leave the
+    // shorter of the two starting lower than the other. The columns are
+    // pinned to the top so that they begin level, whatever slack is left at
+    // the foot of the second.
+    place(bottom, scope: "parent", float: true,
+      ruled(block(width: 100%, height: height / 2 + slack,
+        align(top, columns(2, gutter: 4%, note)))))
+  } else {
+    place(bottom, float: true, ruled(note))
+  }
+}
+
 // How far the blank paragraph that formattypst.lua puts before a first
 // paragraph is pulled back up. It cancels the height of that blank
 // paragraph, so it follows the leading, and journal mode resets it.

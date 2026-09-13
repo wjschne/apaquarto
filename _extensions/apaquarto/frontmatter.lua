@@ -1075,17 +1075,23 @@ return {
         end
         out:extend({ pandoc.RawBlock('typst', ']') })
         if #notes > 0 then
-          -- apa7 sets the author note as a footnote at the foot of the first
-          -- column. place(bottom, float: true) does the same here: the scope
-          -- defaults to the column, and emitting it at the head of the body
-          -- puts it in column one of the first page.
+          -- jouauthornote in typst-template.typ places the note at the foot of
+          -- the first column, or across the foot of the page in two columns
+          -- when it is too long for one. Emitting it at the head of the body
+          -- puts it on the first page. author-note-columns overrides the
+          -- reading it takes of the length; anything else, "auto" included,
+          -- leaves the decision to it.
+          local notecols = "auto"
+          if meta["author-note-columns"] then
+            local asked = stringify(meta["author-note-columns"])
+            if asked == "1" or asked == "2" then
+              notecols = asked
+            end
+          end
           out:extend({ pandoc.RawBlock('typst',
-            '#place(bottom, float: true)[\n' ..
-            '#block(width: 100%, above: 0.5em, below: 0.8em, inset: (top: 0.4em), stroke: (top: 0.5pt))[\n' ..
-            '#set par(..jounotepar)\n' ..
-            '#set block(spacing: 0.55em)\n#set text(size: 9pt)') })
+            '#jouauthornote(cols: ' .. notecols .. ')[') })
           out:extend(set_off_jou_orcid(fit_jou_orcid(notes)))
-          out:extend({ pandoc.RawBlock('typst', ']\n]') })
+          out:extend({ pandoc.RawBlock('typst', ']') })
         end
         out:extend(tail)
         out:extend(doc.blocks)

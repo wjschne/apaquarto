@@ -149,16 +149,18 @@ format:
     toc: true
   apaquarto-docx: 
     toc: false
+    list-of-figures: true
   apaquarto-typst: 
-    keep-typ: true
+    # Options: manuscript (default), journal, student, document
+    documentmode: manuscript
+    keep-typ: false
     list-of-figures: false
     list-of-tables: false
     toc: false
     numbersections: false
-    # Options: journal, manuscript, student, document
-    documentmode: journal
+    author-note-columns: auto # 1, 2, or auto (default)
   apaquarto-pdf:
-    # Options: journal, manuscript, student, document
+    # Options: manuscript (default), journal, student, document
     documentmode: manuscript
 ---
 
