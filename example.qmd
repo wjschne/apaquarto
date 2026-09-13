@@ -137,7 +137,7 @@ language:
 no-ampersand-parenthetical: false
 execute: 
   echo: false
-  cache: true
+  cache: false
 # mainfont: Times New Roman
 # monofont: Consolas
 papersize: us-letter

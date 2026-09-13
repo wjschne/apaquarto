@@ -225,9 +225,9 @@ contributes:
         # Add custom styles to docx
         - at: post-quarto
           path: docxstyler.lua
-        # Add line numbers and format Latex symbol
+        # Format Latex symbol
         - at: post-render
-          path: docxlinenumber.lua
+          path: docxformatlatexsymbol.lua
         # Set the docx fonts and page size from the mainfont, monofont
         # and papersize options
         - at: post-render

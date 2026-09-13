@@ -19,13 +19,21 @@
 --- so papersize is set there too. Setting it before pandoc writes also
 --- means images given a percentage width are scaled to the new text width.
 ---
+--- numbered-lines is set in those same section properties, as their
+--- w:lnNumType. It belongs there because a section's line numbering, its
+--- page size and the headerReference that carries the running head are all
+--- properties of one section: adding a <w:sectPr> of its own to the body to
+--- carry the line numbering, as apaquarto once did, splits the document into
+--- a section with no header and takes the running head away (issue #104).
+---
 --- Pandoc reads the reference document when it writes the output, which
 --- happens after all filters have run, so patching the reference document
 --- here is picked up by the writer.
 ---
---- The fonts and page size the reference document shipped with are
---- recorded in xml comments the first time it is patched, so that a later
---- render without mainfont, monofont or papersize restores them.
+--- The fonts, page size and line numbering the reference document shipped
+--- with are recorded in xml comments the first time it is patched, so that a
+--- later render without mainfont, monofont, papersize or numbered-lines
+--- restores them.
 
 --- This filter only runs on docx format
 if FORMAT ~= "docx" then
@@ -216,7 +224,31 @@ local function paper_key(papersize)
   return name
 end
 
-local function patch_document(document, papersize)
+--- Word numbers every line of the section, counting by one and running on
+--- across pages, which is what APA asks for.
+local line_numbering = '<w:lnNumType w:countBy="1" w:restart="continuous"/>'
+
+--- w:lnNumType sits between w:pgMar and w:cols in a w:sectPr, where the
+--- schema's order for section properties puts it.
+local function set_line_numbers(document, linenumbers)
+  local stripped = strip_marker(document, "linenumbers")
+
+  --- The line numbering the reference document shipped with, as its element
+  local original = get_marker(document, "linenumbers") or
+    stripped:match("<w:lnNumType[^>]*>") or ""
+  stripped = (stripped:gsub("<w:lnNumType[^>]*>", ""))
+
+  local wanted = linenumbers and line_numbering or original
+  local marker = wanted ~= original and make_marker("linenumbers", original) or ""
+
+  local first, last = stripped:find("<w:pgMar[^>]*>")
+  if not first then first, last = stripped:find("<w:pgSz[^>]*>") end
+  if not first then return nil end
+
+  return stripped:sub(1, last) .. marker .. wanted .. stripped:sub(last + 1)
+end
+
+local function patch_document(document, papersize, linenumbers)
   local stripped = strip_marker(document, "papersize")
   local first, last = stripped:find("<w:pgSz[^>]*>")
   if not first then return nil end
@@ -245,8 +277,10 @@ local function patch_document(document, papersize)
   end
 
   local marker = attributes ~= original and make_marker("papersize", original) or ""
-  return stripped:sub(1, first - 1) .. marker ..
+  local patched = stripped:sub(1, first - 1) .. marker ..
     "<w:pgSz " .. attributes .. "/>" .. stripped:sub(last + 1)
+
+  return set_line_numbers(patched, linenumbers) or patched
 end
 
 function Pandoc(doc)
@@ -257,18 +291,21 @@ function Pandoc(doc)
   local monofont = clean_font(doc.meta.monofont)
   local papersize = doc.meta.papersize and
     trim(pandoc.utils.stringify(doc.meta.papersize)) or ""
+  local linenumbers = doc.meta["numbered-lines"] ~= nil and
+    pandoc.utils.stringify(doc.meta["numbered-lines"]) == "true"
 
   local data = read_file(refdoc)
   if not data then
     quarto.log.warning("Could not read reference document " .. refdoc ..
-      ", so mainfont, monofont and papersize were not applied.")
+      ", so mainfont, monofont, papersize and numbered-lines were not applied.")
     return nil
   end
 
   local ok, archive = pcall(pandoc.zip.Archive, data)
   if not ok then
     quarto.log.warning("Could not read reference document " .. refdoc ..
-      " as a docx file, so mainfont, monofont and papersize were not applied.")
+      " as a docx file, so mainfont, monofont, papersize and numbered-lines" ..
+      " were not applied.")
     return nil
   end
 
@@ -292,10 +329,10 @@ function Pandoc(doc)
       end
     elseif entry.path == document_path then
       xml = entry:contents()
-      patched = patch_document(xml, papersize)
+      patched = patch_document(xml, papersize, linenumbers)
       if not patched then
         quarto.log.warning("Reference document " .. refdoc ..
-          " has no page size, papersize was not applied.")
+          " has no page size, so papersize and numbered-lines were not applied.")
       end
     end
     if patched and patched ~= xml then
@@ -310,7 +347,7 @@ function Pandoc(doc)
   archive.entries = newentries
   if not write_file(refdoc, archive:bytestring()) then
     quarto.log.warning("Could not write reference document " .. refdoc ..
-      ", so mainfont, monofont and papersize were not applied.")
+      ", so mainfont, monofont, papersize and numbered-lines were not applied.")
   end
 
   return nil
