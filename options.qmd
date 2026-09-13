@@ -609,7 +609,39 @@ All of the .pdf-specific options for apaquarto come directly from the [apa7 $\La
 
 The `documentmode` field works in `apaquarto-typst` as well as `apaquarto-pdf`. All four modes are supported: `man` (manuscript), `jou` (journal, two columns), `doc` (a plain continuous document), and `stu` (student paper). In both formats each mode may also be named in full: `journal`, `manuscript`, `document`, and `student` are accepted as aliases for `jou`, `man`, `doc`, and `stu`.
 
-In `stu` mode the student-paper fields `course`, `professor`, `duedate`, and `note` are placed on the title page. In `jou` mode the journal metadata appears at the top of the article masthead: set the journal name as `journal: {title: "..."}` (Quarto reserves `journal` as an object), with top-level `volume`, `copyrightnotice`, and `copyrighttext`.
+In `stu` mode the student-paper fields `course`, `professor`, `duedate`, and `note` are placed on the title page.
+
+In `jou` mode the journal metadata is set as a masthead at the head of the first page, the way the journals set one: the journal's name at the right with its logo opposite, a rule under both, and the issue on the right beneath it with the copyright on the left. All of it goes under `journal`, which Quarto reserves as an object:
+
+``` yaml
+journal:
+  title: "Journal of Educational Psychology"
+  logo: apa-logo.png
+  year: 2026
+  volume: 118
+  issue: 6
+  pages: 869--888
+  url: "https://doi.org/10.1037/edu0000976"
+  issn: 0022-0663
+  copyrightnotice: 2025
+  copyrighttext: "The Author(s)"
+```
+
+which is set as
+
+|                                          |                                       |
+|:-----------------------------------------|--------------------------------------:|
+| *logo*                                   |   Journal of Educational Psychology    |
+| © 2025 The Author(s)                     |      2026, Vol. 118, No. 6, 869--888   |
+| ISSN: 0022-0663                          |   https://doi.org/10.1037/edu0000976   |
+
+`logo` is a path to an image file, read the same way a path in the document is. Writing `logo: default` instead of a path uses the apaquarto logo, which the extension ships with, so that a masthead can be seen without one having to be found first.
+
+Every field is optional, and anything left out is simply left out: a `journal` with nothing but a `title` gives the name and the rule and no more. A masthead is lifted into the top margin by half of it, so that the head of the first page sits about where the journals put it. Only the first page moves: every page after it keeps the margin, and the running head in it, that the mode gives. A document that sets its own `margin` is lifted by half of that. Writing any of the fields at the top level of the document rather than under `journal` works too, which is how `volume`, `copyrightnotice` and `copyrighttext` were given before there was anywhere else to put them.
+
+`year`, `volume`, `issue`, and `pages` are assembled into the issue line, so `volume: 118` is set as "Vol. 118". A `volume` given on its own, with no `year`, `issue`, or `pages` beside it, is printed exactly as it was written, so a document that carries the whole line in `volume` (`volume: 2026, Vol. 118, No. 6, 869--888`) keeps setting it that way. The words "Vol." and "No." can be changed with `journal-volume` and `journal-issue` in the `language` field.
+
+The masthead itself is journal mode in `apaquarto-typst`. `apaquarto-pdf` sets the journal's name and the issue line above the title, as the apa7 LaTeX class does, and reads `year`, `volume`, `issue`, and `pages` the same way, so the two formats print the same issue line. The apa7 class has nowhere to put a logo, an ISSN, or a doi, so those appear only in the typst masthead.
 
 In `jou` mode the author note sits at the foot of the first column, under a thin rule, the way apa7 sets it. A note long enough to fill much of that column would leave the article nowhere to start, so once it passes a third of the column it runs across the foot of the page in two columns instead, as the journals themselves set a long author note. Nothing needs to be set for this; it follows from the length of the note. To decide it yourself rather than by length, set `author-note-columns` to `1` for one column or `2` for two; `auto`, the default, measures the note.
 

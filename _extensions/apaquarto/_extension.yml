@@ -54,6 +54,8 @@ contributes:
         citation-masked-date: "n.d."
         email: "Email"
         figure-table-note: "Note"
+        journal-volume: "Vol."
+        journal-issue: "No."
         title-block-author-note: "Author Note"
         title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
         title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
@@ -91,6 +93,9 @@ contributes:
         # Set latex document mode
         - at: pre-ast
           path: journalmode.lua
+        # Compose the journal's issue line for latex out of the journal fields
+        - at: pre-ast
+          path: journalvolume.lua
         # Put papersize in the form the latex document class wants
         - at: pre-ast
           path: apapapersize.lua

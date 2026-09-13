@@ -33,6 +33,8 @@ local fields = {
   { field = "citation-masked-date",            default = "n.d." },
   { field = "email",                           default = "Email" },
   { field = "figure-table-note",               default = "Note" },
+  { field = "journal-volume",                  default = "Vol." },
+  { field = "journal-issue",                   default = "No." },
   { field = "section-title-abstract",          default = "Abstract" },
   { field = "section-title-appendixes",        default = "Appendices" },
   { field = "section-title-references",        default = "References" },

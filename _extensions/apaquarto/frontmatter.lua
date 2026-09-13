@@ -382,56 +382,190 @@ local function add_student_field(body, meta, field)
   body:extend({ div })
 end
 
--- Coerce a metadata value to Inlines (or nil if empty).
-local function meta_inlines(meta_item)
-  if meta_item and stringify(meta_item) ~= "" then
-    if pandoc.utils.type(meta_item) == "Inlines" then
-      return meta_item
-    end
-    return pandoc.Inlines({ pandoc.Str(stringify(meta_item)) })
-  end
+-- Coerce a metadata value to Inlines (or nil if empty). Shared with the
+-- latex side, which reads the journal fields through utilsapa as well.
+local meta_inlines = utilsapa.meta_inlines
+
+-- Journal masthead for jou mode, following the way the journals set one: the
+-- journal's name at the right of the page with its logo opposite, a rule
+-- under both, and the issue on the right beneath it with the copyright on the
+-- left. Journal of Educational Psychology is the model.
+--
+-- The fields belong under journal, but an author who writes any of them at
+-- the top level gets the same reading of them, which is how volume,
+-- copyrightnotice and copyrighttext were given before there was anywhere else
+-- to put them.
+
+local journal_title = utilsapa.journal_title
+local journal_field = utilsapa.journal_field
+local journal_issue_line = utilsapa.journal_issue_line
+
+-- The logo apaquarto ships with, asked for by writing logo: default.
+--
+-- The extension is installed as _extensions/apaquarto when it is worked on
+-- and as _extensions/<owner>/apaquarto when it is added with quarto add, so
+-- the folder is found from this filter's own path rather than assumed.
+--
+-- Typst reads a path that begins with a slash from the root it is given,
+-- which is the project directory, or the document's own directory when the
+-- document does not belong to a project. Anchoring there rather than writing
+-- a path relative to the .typ keeps the logo reachable from a paper that sits
+-- in a subfolder of the project. Forward slashes are what typst wants on
+-- every platform.
+local kDefaultLogo = "default"
+local kShippedLogo = "apaquarto-logo.png"
+
+local function typst_root()
+  local ok, dir = pcall(function() return quarto.project.directory end)
+  if ok and dir and dir ~= "" then return dir end
+  ok, dir = pcall(function()
+    return pandoc.path.directory(quarto.doc.input_file)
+  end)
+  if ok and dir and dir ~= "" then return dir end
+  return pandoc.system.get_working_directory()
 end
 
--- Journal masthead metadata (journal name, volume, copyright) for jou mode.
+local function shipped_logo()
+  if not PANDOC_SCRIPT_FILE then return nil end
+  local ok, path = pcall(function()
+    local script = PANDOC_SCRIPT_FILE
+    if not pandoc.path.is_absolute(script) then
+      script = pandoc.path.join(
+        { pandoc.system.get_working_directory(), script })
+    end
+    local folder = pandoc.path.directory(script)
+    return pandoc.path.make_relative(
+      pandoc.path.join({ folder, kShippedLogo }), typst_root())
+  end)
+  if not ok or not path or path == "" then return nil end
+  path = path:gsub("\\", "/")
+  if path:sub(1, 1) ~= "/" then path = "/" .. path end
+  return path
+end
+
+-- A path as a typst string literal
+local function typst_string(text)
+  return '"' .. text:gsub('\\', '\\\\'):gsub('"', '\\"') .. '"'
+end
+
+-- "(c) 2025 The Author(s)", from whichever of the two was given
+local function journal_copyright(meta)
+  local notice = journal_field(meta, "copyrightnotice")
+  local text = journal_field(meta, "copyrighttext")
+  if not (notice or text) then return nil end
+  local out = List:new { pandoc.Str("\u{00A9}") }
+  if notice then
+    out:extend({ pandoc.Space() })
+    out:extend(notice)
+  end
+  if text then
+    out:extend({ pandoc.Space() })
+    out:extend(text)
+  end
+  return out
+end
+
+-- The two lines of one side of the masthead, under the rule
+local function masthead_lines(first, second)
+  local out = List:new {}
+  if first then out:extend(first) end
+  if second then
+    if #out > 0 then out:extend({ pandoc.LineBreak() }) end
+    out:extend(second)
+  end
+  if #out == 0 then return nil end
+  return List:new { pandoc.Plain(out) }
+end
+
 local function typst_journal_metadata(meta)
+  local title = journal_title(meta)
+  local issue_line = journal_issue_line(meta)
+  local url = journal_field(meta, "url")
+  local logo = journal_field(meta, "logo")
+  if logo and stringify(logo) == kDefaultLogo then
+    local shipped = shipped_logo()
+    if shipped then
+      logo = pandoc.Inlines({ pandoc.Str(shipped) })
+    else
+      quarto.log.warning(
+        "logo: default could not find " .. kShippedLogo ..
+        " in the apaquarto extension folder, so the masthead has no logo.")
+      logo = nil
+    end
+  end
+  local issn = journal_field(meta, "issn")
+  local copyright = journal_copyright(meta)
+
+  if not (title or issue_line or url or logo or issn or copyright) then
+    return List:new {}
+  end
+
+  -- The url is set as a link, so that it is both live and coloured the way
+  -- the journals print a doi.
+  local url_line
+  if url then
+    local target = stringify(url)
+    url_line = List:new { pandoc.Link(url, target) }
+  end
+
+  local issn_line
+  if issn then
+    issn_line = List:new { pandoc.Str("ISSN:"), pandoc.Space() }
+    issn_line:extend(issn)
+  end
+
+  local left = masthead_lines(copyright, issn_line)
+  local right = masthead_lines(issue_line, url_line)
+
   local result = List:new {}
-  local journal_line = List:new {}
-  -- Quarto reserves `journal` as an object, so prefer journal.title.
-  local journal
-  local volume 
-  if meta.journal then
-    journal = meta_inlines(meta.journal.title) or meta_inlines(meta.journal)
-    if meta.journal.volume then
-      volume = meta_inlines(meta.journal.volume)
-    else 
-      if meta.volume then
-        volume = meta_inlines(meta.volume)
-      end
+  -- Into the top margin, so that the masthead sits where a journal puts it
+  -- without moving the pages after the first.
+  result:extend({ pandoc.RawBlock("typst", "#joumastheadlift()") })
+  result:extend({ pandoc.RawBlock("typst",
+    "#block(width: 100%, below: 1em)[\n" ..
+    "#set par(first-line-indent: 0pt)") })
+
+  -- Above the rule: the logo at the left, the journal's name at the right,
+  -- both sitting on it.
+  if logo or title then
+    result:extend({ pandoc.RawBlock("typst",
+      "#grid(columns: (1fr, auto), align: (left + bottom, right + bottom),\n" ..
+      "  column-gutter: 1em, [") })
+    -- The logo is written as typst rather than as a pandoc image so that it
+    -- can be fitted to the height of the masthead band: pandoc drops a height
+    -- it cannot read as a dimension, and the band is named in the template.
+    if logo then
+      result:extend({ pandoc.RawBlock("typst",
+        "#image(" .. typst_string(stringify(logo)) .. ", height: joulogoheight)") })
     end
-  else
-    if meta.volume then
-      volume = meta_inlines(meta.volume)
+    result:extend({ pandoc.RawBlock("typst",
+      "], [\n#set text(size: joujournalsize)") })
+    if title then
+      result:extend({ pandoc.Plain(title) })
     end
+    result:extend({ pandoc.RawBlock("typst", "])") })
   end
-  
-  if journal then
-    journal_line:extend(journal)
+
+  result:extend({ pandoc.RawBlock("typst",
+    -- Plain v rather than weak: a weak space collapses against the edge
+    -- of a block, which left the rule touching the descenders of the
+    -- journal's name whenever there was no logo to give the row height.
+    "#v(3pt)\n#line(length: 100%, stroke: 0.5pt + black)\n#v(3pt)") })
+
+  -- Below it: the copyright at the left, the issue and the doi at the right.
+  if left or right then
+    result:extend({ pandoc.RawBlock("typst",
+      "#grid(columns: (1fr, 1fr), align: (left + top, right + top),\n" ..
+      "  column-gutter: 1em, [\n#set text(size: joumastheadsize)") })
+    if left then result:extend(left) end
+    result:extend({ pandoc.RawBlock("typst",
+      "], [\n#set text(size: joumastheadsize)") })
+    if right then result:extend(right) end
+    result:extend({ pandoc.RawBlock("typst", "])") })
   end
-  if volume then
-    if #journal_line > 0 then
-      journal_line:extend({ pandoc.Str(", ") })
-    end
-    journal_line:extend(volume)
-  end
-  if #journal_line > 0 then
-    result:extend({ pandoc.Para(journal_line) })
-  end
-  if meta.copyrightnotice and stringify(meta.copyrightnotice) ~= "" then
-    result:extend({ pandoc.Para({ pandoc.Str("© " .. stringify(meta.copyrightnotice)) }) })
-  end
-  if meta.copyrighttext and stringify(meta.copyrighttext) ~= "" then
-    result:extend({ pandoc.Para(meta_inlines(meta.copyrighttext)) })
-  end
+
+  result:extend({ pandoc.RawBlock("typst", "]") })
+
   return result
 end
 
@@ -1039,14 +1173,9 @@ return {
         local out = List:new {}
         out:extend({ pandoc.RawBlock('typst',
           '#place(top, scope: "parent", float: true, clearance: 1.5em)[') })
-        if #metadata > 0 then
-          -- Journal name / volume / copyright above the title, small and centered.
-          out:extend({ pandoc.RawBlock('typst',
-            '#block(width: 100%, below: 0.5em)[\n#set align(center)\n' ..
-            '#set par(first-line-indent: 0pt)\n#set text(size: 8pt)') })
-          out:extend(metadata)
-          out:extend({ pandoc.RawBlock('typst', ']') })
-        end
+        -- The masthead carries its own block, sizes and alignment, and lifts
+        -- itself into the top margin of the page it sits on.
+        out:extend(metadata)
         -- The title and authors. The template's heading rule pins every
         -- heading to the body size, so the title size is restated here in a
         -- show rule of its own, which being the later rule wins inside this

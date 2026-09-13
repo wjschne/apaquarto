@@ -1,0 +1,83 @@
+---
+title: "A Table Cell That Opens With a Parenthesis"
+shorttitle: "Booktabs trim argument"
+author:
+  - name: Test Author
+    affiliations:
+      - name: Test University
+keep-tex: true
+format:
+  apaquarto-pdf:
+    documentmode: man
+---
+
+<!--
+Reproducer for issue #164. booktabs' rules take an optional trim argument,
+written \midrule(rl), and look for it by peeking at the character that follows
+the rule. A table whose first cell opens with a literal "(" -- the term name
+"(Intercept)" that every model summary produces -- is read as the start of one,
+and the build dies with
+
+    ! Undefined control sequence.
+    <argument> ...\else \global \expandafter \let \cmrsideswitch
+
+Only the longtable form is affected, since the peek lives in booktabs'
+\@BLTrule. Pandoc's own tables are out of reach of it, because pandoc writes
+\noalign{} after every rule; a table written as latex puts the row hard against
+the rule and does reach it. header.tex gives \@BLTrule an empty trim spec so
+that it stops peeking.
+
+Render from the tests directory:
+
+    quarto render booktabs-paren-cell.qmd
+
+A successful run produces a PDF with four tables, each showing its rules and
+an "(Intercept)" row. Before the fix, cases 3 and 4 took the build down.
+-->
+
+```{r}
+#| echo: false
+d <- data.frame(term = c("(Intercept)", "x"), estimate = c(-1.5, 2.0))
+```
+
+# 1. A markdown table, which pandoc writes
+
+```{r}
+#| label: tbl-markdown
+#| tbl-cap: "Written by pandoc, so every rule is followed by a noalign"
+#| echo: false
+knitr::kable(d)
+```
+
+# 2. A latex table with booktabs rules
+
+```{r}
+#| label: tbl-booktabs
+#| tbl-cap: "Written as latex, in a tabular"
+#| echo: false
+knitr::kable(d, format = "latex", booktabs = TRUE)
+```
+
+# 3. A latex table with booktabs rules in a longtable
+
+```{r}
+#| label: tbl-longtable
+#| tbl-cap: "Written as latex, in a longtable: the case that crashed"
+#| echo: false
+knitr::kable(d, format = "latex", booktabs = TRUE, longtable = TRUE)
+```
+
+# 4. A longtable written by hand
+
+```{=latex}
+\begin{longtable}{lr}
+\toprule
+term & estimate \\
+\midrule
+(Intercept) & -1.5 \\
+x & 2.0 \\
+\bottomrule
+\end{longtable}
+```
+
+End of document.

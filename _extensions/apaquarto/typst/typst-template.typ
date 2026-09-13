@@ -53,6 +53,35 @@
 // the block quotations run their paragraphs on at exactly this spacing.
 #let jouleading = 5.5pt
 #let jouabstractsize = 9pt
+// The masthead of a published article, following the Journal of Educational
+// Psychology: the journal's name set larger than the body at the right of the
+// page, the logo opposite it, a rule under both, and the issue and the
+// copyright in small type on either side beneath. Measured off that journal,
+// whose own page is narrower than letter: a 12pt name over 6pt metadata on an
+// 8pt body. The metadata is set at the 8pt this template already gives the
+// running head rather than at 6pt, which is smaller than anything else here
+// and hard to read on the wider page.
+#let joujournalsize = 12pt
+#let joumastheadsize = 8pt
+// A band the logo is fitted to, whatever its proportions.
+#let joulogoheight = 0.5in
+
+// A journal sets its masthead high on the page, above where the text of the
+// page begins. The masthead is lifted into the top margin by half of it, which
+// puts the head of the first page about where the journals put it. Lifting it
+// rather than giving the document a shorter margin leaves every page after the
+// first as the mode set it, running head and all. Half of whatever the margin
+// is, so that a document setting its own margin is followed rather than
+// overruled.
+#let joumastheadlift() = context {
+  let m = page.margin
+  let top = if type(m) == dictionary {
+    m.at("top", default: m.at("y", default: 1in))
+  } else {
+    m
+  }
+  v(-top / 2)
+}
 #let jouabstractwidth = 4.6875in
 // Kept in em so it tracks the smaller abstract text at the same ratio the jou
 // body uses. Measures as the 11pt baseline apa7 gives its \small abstract.
@@ -127,7 +156,9 @@
 
   let ruled(content) = block(
     width: 100%, above: 0.5em, below: 0.8em,
-    inset: (top: 0.4em), stroke: (top: 0.5pt),
+    // 3pt more than the 0.4em the note used to sit under, which put the
+    // ascenders of its first line very nearly on the rule.
+    inset: (top: 0.4em + 3pt), stroke: (top: 0.5pt),
     content
   )
 

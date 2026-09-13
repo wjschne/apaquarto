@@ -137,13 +137,21 @@ language:
 no-ampersand-parenthetical: false
 execute: 
   echo: false
-  cache: false
+  cache: true
 # mainfont: Times New Roman
 # monofont: Consolas
 papersize: us-letter
 journal:
   title: "Nonexistent Journal of Generic Psychology"
-  volume: 42(2) 227--229
+  logo: default
+  year: 2026
+  volume: 3
+  issue: 2
+  pages: 45--61
+  url: "https://wjschne.github.io/apaquarto"
+  issn: 0024-7662
+  copyrightnotice: 2025
+  copyrighttext: "The Author(s)"
 format:
   apaquarto-html: 
     toc: true
@@ -152,7 +160,7 @@ format:
     list-of-figures: true
   apaquarto-typst: 
     # Options: manuscript (default), journal, student, document
-    documentmode: manuscript
+    documentmode: journal
     keep-typ: false
     list-of-figures: false
     list-of-tables: false

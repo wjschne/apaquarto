@@ -18,6 +18,26 @@
 % LaTeX tables using \toprule/\midrule still render even without Pandoc table
 % nodes.
 \usepackage{booktabs, multirow, multicol, colortbl, hhline, caption, array, float, xpatch}
+
+% booktabs' rules take an optional trim argument, written \midrule(rl),
+% which they look for by peeking at the single character that follows the
+% rule. Inside a longtable that peek is \@BLTrule's, and a table whose
+% first cell opens with a literal ( -- the term name (Intercept), which
+% every model summary produces -- is read as the start of a trim spec.
+% booktabs then tries to parse the letters of Intercept as trim sides,
+% leaves \cmrsideswitch undefined and takes the whole build down with
+% ``Undefined control sequence'' (issue #164). Pandoc's own tables are out
+% of reach of this, since it writes \noalign{} after every rule, but a
+% table written as latex -- kable(format = ``latex'', booktabs = TRUE,
+% longtable = TRUE) among them -- puts the row hard against the rule.
+%
+% Giving \@BLTrule an empty trim spec of its own stops it peeking. The
+% trim argument is then unavailable inside longtables, which is no loss
+% here: apaquarto never writes one. Thanks to @112345brian, who traced
+% this and proposed the patch.
+\makeatletter
+\def\@BLTrule{\@@BLTrule()}
+\makeatother
 \usepackage{subcaption}
 
 
