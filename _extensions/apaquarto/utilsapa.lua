@@ -118,6 +118,117 @@ function M.journal_issue_line(meta)
   return comma_list(parts)
 end
 
+-- Files that ship with the extension: the apaquarto logo and the ORCID icon.
+--
+-- The folder they sit in is not fixed. It is _extensions/apaquarto while the
+-- extension is worked on and _extensions/<owner>/apaquarto once it has been
+-- added with quarto add, and <owner> is whoever it was added from, so a fork
+-- is not under wjschne. Rather than guess at it, the folder is taken from the
+-- path of this file, which is in it.
+--
+-- PANDOC_SCRIPT_FILE would be the obvious way to ask, and is in a filter, but
+-- not here: quarto gives each filter it runs its own environment, and a module
+-- required from one is outside them all, where PANDOC_SCRIPT_FILE is quarto's
+-- own main.lua. What a required module can always say is where it was loaded
+-- from, so that is what is asked, once, as it loads.
+
+local kFolder = (function()
+  local ok, source = pcall(function() return debug.getinfo(1, "S").source end)
+  if not ok or type(source) ~= "string" then return nil end
+  -- A chunk loaded from a file names it after an @.
+  if source:sub(1, 1) ~= "@" then return nil end
+  local file = source:sub(2)
+  if not pandoc.path.is_absolute(file) then
+    file = pandoc.path.join({ pandoc.system.get_working_directory(), file })
+  end
+  return pandoc.path.directory(file)
+end)()
+
+local function script_directory()
+  return kFolder
+end
+
+-- The directory the document is in, which is where its output is written.
+local function document_directory()
+  local ok, input = pcall(function() return quarto.doc.input_file end)
+  if ok and input and input ~= "" then
+    return pandoc.path.directory(input)
+  end
+  return pandoc.system.get_working_directory()
+end
+
+-- The root typst is given: the project, or the document's own directory when
+-- there is no project.
+local function typst_root()
+  local ok, dir = pcall(function() return quarto.project.directory end)
+  if ok and dir and dir ~= "" then return dir end
+  return document_directory()
+end
+
+-- The absolute path of a file that ships with the extension, or nil when
+-- there is no way to tell where the extension is.
+function M.extension_file(name)
+  local folder = script_directory()
+  if not folder then return nil end
+  local ok, path = pcall(pandoc.path.join, { folder, name })
+  if not ok or not path or path == "" then return nil end
+  return path
+end
+
+-- A shipped file as typst wants to read it: a path from the root typst is
+-- given, which is what a leading slash means to it, with forward slashes,
+-- which it wants on every platform. Anchoring on the root rather than writing
+-- a path relative to the .typ keeps the file reachable from a paper that sits
+-- in a subfolder of the project. For raw typst only; see
+-- M.extension_file_relative for a path that goes into the document.
+function M.extension_file_typst(name)
+  local file = M.extension_file(name)
+  if not file then return nil end
+  local ok, path = pcall(pandoc.path.make_relative, file, typst_root())
+  if not ok or not path or path == "" then return nil end
+  path = path:gsub("\\", "/")
+  if path:sub(1, 1) ~= "/" then path = "/" .. path end
+  return path
+end
+
+local function split_path(path)
+  local parts = {}
+  for part in path:gsub("\\", "/"):gmatch("[^/]+") do
+    if part ~= "." then parts[#parts + 1] = part end
+  end
+  return parts
+end
+
+-- A shipped file as a path from the document, which is how every writer reads
+-- one that is put in the document itself. The ORCID icon goes in this way.
+--
+-- A document in a subfolder of the project has to climb out of it to reach the
+-- extension, and pandoc's make_relative will not write the .. that takes it
+-- there, so the two paths are walked apart by hand. Comparison is
+-- case-insensitive, since the drive letter of an absolute path on windows is
+-- not always given in the same case.
+--
+-- One thing is given up by climbing out. Pandoc rasterises an svg to a png for
+-- word to fall back on when it cannot draw one, and it does not do that for a
+-- src with a .. in it, so word 2013 and older show nothing where the icon
+-- should be. Only a document in a subfolder is affected, and only in .docx.
+function M.extension_file_relative(name)
+  local file = M.extension_file(name)
+  if not file then return nil end
+  local from, to = split_path(document_directory()), split_path(file)
+  local same = 0
+  while same < #from and same < #to
+    and from[same + 1]:lower() == to[same + 1]:lower() do
+    same = same + 1
+  end
+  -- Nothing in common means separate drives, where no relative path exists.
+  if same == 0 then return (file:gsub("\\", "/")) end
+  local parts = {}
+  for _ = same + 1, #from do parts[#parts + 1] = ".." end
+  for i = same + 1, #to do parts[#parts + 1] = to[i] end
+  return table.concat(parts, "/")
+end
+
 -- if any value in table
 function M.containsValue(tbl, value)
   for _, v in pairs(tbl) do

@@ -23,16 +23,6 @@ local function ends_with(str, ending)
   return string.sub(str.text, -1) == ending
 end
 
-local function file_exists(name)
-  local f = io.open(name, 'r')
-  if f ~= nil then
-    io.close(f)
-    return true
-  else
-    return false
-  end
-end
-
 -- Check if meta is present or if it has length of 0
 local function chkmeta(meta_item)
   ispresent = false
@@ -193,7 +183,7 @@ local function fit_jou_orcid(blocks)
     Image = function(img)
       if img.identifier == "orcid" then
         img.attributes.width = nil
-        img.attributes.height = "0.66em"
+        img.attributes.height = "0.8em"
         return img
       end
     end
@@ -402,45 +392,15 @@ local journal_issue_line = utilsapa.journal_issue_line
 
 -- The logo apaquarto ships with, asked for by writing logo: default.
 --
--- The extension is installed as _extensions/apaquarto when it is worked on
--- and as _extensions/<owner>/apaquarto when it is added with quarto add, so
--- the folder is found from this filter's own path rather than assumed.
---
--- Typst reads a path that begins with a slash from the root it is given,
--- which is the project directory, or the document's own directory when the
--- document does not belong to a project. Anchoring there rather than writing
--- a path relative to the .typ keeps the logo reachable from a paper that sits
--- in a subfolder of the project. Forward slashes are what typst wants on
--- every platform.
+-- The apaquarto logo, asked for by writing logo: default. utilsapa finds the
+-- extension folder it ships in; the masthead writes it as raw typst, so the
+-- path is the one typst reads.
 local kDefaultLogo = "default"
 local kShippedLogo = "apaquarto-logo.png"
-
-local function typst_root()
-  local ok, dir = pcall(function() return quarto.project.directory end)
-  if ok and dir and dir ~= "" then return dir end
-  ok, dir = pcall(function()
-    return pandoc.path.directory(quarto.doc.input_file)
-  end)
-  if ok and dir and dir ~= "" then return dir end
-  return pandoc.system.get_working_directory()
-end
+local kOrcidIcon = "ORCID-iD_icon-vector.svg"
 
 local function shipped_logo()
-  if not PANDOC_SCRIPT_FILE then return nil end
-  local ok, path = pcall(function()
-    local script = PANDOC_SCRIPT_FILE
-    if not pandoc.path.is_absolute(script) then
-      script = pandoc.path.join(
-        { pandoc.system.get_working_directory(), script })
-    end
-    local folder = pandoc.path.directory(script)
-    return pandoc.path.make_relative(
-      pandoc.path.join({ folder, kShippedLogo }), typst_root())
-  end)
-  if not ok or not path or path == "" then return nil end
-  path = path:gsub("\\", "/")
-  if path:sub(1, 1) ~= "/" then path = "/" .. path end
-  return path
+  return utilsapa.extension_file_typst(kShippedLogo)
 end
 
 -- A path as a typst string literal
@@ -761,11 +721,11 @@ return {
       if byauthor then
         for i, a in ipairs(byauthor) do
           if a.orcid then
-            local orcidfile = "_extensions/wjschne/apaquarto/ORCID-iD_icon-vector.svg"
-            if not file_exists(orcidfile) then
-              orcidfile = "_extensions/apaquarto/ORCID-iD_icon-vector.svg"
-            end
-            img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile)
+            -- The icon goes into the document rather than into raw typst,
+            -- so it is written as a path from the document, which every
+            -- writer reads the same way.
+            local orcidfile = utilsapa.extension_file_relative(kOrcidIcon)
+            img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile or kOrcidIcon)
             img.attr = pandoc.Attr('orcid', { 'img-fluid' }, { width = '4.23mm' })
             pp = pandoc.Para(pandoc.Str(""))
             pp.content:extend(a.apaauthordisplay)
@@ -1211,8 +1171,15 @@ return {
           -- reading it takes of the length; anything else, "auto" included,
           -- leaves the decision to it.
           local notecols = "auto"
+          local asked
+          if meta["author-note"]["author-note-columns"] then
+            asked = stringify(meta["author-note-columns"])
+            if asked == "1" or asked == "2" then
+              notecols = asked
+            end
+          end
           if meta["author-note-columns"] then
-            local asked = stringify(meta["author-note-columns"])
+            asked = stringify(meta["author-note-columns"])
             if asked == "1" or asked == "2" then
               notecols = asked
             end
