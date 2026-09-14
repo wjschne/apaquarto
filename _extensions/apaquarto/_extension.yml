@@ -149,6 +149,9 @@ contributes:
         # Removes surrounding table environment for docx figures and tables
         - at: post-render
           path: apaextractfigure.lua
+        # Recovers the apa-note of a figure or table brought in by an embed
+        - at: post-render
+          path: embednote.lua
         # Formats notes below figures and tables (docx, html, typst)
         - at: post-render
           path: apanote.lua
