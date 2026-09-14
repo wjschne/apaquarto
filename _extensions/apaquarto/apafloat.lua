@@ -16,6 +16,9 @@ function Pandoc(doc)
         istable = true
       end
     end
+    if doc.blocks[i].attributes and doc.blocks[i].attributes["apa-note"] then
+      hasnote = true
+    end
     if doc.blocks[i].t == "Div" then
       doc.blocks[i].content:walk {
         Div = function(div)
@@ -26,6 +29,16 @@ function Pandoc(doc)
             if div.identifier:find("^tbl%-") then
               istable = true
             end
+          end
+          -- An {{< embed other.qmd#fig-x >}} wraps the cell in a div of its
+          -- own, which puts the note one level deeper than it is for a figure
+          -- written in the document. The figure is already looked for at any
+          -- depth, so the note is looked for at any depth as well. Without
+          -- this an embedded figure that has a note is styled as one that has
+          -- none, losing the keepNext that holds the note on the page with
+          -- its figure, and word is free to break between the two.
+          if div.attributes["apa-note"] then
+            hasnote = true
           end
         end
       }
@@ -45,8 +58,7 @@ function Pandoc(doc)
       end
 
 
-      if doc.blocks[i].attributes["apa-note"] then
-        
+      if hasnote then
         doc.blocks[i].classes:insert("FigureWithNote")
         doc.blocks[i].attributes["custom-style"] = "FigureWithNote"
       else

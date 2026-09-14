@@ -1173,7 +1173,7 @@ return {
           local notecols = "auto"
           local asked
           if meta["author-note"]["author-note-columns"] then
-            asked = stringify(meta["author-note-columns"])
+            asked = stringify(meta["author-note"]["author-note-columns"])
             if asked == "1" or asked == "2" then
               notecols = asked
             end
