@@ -1,5 +1,72 @@
 local M = {}
 
+-- The markdown of a note, as inlines.
+--
+-- quarto.utils.string_to_inlines costs about 9 ms however short the string
+-- given to it -- an empty one costs the same -- because it runs quarto's whole
+-- ast normalization pipeline over what it reads. A note is a sentence or two,
+-- and that pipeline is only needed for the syntax quarto adds on top of
+-- markdown: shortcodes and fenced divs. Reading the rest with pandoc costs
+-- about a tenth of a millisecond and gives back the same inlines, citations,
+-- cross-references, footnotes, math and all, because quarto reads a note with
+-- pandoc's markdown reader as well.
+local function has_quarto_syntax(text)
+  return text:find("{{<", 1, true) ~= nil or text:find(":::", 1, true) ~= nil
+end
+
+local function extension_set(extensions)
+  local set = {}
+  for key, value in pairs(extensions) do
+    if type(key) == "number" then
+      set[value] = true
+    elseif value then
+      set[key] = true
+    end
+  end
+  return set
+end
+
+-- The name of the reader to give pandoc, or false when pandoc cannot be given
+-- one and quarto's reader has to do the work.
+--
+-- Naming the format matters: handing pandoc a table of extensions instead
+-- rebuilds the reader on every call and costs about 4 ms a note, against a
+-- tenth of that for the name, for exactly the same result. The name can only
+-- stand in when this document was read with the markdown reader's own
+-- defaults, which is what a .qmd is read with unless a `from:` says otherwise,
+-- so the two sets of extensions are compared once and anything else is left to
+-- quarto. Worked out on first use, since the reader options are not settled
+-- when this file is loaded.
+local markdown_flavor
+
+local function flavor()
+  if markdown_flavor ~= nil then return markdown_flavor end
+  markdown_flavor = false
+  pcall(function()
+    local default = extension_set(pandoc.format.extensions("markdown"))
+    local actual = extension_set(PANDOC_READER_OPTIONS.extensions)
+    for name in pairs(default) do
+      if not actual[name] then return end
+    end
+    for name in pairs(actual) do
+      if not default[name] then return end
+    end
+    markdown_flavor = "markdown"
+  end)
+  return markdown_flavor
+end
+
+function M.note_inlines(text)
+  local format = flavor()
+  if format and not has_quarto_syntax(text) then
+    local ok, inlines = pcall(function()
+      return pandoc.utils.blocks_to_inlines(pandoc.read(text, format).blocks)
+    end)
+    if ok then return inlines end
+  end
+  return quarto.utils.string_to_inlines(text)
+end
+
 function M.make_note(s, prefix)
   s = string.gsub(s, '^%[%"', "")
   s = string.gsub(s, '%"%]$', "")
@@ -19,9 +86,9 @@ function M.make_note(s, prefix)
     apanote.classes:extend({ "NoIndent" })
     cnt = cnt + 1
     if (cnt == 1 and includeprefix) then
-      apanote.content:extend(prefix.content:extend(quarto.utils.string_to_inlines(v:gsub(" ", "\u{00A0}", 1))))
+      apanote.content:extend(prefix.content:extend(M.note_inlines(v:gsub(" ", "\u{00A0}", 1))))
     else
-      apanote.content:extend(quarto.utils.string_to_inlines(v))
+      apanote.content:extend(M.note_inlines(v))
     end
     apanotedivs.content:extend({ apanote })
   end

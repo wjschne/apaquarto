@@ -12,6 +12,56 @@ local maskeddate = "n.d."
 local metaanalysis = true
 local metareferencesentence = "References marked with an asterisk indicate studies included in the meta-analysis."
 
+local utilsapa = require("utilsapa")
+
+-- A citation field written without a value -- `bibliography: ""`, or a list
+-- with a blank item under it -- reaches pandoc as the name of a file to open,
+-- and the render stops with "File  not found in resource path" from inside the
+-- references() or citeproc() call below. The traceback names this file, so what
+-- is really a typo in the yaml reads as a fault in apaquarto; plain quarto
+-- stops on the same document in the same way. The blank entries are dropped
+-- here and said out loud, so that the render carries on and the writer is told
+-- which field to look at.
+local function is_blank(value)
+  if value == nil then return true end
+  return pandoc.utils.stringify(value):match("^%s*$") ~= nil
+end
+
+local function drop_blank_bibliography(meta)
+  if meta.bibliography == nil then return end
+  local given = meta.bibliography
+  if pandoc.utils.type(given) ~= "List" then
+    given = pandoc.List({ given })
+  end
+  local kept = pandoc.List({})
+  for _, entry in ipairs(given) do
+    if not is_blank(entry) then kept:insert(entry) end
+  end
+  if #kept == #given then return end
+  quarto.log.warning(
+    "The bibliography field has an entry with no file name in it, which " ..
+    "pandoc reads as a file called \"\" and cannot open. Ignoring it. Give " ..
+    "the field the name of a .bib file, or take the field out altogether.")
+  if #kept == 0 then
+    meta.bibliography = nil
+  else
+    meta.bibliography = kept
+  end
+end
+
+local function fix_blank_csl(meta)
+  if meta.csl == nil or not is_blank(meta.csl) then return end
+  -- Removing it outright would leave citeproc on its own default style, which
+  -- is not APA, so the style apaquarto ships is named instead. That is what
+  -- the document would have had if the field had never been written.
+  local apa = utilsapa.extension_file_relative("apa.csl")
+  quarto.log.warning(
+    "The csl field has no file name in it, which pandoc reads as a file " ..
+    "called \".csl\" and cannot open. Using apaquarto's own apa.csl. Give " ..
+    "the field the name of a .csl file, or take the field out altogether.")
+  meta.csl = apa and pandoc.MetaString(apa) or nil
+end
+
 return {
   {
     Cite = function(ct)
@@ -148,6 +198,8 @@ return {
   },
   {
     Pandoc = function(doc)
+      drop_blank_bibliography(doc.meta)
+      fix_blank_csl(doc.meta)
       doc.meta.references = pandoc.utils.references(doc)
       maskedref = {
         author = pandoc.List:new({ { literal = maskedauthor } }),
