@@ -12,7 +12,7 @@ local function count_images(blocks)
   return n
 end
 
--- If div if a figure with apa-note, then insert it into the image
+-- If div is a figure with apa-note, then insert it into the image
 Div = function(div)
   if div.attributes then
     if div.attributes["apa-note"] then

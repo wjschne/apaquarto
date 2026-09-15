@@ -446,6 +446,7 @@ See @fig-appendfig, an example of an imported graphic using markdown syntax.
 ```{r}
 #| label: tbl-chisq
 #| tbl-cap: Contingency table
+
 mtcars |>
   select(Transmission = am, Gears = gear) |>
   mutate(Gears = factor(Gears),
