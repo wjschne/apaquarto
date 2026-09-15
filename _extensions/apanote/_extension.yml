@@ -1,0 +1,36 @@
+title: APA Figure and Table Notes
+author: W. Joel Schneider
+version: 6.0.0
+quarto-required: ">=1.4.549"
+contributes:
+  # apa-note on its own, for a document that is not in one of apaquarto's
+  # formats. Such a document gets the notes by naming this extension:
+  #
+  #     filters:
+  #       - apanote
+  #
+  # which is the whole of what it has to add. Nothing else of apaquarto comes
+  # with them, so the note is written where it belongs and styled by whatever
+  # the document is already using.
+  #
+  # The filters themselves live in the apaquarto extension beside this one,
+  # which is where they are maintained and where the apaquarto formats run them
+  # from; this extension only names a few of them. The two are installed as
+  # siblings whether apaquarto is being worked on, as _extensions/apaquarto and
+  # _extensions/apanote, or added with quarto add, as _extensions/<owner>/
+  # apaquarto and _extensions/<owner>/apanote, so one path reaches them either
+  # way.
+  #
+  # The stages matter. apa-note on a plain markdown table has to be taken down
+  # before quarto turns the table into a float, which is why the first of these
+  # is a pre-ast filter; the note is written at the end, once the floats exist,
+  # which is why the others are post-render.
+  filters:
+    - at: pre-ast
+      path: ../apaquarto/apatablenote.lua
+    - at: post-render
+      path: ../apaquarto/apaextractfigure.lua
+    - at: post-render
+      path: ../apaquarto/embednote.lua
+    - at: post-render
+      path: ../apaquarto/apanote.lua

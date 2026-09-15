@@ -375,6 +375,42 @@ tibble(x = seq(0, 1, .001),
   geom_area(fill = "royalblue", alpha = .5)
 ```
 
+### Notes in a Document That Is Not in an apaquarto Format
+
+`apa-note` is read by one of apaquarto's filters rather than by Quarto, so a
+document in a plain format ignores it and the note simply does not appear. A
+document that wants the notes without the rest of APA style can ask for those
+filters by name:
+
+``` yaml
+---
+title: "An ordinary document"
+format: html
+filters:
+  - apanote
+---
+```
+
+That is the whole of it. `apanote` is a small companion extension that is
+installed alongside apaquarto and names a few of its filters. Nothing else of
+apaquarto comes with them: no title page, no APA headings, no stylesheet. The
+note is written in place below its figure or table and takes whatever styling
+the document already has.
+
+Notes on figures and tables written in code chunks, on markdown images, and on
+markdown tables are all read. Which of them survive depends on the format:
+
+| Format | Notes |
+|--------|-------|
+| `html`, `revealjs` | all |
+| `docx` | all |
+| `typst` | figures only; a note on a markdown table is lost, because Quarto's typst writer has already turned the table into typst before the filter runs |
+| `pdf` | not supported; notes in .pdf need the LaTeX machinery that comes with `apaquarto-pdf` |
+| `gfm` and other plain markdown | none; Quarto does not build figures and tables there for a note to attach to |
+
+A document already in an apaquarto format has these filters and does not need
+`apanote` --- though if it names it anyway, each note is still written once.
+
 ### Omit "Note" Prefix in apa-note
 
 By default, the first paragraph of the `apa-note` has a prefix added (*Note. *). If you wish to omit this prefix (i.e., for a specific note or a probability note), start the note with "NoNote " like so:
