@@ -352,6 +352,44 @@ tibble(x = seq(0, 8, .01),
 
 [Code chunk options](https://quarto.org/docs/computations/r.html#chunk-options) like `label` and and `fig-cap` options are preceded by `#|`. They tell Quarto about how to run the code and present it the document.
 
+## Graphics Devices
+
+R draws each figure through a graphics device, and apaquarto names one for
+every format so that the same document draws the same way everywhere:
+
+| Format | Device | R package |
+|--------|--------|-----------|
+| `apaquarto-html` | `svglite` | svglite |
+| `apaquarto-typst` | `svglite` | svglite |
+| `apaquarto-docx` | `ragg_png` | ragg |
+| `apaquarto-pdf` | `pdf` | (built in) |
+
+So a document with R chunks needs the svglite and ragg packages:
+
+``` r
+install.packages(c("svglite", "ragg"))
+```
+
+These are chosen partly to keep clear of R's own `svg()` and `png()` devices,
+which draw through cairo. On macOS cairo comes from XQuartz, and on a machine
+without it a render stops at the first chunk that draws anything:
+
+```
+Error in dev.control(displaylist = if (record) "enable" else "inhibit") :
+  dev.control() called without an open graphics device
+```
+
+followed by a long list of libraries it could not load from `/opt/X11`. If you
+see this, check that svglite and ragg are installed. A document in a plain
+Quarto format rather than an apaquarto one is on R's cairo devices and can hit
+the same wall; naming a device in the document settles it:
+
+``` yaml
+knitr:
+  opts_chunk:
+    dev: svglite
+```
+
 ## Notes below Figures and Tables
 
 APA style distinguishes between three types of table notes, each of which need to be in separate paragraphs:

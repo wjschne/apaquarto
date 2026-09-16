@@ -247,6 +247,19 @@ contributes:
         opts_chunk: 
           dev: ragg_png
     typst:
+      # Draw R figures with svglite, as the .html format does.
+      #
+      # Quarto leaves typst on R's own svg device, which draws through cairo,
+      # and cairo on macos is part of XQuartz. A machine without XQuartz has no
+      # working svg device, and a render stops in the first chunk that draws
+      # anything with "dev.control() called without an open graphics device"
+      # under a wall of dlopen failures for libSM and libXrender. svglite
+      # writes the same svg without cairo, so the figures no longer depend on
+      # what the machine has under /opt/X11. The picture is the same and its
+      # text stays text in the .pdf rather than being flattened to outlines.
+      knitr:
+        opts_chunk:
+          dev: svglite
       # One column, two columns, or auto to let the length of the note
       # decide. Journal mode only; the other modes do not float the
       # author note.
