@@ -1,0 +1,59 @@
+---
+title: "Multipanel Notes"
+shorttitle: "Multipanel Notes"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+bibliography: references.bib
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-latex-pdf: default
+---
+
+<!--
+Covers the parts of `apa-note` that have broken most often, in the formats
+that have no other fixture here.
+
+A successful run produces, in every format:
+
+  - Panel labels reading "Panel A" and "Panel B", not quarto's "(A)" and not
+    an unlabelled panel;
+  - each panel's caption above its panel, never below it;
+  - each panel's own note under that panel, printed once;
+  - the note of the whole figure under the grid, printed once;
+  - a note under the table;
+  - a reference to a panel that resolves, reading "Figure 1B" rather than a
+    figure number of its own or a dangling link.
+
+The panels carry labels of their own, which is the case that used to leave
+each one in a figure environment or grid cell of its own and stack them.
+-->
+
+# Method
+
+See @fig-panels, @fig-second and @tbl-values.
+
+::: {#fig-panels layout-ncol=2 fig-cap="Two Panels" apa-note="A note belonging to the whole figure."}
+
+![First panel.](sampleimage.png){#fig-first apa-note="NoNote A note belonging to the first panel."}
+
+![Second panel.](sampleimage.png){#fig-second apa-note="NoNote A note belonging to the second panel."}
+
+:::
+
+| Group | Mean |  SD |
+|-------|-----:|----:|
+| A     | 10.2 | 1.1 |
+| B     | 12.4 | 1.3 |
+
+: Values by group. {#tbl-values apa-note="A note belonging to the table."}
+
+# Discussion
+
+Text after the float, so that the spacing which follows a figure with a note
+has something to apply to [@schneiderCattellHornCarrollTheoryCognitive2018].

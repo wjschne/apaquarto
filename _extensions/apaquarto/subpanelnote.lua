@@ -20,6 +20,8 @@ end
 
 local kNote = "FigureNote"
 local kPanelNote = "SubPanelNote"
+-- The layout cell quarto gives a panel that carries a label of its own.
+local kPanelCell = "quarto-layout-cell-subref"
 
 local function is_float(div)
   return div.classes:includes("FigureWithNote")
@@ -60,9 +62,19 @@ return {
       local touched = false
       float.content = float.content:walk {
         Div = function(div)
-          -- The float itself is not walked here, only what it holds, so a note
-          -- belonging to the whole figure is never taken for a panel's.
-          if div.attributes["apa-note"] and not is_float(div) then
+          -- A panel arrives in one of two shapes, and the note of the whole
+          -- figure has to be told from both.
+          --
+          -- A panel written as a plain code chunk is a div carrying the
+          -- apa-note itself, with the note written inside it. A panel given a
+          -- label of its own is a float, and its note is not inside it but
+          -- beside it: quarto puts the two together in a layout cell, and
+          -- marks that cell quarto-layout-cell-subref because it holds a
+          -- sub-reference. The note of the whole figure sits in a cell of its
+          -- own, a plain quarto-layout-cell with no subref, which is what
+          -- keeps it flush left while these are centred.
+          if div.classes:includes(kPanelCell)
+              or div.attributes["apa-note"] then
             touched = true
             return restyle(div)
           end

@@ -1,0 +1,436 @@
+
+/documentclass[
+  man,
+  floatsintext,
+  longtable,
+  nolmodern,
+  notxfonts,
+  notimes,
+  colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{apa7}
+
+/usepackage{amsmath}
+/usepackage{amssymb}
+/usepackage{setspace}
+
+
+% Font fallback is a lualatex feature, and the fallback list has to be
+% registered before any font asks for it by name. That happens here rather
+% than next to each font because /babelfont below comes first. The fallback
+% fonts are asked for in harfbuzz mode because luaotfload only looks inside
+% a fallback font that was loaded that way; the fonts that use the list are
+% left alone, so their shaping is unchanged.
+
+
+/RequirePackage{longtable}
+/RequirePackage{threeparttablex}
+
+/usepackage{framed}
+
+
+/makeatletter
+/renewcommand{/paragraph}{/@startsection{paragraph}{4}{/parindent}%
+	{0/baselineskip /@plus 0.2ex /@minus 0.2ex}%
+	{-.5em}%
+	{/normalfont/normalsize/bfseries/typesectitle}}
+
+/renewcommand{/subparagraph}[1]{/@startsection{subparagraph}{5}{0.5em}%
+	{0/baselineskip /@plus 0.2ex /@minus 0.2ex}%
+	{-/z@/relax}%
+	{/normalfont/normalsize/bfseries/itshape/hspace{/parindent}{#1}/textit{/addperi}}{/relax}}
+/makeatother
+
+
+
+
+% longtable is already loaded via doc-class.tex (apa7 class option) and
+% apatemplate.tex (/RequirePackage{longtable}). Keep booktabs here so raw
+% LaTeX tables using /toprule//midrule still render even without Pandoc table
+% nodes.
+/usepackage{booktabs, multirow, multicol, colortbl, hhline, caption, array, float, xpatch}
+
+% booktabs' rules take an optional trim argument, written /midrule(rl),
+% which they look for by peeking at the single character that follows the
+% rule. Inside a longtable that peek is /@BLTrule's, and a table whose
+% first cell opens with a literal ( -- the term name (Intercept), which
+% every model summary produces -- is read as the start of a trim spec.
+% booktabs then tries to parse the letters of Intercept as trim sides,
+% leaves /cmrsideswitch undefined and takes the whole build down with
+% ``Undefined control sequence'' (issue #164). Pandoc's own tables are out
+% of reach of this, since it writes /noalign{} after every rule, but a
+% table written as latex -- kable(format = ``latex'', booktabs = TRUE,
+% longtable = TRUE) among them -- puts the row hard against the rule.
+%
+% Giving /@BLTrule an empty trim spec of its own stops it peeking. The
+% trim argument is then unavailable inside longtables, which is no loss
+% here: apaquarto never writes one. Thanks to @112345brian, who traced
+% this and proposed the patch.
+/makeatletter
+/def/@BLTrule{/@@BLTrule()}
+/makeatother
+/usepackage{subcaption}
+
+
+/renewcommand/thesubfigure{/Alph{subfigure}}
+/setcounter{topnumber}{2}
+/setcounter{bottomnumber}{2}
+/setcounter{totalnumber}{4}
+/renewcommand{/topfraction}{0.85}
+/renewcommand{/bottomfraction}{0.85}
+/renewcommand{/textfraction}{0.15}
+/renewcommand{/floatpagefraction}{0.7}
+
+/usepackage{tcolorbox}
+/tcbuselibrary{listings,theorems, breakable, skins}
+/usepackage{fontawesome5}
+
+/definecolor{quarto-callout-color}{HTML}{909090}
+/definecolor{quarto-callout-note-color}{HTML}{0758E5}
+/definecolor{quarto-callout-important-color}{HTML}{CC1914}
+/definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+/definecolor{quarto-callout-tip-color}{HTML}{00A047}
+/definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+/definecolor{quarto-callout-color-frame}{HTML}{ACACAC}
+/definecolor{quarto-callout-note-color-frame}{HTML}{4582EC}
+/definecolor{quarto-callout-important-color-frame}{HTML}{D9534F}
+/definecolor{quarto-callout-warning-color-frame}{HTML}{F0AD4E}
+/definecolor{quarto-callout-tip-color-frame}{HTML}{02B875}
+/definecolor{quarto-callout-caution-color-frame}{HTML}{FD7E14}
+
+%/newlength/Oldarrayrulewidth
+%/newlength/Oldtabcolsep
+
+
+/usepackage{hyperref}
+/usepackage[protrusion=true]{microtype}
+
+
+/providecommand{/tightlist}{%
+  /setlength{/itemsep}{0pt}/setlength{/parskip}{0pt}}
+/usepackage{longtable,booktabs,array}
+/newcounter{none} % for unnumbered tables
+/usepackage{calc} % for calculating minipage widths
+% Correct order of tables after /paragraph or /subparagraph
+/usepackage{etoolbox}
+/makeatletter
+/patchcmd/longtable{/par}{/if@noskipsec/mbox{}/fi/par}{}{}
+/makeatother
+% Allow footnotes in longtable head/foot
+/IfFileExists{footnotehyper.sty}{/usepackage{footnotehyper}}{/usepackage{footnote}}
+/makesavenoteenv{longtable}
+
+/usepackage{graphicx}
+/makeatletter
+/newsavebox/pandoc@box
+/newcommand*/pandocbounded[1]{% scales image to fit in text height/width
+  /sbox/pandoc@box{#1}%
+  /Gscale@div/@tempa{/textheight}{/dimexpr/ht/pandoc@box+/dp/pandoc@box/relax}%
+  /Gscale@div/@tempb{/linewidth}{/wd/pandoc@box}%
+  /ifdim/@tempb/p@</@tempa/p@/let/@tempa/@tempb/fi% select the smaller of both
+  /ifdim/@tempa/p@</p@/scalebox{/@tempa}{/usebox/pandoc@box}%
+  /else/usebox{/pandoc@box}%
+  /fi%
+}
+% Set default figure placement to htbp
+/def/fps@figure{htbp}
+/makeatother
+
+
+
+
+
+
+% apa7 sets captions with the caption package, which single spaces them
+% whatever the rest of the document does. Manuscript and student mode are
+% double spaced throughout, and that includes the caption number line and
+% the caption title line.
+/captionsetup{font=doublespacing}
+
+% A float resets the line spacing, so notes below figures and tables come out
+% single spaced whatever the document does. /apanotespacing gives them the
+% document's own spacing back, and apafloatlatex.lua puts it at the start of
+% every note. The note is the last thing in the float, so there is nothing
+% after it to restore the spacing for.
+/makeatletter
+/AtBeginDocument{%
+  /edef/apaq@stretch{/baselinestretch}%
+  /ifx/apaq@stretch/@empty/def/apaq@stretch{1}/fi}
+/newcommand{/apanotespacing}{/setstretch{/apaq@stretch}}
+/makeatother
+
+
+/usepackage{newtx}
+
+/defaultfontfeatures{Scale=MatchLowercase}
+/defaultfontfeatures[/rmfamily]{Ligatures=TeX,Scale=1}
+
+
+
+
+
+/title{Long Table Reproducer}
+
+
+/shorttitle{Issue 71}
+
+
+/usepackage{etoolbox}
+
+
+
+
+
+
+/author{Test Author}
+
+
+
+/affiliation{
+{Test University}}
+
+
+
+
+/leftheader{Author}
+
+
+
+
+
+
+/authornote{
+
+/par{       }
+/par{Correspondence concerning this article should be addressed to Test
+Author, Email: /href{mailto:test@example.com}{test@example.com}}
+}
+
+/makeatletter
+/let/endoldlt/endlongtable
+/def/endlongtable{
+/hline
+/endoldlt
+}
+/makeatother
+
+/urlstyle{same}
+
+
+
+/makeatletter
+/@ifpackageloaded{caption}{}{/usepackage{caption}}
+/AtBeginDocument{%
+/ifdefined/contentsname
+  /renewcommand*/contentsname{Table of contents}
+/else
+  /newcommand/contentsname{Table of contents}
+/fi
+/ifdefined/listfigurename
+  /renewcommand*/listfigurename{List of Figures}
+/else
+  /newcommand/listfigurename{List of Figures}
+/fi
+/ifdefined/listtablename
+  /renewcommand*/listtablename{List of Tables}
+/else
+  /newcommand/listtablename{List of Tables}
+/fi
+/ifdefined/figurename
+  /renewcommand*/figurename{Figure}
+/else
+  /newcommand/figurename{Figure}
+/fi
+/ifdefined/tablename
+  /renewcommand*/tablename{Table}
+/else
+  /newcommand/tablename{Table}
+/fi
+}
+/@ifpackageloaded{float}{}{/usepackage{float}}
+/floatstyle{ruled}
+/@ifundefined{c@chapter}{/newfloat{codelisting}{h}{lop}}{/newfloat{codelisting}{h}{lop}[chapter]}
+/floatname{codelisting}{Listing}
+/newcommand*/listoflistings{/listof{codelisting}{List of Listings}}
+/makeatother
+/makeatletter
+/makeatother
+/makeatletter
+/@ifpackageloaded{caption}{}{/usepackage{caption}}
+/@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
+/makeatother
+
+% From https://tex.stackexchange.com/a/645996/211326
+%%% apa7 doesn't want to add appendix section titles in the toc
+%%% let's make it do it
+/makeatletter
+/xpatchcmd{/appendix}
+  {/par}
+  {/addcontentsline{toc}{section}{/@currentlabelname}/par}
+  {}{}
+/makeatother
+
+%% Disable longtable counter
+%% https://tex.stackexchange.com/a/248395/211326
+
+/usepackage{etoolbox}
+
+/makeatletter
+/patchcmd{/LT@caption}
+  {/bgroup}
+  {/bgroup/global/LTpatch@captiontrue}
+  {}{}
+/patchcmd{/longtable}
+  {/par}
+  {/par/global/LTpatch@captionfalse}
+  {}{}
+/apptocmd{/endlongtable}
+  {/ifLTpatch@caption/else/addtocounter{table}{-1}/fi}
+  {}{}
+/newif/ifLTpatch@caption
+/makeatother
+
+/begin{document}
+
+/maketitle
+
+
+
+
+/setlength/LTleft{0pt}
+
+
+
+/ifdefined/Shaded/renewenvironment{Shaded}{/begin{snugshade}/begin{singlespace}}{/end{singlespace}/end{snugshade}}/fi
+
+
+/ifdefined/cslhangindent/else/newlength{/cslhangindent}/fi
+/ifdefined/csllabelwidth/else/newlength{/csllabelwidth}/fi
+/setlength{/cslhangindent}{0.5in}
+
+
+This document reproduces the long-table clipping problem in
+manuscript-mode PDF output.
+
+/begin{longtable}[]{@{}
+  >{/raggedright/arraybackslash}p{(/linewidth - 8/tabcolsep) * /real{0.1111}}
+  >{/raggedright/arraybackslash}p{(/linewidth - 8/tabcolsep) * /real{0.2889}}
+  >{/raggedright/arraybackslash}p{(/linewidth - 8/tabcolsep) * /real{0.2000}}
+  >{/raggedright/arraybackslash}p{(/linewidth - 8/tabcolsep) * /real{0.2000}}
+  >{/raggedright/arraybackslash}p{(/linewidth - 8/tabcolsep) * /real{0.2000}}@{}}
+/caption{A very long table that should span multiple
+pages.}/label{tbl-long}/tabularnewline
+/toprule/noalign{}
+/begin{minipage}[b]{/linewidth}/raggedright
+Row
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Description
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Value A
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Value B
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Value C
+/end{minipage} //
+/midrule/noalign{}
+/endfirsthead
+/toprule/noalign{}
+/begin{minipage}[b]{/linewidth}/raggedright
+Row
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Description
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Value A
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Value B
+/end{minipage} & /begin{minipage}[b]{/linewidth}/raggedright
+Value C
+/end{minipage} //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+1 & Lorem ipsum dolor sit amet consectetur & 0.123 & 0.456 & 0.789 //
+2 & Sed do eiusmod tempor incididunt ut labore & 0.234 & 0.567 &
+0.890 //
+3 & Ut enim ad minim veniam quis nostrud & 0.345 & 0.678 & 0.901 //
+4 & Duis aute irure dolor in reprehenderit & 0.456 & 0.789 & 0.012 //
+5 & Excepteur sint occaecat cupidatat non proident & 0.567 & 0.890 &
+0.123 //
+6 & Sunt in culpa qui officia deserunt mollit & 0.678 & 0.901 & 0.234 //
+7 & Nemo enim ipsam voluptatem quia voluptas sit & 0.789 & 0.012 &
+0.345 //
+8 & Neque porro quisquam est qui dolorem ipsum & 0.890 & 0.123 &
+0.456 //
+9 & Quis autem vel eum iure reprehenderit qui & 0.901 & 0.234 & 0.567 //
+10 & At vero eos et accusamus et iusto odio & 0.012 & 0.345 & 0.678 //
+11 & Nam libero tempore cum soluta nobis est & 0.111 & 0.444 & 0.777 //
+12 & Temporibus autem quibusdam et aut officiis & 0.222 & 0.555 &
+0.888 //
+13 & Itaque earum rerum hic tenetur a sapiente & 0.333 & 0.666 &
+0.999 //
+14 & Nisi ut aliquid ex ea commodi consequatur & 0.141 & 0.272 &
+0.393 //
+15 & Ut aut reiciendis voluptatibus maiores alias & 0.151 & 0.282 &
+0.303 //
+16 & Et harum quidem rerum facilis est expedita & 0.161 & 0.292 &
+0.313 //
+17 & Similique sunt in culpa qui officia deserunt & 0.171 & 0.302 &
+0.323 //
+18 & Nemo enim ipsam voluptatem quia voluptas sit & 0.181 & 0.312 &
+0.333 //
+19 & Sed ut perspiciatis unde omnis iste natus & 0.191 & 0.322 &
+0.343 //
+20 & Accusantium doloremque laudantium totam rem & 0.201 & 0.332 &
+0.353 //
+21 & Inventore veritatis et quasi architecto beatae & 0.211 & 0.342 &
+0.363 //
+22 & Vitae dicta sunt explicabo enim ipsam voluptatem & 0.221 & 0.352 &
+0.373 //
+23 & Totam rem aperiam eaque ipsa quae ab illo & 0.231 & 0.362 &
+0.383 //
+24 & Perspiciatis unde omnis iste natus error sit & 0.241 & 0.372 &
+0.393 //
+25 & Voluptatem accusantium doloremque laudantium & 0.251 & 0.382 &
+0.403 //
+26 & Beatae vitae dicta sunt explicabo nemo enim & 0.261 & 0.392 &
+0.413 //
+27 & Ipsam voluptatem quia voluptas sit aspernatur & 0.271 & 0.402 &
+0.423 //
+28 & Aut odit aut fugit sed quia consequuntur & 0.281 & 0.412 & 0.433 //
+29 & Magni dolores eos qui ratione voluptatem sequi & 0.291 & 0.422 &
+0.443 //
+30 & Nesciunt neque porro quisquam est qui dolorem & 0.301 & 0.432 &
+0.453 //
+31 & Ipsum quia dolor sit amet consectetur adipisci & 0.311 & 0.442 &
+0.463 //
+32 & Velit sed quia non numquam eius modi tempora & 0.321 & 0.452 &
+0.473 //
+33 & Incidunt ut labore et dolore magnam aliquam & 0.331 & 0.462 &
+0.483 //
+34 & Quaerat voluptatem ut enim ad minima veniam & 0.341 & 0.472 &
+0.493 //
+35 & Quis nostrum exercitationem ullam corporis & 0.351 & 0.482 &
+0.503 //
+36 & Suscipit laboriosam nisi ut aliquid ex ea & 0.361 & 0.492 &
+0.513 //
+37 & Commodi consequatur quis autem vel eum iure & 0.371 & 0.502 &
+0.523 //
+38 & Reprehenderit qui in ea voluptate velit esse & 0.381 & 0.512 &
+0.533 //
+39 & Quam nihil molestiae consequatur vel illum qui & 0.391 & 0.522 &
+0.543 //
+40 & Dolorem eum fugiat quo voluptas nulla pariatur & 0.401 & 0.532 &
+0.553 //
+/end{longtable}
+
+/vspace{-12pt}
+/ifdefined/apanotespacing/apanotespacing/fi /noindent /emph{Note.} This~note
+should appear below the table.
+
+Some text after the table to confirm it rendered completely.
+
+
+
+
+
+
+/end{document}

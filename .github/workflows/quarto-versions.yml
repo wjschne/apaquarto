@@ -1,0 +1,68 @@
+# apaquarto against several versions of quarto, weekly.
+#
+# This is the one that earns its keep. Quarto 1.10 turned a typst document's
+# bibliography paths into raw typst inlines, which made apaquarto throw the
+# whole bibliography away and left every citation unresolved; the release was
+# months old before anyone noticed. A weekly run against the pre-release says
+# so before it reaches a writer with a deadline.
+#
+# "1.9.38" is the floor named in _extensions/apaquarto/_extension.yml. Raise it
+# here when that is raised.
+
+name: quarto-versions
+
+on:
+  schedule:
+    # Mondays, early UTC.
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+jobs:
+  render:
+    name: quarto ${{ matrix.quarto }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        quarto: ["1.9.38", "release", "pre-release"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          dependencies: '"all"'
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: ${{ matrix.quarto }}
+          tinytex: true
+
+      - name: Show versions
+        run: quarto --version
+
+      # No snapshot comparison: a new quarto is allowed to write a slightly
+      # different .tex or .typ, and that on its own is not a fault. What this
+      # job is looking for is an output that no longer says what it should.
+      - name: Fixtures
+        run: Rscript tests/run-tests.R --no-snapshots
+
+      - name: example.qmd in every format
+        run: |
+          for format in apaquarto-html apaquarto-docx apaquarto-typst \
+                        apaquarto-pdf apaquarto-latex-pdf; do
+            echo "::group::$format"
+            quarto render example.qmd --to "$format"
+            echo "::endgroup::"
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: failure-quarto-${{ matrix.quarto }}
+          path: tests/_results/
+          retention-days: 14

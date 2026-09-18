@@ -1,0 +1,69 @@
+---
+title: "Multipanel Notes, Unlabelled Panels"
+shorttitle: "Unlabelled Panels"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+---
+
+<!--
+The other half of multipanel-notes.qmd. There, every panel carries a label of
+its own and is a float in its own right; here the panels are plain code chunks
+with a fig-cap and no label, so quarto never marks the figure as having
+sub-figures. The two take different paths through floatwithsubfigure.lua and
+through quarto's own layout code, and a change that suits one has more than
+once broken the other. The .docx note of the whole figure went missing on the
+labelled path while this one kept it, which is why nobody noticed for a while:
+example.qmd only has this shape.
+
+Base R draws the panels. The point is the layout, not the picture, and a
+fixture that pulled in ggplot would take longer to run than everything else
+here put together.
+
+A successful run produces, in both formats:
+
+  - Panel labels reading "Panel A" and "Panel B";
+  - each panel's own note under that panel;
+  - the note of the whole figure under the grid, once;
+  - in .docx, the panels side by side in a layout table.
+-->
+
+# Method
+
+See @fig-plain.
+
+::: {#fig-plain layout-ncol=2 fig-cap="Two Unlabelled Panels" apa-note="A note belonging to the whole figure."}
+
+```{r}
+#| label: leftpanel
+#| echo: false
+#| fig-cap: "The left panel."
+#| fig-height: 2
+#| fig-width: 3
+#| fig-alt: A line.
+#| apa-note: "NoNote A note belonging to the left panel."
+plot(1:10, type = "l", axes = FALSE, xlab = "", ylab = "")
+```
+
+```{r}
+#| label: rightpanel
+#| echo: false
+#| fig-cap: "The right panel."
+#| fig-height: 2
+#| fig-width: 3
+#| fig-alt: Another line.
+#| apa-note: "NoNote A note belonging to the right panel."
+plot(10:1, type = "l", axes = FALSE, xlab = "", ylab = "")
+```
+
+:::
+
+# Discussion
+
+Text after the float.

@@ -63,4 +63,20 @@ contributors_table_template_tenzing.xlsx
 .claude
 example_cache/
 tests/_extensions/
+# What a test run leaves behind: render logs, and the .tex or .typ of a
+# snapshot that did not match. The snapshots themselves, in
+# tests/_snapshots/, are kept.
+tests/_results/
+tests/*.html
+tests/*.docx
+tests/*.pdf
+tests/*.tex
+tests/*.typ
+tests/*_files/
+# What latex leaves beside a .tex it has just built.
+tests/*.aux
+tests/*.log
+tests/*.out
+tests/*.fls
+tests/*.fdb_latexmk
 JEP.pdf

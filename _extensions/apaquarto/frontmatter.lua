@@ -1176,8 +1176,13 @@ return {
           -- leaves the decision to it.
           local notecols = "auto"
           local asked
-          if meta["author-note"]["author-note-columns"] then
-            asked = stringify(meta["author-note"]["author-note-columns"])
+          -- There can be a note without an author-note field: a corresponding
+          -- author makes one out of the address and the email. Reading the
+          -- field without looking first brought the render down on any journal
+          -- document that had not written one.
+          local note_meta = meta["author-note"]
+          if note_meta and note_meta["author-note-columns"] then
+            asked = stringify(note_meta["author-note-columns"])
             if asked == "1" or asked == "2" then
               notecols = asked
             end

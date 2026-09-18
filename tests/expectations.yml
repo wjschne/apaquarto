@@ -1,0 +1,234 @@
+# What each fixture should produce.
+#
+# One entry per fixture and format. `to` is the format to render, and `expect`
+# is keyed by the extension of the file to read: html, docx, pdf, tex or typ.
+# Under each of those:
+#
+#   contains  text that must appear
+#   absent    text that must not appear
+#   count     text, and exactly how many times it must appear
+#
+# All three are plain text, matched literally, never as a regular expression.
+# Keep every string in single quotes so that a backslash means a backslash.
+#
+# What to assert: the thing the fixture is for. A check that merely restates
+# what the renderer happens to do today will break on every harmless change and
+# teach everyone to ignore it. A check tied to the bug the fixture was written
+# for goes off when that bug comes back, which is the whole point.
+
+# --------------------------------------------------------- notes and panels --
+
+- fixture: multipanel-notes.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the first panel.'
+        - 'A note belonging to the second panel.'
+        - 'A note belonging to the table.'
+      absent:
+        # Quarto's own panel label, which apaquarto replaces.
+        - '(a)'
+        # A replacement character in a class list: an attribute value read as
+        # though it were a class.
+        - "�"
+      count:
+        # One note per panel, centred, and one each for the figure as a whole
+        # and for the table, flush left. The class is matched with its
+        # attribute name, since the style is named twice in every note div:
+        # once as a class and once as data-custom-style.
+        'class="SubPanelNote': 2
+        'class="FigureNote NoIndent"': 2
+
+- fixture: multipanel-notes.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the first panel.'
+        - 'A note belonging to the second panel.'
+        - 'A note belonging to the table.'
+    docx-xml:
+      absent:
+        # The reference document's table style draws a rule under every row,
+        # which belongs to APA tables and to no figure.
+        - 'w:tblStyle w:val="Table"'
+
+- fixture: multipanel-notes.qmd
+  to: apaquarto-docx
+  known_failure: >-
+    In .docx the panels of a multipanel figure are set one under the other when
+    they carry labels of their own, rather than side by side. Word has no way
+    of putting things side by side except a table, and quarto builds one for a
+    figure whose panels are plain code chunks but not for a figure whose panels
+    are floats in their own right. The note and the labels are right either
+    way; only the arrangement is wrong.
+  expect:
+    docx-xml:
+      count:
+        # The layout table holding the two panels, and the data table further
+        # down. Only the second of them is built today.
+        '<w:tbl>': 2
+
+# The same figure with panels that carry no labels of their own, which takes a
+# different path here and through quarto.
+
+- fixture: multipanel-notes-plain.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the left panel.'
+        - 'A note belonging to the right panel.'
+      count:
+        'class="SubPanelNote': 2
+        'class="FigureNote NoIndent"': 1
+
+- fixture: multipanel-notes-plain.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the left panel.'
+        - 'A note belonging to the right panel.'
+    docx-xml:
+      count:
+        # One layout table, holding the two panels side by side.
+        '<w:tbl>': 1
+      absent:
+        - 'w:tblStyle w:val="Table"'
+
+- fixture: multipanel-notes.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the first panel.'
+        - 'A note belonging to the table.'
+      absent:
+        - '??'
+    typ:
+      contains:
+        # The grid apaquarto builds itself, rather than quarto's.
+        - '#grid(columns: 2'
+
+- fixture: multipanel-notes.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the first panel.'
+        - 'A note belonging to the table.'
+      absent:
+        - '??'
+    tex:
+      contains:
+        - 'begin{apapanel}'
+      count:
+        # Two panels side by side in one figure environment. A panel left as a
+        # float of its own would make a figure within a figure, which latex
+        # sets one under the other whatever the layout asked for.
+        'begin{apapanel}': 2
+        'begin{figure}': 1
+
+# ------------------------------------------------------------- pdf via apa7 --
+
+- fixture: subfigure-layout-grid.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      absent:
+        # An unresolved cross-reference.
+        - 'Figure ??'
+    tex:
+      contains:
+        - 'begin{minipage}'
+
+- fixture: issue-158-subfigure-notes.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      absent:
+        - 'Figure ??'
+
+- fixture: booktabs-paren-cell.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains:
+        # The cell that used to bring the build down: booktabs read the opening
+        # parenthesis as the start of a rule-trimming argument.
+        - '(Intercept)'
+
+- fixture: longtable-pagebreak.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains:
+        # The first and last rows both survive; the table used to be clipped.
+        # Short fragments, because a cell that wraps is pulled out of the .pdf
+        # with the rest of its row in between the two halves.
+        - 'Lorem ipsum dolor sit'
+        - 'Itaque earum rerum hic'
+
+- fixture: csl-length-compat.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains:
+        - 'Schneider'
+      absent:
+        - '??'
+
+# ------------------------------------------------------------------- typst --
+
+- fixture: typst-doc.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        - 'A table that should appear inline in document mode.'
+      absent:
+        - '??'
+
+- fixture: typst-jou-floats.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        - 'This figure spans both columns.'
+        - 'This table spans both columns.'
+      absent:
+        - '??'
+
+- fixture: typst-jou-pagebreak.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        - 'This section follows the manual page break.'
+
+- fixture: typst-student.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        - 'Body text for the student paper fixture.'

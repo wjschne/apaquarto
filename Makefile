@@ -19,6 +19,19 @@ sync-tests:
 	find tests/_extensions/apaquarto -mindepth 1 -type f -delete
 	cp -R _extensions/apaquarto/. tests/_extensions/apaquarto/
 
+# Render the fixtures in tests/ and check what comes out. run-tests.R does its
+# own sync-tests, so this needs nothing done first.
+.PHONY: test
+test:
+	Rscript tests/run-tests.R
+
+# Accept the current .tex and .typ as the snapshots to compare against from now
+# on. Read the diff before running this.
+.PHONY: test-update
+test-update:
+	Rscript tests/run-tests.R --update-snapshots
+
+
 pdf: pdf-man pdf-doc pdf-jou
 typst: typst-man typst-doc typst-stu typst-jou
 

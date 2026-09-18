@@ -171,12 +171,19 @@ end
 -- half empty is padded with a blank cell, so every panel keeps the width it
 -- had.
 local function note_gets_its_own_row(float)
-  -- Quarto's latex and html writers lay a float out from an explicit layout
-  -- matrix. Its typst writer reads layout-ncol and falls back to a single
-  -- column for anything it is given as a matrix, and its docx writer has
-  -- not been checked, so those keep the grid they asked for and the note
-  -- keeps the column width it had.
-  if not (FORMAT == "latex" or FORMAT == "html") then
+  -- Quarto's latex, html and docx writers lay a float out from an explicit
+  -- layout matrix. Its typst writer reads layout-ncol and falls back to a
+  -- single column for anything it is given as a matrix, so typst keeps the
+  -- grid it asked for; formattypst.lua builds that one itself anyway.
+  --
+  -- .docx needs the explicit matrix rather than merely tolerating it. Word has
+  -- no way of putting panels side by side except a table, and quarto fills
+  -- that table with as many cells as the layout asked for: under layout-ncol
+  -- the note appended after the panels was a block too many and was dropped,
+  -- so a figure whose panels carried labels of their own lost the note
+  -- belonging to the whole figure. A figure whose panels are plain code chunks
+  -- kept its note, which is why example.qmd never showed this.
+  if FORMAT == "typst" then
     return
   end
 

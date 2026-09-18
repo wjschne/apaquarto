@@ -1,0 +1,26 @@
+Package: apaquarto
+Title: APA Style Seventh Edition Documents in Quarto
+Version: 6.0.0
+Authors@R:
+    person("W. Joel", "Schneider", role = c("aut", "cre"),
+           email = "w.joel.schneider@gmail.com")
+Description: apaquarto is a Quarto extension rather than an R package. This
+    file is here so that the packages its example and test documents need can
+    be declared in one place, installed in one step, and cached by continuous
+    integration. Nothing installs apaquarto itself from here; the extension is
+    added with "quarto add wjschne/apaquarto".
+License: MIT + file LICENSE
+Encoding: UTF-8
+SystemRequirements: Quarto (>= 1.9.0)
+Suggests:
+    apa7,
+    conflicted,
+    flextable,
+    ftExtra,
+    knitr,
+    patchwork,
+    pdftools,
+    rmarkdown,
+    svglite,
+    tidyverse,
+    yaml
