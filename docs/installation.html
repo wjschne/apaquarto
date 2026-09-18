@@ -227,7 +227,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install-quarto" class="level2">
 <h2 class="anchored" data-anchor-id="install-quarto">Install Quarto</h2>
 <p>The current stable version of Quarto can be installed <a href="https://quarto.org/docs/get-started/">here</a>.</p>
-<p>If you use a recent version of <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.</p>
+<p>apaquarto needs <strong>Quarto 1.9 or greater</strong>. The .pdf and Typst outputs rely on parts of Quarto that earlier versions do not have, and installing apaquarto on an older Quarto stops with a message saying so.</p>
+<p>If you use a recent version of <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>, Quarto is already installed — but RStudio carries whichever version it was built with, which may be older than 1.9. The check below says which version is being used; if it is older than 1.9, install Quarto on its own from the link above and restart RStudio.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

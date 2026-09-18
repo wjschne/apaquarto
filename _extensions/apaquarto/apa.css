@@ -7,9 +7,13 @@ div.Author p {
 .FigureTitle {font-weight: bold; margin: 5pt 0; font-size: 12pt; color: black;}
 .FigureTitle p {text-indent: 0; text-align: left;}
 .FigureNote p {text-indent: 0; margin: 0; padding: 0}
+.SubPanelNote {text-indent: 0; margin: 0; padding: 0; text-align: center; color: black}
 .Caption {font-style: italic; font-size: 12pt; color: black; text-align: left}
 .Caption p {text-indent: 0; font-size: 12pt;}
-.quarto-float, .quarto-float-tbl, .figure {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0}
+figure .quarto-layout-row figure figcaption {
+  color: black; font-weight: normal; font-style: normal;
+}
+.quarto-float, .quarto-float-tbl, .figure, .quarto-figure, img.img-fluid {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0}
 
 h1, h2, h3, h4, h5 {border: none; margin: 0; padding: 0;line-height: 2; text-indent: 0 }
 

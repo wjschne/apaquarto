@@ -172,7 +172,7 @@
     "href": "installation.html#install-quarto",
     "title": "Installation",
     "section": "Install Quarto",
-    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\nIf you use a recent version of RStudio, Quarto is already installed. If you are not sure if your version of Quarto is recent enough, there is no harm in re-installing it.\n\n\n\n\n\n\nNoteHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
+    "text": "Install Quarto\nThe current stable version of Quarto can be installed here.\napaquarto needs Quarto 1.9 or greater. The .pdf and Typst outputs rely on parts of Quarto that earlier versions do not have, and installing apaquarto on an older Quarto stops with a message saying so.\nIf you use a recent version of RStudio, Quarto is already installed — but RStudio carries whichever version it was built with, which may be older than 1.9. The check below says which version is being used; if it is older than 1.9, install Quarto on its own from the link above and restart RStudio.\n\n\n\n\n\n\nNoteHow to check which version of Quarto is installed\n\n\n\n\n\nIn a terminal, run\n\n\n\nTerminal\n\nquarto --version"
   },
   {
     "objectID": "installation.html#install-a-programming-language",

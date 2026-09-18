@@ -107,10 +107,197 @@ local function has_alt(float)
   return alt
 end
 
--- Quarto drops the apa-note of a table when it renders the float, and the
--- note of a figure with alt text goes the same way, so both are made here
--- while the float still carries the note. A figure without alt text keeps its
--- image, and apanote.lua makes the note for it later.
+-- ---------------------------------------------------------------------------
+-- Figures laid out in panels
+--
+-- Quarto builds the grid for such a figure out of everything the float holds,
+-- one cell per block, so a note left inside it is one more cell and only as
+-- wide as a column: in a two column figure it wraps inside half the width.
+-- There is no way to widen it from outside. An explicit layout matrix, which
+-- is how latex and html are given a full width row, is not something quarto's
+-- typst writer reads -- handed one, it drops the figure. A note returned
+-- alongside the float loses the label and typst stops with "label <fig-x>
+-- does not exist in the document". And grid.cell(colspan:) is honoured only as
+-- a direct child of the grid, which is not where quarto puts a cell's content.
+--
+-- So the grid is written out here instead, and the layout attributes taken off
+-- the float so that quarto does not build a second one around it. The note
+-- then follows the grid inside the figure, at the full width, with the label
+-- still on the figure it belongs to.
+--
+-- Writing the grid means labelling the panels too, since quarto's "(a)" and
+-- "(b)" come from the layout it is no longer building. They are labelled the
+-- APA way, Panel A and Panel B, above each panel.
+local panelword = "Panel"
+local letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+-- The number of columns a float of panels is asking for, or nil if it is not
+-- laid out in panels at all.
+local function panel_columns(float)
+  local a = float.attributes
+  if not a then return nil end
+  local ncol = tonumber(a["layout-ncol"])
+  if not ncol then
+    local nrow = tonumber(a["layout-nrow"])
+    if nrow and nrow > 0 then
+      ncol = math.ceil(#float.content / nrow)
+    end
+  end
+  if not ncol or ncol < 1 then return nil end
+  return ncol
+end
+
+-- A float's caption, which quarto hands over as a single Block for the usual
+-- one line caption and as Blocks or Inlines elsewhere.
+local function caption_inlines(float)
+  local caption = float.caption_long
+  if not caption then return nil end
+  local kind = pandoc.utils.type(caption)
+  local inlines
+  if kind == "Inlines" then
+    inlines = caption
+  elseif kind == "Block" then
+    inlines = caption.content
+  elseif kind == "Blocks" then
+    local ok, converted = pcall(pandoc.utils.blocks_to_inlines, caption)
+    inlines = ok and converted or nil
+  end
+  if not inlines or #inlines == 0 then return nil end
+  return inlines
+end
+
+-- The float a div is standing in for. A float is a custom node, and a walk of
+-- the document sees only the div carrying its id.
+local function float_behind(block)
+  if block.t ~= "Div" then return nil end
+  local id = block.attributes and block.attributes["__quarto_custom_id"]
+  if not id then return nil end
+  local ok, float = pcall(function()
+    return quarto._quarto.ast.custom_node_data[tostring(id)]
+  end)
+  if not ok then return nil end
+  return float
+end
+
+-- The first pandoc Figure inside a block, which is how a panel written as a
+-- plain code chunk arrives: a cell div wrapping an output div wrapping the
+-- figure. A panel that was given a label of its own is a float instead, and
+-- float_behind finds that one.
+local function figure_inside(block)
+  local found = nil
+  block:walk {
+    Figure = function(fig)
+      if not found then found = fig end
+    end
+  }
+  return found
+end
+
+-- One panel of the grid: its label, then the picture.
+--
+-- Whatever a panel arrived as, it is written out as plain content. Left alone
+-- it would be set as a numbered figure of its own -- which is what quarto
+-- suppresses while it is building the layout, and no longer does once the
+-- layout is being built here. The panel is labelled the APA way instead, with
+-- its own caption following the label on the same line.
+local function panel_cell(block, index)
+  local letter = letters:sub(index, index)
+  if letter == "" then letter = tostring(index) end
+  local label = pandoc.Inlines({
+    pandoc.Strong(pandoc.Str(panelword .. " " .. letter))
+  })
+
+  local caption, content, identifier, note
+  local float = float_behind(block)
+  if float then
+    caption = caption_inlines(float)
+    content = float.content
+    identifier = float.identifier
+    note = float.attributes and float.attributes["apa-note"]
+  else
+    local figure = figure_inside(block)
+    if figure then
+      caption = figure.caption and figure.caption.long
+      if caption then
+        local ok, inlines = pcall(pandoc.utils.blocks_to_inlines, caption)
+        caption = ok and inlines or nil
+        if caption and #caption == 0 then caption = nil end
+      end
+      content = figure.content
+      identifier = figure.identifier
+    end
+  end
+
+  if caption then
+    label:insert(pandoc.Str("."))
+    label:insert(pandoc.Space())
+    label:extend(caption)
+  end
+
+  local blocks = pandoc.Blocks({ pandoc.Para(label) })
+  if content == nil then
+    blocks:insert(block)
+  elseif pandoc.utils.type(content) == "Blocks" then
+    blocks:extend(content)
+  else
+    blocks:insert(content)
+  end
+  -- The panel keeps its own label, so that a cross-reference to it still finds
+  -- something to point at.
+  if identifier and identifier ~= "" then
+    blocks:insert(pandoc.RawBlock("typst", "<" .. identifier .. ">"))
+  end
+
+  -- A note of the panel's own, which sits centred under the panel it belongs
+  -- to rather than flush left like the note of the whole figure. A panel given
+  -- a label of its own carries the note on the float behind it, read above; a
+  -- panel written as a plain code chunk carries it on the block itself.
+  if note == nil or note == "" then
+    note = block.attributes and block.attributes["apa-note"]
+  end
+  if note and note ~= "" then
+    local prefix = pandoc.Para({
+      pandoc.Emph(pandoc.Str(noteword)), pandoc.Str("."), pandoc.Space() })
+    blocks:insert(pandoc.RawBlock("typst", "#align(center)["))
+    blocks:insert(utilsapa.make_note(note, prefix))
+    blocks:insert(pandoc.RawBlock("typst", "]"))
+  end
+
+  return blocks
+end
+
+-- The whole figure: the grid of panels, then the note under it at full width.
+-- The panels are already plain blocks by the time this runs, each one having
+-- been through panel_cell below.
+local function laid_out_float(float, ncol)
+  local content = pandoc.Blocks({
+    pandoc.RawBlock("typst", "#grid(columns: " .. ncol .. ", gutter: 2em,")
+  })
+  local index = 0
+  for _, panel in ipairs(float.content) do
+    index = index + 1
+    content:insert(pandoc.RawBlock("typst", "["))
+    content:extend(panel_cell(panel, index))
+    content:insert(pandoc.RawBlock("typst", "],"))
+  end
+  content:insert(pandoc.RawBlock("typst", ")"))
+
+  if float.attributes["apa-note"] then
+    local prefix = pandoc.Para({
+      pandoc.Emph(pandoc.Str(noteword)), pandoc.Str("."), pandoc.Space() })
+    content:insert(pandoc.RawBlock("typst", "#align(left)["))
+    content:insert(utilsapa.make_note(float.attributes["apa-note"], prefix))
+    content:insert(pandoc.RawBlock("typst", "]"))
+  end
+
+  float.content = content
+  -- Quarto builds no grid of its own for a float that asks for no layout.
+  float.attributes["layout-ncol"] = nil
+  float.attributes["layout-nrow"] = nil
+  float.attributes["layout"] = nil
+  return float
+end
+
 local function floatnote(float)
   if divnotes[float.identifier] then
     return nil
@@ -145,6 +332,9 @@ return {
       end
       if meta.language and meta.language["figure-table-note"] then
         noteword = pandoc.utils.stringify(meta.language["figure-table-note"])
+      end
+      if meta.language and meta.language["figure-panel"] then
+        panelword = pandoc.utils.stringify(meta.language["figure-panel"])
       end
       set_body_indent(meta)
       if meta["apa-table-notes"] then
@@ -181,18 +371,40 @@ return {
     -- label quarto registers for cross-references. The template centres the
     -- body of a figure, so the note is aligned left for itself.
     FloatRefTarget = function(float)
+      -- A panel of a laid-out figure. It is left as it is so that the figure
+      -- it belongs to can take it apart and put it in the grid; given a note
+      -- here, that note would be written outside the grid.
+      if float.parent_id then return nil end
+
+      -- floatwithsubfigure.lua writes the note of a float laid out in panels
+      -- for the other formats, and marks the float when it has. Writing it
+      -- again here would print it twice.
+      if float.attributes and float.attributes["apa-note-written"] then
+        return nil
+      end
+
+      local ncol = panel_columns(float)
+      if ncol then
+        return laid_out_float(float, ncol)
+      end
+
       local note = floatnote(float)
-      if note then
-        float.content = pandoc.Blocks({
-          float.content,
-          pandoc.RawBlock("typst", "#align(left)["),
-          note,
-          pandoc.RawBlock("typst", "]")
-        })
+      if not note then return nil end
+      -- A float holding one image has a single block for its content; one
+      -- holding a layout of panels has a list of them. The list has to be
+      -- opened out rather than put inside the new list, since a list is not
+      -- itself a block and pandoc will not take one where a block belongs.
+      local content = pandoc.Blocks({})
+      if pandoc.utils.type(float.content) == "Blocks" then
+        content:extend(float.content)
+      else
+        content:insert(float.content)
       end
-      if note then
-        return float
-      end
+      content:insert(pandoc.RawBlock("typst", "#align(left)["))
+      content:insert(note)
+      content:insert(pandoc.RawBlock("typst", "]"))
+      float.content = content
+      return float
     end
   },
   {

@@ -296,6 +296,30 @@ function M.extension_file_relative(name)
   return table.concat(parts, "/")
 end
 
+-- Which latex apaquarto is writing.
+--
+-- There are two latex formats. apaquarto-pdf is built on the apa7 class, which
+-- lays out the title page, the headings and the floats itself, so the filters
+-- that do that work for every other format stand down for it. The plain latex
+-- format, apaquarto-latex-pdf, does not use apa7 and wants those filters to
+-- run, exactly as html, docx and typst do. Both are FORMAT "latex", so the
+-- plain one sets a field in its own format definition to say which it is.
+--
+-- Takes the document's metadata, since the field is only there to be read once
+-- the document has been parsed.
+function M.plain_latex(meta)
+  if meta == nil then return false end
+  local flag = meta["apaquarto-plain-latex"]
+  if flag == nil then return false end
+  return M.stringify(flag) ~= "false"
+end
+
+-- True for the apa7 latex only, which is what a filter asks when it is about
+-- to leave work to apa7 that it would otherwise do itself.
+function M.apa7_latex(meta)
+  return FORMAT == "latex" and not M.plain_latex(meta)
+end
+
 -- if any value in table
 function M.containsValue(tbl, value)
   for _, v in pairs(tbl) do

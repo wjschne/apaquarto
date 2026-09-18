@@ -1,7 +1,7 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
 version: 6.0.0
-quarto-required: ">=1.4.549"
+quarto-required: ">=1.9.0"
 contributes:
   formats:
     common:
@@ -54,6 +54,7 @@ contributes:
         citation-masked-date: "n.d."
         email: "Email"
         figure-table-note: "Note"
+        figure-panel: "Panel"
         journal-volume: "Vol."
         journal-issue: "No."
         title-block-author-note: "Author Note"
@@ -158,12 +159,18 @@ contributes:
         # Adds styles to figures and tables 
         - at: post-render
           path: apafloat.lua
+        # A panel's note is set apart from the note of the whole figure
+        - at: post-render
+          path: subpanelnote.lua
         # Formats captions for figures and tables 
         - at: post-render
           path: apacaption.lua
         # Puts proper spacing for paragraphs after figures and tables
         - at: post-render
           path: apaafternote.lua
+        # Set a multipanel figure the APA way in .docx
+        - at: post-render
+          path: docxlayout.lua
         # Span apa-twocolumn figures across both columns in typst journal mode
         - at: post-render
           path: apatwocolumntypst.lua

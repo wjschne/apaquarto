@@ -1,7 +1,10 @@
--- Handle frontmatter stuff for .docx, html, and typst formats
-if FORMAT:match 'latex' then
-  return
-end
+-- Handle frontmatter stuff for .docx, html, typst, and plain latex formats.
+--
+-- apaquarto-pdf leaves all of this to the apa7 class, so this filter stands
+-- down for it. apaquarto-latex-pdf does not use apa7 and is built out of the
+-- same blocks as every other format, so it runs here like the rest. The two
+-- are told apart by utilsapa.apa7_latex, which reads the metadata, so the test
+-- is made below where the metadata is in hand rather than here.
 
 
 local andreplacement = "and"
@@ -533,6 +536,7 @@ return {
   { Meta = get_and },
   {
     Pandoc = function(doc)
+      if utilsapa.apa7_latex(doc.meta) then return nil end
       local body = List:new {}
       local meta = doc.meta
 

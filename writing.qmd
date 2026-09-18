@@ -413,30 +413,26 @@ tibble(x = seq(0, 1, .001),
   geom_area(fill = "royalblue", alpha = .5)
 ```
 
-### Notes in a Document That Is Not in an apaquarto Format
+### Notes in Formats Outside of apaquarto Documents
 
-`apa-note` is read by one of apaquarto's filters rather than by Quarto, so a
-document in a plain format ignores it and the note simply does not appear. A
-document that wants the notes without the rest of APA style can ask for those
-filters by name:
+A user might want a note below a figure in a document that is not otherwise in APA-style. The apaquarto extension has the `apanote` filter that can add table notes to a non-apaquarto Quarto document. For example: 
 
 ``` yaml
 ---
 title: "An ordinary document"
 format: html
 filters:
+  - quarto
   - apanote
 ---
 ```
 
-That is the whole of it. `apanote` is a small companion extension that is
-installed alongside apaquarto and names a few of its filters. Nothing else of
-apaquarto comes with them: no title page, no APA headings, no stylesheet. The
-note is written in place below its figure or table and takes whatever styling
-the document already has.
+The `quarto` line is part of it. A filter named on its own runs before Quarto builds its figures and tables, so there would be nothing for a note to attach to; naming `quarto` first puts `apanote` after that work, which is where it belongs.
 
-Notes on figures and tables written in code chunks, on markdown images, and on
-markdown tables are all read. Which of them survive depends on the format:
+`apanote` is a small companion extension that is
+installed alongside apaquarto and names a few of its filters. Nothing else of apaquarto comes with them: no title page, no APA headings, no stylesheet. The note is written in place below its figure or table and takes whatever styling the document already has.
+
+Notes on figures and tables written in code chunks, on markdown images, and on markdown tables are all read. Which of them survive depends on the format:
 
 | Format | Notes |
 |--------|-------|
@@ -445,9 +441,6 @@ markdown tables are all read. Which of them survive depends on the format:
 | `typst` | figures only; a note on a markdown table is lost, because Quarto's typst writer has already turned the table into typst before the filter runs |
 | `pdf` | not supported; notes in .pdf need the LaTeX machinery that comes with `apaquarto-pdf` |
 | `gfm` and other plain markdown | none; Quarto does not build figures and tables there for a note to attach to |
-
-A document already in an apaquarto format has these filters and does not need
-`apanote` --- though if it names it anyway, each note is still written once.
 
 ### Omit "Note" Prefix in apa-note
 

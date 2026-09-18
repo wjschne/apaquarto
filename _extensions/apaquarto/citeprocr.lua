@@ -27,6 +27,40 @@ local function is_blank(value)
   return pandoc.utils.stringify(value):match("^%s*$") ~= nil
 end
 
+-- The text of a metadata value, raw inlines included.
+--
+-- pandoc.utils.stringify drops a raw inline altogether, and from quarto 1.10 a
+-- typst document's bibliography paths arrive as raw typst inlines rather than
+-- plain strings: quarto rewrites them that way to stop pandoc's typst writer
+-- backslash-escaping a path that begins with a dot. Read with stringify alone
+-- every path then looks like the empty string, which is indistinguishable from
+-- the blank field the check below is for, so the whole bibliography was thrown
+-- away and every citation in every apaquarto-typst document came out
+-- unresolved. Reading the raw inline's own text tells the two apart.
+local function meta_text(value)
+  if value == nil then return "" end
+  local parts = {}
+  local function collect(v)
+    local kind = pandoc.utils.type(v)
+    if kind == "Inlines" or kind == "Blocks" or kind == "List" then
+      for _, item in ipairs(v) do collect(item) end
+    elseif v.t == "RawInline" or v.t == "RawBlock" then
+      parts[#parts + 1] = v.text
+    else
+      parts[#parts + 1] = pandoc.utils.stringify(v)
+    end
+  end
+  collect(value)
+  return table.concat(parts)
+end
+
+-- Every bibliography entry as a plain path, with the blank ones dropped.
+--
+-- Plain, because pandoc.utils.references() below opens the files named here
+-- and a path hidden inside a raw inline is not a name it can open. Quarto
+-- wrote them that way for its own writer's sake; apaquarto runs citeproc
+-- itself and clears the field afterwards, so nothing of its escaping is
+-- wanted here.
 local function drop_blank_bibliography(meta)
   if meta.bibliography == nil then return end
   local given = meta.bibliography
@@ -35,13 +69,17 @@ local function drop_blank_bibliography(meta)
   end
   local kept = pandoc.List({})
   for _, entry in ipairs(given) do
-    if not is_blank(entry) then kept:insert(entry) end
+    local path = meta_text(entry)
+    if not path:match("^%s*$") then
+      kept:insert(pandoc.MetaString(path))
+    end
   end
-  if #kept == #given then return end
-  quarto.log.warning(
-    "The bibliography field has an entry with no file name in it, which " ..
-    "pandoc reads as a file called \"\" and cannot open. Ignoring it. Give " ..
-    "the field the name of a .bib file, or take the field out altogether.")
+  if #kept < #given then
+    quarto.log.warning(
+      "The bibliography field has an entry with no file name in it, which " ..
+      "pandoc reads as a file called \"\" and cannot open. Ignoring it. Give " ..
+      "the field the name of a .bib file, or take the field out altogether.")
+  end
   if #kept == 0 then
     meta.bibliography = nil
   else

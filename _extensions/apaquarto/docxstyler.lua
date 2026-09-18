@@ -21,6 +21,7 @@ customclasses = {
   "AbstractFirstParagraph",
   "FigureTitle",
   "FigureNote",
+  "SubPanelNote",
   "FigureWithNote",
   "FigureWithoutNote",
   "Caption",

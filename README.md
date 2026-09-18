@@ -7,7 +7,7 @@ This article template creates [APA Style 7th Edition
 documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. The
 .pdf format can be rendered via Latex (i.e., apaquarto-pdf) or via Typst
 (apaquarto-typst). The Typst output for this extension is still
-experimental and requires Quarto 1.5 or greater.
+experimental and requires Quarto 1.9 or greater, as does the rest of apaquarto.
 
 Because the .docx format is still widely used—and often required—my main
 priority was to ensure compatibility for .docx. This is still a work in

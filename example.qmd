@@ -167,7 +167,7 @@ format:
     toc: false
     numbersections: false
     author-note-columns: auto # 1, 2, or auto (default)
-  apaquarto-pdf:
+  apaquarto-latex-pdf:
     # Options: manuscript (default), journal, student, document
     documentmode: manuscript
 ---
@@ -181,6 +181,8 @@ library(flextable)
 library(ftExtra)
 library(apa7)
 library(knitr)
+library(svglite)
+library(patchwork)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 conflicts_prefer(ggplot2::theme_void, .quiet = TRUE)
@@ -232,7 +234,7 @@ Sometimes you want to give a longer quote that needs to go in its own paragraph.
 
 ## Math and Equations
 
-Inline math uses $\LaTeX$ syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
+Inline math uses LaTeX syntax with single dollar signs. For example, the reliability coefficient of my measure is $r_{XX}=.95$.
 
 If you want to display and refer to a specific formula, enclose the formula in two dollar signs. After the second pair of dollar signs, place the label in curly braces. The label should have an `#eq-` prefix. To refer to the formula, use the same label but with the `@` symbol. For example, @eq-euler is Euler's Identity, which is much admired for its elegance.
 
@@ -282,10 +284,86 @@ ggplot(data.frame(x = c(0, 35)), aes(x)) +
                 n = 1000,
                 color = NA,
                 fill = "#41448780") +
-  theme_void(base_size = 18)
+  theme_void()
 ```
 
 To refer to any figure or table, use the `@` symbol followed by the reference label (e.g., @fig-myplot).
+
+### Multipanel Figures
+
+Quarto supports multiple panels in a figure, and thus apaquarto does as well. 
+
+:::{#fig-multipanel layout-ncol=2 fig-cap="Two Distributions" apa-note="A normal distribution has no bounds, whereas a beta distribution ranges from 0 to 1."}
+
+```{r}
+#| label: subpanela
+#| fig-cap: "A Normal Distribution"
+#| fig-height: 2
+#| fig-width: 3
+#| fig-alt: A normal distribution.
+#| apa-note: "NoNote Mean = 0, SD = 1"
+ggplot(data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, 
+                geom = "area",
+                n = 1000,
+                color = NA,
+                fill = "#41448780") + 
+  theme_void()
+```
+
+```{r}
+#| label: subpanelb
+#| fig-cap: "A Beta Distribution"
+#| fig-alt: A beta distribution.
+#| fig-height: 2
+#| fig-width: 3
+#| apa-note: "NoNote $\\alpha=0, \\beta = 1$"
+ggplot(data.frame(x = c(0,1)), aes(x)) +
+  stat_function(fun = dbeta, 
+                args = list(shape1 = 2, shape2 = 2),
+                geom = "area",
+                n = 1000,
+                color = NA,
+                fill = "#41448780") +
+  theme_void()
+```
+
+
+
+:::
+
+
+
+However, you might find that perfect APA style may require fine-tuning that is better achieved using the patchwork package [@pedersenPatchworkComposerPlots2025], as in @fig-patchwork.
+
+```{r}
+#| label: fig-patchwork
+#| fig-cap: A multipanel plot using patchwork
+#| fig-height: 2
+#| apa-note: "Not only do statistical distributions have distinct shapes, they are used for diverse purposes. Panel A: Because a Cauchy distribution has a location but no mean and no variance, it has thick tails, making it useful when modeling variables with extreme events. Panel B: A Weibull distribution (shown here with shape = 2) is used to model time between events."
+library(patchwork)
+p1 <- ggplot(data.frame(x = c(-20, 20)), aes(x)) +
+  stat_function(fun = dt, 
+                args = list(df = 1),
+                geom = "area",
+                n = 1000,
+                color = NA,
+                fill = "#41448780") +
+  theme_void(base_size = 14)
+
+p2 <- ggplot(data.frame(x = c(0, 3)), aes(x)) +
+  stat_function(fun = dweibull, 
+                args = list(shape = 2),
+                geom = "area",
+                n = 1000,
+                color = NA,
+                fill = "#21511760") +
+  theme_void(base_size = 14)
+
+p1 + p2 + 
+  plot_annotation(tag_levels = 'A') 
+```
+
 
 ## Displaying Tables
 
@@ -311,7 +389,7 @@ To refer to this table in text, use the `@` symbol followed by the reference lab
 
 ## Tables and Figures Spanning Two Columns in Journal Mode
 
-When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise $\LaTeX$ sometimes makes them disappear.
+When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise LaTeX sometimes makes them disappear.
 
 As demonstrated in @fig-twocolumn, you can make figures tables span the two columns by setting the `apa-twocolumn` chunk option to `true`.
 
@@ -446,7 +524,6 @@ See @fig-appendfig, an example of an imported graphic using markdown syntax.
 ```{r}
 #| label: tbl-chisq
 #| tbl-cap: Contingency table
-
 mtcars |>
   select(Transmission = am, Gears = gear) |>
   mutate(Gears = factor(Gears),
