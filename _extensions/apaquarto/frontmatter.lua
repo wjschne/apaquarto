@@ -405,19 +405,91 @@ local function box_jou_impact(blocks)
   return out
 end
 
--- Document mode: one continuous flow. Drop the repeated body-top title and the
--- manuscript spacing/pagebreaks; keep everything else in order.
+-- Document mode: one continuous flow, set the way apa7 sets it in .pdf.
+--
+-- The manuscript front matter is built once for every mode, and document mode
+-- differs from it in four ways, all of them handled here so that the rest of
+-- the front matter can stay as it is:
+--
+--   * the title is large and unemphasised rather than bold, there being no
+--     title page for a bold title to head;
+--   * the author note goes to the foot of the first page instead of standing
+--     between the authors and the abstract, and loses its heading with it;
+--   * the abstract is inset from both margins, so that it does not read as one
+--     more body paragraph;
+--   * two lines are left clear between the abstract and the body.
+--
+-- The typst side of each is a helper in typst-template.typ, which is where the
+-- sizes and widths are written down.
 local function strip_doc_frontmatter(blocks)
+  local function raw(text)
+    return pandoc.RawBlock("typst", text)
+  end
+
+  -- Read by hand rather than with classes:includes. What arrives here is not
+  -- all blocks -- the spacing between the title and the authors comes as line
+  -- breaks, which are inlines -- and an element that has no classes at all
+  -- answers a method call on them with an error rather than with false.
+  local function has_class(block, name)
+    local classes = block.classes
+    if type(classes) ~= "table" then return false end
+    for _, class in ipairs(classes) do
+      if class == name then return true end
+    end
+    return false
+  end
+
   local out = List:new {}
+  local authornote = List:new {}
+  local in_note = false
+
   for _, block in ipairs(blocks) do
-    if block.t == "Header" and block.identifier == "firstheader" then
+    local header = block.t == "Header"
+
+    -- Everything from the author note's heading to the next heading is the
+    -- note, and goes to the foot of the page rather than staying here.
+    if in_note and not header then
+      if block.t ~= "RawBlock" then
+        authornote:extend({ block })
+      end
+      goto continue
+    end
+    in_note = false
+
+    if header and block.identifier == "firstheader" then
       -- Title already appears at the top of the document.
     elseif is_frontmatter_spacing(block) then
       -- Continuous flow: no manuscript breaks.
+    elseif header and block.identifier == "title" then
+      -- Plain rather than Para: a paragraph picks up the first-line shift
+      -- apaquarto puts in front of body text, which has no business in a
+      -- centred title.
+      out:extend({ raw("#apadoctitle["), pandoc.Plain(block.content), raw("]") })
+    elseif header and block.identifier == "author-note" then
+      in_note = true
+    elseif has_class(block, "AbstractFirstParagraph") then
+      out:extend({ raw("#apadocabstract["), block, raw("]"),
+        raw("#apadocabstractgap()") })
     else
       out:extend({ block })
     end
+    ::continue::
   end
+
+  -- Emitted at the end of the front matter, which is on the first page; a
+  -- footnote is set at the foot of the page its mark is on, so that is where
+  -- the note is set. The separator is asked for here rather than in the
+  -- template because a set rule has to be written into the document to reach
+  -- the page's footnote area.
+  if #authornote > 0 then
+    out:extend({
+      raw("#set footnote.entry(separator: docauthornoterule)"),
+      raw("#apadocauthornote["),
+    })
+    out:extend(authornote)
+    out:extend({ raw("]") })
+  end
+
   return out
 end
 

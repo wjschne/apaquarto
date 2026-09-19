@@ -293,6 +293,64 @@
   v(-top / 2)
 }
 #let jouabstractwidth = 4.6875in
+
+// --- documentmode: doc ------------------------------------------------------
+// A plain document has no title page, so the title is marked out by its size
+// rather than by weight: apa7 sets it large and unemphasised there, and a bold
+// title in a continuous document reads as a heading over the paragraph under
+// it. 1.44x the body text, which is the size the journal title takes too.
+#let doctitlesize = 17.28pt
+
+// The abstract is inset from both margins. Set at the full measure it reads as
+// one more body paragraph; apa7 insets it by about an eighth of the text block
+// on each side, which is what this comes to.
+#let docabstractwidth = 77%
+
+
+// The line spacing of document mode, named so that the space after the
+// abstract can be two lines of it rather than a number that has to be kept in
+// step by hand.
+#let docleading = 14pt
+
+#let apadoctitle(body) = {
+  set align(center)
+  text(size: doctitlesize, weight: "regular")[#body]
+}
+
+#let apadocabstract(body) = {
+  set align(center)
+  block(width: docabstractwidth)[#align(left)[#body]]
+}
+
+// Two lines clear of the abstract before the body starts.
+#let apadocabstractgap() = v(2 * docleading, weak: true)
+
+// How much the author note is stepped down from the body. Applied on top of
+// the size typst already gives a footnote, which together come to about the
+// size apa7 sets the note at. It is not only a matter of looks: a note set
+// larger than this takes enough lines out of the foot of the first page that
+// typst moves the paragraph carrying its mark to the second page, and the note
+// goes with it.
+#let docauthornotesize = 0.83em
+
+// The rule that sets the author note apart from the body above it. A third of
+// the measure, which is what typst draws for a footnote by default and close to
+// what latex draws for one.
+#let docauthornoterule = line(length: 33%, stroke: 0.5pt)
+
+// A footnote rather than a floating placement at the foot of the page.
+//
+// A float goes to the foot of the page if it fits and to the next page if it
+// does not, and the first page of a document with a long abstract has no room
+// left: the note came out at the foot of page two. A footnote is tied to the
+// page its mark is on, so it stays on the first page whatever else is there.
+//
+// The mark itself is numbered to nothing, so neither the empty superscript in
+// the front matter nor a number in front of the note is shown; APA's author
+// note carries no footnote number.
+#let apadocauthornote(body) = footnote(
+  numbering: _ => "",
+)[#text(size: docauthornotesize)[#body]]
 // Kept in em so it tracks the smaller abstract text at the same ratio the jou
 // body uses. Measures as the 11pt baseline apa7 gives its /small abstract.
 #let jouabstractleading = 0.55em
@@ -772,7 +830,7 @@
 // title page or running head, page numbers at the foot. For notes and reports
 // that do not need full manuscript formatting.
 #let doc(..args) = apa-layout(
-  leading: 14pt,
+  leading: docleading,
   spacing: 8pt,
   firstlineindent: docfirstlineindent,
   justify: true,
