@@ -862,8 +862,6 @@ Exercises Typst student mode (page-number-only header, student title fields).
 
 #heading(level: 1, numbering: none)[Typst Student Paper Fixture]
 <firstheader>
-= Introduction
-<introduction>
 #par()[#text(size:0.5em)[#h(0.0em)]]
 #v(apafirstparshift)
 Body text for the student paper fixture.

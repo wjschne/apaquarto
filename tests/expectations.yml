@@ -210,6 +210,67 @@
         'begin{apapanel}': 2
         'begin{figure}': 1
 
+# ------------------------------------------- abstract written in the document --
+
+- fixture: abstract-section.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'The body of the article starts here'
+      count:
+        # Once each: on the title page, and not still in the body as well.
+        'The first paragraph of an abstract that was written in the document.': 1
+        'The second paragraph, which is here to show that both of them arrive.': 1
+        'A statement of the impact, written in the document beside the abstract.': 1
+
+- fixture: abstract-section.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      count:
+        'The first paragraph of an abstract that was written in the document.': 1
+        'The second paragraph, which is here to show that both of them arrive.': 1
+        'A statement of the impact, written in the document beside the abstract.': 1
+
+- fixture: abstract-section.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      absent:
+        # As above: a heading of that name means the section is still in the
+        # body rather than on the title page.
+        - '= Abstract'
+        - '= Impact Statement'
+        - '= Introduction'
+    pdf:
+      contains:
+        - 'The body of the article starts here'
+      count:
+        'The first paragraph of an abstract that was written in the document.': 1
+        'The second paragraph, which is here to show that both of them arrive.': 1
+        'A statement of the impact, written in the document beside the abstract.': 1
+
+- fixture: abstract-section.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      contains:
+        - 'The body of the article starts here'
+      count:
+        'The first paragraph of an abstract that was written in the document.': 1
+        'The second paragraph, which is here to show that both of them arrive.': 1
+        'A statement of the impact, written in the document beside the abstract.': 1
+    tex:
+      absent:
+        # Counting the sentences is not enough on its own: left in the body as
+        # an ordinary section, each of them still appears exactly once. What
+        # says the section was taken up into the title page is that latex is
+        # not setting a section of that name.
+        - 'section{Abstract}'
+        - 'section{Impact Statement}'
+        - 'section{Introduction}'
+
 # ------------------------------------------------------------- pdf via apa7 --
 
 - fixture: subfigure-layout-grid.qmd

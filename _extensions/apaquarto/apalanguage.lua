@@ -37,6 +37,7 @@ local fields = {
   { field = "journal-issue",                   default = "No." },
   { field = "section-title-abstract",          default = "Abstract" },
   { field = "section-title-appendixes",        default = "Appendices" },
+  { field = "section-title-introduction",      default = "Introduction" },
   { field = "section-title-references",        default = "References" },
   { field = "title-block-author-note",         default = "Author Note" },
   { field = "title-block-correspondence-note", default = "Correspondence concerning this article should be addressed to" },

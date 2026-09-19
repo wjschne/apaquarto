@@ -15,6 +15,71 @@ local List = require 'pandoc.List'
 local utilsapa = require("utilsapa")
 local stringify = utilsapa.stringify
 
+-- The paragraphs of an abstract or an impact statement, as the two divs the
+-- stylesheets and the reference document expect: the first paragraph on its
+-- own, flush left, and the rest under a style that indents them.
+--
+-- The text arrives in one of two shapes. Written in the yaml under a block
+-- scalar it comes as line blocks, a paragraph to a line; written as a section
+-- of the document, which abstractsection.lua allows, it comes as ordinary
+-- paragraphs. Both are read here so that neither way of writing it is second
+-- best.
+local function paragraph_divs(blocks)
+  local rest = pandoc.Div({})
+  local first = pandoc.Div({})
+  local counter = 1
+  -- typst indents the first paragraph itself, so nothing is set apart for it
+  -- and the count starts past it.
+  if FORMAT == "typst" then
+    counter = 2
+  end
+
+  local function add(para)
+    if counter == 1 then
+      first.content:extend({ para })
+      first.classes:insert("AbstractFirstParagraph")
+    else
+      rest.content:extend({ para })
+      if counter == 2 then
+        rest.classes:insert("Abstract")
+      end
+    end
+    counter = counter + 1
+  end
+
+  local has_lines = false
+  blocks:walk { LineBlock = function() has_lines = true end }
+
+  if has_lines then
+    blocks:walk {
+      LineBlock = function(lb)
+        lb:walk {
+          traverse = "topdown",
+          Inlines = function(el)
+            add(pandoc.Para(el))
+            return el, false
+          end
+        }
+      end
+    }
+  else
+    for _, block in ipairs(blocks) do
+      if block.t == "Para" or block.t == "Plain" then
+        add(pandoc.Para(block.content))
+      elseif block.t ~= "Header" then
+        -- Anything else -- a block quote, a list -- is kept whole rather than
+        -- taken apart, and counts as a paragraph for the styling above.
+        add(block)
+      end
+    end
+  end
+
+  local out = pandoc.List({})
+  if counter > 1 then out:insert(first) end
+  if counter > 2 then out:insert(rest) end
+  return out
+end
+
 local function get_and(m)
   if m.language and m.language["citation-last-author-separator"] then
     andreplacement = stringify(m.language["citation-last-author-separator"])
@@ -954,42 +1019,7 @@ return {
         end
 
         if pandoc.utils.type(meta.apaabstract) == "Blocks" then
-          local abstractdiv = pandoc.Div({})
-          local abstractfirstparagraphdiv = pandoc.Div({})
-          local abstractlinecounter = 1
-          if FORMAT == "typst" then
-            abstractlinecounter = 2
-          end
-          meta.apaabstract:walk {
-            LineBlock = function(lb)
-              lb:walk {
-                traverse = "topdown",
-                Inlines = function(el)
-                  local lbpara = pandoc.Para(el)
-
-                  if abstractlinecounter == 1 then
-                    abstractfirstparagraphdiv.content:extend({ lbpara })
-                    abstractfirstparagraphdiv.classes:insert("AbstractFirstParagraph")
-                  else
-                    abstractdiv.content:extend({ lbpara })
-                    if abstractlinecounter == 2 then
-                      abstractdiv.classes:insert("Abstract")
-                    end
-                  end
-
-                  abstractlinecounter = abstractlinecounter + 1
-                  return el, false
-                end
-              }
-            end
-          }
-          if abstractlinecounter > 1 then
-            body:extend({ abstractfirstparagraphdiv })
-          end
-
-          if abstractlinecounter > 2 then
-            body:extend({ abstractdiv })
-          end
+          body:extend(paragraph_divs(meta.apaabstract))
         end
       end
 
@@ -1008,6 +1038,12 @@ return {
           local impactdiv = pandoc.Div(impact_paragraph)
           impactdiv.classes:insert("AbstractFirstParagraph")
           body:extend({ impactdiv })
+        end
+
+        -- An impact statement of more than one paragraph, which is what a
+        -- statement written as a section of the document gives.
+        if pandoc.utils.type(meta["impact-statement"]) == "Blocks" then
+          body:extend(paragraph_divs(meta["impact-statement"]))
         end
       end
 

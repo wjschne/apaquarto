@@ -1,0 +1,105 @@
+body {line-height: 2em; font-size: 12pt}
+
+p {text-indent: 0.5in; margin: 0; line-height: 2em}
+div.Author p {
+  text-indent: 0;
+}
+.FigureTitle {font-weight: bold; margin: 5pt 0; font-size: 12pt; color: black;}
+.FigureTitle p {text-indent: 0; text-align: left;}
+.FigureNote p {text-indent: 0; margin: 0; padding: 0}
+.SubPanelNote {text-indent: 0; margin: 0; padding: 0; text-align: center; color: black}
+.Caption {font-style: italic; font-size: 12pt; color: black; text-align: left}
+.Caption p {text-indent: 0; font-size: 12pt;}
+figure .quarto-layout-row figure figcaption {
+  color: black; font-weight: normal; font-style: normal;
+}
+.quarto-float, .quarto-float-tbl, .figure, .quarto-figure, img.img-fluid {margin: 0; margin-block-start: 0; margin-block-end: 0; margin-block-start: 0; margin-inline-start: 0; margin-inline-end: 0}
+
+h1, h2, h3, h4, h5 {border: none; margin: 0; padding: 0;line-height: 2; text-indent: 0 }
+
+h1 {text-align: center;}
+h3 {font-style: italic}
+h4 {font-weight: bold}
+
+h4, h5 {
+text-indent: 0.5in;
+display:inline-block;
+margin: 0
+}
+
+h5 {
+  font-style: italic;
+}
+
+h4 + p, h5 + p {
+  display:inline;
+  text-indent: 0;
+}
+
+
+.Compact {
+  line-height: 1em;
+  text-indent: 0;
+  margin: 0;
+}
+
+
+
+
+
+
+td p, th p, li p {text-indent: 0; margin: 0;}
+
+
+
+li p {text-indent: 0; margin: 0;}
+
+.subtitle {font-size: 12pt; text-align: center; color: #303030; font-weight: bold;}
+
+blockquote, .blockquote {border: none; margin: 0 .5in; padding: 0; font-style: normal; color: #303030;}
+
+.Author {text-align:center; text-indent: 0}
+
+.cell-output-display p {text-indent: 0}
+
+div.hanging-indent {margin-left: 0.5in; text-indent: -0.5in}
+
+div.hanging-indent .csl-entry {margin-left: 0; text-indent: -0.5in;}
+
+.katex {font-size: 1em;}
+.katex-display {font-size: 1.1em;}
+
+.NoIndent p {text-indent: 0}
+
+blockquote p:nth-child(1) {text-indent: 0}
+
+table {
+    font-variant-numeric: tabular-nums;
+}
+
+.table {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  font-variant-numeric: tabular-nums;
+}
+
+.table>thead {
+  border-bottom: 1px solid black;
+}
+
+.table>:not(caption)>*>* {
+  border-bottom: none;
+}
+
+.tabwid {padding: 0}
+
+.AbstractFirstParagraph p {text-indent: 0}
+
+.sourceCode {
+  font-family: Consolas, "Lucida Console", "Courier New", monospace;
+  font-size: 10pt;
+}
+
+.container {
+  padding: 0;
+}

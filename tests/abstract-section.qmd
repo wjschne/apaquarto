@@ -1,0 +1,51 @@
+---
+title: "Abstract Written in the Document"
+shorttitle: "Abstract Section"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+keywords:
+  - one
+  - two
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-latex-pdf: default
+---
+
+<!--
+The abstract and the impact statement written as sections of the document
+rather than as yaml fields, which abstractsection.lua allows.
+
+A successful run produces, in every format:
+
+  - the abstract on the title page, both paragraphs of it, under a heading
+    apaquarto writes itself;
+  - the impact statement under its own heading;
+  - neither section left in the body, so no sentence of either appears twice;
+  - the article's own first section still in the body.
+
+The abstract has two paragraphs on purpose. An abstract written in the yaml
+arrives as line blocks and one written here arrives as ordinary paragraphs,
+and frontmatter.lua used to read only the first of those shapes, so a
+two-paragraph section abstract came out empty.
+-->
+
+# Abstract
+
+The first paragraph of an abstract that was written in the document.
+
+The second paragraph, which is here to show that both of them arrive.
+
+# Impact Statement
+
+A statement of the impact, written in the document beside the abstract.
+
+# Introduction
+
+The body of the article starts here, after both sections have been taken out
+of it.

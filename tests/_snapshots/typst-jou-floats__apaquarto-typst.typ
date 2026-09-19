@@ -847,8 +847,6 @@ Exercises wide (apa-twocolumn) figures and tables, each with a note, in Typst jo
 Correspondence concerning this article should be addressed to Ana Author, Example University, Email: #link("mailto:ana@example.org")[ana/@example.org]
 
 ]
-= Introduction
-<introduction>
 Body text before the floats, with enough words to start filling the first column so the spanning floats have context around them in the layout.
 
 #place(top, scope: "parent", float: true, clearance: 1.5em)[

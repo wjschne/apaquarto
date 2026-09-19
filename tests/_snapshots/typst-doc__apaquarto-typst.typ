@@ -835,8 +835,6 @@ Correspondence concerning this article should be addressed to Dana Doc, Example 
 Exercises Typst document (doc) mode: continuous one-column flow, no running head, page numbers at the foot.
 
 ]
-= Introduction
-<introduction>
 #par()[#text(size:0.5em)[#h(0.0em)]]
 #v(apafirstparshift)
 Body text for the document-mode fixture. Document mode runs as a single continuous column with no manuscript title page, so the title sits directly above this text and pages are numbered at the foot.

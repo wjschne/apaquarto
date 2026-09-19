@@ -63,6 +63,14 @@ contributes:
         # Language defaults other than English
         - at: pre-ast
           path: ../apaquarto/apalanguage.lua
+        # An abstract or impact statement written as a section of the document
+        # rather than as a yaml field
+        - at: pre-ast
+          path: ../apaquarto/abstractsection.lua
+        # APA does not label the introduction, so a heading that does is
+        # taken out
+        - at: pre-ast
+          path: ../apaquarto/introductionheading.lua
         # Recover the apa-note of a plain markdown table before quarto
         # flattens it
         - at: pre-ast

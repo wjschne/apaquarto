@@ -847,8 +847,6 @@ Confirms that a manual page break is legal in Typst journal mode (page-level col
 Correspondence concerning this article should be addressed to Ana Author, Example University, Email: #link("mailto:ana@example.org")[ana/@example.org]
 
 ]
-= Introduction
-<introduction>
 First section, before an explicit page break.
 
 #pagebreak()

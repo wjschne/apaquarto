@@ -72,6 +72,16 @@ contributes:
         # Sets language defaults other than English
         - at: pre-ast
           path: apalanguage.lua
+        # An abstract or impact statement written as a section of the
+        # document rather than as a yaml field. Runs after apalanguage.lua,
+        # whose defaults say what such a section is called.
+        - at: pre-ast
+          path: abstractsection.lua
+        # APA does not label the introduction, so a heading that does is taken
+        # out. Runs after abstractsection.lua, which may have left the
+        # Introduction heading first in the body.
+        - at: pre-ast
+          path: introductionheading.lua
         # Recover the apa-note of a plain markdown table before quarto
         # flattens it
         - at: pre-ast
