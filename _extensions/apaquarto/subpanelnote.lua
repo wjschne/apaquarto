@@ -14,7 +14,12 @@
 -- typst and latex are left alone: formattypst.lua and floatlatex.lua build
 -- their own panels and centre the notes as they go.
 
-if FORMAT ~= "html" and FORMAT ~= "docx" then
+-- quarto.doc.isFormat rather than a comparison against FORMAT, which is the
+-- name of the pandoc writer and so is "revealjs" for slides. Notes work in
+-- slides -- the apanote extension is written for exactly that -- and a panel's
+-- note was the one part of them that did not, because the writer's name did
+-- not happen to read "html".
+if not (quarto.doc.isFormat("html") or quarto.doc.isFormat("docx")) then
   return
 end
 

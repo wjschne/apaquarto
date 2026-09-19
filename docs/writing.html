@@ -216,9 +216,10 @@ div.csl-indent {
   <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures">Figures</a>
   <ul class="collapse">
   <li><a href="#figures-in-code-chunks" id="toc-figures-in-code-chunks" class="nav-link" data-scroll-target="#figures-in-code-chunks">Figures in Code Chunks</a></li>
+  <li><a href="#graphics-devices" id="toc-graphics-devices" class="nav-link" data-scroll-target="#graphics-devices">Graphics Devices</a></li>
   <li><a href="#notes-below-figures-and-tables" id="toc-notes-below-figures-and-tables" class="nav-link" data-scroll-target="#notes-below-figures-and-tables">Notes below Figures and Tables</a>
   <ul class="collapse">
-  <li><a href="#notes-in-a-document-that-is-not-in-an-apaquarto-format" id="toc-notes-in-a-document-that-is-not-in-an-apaquarto-format" class="nav-link" data-scroll-target="#notes-in-a-document-that-is-not-in-an-apaquarto-format">Notes in a Document That Is Not in an apaquarto Format</a></li>
+  <li><a href="#notes-in-formats-outside-of-apaquarto-documents" id="toc-notes-in-formats-outside-of-apaquarto-documents" class="nav-link" data-scroll-target="#notes-in-formats-outside-of-apaquarto-documents">Notes in Formats Outside of apaquarto Documents</a></li>
   <li><a href="#omit-note-prefix-in-apa-note" id="toc-omit-note-prefix-in-apa-note" class="nav-link" data-scroll-target="#omit-note-prefix-in-apa-note">Omit “Note” Prefix in apa-note</a></li>
   <li><a href="#multi-paragraph-notes" id="toc-multi-paragraph-notes" class="nav-link" data-scroll-target="#multi-paragraph-notes">Multi-Paragraph Notes</a></li>
   </ul></li>
@@ -653,6 +654,50 @@ Tip
 </div>
 <p><a href="https://quarto.org/docs/computations/r.html#chunk-options">Code chunk options</a> like <code>label</code> and and <code>fig-cap</code> options are preceded by <code>#|</code>. They tell Quarto about how to run the code and present it the document.</p>
 </section>
+<section id="graphics-devices" class="level2">
+<h2 data-anchor-id="graphics-devices">Graphics Devices</h2>
+<p>R draws each figure through a graphics device, and apaquarto names one for every format so that the same document draws the same way everywhere:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Format</th>
+<th>Device</th>
+<th>R package</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>apaquarto-html</code></td>
+<td><code>svglite</code></td>
+<td>svglite</td>
+</tr>
+<tr class="even">
+<td><code>apaquarto-typst</code></td>
+<td><code>svglite</code></td>
+<td>svglite</td>
+</tr>
+<tr class="odd">
+<td><code>apaquarto-docx</code></td>
+<td><code>ragg_png</code></td>
+<td>ragg</td>
+</tr>
+<tr class="even">
+<td><code>apaquarto-pdf</code></td>
+<td><code>pdf</code></td>
+<td>(built in)</td>
+</tr>
+</tbody>
+</table>
+<p>So a document with R chunks needs the svglite and ragg packages:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"svglite"</span>, <span class="st">"ragg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These are chosen partly to keep clear of R’s own <code>svg()</code> and <code>png()</code> devices, which draw through cairo. On macOS cairo comes from XQuartz, and on a machine without it a render stops at the first chunk that draws anything:</p>
+<pre><code>Error in dev.control(displaylist = if (record) "enable" else "inhibit") :
+  dev.control() called without an open graphics device</code></pre>
+<p>followed by a long list of libraries it could not load from <code>/opt/X11</code>. If you see this, check that svglite and ragg are installed. A document in a plain Quarto format rather than an apaquarto one is on R’s cairo devices and can hit the same wall; naming a device in the document settles it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">knitr</span><span class="kw">:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">opts_chunk</span><span class="kw">:</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">dev</span><span class="kw">:</span><span class="at"> svglite</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 <section id="notes-below-figures-and-tables" class="level2">
 <h2 data-anchor-id="notes-below-figures-and-tables">Notes below Figures and Tables</h2>
 <p>APA style distinguishes between three types of table notes, each of which need to be in separate paragraphs:</p>
@@ -662,18 +707,18 @@ Tip
 <li><em>Probability Note.</em> This note explains the meanings of probability markers (e.g., * <em>p</em> &lt; .05; ** <em>p</em> &lt; .001; *** <em>p</em> &lt; .001).</li>
 </ul>
 <p>You can add a general note below a figure or table with the chunk option <code>apa-note</code>. The note can have markdown formatting (e.g, bolding and italics).</p>
-<div class="cell FigureWithNote" data-apa-note="This is the note below the figure." data-apa-note-written="true" data-custom-style="FigureWithNote">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot2</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: This is the note below the figure.</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">8</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell FigureWithNote" data-apa-note="This is the note below the figure." data-apa-note-written="50ebc1ce" data-custom-style="FigureWithNote">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot2</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: This is the note below the figure.</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">8</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-myplot2" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="4">
 <figure class="quarto-float quarto-float-fig figure">
@@ -691,74 +736,91 @@ Tip
 </figure>
 </div>
 </div>
-</div>
 <div>
 <div class="FigureNote NoIndent" data-custom-style="FigureNote">
 <em>Note</em>. This&nbsp;is the note below the figure.
 </div>
 </div>
-<section id="notes-in-a-document-that-is-not-in-an-apaquarto-format" class="level3">
-<h3 data-anchor-id="notes-in-a-document-that-is-not-in-an-apaquarto-format">Notes in a Document That Is Not in an apaquarto Format</h3>
-<p><code>apa-note</code> is read by one of apaquarto’s filters rather than by Quarto, so a document in a plain format ignores it and the note simply does not appear. A document that wants the notes without the rest of APA style can ask for those filters by name:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"An ordinary document"</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> apanote</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>That is the whole of it. <code>apanote</code> is a small companion extension that is installed alongside apaquarto and names a few of its filters. Nothing else of apaquarto comes with them: no title page, no APA headings, no stylesheet. The note is written in place below its figure or table and takes whatever styling the document already has.</p>
+</div>
+<section id="notes-in-formats-outside-of-apaquarto-documents" class="level3">
+<h3 data-anchor-id="notes-in-formats-outside-of-apaquarto-documents">Notes in Formats Outside of apaquarto Documents</h3>
+<p>A user might want a note below a figure in a document that is not otherwise in APA-style. The apaquarto extension has the <code>apanote</code> filter that can add table notes to a non-apaquarto Quarto document. For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"An ordinary document"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> quarto</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> apanote</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>quarto</code> line is part of it. A filter named on its own runs before Quarto builds its figures and tables, so there would be nothing for a note to attach to; naming <code>quarto</code> first puts <code>apanote</code> after that work, which is where it belongs.</p>
+<p><code>apanote</code> is a small companion extension that is installed alongside apaquarto and names a few of its filters. Nothing else of apaquarto comes with them: no title page, no APA headings, no stylesheet. The note is written in place below its figure or table and takes whatever styling the document already has.</p>
 <p>Notes on figures and tables written in code chunks, on markdown images, and on markdown tables are all read. Which of them survive depends on the format:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 53%">
-<col style="width: 46%">
+<col style="width: 14%">
+<col style="width: 17%">
+<col style="width: 16%">
+<col style="width: 51%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Format</th>
-<th>Notes</th>
+<th>A figure</th>
+<th>A table</th>
+<th>A figure laid out in panels</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>html</code>, <code>revealjs</code></td>
-<td>all</td>
+<td>yes</td>
+<td>yes</td>
+<td>each panel’s own note, but not the note of the whole figure</td>
 </tr>
 <tr class="even">
 <td><code>docx</code></td>
-<td>all</td>
+<td>yes</td>
+<td>yes</td>
+<td>each panel’s own note, but not the note of the whole figure</td>
 </tr>
 <tr class="odd">
 <td><code>typst</code></td>
-<td>figures only; a note on a markdown table is lost, because Quarto’s typst writer has already turned the table into typst before the filter runs</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
 </tr>
 <tr class="even">
 <td><code>pdf</code></td>
-<td>not supported; notes in .pdf need the LaTeX machinery that comes with <code>apaquarto-pdf</code></td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
 </tr>
 <tr class="odd">
 <td><code>gfm</code> and other plain markdown</td>
-<td>none; Quarto does not build figures and tables there for a note to attach to</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
 </tr>
 </tbody>
 </table>
-<p>A document already in an apaquarto format has these filters and does not need <code>apanote</code> — though if it names it anyway, each note is still written once.</p>
+<p>The gaps are not arbitrary. A note belonging to a whole figure of panels, rather than to any one panel, is written by a filter that runs at a later point in the render than the ones <code>apanote</code> names, and <code>apanote</code> has no way of naming that point: an extension that lists its filters as plain paths, which is what every Quarto before 1.9 can read, gets to choose only between running before Quarto’s own work and after it. In typst a note on a markdown table is lost because Quarto’s typst writer has turned the table into typst before the filter runs, and a figure of panels is built by apaquarto’s own typst code, which is not part of <code>apanote</code>. In .pdf the notes are set by the LaTeX machinery that comes with <code>apaquarto-pdf</code>, and in plain markdown Quarto builds no figures or tables for a note to attach to.</p>
+<p>All of these work in full in apaquarto’s own formats. <code>apanote</code> is for a document that is not otherwise in APA style; a document that is, should name an apaquarto format instead.</p>
 </section>
 <section id="omit-note-prefix-in-apa-note" class="level3">
 <h3 data-anchor-id="omit-note-prefix-in-apa-note">Omit “Note” Prefix in apa-note</h3>
 <p>By default, the first paragraph of the <code>apa-note</code> has a prefix added (<em>Note. </em>). If you wish to omit this prefix (i.e., for a specific note or a probability note), start the note with “NoNote” like so:</p>
-<div class="cell FigureWithNote" data-apa-note="NoNote \* *p* < .05; \*\* *p* < .01" data-apa-note-written="true" data-custom-style="FigureWithNote">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot4</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: NoNote \\* *p* &lt; .05; \\*\\* *p* &lt; .01</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">8</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell FigureWithNote" data-apa-note="NoNote \* *p* < .05; \*\* *p* < .01" data-apa-note-written="50ebc1ce" data-custom-style="FigureWithNote">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot4</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: This Is the Figure Caption.</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: NoNote \\* *p* &lt; .05; \\*\\* *p* &lt; .01</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">8</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-myplot4" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="5">
 <figure class="quarto-float quarto-float-fig figure">
@@ -776,10 +838,10 @@ Tip
 </figure>
 </div>
 </div>
-</div>
 <div>
 <div class="FigureNote NoIndent" data-custom-style="FigureNote">
 * <em>p</em> &lt; .05; ** <em>p</em> &lt; .01
+</div>
 </div>
 </div>
 </section>
@@ -787,30 +849,30 @@ Tip
 <h3 data-anchor-id="multi-paragraph-notes">Multi-Paragraph Notes</h3>
 <p>If you need multiple paragraphs in the note, separate them with a yaml sequence.</p>
 <div class="cell FigureWithNote" data-apa-note="[&quot;First paragraph.&quot;,&quot;Second paragraph.&quot;]" prefix="" data-tblnum="1" data-custom-style="FigureWithNote">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-penguins</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Some Descriptives</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - First paragraph.</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - Second paragraph.</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>year, <span class="sc">-</span>island, <span class="sc">-</span>sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename_with</span>(</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    \(x) <span class="fu">str_replace_all</span>(x, <span class="fu">c</span>(<span class="at">len =</span> <span class="st">"length"</span>, <span class="at">dep =</span> <span class="st">"depth"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>      snakecase<span class="sc">::</span><span class="fu">to_title_case</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarizor</span>(<span class="at">by =</span> <span class="st">"Species"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flextable</span>()  <span class="sc">%&gt;%</span> </span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">valign</span>(<span class="at">valign =</span> <span class="st">"top"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surround</span>(<span class="at">i =</span> <span class="sc">~</span> stat <span class="sc">==</span> <span class="st">"mean_sd"</span>,</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">border.top =</span> flextable<span class="sc">::</span><span class="fu">fp_border_default</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(<span class="at">variable =</span> <span class="st">"Variable"</span>, <span class="at">stat =</span> <span class="st">"Descriptive"</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="tbl-penguins" class="cell quarto-float quarto-figure quarto-figure-center" data-apa-note="[&quot;First paragraph.&quot;,&quot;Second paragraph.&quot;]" prefix="" data-tblnum="1" data-apa-note-written="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-penguins</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Some Descriptives</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - First paragraph.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - Second paragraph.</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>year, <span class="sc">-</span>island, <span class="sc">-</span>sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename_with</span>(</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    \(x) <span class="fu">str_replace_all</span>(x, <span class="fu">c</span>(<span class="at">len =</span> <span class="st">"length"</span>, <span class="at">dep =</span> <span class="st">"depth"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>      snakecase<span class="sc">::</span><span class="fu">to_title_case</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarizor</span>(<span class="at">by =</span> <span class="st">"Species"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flextable</span>()  <span class="sc">%&gt;%</span> </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">valign</span>(<span class="at">valign =</span> <span class="st">"top"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">surround</span>(<span class="at">i =</span> <span class="sc">~</span> stat <span class="sc">==</span> <span class="st">"mean_sd"</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">border.top =</span> flextable<span class="sc">::</span><span class="fu">fp_border_default</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(<span class="at">variable =</span> <span class="st">"Variable"</span>, <span class="at">stat =</span> <span class="st">"Descriptive"</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-penguins" class="cell quarto-float quarto-figure quarto-figure-center" data-tblnum="1" data-apa-note="[&quot;First paragraph.&quot;,&quot;Second paragraph.&quot;]" prefix="" data-apa-note-written="50ebc1ce">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-penguins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -826,13 +888,13 @@ Tip
 </div>
 </div>
 </figure>
-</div>
 <div>
 <div class="FigureNote NoIndent" data-custom-style="FigureNote">
 <em>Note</em>. First&nbsp;paragraph.
 </div>
 <div class="FigureNote NoIndent" data-custom-style="FigureNote">
 Second paragraph.
+</div>
 </div>
 </div>
 </div>
@@ -852,13 +914,13 @@ Second paragraph.
 <li><code>apa-note</code> A note below the figure</li>
 </ul>
 <p>For example, in the same same folder as my Quarto document, there is an image file <code>sampleimage.png</code>. We can display this image like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](sampleimage.png)</span>{</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  #fig-myimportedimage </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  width="5in" </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="fig-myimportedimage" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" data-fignum="6" data-apa-note="Variable A indirectly causes Variable C." prefix="" alt="A path diagram in which A causes B, and B causes C." data-apa-note-written="true" data-custom-style="FigureWithNote">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](sampleimage.png)</span>{</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  #fig-myimportedimage </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  width="5in" </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-myimportedimage" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" data-apa-note="Variable A indirectly causes Variable C." data-fignum="6" alt="A path diagram in which A causes B, and B causes C." prefix="" data-apa-note-written="50ebc1ce" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -891,20 +953,20 @@ Second paragraph.
 <h2 data-anchor-id="tables-in-code-chunks">Tables in Code Chunks</h2>
 <p>The chunk label must begin with <code>tbl-</code> instead of <code>fig-</code>. The caption is set with <code>tbl-cap</code>. I like making tables with <a href="https://ardata-fr.github.io/flextable-book/">flextable</a> because it ports to to the .docx format without hassle.</p>
 <div class="cell FigureWithNote" data-ft.align="left" data-apa-note="A note below table" prefix="" data-tblnum="2" data-custom-style="FigureWithNote">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-mytable</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: My Table</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: A note below table</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="tbl-mytable" class="cell quarto-float quarto-figure quarto-figure-center" data-tblnum="2" data-apa-note="A note below table" data-ft.align="left" prefix="" data-apa-note-written="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-mytable</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: My Table</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-note: A note below table</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-mytable" class="cell quarto-float quarto-figure quarto-figure-center" data-ft.align="left" data-tblnum="2" data-apa-note="A note below table" prefix="" data-apa-note-written="50ebc1ce">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -920,10 +982,10 @@ Second paragraph.
 </div>
 </div>
 </figure>
-</div>
 <div>
 <div class="FigureNote NoIndent" data-custom-style="FigureNote">
 <em>Note</em>. A&nbsp;note below table
+</div>
 </div>
 </div>
 </div>
@@ -931,15 +993,15 @@ Second paragraph.
 <section id="tables-made-directly-with-markdown" class="level2">
 <h2 data-anchor-id="tables-made-directly-with-markdown">Tables Made Directly with Markdown</h2>
 <p>You can create tables with Markdown in several ways. See <a href="https://quarto.org/docs/authoring/tables.html#markdown-tables">here</a> for details. If you need to make a more complex table in Markdown, I suggest using <a href="https://quarto.org/docs/visual-editor/content.html#editing-tables">RStudio’s visual editor</a>. Here is an example of a simple table:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A       <span class="pp">|</span> 1       <span class="pp">|</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> B       <span class="pp">|</span> 2       <span class="pp">|</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> C       <span class="pp">|</span> 3       <span class="pp">|</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="tbl-mytable2" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" data-apa-note="Note below table" data-apa-note-written="true" data-custom-style="FigureWithNote">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A       <span class="pp">|</span> 1       <span class="pp">|</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> B       <span class="pp">|</span> 2       <span class="pp">|</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> C       <span class="pp">|</span> 3       <span class="pp">|</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-mytable2 apa-note="Note below table" data-quarto-disable-processing="true"}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-mytable2" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" data-apa-note="Note below table" data-apa-note-written="50ebc1ce" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mytable2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -986,17 +1048,17 @@ Second paragraph.
 <p>When creating tables and figures in journal mode, care must be taken not to make figures and tables wider than the columns, otherwise sometimes makes them disappear (and sometimes takes large swaths of text with it). Typst output handles wide floats more gracefully, but the same option applies.</p>
 <p>You can make figures and tables span the two columns by setting the <code>apa-twocolumn</code> chunk option to <code>true</code>. This affects .pdf and Typst documents when in journal mode (i.e., <code>documentmode: jou</code>).</p>
 <div class="cell FigureWithoutNote" data-apa-twocolumn="true" data-custom-style="FigureWithoutNote">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot3</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: A Figure that Will Span Two Columns in Journal Mode</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-twocolumn: true</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">2</span>,<span class="dv">8</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-myplot3</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: A Figure that Will Span Two Columns in Journal Mode</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| apa-twocolumn: true</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">001</span>),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">dbeta</span>(x,<span class="dv">2</span>,<span class="dv">8</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-myplot3" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="7">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1020,26 +1082,26 @@ Second paragraph.
 <h2 data-anchor-id="disable-apaquarto-processing-.pdf-only">Disable apaquarto processing (.pdf only)</h2>
 <p>If you want a long table to span multiple pages in .pdf format, the table might get cut off after the first page. Quarto makes .pdf tables using the longtable package, which allows for multi-page tables. Unfortunately, longtable does not always play nicely with the apa7 LaTeX package that aqaquarto uses to make .pdf documents. I have not yet found a fully satisfactory way get all of the features of apaquarto to be compatible with longtable’s multi-page tables. If you set <code>disable-apaquarto-processing</code> to <code>true</code> in the chunk or in markdown, you can get a multi-page table. The <code>apa-note</code> function, however, will not place a note below the table.</p>
 <p>To disable apaquarto processing directly in markdown:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    A    <span class="pp">|</span>    1    <span class="pp">|</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    B    <span class="pp">|</span>    2    <span class="pp">|</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    C    <span class="pp">|</span>    3    <span class="pp">|</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-disabledprocessing1 disable-apaquarto-processing=true}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Letters <span class="pp">|</span> Numbers <span class="pp">|</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|:-------:|:-------:|</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    A    <span class="pp">|</span>    1    <span class="pp">|</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    B    <span class="pp">|</span>    2    <span class="pp">|</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>    C    <span class="pp">|</span>    3    <span class="pp">|</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>: My Caption {#tbl-disabledprocessing1 disable-apaquarto-processing=true}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To disable processing within a code chunk:</p>
 <div class="cell FigureWithoutNote" data-ft.align="left" data-disable-apaquarto-processing="true" prefix="" data-tblnum="3" data-custom-style="FigureWithoutNote">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-disabledprocessing2</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Table with apaquarto processing disabled (note does not appear below)</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| disable-apaquarto-processing: true</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="tbl-disabledprocessing2" class="cell quarto-float quarto-figure quarto-figure-center" data-tblnum="3" prefix="" data-ft.align="left" data-disable-apaquarto-processing="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-disabledprocessing2</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Table with apaquarto processing disabled (note does not appear below)</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| ft.align: left</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| disable-apaquarto-processing: true</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Letters =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">Numbers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-disabledprocessing2" class="cell quarto-float quarto-figure quarto-figure-center" data-ft.align="left" data-tblnum="3" prefix="" data-disable-apaquarto-processing="true">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-disabledprocessing2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -1101,10 +1163,10 @@ Warning
 <section id="suppressing-parenthetical-ampersands" class="level3">
 <h3 data-anchor-id="suppressing-parenthetical-ampersands">Suppressing Parenthetical Ampersands</h3>
 <p>Strict APA style uses ampersands in parenthetical citations with multiple authors. If you want the word “and” instead, add this field to your YAML header:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">no-ampersand-parenthetical</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">no-ampersand-parenthetical</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you are not writing in English, you can set “and” to whatever is appropriate. For example, “and” in Spanish is “y”, which can be set like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="narrative-in-text-citations" class="level2">
@@ -1155,47 +1217,47 @@ Warning
 <section id="citations-for-articles-included-in-a-meta-analysis" class="level2">
 <h2 data-anchor-id="citations-for-articles-included-in-a-meta-analysis">Citations for Articles Included in a Meta-Analysis</h2>
 <p>In a meta-analytic study, all studies included in the meta-analysis should appear in the References section but ordinarily should not be cited in the text. Quarto allows references not cited in the text to appear in the References section when they are listed in the the <code>nocite</code> field in the metadata. All articles listed in the <code>nocite</code> field will be marked with an asterisk in the References section.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If marking <code>nocite</code> studies with an asterisk is unwanted, set the <code>meta-analysis</code> field to <code>false</code>,</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nocite</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  @schneider2015intelligence, @schneider2012cattell</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="masked-citations-for-anonymous-peer-review" class="level2">
 <h2 data-anchor-id="masked-citations-for-anonymous-peer-review">Masked Citations for Anonymous Peer Review</h2>
 <p>Suppose you want to cite a previous reference of yours, but your anonymity is supposed to be protected in the review process. You can “mask” any citation you wish by setting the <code>mask</code> field in the metadata yaml to <code>true</code>. Then list all citations that need to be masked in the <code>masked-citations</code> field like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2015intelligence</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2012cattell</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2015intelligence</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> schneider2012cattell</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If the <code>mask</code> field is set to <code>false</code>, the masked citations will print as usual. When <code>mask</code> is <code>true</code>, depending if they are narrative or parenthetical citations, they will be listed as “Masked Citations (n.d)” or “(Masked Citations, n.d)”. In parenthetical citations, it is possible to mix masked and unmasked citations.</p>
 <p>Setting <code>mask</code> to <code>true</code> will also remove the authors, affiliations, and author notes from the title page.</p>
 <p>The text for masked citations have these defaults:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Masked Citation"</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.d."</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Masked Title"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Masked Citation"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.d."</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Masked Title"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>They can be changed to another language or alternate text in English in your YAML header. For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Author masked for review"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"Date masked"</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Title masked for review"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Author masked for review"</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"Date masked"</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Title masked for review"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="appendices" class="level1">
 <h1>Appendices</h1>
 <p>Appendices begin with level-1 headers after the references. The header should be in title case and should describe the content of the appendix. The identifier after the header should have a an <code>#apx-</code> prefix as shown here:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reliability Analysis of the Individual Differences Scale {#apx-myappendix}</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>The Individual Differences Scale's reliability coefficients can be seen in @tbl-idsrxx.</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reliability Analysis of the Individual Differences Scale {#apx-myappendix}</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>The Individual Differences Scale's reliability coefficients can be seen in @tbl-idsrxx.</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then cite the appendix in your text with the identifier you have chosen like so: <code>See @apx-myappendix</code>.</p>
 <p>There is no need to give the appendix a title of <em>Appendix</em>. the appropriate title will be inserted automatically—<em>Appendix</em> for a single appendix or <em>Appendix A</em>, <em>Appendix B</em>, and so forth for multiple appendixes. Tables and figures included in appendices will be given the appropriate prefixes automatically (e.g., Figure A1, Table B1, Table B2, and so forth).</p>
 <p>If <code>lang</code> is set to a <a href="https://quarto.org/docs/authoring/language.html">supported language</a>, the Appendix heading will start with the word specified in the <code>crossref-apx-prefix</code> subfield of <code>language</code>. If you want to set it a word in a language that is not supported by Quarto or to any other word (e.g., <em>Addendum</em>), set the word for <em>Appendix</em> like so in the YAML header:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-apx-prefix</span><span class="kw">:</span><span class="at"> </span><span class="st">"Addendum"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-apx-prefix</span><span class="kw">:</span><span class="at"> </span><span class="st">"Addendum"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="references" class="level1">
 

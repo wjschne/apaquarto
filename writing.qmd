@@ -434,13 +434,29 @@ installed alongside apaquarto and names a few of its filters. Nothing else of ap
 
 Notes on figures and tables written in code chunks, on markdown images, and on markdown tables are all read. Which of them survive depends on the format:
 
-| Format | Notes |
-|--------|-------|
-| `html`, `revealjs` | all |
-| `docx` | all |
-| `typst` | figures only; a note on a markdown table is lost, because Quarto's typst writer has already turned the table into typst before the filter runs |
-| `pdf` | not supported; notes in .pdf need the LaTeX machinery that comes with `apaquarto-pdf` |
-| `gfm` and other plain markdown | none; Quarto does not build figures and tables there for a note to attach to |
+| Format | A figure | A table | A figure laid out in panels |
+|--------|----------|---------|-----------------------------|
+| `html`, `revealjs` | yes | yes | each panel's own note, but not the note of the whole figure |
+| `docx` | yes | yes | each panel's own note, but not the note of the whole figure |
+| `typst` | yes | no | no |
+| `pdf` | no | no | no |
+| `gfm` and other plain markdown | no | no | no |
+
+The gaps are not arbitrary. A note belonging to a whole figure of panels, rather
+than to any one panel, is written by a filter that runs at a later point in the
+render than the ones `apanote` names, and `apanote` has no way of naming that
+point: an extension that lists its filters as plain paths, which is what every
+Quarto before 1.9 can read, gets to choose only between running before Quarto's
+own work and after it. In typst a note on a markdown table is lost because
+Quarto's typst writer has turned the table into typst before the filter runs,
+and a figure of panels is built by apaquarto's own typst code, which is not part
+of `apanote`. In .pdf the notes are set by the LaTeX machinery that comes with
+`apaquarto-pdf`, and in plain markdown Quarto builds no figures or tables for a
+note to attach to.
+
+All of these work in full in apaquarto's own formats. `apanote` is for a
+document that is not otherwise in APA style; a document that is, should name an
+apaquarto format instead.
 
 ### Omit "Note" Prefix in apa-note
 

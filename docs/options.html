@@ -221,6 +221,7 @@ window.Quarto = {
   <li><a href="#options-for-.pdf" id="toc-options-for-.pdf" class="nav-link" data-scroll-target="#options-for-.pdf">Options for .pdf</a></li>
   <li><a href="#document-modes-in-typst" id="toc-document-modes-in-typst" class="nav-link" data-scroll-target="#document-modes-in-typst">Document modes in typst</a></li>
   <li><a href="#options-for-.html" id="toc-options-for-.html" class="nav-link" data-scroll-target="#options-for-.html">Options for .html</a></li>
+  <li><a href="#the-introduction-heading" id="toc-the-introduction-heading" class="nav-link" data-scroll-target="#the-introduction-heading">The Introduction Heading</a></li>
   <li><a href="#suppress-elements" id="toc-suppress-elements" class="nav-link" data-scroll-target="#suppress-elements">Suppress Elements</a></li>
   <li><a href="#language-options" id="toc-language-options" class="nav-link" data-scroll-target="#language-options">Language Options</a></li>
   </ul>
@@ -964,6 +965,21 @@ window.Quarto = {
 <p>With one exception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.</p>
 <p>Notebook previews are off by default (<code>notebook-view: false</code>). When a document pulls in a figure or table from another document with <code>{{&lt; embed other.qmd#fig-x &gt;}}</code>, Quarto ordinarily renders that other document a second time to build a standalone preview page for the “Source:” link beneath the embedded output. That second render resolves this format’s theme against a temporary directory instead of the project, so it cannot find the apaquarto stylesheet and builds the preview page with none of this format’s styling. The embedded figure or table itself is unaffected — it is placed in the article, which does have the styling. Set <code>notebook-view: true</code> if you want the “Source:” link back.</p>
 </section>
+<section id="the-introduction-heading" class="level1">
+<h1>The Introduction Heading</h1>
+<p>APA does not label the introduction. The title of the paper stands at the top of the first page of text and the introduction runs on underneath it, so a heading reading <em>Introduction</em> is one heading too many.</p>
+<p>apaquarto takes such a heading out for you. If the first heading in the body is a level-one heading whose text is <em>Introduction</em>, it is removed and the text under it is left where it is. A heading called <em>Introduction</em> anywhere else — inside an appendix, say — is left alone, as is one at any other level.</p>
+<p>This matters most when the abstract is written as a section of the document, since something has to mark where the abstract ends and a heading is the obvious thing to reach for:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>The abstract goes here.</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>The body of the paper starts here, and the heading above it does not</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>appear in the output.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The word it looks for is <code>section-title-introduction</code> in the <code>language</code> field, so a paper written in another language is matched too. To keep the heading, set <code>keep-introduction-heading: true</code>.</p>
+</section>
 <section id="suppress-elements" class="level1">
 <h1>Suppress Elements</h1>
 <p>Any of the elements below can be selectively suppressed from the document by setting the field to <code>true</code>.</p>
@@ -1230,21 +1246,21 @@ window.Quarto = {
 </tbody>
 </table>
 <p>All these options must be listed under the <code>language</code> field . For example, if we set the <code>lang</code> field to <code>es</code> (Spanish), the remaining options can also be set:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In addition, many terms that are translated automatically can be overridden. The full list is <a href="https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml">here</a>. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here are the language terms most likely to be used in apaquarto:</p>
 <table class="caption-top table">
 <thead>

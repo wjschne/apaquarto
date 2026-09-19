@@ -33,10 +33,11 @@ impact-statement: "This template helps you get started."
 keywords: [Keyword 1, Keyword 2, Keyword 3]
 bibliography: bibliography.bib
 format:
-  apaquarto-docx: default
   apaquarto-html: default
+  apaquarto-docx: default
   apaquarto-typst: 
     keep-typ: true
+    documentmode: journal
   apaquarto-pdf:
     documentmode: man
 ---
