@@ -1,0 +1,52 @@
+---
+title: "Multipanel Notes, Image Panels"
+shorttitle: "Image Panels"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-latex-pdf: default
+---
+
+<!--
+The third shape a panel can take. multipanel-notes.qmd has panels that carry
+labels of their own, so each is a float; multipanel-notes-plain.qmd has panels
+written as code chunks, so each is a cell; here each panel is a plain markdown
+image, which is neither.
+
+Such a panel keeps its apa-note on the image and nowhere else, and nothing
+downstream used to look there: the panel labels came out right and both panel
+notes were dropped in every format. In typst the note of the first panel
+reappeared on its own after the whole figure, because apanote.lua lifts an
+image's note onto the div around it and for a panel that div is the scaffold
+quarto wraps the whole grid in.
+
+A successful run produces, in every format:
+
+  - Panel labels reading "Panel A" and "Panel B", with the panel's own caption
+    after the label rather than under the picture;
+  - each panel's own note under that panel, once;
+  - the note of the whole figure under the grid, once.
+-->
+
+# Method
+
+See @fig-images.
+
+::: {#fig-images layout-ncol=2 fig-cap="Two Image Panels" apa-note="A note belonging to the whole figure."}
+
+![First panel.](sampleimage.png){apa-note="NoNote A note belonging to the left panel."}
+
+![Second panel.](sampleimage.png){apa-note="NoNote A note belonging to the right panel."}
+
+:::
+
+# Discussion
+
+Text after the float.

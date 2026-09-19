@@ -1,0 +1,387 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+/PassOptionsToPackage{unicode}{hyperref}
+/PassOptionsToPackage{hyphens}{url}
+/PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+/documentclass[
+  letterpaper,
+  12pt]{article}
+/usepackage{xcolor}
+/usepackage[margin=1in]{geometry}
+/usepackage{amsmath,amssymb}
+/setcounter{secnumdepth}{-/maxdimen} % remove section numbering
+/usepackage{iftex}
+/ifPDFTeX
+  /usepackage[T1]{fontenc}
+  /usepackage[utf8]{inputenc}
+  /usepackage{textcomp} % provide euro and other symbols
+/else % if luatex or xetex
+  /usepackage{unicode-math} % this also loads fontspec
+  /defaultfontfeatures{Scale=MatchLowercase}
+  /defaultfontfeatures[/rmfamily]{Ligatures=TeX,Scale=1}
+/fi
+/usepackage{lmodern}
+/ifPDFTeX/else
+  % xetex/luatex font selection
+/fi
+% Use upquote if available, for straight quotes in verbatim environments
+/IfFileExists{upquote.sty}{/usepackage{upquote}}{}
+/IfFileExists{microtype.sty}{% use microtype if available
+  /usepackage[]{microtype}
+  /UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+/usepackage{setspace}
+% Make /paragraph and /subparagraph free-standing
+/makeatletter
+/ifx/paragraph/undefined/else
+  /let/oldparagraph/paragraph
+  /renewcommand{/paragraph}{
+    /@ifstar
+      /xxxParagraphStar
+      /xxxParagraphNoStar
+  }
+  /newcommand{/xxxParagraphStar}[1]{/oldparagraph*{#1}/mbox{}}
+  /newcommand{/xxxParagraphNoStar}[1]{/oldparagraph{#1}/mbox{}}
+/fi
+/ifx/subparagraph/undefined/else
+  /let/oldsubparagraph/subparagraph
+  /renewcommand{/subparagraph}{
+    /@ifstar
+      /xxxSubParagraphStar
+      /xxxSubParagraphNoStar
+  }
+  /newcommand{/xxxSubParagraphStar}[1]{/oldsubparagraph*{#1}/mbox{}}
+  /newcommand{/xxxSubParagraphNoStar}[1]{/oldsubparagraph{#1}/mbox{}}
+/fi
+/makeatother
+
+
+/usepackage{longtable,booktabs,array}
+/newcounter{none} % for unnumbered tables
+/usepackage{calc} % for calculating minipage widths
+% Correct order of tables after /paragraph or /subparagraph
+/usepackage{etoolbox}
+/makeatletter
+/patchcmd/longtable{/par}{/if@noskipsec/mbox{}/fi/par}{}{}
+/makeatother
+% Allow footnotes in longtable head/foot
+/IfFileExists{footnotehyper.sty}{/usepackage{footnotehyper}}{/usepackage{footnote}}
+/makesavenoteenv{longtable}
+/usepackage{graphicx}
+/makeatletter
+/newsavebox/pandoc@box
+/newcommand*/pandocbounded[1]{% scales image to fit in text height/width
+  /sbox/pandoc@box{#1}%
+  /Gscale@div/@tempa{/textheight}{/dimexpr/ht/pandoc@box+/dp/pandoc@box/relax}%
+  /Gscale@div/@tempb{/linewidth}{/wd/pandoc@box}%
+  /ifdim/@tempb/p@</@tempa/p@/let/@tempa/@tempb/fi% select the smaller of both
+  /ifdim/@tempa/p@</p@/scalebox{/@tempa}{/usebox/pandoc@box}%
+  /else/usebox{/pandoc@box}%
+  /fi%
+}
+% Set default figure placement to htbp
+/def/fps@figure{htbp}
+/makeatother
+
+
+
+
+
+/setlength{/emergencystretch}{3em} % prevent overfull lines
+
+/providecommand{/tightlist}{%
+  /setlength{/itemsep}{0pt}/setlength{/parskip}{0pt}}
+
+
+
+
+
+
+% APA Seventh Edition styling, in plain LaTeX.
+%
+% Everything here is ordinary article-class styling. There is no apa7: the
+% title page, the abstract, the author note and the notes below floats all
+% arrive as ordinary blocks from apaquarto's filters, and this file only says
+% how they are set. Each command below is used by formatlatex.lua.
+
+/usepackage{setspace}
+/usepackage{fancyhdr}
+/usepackage{titlesec}
+/usepackage{ragged2e}
+/usepackage{etoolbox}
+% [H] placement, which floatsintext asks for
+/usepackage{float}
+
+% --- Page and paragraph -----------------------------------------------------
+% APA: double spaced throughout, first line of every paragraph indented half an
+% inch, no extra space between paragraphs, text flush left with a ragged right
+% edge rather than justified.
+% /RaggedRight sets /parindent to /RaggedRightParindent, so the indent has to
+% be told to it before it is switched on. Setting /parindent afterwards instead
+% leaves every paragraph flush left.
+/setlength{/parindent}{0.5in}
+/setlength{/parskip}{0pt}
+/setlength{/RaggedRightParindent}{0.5in}
+/RaggedRight
+
+% --- Running head -----------------------------------------------------------
+% APA seventh edition: the short title in capitals at the left of every page
+% and the page number at the right. No rule under it.
+/pagestyle{fancy}
+/fancyhf{}
+/renewcommand{/headrulewidth}{0pt}
+/fancyhead[L]{/apashorttitle}
+/fancyhead[R]{/thepage}
+/newcommand{/apashorttitle}{}
+/newcommand{/setapashorttitle}[1]{/renewcommand{/apashorttitle}{/MakeUppercase{#1}}}
+
+% --- Headings ---------------------------------------------------------------
+% The five APA levels. One to three are their own paragraphs; four and five run
+% into the text that follows them, which is why they are set as runin.
+% Numbering is off: APA headings are never numbered.
+/setcounter{secnumdepth}{-1}
+
+/titleformat{/section}[block]
+  {/normalfont/bfseries/centering}{}{0pt}{}
+/titlespacing*{/section}{0pt}{/baselineskip}{0pt}
+
+/titleformat{/subsection}[block]
+  {/normalfont/bfseries/raggedright}{}{0pt}{}
+/titlespacing*{/subsection}{0pt}{/baselineskip}{0pt}
+
+/titleformat{/subsubsection}[block]
+  {/normalfont/bfseries/itshape/raggedright}{}{0pt}{}
+/titlespacing*{/subsubsection}{0pt}{/baselineskip}{0pt}
+
+/titleformat{/paragraph}[runin]
+  {/normalfont/bfseries}{}{0pt}{}[.]
+/titlespacing*{/paragraph}{/parindent}{/baselineskip}{0.5em}
+
+/titleformat{/subparagraph}[runin]
+  {/normalfont/bfseries/itshape}{}{0pt}{}[.]
+/titlespacing*{/subparagraph}{/parindent}{/baselineskip}{0.5em}
+
+% --- Title page -------------------------------------------------------------
+% The title itself, bold and centred, set a third of the way down the page in
+% manuscript mode and at the top of the body otherwise.
+/newcommand{/apatitle}[1]{%
+  {/centering/bfseries #1/par}}
+
+% The authors and their affiliations, centred under the title.
+/newenvironment{apaauthor}
+  {/par/centering}
+  {/par}
+
+% A title-page heading: Author Note, Abstract, Impact Statement. Centred and
+% bold, like a level-one heading, but not part of the document's outline.
+/newcommand{/apatitlepageheading}[1]{%
+  {/centering/bfseries #1/par}}
+
+% The first paragraph of the abstract and of the impact statement, which APA
+% sets flush left rather than indented.
+/newenvironment{apanoindent}
+  {/par/setlength{/parindent}{0pt}}
+  {/par}
+
+% --- Figures and tables -----------------------------------------------------
+% APA puts the number above the title, the title above the figure, and the note
+% below it, all flush left. The blocks arrive already in that order, so these
+% only set them.
+/newcommand{/apafloattitle}[1]{%
+  {/par/noindent/bfseries #1/par}}
+/newcommand{/apafloatcaption}[1]{%
+  {/par/noindent/itshape #1/par}}
+/newenvironment{apafloatnote}
+  {/par/setlength{/parindent}{0pt}/noindent}
+  {/par}
+
+% A panel of a multipanel figure: its label above it, and its own note centred
+% underneath, both set inside the panel's own column rather than across the
+% figure the way the figure's note is.
+%
+% A minipage starts a fresh vertical list and works out its baseline skip from
+% the font as it stands, which is the unstretched one: the label and the note
+% came out single spaced inside a document set double. /selectfont asks for the
+% skip to be worked out again, and /baselinestretch is still whatever the
+% document set, so the panel is spaced like the rest of the text.
+/newenvironment{apapanel}[1]
+  {/begin{minipage}[t]{#1/linewidth}/selectfont/centering}
+  {/end{minipage}}
+/newcommand{/apapanellabel}[1]{%
+  {/par/noindent #1/par/smallskip}}
+/newenvironment{apapanelnote}
+  {/par/smallskip/setlength{/parindent}{0pt}/centering}
+  {/par}
+
+% --- References -------------------------------------------------------------
+% A hanging indent of half an inch, which is what the reference list wants and
+% what quarto's csl div is given here.
+/newenvironment{apareferences}
+  {/par/setlength{/parindent}{0pt}%
+   /everypar{/hangindent=0.5in/hangafter=1}}
+  {/par}
+/makeatletter
+/@ifpackageloaded{caption}{}{/usepackage{caption}}
+/AtBeginDocument{%
+/ifdefined/contentsname
+  /renewcommand*/contentsname{Table of contents}
+/else
+  /newcommand/contentsname{Table of contents}
+/fi
+/ifdefined/listfigurename
+  /renewcommand*/listfigurename{List of Figures}
+/else
+  /newcommand/listfigurename{List of Figures}
+/fi
+/ifdefined/listtablename
+  /renewcommand*/listtablename{List of Tables}
+/else
+  /newcommand/listtablename{List of Tables}
+/fi
+/ifdefined/figurename
+  /renewcommand*/figurename{Figure}
+/else
+  /newcommand/figurename{Figure}
+/fi
+/ifdefined/tablename
+  /renewcommand*/tablename{Table}
+/else
+  /newcommand/tablename{Table}
+/fi
+}
+/@ifpackageloaded{float}{}{/usepackage{float}}
+/floatstyle{ruled}
+/@ifundefined{c@chapter}{/newfloat{codelisting}{h}{lop}}{/newfloat{codelisting}{h}{lop}[chapter]}
+/floatname{codelisting}{Listing}
+/newcommand*/listoflistings{/listof{codelisting}{List of Listings}}
+/makeatother
+/makeatletter
+/makeatother
+/makeatletter
+/@ifpackageloaded{caption}{}{/usepackage{caption}}
+/@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
+/makeatother
+/setapashorttitle{IMAGE PANELS}
+/usepackage{bookmark}
+/IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
+/urlstyle{same}
+/hypersetup{
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+/author{Test Author}
+/date{}
+/begin{document}
+
+
+/setstretch{2}
+/hfill/break
+
+/hfill/break
+
+/vspace*{3/baselineskip}
+
+/apatitle{
+
+Multipanel Notes, Image Panels
+
+}
+
+/begin{apaauthor}
+
+/hfill/break
+
+Test Author
+
+Test University
+
+/end{apaauthor}
+
+/hfill/break
+
+/hfill/break
+
+/apatitlepageheading{
+
+Author Note
+
+}
+
+Correspondence concerning this article should be addressed to Test
+Author, Test University, Email:
+/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
+
+/clearpage
+
+/apatitle{
+
+Multipanel Notes, Image Panels
+
+}
+
+/section{Method}/label{method}
+
+See Figure~/ref{fig-images}.
+
+/begin{figure}[H]
+
+/setcounter{figure}{0}
+
+/refstepcounter{figure}%
+/label{fig-images}
+
+/apafloattitle{Figure 1}
+
+/apafloatcaption{Two Image Panels}
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. First panel.
+
+/pandocbounded{/includegraphics[keepaspectratio,alt={First panel.}]{sampleimage.png}}
+
+/begin{apapanelnote}
+
+A note belonging to the left panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Second panel.
+
+/pandocbounded{/includegraphics[keepaspectratio,alt={Second panel.}]{sampleimage.png}}
+
+/begin{apapanelnote}
+
+A note belonging to the right panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/par
+
+/begin{apafloatnote}
+
+/emph{Note}. A~note belonging to the whole figure.
+
+/end{apafloatnote}
+
+/end{figure}
+
+/section{Discussion}/label{discussion}
+
+Text after the float.
+
+/begin{apareferences}
+
+/end{apareferences}
+
+
+
+
+/end{document}

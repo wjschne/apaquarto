@@ -217,6 +217,11 @@ end
 -- The first pandoc Figure inside a block, which is what a panel is once quarto
 -- has laid the cell out.
 local function figure_inside(block)
+  -- A panel written as a markdown image is the figure, rather than holding
+  -- one, and a walk of it visits its children and never itself. Without this
+  -- such a panel kept the caption typst or latex writes under a figure of its
+  -- own instead of taking the caption up beside its panel label.
+  if block.t == "Figure" then return block end
   local found = nil
   block:walk {
     Figure = function(fig)

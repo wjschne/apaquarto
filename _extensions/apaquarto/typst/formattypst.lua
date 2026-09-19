@@ -184,6 +184,11 @@ end
 -- figure. A panel that was given a label of its own is a float instead, and
 -- float_behind finds that one.
 local function figure_inside(block)
+  -- A panel written as a markdown image is the figure, rather than holding
+  -- one, and a walk of it visits its children and never itself. Without this
+  -- such a panel kept the caption typst or latex writes under a figure of its
+  -- own instead of taking the caption up beside its panel label.
+  if block.t == "Figure" then return block end
   local found = nil
   block:walk {
     Figure = function(fig)
@@ -251,10 +256,34 @@ local function panel_cell(block, index)
   -- A note of the panel's own, which sits centred under the panel it belongs
   -- to rather than flush left like the note of the whole figure. A panel given
   -- a label of its own carries the note on the float behind it, read above; a
-  -- panel written as a plain code chunk carries it on the block itself.
+  -- panel written as a plain code chunk carries it on the block itself; and a
+  -- panel written as a markdown image carries it on the image, which is the
+  -- only place it is ever written.
   if note == nil or note == "" then
     note = block.attributes and block.attributes["apa-note"]
   end
+  if note == nil or note == "" then
+    blocks:walk {
+      Image = function(img)
+        if (note == nil or note == "") and img.attributes
+            and img.attributes["apa-note"] then
+          note = img.attributes["apa-note"]
+        end
+      end
+    }
+  end
+  -- Taken off the image now that it has been read. apanote.lua lifts the note
+  -- of an image onto the div around it, which for a panel is the scaffold
+  -- quarto wraps the whole grid in, and the note would then be written a
+  -- second time after the figure rather than under its panel.
+  blocks = blocks:walk {
+    Image = function(img)
+      if img.attributes and img.attributes["apa-note"] then
+        img.attributes["apa-note"] = nil
+        return img
+      end
+    end
+  }
   if note and note ~= "" then
     local prefix = pandoc.Para({
       pandoc.Emph(pandoc.Str(noteword)), pandoc.Str("."), pandoc.Space() })

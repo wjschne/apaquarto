@@ -50,6 +50,9 @@ template.out
 template.typ
 template_files/
 test.*
+# ...but not the workflow of that name. The rule above is for scratch
+# files called test.qmd and test.pdf, and it matches at any depth.
+!.github/workflows/*.yml
 test_*
 test_files/
 testdocs.R
@@ -63,6 +66,8 @@ contributors_table_template_tenzing.xlsx
 .claude
 example_cache/
 tests/_extensions/
+# Quarto downloads typst packages beside whatever it is rendering.
+tests/.quarto/
 # What a test run leaves behind: render logs, and the .tex or .typ of a
 # snapshot that did not match. The snapshots themselves, in
 # tests/_snapshots/, are kept.
@@ -73,6 +78,8 @@ tests/*.pdf
 tests/*.tex
 tests/*.typ
 tests/*_files/
+# knitr's intermediate, left behind when a render stops partway.
+tests/*.rmarkdown
 # What latex leaves beside a .tex it has just built.
 tests/*.aux
 tests/*.log

@@ -71,7 +71,14 @@ end
 -- which is how quarto builds it -- rather than by the word "Source", which is
 -- whatever the document's language calls it.
 local function note_position(elem)
-  if not elem.classes:includes("cell") then return nil end
+  -- A code chunk is a cell; a panel written as a markdown image becomes a
+  -- layout cell once quarto has built the grid. Either way the note belongs
+  -- inside the panel rather than after it: placed after, it is a flex item of
+  -- its own beside the panels rather than under the one it describes.
+  if not (elem.classes:includes("cell")
+      or elem.classes:includes("quarto-layout-cell")) then
+    return nil
+  end
   local blocks = elem.content
   local last = blocks[#blocks]
   if last and (last.t == "Plain" or last.t == "Para")

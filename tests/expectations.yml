@@ -149,6 +149,67 @@
         'begin{apapanel}': 2
         'begin{figure}': 1
 
+# The same figure again with panels written as plain markdown images, which is
+# neither a float nor a cell and keeps its note on the image itself.
+
+- fixture: multipanel-notes-image.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the left panel.'
+        - 'A note belonging to the right panel.'
+      count:
+        'class="SubPanelNote': 2
+        'class="FigureNote NoIndent"': 1
+
+- fixture: multipanel-notes-image.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Panel A'
+        - 'Panel B'
+        - 'A note belonging to the whole figure.'
+        - 'A note belonging to the left panel.'
+        - 'A note belonging to the right panel.'
+    docx-xml:
+      count:
+        '<w:tbl>': 1
+
+- fixture: multipanel-notes-image.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        # The caption follows the label rather than sitting under the picture.
+        - 'Panel A. First panel.'
+        - 'Panel B. Second panel.'
+        - 'A note belonging to the whole figure.'
+      count:
+        # Once each. The first panel's note used to be printed a second time
+        # after the whole figure.
+        'A note belonging to the left panel.': 1
+        'A note belonging to the right panel.': 1
+
+- fixture: multipanel-notes-image.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      contains:
+        - 'Panel A. First panel.'
+        - 'Panel B. Second panel.'
+        - 'A note belonging to the left panel.'
+        - 'A note belonging to the right panel.'
+        - 'A note belonging to the whole figure.'
+    tex:
+      count:
+        'begin{apapanel}': 2
+        'begin{figure}': 1
+
 # ------------------------------------------------------------- pdf via apa7 --
 
 - fixture: subfigure-layout-grid.qmd

@@ -76,6 +76,24 @@ local function label_subfloat(float)
   return float
 end
 
+-- The apa-note of the image a figure holds, when the figure has none of its
+-- own. A panel written as `![Caption](x.png){apa-note="..."}` puts the note
+-- there and nowhere else.
+local function image_note(fig)
+  if fig.attributes and fig.attributes["apa-note"] then
+    return fig.attributes["apa-note"]
+  end
+  local found = nil
+  fig:walk {
+    Image = function(img)
+      if found == nil and img.attributes and img.attributes["apa-note"] then
+        found = img.attributes["apa-note"]
+      end
+    end
+  }
+  return found
+end
+
 -- A panel written as a plain code chunk, which arrives as a pandoc figure
 -- inside the parent rather than as a float of its own. Quarto gives these no
 -- label at all.
@@ -94,6 +112,18 @@ local function label_figures(float)
         fig.caption.long = labelled_caption(panel_label(index), long)
       else
         fig.caption = { long = labelled_caption(panel_label(index), long) }
+      end
+
+      -- A panel written as a markdown image keeps its note on the image
+      -- itself, where nothing downstream looks for it: apanote.lua writes the
+      -- note of a div, and a code chunk gives it one to write while a bare
+      -- image does not. The note is lifted onto a div around the figure, which
+      -- is the shape the rest of apaquarto already knows how to read. One
+      -- block still stands for one panel, so the grid is unchanged.
+      local note = image_note(fig)
+      if note then
+        return pandoc.Div(pandoc.Blocks({ fig }), pandoc.Attr("", {},
+          { ["apa-note"] = note }))
       end
       return fig
     end
