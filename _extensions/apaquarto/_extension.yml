@@ -1,7 +1,7 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 5.0.16
-quarto-required: ">=1.4.549"
+version: 6.0.0
+quarto-required: ">=1.9.0"
 contributes:
   formats:
     common:
@@ -17,6 +17,7 @@ contributes:
       fig-width: 6.5
       fig-height: 6.5
       number-depth: 3
+      floatsintext: true
       crossref:
         subref-labels: alpha A
       suppress-title-page: false
@@ -38,10 +39,12 @@ contributes:
       suppress-corresponding-city: false
       suppress-corresponding-region: false
       suppress-corresponding-postal-code: false
+      suppress-corresponding-country: false
       suppress-corresponding-email: false
       suppress-abstract: false
       suppress-impact-statement: false
       suppress-keywords: false
+      suppress-supplemental-materials: false
       suppress-title-introduction: false
       no-ampersand-parenthetical: false
       language: 
@@ -51,16 +54,28 @@ contributes:
         citation-masked-date: "n.d."
         email: "Email"
         figure-table-note: "Note"
+        figure-panel: "Panel"
+        journal-volume: "Vol."
+        journal-issue: "No."
         title-block-author-note: "Author Note"
         title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
         title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
         title-impact-statement: "Impact Statement"
+        title-supplemental-materials: "Supplemental materials"
         title-word-count: "Word Count"
         references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
       filters:
+        # Resolve documentmode aliases (journal, manuscript, document, student)
+        # before anything reads the field
+        - at: pre-ast
+          path: documentmode.lua
         # Sets language defaults other than English
         - at: pre-ast
           path: apalanguage.lua
+        # Recover the apa-note of a plain markdown table before quarto
+        # flattens it
+        - at: pre-ast
+          path: apatablenote.lua
         # Prepare plain markdown tables to be used by crossrefprefix.lua
         - at: pre-ast
           path: markdowntable.lua
@@ -70,10 +85,21 @@ contributes:
         # Move figures and tables to end of document
         - at: pre-ast
           path: apafloatstoend.lua
+        # Mark apa-twocolumn floats (and capture table notes) AFTER float
+        # placement but before Quarto realizes markdown tables, so the marker
+        # stays adjacent to a float that floatsintext: false has moved to the end.
+        - at: pre-ast
+          path: apatwocolumntypstcollect.lua
  
         # Set latex document mode
         - at: pre-ast
           path: journalmode.lua
+        # Compose the journal's issue line for latex out of the journal fields
+        - at: pre-ast
+          path: journalvolume.lua
+        # Put papersize in the form the latex document class wants
+        - at: pre-ast
+          path: apapapersize.lua
         # Set latex images to column width by default
         - at: pre-ast
           path: apafigurewidthlatex.lua     
@@ -113,6 +139,8 @@ contributes:
         # Inserts appendix prefixes to tables and figures
         - at: pre-quarto
           path: apafigtblappendix.lua
+        - at: post-quarto
+          path: floatwithsubfigure.lua
         # Process tables and figures in latex
         - at: post-quarto
           path: apafloatlatex.lua
@@ -122,18 +150,30 @@ contributes:
         # Removes surrounding table environment for docx figures and tables
         - at: post-render
           path: apaextractfigure.lua
+        # Recovers the apa-note of a figure or table brought in by an embed
+        - at: post-render
+          path: embednote.lua
         # Formats notes below figures and tables (docx, html, typst)
         - at: post-render
           path: apanote.lua
         # Adds styles to figures and tables 
         - at: post-render
           path: apafloat.lua
+        # A panel's note is set apart from the note of the whole figure
+        - at: post-render
+          path: subpanelnote.lua
         # Formats captions for figures and tables 
         - at: post-render
           path: apacaption.lua
         # Puts proper spacing for paragraphs after figures and tables
         - at: post-render
           path: apaafternote.lua
+        # Set a multipanel figure the APA way in .docx
+        - at: post-render
+          path: docxlayout.lua
+        # Span apa-twocolumn figures across both columns in typst journal mode
+        - at: post-render
+          path: apatwocolumntypst.lua
         # Process citations, adds asterisks for meta-analysis citations
         - at: post-render
           path: citeprocr.lua
@@ -143,13 +183,31 @@ contributes:
         # Process appendices in latex
         - at: post-render
           path: apaappendixlatex.lua
+        # Warn when a pdf standard cannot work with the document's tables
+        - at: post-render
+          path: apapdfstandard.lua
     native: default
     html:
+      filters:
+        # Place tinytable tables with tbl-align, left by default
+        - at: post-quarto
+          path: apatinytablehtml.lua
       toc: true
       toc-location: left
       anchor-sections: false
       fig-cap-location: top
       html-math-method: katex
+      # An {{< embed other.qmd#fig-x >}} makes quarto render the source
+      # document a second time, from a copy it writes to .quarto/embed, to
+      # build a standalone preview page for the "Source:" link. That render
+      # resolves the theme against .quarto/embed rather than the project, so
+      # it cannot find _extensions/apaquarto/apa.scss ("Theme file not found")
+      # and falls back to stock bootstrap -- a preview page with none of this
+      # format's styling. The embedded output itself is unaffected: it is
+      # inlined into the article, which has the theme. Turning the preview off
+      # drops the warning and the unstyled page; set notebook-view: true to
+      # get the "Source:" link back.
+      notebook-view: false
       mainfont: Times, Times New Roman, serif
       monofont: Consolas, Lucida Console, Courier New, monospace
       grid: 
@@ -164,7 +222,7 @@ contributes:
           dev: svglite
     pdf:
       documentclass: apa7
-      pdf-engine: xelatex
+      pdf-engine: lualatex
       suppress-bibliography: false
       hyperrefoptions: 
         - linktoc=none
@@ -174,7 +232,6 @@ contributes:
       template-partials:
         - doc-class.tex
         - title.tex
-        - before-body.tex
         - header.tex
       classoption: "colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue"
     docx: 
@@ -183,13 +240,37 @@ contributes:
         # Add custom styles to docx
         - at: post-quarto
           path: docxstyler.lua
-        # Add line numbers and format Latex symbol
+        # Set code listings flush left in docx rather than centered
+        - at: post-quarto
+          path: docxlisting.lua
+        # Format Latex symbol
         - at: post-render
-          path: docxlinenumber.lua
+          path: docxformatlatexsymbol.lua
+        # Set the docx fonts and page size from the mainfont, monofont
+        # and papersize options
+        - at: post-render
+          path: docxreferencedoc.lua
       knitr: 
         opts_chunk: 
           dev: ragg_png
     typst:
+      # Draw R figures with svglite, as the .html format does.
+      #
+      # Quarto leaves typst on R's own svg device, which draws through cairo,
+      # and cairo on macos is part of XQuartz. A machine without XQuartz has no
+      # working svg device, and a render stops in the first chunk that draws
+      # anything with "dev.control() called without an open graphics device"
+      # under a wall of dlopen failures for libSM and libXrender. svglite
+      # writes the same svg without cairo, so the figures no longer depend on
+      # what the machine has under /opt/X11. The picture is the same and its
+      # text stays text in the .pdf rather than being flattened to outlines.
+      knitr:
+        opts_chunk:
+          dev: svglite
+      # One column, two columns, or auto to let the length of the note
+      # decide. Journal mode only; the other modes do not float the
+      # author note.
+      author-note-columns: auto
       filters: 
         # Process typst-specific styles
         - at: post-quarto
