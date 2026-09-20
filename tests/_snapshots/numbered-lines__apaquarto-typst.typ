@@ -881,105 +881,55 @@
   columns: 1,
 )
 
-#show: document => jou(
-  title: [Typst Journal Floats Fixture],
-  authors: ([Ana Author],),
-  runninghead: "JOURNAL FLOATS",
+#show: document => man(
+  title: [Numbered Lines],
+  authors: ([Test Author],),
+  runninghead: "LINES",
   runningauthors: "Author",
   font: ("Times New Roman",),
   numberdepth: 3,
   document,
 )
 
-#place(top, scope: "parent", float: true, clearance: 1.5em)[
-#block(width: 100%)[
-#show heading.where(level: 1): set text(size: joutitlesize, weight: "regular")
-#heading(level: 1, outlined: false, numbering: none)[Typst Journal Floats Fixture]
+#set par.line(numbering: n => text(size: 0.5em, font: linenumberfont)[#n], number-align: right, number-clearance: 10pt)
+/
+/
+#heading(level: 1, outlined: false, numbering: none)[Numbered Lines]
 <title>
 #set align(center)
 #block[
-#set par(..joubylinepar)
-#set block(spacing: 0.55em)
 /
-#set text(size: jouauthorsize)
-Ana Author
+Test Author
 
-#set text(size: jouaffiliationsize)
-Example University
+Test University
 
 ]
 #set align(left)
-]
-#align(center)[
-#block(width: jouabstractwidth, above: 1em, below: 0.6em)[
-#set align(left)
-#set text(size: jouabstractsize)
-#set par(leading: jouabstractleading, first-line-indent: 0pt)
-#show heading.where(level: 1): set text(size: jouabstractsize)
+/
+/
+#heading(level: 1, outlined: false, numbering: none)[Author Note]
+<author-note>
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#v(apafirstparshift)
+
+#pagebreak()
+
+#heading(level: 1, outlined: false, numbering: none)[Abstract]
+<abstract>
 #block[
-Exercises wide (apa-twocolumn) figures and tables, each with a note, in Typst journal mode.
+An abstract long enough to run over more than one line so that the numbering has something to count.
 
 ]
-]
-]
-]
-#jouauthornote(cols: auto)[
-Correspondence concerning this article should be addressed to Ana Author, Example University, Email: #link("mailto:ana@example.org")[ana/@example.org]
+#pagebreak()
 
-]
-Body text before the floats, with enough words to start filling the first column so the spanning floats have context around them in the layout.
+#heading(level: 1, numbering: none)[Numbered Lines]
+<firstheader>
+= Method
+<method>
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#v(apafirstparshift)
+The first paragraph of the body, written long enough to wrap over more than one line so that the line numbers have something to number, with more words after them to be sure of it in every mode.
 
-#place(top, scope: "parent", float: true, clearance: 1.5em)[
-#figure([
-#box(image("sampleimage.png"))
-], caption: figure.caption(
-position: top,
-[
-A wide figure that spans both columns.
-]),
-kind: "quarto-float-fig",
-supplement: "Figure",
-)
-<fig-wide>
-
-
-#block[
-#block[
-#emph[Note]. This~figure spans both columns.
-]
-]
-]
-#place(top, scope: "parent", float: true, clearance: 1.5em)[
-#figure([
-#table(
-  columns: 3,
-  align: (auto,right,right,),
-  table.header([Group], [Mean], [SD],),
-  table.hline(),
-  [A], [10.2], [1.1],
-  [B], [12.4], [1.3],
-)
-#align(left)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-#emph[Note]. This~table spans both columns.
-]
-#set par(first-line-indent: apaparindent(joufirstlineindent, all: true))
-]
-]
-], caption: figure.caption(
-position: top,
-[
-A wide table that spans both columns.
-]),
-kind: "quarto-float-tbl",
-supplement: "Table",
-)
-<tbl-wide>
-
-
-]
-= Discussion
-<discussion>
-More text after the floats to confirm the two-column body continues below them.
+A second paragraph, also long enough to wrap, so that the count carries on past the first one and can be seen to do so.

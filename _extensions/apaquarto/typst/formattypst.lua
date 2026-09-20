@@ -71,6 +71,30 @@ local utilsapa = require("utilsapa")
 local bodyindent = "apaparindent(firstlineindent)"
 local hangingindent = "0.5in"
 
+-- Numbered lines, which APA wants on a manuscript sent out for review.
+--
+-- apa7 draws them with lineno and leaves that package's own look alone: a
+-- number half the size of the body, right aligned, ten points clear of the
+-- text block, in the margin beside every line. Journal mode is the one it
+-- changes, moving the number to five points so that it still has room beside
+-- a column. Those are the three things matched here -- the size, the
+-- alignment and the distance -- with the size written in em so that it
+-- follows the body of whichever mode is being set.
+--
+-- The face is matched too, as nearly as typst allows: linenumberfont in the
+-- template is a stack of sans families ending in the one typst bundles, so the
+-- numbers are sans wherever the paper is set.
+local function line_numbering(meta)
+  if meta["numbered-lines"] == nil then return nil end
+  if pandoc.utils.stringify(meta["numbered-lines"]) == "false" then return nil end
+  local mode = meta.documentmode and
+    pandoc.utils.stringify(meta.documentmode) or "man"
+  local clearance = (mode == "jou") and "5pt" or "10pt"
+  return pandoc.RawBlock("typst",
+    "#set par.line(numbering: n => text(size: 0.5em, font: linenumberfont)[#n], " ..
+    "number-align: right, number-clearance: " .. clearance .. ")")
+end
+
 local function set_body_indent(meta)
   local mode = meta.documentmode and pandoc.utils.stringify(meta.documentmode) or "man"
   if mode == "jou" then
@@ -468,6 +492,11 @@ return {
   } ,
   {
     Pandoc = function (doc)
+      -- The line-number rule goes at the head of the body, so that it reaches
+      -- every line of the document as lineno does in apa7.
+      local numbering = line_numbering(doc.meta)
+      if numbering then doc.blocks:insert(1, numbering) end
+
       -- typst aggressively wants to make first paragraphs after something not indented. 
       -- APA style wants almost all paragraphs to be indented.
       -- This function inserts a blank  paragraph and then negative vertical space
@@ -487,7 +516,18 @@ return {
           if doc.blocks[i-1].t == "Header" and doc.blocks[i-1].level > 3 then
             --Do nothing
           else
-            doc.blocks:insert(i, pandoc.RawBlock("typst", "#par()[#text(size:0.5em)[#h(0.0em)]]\n#v(apafirstparshift)"))
+            doc.blocks:insert(i, pandoc.RawBlock("typst",
+              -- The spacer is a paragraph, so numbered-lines counts it as
+              -- a line: its number came out beside the number of the real
+              -- first line, five points apart, where the reader expects
+              -- one. It is a trick of the layout rather than a line of the
+              -- document, so it is not numbered. A set rule inside a
+              -- content block reaches no further than the block, so the
+              -- rest of the document keeps its numbering and a document
+              -- that asked for none is unaffected.
+              "#[#set par.line(numbering: none)\n" ..
+              "#par()[#text(size:0.5em)[#h(0.0em)]]]\n" ..
+              "#v(apafirstparshift)"))
           end
         end       
         -- Count appendices

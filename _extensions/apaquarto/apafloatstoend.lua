@@ -1,7 +1,13 @@
-if FORMAT == "latex" then
-  return
-end
+-- apaquarto-pdf leaves this to apa7, which collects the floats itself, so the
+-- filter stands down for it. It used to stand down for FORMAT "latex"
+-- outright, which was the same thing when apa7 was the only latex format
+-- apaquarto had. apaquarto-latex-pdf is latex too and has no apa7 behind it,
+-- so floatsintext: false did nothing at all there. The test needs the
+-- metadata, so it is made inside Pandoc below.
+local utilsapa = require("utilsapa")
+
 Pandoc = function(doc)
+  if utilsapa.apa7_latex(doc.meta) then return nil end
   local tbl = {}
   local fig = {}
   local appendixword = "Appendix"

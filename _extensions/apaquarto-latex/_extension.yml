@@ -85,6 +85,9 @@ contributes:
         # Language defaults other than English
         - at: pre-ast
           path: ../apaquarto/apalanguage.lua
+        # Paper size in the form the document class wants
+        - at: pre-ast
+          path: ../apaquarto/apapapersize.lua
         # An abstract or impact statement written as a section of the document
         # rather than as a yaml field
         - at: pre-ast
@@ -148,6 +151,9 @@ contributes:
         # Figure and table titles
         - at: post-render
           path: ../apaquarto/apacaption.lua
+        # The spacing of the paragraph after a figure or table
+        - at: post-render
+          path: ../apaquarto/apaafternote.lua
         # Citations, asterisks for meta-analysis entries. Before formatlatex.lua,
         # which turns the refs div into raw latex: citeproc puts the finished
         # bibliography inside the div whose identifier is "refs", and with the
@@ -163,3 +169,7 @@ contributes:
         # everything it writes out has been built by then.
         - at: post-render
           path: formatlatex.lua
+        # Warn when a pdf standard asks for a tagged pdf that latex cannot
+        # make out of a flextable
+        - at: post-render
+          path: ../apaquarto/apapdfstandard.lua

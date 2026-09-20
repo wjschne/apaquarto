@@ -1,0 +1,46 @@
+---
+title: "A Table Foot in a Manuscript"
+shorttitle: "Manuscript Tables"
+author:
+  - name: Test Author
+    affiliations:
+      - name: Test University
+abstract: "Exercises the foot of a longtable in manuscript mode."
+format:
+  apaquarto-latex-pdf: default
+---
+
+<!--
+A longtable inside a float never emits the material \endlastfoot marks, and
+every table in this format goes in a float. So a pandoc table lost the
+\bottomrule that closes it and a flextable lost its note row -- silently, with
+no warning from LaTeX -- in manuscript, student and document modes. Journal
+mode escaped it only because a longtable refuses two columns there and was
+already being set as a tabular.
+
+Every mode sets them as tabulars now. The raw table below stands in for
+flextable, which is what writes a longtable with a footer of its own.
+-->
+
+# Method
+
+A longtable with a head that repeats and a foot of its own.
+
+```{=latex}
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+HEADMARKER & HEADTWO \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+HEADMARKER & HEADTWO \\
+\midrule\noalign{}
+\endhead
+\multicolumn{2}{@{}l@{}}{FOOTMARKER} \\
+\endlastfoot
+ROWONE & r1 \\
+ROWTWO & r2 \\
+\end{longtable}
+```
+
+Text after the table.

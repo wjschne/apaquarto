@@ -1,0 +1,37 @@
+---
+title: "Numbered Lines"
+shorttitle: "Lines"
+author:
+  - name: Test Author
+    affiliations:
+      - name: Test University
+abstract: "An abstract long enough to run over more than one line so that the numbering has something to count."
+numbered-lines: true
+format:
+  apaquarto-latex-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+---
+
+<!--
+numbered-lines puts a number beside every line, which APA asks for on a
+manuscript sent out for review. It worked in .docx and in apaquarto-pdf, which
+draws them with lineno, and in neither apaquarto-latex-pdf nor apaquarto-typst.
+
+apa7 leaves lineno's own look alone: a number half the size of the body, right
+aligned, ten points clear of the text block, five in journal mode where the
+text is smaller and a column has less room beside it. Both formats match those
+three now, measured against apa7 in each of its four modes.
+
+Numbering lines is not offered in .html, where there are no pages and no line
+boxes a stylesheet can count.
+-->
+
+# Method
+
+The first paragraph of the body, written long enough to wrap over more than
+one line so that the line numbers have something to number, with more words
+after them to be sure of it in every mode.
+
+A second paragraph, also long enough to wrap, so that the count carries on past
+the first one and can be seen to do so.

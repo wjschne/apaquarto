@@ -1,0 +1,48 @@
+---
+title: "Floats Collected at the End"
+shorttitle: "Floats at End"
+author:
+  - name: Test Author
+    affiliations:
+      - name: Test University
+abstract: "Exercises floatsintext in the plain LaTeX format."
+floatsintext: false
+format:
+  apaquarto-latex-pdf: default
+---
+
+<!--
+floatsintext: false is the APA submission convention: the figures and the
+tables are collected after the body rather than set where they were written.
+It did nothing at all in plain LaTeX, for two reasons at once.
+
+apafloatstoend.lua, which does the collecting, stood down for FORMAT "latex" --
+right when apa7 was the only LaTeX format apaquarto had, since apa7 collects
+them itself, and wrong for a format with no apa7 behind it.
+
+And floatlatex.lua, which chooses the placement, asked
+utilsapa.stringify(m.floatsintext) ~= "false". That function opened with
+`if s then`, so a yaml false -- which arrives as a lua false -- was read as an
+absent field and answered the empty string, which is not "false". Every caller
+asking that question was told that false meant true.
+
+A successful run sets both floats after the body, with the placement latex
+chooses rather than the H that pins a float where it stands.
+-->
+
+# Method
+
+Text of the body, which must come before the floats. See @fig-end and
+@tbl-end.
+
+![A figure.](sampleimage.png){#fig-end}
+
+| A | B |
+|---|---|
+| 1 | 2 |
+
+: A table. {#tbl-end}
+
+# Results
+
+The last line of the body.

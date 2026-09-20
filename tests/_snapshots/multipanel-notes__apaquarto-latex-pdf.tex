@@ -266,12 +266,12 @@
   {/end{minipage}/par/vspace{10pt}}
 
 % The impact statement, ruled off from the abstract above it and the keywords
-% below it. The same box the typst masthead draws: a three-quarter-point rule
-% 6pt clear of the text on every side, with 9pt above and below.
+% below it. The same box the typst masthead draws: a half-point rule 6pt clear
+% of the text on every side, with 9pt above and below.
 /newsavebox{/apajouimpactbox}
 /newenvironment{apajouimpact}
   {/par/vspace{3pt}%
-   /setlength{/fboxrule}{0.75pt}/setlength{/fboxsep}{6pt}%
+   /setlength{/fboxrule}{0.5pt}/setlength{/fboxsep}{6pt}%
    /begin{lrbox}{/apajouimpactbox}%
    /begin{minipage}{/dimexpr/linewidth-2/fboxsep-2/fboxrule/relax}}
   {/end{minipage}/end{lrbox}%
@@ -287,29 +287,60 @@
    /setlength{/RaggedRightParindent}{0pt}/RaggedRight}
   {/par}
 
-% The author note, across the foot of the first page under a rule.
+% The author note, at the foot of the first page under a rule.
 %
 % A journal sets a short note at the foot of the first column and a long one
-% across the foot of the page; apaquarto's typst format measures the note and
-% does both. Here it always spans the page, because the column is not open to
-% a note of any length: latex will only set a footnote that fits in the column
-% it was raised in, and the fifteen lines example.qmd's note runs to does not,
-% which sent the output routine round in circles rather than breaking it.
+% across the foot of the page. apaquarto's typst format measures the note and
+% does both, and so does this: the note is set once into a box the width of a
+% column, and if it fits in a third of the text height it stays in that box at
+% the foot of the column. A longer one is set again across the page, since a
+% note that fills a column leaves the article nowhere to start.
+%
+% A third of the text height is the share typst measures against, and it is
+% also about what latex will hold at the foot of a column: bottomfraction is
+% half a page in journal mode, so a note under a third always fits and never
+% drifts to a later page.
+%
+% The environment collects its body so that it can be set twice, which is what
+% environ is for. A footnote would be the natural way to put something at the
+% foot of a column, but latex sets a footnote only if it fits the column it was
+% raised in and breaks it across pages otherwise, and on a page of floats that
+% sent the output routine round in circles.
 %
 % stfloats is what allows a float spanning both columns to be set at the foot
 % of a page. Latex on its own will only put one at the top, and silently drops
 % a starred float asked for anywhere else.
 /usepackage{stfloats}
+/usepackage{environ}
 /newlength{/apajounoteindent}
 /setlength{/apajounoteindent}{1.1em}
-/newenvironment{apajounote}
-  {/begin{figure*}[b]%
-   /noindent/rule{/linewidth}{0.5pt}%
-   /par/vspace{/dimexpr0.4em+3pt/relax}%
-   /fontsize{9}{11}/selectfont
-   /setlength{/parindent}{/apajounoteindent}%
-   /setlength{/RaggedRightParindent}{/apajounoteindent}/RaggedRight}
-  {/end{figure*}}
+/newsavebox{/apajounotebox}
+
+/newcommand{/apajounotetext}{%
+  /fontsize{9}{11}/selectfont
+  /setlength{/parindent}{/apajounoteindent}%
+  /setlength{/RaggedRightParindent}{/apajounoteindent}/RaggedRight}
+
+/newcommand{/apajounoterule}{%
+  /noindent/rule{/linewidth}{0.5pt}%
+  /par/vspace{/dimexpr0.4em+3pt/relax}}
+
+/NewEnviron{apajounote}{%
+  /sbox{/apajounotebox}{%
+    /begin{minipage}{/columnwidth}%
+      /apajounotetext/BODY
+    /end{minipage}}%
+  /ifdim/dimexpr/ht/apajounotebox+/dp/apajounotebox/relax>/dimexpr/textheight/3/relax
+    /begin{figure*}[b]%
+      /apajounoterule
+      /apajounotetext/BODY
+    /end{figure*}%
+  /else
+    /begin{figure}[b]%
+      /apajounoterule
+      /usebox{/apajounotebox}%
+    /end{figure}%
+  /fi}
 
 % --- Journal masthead -------------------------------------------------------
 % The band a published article carries at the head of its first page: the
@@ -529,16 +560,16 @@
 
 % The air between the rule at the foot of a table and the note under it.
 %
-% None by default. A manuscript is double spaced, and the leading alone opens
-% more room there than APA asks for. A journal article is single spaced, and
-% the note's first line came within half a point of the rule: it read as the
-% last row of the table rather than as a note under it. formatlatex.lua sets
-% the length for jou, to the half em that brings it to what apa7 leaves.
+% Half an em, which is what apa7 leaves there. Without it the note's first line
+% comes within a point of the rule and reads as one more row of the table.
+% This was a journal-mode setting while a longtable inside a float was silently
+% dropping the rule that closes it in every other mode; with that rule back,
+% every mode needs the air under it.
 %
 % The gap is written by floatlatex.lua, which knows a table from a figure. A
 % figure's note follows the picture, which needs no rule cleared.
 /newlength{/apatablenotegap}
-/setlength{/apatablenotegap}{0pt}
+/setlength{/apatablenotegap}{0.5em}
 /newcommand{/apatablenoteskip}{/par/vspace{/apatablenotegap}}
 
 % A panel of a multipanel figure: its label above it, and its own note centred
@@ -629,6 +660,7 @@
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
 /setapashorttitle{MULTIPANEL NOTES}
+/AtBeginDocument{/apalongtableastabular}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}

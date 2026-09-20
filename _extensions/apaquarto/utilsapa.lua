@@ -96,17 +96,15 @@ function M.make_note(s, prefix)
 end
 
 -- make string, if it exists, else return default
+--- Test for nil, not for truthiness. A yaml false arrives as a lua false,
+--- which the old `if s then` read as an absent field and answered the empty
+--- string for, so every caller asking `stringify(x) ~= "false"` was told that
+--- `x: false` meant true. pandoc's own stringify answers "false" for it.
 function M.stringify(s, default)
-  if s then
-    s = pandoc.utils.stringify(s)
-  else
-    if default then
-      s = default
-    else
-      s = ""
-    end
+  if s == nil then
+    return default or ""
   end
-  return s
+  return pandoc.utils.stringify(s)
 end
 
 --- Coerce a metadata value to Inlines, or nil when it is absent or empty

@@ -1,3 +1,103 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+/PassOptionsToPackage{unicode}{hyperref}
+/PassOptionsToPackage{hyphens}{url}
+/PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+/documentclass[
+  letterpaper,
+  12pt]{article}
+/usepackage{xcolor}
+/usepackage[margin=1in]{geometry}
+/usepackage{amsmath,amssymb}
+/setcounter{secnumdepth}{-/maxdimen} % remove section numbering
+/usepackage{iftex}
+/ifPDFTeX
+  /usepackage[T1]{fontenc}
+  /usepackage[utf8]{inputenc}
+  /usepackage{textcomp} % provide euro and other symbols
+/else % if luatex or xetex
+  /usepackage{unicode-math} % this also loads fontspec
+  /defaultfontfeatures{Scale=MatchLowercase}
+  /defaultfontfeatures[/rmfamily]{Ligatures=TeX,Scale=1}
+/fi
+/usepackage{lmodern}
+/ifPDFTeX/else
+  % xetex/luatex font selection
+  /setmainfont[]{TeX Gyre Termes}
+/fi
+% Use upquote if available, for straight quotes in verbatim environments
+/IfFileExists{upquote.sty}{/usepackage{upquote}}{}
+/IfFileExists{microtype.sty}{% use microtype if available
+  /usepackage[]{microtype}
+  /UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+% Make /paragraph and /subparagraph free-standing
+/makeatletter
+/ifx/paragraph/undefined/else
+  /let/oldparagraph/paragraph
+  /renewcommand{/paragraph}{
+    /@ifstar
+      /xxxParagraphStar
+      /xxxParagraphNoStar
+  }
+  /newcommand{/xxxParagraphStar}[1]{/oldparagraph*{#1}/mbox{}}
+  /newcommand{/xxxParagraphNoStar}[1]{/oldparagraph{#1}/mbox{}}
+/fi
+/ifx/subparagraph/undefined/else
+  /let/oldsubparagraph/subparagraph
+  /renewcommand{/subparagraph}{
+    /@ifstar
+      /xxxSubParagraphStar
+      /xxxSubParagraphNoStar
+  }
+  /newcommand{/xxxSubParagraphStar}[1]{/oldsubparagraph*{#1}/mbox{}}
+  /newcommand{/xxxSubParagraphNoStar}[1]{/oldsubparagraph{#1}/mbox{}}
+/fi
+/makeatother
+
+
+/usepackage{longtable,booktabs,array}
+/newcounter{none} % for unnumbered tables
+/usepackage{calc} % for calculating minipage widths
+% Correct order of tables after /paragraph or /subparagraph
+/usepackage{etoolbox}
+/makeatletter
+/patchcmd/longtable{/par}{/if@noskipsec/mbox{}/fi/par}{}{}
+/makeatother
+% Allow footnotes in longtable head/foot
+/IfFileExists{footnotehyper.sty}{/usepackage{footnotehyper}}{/usepackage{footnote}}
+/makesavenoteenv{longtable}
+/usepackage{graphicx}
+/makeatletter
+/newsavebox/pandoc@box
+/newcommand*/pandocbounded[1]{% scales image to fit in text height/width
+  /sbox/pandoc@box{#1}%
+  /Gscale@div/@tempa{/textheight}{/dimexpr/ht/pandoc@box+/dp/pandoc@box/relax}%
+  /Gscale@div/@tempb{/linewidth}{/wd/pandoc@box}%
+  /ifdim/@tempb/p@</@tempa/p@/let/@tempa/@tempb/fi% select the smaller of both
+  /ifdim/@tempa/p@</p@/scalebox{/@tempa}{/usebox/pandoc@box}%
+  /else/usebox{/pandoc@box}%
+  /fi%
+}
+% Set default figure placement to htbp
+/def/fps@figure{htbp}
+/makeatother
+
+
+
+
+
+/setlength{/emergencystretch}{3em} % prevent overfull lines
+
+/providecommand{/tightlist}{%
+  /setlength{/itemsep}{0pt}/setlength{/parskip}{0pt}}
+
+
+
+
+
+
 % APA Seventh Edition styling, in plain LaTeX.
 %
 % Everything here is ordinary article-class styling. There is no apa7: the
@@ -5,44 +105,44 @@
 % arrive as ordinary blocks from apaquarto's filters, and this file only says
 % how they are set. Each command below is used by formatlatex.lua.
 
-\usepackage{setspace}
-\usepackage{fancyhdr}
-\usepackage{titlesec}
-\usepackage{ragged2e}
-\usepackage{etoolbox}
+/usepackage{setspace}
+/usepackage{fancyhdr}
+/usepackage{titlesec}
+/usepackage{ragged2e}
+/usepackage{etoolbox}
 % [H] placement, which floatsintext asks for
-\usepackage{float}
+/usepackage{float}
 
 % --- Page and paragraph -----------------------------------------------------
 % APA: double spaced throughout, first line of every paragraph indented half an
 % inch, no extra space between paragraphs, text flush left with a ragged right
 % edge rather than justified.
-% \RaggedRight sets \parindent to \RaggedRightParindent, so the indent has to
-% be told to it before it is switched on. Setting \parindent afterwards instead
+% /RaggedRight sets /parindent to /RaggedRightParindent, so the indent has to
+% be told to it before it is switched on. Setting /parindent afterwards instead
 % leaves every paragraph flush left.
-\setlength{\parindent}{0.5in}
-\setlength{\parskip}{0pt}
-\setlength{\RaggedRightParindent}{0.5in}
-\RaggedRight
+/setlength{/parindent}{0.5in}
+/setlength{/parskip}{0pt}
+/setlength{/RaggedRightParindent}{0.5in}
+/RaggedRight
 
 % setspace's own double spacing, which is what apa7 uses and which comes to
 % about twice the font size. Asking for linestretch: 2 instead multiplies the
 % normal baseline skip, which is already larger than the font size, and set the
 % lines about a fifth further apart than apaquarto-pdf sets them.
-\doublespacing
+/doublespacing
 
 % --- Running head -----------------------------------------------------------
 % APA seventh edition: the short title in capitals at the left of every page
 % and the page number at the right. No rule under it.
-\pagestyle{fancy}
-\fancyhf{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyhead[L]{\apashorttitle}
-\fancyhead[R]{\thepage}
-\newcommand{\apashorttitle}{}
-\newcommand{\setapashorttitle}[1]{\renewcommand{\apashorttitle}{\MakeUppercase{#1}}}
-\newcommand{\apaauthorline}{}
-\newcommand{\setapaauthorline}[1]{\renewcommand{\apaauthorline}{\MakeUppercase{#1}}}
+/pagestyle{fancy}
+/fancyhf{}
+/renewcommand{/headrulewidth}{0pt}
+/fancyhead[L]{/apashorttitle}
+/fancyhead[R]{/thepage}
+/newcommand{/apashorttitle}{}
+/newcommand{/setapashorttitle}[1]{/renewcommand{/apashorttitle}{/MakeUppercase{#1}}}
+/newcommand{/apaauthorline}{}
+/newcommand{/setapaauthorline}[1]{/renewcommand{/apaauthorline}{/MakeUppercase{#1}}}
 
 % The head a published article carries, which is the one apaquarto's typst
 % format sets: the short title centred on a recto page and the authors'
@@ -52,13 +152,13 @@
 %
 % Recto and verso only differ once the document is twoside, which
 % formatlatex.lua asks for along with this.
-\newcommand{\apaheadsize}{\fontsize{8}{10}\selectfont}
-\newcommand{\apajournalhead}{%
-  \fancyhf{}%
-  \fancyhead[LE]{\thepage}%
-  \fancyhead[RO]{\thepage}%
-  \fancyhead[CE]{{\apaheadsize\apaauthorline}}%
-  \fancyhead[CO]{{\apaheadsize\apashorttitle}}}
+/newcommand{/apaheadsize}{/fontsize{8}{10}/selectfont}
+/newcommand{/apajournalhead}{%
+  /fancyhf{}%
+  /fancyhead[LE]{/thepage}%
+  /fancyhead[RO]{/thepage}%
+  /fancyhead[CE]{{/apaheadsize/apaauthorline}}%
+  /fancyhead[CO]{{/apaheadsize/apashorttitle}}}
 
 % Float placement in a published article.
 %
@@ -69,90 +169,90 @@
 % typst format both set them at the head of a page of text. A spanning float
 % may now take nine tenths of the top of a page, and a float page has to be
 % nine tenths full before latex will make one.
-\newcommand{\apajoufloats}{%
-  \renewcommand{\dbltopfraction}{0.9}%
-  \renewcommand{\dblfloatpagefraction}{0.9}%
-  \renewcommand{\topfraction}{0.9}%
-  \renewcommand{\bottomfraction}{0.5}%
-  \renewcommand{\textfraction}{0.07}%
-  \renewcommand{\floatpagefraction}{0.85}%
-  \setcounter{dbltopnumber}{2}%
-  \setcounter{topnumber}{3}%
-  \setcounter{totalnumber}{5}}
+/newcommand{/apajoufloats}{%
+  /renewcommand{/dbltopfraction}{0.9}%
+  /renewcommand{/dblfloatpagefraction}{0.9}%
+  /renewcommand{/topfraction}{0.9}%
+  /renewcommand{/bottomfraction}{0.5}%
+  /renewcommand{/textfraction}{0.07}%
+  /renewcommand{/floatpagefraction}{0.85}%
+  /setcounter{dbltopnumber}{2}%
+  /setcounter{topnumber}{3}%
+  /setcounter{totalnumber}{5}}
 
 % The gutter between the columns, which typst leaves at a twenty-fifth of the
 % text width and latex at ten points.
-\newcommand{\apajoucolumnsep}{\setlength{\columnsep}{0.04\textwidth}}
+/newcommand{/apajoucolumnsep}{/setlength{/columnsep}{0.04/textwidth}}
 
 % The first page of a journal or document paper carries the masthead instead of
 % a running head, so it is left plain.
-\fancypagestyle{apafirstpage}{%
-  \fancyhf{}%
-  \renewcommand{\headrulewidth}{0pt}}
+/fancypagestyle{apafirstpage}{%
+  /fancyhf{}%
+  /renewcommand{/headrulewidth}{0pt}}
 
-% Two columns, which is what a published article is set in. \twocolumn starts a
+% Two columns, which is what a published article is set in. /twocolumn starts a
 % page, so it is asked for at the start of the document rather than in the
 % preamble, where it would be too early to take effect.
-\newcommand{\apatwocolumn}{\AtBeginDocument{\twocolumn}}
+/newcommand{/apatwocolumn}{/AtBeginDocument{/twocolumn}}
 
 % --- Journal front matter ---------------------------------------------------
 % In a published article the title, the byline, the abstract and the lines
 % under them span the page beneath the masthead rather than standing in the
 % first column, and the author note goes to the foot of that column. The sizes
 % are the ones apa7 gives its journal mode, which is where apaquarto's typst
-% format takes them from as well: at a 10pt base the title is \LARGE and
-% unemphasised, the byline \large, the affiliations the body size, and the
-% abstract and everything with it \small.
-\newcommand{\apajoutitle}[1]{%
-  {\centering\fontsize{17.28}{20.74}\selectfont #1\par}}
+% format takes them from as well: at a 10pt base the title is /LARGE and
+% unemphasised, the byline /large, the affiliations the body size, and the
+% abstract and everything with it /small.
+/newcommand{/apajoutitle}[1]{%
+  {/centering/fontsize{17.28}{20.74}/selectfont #1/par}}
 
 % The byline, with the affiliations under it at the body size. formatlatex.lua
 % switches to the smaller size after the first paragraph, which is the byline.
 % The gaps between the parts of the front matter are measured against the
 % typst masthead, which is what this page is meant to look like.
-\newenvironment{apajoubyline}
-  {\par\vspace{9pt}\centering\fontsize{12}{14}\selectfont}
-  {\par}
-\newcommand{\apajouaffiliationsize}{\fontsize{10}{12}\selectfont}
+/newenvironment{apajoubyline}
+  {/par/vspace{9pt}/centering/fontsize{12}{14}/selectfont}
+  {/par}
+/newcommand{/apajouaffiliationsize}{/fontsize{10}{12}/selectfont}
 
 % The abstract, the impact statement and the lines under them: smaller, and in
 % a block narrower than the masthead, centred under the byline. apa7 sets its
 % journal abstract in a 4.6875in parbox, which is where the width comes from.
 % The text inside is set flush left, as it is in the typst masthead.
-\newlength{\apajounarrowwidth}
-\setlength{\apajounarrowwidth}{4.6875in}
+/newlength{/apajounarrowwidth}
+/setlength{/apajounarrowwidth}{4.6875in}
 % parskip as well as leading: typst leaves a line and a bit between the
 % keywords and the supplemental materials under them, where latex on its own
 % would leave only the line.
-\newenvironment{apajounarrow}
-  {\par\vspace{7pt}\centering
-   \begin{minipage}{\apajounarrowwidth}%
-   \fontsize{9}{11}\selectfont
-   \setlength{\parskip}{6pt}%
-   \setlength{\parindent}{0pt}\setlength{\RaggedRightParindent}{0pt}\RaggedRight}
-  {\end{minipage}\par\vspace{10pt}}
+/newenvironment{apajounarrow}
+  {/par/vspace{7pt}/centering
+   /begin{minipage}{/apajounarrowwidth}%
+   /fontsize{9}{11}/selectfont
+   /setlength{/parskip}{6pt}%
+   /setlength{/parindent}{0pt}/setlength{/RaggedRightParindent}{0pt}/RaggedRight}
+  {/end{minipage}/par/vspace{10pt}}
 
 % The impact statement, ruled off from the abstract above it and the keywords
 % below it. The same box the typst masthead draws: a half-point rule 6pt clear
 % of the text on every side, with 9pt above and below.
-\newsavebox{\apajouimpactbox}
-\newenvironment{apajouimpact}
-  {\par\vspace{3pt}%
-   \setlength{\fboxrule}{0.5pt}\setlength{\fboxsep}{6pt}%
-   \begin{lrbox}{\apajouimpactbox}%
-   \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}}
-  {\end{minipage}\end{lrbox}%
-   \noindent\fbox{\usebox{\apajouimpactbox}}\par\vspace{3pt}}
+/newsavebox{/apajouimpactbox}
+/newenvironment{apajouimpact}
+  {/par/vspace{3pt}%
+   /setlength{/fboxrule}{0.5pt}/setlength{/fboxsep}{6pt}%
+   /begin{lrbox}{/apajouimpactbox}%
+   /begin{minipage}{/dimexpr/linewidth-2/fboxsep-2/fboxrule/relax}}
+  {/end{minipage}/end{lrbox}%
+   /noindent/fbox{/usebox{/apajouimpactbox}}/par/vspace{3pt}}
 
 % The orcid lines of the author note. Each is one short name-and-link
 % paragraph, so justifying it stretches the gaps across the measure and
 % indenting it leaves the names out of line with each other. They are set
 % flush left and unindented, while the prose paragraphs of the note keep the
 % indent they are given, which is what the typst masthead does with them.
-\newenvironment{apajouorcid}
-  {\par\setlength{\parindent}{0pt}%
-   \setlength{\RaggedRightParindent}{0pt}\RaggedRight}
-  {\par}
+/newenvironment{apajouorcid}
+  {/par/setlength{/parindent}{0pt}%
+   /setlength{/RaggedRightParindent}{0pt}/RaggedRight}
+  {/par}
 
 % The author note, at the foot of the first page under a rule.
 %
@@ -177,37 +277,37 @@
 % stfloats is what allows a float spanning both columns to be set at the foot
 % of a page. Latex on its own will only put one at the top, and silently drops
 % a starred float asked for anywhere else.
-\usepackage{stfloats}
-\usepackage{environ}
-\newlength{\apajounoteindent}
-\setlength{\apajounoteindent}{1.1em}
-\newsavebox{\apajounotebox}
+/usepackage{stfloats}
+/usepackage{environ}
+/newlength{/apajounoteindent}
+/setlength{/apajounoteindent}{1.1em}
+/newsavebox{/apajounotebox}
 
-\newcommand{\apajounotetext}{%
-  \fontsize{9}{11}\selectfont
-  \setlength{\parindent}{\apajounoteindent}%
-  \setlength{\RaggedRightParindent}{\apajounoteindent}\RaggedRight}
+/newcommand{/apajounotetext}{%
+  /fontsize{9}{11}/selectfont
+  /setlength{/parindent}{/apajounoteindent}%
+  /setlength{/RaggedRightParindent}{/apajounoteindent}/RaggedRight}
 
-\newcommand{\apajounoterule}{%
-  \noindent\rule{\linewidth}{0.5pt}%
-  \par\vspace{\dimexpr0.4em+3pt\relax}}
+/newcommand{/apajounoterule}{%
+  /noindent/rule{/linewidth}{0.5pt}%
+  /par/vspace{/dimexpr0.4em+3pt/relax}}
 
-\NewEnviron{apajounote}{%
-  \sbox{\apajounotebox}{%
-    \begin{minipage}{\columnwidth}%
-      \apajounotetext\BODY
-    \end{minipage}}%
-  \ifdim\dimexpr\ht\apajounotebox+\dp\apajounotebox\relax>\dimexpr\textheight/3\relax
-    \begin{figure*}[b]%
-      \apajounoterule
-      \apajounotetext\BODY
-    \end{figure*}%
-  \else
-    \begin{figure}[b]%
-      \apajounoterule
-      \usebox{\apajounotebox}%
-    \end{figure}%
-  \fi}
+/NewEnviron{apajounote}{%
+  /sbox{/apajounotebox}{%
+    /begin{minipage}{/columnwidth}%
+      /apajounotetext/BODY
+    /end{minipage}}%
+  /ifdim/dimexpr/ht/apajounotebox+/dp/apajounotebox/relax>/dimexpr/textheight/3/relax
+    /begin{figure*}[b]%
+      /apajounoterule
+      /apajounotetext/BODY
+    /end{figure*}%
+  /else
+    /begin{figure}[b]%
+      /apajounoterule
+      /usebox{/apajounotebox}%
+    /end{figure}%
+  /fi}
 
 % --- Journal masthead -------------------------------------------------------
 % The band a published article carries at the head of its first page: the
@@ -221,13 +321,13 @@
 % commands below, which say why.
 %
 % frontmatter.lua builds the masthead out of the four commands below and
-% formatlatex.lua hands it to \twocolumn, which is the only thing that sets
+% formatlatex.lua hands it to /twocolumn, which is the only thing that sets
 % material across both columns of a two-column page.
-\newlength{\apamastheadrulewidth}
-\setlength{\apamastheadrulewidth}{0.5pt}
-\newlength{\apalogoheight}
-\setlength{\apalogoheight}{0.5in}
-\newsavebox{\apamastheadbox}
+/newlength{/apamastheadrulewidth}
+/setlength{/apamastheadrulewidth}{0.5pt}
+/newlength{/apalogoheight}
+/setlength{/apalogoheight}{0.5in}
+/newsavebox{/apamastheadbox}
 
 % A journal sets its masthead above where the text of the page begins, so it is
 % lifted into the top margin by half of that margin, which is what the typst
@@ -242,23 +342,23 @@
 % out by eight points. The band is the part that can afford to be out: this
 % sets it about five points higher than typst sets it, and everything under it
 % level to the point.
-\newcommand{\apamastheadlift}{%
-  \vspace*{-\dimexpr(1in+\voffset+\topmargin+\headheight+\headsep)/2\relax}}
+/newcommand{/apamastheadlift}{%
+  /vspace*{-/dimexpr(1in+/voffset+/topmargin+/headheight+/headsep)/2/relax}}
 
 % Declarations rather than commands taking an argument: the metadata below is
 % two lines with a break between them, which reads more plainly set into a
 % paragraph than passed through a pair of braces.
-\newcommand{\apamastheadname}{\fontsize{12}{14}\selectfont}
+/newcommand{/apamastheadname}{/fontsize{12}{14}/selectfont}
 % 8pt on 10.75, which is the leading the typst masthead sets its two lines of
 % metadata at. The 9.6 an 8pt size would take by the usual ratio set them a
 % point and a quarter closer together than that.
-\newcommand{\apamastheadsmall}{\fontsize{8}{10.75}\selectfont}
+/newcommand{/apamastheadsmall}{/fontsize{8}{10.75}/selectfont}
 
-\newcommand{\apamastheadlogo}[1]{\includegraphics[height=\apalogoheight]{#1}}
+/newcommand{/apamastheadlogo}[1]{/includegraphics[height=/apalogoheight]{#1}}
 
 % The logo and the journal's name, sitting on one baseline at either edge.
-\newcommand{\apamastheadhead}[2]{%
-  \noindent #1\hfill{\apamastheadname #2}\par}
+/newcommand{/apamastheadhead}[2]{%
+  /noindent #1/hfill{/apamastheadname #2}/par}
 
 % nointerlineskip on either side of the rule, and the space written out in
 % full. A rule set as its own paragraph takes a whole line's leading above it
@@ -270,22 +370,22 @@
 % leaves none to add it to. They are measured instead: they put the rule and
 % the first line of the metadata within a point of where the typst masthead
 % puts them, which is what this band is meant to look like.
-\newcommand{\apamastheadline}{%
-  \par\nointerlineskip\vspace{5.5pt}%
-  \noindent\rule{\linewidth}{\apamastheadrulewidth}%
-  \par\nointerlineskip\vspace{6.5pt}}
+/newcommand{/apamastheadline}{%
+  /par/nointerlineskip/vspace{5.5pt}%
+  /noindent/rule{/linewidth}{/apamastheadrulewidth}%
+  /par/nointerlineskip/vspace{6.5pt}}
 
 % The copyright and the issn on the left, the issue and the doi on the right,
 % each pair set as two lines. Half the measure each, less half the gutter the
 % typst masthead leaves between them.
-\newcommand{\apamastheadfoot}[2]{%
-  \noindent
-  \begin{minipage}[t]{\dimexpr0.5\linewidth-0.5em\relax}%
-    \apamastheadsmall\raggedright #1%
-  \end{minipage}\hfill
-  \begin{minipage}[t]{\dimexpr0.5\linewidth-0.5em\relax}%
-    \apamastheadsmall\raggedleft #2%
-  \end{minipage}\par\vspace{1em}}
+/newcommand{/apamastheadfoot}[2]{%
+  /noindent
+  /begin{minipage}[t]{/dimexpr0.5/linewidth-0.5em/relax}%
+    /apamastheadsmall/raggedright #1%
+  /end{minipage}/hfill
+  /begin{minipage}[t]{/dimexpr0.5/linewidth-0.5em/relax}%
+    /apamastheadsmall/raggedleft #2%
+  /end{minipage}/par/vspace{1em}}
 
 % The first-line indent of a published article, which is a good deal smaller
 % than the half inch a manuscript takes: apa7 sets it at about 1.1 times the
@@ -299,12 +399,12 @@
 % Written into the body rather than the preamble. The half inch a manuscript
 % takes is set further down the preamble than an in-header include reaches, so
 % a preamble setting of this would simply be undone.
-\newlength{\apajouparindent}
-\setlength{\apajouparindent}{1.1em}
-\newcommand{\apajournalindent}{%
-  \setlength{\parindent}{\apajouparindent}%
-  \setlength{\RaggedRightParindent}{\apajouparindent}%
-  \RaggedRight}
+/newlength{/apajouparindent}
+/setlength{/apajouparindent}{1.1em}
+/newcommand{/apajournalindent}{%
+  /setlength{/parindent}{/apajouparindent}%
+  /setlength{/RaggedRightParindent}{/apajouparindent}%
+  /RaggedRight}
 
 % A longtable refuses to be set in two columns, and quarto writes every
 % markdown table as a longtable while flextable builds its tables out of one.
@@ -317,34 +417,34 @@
 % and the foot end; they say which rows repeat on every page and which are set
 % once, and in the source the foot stands above the body. Made to do nothing,
 % as they were, every row was set where it stood: a table with a repeating
-% head printed the head twice, a pandoc table printed its \bottomrule under
-% the \midrule and had no rule at the foot, and a flextable printed its note
+% head printed the head twice, a pandoc table printed its /bottomrule under
+% the /midrule and had no rule at the foot, and a flextable printed its note
 % row between the head and the body.
 %
 % So the head that repeats is thrown away, the first head being the one that
 % is wanted, and the foot is collected and set at the end of the table where
-% it belongs. Both grabs are \long, since the rows of a flextable have blank
-% lines between them, and the one that saves the foot is wrapped in \noalign:
+% it belongs. Both grabs are /long, since the rows of a flextable have blank
+% lines between them, and the one that saves the foot is wrapped in /noalign:
 % an assignment between two rows would otherwise open a cell, and the row
 % after it lost its first column.
-\makeatletter
-\newtoks\apa@lt@foot
-\long\def\apa@lt@firsthead#1\endhead{\apa@lt@head}
-\def\apa@lt@head{\apa@lt@grab}
-\long\def\apa@lt@grab#1\endlastfoot{\noalign{\global\apa@lt@foot{#1}}}
-\newcommand{\apalongtableastabular}{%
-  \renewenvironment{longtable}[2][]{%
-    \global\apa@lt@foot{}%
-    \let\endfirsthead\apa@lt@firsthead
-    \let\endhead\apa@lt@head
-    \let\endfoot\relax
-    \let\endlastfoot\relax
-    \begin{tabular}{##2}%
+/makeatletter
+/newtoks/apa@lt@foot
+/long/def/apa@lt@firsthead#1/endhead{/apa@lt@head}
+/def/apa@lt@head{/apa@lt@grab}
+/long/def/apa@lt@grab#1/endlastfoot{/noalign{/global/apa@lt@foot{#1}}}
+/newcommand{/apalongtableastabular}{%
+  /renewenvironment{longtable}[2][]{%
+    /global/apa@lt@foot{}%
+    /let/endfirsthead/apa@lt@firsthead
+    /let/endhead/apa@lt@head
+    /let/endfoot/relax
+    /let/endlastfoot/relax
+    /begin{tabular}{##2}%
   }{%
-    \the\apa@lt@foot
-    \end{tabular}%
+    /the/apa@lt@foot
+    /end{tabular}%
   }}
-\makeatother
+/makeatother
 
 % --- Headings ---------------------------------------------------------------
 % titlespacing rather than titlespacing*: the starred form takes the indent off
@@ -354,62 +454,62 @@
 % The five APA levels. One to three are their own paragraphs; four and five run
 % into the text that follows them, which is why they are set as runin.
 % Numbering is off: APA headings are never numbered.
-\setcounter{secnumdepth}{-1}
+/setcounter{secnumdepth}{-1}
 
-\titleformat{\section}[block]
-  {\normalfont\bfseries\centering}{}{0pt}{}
-\titlespacing{\section}{0pt}{\baselineskip}{0pt}
+/titleformat{/section}[block]
+  {/normalfont/bfseries/centering}{}{0pt}{}
+/titlespacing{/section}{0pt}{/baselineskip}{0pt}
 
-\titleformat{\subsection}[block]
-  {\normalfont\bfseries\raggedright}{}{0pt}{}
-\titlespacing{\subsection}{0pt}{\baselineskip}{0pt}
+/titleformat{/subsection}[block]
+  {/normalfont/bfseries/raggedright}{}{0pt}{}
+/titlespacing{/subsection}{0pt}{/baselineskip}{0pt}
 
-\titleformat{\subsubsection}[block]
-  {\normalfont\bfseries\itshape\raggedright}{}{0pt}{}
-\titlespacing{\subsubsection}{0pt}{\baselineskip}{0pt}
+/titleformat{/subsubsection}[block]
+  {/normalfont/bfseries/itshape/raggedright}{}{0pt}{}
+/titlespacing{/subsubsection}{0pt}{/baselineskip}{0pt}
 
 % No [.] suffix: apaheader.lua has already put a full stop at the end of a
 % level four or five heading, and only when the heading did not end in one
 % already. A stop added here as well doubled every one of them, and turned a
 % heading ending in a question mark into "...?.".
-\titleformat{\paragraph}[runin]
-  {\normalfont\bfseries}{}{0pt}{}
-\titlespacing{\paragraph}{\parindent}{\baselineskip}{0.5em}
+/titleformat{/paragraph}[runin]
+  {/normalfont/bfseries}{}{0pt}{}
+/titlespacing{/paragraph}{/parindent}{/baselineskip}{0.5em}
 
-\titleformat{\subparagraph}[runin]
-  {\normalfont\bfseries\itshape}{}{0pt}{}
-\titlespacing{\subparagraph}{\parindent}{\baselineskip}{0.5em}
+/titleformat{/subparagraph}[runin]
+  {/normalfont/bfseries/itshape}{}{0pt}{}
+/titlespacing{/subparagraph}{/parindent}{/baselineskip}{0.5em}
 
 % --- Title page -------------------------------------------------------------
 % The title itself, bold and centred, set a third of the way down the page in
 % manuscript mode and at the top of the body otherwise.
-\newcommand{\apatitle}[1]{%
-  {\centering\bfseries #1\par}}
+/newcommand{/apatitle}[1]{%
+  {/centering/bfseries #1/par}}
 
 % The authors and their affiliations, centred under the title.
-\newenvironment{apaauthor}
-  {\par\centering}
-  {\par}
+/newenvironment{apaauthor}
+  {/par/centering}
+  {/par}
 
 % A title-page heading: Author Note, Abstract, Impact Statement. Centred and
 % bold, like a level-one heading, but not part of the document's outline.
-\newcommand{\apatitlepageheading}[1]{%
-  {\centering\bfseries #1\par}}
+/newcommand{/apatitlepageheading}[1]{%
+  {/centering/bfseries #1/par}}
 
 % The first paragraph of the abstract and of the impact statement, which APA
 % sets flush left rather than indented.
-\newenvironment{apanoindent}
-  {\par\setlength{\parindent}{0pt}}
-  {\par}
+/newenvironment{apanoindent}
+  {/par/setlength{/parindent}{0pt}}
+  {/par}
 
 % --- Figures and tables -----------------------------------------------------
 % APA puts the number above the title, the title above the figure, and the note
 % below it, all flush left. The blocks arrive already in that order, so these
 % only set them.
-\newcommand{\apafloattitle}[1]{%
-  {\par\noindent\bfseries #1\par}}
-\newcommand{\apafloatcaption}[1]{%
-  {\par\noindent\itshape #1\par}}
+/newcommand{/apafloattitle}[1]{%
+  {/par/noindent/bfseries #1/par}}
+/newcommand{/apafloatcaption}[1]{%
+  {/par/noindent/itshape #1/par}}
 
 % The blank line APA leaves between a figure's title and the figure itself.
 %
@@ -420,10 +520,10 @@
 %
 % Figures only. A table follows its title immediately, and apa7 in fact leaves
 % a little less room there than this format already does.
-\newcommand{\apafigureskip}{\vspace{1.2em}}
-\newenvironment{apafloatnote}
-  {\par\setlength{\parindent}{0pt}\noindent}
-  {\par}
+/newcommand{/apafigureskip}{/vspace{1.2em}}
+/newenvironment{apafloatnote}
+  {/par/setlength{/parindent}{0pt}/noindent}
+  {/par}
 
 % The air between the rule at the foot of a table and the note under it.
 %
@@ -435,9 +535,9 @@
 %
 % The gap is written by floatlatex.lua, which knows a table from a figure. A
 % figure's note follows the picture, which needs no rule cleared.
-\newlength{\apatablenotegap}
-\setlength{\apatablenotegap}{0.5em}
-\newcommand{\apatablenoteskip}{\par\vspace{\apatablenotegap}}
+/newlength{/apatablenotegap}
+/setlength{/apatablenotegap}{0.5em}
+/newcommand{/apatablenoteskip}{/par/vspace{/apatablenotegap}}
 
 % A panel of a multipanel figure: its label above it, and its own note centred
 % underneath, both set inside the panel's own column rather than across the
@@ -445,34 +545,34 @@
 %
 % A minipage starts a fresh vertical list and works out its baseline skip from
 % the font as it stands, which is the unstretched one: the label and the note
-% came out single spaced inside a document set double. \selectfont asks for the
-% skip to be worked out again, and \baselinestretch is still whatever the
+% came out single spaced inside a document set double. /selectfont asks for the
+% skip to be worked out again, and /baselinestretch is still whatever the
 % document set, so the panel is spaced like the rest of the text.
-\newenvironment{apapanel}[1]
-  {\begin{minipage}[t]{#1\linewidth}\selectfont\centering}
-  {\end{minipage}}
-\newcommand{\apapanellabel}[1]{%
-  {\par\noindent #1\par\smallskip}}
-\newenvironment{apapanelnote}
-  {\par\smallskip\setlength{\parindent}{0pt}\centering}
-  {\par}
+/newenvironment{apapanel}[1]
+  {/begin{minipage}[t]{#1/linewidth}/selectfont/centering}
+  {/end{minipage}}
+/newcommand{/apapanellabel}[1]{%
+  {/par/noindent #1/par/smallskip}}
+/newenvironment{apapanelnote}
+  {/par/smallskip/setlength{/parindent}{0pt}/centering}
+  {/par}
 
 % --- References -------------------------------------------------------------
 % A hanging indent of half an inch, which is what the reference list wants and
 % what quarto's csl div is given here.
-\newenvironment{apareferences}
-  {\par\setlength{\parindent}{0pt}%
-   \everypar{\hangindent=0.5in\hangafter=1}}
-  {\par}
+/newenvironment{apareferences}
+  {/par/setlength{/parindent}{0pt}%
+   /everypar{/hangindent=0.5in/hangafter=1}}
+  {/par}
 
 % Quarto sets the reference list as its own CSLReferences list, which hangs its
 % entries by cslhangindent and not by the environment above. That length is
 % 1.5em out of the box, about two fifths of what APA asks for, so it is given
 % the half inch apa7 uses. Guarded: a document with no bibliography never
 % defines it.
-\makeatletter
-\@ifundefined{cslhangindent}{}{\setlength{\cslhangindent}{0.5in}}
-\makeatother
+/makeatletter
+/@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{0.5in}}
+/makeatother
 
 % A published article hangs its references by the same amount it indents the
 % first line of a paragraph by, which is a good deal less than the half inch a
@@ -481,7 +581,178 @@
 % the hanging indent to joufirstlineindent in journal mode for the same
 % reason, and the two lengths come to within a fifth of a point of each other.
 % Set for jou by formatlatex.lua.
-\makeatletter
-\newcommand{\apajouhangindent}{%
-  \@ifundefined{cslhangindent}{}{\setlength{\cslhangindent}{\apajouparindent}}}
-\makeatother
+/makeatletter
+/newcommand{/apajouhangindent}{%
+  /@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{/apajouparindent}}}
+/makeatother
+/makeatletter
+/@ifpackageloaded{caption}{}{/usepackage{caption}}
+/AtBeginDocument{%
+/ifdefined/contentsname
+  /renewcommand*/contentsname{Table of contents}
+/else
+  /newcommand/contentsname{Table of contents}
+/fi
+/ifdefined/listfigurename
+  /renewcommand*/listfigurename{List of Figures}
+/else
+  /newcommand/listfigurename{List of Figures}
+/fi
+/ifdefined/listtablename
+  /renewcommand*/listtablename{List of Tables}
+/else
+  /newcommand/listtablename{List of Tables}
+/fi
+/ifdefined/figurename
+  /renewcommand*/figurename{Figure}
+/else
+  /newcommand/figurename{Figure}
+/fi
+/ifdefined/tablename
+  /renewcommand*/tablename{Table}
+/else
+  /newcommand/tablename{Table}
+/fi
+}
+/@ifpackageloaded{float}{}{/usepackage{float}}
+/floatstyle{ruled}
+/@ifundefined{c@chapter}{/newfloat{codelisting}{h}{lop}}{/newfloat{codelisting}{h}{lop}[chapter]}
+/floatname{codelisting}{Listing}
+/newcommand*/listoflistings{/listof{codelisting}{List of Listings}}
+/makeatother
+/makeatletter
+/makeatother
+/makeatletter
+/@ifpackageloaded{caption}{}{/usepackage{caption}}
+/@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
+/makeatother
+/setapashorttitle{FLOATS AT END}
+/AtBeginDocument{/apalongtableastabular}
+/usepackage{bookmark}
+/IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
+/urlstyle{same}
+/hypersetup{
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+/author{Test Author}
+/date{}
+/begin{document}
+
+
+/hfill/break
+
+/hfill/break
+
+/vspace*{3/baselineskip}
+
+/apatitle{
+
+Floats Collected at the End
+
+}
+
+/begin{apaauthor}
+
+/hfill/break
+
+Test Author
+
+Test University
+
+/end{apaauthor}
+
+/hfill/break
+
+/hfill/break
+
+/apatitlepageheading{
+
+Author Note
+
+}
+
+/clearpage
+
+/apatitlepageheading{
+
+Abstract
+
+}
+
+/begin{apanoindent}
+
+Exercises floatsintext in the plain LaTeX format.
+
+/end{apanoindent}
+
+/clearpage
+
+/apatitle{
+
+Floats Collected at the End
+
+}
+
+/section{Method}/label{method}
+
+Text of the body, which must come before the floats. See
+Figure~/ref{fig-end} and Table~/ref{tbl-end}.
+
+/section{Results}/label{results}
+
+The last line of the body.
+
+/begin{table}[htbp]
+
+/setcounter{table}{0}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{tbl-end}
+
+/apafloattitle{Table 1}
+
+/apafloatcaption{A table.}
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}ll@{}}
+/toprule/noalign{}
+A & B //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+1 & 2 //
+/end{longtable}
+}
+
+/end{table}
+
+/begin{figure}[htbp]
+
+/setcounter{figure}{0}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{fig-end}
+
+/apafloattitle{Figure 1}
+
+/apafloatcaption{A figure.}
+
+/apafigureskip
+
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
+
+/end{figure}
+
+
+
+
+/end{document}

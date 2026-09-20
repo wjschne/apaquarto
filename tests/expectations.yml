@@ -147,7 +147,10 @@
         # float of its own would make a figure within a figure, which latex
         # sets one under the other whatever the layout asked for.
         'begin{apapanel}': 2
-        'begin{figure}': 1
+        # Named with its placement, so that the figure environments inside the
+        # author note's own definition in the preamble are not counted as a
+        # second figure in the body.
+        '\begin{figure}[H]': 1
 
 # The same figure again with panels written as plain markdown images, which is
 # neither a float nor a cell and keeps its note on the image itself.
@@ -208,7 +211,10 @@
     tex:
       count:
         'begin{apapanel}': 2
-        'begin{figure}': 1
+        # Named with its placement, so that the figure environments inside the
+        # author note's own definition in the preamble are not counted as a
+        # second figure in the body.
+        '\begin{figure}[H]': 1
 
 # ------------------------------------------- abstract written in the document --
 
@@ -458,3 +464,71 @@
         # The note itself, which a corresponding author gets whether or not
         # an author-note field was written.
         - 'Correspondence concerning this article'
+
+# ---------------------------------- floats at the end, and a table's foot --
+
+- fixture: latex-floatsintext.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    tex:
+      count:
+        # The placement latex chooses, since the floats no longer stand where
+        # they were written. H pins a float in place and is what both floats
+        # were given while floatsintext: false was being read as true.
+        '\begin{figure}[htbp]': 1
+        '\begin{table}[htbp]': 1
+      absent:
+        - '\begin{figure}[H]'
+        - '\begin{table}[H]'
+    pdf:
+      contains:
+        # The body runs on without them, and they follow it.
+        - 'The last line of the body.'
+        - 'A figure.'
+        - 'A table.'
+
+- fixture: latex-man-tables.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      count:
+        # The head of a longtable set as a tabular, printed once.
+        'HEADMARKER': 1
+      contains:
+        # The foot under the last row of the body. A longtable inside a float
+        # never emits it, and every table in this format is in a float, so in
+        # manuscript mode this row simply disappeared.
+        - 'ROWTWO r2 FOOTMARKER'
+      absent:
+        # The foot directly under the head, which is where it is written.
+        - 'HEADTWO FOOTMARKER'
+
+# --------------------------------------------------------- numbered lines --
+
+- fixture: numbered-lines.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    tex:
+      contains:
+        # lineno is what apa7 draws them with, and nolongtablepatch is what
+        # keeps it away from a table this format sets as a tabular anyway.
+        - '\usepackage[nolongtablepatch]{lineno}'
+        - '\linenumbers'
+        - '\resetlinenumber[1]'
+
+- fixture: numbered-lines.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # Half the body size, right aligned, ten points clear of the text,
+        # which is where apa7 leaves lineno's own numbers, in the sans stack
+        # the template names.
+        - '#set par.line(numbering: n => text(size: 0.5em, font: linenumberfont)[#n], number-align: right, number-clearance: 10pt)'
+
+- fixture: numbered-lines.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        - '<w:lnNumType'

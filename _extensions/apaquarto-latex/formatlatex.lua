@@ -14,6 +14,7 @@ local utilsapa = require("utilsapa")
 
 local mode = "man"
 local shorttitle = nil
+local line_numbers = false
 
 local function raw(text)
   return pandoc.RawBlock("latex", text)
@@ -54,6 +55,13 @@ local function asked_for_size(m)
   return nil
 end
 
+-- Whether the writer asked for numbered lines, which APA wants on a
+-- manuscript sent out for review.
+local function asked_for_line_numbers(m)
+  if m["numbered-lines"] == nil then return false end
+  return utilsapa.stringify(m["numbered-lines"]) ~= "false"
+end
+
 local function meta(m)
   if m.documentmode then mode = utilsapa.stringify(m.documentmode) end
   if m.shorttitle then
@@ -79,6 +87,24 @@ local function meta(m)
   m.date = nil
   m.abstract = nil
   m.keywords = nil
+
+  -- Quarto writes every markdown table as a longtable, and flextable builds
+  -- its tables out of one. Every mode sets those as ordinary tabulars.
+  --
+  -- Two columns is what made this necessary -- a longtable refuses to start
+  -- there at all -- but it is wanted everywhere. A longtable inside a float,
+  -- which is where every table in this format goes, never emits the material
+  -- its \endlastfoot marks: a pandoc table lost the \bottomrule that closes
+  -- it and a flextable lost its note row, silently, in manuscript, student
+  -- and document modes. Set as a tabular the foot is written out under the
+  -- table, which is where it belongs, and a longtable inside a float could
+  -- not break over pages to earn its keep either way.
+  --
+  -- At the start of the document rather than here, because the command renews
+  -- the longtable environment and an include reaches the preamble before
+  -- quarto's own packages have defined it.
+  quarto.doc.include_text("in-header",
+    "\\AtBeginDocument{\\apalongtableastabular}")
 
   -- A published article is set in two columns and carries the authors' names
   -- in the head rather than the manuscript's short title.
@@ -117,29 +143,12 @@ local function meta(m)
     if not utilsapa.has_journal_masthead(m) then
       quarto.doc.include_text("in-header", "\\apatwocolumn")
     end
-    -- Quarto writes every markdown table as a longtable, and flextable
-    -- builds its tables out of one; a longtable refuses to be set in two
-    -- columns. There each is set as an ordinary tabular, which loses
-    -- nothing: a table inside a column cannot break over pages either way,
-    -- and one asking to span both columns is given a float of its own by
-    -- floatlatex.lua.
-    --
-    -- At the start of the document rather than here, because the command
-    -- renews the longtable environment and an include reaches the preamble
-    -- before quarto's own packages have defined it.
-    quarto.doc.include_text("in-header",
-      "\\AtBeginDocument{\\apalongtableastabular}")
     quarto.doc.include_text("in-header", "\\apajournalhead")
     quarto.doc.include_text("in-header", "\\apajoucolumnsep")
     quarto.doc.include_text("in-header", "\\apajoufloats")
     -- References hang by the paragraph indent rather than by a manuscript's
     -- half inch, which is what the typst format does in this mode.
     quarto.doc.include_text("in-header", "\\apajouhangindent")
-    -- Single spacing leaves a table's note hard against the rule at the foot
-    -- of the table, where it reads as one more row. Half an em of air brings
-    -- it to what apa7 leaves there.
-    quarto.doc.include_text("in-header",
-      "\\setlength{\\apatablenotegap}{0.5em}")
     local authors = m["jou-running-authors"]
     if authors then
       quarto.doc.include_text("in-header",
@@ -148,6 +157,28 @@ local function meta(m)
           "\\%1") .. "}")
     end
   end
+  -- Numbered lines, which apa7 draws with lineno and so does this. The size,
+  -- the right alignment and the distance from the text are lineno's own,
+  -- which is what apa7 leaves them at; journal mode moves the number closer
+  -- and opens the gutter, so that the number of a second-column line has
+  -- somewhere to sit. Emitted after the journal block above, whose narrower
+  -- gutter this one supersedes.
+  --
+  -- nolongtablepatch: lineno patches longtable to number its rows, and every
+  -- table here is set as a tabular instead, so the patch has nothing to do.
+  line_numbers = asked_for_line_numbers(m)
+  if line_numbers then
+    quarto.doc.include_text("in-header",
+      "\\usepackage[nolongtablepatch]{lineno}")
+    if mode == "jou" then
+      quarto.doc.include_text("in-header",
+        "\\setlength{\\linenumbersep}{5pt}")
+      quarto.doc.include_text("in-header",
+        "\\setlength{\\columnsep}{25pt}")
+    end
+    quarto.doc.include_text("in-header", "\\linenumbers")
+  end
+
   return m
 end
 
@@ -303,6 +334,11 @@ local function blocks(doc)
   if mode == "jou" then
     out:insert(raw("\\apajournalindent"))
   end
+  -- The count starts at one where the document does, which is what apa7 asks
+  -- lineno for at the same point.
+  if line_numbers then
+    out:insert(raw("\\resetlinenumber[1]"))
+  end
 
   -- The author note, raised in the first column so that it falls to the foot
   -- of it. After the page style, and before any of the article: a footnote
@@ -321,7 +357,7 @@ end
 
 -- A raw latex longtable that does not say where its head and foot end.
 --
--- In journal mode apalatex.tex sets every longtable as a tabular, and to do
+-- apalatex.tex sets every longtable as a tabular, and to do
 -- that it reads the head that repeats, which ends at \endhead, and the foot,
 -- which ends at \endlastfoot, so that it can throw the first away and write
 -- the second under the table. A marker that never arrives is looked for to the
@@ -334,7 +370,6 @@ end
 -- missing marker is added here, with nothing in front of it, which is what
 -- pandoc would have written.
 local function guard_longtable(el)
-  if mode ~= "jou" then return nil end
   if el.format ~= "latex" and el.format ~= "tex" then return nil end
   local text = el.text
   if not text:find("\\begin{longtable", 1, true) then return nil end

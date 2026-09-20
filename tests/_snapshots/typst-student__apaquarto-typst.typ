@@ -463,6 +463,28 @@
 // How far the blank paragraph that formattypst.lua puts before a first
 // paragraph is pulled back up. It cancels the height of that blank
 // paragraph, so it follows the leading, and journal mode resets it.
+// The face the line numbers take when numbered-lines asks for them.
+//
+// apa7 numbers with lineno, which sets its numbers in a sans face, and typst
+// bundles no sans family of its own: Libertinus Serif, New Computer Modern and
+// DejaVu Sans Mono are the three a machine is certain to have. So this is a
+// stack. Typst tries each family in turn and falls back to the document's own
+// face if it finds none of them, which is why the last name is the mono sans
+// typst does bundle: the list always lands on something sans-serif rather than
+// quietly giving the numbers the body's serif, and it can never fail to
+// resolve, since a family that is not installed is passed over rather than
+// raising anything.
+//
+// Monospaced digits at the foot of the list are no loss in a margin, where the
+// numbers are set flush right and a fixed width lines them up.
+// Helvetica and Liberation Sans before Arial. The three are metrically the
+// same face, so the order changes which one a machine picks and nothing about
+// the setting: Helvetica is what a mac has, Liberation Sans what a linux box
+// has, and Arial what windows has, so each takes the one that is native to it
+// and the digits come out the same width either way.
+#let linenumberfont = (
+  "Helvetica", "Liberation Sans", "Arial", "DejaVu Sans", "DejaVu Sans Mono")
+
 #let apafirstparshift = -18pt
 
 // Shared APA layout for every document mode. man/jou/doc/stu (defined below the
@@ -904,7 +926,8 @@ December 22, 2026
 /
 #heading(level: 1, outlined: false, numbering: none)[Author Note]
 <author-note>
-#par()[#text(size:0.5em)[#h(0.0em)]]
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
 Correspondence concerning this article should be addressed to Sam Student, Example University, Email: #link("mailto:sam@example.edu")[sam/@example.edu]
 
@@ -920,6 +943,7 @@ Exercises Typst student mode (page-number-only header, student title fields).
 
 #heading(level: 1, numbering: none)[Typst Student Paper Fixture]
 <firstheader>
-#par()[#text(size:0.5em)[#h(0.0em)]]
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
 Body text for the student paper fixture.

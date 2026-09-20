@@ -87,3 +87,4 @@ tests/*.out
 tests/*.fls
 tests/*.fdb_latexmk
 JEP.pdf
+pb.pdf
