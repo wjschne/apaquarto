@@ -167,7 +167,7 @@ format:
     toc: false
     numbersections: false
     author-note-columns: auto # 1, 2, or auto (default)
-  apaquarto-pdf:
+  apaquarto-latex-pdf:
     # Options: manuscript (default), journal, student, document
     documentmode: manuscript
 ---

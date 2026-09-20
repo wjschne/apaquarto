@@ -29,7 +29,6 @@ contributes:
       papersize: letter
       geometry:
         - margin=1in
-      linestretch: 2
       indent: true
       colorlinks: true
       linkcolor: blue
@@ -41,13 +40,18 @@ contributes:
       tbl-cap-location: top
       cap-location: top
       citeproc: false
-      # The style is named as it will be beside the document, and copied there
-      # by format-resources. A path reaching back into the extension would be
-      # read relative to the document rather than to this file, and would not
-      # be found.
-      csl: apa.csl
-      format-resources:
-        - ../apaquarto/apa.csl
+      # The style apaquarto ships, read from the extension beside this one.
+      # Quarto works the path out from this file rather than from the document,
+      # so the style is found wherever the document is and nothing is copied
+      # next to it.
+      #
+      # Naming it "apa.csl" and listing ../apaquarto/apa.csl under
+      # format-resources looked equivalent and was not: the render stopped with
+      # "File apa.csl not found in resource path" in any directory where an
+      # apaquarto format had not been rendered first. Those formats do copy the
+      # style next to the document, which left it lying there and made this one
+      # appear to work.
+      csl: ../apaquarto/apa.csl
       floatsintext: true
       documentmode: man
       include-in-header:
@@ -126,12 +130,18 @@ contributes:
         # Figure and table titles
         - at: post-render
           path: ../apaquarto/apacaption.lua
-        # Turn the blocks the filters above produced into latex
-        - at: post-render
-          path: formatlatex.lua
-        # Citations, asterisks for meta-analysis entries
+        # Citations, asterisks for meta-analysis entries. Before formatlatex.lua,
+        # which turns the refs div into raw latex: citeproc puts the finished
+        # bibliography inside the div whose identifier is "refs", and with the
+        # div already written out there was nothing left to put it in, so the
+        # entries went to the end of the document, below the appendices,
+        # instead of under the References heading.
         - at: post-render
           path: ../apaquarto/citeprocr.lua
         # APA in-text citations
         - at: post-render
           path: ../apaquarto/apaandcite.lua
+        # Turn the blocks the filters above produced into latex. Last, so that
+        # everything it writes out has been built by then.
+        - at: post-render
+          path: formatlatex.lua

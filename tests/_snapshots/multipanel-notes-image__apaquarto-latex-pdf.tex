@@ -31,7 +31,6 @@
   /usepackage[]{microtype}
   /UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-/usepackage{setspace}
 % Make /paragraph and /subparagraph free-standing
 /makeatletter
 /ifx/paragraph/undefined/else
@@ -125,6 +124,12 @@
 /setlength{/RaggedRightParindent}{0.5in}
 /RaggedRight
 
+% setspace's own double spacing, which is what apa7 uses and which comes to
+% about twice the font size. Asking for linestretch: 2 instead multiplies the
+% normal baseline skip, which is already larger than the font size, and set the
+% lines about a fifth further apart than apaquarto-pdf sets them.
+/doublespacing
+
 % --- Running head -----------------------------------------------------------
 % APA seventh edition: the short title in capitals at the left of every page
 % and the page number at the right. No rule under it.
@@ -137,6 +142,10 @@
 /newcommand{/setapashorttitle}[1]{/renewcommand{/apashorttitle}{/MakeUppercase{#1}}}
 
 % --- Headings ---------------------------------------------------------------
+% titlespacing rather than titlespacing*: the starred form takes the indent off
+% the paragraph that follows a heading, which is latex's habit and not APA's.
+% APA indents the first line of every paragraph, the one under a heading along
+% with the rest.
 % The five APA levels. One to three are their own paragraphs; four and five run
 % into the text that follows them, which is why they are set as runin.
 % Numbering is off: APA headings are never numbered.
@@ -144,23 +153,27 @@
 
 /titleformat{/section}[block]
   {/normalfont/bfseries/centering}{}{0pt}{}
-/titlespacing*{/section}{0pt}{/baselineskip}{0pt}
+/titlespacing{/section}{0pt}{/baselineskip}{0pt}
 
 /titleformat{/subsection}[block]
   {/normalfont/bfseries/raggedright}{}{0pt}{}
-/titlespacing*{/subsection}{0pt}{/baselineskip}{0pt}
+/titlespacing{/subsection}{0pt}{/baselineskip}{0pt}
 
 /titleformat{/subsubsection}[block]
   {/normalfont/bfseries/itshape/raggedright}{}{0pt}{}
-/titlespacing*{/subsubsection}{0pt}{/baselineskip}{0pt}
+/titlespacing{/subsubsection}{0pt}{/baselineskip}{0pt}
 
+% No [.] suffix: apaheader.lua has already put a full stop at the end of a
+% level four or five heading, and only when the heading did not end in one
+% already. A stop added here as well doubled every one of them, and turned a
+% heading ending in a question mark into "...?.".
 /titleformat{/paragraph}[runin]
-  {/normalfont/bfseries}{}{0pt}{}[.]
-/titlespacing*{/paragraph}{/parindent}{/baselineskip}{0.5em}
+  {/normalfont/bfseries}{}{0pt}{}
+/titlespacing{/paragraph}{/parindent}{/baselineskip}{0.5em}
 
 /titleformat{/subparagraph}[runin]
-  {/normalfont/bfseries/itshape}{}{0pt}{}[.]
-/titlespacing*{/subparagraph}{/parindent}{/baselineskip}{0.5em}
+  {/normalfont/bfseries/itshape}{}{0pt}{}
+/titlespacing{/subparagraph}{/parindent}{/baselineskip}{0.5em}
 
 % --- Title page -------------------------------------------------------------
 % The title itself, bold and centred, set a third of the way down the page in
@@ -192,6 +205,17 @@
   {/par/noindent/bfseries #1/par}}
 /newcommand{/apafloatcaption}[1]{%
   {/par/noindent/itshape #1/par}}
+
+% The blank line APA leaves between a figure's title and the figure itself.
+%
+% 1.2em, which is one line of text at the ordinary leading ratio and comes to
+% the 14 points apa7 leaves there. Not normalbaselineskip: in a double-spaced
+% document that is the stretched leading, twice as much, and it opened a gap
+% ten points wider than apaquarto-pdf's.
+%
+% Figures only. A table follows its title immediately, and apa7 in fact leaves
+% a little less room there than this format already does.
+/newcommand{/apafigureskip}{/vspace{1.2em}}
 /newenvironment{apafloatnote}
   {/par/setlength{/parindent}{0pt}/noindent}
   {/par}
@@ -221,6 +245,15 @@
   {/par/setlength{/parindent}{0pt}%
    /everypar{/hangindent=0.5in/hangafter=1}}
   {/par}
+
+% Quarto sets the reference list as its own CSLReferences list, which hangs its
+% entries by cslhangindent and not by the environment above. That length is
+% 1.5em out of the box, about two fifths of what APA asks for, so it is given
+% the half inch apa7 uses. Guarded: a document with no bibliography never
+% defines it.
+/makeatletter
+/@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{0.5in}}
+/makeatother
 /makeatletter
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /AtBeginDocument{%
@@ -280,7 +313,6 @@
 /begin{document}
 
 
-/setstretch{2}
 /hfill/break
 
 /hfill/break
@@ -340,8 +372,12 @@ See Figure~/ref{fig-images}.
 
 /apafloatcaption{Two Image Panels}
 
+/apafigureskip
+
 /begin{apapanel}{0.4900}%
 /textbf{Panel A}. First panel.
+
+/apafigureskip
 
 /pandocbounded{/includegraphics[keepaspectratio,alt={First panel.}]{sampleimage.png}}
 
@@ -354,6 +390,8 @@ A note belonging to the left panel.
 /hfill
 /begin{apapanel}{0.4900}%
 /textbf{Panel B}. Second panel.
+
+/apafigureskip
 
 /pandocbounded{/includegraphics[keepaspectratio,alt={Second panel.}]{sampleimage.png}}
 
@@ -376,10 +414,6 @@ A note belonging to the right panel.
 /section{Discussion}/label{discussion}
 
 Text after the float.
-
-/begin{apareferences}
-
-/end{apareferences}
 
 
 

@@ -126,6 +126,10 @@ end
 
 -- The note, as the same blocks every other format gets, so that a note reads
 -- the same whichever way the document is written out.
+-- Every note this filter has written, so that the div around the float can be
+-- told not to write it again.
+local written_notes = {}
+
 local function note_blocks(float)
   local attributes = float.attributes or {}
   -- floatwithsubfigure.lua writes the note of a float laid out in panels, and
@@ -133,9 +137,31 @@ local function note_blocks(float)
   if attributes["apa-note-written"] then return nil end
   local note = attributes["apa-note"]
   if not note or note == "" then return nil end
+  written_notes[note] = true
   local prefix = pandoc.Para({
     pandoc.Emph(pandoc.Str(noteword)), pandoc.Str("."), pandoc.Space() })
   return utilsapa.make_note(note, prefix)
+end
+
+-- Takes the apa-note off the cell a float came from, once the note has been
+-- written into the float above.
+--
+-- A float made by a code chunk sits inside the cell div quarto builds for that
+-- chunk, and the chunk's apa-note is set on both. This filter writes the note
+-- inside the float, which is where APA wants it and where floatsintext can
+-- carry it; apanote.lua, which runs later and reads divs, then found the
+-- attribute still on the cell and wrote the note a second time underneath the
+-- whole table. Only the note this filter has actually written is taken off, so
+-- a note on a div holding no float is left for apanote.lua as before.
+--
+-- The float is inside the div, so it has already been through processfloat by
+-- the time the div is reached.
+local function clear_written_note(div)
+  local note = div.attributes and div.attributes["apa-note"]
+  if note and written_notes[note] then
+    div.attributes["apa-note"] = nil
+    return div
+  end
 end
 
 -- ---------------------------------------------------------------------------
@@ -277,9 +303,12 @@ local function panel_latex(block, width, parentnumber, letter)
   end
 
   -- The caption already carries its APA panel label, put there by
-  -- floatwithsubfigure.lua, so none is added here.
+  -- floatwithsubfigure.lua, so none is added here. It is followed by the same
+  -- blank line that separates a figure's own title from its picture: set hard
+  -- against the panel, as it was, the label read as part of the picture.
   if caption then
     body:insert(pandoc.Para(caption))
+    body:insert(pandoc.RawBlock("latex", "\\apafigureskip"))
   end
 
   if content == nil then
@@ -366,6 +395,9 @@ local function processfloat(float)
   local caption = caption_inlines(float)
   if caption then
     blocks:insert(command("apafloatcaption", caption))
+    if not istable then
+      blocks:insert(raw("\\apafigureskip"))
+    end
   end
 
   local ncol = panel_columns(float)
@@ -398,5 +430,5 @@ end
 
 return {
   { Meta = meta },
-  { FloatRefTarget = processfloat },
+  { FloatRefTarget = processfloat, Div = clear_written_note },
 }

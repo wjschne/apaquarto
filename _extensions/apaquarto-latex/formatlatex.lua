@@ -118,9 +118,15 @@ local function div(el)
   if el.classes:includes("FigureNote") then
     return environment("apafloatnote", el.content)
   end
-  if el.classes:includes("csl-bib-body") or el.identifier == "refs" then
-    return environment("apareferences", el.content)
-  end
+  -- The reference list is left exactly as it is.
+  --
+  -- The div citeproc fills is the same one that carries the csl-bib-body
+  -- class, so wrapping it in an environment of apaquarto's own took it away,
+  -- and with it both the CSLReferences list pandoc writes around the entries
+  -- and the \citeproc definition its template only emits when it can see such
+  -- a div. Every citation in the body calls that command, so the build stopped
+  -- at the first one with "Undefined control sequence". The hanging indent APA
+  -- asks for is set on cslhangindent in apalatex.tex instead.
 end
 
 return {
