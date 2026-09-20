@@ -255,25 +255,23 @@
 // paragraph, so it follows the leading, and journal mode resets it.
 // The face the line numbers take when numbered-lines asks for them.
 //
-// apa7 numbers with lineno, which sets its numbers in a sans face, and typst
-// bundles no sans family of its own: Libertinus Serif, New Computer Modern and
-// DejaVu Sans Mono are the three a machine is certain to have. So this is a
-// stack. Typst tries each family in turn and falls back to the document's own
-// face if it finds none of them, which is why the last name is the mono sans
-// typst does bundle: the list always lands on something sans-serif rather than
-// quietly giving the numbers the body's serif, and it can never fail to
-// resolve, since a family that is not installed is passed over rather than
-// raising anything.
+// apa7 numbers with lineno, which sets its numbers in a sans face. Typst
+// bundles exactly one sans -- DejaVu Sans Mono -- and naming any family it
+// cannot find draws a warning for that family on every render, whether or not
+// a later name in the list resolves. There is no way to quiet that warning in
+// typst 0.14: there is no allow(), no flag on typst compile, and quarto's own
+// --quiet would hide real errors along with it. So the default names only the
+// family typst is certain to have, which is silent on every machine and sets
+// the same numbers everywhere.
 //
-// Monospaced digits at the foot of the list are no loss in a margin, where the
-// numbers are set flush right and a fixed width lines them up.
-// Helvetica and Liberation Sans before Arial. The three are metrically the
-// same face, so the order changes which one a machine picks and nothing about
-// the setting: Helvetica is what a mac has, Liberation Sans what a linux box
-// has, and Arial what windows has, so each takes the one that is native to it
-// and the digits come out the same width either way.
-#let linenumberfont = (
-  "Helvetica", "Liberation Sans", "Arial", "DejaVu Sans", "DejaVu Sans Mono")
+// Monospaced digits are no loss in a margin, where the numbers are set flush
+// right and a fixed width lines them up.
+//
+// linenumber-font names another, for a writer who knows the machine has it:
+//
+//   linenumber-font: Helvetica
+//   linenumber-font: [Helvetica, Arial]
+#let linenumberfont = ("DejaVu Sans Mono",)
 
 #let apafirstparshift = -18pt
 

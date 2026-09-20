@@ -81,17 +81,51 @@ local hangingindent = "0.5in"
 -- alignment and the distance -- with the size written in em so that it
 -- follows the body of whichever mode is being set.
 --
--- The face is matched too, as nearly as typst allows: linenumberfont in the
--- template is a stack of sans families ending in the one typst bundles, so the
--- numbers are sans wherever the paper is set.
+-- The face is matched as nearly as typst allows: linenumberfont in the
+-- template is the one sans typst bundles, so the numbers are sans wherever the
+-- paper is set and no render has to warn about a family that is not there.
+-- linenumber-font names another.
+-- The font list a writer named in linenumber-font, as a typst array, or nil
+-- when they named none. One name or several; several are tried in turn, which
+-- is worth doing only for families the writer knows the machine has, since
+-- typst warns once for every name it cannot find.
+local function asked_for_number_font(meta)
+  local value = meta["linenumber-font"]
+  if value == nil then return nil end
+
+  local names = {}
+  local kind = pandoc.utils.type(value)
+  if kind == "List" then
+    for _, item in ipairs(value) do
+      local name = pandoc.utils.stringify(item)
+      if name ~= "" then names[#names + 1] = name end
+    end
+  else
+    local name = pandoc.utils.stringify(value)
+    if name ~= "" then names[1] = name end
+  end
+  if #names == 0 then return nil end
+
+  for i, name in ipairs(names) do
+    -- A quotation mark or a backslash in a font name would close or
+    -- escape the typst string it is about to be written into. Neither
+    -- belongs in one, so they are dropped rather than escaped.
+    names[i] = '"' .. name:gsub('[\\"]', '') .. '"'
+  end
+  -- A one-name array keeps the trailing comma typst wants to tell an array
+  -- from a parenthesised value.
+  return "(" .. table.concat(names, ", ") .. ",)"
+end
+
 local function line_numbering(meta)
   if meta["numbered-lines"] == nil then return nil end
   if pandoc.utils.stringify(meta["numbered-lines"]) == "false" then return nil end
   local mode = meta.documentmode and
     pandoc.utils.stringify(meta.documentmode) or "man"
   local clearance = (mode == "jou") and "5pt" or "10pt"
+  local font = asked_for_number_font(meta) or "linenumberfont"
   return pandoc.RawBlock("typst",
-    "#set par.line(numbering: n => text(size: 0.5em, font: linenumberfont)[#n], " ..
+    "#set par.line(numbering: n => text(size: 0.5em, font: " .. font .. ")[#n], " ..
     "number-align: right, number-clearance: " .. clearance .. ")")
 end
 
