@@ -1,9 +1,22 @@
-if FORMAT == "latex" then
-  return
-end
-
 -- This filter finds and assigns the table identifier in plain
 -- markdown tables so that the crossrefprefix.lua filter can find it.
+--
+-- apaquarto-pdf leaves markdown tables to apa7, so the filter stands down for
+-- it. It used to stand down for FORMAT "latex" outright, which was the same
+-- thing when apa7 was the only latex format apaquarto had. apaquarto-latex-pdf
+-- is also FORMAT "latex" and does want this: without an identifier on the
+-- table, crossrefprefix.lua never counted it, so a markdown table took no
+-- number of its own and fell back to quarto's count -- a document with a
+-- markdown table and a code chunk table in it had two Table 1s. The test
+-- needs the metadata, so it is made in the passes below.
+
+local utilsapa = require("utilsapa")
+
+local skip = false
+
+local function getmeta(m)
+  skip = utilsapa.apa7_latex(m)
+end
 
 -- The attribute text with the inside of every quoted value blanked out.
 --
@@ -70,7 +83,9 @@ local function add_caption_attributes(tb)
   end
 end
 
-Table = function(tb)
+local function table_identifier(tb)
+  if skip then return nil end
+
   add_caption_attributes(tb)
 
   if tb.caption.long then
@@ -84,3 +99,8 @@ Table = function(tb)
     return tb
   end
 end
+
+return {
+  { Meta = getmeta },
+  { Table = table_identifier },
+}

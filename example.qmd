@@ -160,16 +160,19 @@ format:
     list-of-figures: true
   apaquarto-typst: 
     # Options: manuscript (default), journal, student, document
-    documentmode: document
+    documentmode: journal
     keep-typ: false
     list-of-figures: false
     list-of-tables: false
     toc: false
     numbersections: false
     author-note-columns: auto # 1, 2, or auto (default)
+  apaquarto-pdf:
+    # Options: manuscript (default), journal, student, document
+    documentmode: journal
   apaquarto-latex-pdf:
     # Options: manuscript (default), journal, student, document
-    documentmode: manuscript
+    documentmode: journal
 ---
 
 ```{r}
@@ -529,6 +532,6 @@ mtcars |>
   mutate(Gears = factor(Gears),
          Transmission = factor(Transmission, 
                                labels = c("Automatic", "Manual"))) |>
-  apa_chisq(table_width = .5, font_size = 10)
+  apa_chisq(table_width = .45, font_size = 10)
 ```
 

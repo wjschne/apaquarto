@@ -1,0 +1,109 @@
+---
+title: "Tables and Appendix References in Plain LaTeX"
+shorttitle: "Journal Tables"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+abstract: "Exercises table numbering, appendix references and longtable head and foot handling."
+format:
+  apaquarto-latex-pdf:
+    documentmode: jou
+---
+
+<!--
+Four things that were wrong at once in plain LaTeX, three of them only in
+journal mode.
+
+  - A markdown table and a code chunk table in one document were both Table 1.
+    markdowntable.lua stood down for FORMAT "latex", which was right when apa7
+    was the only LaTeX format apaquarto had, so the markdown table never got an
+    identifier and crossrefprefix.lua never counted it.
+
+  - A reference to a float in an appendix printed the bare count, "Table 1",
+    while the title above it read "Table A1".
+
+  - In journal mode a longtable is set as a tabular, since a longtable refuses
+    two columns. The four markers that say where the repeating head and the
+    foot end were made to do nothing, so every row was set where it stood: a
+    repeating head printed twice, a foot printed between the head and the body.
+
+  - A raw LaTeX longtable with no \endlastfoot sent the collection that moves
+    the foot reading to the end of the document.
+
+The two raw tables stand in for flextable, which writes \endfirsthead and
+\endhead always and \endlastfoot only for a table that has a footer. Raw LaTeX
+says exactly what is being tested and needs no package to do it.
+-->
+
+# Method
+
+See @tbl-md, @tbl-chunk, @tbl-apx and @fig-apx.
+
+| Letters | Numbers |
+|---------|---------|
+| A       | 1       |
+
+: A markdown table. {#tbl-md apa-note="A note on the markdown table."}
+
+```{r}
+#| label: tbl-chunk
+#| echo: false
+#| tbl-cap: "A table written as a code chunk."
+#| apa-note: "A note on the chunk table."
+knitr::kable(data.frame(a = 1:2, b = 3:4))
+```
+
+A longtable with a head that repeats and a foot of its own.
+
+```{=latex}
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+HEADMARKER & HEADTWO \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+HEADMARKER & HEADTWO \\
+\midrule\noalign{}
+\endhead
+\multicolumn{2}{@{}l@{}}{FOOTMARKER} \\
+\endlastfoot
+ROWONE & r1 \\
+ROWTWO & r2 \\
+\end{longtable}
+```
+
+A longtable with a head that repeats and no foot at all.
+
+```{=latex}
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+NOFOOTHEAD & n2 \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+NOFOOTHEAD & n2 \\
+\midrule\noalign{}
+\endhead
+NOFOOTROW & n4 \\
+\end{longtable}
+```
+
+# References {#refs}
+
+::: {#refs}
+:::
+
+# An Appendix {#apx-a}
+
+Text in the appendix, which refers to @tbl-apx and to @fig-apx.
+
+| Letters | Numbers |
+|---------|---------|
+| B       | 2       |
+
+: A table in an appendix. {#tbl-apx apa-note="A note on the appendix table."}
+
+![A figure in an appendix.](sampleimage.png){#fig-apx apa-note="A note on the appendix figure."}

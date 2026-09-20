@@ -22,8 +22,10 @@ local figureword = "Figure"
 local tableword = "Table"
 local noteword = "Note"
 local floatsintext = true
+local mode = "man"
 
 local function meta(m)
+  if m.documentmode then mode = utilsapa.stringify(m.documentmode) end
   if m.language then
     if m.language["crossref-fig-title"] then
       figureword = utilsapa.stringify(m.language["crossref-fig-title"])
@@ -106,9 +108,14 @@ end
 -- \label on its own refers to whatever counter was last stepped, which for a
 -- float written without \caption is the wrong one, and every reference to it
 -- comes out as ??. The counter is set to the number the float is being given
--- and then stepped, so that a \ref to it prints what the reader sees above the
--- figure. A number carrying an appendix letter is left to the counter's own
--- count, there being no number to set it to.
+-- and then stepped, so that the anchor a reference jumps to is the float's own.
+--
+-- What the reference prints is set by hand afterwards. \refstepcounter leaves
+-- \@currentlabel reading the bare count, which is right for a float in the
+-- body and wrong for one in an appendix: apaquarto numbers those B1, B2 and
+-- begins again at each appendix, so the title above the table read "Table B1"
+-- while every reference to it in the text read "Table 1". The number the
+-- reader sees is written into \@currentlabel, so that the two agree.
 local function label_blocks(float)
   if not float.identifier or float.identifier == "" then
     return pandoc.List({})
@@ -119,8 +126,13 @@ local function label_blocks(float)
   if n and n:match("^%d+$") then
     out:insert(raw("\\setcounter{" .. counter .. "}{" .. (tonumber(n) - 1) .. "}"))
   end
-  out:insert(raw("\\refstepcounter{" .. counter .. "}%\n\\label{"
-    .. float.identifier .. "}"))
+  local tex = "\\refstepcounter{" .. counter .. "}%\n"
+  if n then
+    local shown = ((float.attributes or {}).prefix or "") .. n
+    tex = tex .. "\\makeatletter\\def\\@currentlabel{" .. shown
+      .. "}\\makeatother%\n"
+  end
+  out:insert(raw(tex .. "\\label{" .. float.identifier .. "}"))
   return out
 end
 
@@ -373,6 +385,71 @@ local function panel_grid(float, ncol)
   return blocks, notes
 end
 
+-- ---------------------------------------------------------------------------
+-- Chunk options on the cell div
+--
+-- A float written as a markdown image carries apa-twocolumn on the image, and
+-- quarto hands the attribute on to the float it builds around it. A float
+-- written as a code chunk carries it somewhere else: on the cell div quarto
+-- wraps the chunk's output in. The float inside that div never saw it, so a
+-- figure asked to span both columns of a journal article was set inside one
+-- column like any other.
+--
+-- The attribute is copied down to the float here, in a pass of its own, so
+-- that it is already there by the time processfloat reads it. A table written
+-- as a chunk needs none of this -- quarto puts the cell's attributes on the
+-- table float itself -- and one that already carries the attribute is left
+-- alone, so nothing is overwritten.
+--
+-- The note comes with it. A spanning float is the one kind this format does
+-- not set in place: latex will only put it at the top of a page, so a note
+-- left behind on the div would sit in the column under a figure that had gone
+-- elsewhere. Inside the float it travels with the figure, which is where the
+-- note of a table already is.
+local function push_cell_attributes(div)
+  local a = div.attributes
+  if not a then return nil end
+  local span = a["apa-twocolumn"]
+  if not span or span == "" then return nil end
+
+  local moved = false
+  div.content:walk {
+    Div = function(child)
+      local float = float_behind(child)
+      if not float or not float.attributes then return nil end
+      if not float.attributes["apa-twocolumn"] then
+        float.attributes["apa-twocolumn"] = span
+        moved = true
+      end
+      if a["apa-note"] and not float.attributes["apa-note"] then
+        float.attributes["apa-note"] = a["apa-note"]
+      end
+    end
+  }
+  if moved then return div end
+end
+
+-- The identifier quarto leaves on a markdown table.
+--
+-- The float carries it too, and this format writes the label itself, from the
+-- number the reader sees. Pandoc's latex writer turns an identified table into
+-- a longtable that opens with a \caption and a \label of its own: the
+-- caption is empty, apacaption.lua having lifted the title out of it long
+-- before, but \caption still steps the table counter and sets an empty
+-- caption line above the rules, and the second \label makes the identifier
+-- multiply defined, so a reference to it could resolve to either. The one on
+-- the table is taken off and the float's own is left.
+local function strip_table_identifier(blocks)
+  return blocks:walk {
+    Table = function(tb)
+      if tb.identifier and tb.identifier ~= "" then
+        tb.identifier = ""
+        return tb
+      end
+    end
+  }
+end
+
 local function processfloat(float)
   -- A panel of a laid-out figure. It is left as it is so that the figure it
   -- belongs to can take it apart and put it in the grid; written out here it
@@ -381,9 +458,29 @@ local function processfloat(float)
 
   local istable = float.type == "Table"
   local environment = istable and "table" or "figure"
+
+  -- A float asking to span both columns of a journal article gets the starred
+  -- environment, which latex sets across the page instead of inside a column.
+  -- Nothing else can hold a table wider than a column, and a longtable, which
+  -- is what such a table would otherwise be, cannot be set in two columns at
+  -- all.
+  if mode == "jou" then
+    local span = (float.attributes or {})["apa-twocolumn"]
+    if span and utilsapa.stringify(span) ~= "false" then
+      environment = environment .. "*"
+    end
+  end
   -- floatsintext asks for the float to stay where it was written, which is
   -- what the H placement means; otherwise latex is left to place it.
+  --
+  -- A float spanning both columns is the exception. Latex will only set one at
+  -- the top of a page or on a page of its own, and given [H] it silently drops
+  -- the float: the table was simply missing from the output, which is the
+  -- disappearance example.qmd warns about.
   local placement = floatsintext and "[H]" or "[htbp]"
+  if environment:find("%*$") then
+    placement = "[tbp]"
+  end
 
   local blocks = pandoc.List({
     raw("\\begin{" .. environment .. "}" .. placement),
@@ -408,14 +505,17 @@ local function processfloat(float)
     panelnotes = notes
   elseif float.content then
     if pandoc.utils.type(float.content) == "Blocks" then
-      blocks:extend(float.content)
+      blocks:extend(strip_table_identifier(float.content))
     else
-      blocks:insert(float.content)
+      blocks:extend(strip_table_identifier(pandoc.Blocks({ float.content })))
     end
   end
 
   local note = note_blocks(float)
   if note then
+    -- A table's note sits under the rule that closes the table, and needs
+    -- the rule cleared. A figure's note follows the picture and does not.
+    if istable then blocks:insert(raw("\\apatablenoteskip")) end
     blocks:insert(note)
   elseif panelnotes then
     -- The note floatwithsubfigure.lua already made, set under the whole grid.
@@ -430,5 +530,8 @@ end
 
 return {
   { Meta = meta },
+  -- Before the floats are written, so that a chunk's apa-twocolumn has
+  -- reached the float by the time processfloat asks for it.
+  { Div = push_cell_attributes },
   { FloatRefTarget = processfloat, Div = clear_written_note },
 }

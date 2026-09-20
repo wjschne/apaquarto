@@ -6,9 +6,10 @@
 %
 /documentclass[
   letterpaper,
-  12pt]{article}
+  10pt,
+  twoside]{article}
 /usepackage{xcolor}
-/usepackage[margin=1in]{geometry}
+/usepackage[margin=0.75in,includehead,headheight=13pt,headsep=4pt]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -595,7 +596,15 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{IMAGE PANELS}
+/setapashorttitle{MASTHEAD}
+/singlespacing
+/AtBeginDocument{/apalongtableastabular}
+/apajournalhead
+/apajoucolumnsep
+/apajoufloats
+/apajouhangindent
+/setlength{/apatablenotegap}{0.5em}
+/setapaauthorline{Author}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -613,108 +622,64 @@
 /begin{document}
 
 
-/hfill/break
+/begin{lrbox}{/apamastheadbox}%
 
-/hfill/break
+/begin{minipage}{/textwidth}
 
-/vspace*{3/baselineskip}
+/apamastheadhead{/apamastheadlogo{_extensions/apaquarto/apaquarto-logo.png}}{Nonexistent
+Journal of Generic Psychology}
 
-/apatitle{
+/apamastheadline
 
-Multipanel Notes, Image Panels
+/apamastheadfoot{© 2025 The Author(s)//
+ISSN: 0024-7662}{2026, Vol. 3, No. 2, 45--61//
+/url{https://example.org/apaquarto}}
+
+/apajoutitle{
+
+A Masthead in Plain LaTeX
 
 }
 
-/begin{apaauthor}
-
-/hfill/break
+/begin{apajoubyline}
 
 Test Author
 
+/apajouaffiliationsize
+
 Test University
 
-/end{apaauthor}
+/end{apajoubyline}
 
-/hfill/break
+/begin{apajounarrow}
 
-/hfill/break
+/begin{apanoindent}
 
-/apatitlepageheading{
+Exercises the journal masthead of the plain LaTeX format.
 
-Author Note
+/end{apanoindent}
 
-}
+/end{apajounarrow}
+
+/end{minipage}/end{lrbox}
+
+/twocolumn[/apamastheadlift/usebox{/apamastheadbox}]
+
+/thispagestyle{apafirstpage}
+
+/apajournalindent
+
+/begin{apajounote}
 
 Correspondence concerning this article should be addressed to Test
 Author, Test University, Email:
 /href{mailto:test@example.com}{/nolinkurl{test@example.com}}
 
-/clearpage
-
-/apatitle{
-
-Multipanel Notes, Image Panels
-
-}
+/end{apajounote}
 
 /section{Method}/label{method}
 
-See Figure~/ref{fig-images}.
-
-/begin{figure}[H]
-
-/setcounter{figure}{0}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-images}
-
-/apafloattitle{Figure 1}
-
-/apafloatcaption{Two Image Panels}
-
-/apafigureskip
-
-/begin{apapanel}{0.4900}%
-/textbf{Panel A}. First panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={First panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the left panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/hfill
-/begin{apapanel}{0.4900}%
-/textbf{Panel B}. Second panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Second panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the right panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/par
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note belonging to the whole figure.
-
-/end{apafloatnote}
-
-/end{figure}
-
-/section{Discussion}/label{discussion}
-
-Text after the float.
+Text of the article, under the masthead.
 
 
 

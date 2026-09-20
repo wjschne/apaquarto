@@ -354,3 +354,107 @@
     pdf:
       contains:
         - 'Body text for the student paper fixture.'
+
+# ------------------------------------------- floats spanning both columns --
+
+- fixture: latex-jou-floats.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    tex:
+      count:
+        # Both wide figures, whichever way they were written, and the wide
+        # table. A float written as a code chunk carries apa-twocolumn on the
+        # cell div rather than on the float, and used to be set inside one
+        # column: two of these three were one.
+        # Named with the placement a spanning float is given, so that the
+        # author note, which is a figure* of its own at the foot of the page,
+        # is not counted as one of them.
+        '\begin{figure*}[tbp]': 2
+        '\begin{table*}[tbp]': 1
+        # The narrow figure, which asked for nothing and is set in its column.
+        '\begin{figure}[H]': 1
+        # Each note written once. A note the filter writes into the float and
+        # leaves on the div as well comes out twice.
+        # The tilde is the space apaquarto ties the note's first word with.
+        'A~note on the wide chunk.': 1
+        'A~note on the wide table.': 1
+        'A~note on the narrow chunk.': 1
+    pdf:
+      contains:
+        - 'A note on the wide image.'
+        - 'A note on the wide chunk.'
+        - 'A note on the wide table.'
+      absent:
+        - '??'
+
+# ------------------------- table numbers, appendix references, longtables --
+
+- fixture: latex-jou-tables.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    tex:
+      count:
+        # A markdown table and a chunk table, numbered one and two. Both were
+        # Table 1: the markdown one was never counted, so it fell back to
+        # quarto's own order while the chunk table used apaquarto's.
+        '\apafloattitle{Table 1}': 1
+        '\apafloattitle{Table 2}': 1
+        # The number a reference prints, written by hand. In an appendix it
+        # carries the letter, which the counter alone cannot.
+        '\makeatletter\def\@currentlabel{A1}\makeatother': 2
+    pdf:
+      count:
+        # The head of a longtable set as a tabular, printed once. The marker
+        # that ends the repeating head did nothing, so it was printed twice.
+        'HEADMARKER': 1
+        'NOFOOTHEAD': 1
+      contains:
+        - 'Table A1'
+        - 'Figure A1'
+        # The foot under the last row of the body, where it belongs.
+        - 'ROWTWO r2 FOOTMARKER'
+        # A raw longtable with no foot marker of its own. One is added for
+        # it, without which the collection that moves the foot reads to the
+        # end of the document and nothing is rendered at all, so this line
+        # standing in the output is the check on that.
+        - 'NOFOOTROW'
+      absent:
+        # The foot directly under the head, which is where it was written and
+        # where it used to be set.
+        - 'HEADTWO FOOTMARKER'
+
+# ------------------------------------------------------- the journal masthead --
+
+- fixture: latex-jou-masthead.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    tex:
+      contains:
+        # The masthead is what asks for two columns, since only the optional
+        # argument of twocolumn sets material across both of them.
+        - '\twocolumn[\apamastheadlift\usebox{\apamastheadbox}]'
+        - '\apamastheadlogo{'
+        # The title, the byline and the abstract span the page under the
+        # masthead, which means being inside the box handed to twocolumn
+        # above rather than standing in the first column.
+        - '\apajoutitle{'
+        - '\begin{apajoubyline}'
+        - '\begin{apajounarrow}'
+        # The author note, across the foot of the first page under a rule.
+        - '\begin{apajounote}'
+      count:
+        # Named once, where apalatex.tex defines it, and not a second time:
+        # a journal document with a masthead asks for its two columns through
+        # the masthead instead. The other two latex-jou fixtures, which have
+        # no journal metadata, take the older path.
+        '\apatwocolumn': 1
+    pdf:
+      contains:
+        - 'Nonexistent Journal of Generic Psychology'
+        - 'ISSN: 0024-7662'
+        - '2026, Vol. 3, No. 2, 45'
+        - '2025 The Author(s)'
+        - 'Text of the article, under the masthead.'
+        # The note itself, which a corresponding author gets whether or not
+        # an author-note field was written.
+        - 'Correspondence concerning this article'

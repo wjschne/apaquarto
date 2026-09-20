@@ -577,6 +577,130 @@ local function masthead_lines(first, second)
   return List:new { pandoc.Plain(out) }
 end
 
+-- One side of the masthead's lower row as inlines rather than blocks, which is
+-- what the latex masthead passes to a command.
+local function masthead_inlines(first, second)
+  local out = pandoc.Inlines({})
+  if first then out:extend(first) end
+  if second then
+    if #out > 0 then out:insert(pandoc.LineBreak()) end
+    out:extend(second)
+  end
+  if #out == 0 then return nil end
+  return out
+end
+
+-- The journal's logo, resolved from logo: default to the file apaquarto ships.
+-- Returns the path as the writer in question wants to read it, or nil.
+local function masthead_logo(meta, resolve)
+  local logo = journal_field(meta, "logo")
+  if not logo then return nil end
+  if stringify(logo) ~= kDefaultLogo then return stringify(logo) end
+  local shipped = resolve(kShippedLogo)
+  if shipped then return shipped end
+  quarto.log.warning(
+    "logo: default could not find " .. kShippedLogo ..
+    " in the apaquarto extension folder, so the masthead has no logo.")
+  return nil
+end
+
+-- The same masthead for plain latex, built out of the commands apalatex.tex
+-- defines and set in a div formatlatex.lua knows to hand to \twocolumn. The
+-- band is the one the typst format sets, off the Journal of Educational
+-- Psychology, and the pieces go in the same order: the logo and the journal's
+-- name on one line, a rule, then the copyright and the issn at the left with
+-- the issue and the doi at the right.
+-- The orcid lines of the author note, set off for latex the way
+-- set_off_jou_orcid sets them off for typst.
+local function set_off_jou_orcid_latex(blocks)
+  local out = List:new {}
+  local open = false
+  for _, block in ipairs(blocks) do
+    local orcid = block.t == "Para" and has_orcid(block)
+    if orcid and not open then
+      out:extend({ pandoc.RawBlock("latex", "\\begin{apajouorcid}") })
+      open = true
+    elseif open and not orcid then
+      out:extend({ pandoc.RawBlock("latex", "\\end{apajouorcid}") })
+      open = false
+    end
+    out:extend({ block })
+  end
+  if open then
+    out:extend({ pandoc.RawBlock("latex", "\\end{apajouorcid}") })
+  end
+  return out
+end
+
+-- The impact statement in its box, for latex. The same shape box_jou_impact
+-- draws in typst: the statement arrives as a heading followed by one or more
+-- divs, and the keywords line after it, which is a para, closes the box.
+local function box_jou_impact_latex(blocks)
+  local out = List:new {}
+  local i = 1
+  while i <= #blocks do
+    local block = blocks[i]
+    if block.t == "Header" and block.identifier == "impact" then
+      out:extend({ pandoc.RawBlock("latex", "\\begin{apajouimpact}") })
+      out:extend({ block })
+      i = i + 1
+      while i <= #blocks and blocks[i].t == "Div" do
+        out:extend({ blocks[i] })
+        i = i + 1
+      end
+      out:extend({ pandoc.RawBlock("latex", "\\end{apajouimpact}") })
+    else
+      out:extend({ block })
+      i = i + 1
+    end
+  end
+  return out
+end
+
+local function latex_journal_metadata(meta)
+  if not utilsapa.has_journal_masthead(meta) then return nil end
+
+  local title = journal_title(meta)
+  local logo = masthead_logo(meta, utilsapa.extension_file_relative)
+  local url = journal_field(meta, "url")
+  local issn = journal_field(meta, "issn")
+
+  local url_line
+  if url then url_line = List:new { pandoc.Link(url, stringify(url)) } end
+  local issn_line
+  if issn then
+    issn_line = List:new { pandoc.Str("ISSN:"), pandoc.Space() }
+    issn_line:extend(issn)
+  end
+
+  local left = masthead_inlines(journal_copyright(meta), issn_line)
+  local right = masthead_inlines(journal_issue_line(meta), url_line)
+
+  local blocks = List:new {}
+
+  local head = pandoc.Inlines({ pandoc.RawInline("latex",
+    "\\apamastheadhead{" ..
+    (logo and ("\\apamastheadlogo{" .. logo:gsub("\\", "/") .. "}") or "") ..
+    "}{") })
+  if title then head:extend(title) end
+  head:insert(pandoc.RawInline("latex", "}"))
+  blocks:insert(pandoc.Para(head))
+
+  blocks:insert(pandoc.RawBlock("latex", "\\apamastheadline"))
+
+  if left or right then
+    local foot = pandoc.Inlines({
+      pandoc.RawInline("latex", "\\apamastheadfoot{") })
+    if left then foot:extend(left) end
+    foot:insert(pandoc.RawInline("latex", "}{"))
+    if right then foot:extend(right) end
+    foot:insert(pandoc.RawInline("latex", "}"))
+    blocks:insert(pandoc.Para(foot))
+  end
+
+  return pandoc.Div(blocks, pandoc.Attr("", { "JournalMasthead" }))
+end
+
 local function typst_journal_metadata(meta)
   local title = journal_title(meta)
   local issue_line = journal_issue_line(meta)
@@ -677,6 +801,8 @@ return {
       local body = List:new {}
       local meta = doc.meta
 
+      local latex_jou = utilsapa.plain_latex(meta) and meta.documentmode
+        and stringify(meta.documentmode) == "jou"
       local typst_jou = is_typst_mode(meta, "jou")
       local typst_doc = is_typst_mode(meta, "doc")
       local typst_stu = is_typst_mode(meta, "stu")
@@ -1312,6 +1438,35 @@ return {
       elseif typst_doc then
         body = strip_doc_frontmatter(body)
         body:extend(doc.blocks)
+      elseif latex_jou then
+        -- A published article in plain latex, laid out the way the typst one
+        -- is: the masthead, the title and the byline, then the abstract and
+        -- what follows it in a narrower block, all of it spanning the page;
+        -- the author note goes to the foot of the first column. The same
+        -- split as typst makes, since the front matter it reads is the same;
+        -- formatlatex.lua is what turns each part into latex, and it needs
+        -- them marked off from one another to do it.
+        local front, narrow, notes, tail = split_jou_frontmatter(body)
+        local out = List:new {}
+        local masthead = latex_journal_metadata(meta)
+        if masthead then out:extend({ masthead }) end
+        out:extend({ pandoc.Div(front, pandoc.Attr("", { "JournalWide" })) })
+        if #narrow > 0 then
+          out:extend({ pandoc.Div(box_jou_impact_latex(narrow),
+            pandoc.Attr("", { "JournalNarrow" })) })
+        end
+        if #notes > 0 then
+          -- The orcid icon carries a width in millimetres, which beside the
+          -- note's smaller text is taller than the text itself and opens up
+          -- every line it sits on. Sized to the text it leaves the line
+          -- height alone, which is what fit_jou_orcid does for typst.
+          out:extend({ pandoc.Div(
+            set_off_jou_orcid_latex(fit_jou_orcid(notes)),
+            pandoc.Attr("", { "JournalNote" })) })
+        end
+        out:extend(tail)
+        out:extend(doc.blocks)
+        body = out
       else
         body:extend(doc.blocks)
       end

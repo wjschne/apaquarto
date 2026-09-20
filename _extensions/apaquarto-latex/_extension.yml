@@ -22,6 +22,24 @@ contributes:
       # apa7 whenever the output is latex. See utilsapa.apa7_latex.
       apaquarto-plain-latex: true
 
+      # APA asks for a serif face of ordinary weight, and names Times New
+      # Roman first. TeX Gyre Termes is metrically the same face and ships
+      # with every TeX distribution, so a document sets the same lines on a
+      # machine that has no Times New Roman on it -- a Linux box, or CI.
+      #
+      # The engine below is lualatex, so quarto's template loads fontspec and
+      # unicode-math and the face is asked for by name.
+      #
+      # Text only. newtxtext and newtxmath, which are the usual way of getting
+      # Times into a LaTeX document, are written for pdflatex: newtxmath sets
+      # up math the traditional way and clashes with the unicode-math that
+      # template loads, and nothing here can unload it. Math is left to
+      # unicode-math's own default, Latin Modern Math, which every
+      # distribution has. Setting mathfont to "TeX Gyre Termes Math" beside
+      # this would match the math to the text, at the cost of a font package
+      # (tex-gyre-math) that is not installed by default.
+      mainfont: "TeX Gyre Termes"
+
       documentclass: article
       classoption:
         - 12pt

@@ -211,6 +211,22 @@ local kFolder = (function()
   return pandoc.path.directory(file)
 end)()
 
+--- Whether the document has anything to put in a journal masthead.
+---
+--- Asked by the two formats that set one: typst builds it in frontmatter.lua
+--- and latex builds it there too, but latex also has to know before the body
+--- is written, since a masthead is what decides whether the article opens with
+--- twocolumn or with a masthead handed to twocolumn.
+function M.has_journal_masthead(meta)
+  if meta == nil then return false end
+  local fields = { "url", "logo", "issn", "copyrightnotice", "copyrighttext" }
+  if M.journal_title(meta) or M.journal_issue_line(meta) then return true end
+  for _, name in ipairs(fields) do
+    if M.journal_field(meta, name) then return true end
+  end
+  return false
+end
+
 local function script_directory()
   return kFolder
 end

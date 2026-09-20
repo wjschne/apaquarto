@@ -24,6 +24,7 @@
 /usepackage{lmodern}
 /ifPDFTeX/else
   % xetex/luatex font selection
+  /setmainfont[]{TeX Gyre Termes}
 /fi
 % Use upquote if available, for straight quotes in verbatim environments
 /IfFileExists{upquote.sty}{/usepackage{upquote}}{}
@@ -173,6 +174,279 @@
 /fancyhead[R]{/thepage}
 /newcommand{/apashorttitle}{}
 /newcommand{/setapashorttitle}[1]{/renewcommand{/apashorttitle}{/MakeUppercase{#1}}}
+/newcommand{/apaauthorline}{}
+/newcommand{/setapaauthorline}[1]{/renewcommand{/apaauthorline}{/MakeUppercase{#1}}}
+
+% The head a published article carries, which is the one apaquarto's typst
+% format sets: the short title centred on a recto page and the authors'
+% surnames centred on a verso one, both in capitals, with the page number in
+% the outer corner. The head is smaller than the body and the page number is
+% not, which is how the journals set it.
+%
+% Recto and verso only differ once the document is twoside, which
+% formatlatex.lua asks for along with this.
+/newcommand{/apaheadsize}{/fontsize{8}{10}/selectfont}
+/newcommand{/apajournalhead}{%
+  /fancyhf{}%
+  /fancyhead[LE]{/thepage}%
+  /fancyhead[RO]{/thepage}%
+  /fancyhead[CE]{{/apaheadsize/apaauthorline}}%
+  /fancyhead[CO]{{/apaheadsize/apashorttitle}}}
+
+% Float placement in a published article.
+%
+% A float spanning both columns can only go at the top of a page, at the foot
+% of one where stfloats allows it, or on a page of its own. Latex's own
+% fractions are cautious enough that the two spanning floats in example.qmd
+% went to a page of their own with no text on it at all, where apa7 and the
+% typst format both set them at the head of a page of text. A spanning float
+% may now take nine tenths of the top of a page, and a float page has to be
+% nine tenths full before latex will make one.
+/newcommand{/apajoufloats}{%
+  /renewcommand{/dbltopfraction}{0.9}%
+  /renewcommand{/dblfloatpagefraction}{0.9}%
+  /renewcommand{/topfraction}{0.9}%
+  /renewcommand{/bottomfraction}{0.5}%
+  /renewcommand{/textfraction}{0.07}%
+  /renewcommand{/floatpagefraction}{0.85}%
+  /setcounter{dbltopnumber}{2}%
+  /setcounter{topnumber}{3}%
+  /setcounter{totalnumber}{5}}
+
+% The gutter between the columns, which typst leaves at a twenty-fifth of the
+% text width and latex at ten points.
+/newcommand{/apajoucolumnsep}{/setlength{/columnsep}{0.04/textwidth}}
+
+% The first page of a journal or document paper carries the masthead instead of
+% a running head, so it is left plain.
+/fancypagestyle{apafirstpage}{%
+  /fancyhf{}%
+  /renewcommand{/headrulewidth}{0pt}}
+
+% Two columns, which is what a published article is set in. /twocolumn starts a
+% page, so it is asked for at the start of the document rather than in the
+% preamble, where it would be too early to take effect.
+/newcommand{/apatwocolumn}{/AtBeginDocument{/twocolumn}}
+
+% --- Journal front matter ---------------------------------------------------
+% In a published article the title, the byline, the abstract and the lines
+% under them span the page beneath the masthead rather than standing in the
+% first column, and the author note goes to the foot of that column. The sizes
+% are the ones apa7 gives its journal mode, which is where apaquarto's typst
+% format takes them from as well: at a 10pt base the title is /LARGE and
+% unemphasised, the byline /large, the affiliations the body size, and the
+% abstract and everything with it /small.
+/newcommand{/apajoutitle}[1]{%
+  {/centering/fontsize{17.28}{20.74}/selectfont #1/par}}
+
+% The byline, with the affiliations under it at the body size. formatlatex.lua
+% switches to the smaller size after the first paragraph, which is the byline.
+% The gaps between the parts of the front matter are measured against the
+% typst masthead, which is what this page is meant to look like.
+/newenvironment{apajoubyline}
+  {/par/vspace{9pt}/centering/fontsize{12}{14}/selectfont}
+  {/par}
+/newcommand{/apajouaffiliationsize}{/fontsize{10}{12}/selectfont}
+
+% The abstract, the impact statement and the lines under them: smaller, and in
+% a block narrower than the masthead, centred under the byline. apa7 sets its
+% journal abstract in a 4.6875in parbox, which is where the width comes from.
+% The text inside is set flush left, as it is in the typst masthead.
+/newlength{/apajounarrowwidth}
+/setlength{/apajounarrowwidth}{4.6875in}
+% parskip as well as leading: typst leaves a line and a bit between the
+% keywords and the supplemental materials under them, where latex on its own
+% would leave only the line.
+/newenvironment{apajounarrow}
+  {/par/vspace{7pt}/centering
+   /begin{minipage}{/apajounarrowwidth}%
+   /fontsize{9}{11}/selectfont
+   /setlength{/parskip}{6pt}%
+   /setlength{/parindent}{0pt}/setlength{/RaggedRightParindent}{0pt}/RaggedRight}
+  {/end{minipage}/par/vspace{10pt}}
+
+% The impact statement, ruled off from the abstract above it and the keywords
+% below it. The same box the typst masthead draws: a three-quarter-point rule
+% 6pt clear of the text on every side, with 9pt above and below.
+/newsavebox{/apajouimpactbox}
+/newenvironment{apajouimpact}
+  {/par/vspace{3pt}%
+   /setlength{/fboxrule}{0.75pt}/setlength{/fboxsep}{6pt}%
+   /begin{lrbox}{/apajouimpactbox}%
+   /begin{minipage}{/dimexpr/linewidth-2/fboxsep-2/fboxrule/relax}}
+  {/end{minipage}/end{lrbox}%
+   /noindent/fbox{/usebox{/apajouimpactbox}}/par/vspace{3pt}}
+
+% The orcid lines of the author note. Each is one short name-and-link
+% paragraph, so justifying it stretches the gaps across the measure and
+% indenting it leaves the names out of line with each other. They are set
+% flush left and unindented, while the prose paragraphs of the note keep the
+% indent they are given, which is what the typst masthead does with them.
+/newenvironment{apajouorcid}
+  {/par/setlength{/parindent}{0pt}%
+   /setlength{/RaggedRightParindent}{0pt}/RaggedRight}
+  {/par}
+
+% The author note, across the foot of the first page under a rule.
+%
+% A journal sets a short note at the foot of the first column and a long one
+% across the foot of the page; apaquarto's typst format measures the note and
+% does both. Here it always spans the page, because the column is not open to
+% a note of any length: latex will only set a footnote that fits in the column
+% it was raised in, and the fifteen lines example.qmd's note runs to does not,
+% which sent the output routine round in circles rather than breaking it.
+%
+% stfloats is what allows a float spanning both columns to be set at the foot
+% of a page. Latex on its own will only put one at the top, and silently drops
+% a starred float asked for anywhere else.
+/usepackage{stfloats}
+/newlength{/apajounoteindent}
+/setlength{/apajounoteindent}{1.1em}
+/newenvironment{apajounote}
+  {/begin{figure*}[b]%
+   /noindent/rule{/linewidth}{0.5pt}%
+   /par/vspace{/dimexpr0.4em+3pt/relax}%
+   /fontsize{9}{11}/selectfont
+   /setlength{/parindent}{/apajounoteindent}%
+   /setlength{/RaggedRightParindent}{/apajounoteindent}/RaggedRight}
+  {/end{figure*}}
+
+% --- Journal masthead -------------------------------------------------------
+% The band a published article carries at the head of its first page: the
+% journal's logo at the left with its name opposite, a rule under both, and the
+% copyright on the left beneath it with the issue and the doi on the right.
+% apaquarto's typst format sets the same band, measured off the Journal of
+% Educational Psychology, and the sizes here are the ones named there: a 12pt
+% name over 8pt metadata, a half-point rule, and a half-inch band the logo is
+% fitted to whatever its proportions. The space around the rule and the
+% leading of the metadata are not the values typst names -- see the two
+% commands below, which say why.
+%
+% frontmatter.lua builds the masthead out of the four commands below and
+% formatlatex.lua hands it to /twocolumn, which is the only thing that sets
+% material across both columns of a two-column page.
+/newlength{/apamastheadrulewidth}
+/setlength{/apamastheadrulewidth}{0.5pt}
+/newlength{/apalogoheight}
+/setlength{/apalogoheight}{0.5in}
+/newsavebox{/apamastheadbox}
+
+% A journal sets its masthead above where the text of the page begins, so it is
+% lifted into the top margin by half of that margin, which is what the typst
+% format does. Written as half the distance from the top of the paper to the
+% top of the text block, so that a document setting its own margin is followed
+% rather than overruled.
+%
+% Half the margin above the running head would be the closer reading of what
+% typst lifts by, and it puts the band within a point of typst's. It also
+% makes the box that much taller, which pushes the title, the abstract and the
+% first line of the body down by the same amount and puts all four of those
+% out by eight points. The band is the part that can afford to be out: this
+% sets it about five points higher than typst sets it, and everything under it
+% level to the point.
+/newcommand{/apamastheadlift}{%
+  /vspace*{-/dimexpr(1in+/voffset+/topmargin+/headheight+/headsep)/2/relax}}
+
+% Declarations rather than commands taking an argument: the metadata below is
+% two lines with a break between them, which reads more plainly set into a
+% paragraph than passed through a pair of braces.
+/newcommand{/apamastheadname}{/fontsize{12}{14}/selectfont}
+% 8pt on 10.75, which is the leading the typst masthead sets its two lines of
+% metadata at. The 9.6 an 8pt size would take by the usual ratio set them a
+% point and a quarter closer together than that.
+/newcommand{/apamastheadsmall}{/fontsize{8}{10.75}/selectfont}
+
+/newcommand{/apamastheadlogo}[1]{/includegraphics[height=/apalogoheight]{#1}}
+
+% The logo and the journal's name, sitting on one baseline at either edge.
+/newcommand{/apamastheadhead}[2]{%
+  /noindent #1/hfill{/apamastheadname #2}/par}
+
+% nointerlineskip on either side of the rule, and the space written out in
+% full. A rule set as its own paragraph takes a whole line's leading above it
+% and the metadata under it takes another, which put the rule a line lower
+% than typst sets it and opened the band out by a line at each turn.
+%
+% The two lengths are not the 3pt the typst masthead names, because typst adds
+% that to the space a grid row carries of its own and nointerlineskip here
+% leaves none to add it to. They are measured instead: they put the rule and
+% the first line of the metadata within a point of where the typst masthead
+% puts them, which is what this band is meant to look like.
+/newcommand{/apamastheadline}{%
+  /par/nointerlineskip/vspace{5.5pt}%
+  /noindent/rule{/linewidth}{/apamastheadrulewidth}%
+  /par/nointerlineskip/vspace{6.5pt}}
+
+% The copyright and the issn on the left, the issue and the doi on the right,
+% each pair set as two lines. Half the measure each, less half the gutter the
+% typst masthead leaves between them.
+/newcommand{/apamastheadfoot}[2]{%
+  /noindent
+  /begin{minipage}[t]{/dimexpr0.5/linewidth-0.5em/relax}%
+    /apamastheadsmall/raggedright #1%
+  /end{minipage}/hfill
+  /begin{minipage}[t]{/dimexpr0.5/linewidth-0.5em/relax}%
+    /apamastheadsmall/raggedleft #2%
+  /end{minipage}/par/vspace{1em}}
+
+% The first-line indent of a published article, which is a good deal smaller
+% than the half inch a manuscript takes: apa7 sets it at about 1.1 times the
+% body size. Written in em so that it follows the type size, whatever the
+% writer has asked for.
+%
+% RaggedRight reads RaggedRightParindent when it is switched on, so the length
+% is set first and RaggedRight asked for again afterwards; setting parindent
+% alone would be undone by the ragged setting already in force.
+%
+% Written into the body rather than the preamble. The half inch a manuscript
+% takes is set further down the preamble than an in-header include reaches, so
+% a preamble setting of this would simply be undone.
+/newlength{/apajouparindent}
+/setlength{/apajouparindent}{1.1em}
+/newcommand{/apajournalindent}{%
+  /setlength{/parindent}{/apajouparindent}%
+  /setlength{/RaggedRightParindent}{/apajouparindent}%
+  /RaggedRight}
+
+% A longtable refuses to be set in two columns, and quarto writes every
+% markdown table as a longtable while flextable builds its tables out of one.
+% A longtable earns its keep by breaking over pages, which a table inside a
+% column cannot do anyway, so in two columns each one is set as an ordinary
+% tabular instead: the row and rule syntax is the same.
+%
+% What the conversion has to get right is the four commands that mark a
+% longtable's repeating head and foot. They do not merely say where the head
+% and the foot end; they say which rows repeat on every page and which are set
+% once, and in the source the foot stands above the body. Made to do nothing,
+% as they were, every row was set where it stood: a table with a repeating
+% head printed the head twice, a pandoc table printed its /bottomrule under
+% the /midrule and had no rule at the foot, and a flextable printed its note
+% row between the head and the body.
+%
+% So the head that repeats is thrown away, the first head being the one that
+% is wanted, and the foot is collected and set at the end of the table where
+% it belongs. Both grabs are /long, since the rows of a flextable have blank
+% lines between them, and the one that saves the foot is wrapped in /noalign:
+% an assignment between two rows would otherwise open a cell, and the row
+% after it lost its first column.
+/makeatletter
+/newtoks/apa@lt@foot
+/long/def/apa@lt@firsthead#1/endhead{/apa@lt@head}
+/def/apa@lt@head{/apa@lt@grab}
+/long/def/apa@lt@grab#1/endlastfoot{/noalign{/global/apa@lt@foot{#1}}}
+/newcommand{/apalongtableastabular}{%
+  /renewenvironment{longtable}[2][]{%
+    /global/apa@lt@foot{}%
+    /let/endfirsthead/apa@lt@firsthead
+    /let/endhead/apa@lt@head
+    /let/endfoot/relax
+    /let/endlastfoot/relax
+    /begin{tabular}{##2}%
+  }{%
+    /the/apa@lt@foot
+    /end{tabular}%
+  }}
+/makeatother
 
 % --- Headings ---------------------------------------------------------------
 % titlespacing rather than titlespacing*: the starred form takes the indent off
@@ -253,6 +527,20 @@
   {/par/setlength{/parindent}{0pt}/noindent}
   {/par}
 
+% The air between the rule at the foot of a table and the note under it.
+%
+% None by default. A manuscript is double spaced, and the leading alone opens
+% more room there than APA asks for. A journal article is single spaced, and
+% the note's first line came within half a point of the rule: it read as the
+% last row of the table rather than as a note under it. formatlatex.lua sets
+% the length for jou, to the half em that brings it to what apa7 leaves.
+%
+% The gap is written by floatlatex.lua, which knows a table from a figure. A
+% figure's note follows the picture, which needs no rule cleared.
+/newlength{/apatablenotegap}
+/setlength{/apatablenotegap}{0pt}
+/newcommand{/apatablenoteskip}{/par/vspace{/apatablenotegap}}
+
 % A panel of a multipanel figure: its label above it, and its own note centred
 % underneath, both set inside the panel's own column rather than across the
 % figure the way the figure's note is.
@@ -286,6 +574,18 @@
 % defines it.
 /makeatletter
 /@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{0.5in}}
+/makeatother
+
+% A published article hangs its references by the same amount it indents the
+% first line of a paragraph by, which is a good deal less than the half inch a
+% manuscript takes: half an inch of a column this narrow leaves the turned
+% lines of an entry with little room to run in. apaquarto's typst format sets
+% the hanging indent to joufirstlineindent in journal mode for the same
+% reason, and the two lengths come to within a fifth of a point of each other.
+% Set for jou by formatlatex.lua.
+/makeatletter
+/newcommand{/apajouhangindent}{%
+  /@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{/apajouparindent}}}
 /makeatother
 /makeatletter
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
@@ -400,6 +700,7 @@ Table~/ref{tbl-values}.
 /setcounter{figure}{0}
 
 /refstepcounter{figure}%
+/makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-panels}
 
 /apafloattitle{Figure 1}
@@ -456,6 +757,7 @@ A note belonging to the second panel.
 /setcounter{table}{0}
 
 /refstepcounter{table}%
+/makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-values}
 
 /apafloattitle{Table 1}
@@ -474,6 +776,8 @@ A & 10.2 & 1.1 //
 B & 12.4 & 1.3 //
 /end{longtable}
 }
+
+/apatablenoteskip
 
 /begin{apafloatnote}
 

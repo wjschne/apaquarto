@@ -1,0 +1,77 @@
+---
+title: "Floats Spanning Both Columns in Plain LaTeX"
+shorttitle: "Spanning Floats"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+abstract: "Exercises apa-twocolumn on figures and tables in plain LaTeX journal mode."
+format:
+  apaquarto-latex-pdf:
+    documentmode: jou
+---
+
+<!--
+apa-twocolumn asks for a float to be set across both columns of a journal
+article. A float written as a markdown image carries the attribute on the
+image and quarto hands it to the float it builds; a float written as a code
+chunk carries it on the cell div instead, and the float inside that div never
+saw it, so a wide figure was set inside one column and ran over the text
+beside it.
+
+Base R draws the figure. The point is which environment the float is written
+into, not the picture.
+
+A successful run produces:
+
+  - figure* for both wide figures, the one written as an image and the one
+    written as a chunk, and table* for the wide table;
+  - figure for the narrow figure, which asked for nothing and should be set
+    in its column like any other;
+  - one note for each float, inside the float rather than left behind in the
+    column it was written in.
+-->
+
+# Method
+
+See @fig-wideimage, @fig-widechunk, @fig-narrow and @tbl-widechunk.
+
+![A wide figure written as a markdown image.](sampleimage.png){#fig-wideimage apa-twocolumn="true" apa-note="A note on the wide image."}
+
+```{r}
+#| label: fig-widechunk
+#| echo: false
+#| fig-cap: "A wide figure written as a code chunk."
+#| fig-height: 2
+#| fig-width: 6
+#| fig-alt: A line.
+#| apa-twocolumn: true
+#| apa-note: "A note on the wide chunk."
+plot(1:10, type = "l", axes = FALSE, xlab = "", ylab = "")
+```
+
+```{r}
+#| label: fig-narrow
+#| echo: false
+#| fig-cap: "A narrow figure written as a code chunk."
+#| fig-height: 2
+#| fig-width: 3
+#| fig-alt: Another line.
+#| apa-note: "A note on the narrow chunk."
+plot(10:1, type = "l", axes = FALSE, xlab = "", ylab = "")
+```
+
+```{r}
+#| label: tbl-widechunk
+#| echo: false
+#| tbl-cap: "A wide table written as a code chunk."
+#| apa-twocolumn: true
+#| apa-note: "A note on the wide table."
+knitr::kable(data.frame(a = 1:2, b = 3:4))
+```
+
+# Discussion
+
+Text after the floats.

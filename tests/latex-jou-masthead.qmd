@@ -1,0 +1,45 @@
+---
+title: "A Masthead in Plain LaTeX"
+shorttitle: "Masthead"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+abstract: "Exercises the journal masthead of the plain LaTeX format."
+journal:
+  title: "Nonexistent Journal of Generic Psychology"
+  logo: default
+  year: 2026
+  volume: 3
+  issue: 2
+  pages: 45--61
+  url: "https://example.org/apaquarto"
+  issn: 0024-7662
+  copyrightnotice: 2025
+  copyrighttext: "The Author(s)"
+format:
+  apaquarto-latex-pdf:
+    documentmode: jou
+---
+
+<!--
+A published article carries a masthead at the head of its first page: the
+journal's logo at the left with its name opposite, a rule under both, and the
+copyright and the issn at the left beneath it with the issue and the doi at the
+right. apaquarto's typst format has set one for a while; the plain LaTeX format
+had none.
+
+The band spans the page, which in two columns only the optional argument of
+\twocolumn can do, so the masthead is what asks for two columns rather than
+\apatwocolumn. A journal document with no journal metadata takes the older
+path, which the other two latex-jou fixtures cover.
+
+A successful run produces the masthead above both columns of the first page,
+with every field in it, and the article's own text underneath.
+-->
+
+# Method
+
+Text of the article, under the masthead.
