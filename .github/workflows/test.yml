@@ -38,11 +38,12 @@ jobs:
 
       # The setup action installs with apt, which will not put an older
       # package over a newer one: "Packages were downgraded and -y was used
-      # without --allow-downgrades". ubuntu-latest carries a quarto of its
-      # own, so whether the pin below is older or newer than the image's is
-      # not something this workflow should have to know. The image's copy
-      # comes off and the pinned one goes on.
-      - name: Remove the quarto the runner image ships
+      # without --allow-downgrades". The step above reads Quarto out of
+      # DESCRIPTION's SystemRequirements and apt-installs whatever is current,
+      # so whether the pin below is older or newer than that is not something
+      # this workflow should have to know. That copy comes off and the pinned
+      # one goes on.
+      - name: Remove the quarto the sysreqs step installed
         run: sudo apt-get remove -y quarto || true
 
       # Pinned, and it has to be. This job is the only one that compares the
