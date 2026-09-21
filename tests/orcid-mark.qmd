@@ -1,0 +1,36 @@
+---
+title: "Author With an ORCID"
+shorttitle: "ORCID Mark"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    orcid: 0000-0002-1825-0097
+    affiliations:
+      - name: Test University
+abstract: "An author note carrying an orcid."
+format:
+  apaquarto-html: default
+  apaquarto-typst: default
+  apaquarto-latex-pdf: default
+---
+
+<!--
+The orcid mark in the author note.
+
+Every format but plain latex places the svg apaquarto ships. Quarto turns an
+svg into a pdf by calling rsvg-convert, which it bundles on windows and on a
+mac and not on linux, so apaquarto-latex-pdf stopped there -- "Could not
+convert a SVG to a PDF for output" -- over a mark four millimetres wide. The
+whole of example.qmd failed to build on a linux box for it.
+
+apaquarto-pdf never hit this: apa7 draws the mark with addORCIDlink and asks
+for no image. Plain latex now does the same thing with the orcidlink package,
+which draws it in tex. So the .tex is checked for the command and for the
+absence of the image, and the other formats are checked to be sure they still
+place the file.
+-->
+
+# Method
+
+A paragraph, so the document has a body.

@@ -991,9 +991,23 @@ return {
             -- The icon goes into the document rather than into raw typst,
             -- so it is written as a path from the document, which every
             -- writer reads the same way.
-            local orcidfile = utilsapa.extension_file_relative(kOrcidIcon)
-            img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile or kOrcidIcon)
-            img.attr = pandoc.Attr('orcid', { 'img-fluid' }, { width = '4.23mm' })
+            --
+            -- Except in plain latex, where it is not an image at all.
+            -- Quarto turns an svg into a pdf by calling rsvg-convert, which
+            -- it ships on windows and on a mac and not on linux, where the
+            -- render stops at "Could not convert a SVG to a PDF for output"
+            -- over an icon four millimetres wide. The orcidlink package
+            -- draws the same mark in tex and links it to the orcid, which is
+            -- what apa7 does with addORCIDlink and why apaquarto-pdf never
+            -- wanted the file. apalatex.tex loads the package.
+            if FORMAT == "latex" and utilsapa.plain_latex(meta) then
+              img = pandoc.RawInline("latex",
+                "\\orcidlink{" .. stringify(a.orcid) .. "}")
+            else
+              local orcidfile = utilsapa.extension_file_relative(kOrcidIcon)
+              img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile or kOrcidIcon)
+              img.attr = pandoc.Attr('orcid', { 'img-fluid' }, { width = '4.23mm' })
+            end
             pp = pandoc.Para(pandoc.Str(""))
             pp.content:extend(a.apaauthordisplay)
             pp.content:extend({ pandoc.Space(), img })

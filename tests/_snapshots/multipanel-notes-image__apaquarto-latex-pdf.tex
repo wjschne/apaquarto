@@ -110,6 +110,13 @@
 /usepackage{titlesec}
 /usepackage{ragged2e}
 /usepackage{etoolbox}
+% The orcid mark in the author note, drawn in tex and linked to the orcid.
+% frontmatter.lua writes /orcidlink{...} for this format instead of placing
+% the svg apaquarto ships, which quarto would have to put through
+% rsvg-convert -- absent on linux, where the render then stops.
+% apa7 does the same thing with its own addORCIDlink.
+/usepackage{orcidlink}
+
 % [H] placement, which floatsintext asks for
 /usepackage{float}
 

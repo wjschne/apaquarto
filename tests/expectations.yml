@@ -599,3 +599,32 @@
         - 'Schneider'
       absent:
         - '??'
+
+# ------------------------------------------------------------ orcid mark --
+
+- fixture: orcid-mark.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    tex:
+      contains:
+        # Drawn in tex by the orcidlink package, and linked to the orcid.
+        - '\usepackage{orcidlink}'
+        - '\orcidlink{0000-0002-1825-0097}'
+      absent:
+        # No image, so nothing for quarto to put through rsvg-convert. The
+        # preamble's own svgnames option for xcolor is not this.
+        - 'ORCID-iD_icon'
+
+- fixture: orcid-mark.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'ORCID-iD_icon'
+
+- fixture: orcid-mark.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'ORCID-iD_icon'

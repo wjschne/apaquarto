@@ -6,10 +6,9 @@
 %
 /documentclass[
   letterpaper,
-  10pt,
-  twoside]{article}
+  12pt]{article}
 /usepackage{xcolor}
-/usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in,includehead,headheight=13pt,headsep=4pt,footskip=18pt]{geometry}
+/usepackage[margin=1in]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -667,15 +666,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{SPANNING FLOATS}
-/AtBeginDocument{/apalongtableastabular}
-/singlespacing
-/apatwocolumn
-/apajournalhead
-/apajoucolumnsep
-/apajoufloats
-/apajouhangindent
-/setapaauthorline{Author}
+/setapashorttitle{ORCID MARK}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -697,168 +688,70 @@
 /begin{document}
 
 
-/begin{lrbox}{/apamastheadbox}%
+/hfill/break
 
-/begin{minipage}{/textwidth}
+/hfill/break
 
-/apajoutitle{
+/vspace*{3/baselineskip}
 
-Floats Spanning Both Columns in Plain LaTeX
+/apatitle{
+
+Author With an ORCID
 
 }
 
-/begin{apajoubyline}
+/begin{apaauthor}
+
+/hfill/break
 
 Test Author
 
-/apajouaffiliationsize
-
 Test University
 
-/end{apajoubyline}
+/end{apaauthor}
 
-/begin{apajounarrow}
+/hfill/break
 
-/begin{apanoindent}
+/hfill/break
 
-Exercises apa-twocolumn on figures and tables in plain LaTeX journal
-mode.
+/apatitlepageheading{
 
-/end{apanoindent}
+Author Note
 
-/end{apajounarrow}
+}
 
-/end{minipage}/end{lrbox}
-
-/twocolumn[/apamastheadlift/usebox{/apamastheadbox}]
-
-/thispagestyle{apajoufirstpage}
-
-/apajournalindent
-
-/begin{apajounote}
+Test Author /orcidlink{0000-0002-1825-0097}
+/url{https://orcid.org/0000-0002-1825-0097}
 
 Correspondence concerning this article should be addressed to Test
 Author, Test University, Email:
 /href{mailto:test@example.com}{/nolinkurl{test@example.com}}
 
-/end{apajounote}
+/clearpage
+
+/apatitlepageheading{
+
+Abstract
+
+}
+
+/begin{apanoindent}
+
+An author note carrying an orcid.
+
+/end{apanoindent}
+
+/clearpage
+
+/apatitle{
+
+Author With an ORCID
+
+}
 
 /section{Method}/label{method}
 
-See Figure~/ref{fig-wideimage}, Figure~/ref{fig-widechunk},
-Figure~/ref{fig-narrow} and Table~/ref{tbl-widechunk}.
-
-/begin{figure*}[tbp]
-
-/setcounter{figure}{0}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-wideimage}
-
-/apafloattitle{Figure 1}
-
-/apafloatcaption{A wide figure written as a markdown image.}
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note on the wide image.
-
-/end{apafloatnote}
-
-/end{figure*}
-
-/begin{figure*}[tbp]
-
-/setcounter{figure}{1}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{2}/makeatother%
-/label{fig-widechunk}
-
-/apafloattitle{Figure 2}
-
-/apafloatcaption{A wide figure written as a code chunk.}
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={A line.}]{latex-jou-floats_files/figure-pdf/fig-widechunk-1.png}}
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note on the wide chunk.
-
-/end{apafloatnote}
-
-/end{figure*}
-
-/begin{figure}[H]
-
-/setcounter{figure}{2}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{3}/makeatother%
-/label{fig-narrow}
-
-/apafloattitle{Figure 3}
-
-/apafloatcaption{A narrow figure written as a code chunk.}
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Another line.}]{latex-jou-floats_files/figure-pdf/fig-narrow-1.png}}
-
-/end{figure}
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note on the narrow chunk.
-
-/end{apafloatnote}
-
-/begin{table*}[tbp]
-
-/setcounter{table}{0}
-
-/refstepcounter{table}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{tbl-widechunk}
-
-/apafloattitle{Table 1}
-
-/apafloatcaption{A wide table written as a code chunk.}
-
-{/def/LTcaptype{none} % do not increment counter
-/begin{longtable}[]{@{}rr@{}}
-/toprule/noalign{}
-a & b //
-/midrule/noalign{}
-/endhead
-/bottomrule/noalign{}
-/endlastfoot
-1 & 3 //
-2 & 4 //
-/end{longtable}
-}
-
-/apatablenoteskip
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note on the wide table.
-
-/end{apafloatnote}
-
-/end{table*}
-
-/section{Discussion}/label{discussion}
-
-Text after the floats.
+A paragraph, so the document has a body.
 
 
 
