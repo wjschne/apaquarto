@@ -12,6 +12,7 @@ keep-tex: true
 format:
   apaquarto-pdf:
     documentmode: man
+  apaquarto-latex-pdf: default
 ---
 
 <!--

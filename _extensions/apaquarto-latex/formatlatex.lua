@@ -15,6 +15,7 @@ local utilsapa = require("utilsapa")
 local mode = "man"
 local shorttitle = nil
 local line_numbers = false
+local first_page = nil
 
 local function raw(text)
   return pandoc.RawBlock("latex", text)
@@ -62,6 +63,20 @@ local function asked_for_line_numbers(m)
   return utilsapa.stringify(m["numbered-lines"]) ~= "false"
 end
 
+-- The number the first page carries, for an article whose pages are numbered
+-- from where it begins in the issue rather than from one. Only a whole number
+-- is taken: the value is written straight into a latex counter, and anything
+-- else there is a compilation error rather than a page number.
+local function asked_for_first_page(m)
+  if m["first-page"] == nil then return nil end
+  local text = utilsapa.stringify(m["first-page"])
+  if text:match("^%-?%d+$") then return text end
+  quarto.log.warning(
+    "first-page must be a whole number, and is \"" .. text ..
+    "\", so the pages are numbered from one.")
+  return nil
+end
+
 local function meta(m)
   if m.documentmode then mode = utilsapa.stringify(m.documentmode) end
   if m.shorttitle then
@@ -103,8 +118,10 @@ local function meta(m)
   -- At the start of the document rather than here, because the command renews
   -- the longtable environment and an include reaches the preamble before
   -- quarto's own packages have defined it.
-  quarto.doc.include_text("in-header",
-    "\\AtBeginDocument{\\apalongtableastabular}")
+  if mode == "jou" then
+    quarto.doc.include_text("in-header",
+      "\\AtBeginDocument{\\apalongtableastabular}")
+  end
 
   -- A published article is set in two columns and carries the authors' names
   -- in the head rather than the manuscript's short title.
@@ -129,11 +146,24 @@ local function meta(m)
     -- includehead puts the running head inside that margin rather than above
     -- it, which is where typst puts its own: the text block then begins a
     -- head and a little more below the top of the page, as it does there.
+    -- Three quarters of an inch at the sides and the top, an inch at the
+    -- foot, which is the page the typst format sets: its own margin is
+    -- (x: 0.75in, y: 1in) there. Written out side by side rather than as one
+    -- margin, which had set the foot at three quarters too and left this
+    -- format eighteen points more text on every page than typst had.
     m.geometry = pandoc.MetaList({
-      pandoc.MetaString("margin=0.75in"),
+      pandoc.MetaString("left=0.75in"),
+      pandoc.MetaString("right=0.75in"),
+      pandoc.MetaString("top=0.75in"),
+      pandoc.MetaString("bottom=1in"),
       pandoc.MetaString("includehead"),
       pandoc.MetaString("headheight=13pt"),
-      pandoc.MetaString("headsep=4pt") })
+      pandoc.MetaString("headsep=4pt"),
+      -- The opening page carries its number at the foot. footskip is measured
+      -- to the baseline, so this sets the number about eleven points under the
+      -- text block, which is where the Journal of Educational Psychology puts
+      -- it; latex's own leaves it half an inch down.
+      pandoc.MetaString("footskip=18pt") })
     quarto.doc.include_text("in-header", "\\singlespacing")
     -- Two columns, asked for at the start of the document. A journal that has
     -- a masthead asks for them differently: the masthead is handed to
@@ -167,6 +197,7 @@ local function meta(m)
   -- nolongtablepatch: lineno patches longtable to number its rows, and every
   -- table here is set as a tabular instead, so the patch has nothing to do.
   line_numbers = asked_for_line_numbers(m)
+  first_page = asked_for_first_page(m)
   if line_numbers then
     quarto.doc.include_text("in-header",
       "\\usepackage[nolongtablepatch]{lineno}")
@@ -327,7 +358,9 @@ local function blocks(doc)
   -- the second page, which is how apa7 sets both. After the masthead: the
   -- \clearpage inside \twocolumn would otherwise carry the page style away
   -- with the page it thinks it is ending.
-  if mode == "jou" or mode == "doc" then
+  if mode == "jou" then
+    out:insert(raw("\\thispagestyle{apajoufirstpage}"))
+  elseif mode == "doc" then
     out:insert(raw("\\thispagestyle{apafirstpage}"))
   end
   -- A first line indent smaller than a manuscript's half inch.
@@ -338,6 +371,11 @@ local function blocks(doc)
   -- lineno for at the same point.
   if line_numbers then
     out:insert(raw("\\resetlinenumber[1]"))
+  end
+  -- The page number the article starts at, set where apa7 sets it: at the
+  -- head of the body, after the page style, so that the first page carries it.
+  if first_page then
+    out:insert(raw("\\setcounter{page}{" .. first_page .. "}"))
   end
 
   -- The author note, raised in the first column so that it falls to the foot

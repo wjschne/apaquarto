@@ -49,3 +49,5 @@ A statement of the impact, written in the document beside the abstract.
 
 The body of the article starts here, after both sections have been taken out
 of it.
+
+# References

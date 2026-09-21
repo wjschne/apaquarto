@@ -1,0 +1,27 @@
+---
+title: "Numbering From Another Page"
+shorttitle: "First Page"
+author:
+  - name: Test Author
+    affiliations:
+      - name: Test University
+abstract: "Exercises first-page."
+first-page: 45
+format:
+  apaquarto-latex-pdf: default
+---
+
+<!--
+first-page numbers the pages of an article from where it begins in the issue
+rather than from one, which is what a published article carries. apa7 sets the
+page counter from it; apaquarto-latex-pdf had no counterpart.
+
+Manuscript mode, where the running head carries the number on every page
+including the first, so the offset can be read straight off page one. A
+journal article is the likelier use, but its first page carries no head at
+all, which would leave nothing to check.
+-->
+
+# Method
+
+Text of the article, which should sit on page 45 rather than page 1.

@@ -98,7 +98,7 @@ word-count: false
 # If true, tables and figures are mingled with the text instead of listed at the end of the document.
 # floatsintext: true
 # Numbered lines (.pdf and .docx only)
-numbered-lines: true
+numbered-lines: false
 # File with references
 bibliography: bibliography.bib
 # Suppress title page
@@ -160,10 +160,10 @@ format:
     list-of-figures: true
   apaquarto-typst: 
     # Options: manuscript (default), journal, student, document
-    documentmode: manuscript
+    documentmode: journal
   apaquarto-pdf:
     # Options: manuscript (default), journal, student, document
-    documentmode: manuscript
+    documentmode: journal
   apaquarto-latex-pdf:
     # Options: manuscript (default), journal, student, document
     documentmode: journal

@@ -506,6 +506,8 @@
   // share of the top margin or as an absolute length. 0% sits it at the foot of
   // the margin, just above the text.
   headerascent: 50%,
+  // How far the footer is set below the text block. Only journal mode has one.
+  footerdescent: 11pt,
   margin: (x: 1in, y: 1in),
   paper: "us-letter",
   font: ("Times", "Times New Roman"),
@@ -617,6 +619,26 @@
     )
   }
 
+  // The opening page of a published article carries its number at the centre
+  // of the bottom margin, where the running head has not started yet. Every
+  // journal APA prints does this; the Journal of Educational Psychology, which
+  // the rest of this mode is measured against, sets it at the running head's
+  // own size rather than the larger size it gives the number in the head.
+  //
+  // The opening page only. From the second page on the number is in the head,
+  // in the outer corner, and a second one at the foot would be one too many.
+  let pagefooter = if headerstyle == "jou" {
+    context {
+      let pg = counter(page).get().at(0)
+      if pg <= first-page {
+        set text(size: if headersize == none { fontsize } else { headersize })
+        align(center)[#counter(page).display()]
+      }
+    }
+  } else {
+    none
+  }
+
   set page(
     margin: margin,
     paper: paper,
@@ -624,6 +646,11 @@
     numbering: pagenumbering,
     header-ascent: headerascent,
     header: pageheader,
+    footer: pagefooter,
+    // The number sits a line or so under the text block, which is where the
+    // Journal of Educational Psychology puts it: eleven points under, against
+    // the three typst leaves of its own accord.
+    footer-descent: footerdescent,
   )
 
 
@@ -943,3 +970,9 @@ A statement of the impact, written in the document beside the abstract.
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
 The body of the article starts here, after both sections have been taken out of it.
+
+#set par(first-line-indent: 0in, hanging-indent: 0.5in)
+#set par(first-line-indent: apaparindent(firstlineindent), hanging-indent: 0in)
+
+
+

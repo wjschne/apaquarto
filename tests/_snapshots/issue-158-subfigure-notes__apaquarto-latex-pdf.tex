@@ -659,7 +659,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{ABSTRACT SECTION}
+/setapashorttitle{ISSUE 158}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -685,7 +685,7 @@
 
 /apatitle{
 
-Abstract Written in the Document
+Subfigure Figure-Note Reproducer
 
 }
 
@@ -715,44 +715,247 @@ Author, Test University, Email:
 
 /clearpage
 
-/apatitlepageheading{
-
-Abstract
-
-}
-
-/begin{apanoindent}
-
-The first paragraph of an abstract that was written in the document.
-
-/end{apanoindent}
-
-The second paragraph, which is here to show that both of them arrive.
-
-/apatitlepageheading{
-
-Impact Statement
-
-}
-
-/begin{apanoindent}
-
-A statement of the impact, written in the document beside the abstract.
-
-/end{apanoindent}
-
-/emph{Keywords}: one, two
-
-/clearpage
-
 /apatitle{
 
-Abstract Written in the Document
+Subfigure Figure-Note Reproducer
 
 }
 
-The body of the article starts here, after both sections have been taken
-out of it.
+/section{1. Single figure with a note
+(control)}/label{single-figure-with-a-note-control}
+
+A lone figure with /texttt{apa-note} already worked; it must keep
+working (Figure~/ref{fig-single}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{0}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{fig-single}
+
+/apafloattitle{Figure 1}
+
+/apafloatcaption{A single image.}
+
+/apafigureskip
+
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/begin{apafloatnote}
+
+/emph{Note}. This~note belongs to a single, non-subfigure figure.
+
+/end{apafloatnote}
+
+/end{figure}
+
+/section{2. Subfigures, each with a note -- exactly as reported (the
+bug)}/label{subfigures-each-with-a-note-exactly-as-reported-the-bug}
+
+This block matches the minimal example in issue /#158: a subfigure
+layout with no overall caption, where each panel carries its own
+/texttt{apa-note}. Before the fix it crashed the PDF render
+(Figure~/ref{fig-bug}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{1}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{2}/makeatother%
+/label{fig-bug}
+
+/apafloattitle{Figure 2}
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. First panel.
+
+/apafigureskip
+
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{2A}/makeatother%
+/label{fig-bug-a}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the first panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Second panel.
+
+/apafigureskip
+
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{2B}/makeatother%
+/label{fig-bug-b}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the second panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+/section{3. Subfigures with a note and an overall
+caption}/label{subfigures-with-a-note-and-an-overall-caption}
+
+The same situation but with an overall figure caption
+(Figure~/ref{fig-capnotes}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{2}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{3}/makeatother%
+/label{fig-capnotes}
+
+/apafloattitle{Figure 3}
+
+/apafloatcaption{An overall caption for the whole figure.}
+
+/apafigureskip
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. First panel.
+
+/apafigureskip
+
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{3A}/makeatother%
+/label{fig-capnotes-a}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the first panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Second panel.
+
+/apafigureskip
+
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{3B}/makeatother%
+/label{fig-capnotes-b}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the second panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+/section{4. Subfigures where only one panel has a note
+(mixed)}/label{subfigures-where-only-one-panel-has-a-note-mixed}
+
+Only the second panel has a note; the first must render without one
+(Figure~/ref{fig-mixed}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{3}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{4}/makeatother%
+/label{fig-mixed}
+
+/apafloattitle{Figure 4}
+
+/apafloatcaption{An overall caption for the mixed figure.}
+
+/apafigureskip
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. Panel without a note.
+
+/apafigureskip
+
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{4A}/makeatother%
+/label{fig-mixed-a}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Panel with a note.
+
+/apafigureskip
+
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{4B}/makeatother%
+/label{fig-mixed-b}
+
+/begin{apapanelnote}
+
+/emph{Note}. Only~this panel has a note.
+
+/end{apapanelnote}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+/section{5. A table with a note (untouched Table
+path)}/label{a-table-with-a-note-untouched-table-path}
+
+The table branch of the filter is unchanged; confirm it still works
+(Table~/ref{tbl-note}).
+
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{0}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{tbl-note}
+
+/apafloattitle{Table 1}
+
+/apafloatcaption{A small table.}
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}ll@{}}
+/toprule/noalign{}
+Group & Value //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+A & 1 //
+B & 2 //
+/end{longtable}
+}
+
+/apatablenoteskip
+
+/begin{apafloatnote}
+
+/emph{Note}. This~note belongs to the table.
+
+/end{apafloatnote}
+
+/par/addvspace{/baselineskip}
+
+Some text after the floats to confirm the document rendered completely.
 
 
 

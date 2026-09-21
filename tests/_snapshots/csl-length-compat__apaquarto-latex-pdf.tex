@@ -85,6 +85,39 @@
 /makeatother
 
 
+% definitions for citeproc citations
+/NewDocumentCommand/citeproctext{}{}
+/NewDocumentCommand/citeproc{mm}{%
+  /begingroup/def/citeproctext{#2}/cite{#1}/endgroup}
+/makeatletter
+ % allow citations to break across lines
+ /let/@cite@ofmt/@firstofone
+ % avoid brackets around text for /cite:
+ /def/@biblabel#1{}
+ /def/@cite#1#2{{#1/if@tempswa , #2/fi}}
+/makeatother
+/newlength{/cslhangindent}
+/setlength{/cslhangindent}{1.5em}
+/newlength{/csllabelwidth}
+/setlength{/csllabelwidth}{3em}
+/newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {/begin{list}{}{%
+  /setlength{/itemindent}{0pt}
+  /setlength{/leftmargin}{0pt}
+  /setlength{/parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  /ifodd #1
+   /setlength{/leftmargin}{/cslhangindent}
+   /setlength{/itemindent}{-1/cslhangindent}
+  /fi
+  % set entry spacing
+  /setlength{/itemsep}{#2/baselineskip}}}
+ {/end{list}}
+/usepackage{calc}
+/newcommand{/CSLBlock}[1]{/hfill/break/parbox[t]{/linewidth}{/strut/ignorespaces#1/strut}}
+/newcommand{/CSLLeftMargin}[1]{/parbox[t]{/csllabelwidth}{/strut#1/strut}}
+/newcommand{/CSLRightInline}[1]{/parbox[t]{/linewidth - /csllabelwidth}{/strut#1/strut}}
+/newcommand{/CSLIndent}[1]{/hspace{/cslhangindent}#1}
 
 
 
@@ -659,7 +692,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{ABSTRACT SECTION}
+/setapashorttitle{CSL LENGTHS}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -685,7 +718,7 @@
 
 /apatitle{
 
-Abstract Written in the Document
+CSL Length Compatibility Reproducer
 
 }
 
@@ -715,44 +748,31 @@ Author, Test University, Email:
 
 /clearpage
 
-/apatitlepageheading{
-
-Abstract
-
-}
-
-/begin{apanoindent}
-
-The first paragraph of an abstract that was written in the document.
-
-/end{apanoindent}
-
-The second paragraph, which is here to show that both of them arrive.
-
-/apatitlepageheading{
-
-Impact Statement
-
-}
-
-/begin{apanoindent}
-
-A statement of the impact, written in the document beside the abstract.
-
-/end{apanoindent}
-
-/emph{Keywords}: one, two
-
-/clearpage
-
 /apatitle{
 
-Abstract Written in the Document
+CSL Length Compatibility Reproducer
 
 }
 
-The body of the article starts here, after both sections have been taken
-out of it.
+This document exercises the bibliography formatting path without any
+local header workaround.
+
+A citation should be enough to trigger CSL-related formatting
+(/citeproc{ref-schneiderCattellHornCarrollTheoryCognitive2018}{Schneider
+/& McGrew, 2018}).
+
+/section{References}
+
+/protect/phantomsection/label{refs}
+/begin{CSLReferences}{1}{0}
+/bibitem[/citeproctext]{ref-schneiderCattellHornCarrollTheoryCognitive2018}
+Schneider, W. J., /& McGrew, K. S. (2018). The cattell-horn-carroll
+theory of cognitive abilities. In D. P. Flanagan /& E. M. McDonough
+(Eds.), /emph{Contemporary intellectual assessment: Theories, tests, and
+issues} (4th ed., pp. 73--130). Guilford Press.
+/url{https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030}
+
+/end{CSLReferences}
 
 
 

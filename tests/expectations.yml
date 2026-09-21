@@ -472,20 +472,24 @@
   expect:
     tex:
       count:
-        # The placement latex chooses, since the floats no longer stand where
-        # they were written. H pins a float in place and is what both floats
-        # were given while floatsintext: false was being read as true.
+        # The placement latex chooses, since the figure no longer stands where
+        # it was written. H pins a float in place and is what it was given
+        # while floatsintext: false was being read as true.
         '\begin{figure}[htbp]': 1
-        '\begin{table}[htbp]': 1
       absent:
         - '\begin{figure}[H]'
-        - '\begin{table}[H]'
+        # A table is set in the text flow rather than in a float, so that one
+        # longer than a page can break over pages instead of being cut off at
+        # the foot of the first.
+        - '\begin{table}'
     pdf:
       contains:
-        # The body runs on without them, and they follow it.
-        - 'The last line of the body.'
-        - 'A figure.'
-        - 'A table.'
+        # The floats follow the body rather than standing where they were
+        # written, which is what floatsintext: false asks for. Read as one
+        # string, so that it is the order being checked and not merely that
+        # all three are somewhere in the document.
+        - 'The last line of the body. Table 1 A table.'
+        - 'Figure 1 A figure.'
 
 - fixture: latex-man-tables.qmd
   to: apaquarto-latex-pdf
@@ -532,3 +536,66 @@
     docx-xml:
       contains:
         - '<w:lnNumType'
+
+# ------------------------------------------------------ numbering offset --
+
+- fixture: latex-first-page.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    tex:
+      contains:
+        # Where apa7 sets it: at the head of the body, so that the first page
+        # carries the number rather than the one after it.
+        - '\setcounter{page}{45}'
+
+# --- the apa7 regressions, checked against the plain latex format as well ---
+#
+# These five fixtures were written for apaquarto-pdf, each for a bug that once
+# got out. apaquarto-latex-pdf is meant to take that format's place, so it has
+# to hold the same ground. Both formats are checked while both are shipped.
+
+- fixture: subfigure-layout-grid.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      absent:
+        - 'Figure ??'
+    tex:
+      contains:
+        # This format builds the grid out of its own panel environment, which
+        # is a minipage underneath.
+        - 'begin{apapanel}'
+
+- fixture: issue-158-subfigure-notes.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      absent:
+        - 'Figure ??'
+
+- fixture: booktabs-paren-cell.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      contains:
+        - '(Intercept)'
+
+- fixture: longtable-pagebreak.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      contains:
+        # A table longer than a page breaks over pages. Set in a float it
+        # cannot, and latex drops what will not fit without a word: this came
+        # out sixty lines short until tables were set in the text flow.
+        - 'Lorem ipsum dolor sit'
+        - 'Itaque earum rerum hic'
+
+- fixture: csl-length-compat.qmd
+  to: apaquarto-latex-pdf
+  expect:
+    pdf:
+      contains:
+        - 'Schneider'
+      absent:
+        - '??'

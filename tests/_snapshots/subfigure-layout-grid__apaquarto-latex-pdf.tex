@@ -659,7 +659,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{ABSTRACT SECTION}
+/setapashorttitle{SUBFIGURE GRID}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -685,7 +685,7 @@
 
 /apatitle{
 
-Abstract Written in the Document
+Subfigure Layout Grid
 
 }
 
@@ -709,50 +709,443 @@ Author Note
 
 }
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
-
-/clearpage
-
-/apatitlepageheading{
-
-Abstract
-
-}
-
-/begin{apanoindent}
-
-The first paragraph of an abstract that was written in the document.
-
-/end{apanoindent}
-
-The second paragraph, which is here to show that both of them arrive.
-
-/apatitlepageheading{
-
-Impact Statement
-
-}
-
-/begin{apanoindent}
-
-A statement of the impact, written in the document beside the abstract.
-
-/end{apanoindent}
-
-/emph{Keywords}: one, two
-
 /clearpage
 
 /apatitle{
 
-Abstract Written in the Document
+Subfigure Layout Grid
 
 }
 
-The body of the article starts here, after both sections have been taken
-out of it.
+/section{Cases}/label{cases}
+
+A: captioned layout, no notes (Figure~/ref{fig-a}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{0}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{fig-a}
+
+/apafloattitle{Figure 1}
+
+/apafloatcaption{An overall caption.}
+
+/apafigureskip
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. Left.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{1A}/makeatother%
+/label{fig-a-1}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Right.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{1B}/makeatother%
+/label{fig-a-2}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+B: caption-less layout, no notes (Figure~/ref{fig-b}). Quarto writes no
+/texttt{/textbackslash{}caption} for a laid-out float whose caption is
+empty, and the /texttt{/textbackslash{}label} goes with it, so this one
+used to render unnumbered with a dangling reference.
+
+/begin{figure}[H]
+
+/setcounter{figure}{1}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{2}/makeatother%
+/label{fig-b}
+
+/apafloattitle{Figure 2}
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. Left.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{2A}/makeatother%
+/label{fig-b-1}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Right.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{2B}/makeatother%
+/label{fig-b-2}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+C: captioned layout, both panels noted (Figure~/ref{fig-c}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{2}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{3}/makeatother%
+/label{fig-c}
+
+/apafloattitle{Figure 3}
+
+/apafloatcaption{An overall caption.}
+
+/apafigureskip
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. Left.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{3A}/makeatother%
+/label{fig-c-1}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the left panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Right.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{3B}/makeatother%
+/label{fig-c-2}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the right panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+D: caption-less layout, both panels noted (Figure~/ref{fig-d}). The case
+from issue /#158, and the one that has to keep both the grid and its
+number.
+
+/begin{figure}[H]
+
+/setcounter{figure}{3}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{4}/makeatother%
+/label{fig-d}
+
+/apafloattitle{Figure 4}
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. Left.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{4A}/makeatother%
+/label{fig-d-1}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the left panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Right.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{4B}/makeatother%
+/label{fig-d-2}
+
+/begin{apapanelnote}
+
+/emph{Note}. Note~for the right panel.
+
+/end{apapanelnote}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+E: layout with a note on the whole figure rather than on the panels
+(Figure~/ref{fig-e}). The note belongs to the figure, so it is printed
+once, below the grid, and not copied onto each panel.
+
+/begin{figure}[H]
+
+/setcounter{figure}{4}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{5}/makeatother%
+/label{fig-e}
+
+/apafloattitle{Figure 5}
+
+/apafloatcaption{An overall caption.}
+
+/apafigureskip
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. Left.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{5A}/makeatother%
+/label{fig-e-1}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Right.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{5B}/makeatother%
+/label{fig-e-2}
+/end{apapanel}%
+/par
+
+/begin{apafloatnote}
+
+/emph{Note}. A~note belonging to the whole figure.
+
+/end{apafloatnote}
+
+/end{figure}
+
+H: layout with a whole-figure note and no layout attribute at all
+(Figure~/ref{fig-h}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{5}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{6}/makeatother%
+/label{fig-h}
+
+/apafloattitle{Figure 6}
+
+/apafloatcaption{An overall caption.}
+
+/apafigureskip
+
+/subcaption{/label{fig-h-1}/textbf{Panel A}. Left.}
+
+/centering{
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+}
+
+/subcaption{/label{fig-h-2}/textbf{Panel B}. Right.}
+
+/centering{
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+}
+
+/begin{apafloatnote}
+
+/emph{Note}. A~note belonging to the whole figure.
+
+/end{apafloatnote}
+
+/end{figure}
+
+I: three panels over two columns, with a whole-figure note
+(Figure~/ref{fig-i}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{6}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{7}/makeatother%
+/label{fig-i}
+
+/apafloattitle{Figure 7}
+
+/apafloatcaption{An overall caption.}
+
+/apafigureskip
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. One.
+
+/apafigureskip
+
+/includegraphics[width=1.2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{7A}/makeatother%
+/label{fig-i-1}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Two.
+
+/apafigureskip
+
+/includegraphics[width=1.2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{7B}/makeatother%
+/label{fig-i-2}
+/end{apapanel}%
+/par/bigskip
+/begin{apapanel}{0.4900}%
+/textbf{Panel C}. Three.
+
+/apafigureskip
+
+/includegraphics[width=1.2in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{7C}/makeatother%
+/label{fig-i-3}
+/end{apapanel}%
+/par
+
+/begin{apafloatnote}
+
+/emph{Note}. A~note belonging to the whole three-panel figure, long
+enough to show whether it wraps inside half the figure width or runs the
+full width of it.
+
+/end{apafloatnote}
+
+/end{figure}
+
+J: explicit layout matrix with a whole-figure note (Figure~/ref{fig-j}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{7}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{8}/makeatother%
+/label{fig-j}
+
+/apafloattitle{Figure 8}
+
+/apafloatcaption{An overall caption.}
+
+/apafigureskip
+
+/begin{apapanel}{0.4900}%
+/textbf{Panel A}. Left.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{8A}/makeatother%
+/label{fig-j-1}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+/textbf{Panel B}. Right.
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/makeatletter/def/@currentlabel{8B}/makeatother%
+/label{fig-j-2}
+/end{apapanel}%
+/par
+
+/begin{apafloatnote}
+
+/emph{Note}. A~note belonging to the whole figure.
+
+/end{apafloatnote}
+
+/end{figure}
+
+F: plain single figure with a note (Figure~/ref{fig-f}). Not a layout;
+it still takes the hand-built wrapper.
+
+/begin{figure}[H]
+
+/setcounter{figure}{8}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{9}/makeatother%
+/label{fig-f}
+
+/apafloattitle{Figure 9}
+
+/apafloatcaption{A single image.}
+
+/apafigureskip
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/begin{apafloatnote}
+
+/emph{Note}. A~single figure's note.
+
+/end{apafloatnote}
+
+/end{figure}
+
+G: plain single figure, no note, no caption text (Figure~/ref{fig-g}).
+
+/begin{figure}[H]
+
+/setcounter{figure}{9}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{10}/makeatother%
+/label{fig-g}
+
+/apafloattitle{Figure 10}
+
+/includegraphics[width=1.5in,height=/textheight,keepaspectratio]{sampleimage.png}
+
+/end{figure}
+
+End of document.
 
 
 

@@ -11,6 +11,7 @@ bibliography: references.bib
 format:
   apaquarto-pdf:
     documentmode: man
+  apaquarto-latex-pdf: default
 keep-tex: true
 ---
 

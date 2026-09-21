@@ -482,9 +482,29 @@ local function processfloat(float)
     placement = "[tbp]"
   end
 
-  local blocks = pandoc.List({
-    raw("\\begin{" .. environment .. "}" .. placement),
-  })
+  -- A table is set in the text flow rather than in a float, which is where
+  -- apa7 sets one too.
+  --
+  -- A float is a single box, and a table longer than a page cannot break out
+  -- of it: latex sets what fits and drops the rest without a word. The long
+  -- table in tests/longtable-pagebreak.qmd came out sixty lines short that
+  -- way. In the flow a longtable breaks over pages as it is built to, and its
+  -- \endlastfoot is emitted, which inside a float it never is -- the missing
+  -- rule at the foot of a table, and the missing note row of a flextable, came
+  -- from the same place.
+  --
+  -- Journal mode keeps the float. A longtable cannot run in two columns at
+  -- all, so a table there is set as a tabular, which is one box again; and a
+  -- table asking to span both columns needs a float to span with.
+  local floated = (not istable) or mode == "jou"
+
+  local blocks = pandoc.List({})
+  if floated then
+    blocks:insert(raw("\\begin{" .. environment .. "}" .. placement))
+  else
+    -- The space a float would have left around itself.
+    blocks:insert(raw("\\par\\addvspace{\\baselineskip}"))
+  end
 
   blocks:extend(label_blocks(float))
   blocks:insert(command("apafloattitle", label_inlines(float)))
@@ -524,7 +544,11 @@ local function processfloat(float)
     blocks:extend(panelnotes)
   end
 
-  blocks:insert(raw("\\end{" .. environment .. "}"))
+  if floated then
+    blocks:insert(raw("\\end{" .. environment .. "}"))
+  else
+    blocks:insert(raw("\\par\\addvspace{\\baselineskip}"))
+  end
   return pandoc.Div(blocks)
 end
 

@@ -659,7 +659,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{ABSTRACT SECTION}
+/setapashorttitle{BOOKTABS TRIM ARGUMENT}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -685,7 +685,7 @@
 
 /apatitle{
 
-Abstract Written in the Document
+A Table Cell That Opens With a Parenthesis
 
 }
 
@@ -709,50 +709,111 @@ Author Note
 
 }
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
-
-/clearpage
-
-/apatitlepageheading{
-
-Abstract
-
-}
-
-/begin{apanoindent}
-
-The first paragraph of an abstract that was written in the document.
-
-/end{apanoindent}
-
-The second paragraph, which is here to show that both of them arrive.
-
-/apatitlepageheading{
-
-Impact Statement
-
-}
-
-/begin{apanoindent}
-
-A statement of the impact, written in the document beside the abstract.
-
-/end{apanoindent}
-
-/emph{Keywords}: one, two
-
 /clearpage
 
 /apatitle{
 
-Abstract Written in the Document
+A Table Cell That Opens With a Parenthesis
 
 }
 
-The body of the article starts here, after both sections have been taken
-out of it.
+/section{1. A markdown table, which pandoc
+writes}/label{a-markdown-table-which-pandoc-writes}
+
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{0}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{tbl-markdown}
+
+/apafloattitle{Table 1}
+
+/apafloatcaption{Written by pandoc, so every rule is followed by a
+noalign}
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}lr@{}}
+/toprule/noalign{}
+term & estimate //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+(Intercept) & -1.5 //
+x & 2.0 //
+/end{longtable}
+}
+
+/par/addvspace{/baselineskip}
+
+/section{2. A latex table with booktabs
+rules}/label{a-latex-table-with-booktabs-rules}
+
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{1}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{2}/makeatother%
+/label{tbl-booktabs}
+
+/apafloattitle{Table 2}
+
+/apafloatcaption{Written as latex, in a tabular}
+
+/begin{tabular}{lr}
+/toprule
+term & estimate//
+/midrule
+(Intercept) & -1.5//
+x & 2.0//
+/bottomrule
+/end{tabular}
+
+/par/addvspace{/baselineskip}
+
+/section{3. A latex table with booktabs rules in a
+longtable}/label{a-latex-table-with-booktabs-rules-in-a-longtable}
+
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{2}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{3}/makeatother%
+/label{tbl-longtable}
+
+/apafloattitle{Table 3}
+
+/apafloatcaption{Written as latex, in a longtable: the case that
+crashed}
+
+/begin{longtable*}{lr}
+/toprule
+term & estimate//
+/midrule
+(Intercept) & -1.5//
+x & 2.0//
+/bottomrule
+/end{longtable*}
+
+/par/addvspace{/baselineskip}
+
+/section{4. A longtable written by
+hand}/label{a-longtable-written-by-hand}
+
+/begin{longtable*}{lr}
+/toprule
+term & estimate //
+/midrule
+(Intercept) & -1.5 //
+x & 2.0 //
+/bottomrule
+/end{longtable*}
+
+End of document.
 
 
 

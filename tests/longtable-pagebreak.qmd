@@ -13,6 +13,7 @@ keep-tex: true
 format:
   apaquarto-pdf:
     documentmode: man
+  apaquarto-latex-pdf: default
 ---
 
 This document reproduces the long-table clipping problem in manuscript-mode PDF output.

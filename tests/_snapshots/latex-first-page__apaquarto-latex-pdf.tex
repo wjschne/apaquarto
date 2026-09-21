@@ -659,7 +659,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{ABSTRACT SECTION}
+/setapashorttitle{FIRST PAGE}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -677,6 +677,8 @@
 /begin{document}
 
 
+/setcounter{page}{45}
+
 /hfill/break
 
 /hfill/break
@@ -685,7 +687,7 @@
 
 /apatitle{
 
-Abstract Written in the Document
+Numbering From Another Page
 
 }
 
@@ -709,10 +711,6 @@ Author Note
 
 }
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
-
 /clearpage
 
 /apatitlepageheading{
@@ -723,36 +721,21 @@ Abstract
 
 /begin{apanoindent}
 
-The first paragraph of an abstract that was written in the document.
+Exercises first-page.
 
 /end{apanoindent}
-
-The second paragraph, which is here to show that both of them arrive.
-
-/apatitlepageheading{
-
-Impact Statement
-
-}
-
-/begin{apanoindent}
-
-A statement of the impact, written in the document beside the abstract.
-
-/end{apanoindent}
-
-/emph{Keywords}: one, two
 
 /clearpage
 
 /apatitle{
 
-Abstract Written in the Document
+Numbering From Another Page
 
 }
 
-The body of the article starts here, after both sections have been taken
-out of it.
+/section{Method}/label{method}
+
+Text of the article, which should sit on page 45 rather than page 1.
 
 
 
