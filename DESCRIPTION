@@ -21,6 +21,7 @@ Suggests:
     patchwork,
     pdftools,
     rmarkdown,
+    snakecase,
     svglite,
     tidyverse,
     yaml
