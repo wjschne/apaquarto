@@ -69,6 +69,15 @@ jobs:
           tinytex: true
           version: 1.10.18
 
+      # apaquarto puts the orcid mark in the author note as the svg it ships,
+      # and quarto turns an svg into a pdf with rsvg-convert. It bundles that
+      # on windows and on a mac and not on linux, where the render stops at
+      # "Could not convert a SVG to a PDF for output". Only the plain latex
+      # format reaches this: apaquarto-pdf draws the mark with apa7's own
+      # addORCIDlink and asks for no image at all.
+      - name: Install rsvg-convert for svg images in pdf
+        run: sudo apt-get install -y librsvg2-bin
+
       - name: Show versions
         run: |
           quarto --version
@@ -81,14 +90,33 @@ jobs:
       - name: Fixtures
         run: Rscript tests/run-tests.R
 
+      # Each format on its own, and the one that fails says so in the run
+      # summary. A step that simply dies leaves "Process completed with exit
+      # code 1" as its only annotation, and the log behind it is readable
+      # only by someone with admin rights on this repository -- so the reason
+      # a render failed had to be fetched by hand every time. The tail of the
+      # failing render becomes a ::error:: annotation instead, which the run
+      # summary and the api both show. %0A is how one annotation carries more
+      # than one line, and the % that starts it has to be escaped first or a
+      # percentage in the output would eat what follows it.
       - name: example.qmd in every format
         run: |
-          for format in apaquarto-html apaquarto-docx apaquarto-typst \
-                        apaquarto-pdf apaquarto-latex-pdf; do
+          status=0
+          for format in apaquarto-html apaquarto-docx apaquarto-typst apaquarto-pdf apaquarto-latex-pdf; do
             echo "::group::$format"
-            quarto render example.qmd --to "$format"
-            echo "::endgroup::"
+            if quarto render example.qmd --to "$format" > "render-$format.log" 2>&1; then
+              cat "render-$format.log"
+              echo "::endgroup::"
+            else
+              cat "render-$format.log"
+              echo "::endgroup::"
+              detail=$(tail -n 40 "render-$format.log" | sed -e 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+              echo "::error title=$format failed::$detail"
+              status=1
+              break
+            fi
           done
+          exit $status
 
       - uses: actions/upload-artifact@v4
         if: always()

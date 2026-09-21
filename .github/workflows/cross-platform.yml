@@ -62,6 +62,16 @@ jobs:
           quarto --version
           Rscript -e 'cat(R.version.string, "\n")'
 
+      # apaquarto puts the orcid mark in the author note as the svg it ships,
+      # and quarto turns an svg into a pdf with rsvg-convert. It bundles that
+      # on windows and on a mac and not on linux, where the render stops at
+      # "Could not convert a SVG to a PDF for output". Only the plain latex
+      # format reaches this: apaquarto-pdf draws the mark with apa7's own
+      # addORCIDlink and asks for no image at all.
+      - name: Install rsvg-convert for svg images in pdf
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y librsvg2-bin
+
       # Snapshots are compared on linux only, in test.yml. The same document
       # gives a slightly different .tex and .typ on another platform -- the
       # fonts it finds, the way paths are spelled -- and none of that is a
