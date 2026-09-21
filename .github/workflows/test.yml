@@ -56,6 +56,15 @@ jobs:
       # commit. quarto-versions.yml is what watches other releases; it
       # compares no snapshots, so it is free to.
       - uses: quarto-dev/quarto-actions/setup@v2
+        # quarto installs tinytex by asking the github api for the latest
+        # rstudio/tinytex-releases, and an unauthenticated call from a shared
+        # runner address is rate limited: "Unable to determine latest release
+        # for rstudio/tinytex-releases, 403 - Forbidden", which fails the job
+        # before a single document is rendered. The token every workflow run
+        # already has raises that limit; it needs no permissions beyond the
+        # read this repository grants by default.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tinytex: true
           version: 1.10.18
