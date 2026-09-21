@@ -1,10 +1,11 @@
 # The quick one: every push and every pull request.
 #
-# Linux only, on the quarto everyone is expected to have. It renders the
-# fixtures in tests/ and checks what comes out, then renders example.qmd in
-# every format as a broad smoke test. Anything that needs another operating
-# system or another quarto is left to cross-platform.yml and
-# quarto-versions.yml, which run less often because they cost more.
+# Linux only, on one pinned quarto -- see the setup step below for why that
+# pin matters. It renders the fixtures in tests/ and checks what comes out,
+# then renders example.qmd in every format as a broad smoke test. Anything
+# that needs another operating system or another quarto is left to
+# cross-platform.yml and quarto-versions.yml, which run less often because
+# they cost more.
 
 name: test
 
@@ -35,9 +36,22 @@ jobs:
         with:
           dependencies: '"all"'
 
+      # Pinned, and it has to be. This job is the only one that compares the
+      # snapshots, and a snapshot records what one quarto writes: the stock
+      # latex template and the typst preamble are quarto's, not apaquarto's,
+      # and they change between releases. Unpinned, this installed 1.10.18
+      # against snapshots written by 1.9.36, and every .tex gained four lines
+      # of hyperxmp fallback and every .typ two more font families -- 23
+      # failures, none of them apaquarto's doing.
+      #
+      # This must be the quarto that wrote the snapshots. Raise it when you
+      # upgrade, and run tests/run-tests.R --update-snapshots in the same
+      # commit. quarto-versions.yml is what watches newer releases; it
+      # compares no snapshots, so it is free to.
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true
+          version: 1.9.36
 
       - name: Show versions
         run: |
