@@ -1,10 +1,8 @@
--- Handle frontmatter stuff for .docx, html, typst, and plain latex formats.
+-- Handles the frontmatter in every format: .html, .docx, typst and the pdf.
 --
--- apaquarto-pdf leaves all of this to the apa7 class, so this filter stands
--- down for it. apaquarto-latex-pdf does not use apa7 and is built out of the
--- same blocks as every other format, so it runs here like the rest. The two
--- are told apart by utilsapa.apa7_latex, which reads the metadata, so the test
--- is made below where the metadata is in hand rather than here.
+-- The pdf was built on the apa7 class until 6.0.0 and this filter stood down
+-- for it, the class laying out the title page itself. It does not any more,
+-- so every format is built out of the same blocks.
 
 
 local andreplacement = "and"
@@ -797,11 +795,10 @@ return {
   { Meta = get_and },
   {
     Pandoc = function(doc)
-      if utilsapa.apa7_latex(doc.meta) then return nil end
       local body = List:new {}
       local meta = doc.meta
 
-      local latex_jou = utilsapa.plain_latex(meta) and meta.documentmode
+      local latex_jou = FORMAT == "latex" and meta.documentmode
         and stringify(meta.documentmode) == "jou"
       local typst_jou = is_typst_mode(meta, "jou")
       local typst_doc = is_typst_mode(meta, "doc")
@@ -1000,7 +997,7 @@ return {
             -- draws the same mark in tex and links it to the orcid, which is
             -- what apa7 does with addORCIDlink and why apaquarto-pdf never
             -- wanted the file. apalatex.tex loads the package.
-            if FORMAT == "latex" and utilsapa.plain_latex(meta) then
+            if FORMAT == "latex" then
               img = pandoc.RawInline("latex",
                 "\\orcidlink{" .. stringify(a.orcid) .. "}")
             else

@@ -1,18 +1,11 @@
 -- This filter prints the apa-note, if present
 
--- apaquarto-pdf leaves notes to apa7, through apanotelatex.lua and
--- apafloatlatex.lua, so this filter stands down for it. apaquarto-latex-pdf
--- does not use apa7 and writes its notes here like every other format. The
--- test needs the metadata, so it is made in the passes below.
-local skip = false
-
 local utilsapa = require("utilsapa")
 
 -- Default word for note
 local beginapanote = "Note"
 -- Replace note word, if specified
 local function getnote(m)
-  skip = utilsapa.apa7_latex(m)
   if m.language and m.language["figure-table-note"] then
     beginapanote = pandoc.utils.stringify(m.language["figure-table-note"])
   end
@@ -91,7 +84,6 @@ local function note_position(elem)
 end
 
 local function apanote(elem)
-  if skip then return nil end
   if elem.attributes[kWritten] == mark() then
     return nil
   end

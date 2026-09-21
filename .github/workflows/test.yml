@@ -69,12 +69,15 @@ jobs:
           tinytex: true
           version: 1.10.18
 
-      # apaquarto puts the orcid mark in the author note as the svg it ships,
-      # and quarto turns an svg into a pdf with rsvg-convert. It bundles that
-      # on windows and on a mac and not on linux, where the render stops at
-      # "Could not convert a SVG to a PDF for output". Only the plain latex
-      # format reaches this: apaquarto-pdf draws the mark with apa7's own
-      # addORCIDlink and asks for no image at all.
+      # Quarto turns an svg into a pdf with rsvg-convert, which it bundles on
+      # windows and on a mac and not on linux, where a render carrying one
+      # stops at "Could not convert a SVG to a PDF for output". No apaquarto
+      # format asks for this any more -- the orcid mark did, as the svg
+      # apaquarto ships, until the orcidlink package began drawing it in tex
+      # -- but a document of one's own may carry an svg figure, and this is
+      # what a reader on linux would have to install for it. Keeping it here
+      # means a document that includes one is still rendered rather than
+      # failing on the runner alone.
       - name: Install rsvg-convert for svg images in pdf
         run: sudo apt-get install -y librsvg2-bin
 

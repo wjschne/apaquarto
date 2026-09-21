@@ -16,7 +16,6 @@ end
 
 
 function Pandoc(doc)
-  if utilsapa.apa7_latex(doc.meta) then return nil end
   local hblocks = {}
   local isfloatref = false
 

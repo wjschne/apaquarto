@@ -224,10 +224,6 @@ contributes:
       # This was a second format, apaquarto-latex-pdf, while it was being
       # written. It is the pdf format now and that one is gone.
 
-      # Read by the shared filters, some of which used to leave the work to
-      # apa7 whenever the output was latex. See utilsapa.plain_latex.
-      apaquarto-plain-latex: true
-
       # APA asks for a serif face of ordinary weight and names Times New
       # Roman first. TeX Gyre Termes is metrically the same face and ships
       # with every TeX distribution, so a document sets the same lines on a
