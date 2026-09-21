@@ -236,6 +236,35 @@ if (!is.null(opt_filter)) {
 
 if (length(jobs) == 0) stop("no jobs to run")
 
+# docxreferencedoc.lua patches the reference document in place -- pandoc reads
+# it when it writes the output, so there is nowhere else to put the fonts, the
+# page size and the line numbering. A render with numbered-lines: true
+# therefore leaves <w:lnNumType> in _extensions/apaquarto/apaquarto.docx, and
+# the marker recording what was there before it. The next render restores the
+# shipped state, so the file is only ever wrong in between -- but that window
+# is long enough to git add it, which is how it reached a37f8de and cdb162b
+# before it. A commit carrying one of those markers would ship line numbers to
+# every docx that does not ask for them.
+check_reference_doc <- function() {
+  refdoc <- file.path(root_dir, "_extensions", "apaquarto", "apaquarto.docx")
+  if (!file.exists(refdoc)) return(invisible())
+  tmp <- tempfile()
+  on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
+  xml <- tryCatch(
+    readLines(unzip(refdoc, "word/document.xml", exdir = tmp), warn = FALSE),
+    error = function(e) return(character())
+  )
+  if (any(grepl("apaquarto-original-", xml, fixed = TRUE))) {
+    stop("_extensions/apaquarto/apaquarto.docx was committed mid-patch: it ",
+         "still carries an apaquarto-original- marker left by a docx render. ",
+         "Render any document to docx without numbered-lines to restore it, ",
+         "then commit that.")
+  }
+  invisible()
+}
+
+check_reference_doc()
+
 sync_extensions()
 # Quarto is given a fixture by name and resolves its images and bibliography
 # beside it, so the renders are run from the tests directory whatever directory
@@ -273,6 +302,21 @@ for (job in jobs) {
   # Anything a previous run left behind, so that a render that quietly produces
   # nothing cannot be read as a pass on the last run's output.
   unlink(unname(artifacts_of(stem)))
+
+  # unlink() reports nothing useful on windows, where a file another process
+  # holds open -- a sync client, a virus scanner, a pdf viewer -- simply stays.
+  # A survivor is worse than a missing file: the fixtures that share a stem
+  # across formats would hand the next job the last one's output, and a
+  # apaquarto-latex-pdf job was checked against a .typ that its sibling typst
+  # job had written and against a snapshot of the same accident.
+  stuck <- artifacts_of(stem)
+  stuck <- stuck[file.exists(stuck)]
+  if (length(stuck)) {
+    note_failure(id, paste0("could not clear ", paste(names(stuck), collapse = ", "),
+                            " left by an earlier render; another process is ",
+                            "holding it open"))
+    next
+  }
 
   rendered <- system2(
     quarto_bin(),

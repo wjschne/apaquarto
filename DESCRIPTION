@@ -20,6 +20,7 @@ Suggests:
     knitr,
     patchwork,
     pdftools,
+    R.utils,
     rmarkdown,
     snakecase,
     svglite,
