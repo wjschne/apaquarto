@@ -82,6 +82,17 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get install -y librsvg2-bin
 
+      # gdtools, which flextable loads, is linked against cairo, and cairo on
+      # a mac is part of XQuartz. A plain runner has none, so the setup chunk
+      # of example.qmd stopped at "unable to load shared object
+      # gdtools.so: Library not loaded: /opt/X11/lib/libXrender.1.dylib"
+      # before a format was rendered. This is the same gap the header of this
+      # file describes for the svg device; a reader on a fresh mac meets it
+      # too, and installs the same thing.
+      - name: Install XQuartz for the cairo behind gdtools
+        if: runner.os == 'macOS'
+        run: brew install --cask xquartz
+
       # Snapshots are compared on linux only, in test.yml. The same document
       # gives a slightly different .tex and .typ on another platform -- the
       # fonts it finds, the way paths are spelled -- and none of that is a
