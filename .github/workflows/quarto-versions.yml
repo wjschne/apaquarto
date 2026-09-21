@@ -38,6 +38,14 @@ jobs:
         with:
           dependencies: '"all"'
 
+      # setup-r-dependencies reads Quarto out of DESCRIPTION's
+      # SystemRequirements and apt-installs the current release, so a leg of
+      # this matrix pinning an older one is a downgrade, and apt will not do
+      # that with -y alone: "Packages were downgraded and -y was used without
+      # --allow-downgrades". That copy comes off and the pinned one goes on.
+      - name: Remove the quarto the sysreqs step installed
+        run: sudo apt-get remove -y quarto || true
+
       - uses: quarto-dev/quarto-actions/setup@v2
         # quarto installs tinytex by asking the github api for the latest
         # rstudio/tinytex-releases, and an unauthenticated call from a shared
