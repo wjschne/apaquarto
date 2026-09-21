@@ -7,7 +7,7 @@ author:
       - name: Test University
 abstract: "Exercises the foot of a longtable in manuscript mode."
 format:
-  apaquarto-latex-pdf: default
+  apaquarto-pdf: default
 ---
 
 <!--

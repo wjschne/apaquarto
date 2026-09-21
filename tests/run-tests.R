@@ -69,7 +69,21 @@ say <- function(...) cat(..., "\n", sep = "")
 # a folder often enough that removing the directory itself fails partway and
 # leaves the copy gutted.
 sync_extensions <- function() {
-  for (name in c("apaquarto", "apaquarto-latex")) {
+  managed <- c("apaquarto")
+  # An extension that is no longer shipped has to go from the copy as well.
+  # apaquarto-latex lived here while the plain latex format was being written,
+  # and a copy left behind is one quarto will still resolve a format from:
+  # renders then come from code the repository no longer has, which is a hard
+  # thing to notice from the results alone.
+  for (stale in setdiff(list.dirs(file.path(tests_dir, "_extensions"),
+                                  full.names = FALSE, recursive = FALSE),
+                        managed)) {
+    here <- file.path(tests_dir, "_extensions", stale)
+    unlink(list.files(here, recursive = TRUE, full.names = TRUE,
+                      all.files = TRUE, no.. = TRUE), recursive = TRUE)
+    unlink(here, recursive = TRUE)
+  }
+  for (name in managed) {
     from <- file.path(root_dir, "_extensions", name)
     if (!dir.exists(from)) next
     to <- file.path(tests_dir, "_extensions", name)

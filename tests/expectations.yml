@@ -128,7 +128,7 @@
         - '#grid(columns: 2'
 
 - fixture: multipanel-notes.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       contains:
@@ -199,7 +199,7 @@
         'A note belonging to the right panel.': 1
 
 - fixture: multipanel-notes-image.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       contains:
@@ -258,7 +258,7 @@
         'A statement of the impact, written in the document beside the abstract.': 1
 
 - fixture: abstract-section.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       contains:
@@ -278,53 +278,6 @@
         - 'section{Introduction}'
 
 # ------------------------------------------------------------- pdf via apa7 --
-
-- fixture: subfigure-layout-grid.qmd
-  to: apaquarto-pdf
-  expect:
-    pdf:
-      absent:
-        # An unresolved cross-reference.
-        - 'Figure ??'
-    tex:
-      contains:
-        - 'begin{minipage}'
-
-- fixture: issue-158-subfigure-notes.qmd
-  to: apaquarto-pdf
-  expect:
-    pdf:
-      absent:
-        - 'Figure ??'
-
-- fixture: booktabs-paren-cell.qmd
-  to: apaquarto-pdf
-  expect:
-    pdf:
-      contains:
-        # The cell that used to bring the build down: booktabs read the opening
-        # parenthesis as the start of a rule-trimming argument.
-        - '(Intercept)'
-
-- fixture: longtable-pagebreak.qmd
-  to: apaquarto-pdf
-  expect:
-    pdf:
-      contains:
-        # The first and last rows both survive; the table used to be clipped.
-        # Short fragments, because a cell that wraps is pulled out of the .pdf
-        # with the rest of its row in between the two halves.
-        - 'Lorem ipsum dolor sit'
-        - 'Itaque earum rerum hic'
-
-- fixture: csl-length-compat.qmd
-  to: apaquarto-pdf
-  expect:
-    pdf:
-      contains:
-        - 'Schneider'
-      absent:
-        - '??'
 
 # ------------------------------------------------------------------- typst --
 
@@ -364,7 +317,7 @@
 # ------------------------------------------- floats spanning both columns --
 
 - fixture: latex-jou-floats.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     tex:
       count:
@@ -396,7 +349,7 @@
 # ------------------------- table numbers, appendix references, longtables --
 
 - fixture: latex-jou-tables.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     tex:
       count:
@@ -432,7 +385,7 @@
 # ------------------------------------------------------- the journal masthead --
 
 - fixture: latex-jou-masthead.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     tex:
       contains:
@@ -468,7 +421,7 @@
 # ---------------------------------- floats at the end, and a table's foot --
 
 - fixture: latex-floatsintext.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     tex:
       count:
@@ -492,7 +445,7 @@
         - 'Figure 1 A figure.'
 
 - fixture: latex-man-tables.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       count:
@@ -510,7 +463,7 @@
 # --------------------------------------------------------- numbered lines --
 
 - fixture: numbered-lines.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     tex:
       contains:
@@ -540,7 +493,7 @@
 # ------------------------------------------------------ numbering offset --
 
 - fixture: latex-first-page.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     tex:
       contains:
@@ -555,7 +508,7 @@
 # to hold the same ground. Both formats are checked while both are shipped.
 
 - fixture: subfigure-layout-grid.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       absent:
@@ -567,21 +520,21 @@
         - 'begin{apapanel}'
 
 - fixture: issue-158-subfigure-notes.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       absent:
         - 'Figure ??'
 
 - fixture: booktabs-paren-cell.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       contains:
         - '(Intercept)'
 
 - fixture: longtable-pagebreak.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       contains:
@@ -592,7 +545,7 @@
         - 'Itaque earum rerum hic'
 
 - fixture: csl-length-compat.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     pdf:
       contains:
@@ -603,7 +556,7 @@
 # ------------------------------------------------------------ orcid mark --
 
 - fixture: orcid-mark.qmd
-  to: apaquarto-latex-pdf
+  to: apaquarto-pdf
   expect:
     tex:
       contains:

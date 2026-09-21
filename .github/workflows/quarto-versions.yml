@@ -73,7 +73,7 @@ jobs:
       - name: example.qmd in every format
         run: |
           for format in apaquarto-html apaquarto-docx apaquarto-typst \
-                        apaquarto-pdf apaquarto-latex-pdf; do
+                        apaquarto-pdf; do
             echo "::group::$format"
             quarto render example.qmd --to "$format"
             echo "::endgroup::"

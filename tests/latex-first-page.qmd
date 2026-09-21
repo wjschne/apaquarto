@@ -8,7 +8,7 @@ author:
 abstract: "Exercises first-page."
 first-page: 45
 format:
-  apaquarto-latex-pdf: default
+  apaquarto-pdf: default
 ---
 
 <!--

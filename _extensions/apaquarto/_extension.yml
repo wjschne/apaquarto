@@ -101,21 +101,9 @@ contributes:
         - at: pre-ast
           path: apatwocolumntypstcollect.lua
  
-        # Set latex document mode
-        - at: pre-ast
-          path: journalmode.lua
-        # Compose the journal's issue line for latex out of the journal fields
-        - at: pre-ast
-          path: journalvolume.lua
         # Put papersize in the form the latex document class wants
         - at: pre-ast
           path: apapapersize.lua
-        # Set latex images to column width by default
-        - at: pre-ast
-          path: apafigurewidthlatex.lua     
-        # Make apa-note an attribute of figure in latex
-        - at: pre-ast
-          path: apanotelatex.lua
         # Make appendices citable with apx prefix
         - at: pre-ast
           path: apaciteappendix.lua
@@ -125,9 +113,6 @@ contributes:
         # Finds citations to be masked and converts them to masked citations
         - at: post-ast
           path: apamasked.lua
-        # Ensures that images have two-column attribute, when needed
-        - at: post-ast
-          path: apatwocolumnlatex.lua
         # Formats headers properly
         - at: pre-quarto
           path: apaheader.lua
@@ -143,17 +128,14 @@ contributes:
         # Formats multi-paragraph quotes
         - at: pre-quarto
           path: apaquote.lua
-        # Indentation for latex, allow for no indenting command
-        - at: pre-quarto
-          path: latexnoindent.lua
         # Inserts appendix prefixes to tables and figures
         - at: pre-quarto
           path: apafigtblappendix.lua
         - at: post-quarto
           path: floatwithsubfigure.lua
-        # Process tables and figures in latex
+        # Set figures and tables the APA way in latex
         - at: post-quarto
-          path: apafloatlatex.lua
+          path: floatlatex.lua
         # Tell latex if there is one author and/or one affiliation
         - at: post-quarto
           path: apaoneauthoraffiliation.lua
@@ -190,9 +172,10 @@ contributes:
         # Process APA in-text citations (ampersand to and, possessive citation)
         - at: post-render
           path: apaandcite.lua
-        # Process appendices in latex
+        # Turn the blocks the filters above produced into latex. Last, so
+        # that everything it writes out has been built by then.
         - at: post-render
-          path: apaappendixlatex.lua
+          path: formatlatex.lua
         # Warn when a pdf standard cannot work with the document's tables
         - at: post-render
           path: apapdfstandard.lua
@@ -231,19 +214,57 @@ contributes:
         opts_chunk: 
           dev: svglite
     pdf:
-      documentclass: apa7
+      # Plain latex. There is no apa7 class here: the title page, the
+      # headings, the running head and the notes below floats arrive as
+      # ordinary blocks from the same filters that build the .html, the .docx
+      # and the typst, and latex is asked only to set them. apalatex.tex is
+      # the page of definitions that says how, and quarto's own pdf template
+      # is used unmodified.
+      #
+      # This was a second format, apaquarto-latex-pdf, while it was being
+      # written. It is the pdf format now and that one is gone.
+
+      # Read by the shared filters, some of which used to leave the work to
+      # apa7 whenever the output was latex. See utilsapa.plain_latex.
+      apaquarto-plain-latex: true
+
+      # APA asks for a serif face of ordinary weight and names Times New
+      # Roman first. TeX Gyre Termes is metrically the same face and ships
+      # with every TeX distribution, so a document sets the same lines on a
+      # machine that has no Times New Roman -- a linux box, or CI.
+      #
+      # The engine is lualatex, so quarto's template loads fontspec and
+      # unicode-math and the face is asked for by name.
+      #
+      # Text only. newtxtext and newtxmath, the usual way of getting Times
+      # into a latex document, are written for pdflatex: newtxmath sets up
+      # math the traditional way and clashes with the unicode-math the
+      # template loads, and nothing here can unload it. Math is left to
+      # unicode-math's own default, Latin Modern Math, which every
+      # distribution has. Setting mathfont to "TeX Gyre Termes Math" beside
+      # this would match the math to the text, at the cost of a font package
+      # (tex-gyre-math) that is not installed by default.
+      mainfont: "TeX Gyre Termes"
+
+      documentclass: article
+      classoption:
+        - 12pt
       pdf-engine: lualatex
-      suppress-bibliography: false
-      hyperrefoptions: 
-        - linktoc=none
-      block-headings: false
-      template: apatemplate.tex
-      mainfontfallback: Arial
-      template-partials:
-        - doc-class.tex
-        - title.tex
-        - header.tex
-      classoption: "colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue"
+      papersize: letter
+      geometry:
+        - margin=1in
+      indent: true
+      colorlinks: true
+      linkcolor: blue
+      citecolor: blue
+      urlcolor: blue
+      number-sections: false
+      documentmode: man
+      include-in-header:
+        - apalatex.tex
+      knitr:
+        opts_chunk:
+          dev: ragg_png
     docx: 
       reference-doc: apaquarto.docx
       filters: 

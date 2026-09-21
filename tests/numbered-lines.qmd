@@ -8,7 +8,7 @@ author:
 abstract: "An abstract long enough to run over more than one line so that the numbering has something to count."
 numbered-lines: true
 format:
-  apaquarto-latex-pdf: default
+  apaquarto-pdf: default
   apaquarto-typst: default
   apaquarto-docx: default
 ---

@@ -164,9 +164,6 @@ format:
   apaquarto-pdf:
     # Options: manuscript (default), journal, student, document
     documentmode: journal
-  apaquarto-latex-pdf:
-    # Options: manuscript (default), journal, student, document
-    documentmode: journal
 ---
 
 ```{r}

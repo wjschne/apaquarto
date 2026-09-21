@@ -10,6 +10,12 @@
 -- A div that is not wrapped goes through pandoc unchanged, which is what
 -- should happen to everything this file does not name.
 
+-- These two filters are the whole of the pdf format, and they are in the
+-- shared chain so that their place in it is fixed. Nothing here has
+-- anything to say about .html, .docx or typst.
+if FORMAT ~= "latex" then
+  return
+end
 local utilsapa = require("utilsapa")
 
 local mode = "man"

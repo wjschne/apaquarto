@@ -16,6 +16,12 @@
 -- its own figure out of it, which is why apanote.lua, which works on divs,
 -- never sees a float in latex and why the note needs writing here.
 
+-- These two filters are the whole of the pdf format, and they are in the
+-- shared chain so that their place in it is fixed. Nothing here has
+-- anything to say about .html, .docx or typst.
+if FORMAT ~= "latex" then
+  return
+end
 local utilsapa = require("utilsapa")
 
 local figureword = "Figure"

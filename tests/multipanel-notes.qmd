@@ -12,7 +12,7 @@ format:
   apaquarto-html: default
   apaquarto-docx: default
   apaquarto-typst: default
-  apaquarto-latex-pdf: default
+  apaquarto-pdf: default
 ---
 
 <!--

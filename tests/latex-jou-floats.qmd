@@ -9,7 +9,7 @@ author:
       - name: Test University
 abstract: "Exercises apa-twocolumn on figures and tables in plain LaTeX journal mode."
 format:
-  apaquarto-latex-pdf:
+  apaquarto-pdf:
     documentmode: jou
 ---
 

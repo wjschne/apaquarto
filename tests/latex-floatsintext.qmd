@@ -8,7 +8,7 @@ author:
 abstract: "Exercises floatsintext in the plain LaTeX format."
 floatsintext: false
 format:
-  apaquarto-latex-pdf: default
+  apaquarto-pdf: default
 ---
 
 <!--

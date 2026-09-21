@@ -9,7 +9,7 @@ author:
       - name: Test University
 abstract: "Exercises table numbering, appendix references and longtable head and foot handling."
 format:
-  apaquarto-latex-pdf:
+  apaquarto-pdf:
     documentmode: jou
 ---
 

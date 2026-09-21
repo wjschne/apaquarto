@@ -20,7 +20,7 @@ journal:
   copyrightnotice: 2025
   copyrighttext: "The Author(s)"
 format:
-  apaquarto-latex-pdf:
+  apaquarto-pdf:
     documentmode: jou
 ---
 

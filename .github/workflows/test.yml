@@ -102,7 +102,7 @@ jobs:
       - name: example.qmd in every format
         run: |
           status=0
-          for format in apaquarto-html apaquarto-docx apaquarto-typst apaquarto-pdf apaquarto-latex-pdf; do
+          for format in apaquarto-html apaquarto-docx apaquarto-typst apaquarto-pdf; do
             echo "::group::$format"
             if quarto render example.qmd --to "$format" > "render-$format.log" 2>&1; then
               cat "render-$format.log"
