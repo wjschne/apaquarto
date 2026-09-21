@@ -911,7 +911,7 @@
   authors: ([Sam Student],),
   runninghead: "STUDENT PAPER",
   runningauthors: "Student",
-  font: ("Times New Roman",),
+  font: (<fonts>),
   numberdepth: 3,
   document,
 )

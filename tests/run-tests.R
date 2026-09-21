@@ -186,6 +186,21 @@ normalize <- function(text) {
   text <- gsub("[0-9]{4}-[0-9]{2}-[0-9]{2}", "<date>", text)
   text <- gsub("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
                "<uuid>", text)
+  # The font list quarto writes into a .typ is resolved against the fonts
+  # the machine has, not fixed by quarto: a document asking for Times New
+  # Roman gets ("Times New Roman",) where that font exists, and
+  # ("Times New Roman","Liberation Serif","Nimbus Roman",) on a linux box,
+  # which substitutes the metric-compatible faces it does have. One quarto,
+  # two machines, two answers -- the machine-specific noise the lines above
+  # take out, and why every typst snapshot failed on CI while every latex
+  # one passed.
+  #
+  # Only the list quarto generates, which it writes with a trailing comma
+  # inside the parentheses. The template's own default, font: ("Times",
+  # "Times New Roman"), has none there and is apaquarto's to get right, so
+  # a change to it still shows. The leading class keeps monofont: out.
+  text <- gsub("(^|[^[:alnum:]_-])font: \\([^)]*,\\)",
+               "\\1font: (<fonts>)", text)
   text <- gsub("[ \t]+\n", "\n", text)
   text
 }

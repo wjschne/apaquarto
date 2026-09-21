@@ -912,7 +912,7 @@
   keywords: ("one","two",),
   runninghead: "ABSTRACT SECTION",
   runningauthors: "Author",
-  font: ("Times New Roman",),
+  font: (<fonts>),
   numberdepth: 3,
   document,
 )

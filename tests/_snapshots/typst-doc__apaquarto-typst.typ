@@ -911,7 +911,7 @@
   authors: ([Dana Doc],),
   runninghead: "DOCUMENT MODE",
   runningauthors: "Doc",
-  font: ("Times New Roman",),
+  font: (<fonts>),
   first-page: 3,
   numberdepth: 3,
   document,

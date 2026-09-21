@@ -36,31 +36,29 @@ jobs:
         with:
           dependencies: '"all"'
 
-      # Pinned, and it has to be. This job is the only one that compares the
-      # snapshots, and a snapshot records what one quarto writes: the stock
-      # latex template and the typst preamble are quarto's, not apaquarto's,
-      # and they change between releases. Unpinned, this installed 1.10.18
-      # against snapshots written by 1.9.36, and every .tex gained four lines
-      # of hyperxmp fallback and every .typ two more font families -- 23
-      # failures, none of them apaquarto's doing.
-      #
-      # This must be the quarto that wrote the snapshots. Raise it when you
-      # upgrade, and run tests/run-tests.R --update-snapshots in the same
-      # commit. quarto-versions.yml is what watches newer releases; it
-      # compares no snapshots, so it is free to.
-      # ubuntu-latest carries a quarto of its own, and the setup action
-      # installs with apt, which will not put an older package over a newer
-      # one unless it is told to: "Packages were downgraded and -y was used
-      # without --allow-downgrades". The pin below is older than the image's
-      # quarto, so the image's comes off first. It is no loss -- the next step
-      # installs the one this job is meant to run.
+      # The setup action installs with apt, which will not put an older
+      # package over a newer one: "Packages were downgraded and -y was used
+      # without --allow-downgrades". ubuntu-latest carries a quarto of its
+      # own, so whether the pin below is older or newer than the image's is
+      # not something this workflow should have to know. The image's copy
+      # comes off and the pinned one goes on.
       - name: Remove the quarto the runner image ships
         run: sudo apt-get remove -y quarto || true
 
+      # Pinned, and it has to be. This job is the only one that compares the
+      # snapshots, and a snapshot records what one quarto writes: the stock
+      # latex preamble and the typst show-call are quarto's, not apaquarto's,
+      # and they change between releases. Unpinned, this installed whatever
+      # was newest and every .tex differed by four lines of hyperxmp fallback.
+      #
+      # This must be the quarto that wrote the snapshots. Raise it when you
+      # upgrade, and run tests/run-tests.R --update-snapshots in the same
+      # commit. quarto-versions.yml is what watches other releases; it
+      # compares no snapshots, so it is free to.
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true
-          version: 1.9.36
+          version: 1.10.18
 
       - name: Show versions
         run: |

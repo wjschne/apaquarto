@@ -6,8 +6,9 @@
 # months old before anyone noticed. A weekly run against the pre-release says
 # so before it reaches a writer with a deadline.
 #
-# "1.9.38" is the floor named in _extensions/apaquarto/_extension.yml. Raise it
-# here when that is raised.
+# The floor the manifests name is ">=1.9.0", which was never a release;
+# "1.9.38" is the oldest 1.9 this matrix can actually install, so it stands in
+# for the floor. Raise both together when quarto-required is raised.
 
 name: quarto-versions
 
