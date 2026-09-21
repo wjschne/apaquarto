@@ -48,6 +48,15 @@ jobs:
       # upgrade, and run tests/run-tests.R --update-snapshots in the same
       # commit. quarto-versions.yml is what watches newer releases; it
       # compares no snapshots, so it is free to.
+      # ubuntu-latest carries a quarto of its own, and the setup action
+      # installs with apt, which will not put an older package over a newer
+      # one unless it is told to: "Packages were downgraded and -y was used
+      # without --allow-downgrades". The pin below is older than the image's
+      # quarto, so the image's comes off first. It is no loss -- the next step
+      # installs the one this job is meant to run.
+      - name: Remove the quarto the runner image ships
+        run: sudo apt-get remove -y quarto || true
+
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true
