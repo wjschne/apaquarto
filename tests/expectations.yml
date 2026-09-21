@@ -62,19 +62,19 @@
 
 - fixture: multipanel-notes.qmd
   to: apaquarto-docx
-  known_failure: >-
-    In .docx the panels of a multipanel figure are set one under the other when
-    they carry labels of their own, rather than side by side. Word has no way
-    of putting things side by side except a table, and quarto builds one for a
-    figure whose panels are plain code chunks but not for a figure whose panels
-    are floats in their own right. The note and the labels are right either
-    way; only the arrangement is wrong.
   expect:
     docx-xml:
       count:
         # The layout table holding the two panels, and the data table further
-        # down. Only the second of them is built today.
+        # down.
         '<w:tbl>': 2
+        # One row for the two panels, three for the data table. This is what
+        # says the panels are beside each other: quarto writes a table for
+        # each panel when the panels carry labels of their own, a row of two
+        # cells with the panel in the first and the second empty, and word
+        # sets each table under the one before it. Two tables alone would
+        # still count right with the panels stacked in two rows.
+        '<w:tr>': 4
 
 # The same figure with panels that carry no labels of their own, which takes a
 # different path here and through quarto.

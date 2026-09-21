@@ -150,13 +150,123 @@ local function style_panel_notes(block)
   }
 end
 
+-- Quarto lays the panels of a figure out as a table, a cell to each panel,
+-- which is the only way word has of putting things side by side. It writes
+-- one such table for the whole figure when the panels are plain code chunks,
+-- and one table for each panel when every panel carries a label of its own:
+-- a row of as many cells as the layout asked for, with the panel in the
+-- first and the rest empty. Word then sets each table under the one before
+-- it, so labelled panels came out in a column where unlabelled ones came out
+-- in a row.
+--
+-- The tables are put back together here. Every cell that holds something is
+-- taken in order and dealt out into rows the width the layout asked for,
+-- which leaves a figure whose panels were already in one table exactly as it
+-- was and gives the labelled figure the same shape.
+local function cell_is_empty(cell)
+  local blocks = pandoc.Blocks(cell.contents)
+  local found = false
+  blocks:walk {
+    Image = function() found = true end,
+    Figure = function() found = true end,
+    RawBlock = function() found = true end,
+  }
+  if found then return false end
+  return (pandoc.utils.stringify(blocks):gsub("%s", "")) == ""
+end
+
+local function merge_layout_tables(tables)
+  if #tables < 2 then return tables end
+  local first = tables[1]
+  local ncol = #first.colspecs
+  if ncol < 2 then return tables end
+
+  local cells = pandoc.List({})
+  for _, tb in ipairs(tables) do
+    -- Tables of different widths are not rows of one layout, so they are
+    -- left alone rather than forced together.
+    if #tb.colspecs ~= ncol or #tb.bodies == 0 then return tables end
+    for _, row in ipairs(tb.bodies[1].body) do
+      for _, cell in ipairs(row.cells) do
+        if not cell_is_empty(cell) then cells:insert(cell) end
+      end
+    end
+  end
+  if #cells < 2 then return tables end
+
+  local rows = pandoc.List({})
+  local i = 1
+  while i <= #cells do
+    local rowcells = pandoc.List({})
+    for j = i, math.min(i + ncol - 1, #cells) do
+      rowcells:insert(cells[j])
+    end
+    while #rowcells < ncol do
+      rowcells:insert(pandoc.Cell(pandoc.Blocks({})))
+    end
+    rows:insert(pandoc.Row(rowcells))
+    i = i + ncol
+  end
+
+  first.bodies[1].body = rows
+  return pandoc.List({ first })
+end
+
+-- Two tables with nothing between them are one table to word, so quarto puts
+-- an empty paragraph between the panel tables. It has to be stepped over to
+-- see that the tables belong together, and it goes when they are merged: one
+-- table needs no separator. Anything that would actually show on the page
+-- ends the run instead.
+local function is_separator(block)
+  if block.t ~= "RawBlock" then return false end
+  if block.format ~= "openxml" then return false end
+  return not (block.text:find("<w:t", 1, true)
+    or block.text:find("<w:drawing", 1, true))
+end
+
+local function merge_adjacent_tables(blocks)
+  local out = pandoc.List({})
+  local run = pandoc.List({})      -- the tables of the run, in order
+  local buffer = pandoc.List({})   -- the run as it stands, separators and all
+
+  local function flush()
+    if #run > 1 then
+      local merged = merge_layout_tables(run)
+      if #merged == 1 then
+        out:insert(merged[1])
+        run = pandoc.List({})
+        buffer = pandoc.List({})
+        return
+      end
+    end
+    -- Nothing merged, so the run is put back exactly as it came.
+    for _, block in ipairs(buffer) do out:insert(block) end
+    run = pandoc.List({})
+    buffer = pandoc.List({})
+  end
+
+  for _, block in ipairs(blocks) do
+    if block.t == "Table" and not note_only_table(block) then
+      run:insert(block)
+      buffer:insert(block)
+    elseif is_separator(block) and #run > 0 then
+      buffer:insert(block)
+    else
+      flush()
+      out:insert(block)
+    end
+  end
+  flush()
+  return out
+end
+
 local function rebuild(float)
   local titles = pandoc.List({})
   local body = pandoc.List({})
   local notes = pandoc.List({})
   local laid_out = false
 
-  for _, block in ipairs(float.content) do
+  for _, block in ipairs(merge_adjacent_tables(float.content)) do
     if block.t == "Div" and (block.classes:includes("FigureTitle")
         or block.classes:includes("Caption")) then
       titles:insert(block)
