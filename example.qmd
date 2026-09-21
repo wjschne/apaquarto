@@ -183,10 +183,22 @@ library(patchwork)
 conflicts_prefer(dplyr::filter, .quiet = TRUE)
 conflicts_prefer(flextable::separate_header, .quiet = TRUE)
 conflicts_prefer(ggplot2::theme_void, .quiet = TRUE)
+# flextable names its font in the output it writes, and a pdf built with
+# lualatex asks fontspec for that name: {\fontspec{Times New Roman} ...}
+# around every cell. Times New Roman ships with windows and with office on
+# a mac, and is on no linux box by default, where fontspec stops the build
+# rather than substituting -- "The font Times New Roman cannot be found".
+# TeX Gyre Termes is the times metric-compatible face that comes with every
+# tex distribution, so the pdf asks for that and looks the same. Word and a
+# browser want the real name, and have it.
+table_font <- if (knitr::is_latex_output()) "TeX Gyre Termes" else "Times New Roman"
 set_flextable_defaults(theme_fun = theme_apa, 
-                       font.family = "Times New Roman", 
+                       font.family = table_font, 
                        text.align = "center", 
                        table_align = "left")
+# apa7 keeps a font of its own, which apa_flextable, apa_chisq and apa_cor
+# take when they are not given one. set_flextable_defaults does not reach it.
+apa7_defaults(font_family = table_font)
 ```
 
 
