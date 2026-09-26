@@ -171,11 +171,40 @@ local function collect_floats(blocks)
   return figures, tables
 end
 
--- A right tab with a dotted leader, at the width of the text block. Letter
--- paper with the inch margins apaquarto asks for is 6.5in, which is 9360
--- twentieths of a point; another paper size shifts the dots, not the number,
--- which Word sets against the right margin either way.
+-- A right tab with a dotted leader, at the width of the text block, so that
+-- the page number sits against the right margin. Letter paper with the inch
+-- margins apaquarto asks for is 6.5in, or 9360 twentieths of a point, and
+-- that is the fallback; the real width is read from the reference document,
+-- since a tab stop beyond the margin puts the number on a line of its own
+-- and looks for all the world like a field that has not been updated.
+--
+-- Read after docxreferencedoc.lua has run, which is where papersize reaches
+-- the reference document.
 local kTabPosition = 9360
+
+local function measure_text_width()
+  local refdoc = PANDOC_WRITER_OPTIONS.reference_doc
+  if not refdoc then return end
+  local f = io.open(refdoc, "rb")
+  if not f then return end
+  local data = f:read("a")
+  f:close()
+  local ok, archive = pcall(pandoc.zip.Archive, data)
+  if not ok then return end
+  for _, entry in ipairs(archive.entries) do
+    if entry.path == "word/document.xml" then
+      local xml = entry:contents()
+      local width = tonumber(xml:match('<w:pgSz[^>]-w:w="(%d+)"'))
+      local left = tonumber(xml:match('<w:pgMar[^>]-w:left="(%d+)"'))
+      local right = tonumber(xml:match('<w:pgMar[^>]-w:right="(%d+)"'))
+      if width and left and right then
+        local measure = width - left - right
+        if measure > 0 then kTabPosition = measure end
+      end
+      return
+    end
+  end
+end
 
 -- One line of the list: what the float is called, a leader, and the page it
 -- is on.
@@ -303,6 +332,7 @@ return {
   { Meta = get_language },
   {
     Pandoc = function(doc)
+      measure_text_width()
       local figures, tables = collect_floats(doc.blocks)
       local headings = collect_headings(doc.blocks)
 
