@@ -83,9 +83,6 @@ There are two ways to install Quarto extensions like apaquarto: Anyone can use t
 
 First open the the terminal and navigate to the folder where you want to install apaquarto.
 
-
-
-
 :::{.panel-tabset .nav.pills}
 
 #### To create a new file
@@ -179,6 +176,14 @@ quarto::quarto_use_template("wjschne/apaquarto", no_prompt = TRUE)
 #| eval: false
 quarto::quarto_add_extension("wjschne/apaquarto", no_prompt = TRUE)
 ```
+
+An alternative that is a little easier for me to remember, my [apa7](https://wjschne.github.io/apa7/) package has a dedicated function for installing apaquarto:
+
+```{r}
+#| eval: false
+apa7::install_apaquarto(no_prompt = TRUE)
+```
+
 
 :::
 

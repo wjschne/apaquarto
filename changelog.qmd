@@ -12,6 +12,9 @@ engine: knitr
 - Implement missing .docx features
     * Right-align equation numbers
 
+# Version 6.0.1
+- 2026-09-26
+- Made both journal modes (apauarto-pdf and apaquarto-typst) fully justified in their body text but not in markdown table text.
 
 # Version 6.0.0
 - 2026-09-12

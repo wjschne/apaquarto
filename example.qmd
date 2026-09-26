@@ -137,7 +137,7 @@ language:
 no-ampersand-parenthetical: false
 execute: 
   echo: false
-  cache: true
+  cache: false
 # mainfont: Times New Roman
 # monofont: Consolas
 papersize: us-letter
@@ -474,13 +474,14 @@ Describe the basic characteristics of the primary variables. My ideal is to desc
 
 @tbl-mymarkdowntable2 is an example of a plain markdown table. Note the that the caption begins with a colon.
 
-| Letters | Numbers |
-|:-------:|:-------:|
-| A       | 1       |
-| B       | 2       |
-| C       | 3       |
+| Scale    | Description                    |
+|:---------|:-------------------------------|
+| Nominal  | Categories without an order    |
+| Ordinal  | Ordered categories             |
+| Interval | Quantities without a true zero |
+| Ratio    | Quantities with a true zero    |
 
-: My Caption. {#tbl-mymarkdowntable2 apa-note="My note"}
+: Classic Scale Types. {#tbl-mymarkdowntable2 apa-note="My note"}
 
 
 

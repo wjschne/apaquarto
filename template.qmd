@@ -36,10 +36,9 @@ format:
   apaquarto-html: default
   apaquarto-docx: default
   apaquarto-typst: 
-    keep-typ: true
     documentmode: journal
   apaquarto-pdf:
-    documentmode: man
+    documentmode: manuscript
 ---
 
 <!-- The introduction should not have a level-1 heading such as Introduction. -->

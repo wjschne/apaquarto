@@ -222,7 +222,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#options-for-.docx-and-typst" id="toc-options-for-.docx-and-typst" class="nav-link" data-scroll-target="#options-for-.docx-and-typst">Options for .docx and typst</a></li>
   <li><a href="#options-for-.pdf" id="toc-options-for-.pdf" class="nav-link" data-scroll-target="#options-for-.pdf">Options for .pdf</a></li>
-  <li><a href="#document-modes-in-typst" id="toc-document-modes-in-typst" class="nav-link" data-scroll-target="#document-modes-in-typst">Document modes in typst</a></li>
+  <li><a href="#document-modes-in-pdf-and-typst" id="toc-document-modes-in-pdf-and-typst" class="nav-link" data-scroll-target="#document-modes-in-pdf-and-typst">Document modes in pdf and typst</a></li>
   <li><a href="#options-for-.html" id="toc-options-for-.html" class="nav-link" data-scroll-target="#options-for-.html">Options for .html</a></li>
   <li><a href="#the-introduction-heading" id="toc-the-introduction-heading" class="nav-link" data-scroll-target="#the-introduction-heading">The Introduction Heading</a></li>
   <li><a href="#suppress-elements" id="toc-suppress-elements" class="nav-link" data-scroll-target="#suppress-elements">Suppress Elements</a></li>
@@ -262,56 +262,60 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"This title needs quotes: Because there is a colon in it."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Any optional key you do not use can be deleted or commented out. If you would prefer to keep the key visible but empty, you can make the value <code>NULL</code> with the tilde symbol <code>~</code> like so:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">~</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you want the null value to be easier to understand, you can specify a null value explicitly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here is a minimal example of what the YAML metadata might look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Paper's Title: A Full Analysis of Everything"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shorttitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Paper's Title"</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">corresponding</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0002-8393-5316</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> schneider@temple.edu</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 358 Ritter Hall</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> </span><span class="st">"This is my abstract."</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">keyword1</span><span class="kw">,</span><span class="at"> keyword2</span><span class="kw">]</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict of interest</span><span class="kw">:</span><span class="at"> The author has no conflict of interest to declare.</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> mybibfile.bib     </span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-typst</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Paper's Title: A Full Analysis of Everything"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shorttitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Paper's Title"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">corresponding</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0002-8393-5316</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> schneider@temple.edu</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 358 Ritter Hall</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> </span><span class="st">"This is my abstract."</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">keyword1</span><span class="kw">,</span><span class="at"> keyword2</span><span class="kw">]</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict of interest</span><span class="kw">:</span><span class="at"> The author has no conflict of interest to declare.</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> mybibfile.bib     </span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-typst</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="general-options" class="level1">
 <h1>General Options</h1>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 5%">
-<col style="width: 85%">
 <col style="width: 8%">
+<col style="width: 89%">
+<col style="width: 1%">
 </colgroup>
 <tbody>
 <tr class="odd">
-<td rowspan="2">Field :============================= <code>title</code></td>
-<td rowspan="2"><p>Explanation :======================================================================================================================================================================================================================================================================================================================================================================================================================================================================= Sets the title.</p>
+<td>Field :============================= <code>title</code></td>
+<td><p>Explanation :======================================================================================================================================================================================================================================================================================================================================================================================================================================================================= Sets the title.</p>
 <p>Titles with no special characters can be raw text.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My title</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My title</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If your title has a colon in it, it will need to be quoted:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Title: My Subtitle"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Title: My Subtitle"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can list your title and subtitle separately, and they will be combined with a colon in the document:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My Title</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> My Subtitle</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My Title</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> My Subtitle</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 <td></td>
 </tr>
 <tr class="even">
+<td></td>
+<td></td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -323,30 +327,30 @@ window.Quarto = {
 <td><code>abstract</code></td>
 <td><p>The abstract paragraph.</p>
 <p>If the abstract is a single paragraph, put it on a single line like most of the other fields:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> This is a single-paragraph abstract.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> This is a single-paragraph abstract.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If the abstract has multiple paragraphs, separate them like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  | This is the first paragraph.</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  | This is the second paragraph.</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  | This the third paragraph.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  | This is the first paragraph.</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  | This is the second paragraph.</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  | This the third paragraph.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The abstract can be written in the document instead, as a section called Abstract. It is taken out of the body and set on the title page as though it had been written here. Handy for a long abstract, which a yaml field makes awkward to write and to spell check:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>This is the first paragraph.</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>This is the second paragraph.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>This is the first paragraph.</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>This is the second paragraph.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td><code>keywords</code></td>
 <td><p>A list of topics your paper relates to. Can be single words or short phrases. There are two ways to format key words.</p>
 <p>Comma-separated list with square brackets:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">First keyword</span><span class="kw">,</span><span class="at"> Second keyword</span><span class="kw">,</span><span class="at"> Third keyword</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">First keyword</span><span class="kw">,</span><span class="at"> Second keyword</span><span class="kw">,</span><span class="at"> Third keyword</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Multiline list with indented hyphens :</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> First keyword</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Second keyword</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Third keyword</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> First keyword</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Second keyword</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Third keyword</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -362,24 +366,26 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td><code>numbered-lines</code></td>
-<td colspan="2">Numbered lines (every format but .html, which has no pages to number lines down) | Default: <code>false</code> |</td>
+<td>Numbered lines (every format but .html, which has no pages to number lines down) | Default: <code>false</code> |</td>
+<td></td>
 </tr>
 <tr class="even">
 <td><code>linenumber-font</code></td>
-<td colspan="2"><p>The font of the numbers <code>numbered-lines</code> puts in the margin, in apaquarto-typst.</p>
+<td><p>The font of the numbers <code>numbered-lines</code> puts in the margin, in apaquarto-typst.</p>
 <p>Typst bundles one sans face, DejaVu Sans Mono, and warns once for every family it is asked for and cannot find. So the default names only that one, which is silent on every machine. Name another if you know the machine has it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linenumber-font</span><span class="kw">:</span><span class="at"> Helvetica</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linenumber-font</span><span class="kw">:</span><span class="at"> Helvetica</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A list is tried in turn:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linenumber-font</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">Helvetica</span><span class="kw">,</span><span class="at"> Arial</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linenumber-font</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">Helvetica</span><span class="kw">,</span><span class="at"> Arial</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Default: <code>DejaVu Sans Mono</code></p></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><code>bibliography</code></td>
 <td><p>File(s) with references.</p>
 <p>If you have a single file, you can list it like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> mybibliography.bib</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> mybibliography.bib</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you have multiple files, you can make an array:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">mybibliography.bib</span><span class="kw">,</span><span class="at"> myotherbibliography.bib</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">mybibliography.bib</span><span class="kw">,</span><span class="at"> myotherbibliography.bib</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -392,10 +398,10 @@ window.Quarto = {
 <tr class="odd">
 <td><code>masked-citations</code></td>
 <td><p>A list of citation keys that should be masked if the <code>mask</code> field is <code>true</code>. For example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2020</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2024</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2020</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2024</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The citation keys should be as they appear in the bibliography file(s).</p></td>
 <td></td>
 </tr>
@@ -418,9 +424,9 @@ window.Quarto = {
 <td><code>impact-statement</code></td>
 <td><p>A paragraph below the Abstract that describes the theoretical/practical importance of the work. The heading of the impact statement is “Impact Statement” by default but can be overridden using the <code>title-impact-statement</code> field in the <code>language</code> field.</p>
 <p>Like the abstract, it can be written in the document instead, as a section called Impact Statement:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Impact Statement</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>This is the statement.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Impact Statement</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>This is the statement.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 <td></td>
 </tr>
 <tr class="even">
@@ -447,46 +453,46 @@ window.Quarto = {
 </table>
 <section id="authors" class="level2">
 <h2 class="anchored" data-anchor-id="authors">Authors</h2>
-<p>The apaquarto uses the <a href="https://quarto.org/docs/authoring/front-matter.html#author">standard Quarto schema for authors</a>. It has a lot of options, some of which are not needed for the apaquarto extension (e.g., <code>fax</code>).</p>
+<p>The apaquarto uses the <a href="https://quarto.org/docs/authoring/front-matter.html#author">standard Quarto schema for authors</a>. It has a lot of options, some of which are not needed for the apaquarto extension (e.g., <code>fax</code>, <code>phone</code>, <code>degrees</code>, <code>note</code>, <code>acknowledgements</code>).</p>
 <p>The <code>author</code> field contains author names, author affiliations, and author roles. Where possible, specify each author’s <a href="https://orcid.org/">orcid</a> for easy, unambiguous identification.</p>
 <p>The corresponding author is specified by setting the author’s corresponding field to true (i.e., <code>corresponding: true</code>). This author needs to list an email and list a mailing address in the affiliation data. Only one author can be the corresponding author. Other authors do not need to list their addresses.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">corresponding</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0002-8393-5316</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> schneider@temple.edu</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> writing</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> conceptualization</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fulano Zutano Mengano</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> Universidad de Dondequiera</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0001</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> formal analysis</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> visualization</span></span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Thomas Richard Harris</span></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Department of Scholarly Studies</span></span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0002</span></span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> funding acquisition</span></span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wut C. Whosis</span></span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> Whatchama College</span></span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0003</span></span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> software</span></span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> methodology</span></span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">corresponding</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0002-8393-5316</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">email</span><span class="kw">:</span><span class="at"> schneider@temple.edu</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> writing</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> conceptualization</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fulano Zutano Mengano</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> Universidad de Dondequiera</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0001</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> formal analysis</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> visualization</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Thomas Richard Harris</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Department of Scholarly Studies</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0002</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> funding acquisition</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wut C. Whosis</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span><span class="at"> Whatchama College</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">orcid</span><span class="kw">:</span><span class="at"> 0000-0000-0000-0003</span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> software</span></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> methodology</span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="affiliations" class="level2">
 <h2 class="anchored" data-anchor-id="affiliations">Affiliations</h2>
@@ -506,33 +512,33 @@ window.Quarto = {
 <tr class="odd">
 <td><code>id</code></td>
 <td><p>A unique identifier for the affiliation. The <code>id</code> can be useful for specifying an affiliation shared by multiple authors:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Renée M. Tobin</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Renée M. Tobin</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="even">
 <td><code>name</code></td>
 <td><p>The name of the organization.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If the author is unaffiliated, list the author’s city and region/state instead:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">city</span><span class="kw">:</span><span class="at"> San Francisco</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> CA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the author is unaffiliated, list the author’s city and region/state instead:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">city</span><span class="kw">:</span><span class="at"> San Francisco</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> CA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="odd">
 <td><code>department</code></td>
@@ -541,12 +547,12 @@ window.Quarto = {
 <tr class="even">
 <td><code>group</code></td>
 <td><p>A subdivision within the department</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Department of Psychology</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Counseling Psychology</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Department of Psychology</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Counseling Psychology</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="odd">
 <td><code>address</code></td>
@@ -574,20 +580,6 @@ window.Quarto = {
 <section id="multiple-affiliations" class="level3">
 <h3 class="anchored" data-anchor-id="multiple-affiliations">Multiple Affiliations</h3>
 <p>If an author has more than one affiliation:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> My Second Affiliation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="shared-affiliations" class="level3">
-<h3 class="anchored" data-anchor-id="shared-affiliations">Shared Affiliations</h3>
-<p>If two authors have the same affiliation, you can type the same affiliation twice. If you do this, make sure the affiliations are EXACTLY the same in every detail. Otherwise they will be listed as different. To make sure they are listed as the same affiliation, it is safer to use a reference id to make sure that there are no accidental differences that creep in to the editing process. In this example, the affiliation information was entered once, and the <code>id</code> was specified. For the second author with the same affiliation, the <code>ref</code> field is used to reference the previously specified <code>id</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
@@ -597,40 +589,50 @@ window.Quarto = {
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Renée M. Tobin</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> My Second Affiliation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="shared-affiliations" class="level3">
+<h3 class="anchored" data-anchor-id="shared-affiliations">Shared Affiliations</h3>
+<p>If two authors have the same affiliation, you can type the same affiliation twice. If you do this, make sure the affiliations are EXACTLY the same in every detail. Otherwise they will be listed as different. To make sure they are listed as the same affiliation, it is safer to use a reference id to make sure that there are no accidental differences that creep in to the editing process. In this example, the affiliation information was entered once, and the <code>id</code> was specified. For the second author with the same affiliation, the <code>ref</code> field is used to reference the previously specified <code>id</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> College of Education and Human Development</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">address</span><span class="kw">:</span><span class="at"> 1301 Cecil B. Moore Ave.</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">city</span><span class="kw">:</span><span class="at"> Philadelphia</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> PA</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">postal-code</span><span class="kw">:</span><span class="at"> 19122-6091</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Renée M. Tobin</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="listing-authors-and-affiliations-separately" class="level3">
 <h3 class="anchored" data-anchor-id="listing-authors-and-affiliations-separately">Listing Authors and Affiliations Separately</h3>
 <p>If there are a lot of authors with shared affiliations, it might be easier to list the affiliations separately and specify each affiliation’s <code>id</code>, which can be looked up with the <code>ref</code> field:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> tamu</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wanda James</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> ucb</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> tamu</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"Texas A&amp;M University"</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> ucb</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> University of California, Berkeley</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> tamu</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wanda James</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> ucb</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">affiliations</span><span class="kw">:</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Temple University</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> tamu</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"Texas A&amp;M University"</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> ucb</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> University of California, Berkeley</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="author-roles" class="level2">
 <h2 class="anchored" data-anchor-id="author-roles">Author Roles</h2>
 <p>APA Style encourages but does not require papers with multiple authors to describe author roles using the <a href="https://credit.niso.org/">Contributor Roles Taxonomy</a> (CRediT). There are 14 contributor roles:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Role</th>
@@ -697,34 +699,34 @@ window.Quarto = {
 </tbody>
 </table>
 <p>It is possible to list the roles for each author:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> conceptualization</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> funding acquisition</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> writing</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wanda James</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> conceptualization</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> formal analysis</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> visualization</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>When 2 or more authors have the same role, one may specify the degree of contribution (<code>lead</code>, <code>equal</code>, <code>supporting</code>):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">conceptualization</span><span class="kw">:</span><span class="at"> lead</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">visualization</span><span class="kw">:</span><span class="at"> supporting</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">investigation</span><span class="kw">:</span><span class="at"> equal</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> funding acquisition</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> writing</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wanda James</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">conceptualization</span><span class="kw">:</span><span class="at"> supporting</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">visualization</span><span class="kw">:</span><span class="at"> lead</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">investigation</span><span class="kw">:</span><span class="at"> equal</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> formal analysis</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> conceptualization</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> funding acquisition</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> writing</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wanda James</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> conceptualization</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> formal analysis</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> visualization</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When 2 or more authors have the same role, one may specify the degree of contribution (<code>lead</code>, <code>equal</code>, <code>supporting</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">conceptualization</span><span class="kw">:</span><span class="at"> lead</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">visualization</span><span class="kw">:</span><span class="at"> supporting</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">investigation</span><span class="kw">:</span><span class="at"> equal</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> funding acquisition</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> writing</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Wanda James</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">role</span><span class="kw">:</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">conceptualization</span><span class="kw">:</span><span class="at"> supporting</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">visualization</span><span class="kw">:</span><span class="at"> lead</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">investigation</span><span class="kw">:</span><span class="at"> equal</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> formal analysis</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> editing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="author-notes" class="level2">
 <h2 class="anchored" data-anchor-id="author-notes">Author Notes</h2>
@@ -732,8 +734,8 @@ window.Quarto = {
 <p>The second paragraph consists of status changes:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
+<col style="width: 24%">
+<col style="width: 75%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -746,25 +748,25 @@ window.Quarto = {
 <td><code>affiliation-change</code></td>
 <td><p>Describe author affiliation changes.</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">status-changes</span><span class="kw">:</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation-change</span><span class="kw">:</span><span class="at"> Fred Jones is now at Generic State University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">status-changes</span><span class="kw">:</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation-change</span><span class="kw">:</span><span class="at"> Fred Jones is now at Generic State University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="even">
 <td><code>deceased</code></td>
 <td><p>Disclose names of authors who are now deceased.</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">status-changes</span><span class="kw">:</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">deceased</span><span class="kw">:</span><span class="at"> Fred Jones is deceased.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">status-changes</span><span class="kw">:</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">deceased</span><span class="kw">:</span><span class="at"> Fred Jones is deceased.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 </tbody>
 </table>
 <p>The third paragraph consists of study details and author disclosures:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
+<col style="width: 16%">
+<col style="width: 83%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -777,71 +779,71 @@ window.Quarto = {
 <td><code>study-registration</code></td>
 <td><p>Describe where the study was registered.</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">study-registration</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was registered at ClinicalTrials.gov (Identifier NTC998877)."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">study-registration</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was registered at ClinicalTrials.gov (Identifier NTC998877)."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="even">
 <td><code>data-sharing</code></td>
 <td><p>Data/materials that have been shared</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">data-sharing</span><span class="kw">:</span><span class="at"> </span><span class="st">"Data from this study can be accessed at https://academicdata.org/jones2024."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">data-sharing</span><span class="kw">:</span><span class="at"> </span><span class="st">"Data from this study can be accessed at https://academicdata.org/jones2024."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="odd">
 <td><code>related-report</code></td>
 <td><p>Acknowledge and cite data/materials that were used previously</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">related-report</span><span class="kw">:</span><span class="at"> </span><span class="st">"This article is based on the dissertation completed by Graham (2018)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">related-report</span><span class="kw">:</span><span class="at"> </span><span class="st">"This article is based on the dissertation completed by Graham (2018)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="even">
 <td><code>conflict-of-interest</code></td>
 <td><p>Disclose author conflicts of interest</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict-of-interest</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fred Jones has been a paid consultant for Corporation X, which funded this study."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict-of-interest</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fred Jones has been a paid consultant for Corporation X, which funded this study."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="odd">
 <td><code>financial-support</code></td>
 <td><p>Acknowledge funding sources</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">financial-support</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was supported by Grant 123 from Academic Funders United."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">financial-support</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was supported by Grant 123 from Academic Funders United."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="even">
 <td><code>gratitude</code></td>
 <td><p>Authors can express gratitude.</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gratitude</span><span class="kw">:</span><span class="at"> </span><span class="st">"The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gratitude</span><span class="kw">:</span><span class="at"> </span><span class="st">"The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="odd">
 <td><code>authorship-agreements</code></td>
 <td><p>Authors can disclose any agreements they entered into regarding the paper.</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">authorship-agreements</span><span class="kw">:</span><span class="at"> </span><span class="st">"Because the authors are equal contributors, order of authorship was determined by a fair coin toss."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">authorship-agreements</span><span class="kw">:</span><span class="at"> </span><span class="st">"Because the authors are equal contributors, order of authorship was determined by a fair coin toss."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 </tbody>
 </table>
 <p>The fourth paragraph of the Author Note consists of the correspondence information. It will created automatically from the contact information from the author marked as the corresponding author. If you wish to override this paragraph with one entirely of your own, you can set it via the <code>correspondence-note</code> subfield in the <code>author-note</code> field.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">correspondence-note</span><span class="kw">:</span><span class="at"> This will override the correspondence note that would otherwise be generated.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">correspondence-note</span><span class="kw">:</span><span class="at"> This will override the correspondence note that would otherwise be generated.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="options-for-.docx-and-typst" class="level1">
 <h1>Options for .docx and typst</h1>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
+<col style="width: 20%">
+<col style="width: 79%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -869,8 +871,8 @@ window.Quarto = {
 <p>All of the .pdf-specific options for apaquarto come directly from the <a href="https://ctan.org/pkg/apa7?lang=en">apa7 <span class="math inline">\(\LaTeX\)</span> package</a>. Consult the [apa7 package documentation](<a href="https://ctan.org/pkg/apa7" class="uri">https://ctan.org/pkg/apa7</a>) for greater detail.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
+<col style="width: 38%">
+<col style="width: 61%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -897,21 +899,21 @@ window.Quarto = {
 <p><code>note</code></p></td>
 <td><p>Fields that are used only for student papers (<code>stu</code> mode).</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">course</span><span class="kw">:</span><span class="at"> Introduction to Statistics (EDUC 5101)</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">professor</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">duedate</span><span class="kw">:</span><span class="at"> 12/22/2024</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">note</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  Student ID: 123456</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">course</span><span class="kw">:</span><span class="at"> Introduction to Statistics (EDUC 5101)</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">professor</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">duedate</span><span class="kw">:</span><span class="at"> 12/22/2024</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">note</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  Student ID: 123456</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="odd">
 <td><code>journal</code> <code>volume</code> <code>copyrightnotice</code> <code>copyrighttext</code></td>
 <td><p>Fields that are used only for journal articles (<code>jou</code> mode).</p>
 <p>Example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">journal</span><span class="kw">:</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Psychological Review</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">volume</span><span class="kw">:</span><span class="at"> 2024, Vol. 131, No. 2, 10--60</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrightnotice</span><span class="kw">:</span><span class="at"> </span><span class="dv">2024</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> All rights reserved</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">journal</span><span class="kw">:</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Psychological Review</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">volume</span><span class="kw">:</span><span class="at"> 2024, Vol. 131, No. 2, 10--60</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrightnotice</span><span class="kw">:</span><span class="at"> </span><span class="dv">2024</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> All rights reserved</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
 </tr>
 <tr class="even">
 <td><code>fontsize</code></td>
@@ -941,27 +943,27 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
-<section id="document-modes-in-typst" class="level1">
-<h1>Document modes in typst</h1>
+<section id="document-modes-in-pdf-and-typst" class="level1">
+<h1>Document modes in pdf and typst</h1>
 <p>The <code>documentmode</code> field works in <code>apaquarto-typst</code> as well as <code>apaquarto-pdf</code>. All four modes are supported: <code>man</code> (manuscript), <code>jou</code> (journal, two columns), <code>doc</code> (a plain continuous document), and <code>stu</code> (student paper). In both formats each mode may also be named in full: <code>journal</code>, <code>manuscript</code>, <code>document</code>, and <code>student</code> are accepted as aliases for <code>jou</code>, <code>man</code>, <code>doc</code>, and <code>stu</code>.</p>
 <p>In <code>stu</code> mode the student-paper fields <code>course</code>, <code>professor</code>, <code>duedate</code>, and <code>note</code> are placed on the title page.</p>
 <p>In <code>jou</code> mode the journal metadata is set as a masthead at the head of the first page, the way the journals set one: the journal’s name at the right with its logo opposite, a rule under both, and the issue on the right beneath it with the copyright on the left. All of it goes under <code>journal</code>, which Quarto reserves as an object:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">journal</span><span class="kw">:</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Journal of Educational Psychology"</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">logo</span><span class="kw">:</span><span class="at"> apa-logo.png</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">year</span><span class="kw">:</span><span class="at"> </span><span class="dv">2026</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volume</span><span class="kw">:</span><span class="at"> </span><span class="dv">118</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">issue</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pages</span><span class="kw">:</span><span class="at"> 869--888</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">url</span><span class="kw">:</span><span class="at"> </span><span class="st">"https://doi.org/10.1037/edu0000976"</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">issn</span><span class="kw">:</span><span class="at"> 0022-0663</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">copyrightnotice</span><span class="kw">:</span><span class="at"> </span><span class="dv">2025</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> </span><span class="st">"The Author(s)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">journal</span><span class="kw">:</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Journal of Educational Psychology"</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">logo</span><span class="kw">:</span><span class="at"> apa-logo.png</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">year</span><span class="kw">:</span><span class="at"> </span><span class="dv">2026</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">volume</span><span class="kw">:</span><span class="at"> </span><span class="dv">118</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">issue</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pages</span><span class="kw">:</span><span class="at"> 869--888</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">url</span><span class="kw">:</span><span class="at"> </span><span class="st">"https://doi.org/10.1037/edu0000976"</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">issn</span><span class="kw">:</span><span class="at"> 0022-0663</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">copyrightnotice</span><span class="kw">:</span><span class="at"> </span><span class="dv">2025</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> </span><span class="st">"The Author(s)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>which is set as</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 51%">
-<col style="width: 48%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -979,30 +981,25 @@ window.Quarto = {
 </tbody>
 </table>
 <p><code>logo</code> is a path to an image file, read the same way a path in the document is. Writing <code>logo: default</code> instead of a path uses the apaquarto logo, which the extension ships with, so that a masthead can be seen without one having to be found first.</p>
-<p>Every field is optional, and anything left out is simply left out: a <code>journal</code> with nothing but a <code>title</code> gives the name and the rule and no more. A masthead is lifted into the top margin by half of it, so that the head of the first page sits about where the journals put it. Only the first page moves: every page after it keeps the margin, and the running head in it, that the mode gives. A document that sets its own <code>margin</code> is lifted by half of that. Writing any of the fields at the top level of the document rather than under <code>journal</code> works too, which is how <code>volume</code>, <code>copyrightnotice</code> and <code>copyrighttext</code> were given before there was anywhere else to put them.</p>
-<p><code>year</code>, <code>volume</code>, <code>issue</code>, and <code>pages</code> are assembled into the issue line, so <code>volume: 118</code> is set as “Vol. 118”. A <code>volume</code> given on its own, with no <code>year</code>, <code>issue</code>, or <code>pages</code> beside it, is printed exactly as it was written, so a document that carries the whole line in <code>volume</code> (<code>volume: 2026, Vol. 118, No. 6, 869--888</code>) keeps setting it that way. The words “Vol.” and “No.” can be changed with <code>journal-volume</code> and <code>journal-issue</code> in the <code>language</code> field.</p>
-<p>The masthead itself is journal mode in <code>apaquarto-typst</code>. <code>apaquarto-pdf</code> sets the journal’s name and the issue line above the title, as the apa7 LaTeX class does, and reads <code>year</code>, <code>volume</code>, <code>issue</code>, and <code>pages</code> the same way, so the two formats print the same issue line. The apa7 class has nowhere to put a logo, an ISSN, or a doi, so those appear only in the typst masthead.</p>
-<p>In <code>jou</code> mode the author note sits at the foot of the first column, under a thin rule, the way apa7 sets it. A note long enough to fill much of that column would leave the article nowhere to start, so once it passes a third of the column it runs across the foot of the page in two columns instead, as the journals themselves set a long author note. Nothing needs to be set for this; it follows from the length of the note. To decide it yourself rather than by length, set <code>author-note-columns</code> to <code>1</code> for one column or <code>2</code> for two; <code>auto</code>, the default, measures the note.</p>
-<p>In typst <code>jou</code> and <code>doc</code> modes, figures and tables are placed in text by default (as they are in the equivalent <code>.pdf</code> output), while <code>man</code> and <code>stu</code> modes collect them at the end in the manuscript convention. Either default can be overridden with <code>floatsintext</code>: set it to <code>false</code> to move floats to the end, or <code>true</code> to keep them in text.</p>
+<p>Every field is optional, and anything left out is simply left out: a <code>journal</code> with nothing but a <code>title</code> gives the name and the rule and no more. The words “Vol.” and “No.” can be changed with <code>journal-volume</code> and <code>journal-issue</code> in the <code>language</code> field.</p>
 </section>
 <section id="options-for-.html" class="level1">
 <h1>Options for .html</h1>
 <p>With one exception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.</p>
-<p>Notebook previews are off by default (<code>notebook-view: false</code>). When a document pulls in a figure or table from another document with <code>{{&lt; embed other.qmd#fig-x &gt;}}</code>, Quarto ordinarily renders that other document a second time to build a standalone preview page for the “Source:” link beneath the embedded output. That second render resolves this format’s theme against a temporary directory instead of the project, so it cannot find the apaquarto stylesheet and builds the preview page with none of this format’s styling. The embedded figure or table itself is unaffected — it is placed in the article, which does have the styling. Set <code>notebook-view: true</code> if you want the “Source:” link back.</p>
 </section>
 <section id="the-introduction-heading" class="level1">
 <h1>The Introduction Heading</h1>
 <p>APA does not label the introduction. The title of the paper stands at the top of the first page of text and the introduction runs on underneath it, so a heading reading <em>Introduction</em> is one heading too many.</p>
 <p>apaquarto takes such a heading out for you. If the first heading in the body is a level-one heading whose text is <em>Introduction</em>, it is removed and the text under it is left where it is. A heading called <em>Introduction</em> anywhere else — inside an appendix, say — is left alone, as is one at any other level.</p>
 <p>This matters most when the abstract is written as a section of the document, since something has to mark where the abstract ends and a heading is the obvious thing to reach for:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>The abstract goes here.</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>The body of the paper starts here, and the heading above it does not</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>appear in the output.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>The abstract goes here.</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>The body of the paper starts here, and the heading above it does not</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>appear in the output.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The word it looks for is <code>section-title-introduction</code> in the <code>language</code> field, so a paper written in another language is matched too. To keep the heading, set <code>keep-introduction-heading: true</code>.</p>
 </section>
 <section id="suppress-elements" class="level1">
@@ -1010,8 +1007,8 @@ window.Quarto = {
 <p>Any of the elements below can be selectively suppressed from the document by setting the field to <code>true</code>.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 70%">
+<col style="width: 17%">
+<col style="width: 82%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1191,9 +1188,9 @@ window.Quarto = {
 <p>However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 11%">
+<col style="width: 49%">
+<col style="width: 38%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1271,21 +1268,21 @@ window.Quarto = {
 </tbody>
 </table>
 <p>All these options must be listed under the <code>language</code> field . For example, if we set the <code>lang</code> field to <code>es</code> (Spanish), the remaining options can also be set:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In addition, many terms that are translated automatically can be overridden. The full list is <a href="https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml">here</a>. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here are the language terms most likely to be used in apaquarto:</p>
 <table class="caption-top table">
 <thead>
