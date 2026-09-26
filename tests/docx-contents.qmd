@@ -1,0 +1,50 @@
+---
+title: "Contents in Word"
+shorttitle: "Contents"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-docx:
+    toc: true
+    list-of-figures: true
+    list-of-tables: true
+---
+
+<!--
+Word builds a table of contents from a field, and collects into it every
+paragraph whose outline level is 1 to 3 -- which is every Heading 1 to 3 in
+the document. apaquarto gives four of its own headings that style: the title,
+the author note, the abstract and the impact statement. All four were listed,
+none of them belong there, and a heading the writer marks {.unlisted} was
+listed too. Each is written out with an outline level of 9, body text, which
+the field passes over. The Heading style stays, so they look as they did.
+
+The lists of figures and tables are apaquarto's own, and are built without a
+field: ordinary paragraphs, each a link to the float it names. Nothing in
+them needs updating, so Word shows them the moment the file opens, which is
+the whole point of not using a field for them.
+-->
+
+# Method
+
+See @fig-one and @tbl-one.
+
+![A first figure.](sampleimage.png){#fig-one}
+
+| A | B |
+|:--|--:|
+| 1 | 2 |
+
+: A first table. {#tbl-one}
+
+# Unlisted Section {.unlisted}
+
+Not in the table of contents.
+
+# Discussion
+
+End.

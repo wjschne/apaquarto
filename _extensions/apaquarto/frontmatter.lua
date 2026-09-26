@@ -1366,6 +1366,18 @@ return {
         body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
       end
 
+      -- The same two lists in .docx. What they are lists of is not known
+      -- yet: apacaption.lua has not run, so no figure has its number or its
+      -- title. A marker goes in at the place typst puts its outlines and
+      -- docxcontents.lua fills it in once the captions exist.
+      if FORMAT == "docx" then
+        for _, which in ipairs({ "list-of-figures", "list-of-tables" }) do
+          if meta[which] and stringify(meta[which]) ~= "false" then
+            body:extend({ pandoc.Div({}, pandoc.Attr("", { which })) })
+          end
+        end
+      end
+
       if meta.apatitledisplay and not meta["suppress-title-introduction"] then
         local firstpageheader = documenttitle:clone()
         firstpageheader.identifier = "firstheader"

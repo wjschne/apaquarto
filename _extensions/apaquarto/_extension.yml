@@ -273,6 +273,11 @@ contributes:
         # Format Latex symbol
         - at: post-render
           path: docxformatlatexsymbol.lua
+        # The lists of figures and tables, and the headings the table of
+        # contents should pass over. After apacaption.lua, which is what
+        # gives a figure its number and its title.
+        - at: post-render
+          path: docxcontents.lua
         # Set the docx fonts and page size from the mainfont, monofont
         # and papersize options
         - at: post-render

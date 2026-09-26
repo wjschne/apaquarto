@@ -604,3 +604,27 @@
         - 'justify: true'
         # ... and a table is not, so a left aligned column stays left aligned.
         - 'show table: set par(justify: false)'
+
+# ------------------------------------------------------ contents in word --
+
+- fixture: docx-contents.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'List of Figures'
+        - 'List of Tables'
+        - 'A first figure.'
+        - 'A first table.'
+    docx-xml:
+      contains:
+        # Each entry is a link to its float rather than a page number, which
+        # would need a field and so an update.
+        - 'w:anchor="fig-one"'
+        - 'w:anchor="tbl-one"'
+      count:
+        # The title, the author note, the two list headings and the writer's
+        # own {.unlisted} heading: five headings the contents field passes
+        # over. Method and Discussion keep their outline level and are
+        # collected.
+        '<w:outlineLvl w:val="9"/>': 5
