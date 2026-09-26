@@ -9,24 +9,28 @@ author:
       - name: Test University
 format:
   apaquarto-docx:
-    toc: true
+    list-of-contents: true
+    list-of-figures: true
+    list-of-tables: true
+  apaquarto-pdf:
     list-of-figures: true
     list-of-tables: true
 ---
 
 <!--
-Word builds a table of contents from a field, and collects into it every
-paragraph whose outline level is 1 to 3 -- which is every Heading 1 to 3 in
-the document. apaquarto gives four of its own headings that style: the title,
-the author note, the abstract and the impact statement. All four were listed,
-none of them belong there, and a heading the writer marks {.unlisted} was
-listed too. Each is written out with an outline level of 9, body text, which
-the field passes over. The Heading style stays, so they look as they did.
+The three lists apaquarto builds for .docx, and the two it builds for the
+pdf. Each entry reads "Figure 1. The Figure Caption", the same line in every
+format, with the number not bold.
 
-The lists of figures and tables are apaquarto's own, and are built without a
-field: ordinary paragraphs, each a link to the float it names. Nothing in
-them needs updating, so Word shows them the moment the file opens, which is
-the whole point of not using a field for them.
+The contents is apaquarto's own rather than the field pandoc writes. Pandoc
+puts that field at the top of the body, ahead of the title page, and no
+filter can move it or turn it off -- --toc is fixed before any filter runs,
+and the .docx writer never looks at the metadata, which a test of setting
+meta.toc to false confirmed. So the contents is asked for by a name of
+apaquarto's own, list-of-contents, and goes where typst puts it: after the
+abstract, the impact statement, the keywords and the supplemental materials.
+Building it here also settles which headings it carries -- the ones marked
+unlisted are simply left out, rather than being fought out of Word's field.
 -->
 
 # Method
@@ -40,6 +44,13 @@ See @fig-one and @tbl-one.
 | 1 | 2 |
 
 : A first table. {#tbl-one}
+
+# A Heading Long Enough That Word Will Not Take Its Name
+
+Word will not take a bookmark name of more than 40 characters, so pandoc
+hashes a longer identifier and writes the sha1 with its first character
+replaced by an X. A link has to ask for that name and not for the identifier,
+or it points at nothing.
 
 # Unlisted Section {.unlisted}
 

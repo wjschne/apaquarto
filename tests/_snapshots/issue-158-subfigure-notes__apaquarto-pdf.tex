@@ -333,6 +333,34 @@
     /end{figure}%
   /fi}
 
+% --- Lists of figures and tables ---------------------------------------------
+% APA sets these as a plain list: the float's name and its title on one line,
+% then a leader out to the page number. Nothing is indented and nothing is
+% numbered again -- floatlatex.lua has already written each line as "Figure 1.
+% The Figure Caption", the line the .docx and typst lists give, so latex has
+% only to place it.
+%
+% /l@figure and /l@table are what /listoffigures and /listoftables use
+% for each line, and /@dottedtocline is the class's own: it sets the text,
+% fills out to the page number with dots, and hangs the turn-over lines. Its
+% two lengths are the indent before the text and the room kept for a number
+% in front of it. Both are zero, since the number is part of the text here
+% and the class would otherwise indent the line and leave a gap for it.
+/makeatletter
+/renewcommand*/l@figure{/@dottedtocline{1}{0em}{0em}}
+/let /l@table /l@figure
+/makeatother
+
+% The heading each list carries, set like any other section heading. The
+% article class writes the heading itself from /listfigurename, so the name
+% is set first and the list follows.
+/newcommand{/apalistoffigures}{%
+  /renewcommand{/listfigurename}{List of Figures}%
+  /listoffigures}
+/newcommand{/apalistoftables}{%
+  /renewcommand{/listtablename}{List of Tables}%
+  /listoftables}
+
 % --- Journal masthead -------------------------------------------------------
 % The band a published article carries at the head of its first page: the
 % journal's logo at the left with its name opposite, a rule under both, and the
@@ -762,6 +790,8 @@ working (Figure~/ref{fig-single}).
 
 /apafigureskip
 
+/addcontentsline{lof}{figure}{Figure 1. A single image.}
+
 /includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
 
 /begin{apafloatnote}
@@ -789,6 +819,8 @@ layout with no overall caption, where each panel carries its own
 /label{fig-bug}
 
 /apafloattitle{Figure 2}
+
+/addcontentsline{lof}{figure}{Figure 2}
 
 /begin{apapanel}{0.4900}%
 /textbf{Panel A}. First panel.
@@ -847,6 +879,9 @@ The same situation but with an overall figure caption
 
 /apafigureskip
 
+/addcontentsline{lof}{figure}{Figure 3. An overall caption for the whole
+figure.}
+
 /begin{apapanel}{0.4900}%
 /textbf{Panel A}. First panel.
 
@@ -904,6 +939,9 @@ Only the second panel has a note; the first must render without one
 
 /apafigureskip
 
+/addcontentsline{lof}{figure}{Figure 4. An overall caption for the mixed
+figure.}
+
 /begin{apapanel}{0.4900}%
 /textbf{Panel A}. Panel without a note.
 
@@ -952,6 +990,8 @@ The table branch of the filter is unchanged; confirm it still works
 /apafloattitle{Table 1}
 
 /apafloatcaption{A small table.}
+
+/addcontentsline{lot}{table}{Table 1. A small table.}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}ll@{}}

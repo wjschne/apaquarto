@@ -704,7 +704,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{IMAGE PANELS}
+/setapashorttitle{CONTENTS}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -734,7 +734,7 @@
 
 /apatitle{
 
-Multipanel Notes, Image Panels
+Contents in Word
 
 }
 
@@ -762,17 +762,21 @@ Correspondence concerning this article should be addressed to Test
 Author, Test University, Email:
 /href{mailto:test@example.com}{/nolinkurl{test@example.com}}
 
+/apalistoffigures
+
+/apalistoftables
+
 /clearpage
 
 /apatitle{
 
-Multipanel Notes, Image Panels
+Contents in Word
 
 }
 
 /section{Method}/label{method}
 
-See Figure~/ref{fig-images}.
+See Figure~/ref{fig-one} and Table~/ref{tbl-one}.
 
 /begin{figure}[H]
 
@@ -780,56 +784,63 @@ See Figure~/ref{fig-images}.
 
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-images}
+/label{fig-one}
 
 /apafloattitle{Figure 1}
 
-/apafloatcaption{Two Image Panels}
+/apafloatcaption{A first figure.}
 
 /apafigureskip
 
-/addcontentsline{lof}{figure}{Figure 1. Two Image Panels}
+/addcontentsline{lof}{figure}{Figure 1. A first figure.}
 
-/begin{apapanel}{0.4900}%
-/textbf{Panel A}. First panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={First panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the left panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/hfill
-/begin{apapanel}{0.4900}%
-/textbf{Panel B}. Second panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Second panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the right panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/par
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note belonging to the whole figure.
-
-/end{apafloatnote}
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
 
 /end{figure}
 
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{0}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{tbl-one}
+
+/apafloattitle{Table 1}
+
+/apafloatcaption{A first table.}
+
+/addcontentsline{lot}{table}{Table 1. A first table.}
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}lr@{}}
+/toprule/noalign{}
+A & B //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+1 & 2 //
+/end{longtable}
+}
+
+/par/addvspace{/baselineskip}
+
+/section{A Heading Long Enough That Word Will Not Take Its
+Name}/label{a-heading-long-enough-that-word-will-not-take-its-name}
+
+Word will not take a bookmark name of more than 40 characters, so pandoc
+hashes a longer identifier and writes the sha1 with its first character
+replaced by an X. A link has to ask for that name and not for the
+identifier, or it points at nothing.
+
+/section{Unlisted Section}/label{unlisted-section}
+
+Not in the table of contents.
+
 /section{Discussion}/label{discussion}
 
-Text after the float.
+End.
 
 
 

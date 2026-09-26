@@ -523,6 +523,26 @@ local function processfloat(float)
     end
   end
 
+  -- The line this float puts in the list of figures or the list of tables:
+  -- "Figure 1. The Figure Caption", which is the line .docx and typst give.
+  -- Written whether or not the document asks for such a list -- latex keeps
+  -- these in a file of its own and prints nothing unless \\listoffigures or
+  -- \\listoftables is there to read them back.
+  local entry = pandoc.List({})
+  entry:extend(label_inlines(float))
+  if caption then
+    entry:insert(pandoc.Str("."))
+    entry:insert(pandoc.Space())
+    entry:extend(caption)
+  end
+  local listfile = istable and "lot" or "lof"
+  local listkind = istable and "table" or "figure"
+  local addline = pandoc.List({ pandoc.RawInline("latex",
+    "\\addcontentsline{" .. listfile .. "}{" .. listkind .. "}{") })
+  addline:extend(entry)
+  addline:insert(pandoc.RawInline("latex", "}"))
+  blocks:insert(pandoc.Plain(addline))
+
   local ncol = panel_columns(float)
   local panelnotes = nil
   if ncol then

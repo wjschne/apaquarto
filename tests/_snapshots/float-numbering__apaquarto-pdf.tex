@@ -704,7 +704,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{IMAGE PANELS}
+/setapashorttitle{NUMBERING}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -734,7 +734,7 @@
 
 /apatitle{
 
-Multipanel Notes, Image Panels
+Numbering Floats
 
 }
 
@@ -762,17 +762,23 @@ Correspondence concerning this article should be addressed to Test
 Author, Test University, Email:
 /href{mailto:test@example.com}{/nolinkurl{test@example.com}}
 
+/apalistoffigures
+
+/apalistoftables
+
 /clearpage
 
 /apatitle{
 
-Multipanel Notes, Image Panels
+Numbering Floats
 
 }
 
 /section{Method}/label{method}
 
-See Figure~/ref{fig-images}.
+See Figure~/ref{fig-first}, Figure~/ref{fig-panels},
+Table~/ref{tbl-values}, Figure~/ref{fig-appendix} and
+Table~/ref{tbl-appendix}.
 
 /begin{figure}[H]
 
@@ -780,56 +786,154 @@ See Figure~/ref{fig-images}.
 
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-images}
+/label{fig-first}
 
 /apafloattitle{Figure 1}
 
-/apafloatcaption{Two Image Panels}
+/apafloatcaption{The first figure.}
 
 /apafigureskip
 
-/addcontentsline{lof}{figure}{Figure 1. Two Image Panels}
+/addcontentsline{lof}{figure}{Figure 1. The first figure.}
 
-/begin{apapanel}{0.4900}%
-/textbf{Panel A}. First panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={First panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the left panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/hfill
-/begin{apapanel}{0.4900}%
-/textbf{Panel B}. Second panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Second panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the right panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/par
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note belonging to the whole figure.
-
-/end{apafloatnote}
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
 
 /end{figure}
 
-/section{Discussion}/label{discussion}
+/begin{figure}[H]
 
-Text after the float.
+/setcounter{figure}{1}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{2}/makeatother%
+/label{fig-panels}
+
+/apafloattitle{Figure 2}
+
+/apafloatcaption{The second figure.}
+
+/apafigureskip
+
+/addcontentsline{lof}{figure}{Figure 2. The second figure.}
+
+/begin{apapanel}{0.4900}%
+Left.
+
+/apafigureskip
+
+/pandocbounded{/includegraphics[keepaspectratio,alt={Left.}]{sampleimage.png}}
+/end{apapanel}%
+/hfill
+/begin{apapanel}{0.4900}%
+Right.
+
+/apafigureskip
+
+/pandocbounded{/includegraphics[keepaspectratio,alt={Right.}]{sampleimage.png}}
+/end{apapanel}%
+/par
+
+/end{figure}
+
+/begin{figure}[H]
+
+/setcounter{figure}{2}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{3}/makeatother%
+/label{fig-third}
+
+/apafloattitle{Figure 3}
+
+/apafloatcaption{The third figure.}
+
+/apafigureskip
+
+/addcontentsline{lof}{figure}{Figure 3. The third figure.}
+
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
+
+/end{figure}
+
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{0}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{tbl-values}
+
+/apafloattitle{Table 1}
+
+/apafloatcaption{The first table.}
+
+/addcontentsline{lot}{table}{Table 1. The first table.}
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}lr@{}}
+/toprule/noalign{}
+A & B //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+1 & 2 //
+/end{longtable}
+}
+
+/par/addvspace{/baselineskip}
+
+/section{Appendix}
+
+/section{Appendix}/label{apx-appendix-a}
+
+/begin{figure}[H]
+
+/setcounter{figure}{0}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{A1}/makeatother%
+/label{fig-appendix}
+
+/apafloattitle{Figure A1}
+
+/apafloatcaption{The appendix figure.}
+
+/apafigureskip
+
+/addcontentsline{lof}{figure}{Figure A1. The appendix figure.}
+
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
+
+/end{figure}
+
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{0}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{A1}/makeatother%
+/label{tbl-appendix}
+
+/apafloattitle{Table A1}
+
+/apafloatcaption{The appendix table.}
+
+/addcontentsline{lot}{table}{Table A1. The appendix table.}
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}lr@{}}
+/toprule/noalign{}
+C & D //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+3 & 4 //
+/end{longtable}
+}
+
+/par/addvspace{/baselineskip}
 
 
 

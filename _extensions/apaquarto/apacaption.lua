@@ -35,8 +35,10 @@ local caption_formatter = function(p)
         for i, v in ipairs(p.content) do
           -- Figure/table title
           if i > intStart and i < intStart + 4 then
-            if i == 3 then
-              -- Figure or table number
+            if i == 3 and labelnum then
+              -- Figure or table number, when apaquarto has one of its own.
+              -- It has for a float in an appendix, where the number carries
+              -- a letter; otherwise quarto's own number is already here.
               v = pandoc.Str(labelnum)
             end
             figuretitle.content:extend({ v })
@@ -62,6 +64,15 @@ end
 
 local divcaption = function(div)
   if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
+    -- Forget the last float's number before working this one out. A float
+    -- that carries no number of its own -- a multipanel figure is one, since
+    -- quarto keeps the count on the panels rather than on the div around
+    -- them -- used to keep whatever the float before it had, so the second
+    -- figure of example.qmd came out as "Figure 1" while the third was
+    -- correctly "Figure 3". Left nil, the number quarto already wrote into
+    -- the caption stands, which is the right one.
+    labelnum = nil
+
     -- Get figure/table prefix and number
     if div.attributes.prefix then
       if div.attributes.fignum then

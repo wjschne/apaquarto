@@ -1,0 +1,68 @@
+---
+title: "Numbering Floats"
+shorttitle: "Numbering"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-docx:
+    list-of-figures: true
+    list-of-tables: true
+  apaquarto-typst:
+    list-of-figures: true
+    list-of-tables: true
+  apaquarto-pdf:
+    list-of-figures: true
+    list-of-tables: true
+---
+
+<!--
+Two ways a float's number went wrong, in two different formats.
+
+In .docx a multipanel figure carries no number of its own -- quarto keeps the
+count on the panels rather than on the div around them -- and apacaption.lua
+kept whatever number the float before it had. The second figure here would
+come out as "Figure 1" and the third as "Figure 3".
+
+In typst the appendix floats were right in the body and wrong in the lists.
+The list took its number from typst's own figure counter, which apaquarto
+restarts at each appendix, and knew nothing of the appendix letter, so
+"Figure A1" was listed as "Figure 1".
+
+The pdf has had both right throughout and is here to keep it that way.
+-->
+
+# Method
+
+See @fig-first, @fig-panels, @tbl-values, @fig-appendix and @tbl-appendix.
+
+![The first figure.](sampleimage.png){#fig-first}
+
+::: {#fig-panels layout-ncol=2 fig-cap="The second figure."}
+
+![Left.](sampleimage.png)
+
+![Right.](sampleimage.png)
+
+:::
+
+![The third figure.](sampleimage.png){#fig-third}
+
+| A | B |
+|:--|--:|
+| 1 | 2 |
+
+: The first table. {#tbl-values}
+
+# Appendix A
+
+![The appendix figure.](sampleimage.png){#fig-appendix}
+
+| C | D |
+|:--|--:|
+| 3 | 4 |
+
+: The appendix table. {#tbl-appendix}

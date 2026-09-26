@@ -1354,15 +1354,39 @@ return {
         body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
       end
 
+      -- "Figure 1. The Figure Caption", which is the line .docx gives. The
+      -- show rule written for the table of contents above passes none as the
+      -- prefix, which dropped the "Figure 1" from these two outlines as well,
+      -- so each gets a rule of its own inside a block that keeps it there.
       if FORMAT:match 'typst' and meta["list-of-figures"] then
         body:extend({ pandoc.RawBlock('typst',
-          '\n\n#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig"),)\n\n') })
+          '\n\n#[\n' ..
+          '#show outline.entry: it => {show link: set text(fill: black)\n' ..
+          'let loc = it.element.location()\n' ..
+          'let n = it.element.counter.at(loc).first()\n' ..
+          'let a = appendixcounter.at(loc).first()\n' ..
+          'let name = if a > 0 {[#it.element.supplement #numbering("A", a)#n]}\n' ..
+          '  else {[#it.element.supplement #n]}\n' ..
+          'link(loc, it.indented(none, name + [. ] + it.inner()))}\n' ..
+          '#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig"),)\n]\n\n') })
         body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
       end
 
+      -- "Figure 1. The Figure Caption", which is the line .docx gives. The
+      -- show rule written for the table of contents above passes none as the
+      -- prefix, which dropped the "Figure 1" from these two outlines as well,
+      -- so each gets a rule of its own inside a block that keeps it there.
       if FORMAT:match 'typst' and meta["list-of-tables"] then
         body:extend({ pandoc.RawBlock('typst',
-          '\n\n#outline(title: [List of Tables], target: figure.where(kind: "quarto-float-tbl"),)\n\n') })
+          '\n\n#[\n' ..
+          '#show outline.entry: it => {show link: set text(fill: black)\n' ..
+          'let loc = it.element.location()\n' ..
+          'let n = it.element.counter.at(loc).first()\n' ..
+          'let a = appendixcounter.at(loc).first()\n' ..
+          'let name = if a > 0 {[#it.element.supplement #numbering("A", a)#n]}\n' ..
+          '  else {[#it.element.supplement #n]}\n' ..
+          'link(loc, it.indented(none, name + [. ] + it.inner()))}\n' ..
+          '#outline(title: [List of Tables], target: figure.where(kind: "quarto-float-tbl"),)\n]\n\n') })
         body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
       end
 
@@ -1370,8 +1394,9 @@ return {
       -- yet: apacaption.lua has not run, so no figure has its number or its
       -- title. A marker goes in at the place typst puts its outlines and
       -- docxcontents.lua fills it in once the captions exist.
-      if FORMAT == "docx" then
-        for _, which in ipairs({ "list-of-figures", "list-of-tables" }) do
+      if FORMAT == "docx" or FORMAT == "latex" then
+        for _, which in ipairs({ "list-of-contents", "list-of-figures",
+                                 "list-of-tables" }) do
           if meta[which] and stringify(meta[which]) ~= "false" then
             body:extend({ pandoc.Div({}, pandoc.Attr("", { which })) })
           end

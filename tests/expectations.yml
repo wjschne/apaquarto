@@ -608,14 +608,36 @@
 # ------------------------------------------------------ contents in word --
 
 - fixture: docx-contents.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # Every float writes its own line; the two commands read them back.
+        - 'addcontentsline{lof}{figure}'
+        - 'addcontentsline{lot}{table}'
+        - 'apalistoffigures'
+        - 'apalistoftables'
+    pdf:
+      contains:
+        - 'List of Figures'
+        - 'List of Tables'
+        # The same line the other two formats give.
+        - 'Figure 1. A first figure.'
+        - 'Table 1. A first table.'
+
+- fixture: docx-contents.qmd
   to: apaquarto-docx
   expect:
     docx:
       contains:
+        - 'Table of Contents'
         - 'List of Figures'
         - 'List of Tables'
         - 'A first figure.'
         - 'A first table.'
+        # Placed by apaquarto, so the heading it carries is there too and the
+        # field pandoc would have written at the top of the body is not.
+        - 'Method'
     docx-xml:
       contains:
         # Each entry is a link to its float rather than a page number, which
@@ -626,12 +648,54 @@
         # here knows where Word will break the pages.
         - 'PAGEREF fig-one'
         - 'PAGEREF tbl-one'
+        # Word takes no bookmark name of more than 40 characters, so pandoc
+        # hashes a longer identifier: the sha1 with an X for its first
+        # character. A link asking for the identifier itself would point at
+        # nothing, which is what the contents used to do for this heading.
+        - 'w:name="Xc24c7f1fa98fcadd084ea98e1299ca9922ae76c"'
+        - 'w:anchor="Xc24c7f1fa98fcadd084ea98e1299ca9922ae76c"'
       count:
-        # The title, the author note, the two list headings and the writer's
-        # own {.unlisted} heading. An outline level of 9 does not take a
-        # Heading 1 out of the contents field -- TOC \o collects the built-in
-        # heading styles whatever outline level is set -- so each of these
-        # takes a style of apaquarto's own instead, which Word does not know
-        # as a heading. Checked in Word: the contents then lists the article
-        # title, Method and Discussion, and nothing else.
-        'ApaUnlistedHeading': 5
+        # The title, the author note and the three list headings, plus the
+        # writer's own {.unlisted} heading. An outline level of 9 does not
+        # take a Heading 1 out of Word's own contents field -- TOC \o
+        # collects the built-in heading styles whatever outline level is set
+        # -- so each of these takes a style of apaquarto's own, which Word
+        # does not know as a heading.
+        'ApaUnlistedHeading': 6
+
+# ---------------------------------------------------- numbering of floats --
+
+- fixture: float-numbering.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'The second figure.'
+        - 'The third figure.'
+      count:
+        # Each number once in the body title, once in the list of figures,
+        # and once more where the text refers to it -- except the third,
+        # which nothing refers to. The point is that they differ at all: the
+        # multipanel figure used to repeat the number of the float before it,
+        # so this read Figure 1, Figure 1, Figure 3.
+        'Figure 1': 3
+        'Figure 2': 3
+        'Figure 3': 2
+
+- fixture: float-numbering.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        # Right in the body and, since the list reads the appendix counter
+        # where the float is, right in the list as well.
+        - 'Figure A1'
+        - 'Table A1'
+
+- fixture: float-numbering.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains:
+        - 'Figure A1'
+        - 'Table A1'

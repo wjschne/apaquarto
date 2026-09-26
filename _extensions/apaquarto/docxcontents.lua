@@ -89,6 +89,18 @@ local function runs(inlines, bold, italic)
   return table.concat(out)
 end
 
+-- The name pandoc gives a heading's bookmark, which is not always the
+-- identifier. Word will not take a bookmark name longer than 40 characters,
+-- so pandoc hashes a longer identifier and writes the sha1 with its first
+-- character replaced by an X. A link here has to ask for the same name or it
+-- points at nothing: the heading "Tables and Figures Spanning Two Columns in
+-- Journal Mode" is 55 characters as an identifier, and every entry for it led
+-- nowhere until this.
+local function bookmark_name(identifier)
+  if #identifier <= 40 then return identifier end
+  return "X" .. pandoc.utils.sha1(identifier):sub(2)
+end
+
 -- Bookmark ids of our own, well clear of the ones pandoc hands out.
 local bookmark = 90000
 
@@ -104,7 +116,7 @@ local function unlisted_heading(header)
   if header.identifier ~= "" then
     bookmark = bookmark + 1
     before = [[<w:bookmarkStart w:id="]] .. bookmark .. [[" w:name="]]
-      .. xml_escape(header.identifier) .. [["/>]]
+      .. xml_escape(bookmark_name(header.identifier)) .. [["/>]]
     after = [[<w:bookmarkEnd w:id="]] .. bookmark .. [["/>]]
   end
 
@@ -176,7 +188,7 @@ local kTabPosition = 9360
 -- whose Word does not run the field still sees the entry and its link; only
 -- the number after the dots is missing.
 local function entry_paragraph(entry)
-  local body = runs(pandoc.Inlines({ pandoc.Str(entry.title) }), true, false)
+  local body = runs(pandoc.Inlines({ pandoc.Str(entry.title) }), false, false)
   if entry.caption and #entry.caption > 0 then
     body = body
       .. runs(pandoc.Inlines({ pandoc.Str("."), pandoc.Space() }), false, false)
@@ -188,7 +200,7 @@ local function entry_paragraph(entry)
     return pandoc.RawBlock("openxml", "<w:p>" .. body .. "</w:p>")
   end
 
-  local anchor = xml_escape(id)
+  local anchor = xml_escape(bookmark_name(id))
   return pandoc.RawBlock("openxml", table.concat({
     "<w:p><w:pPr><w:tabs>",
     [[<w:tab w:val="right" w:leader="dot" w:pos="]] .. kTabPosition .. [["/>]],
@@ -202,6 +214,67 @@ local function entry_paragraph(entry)
     [[<w:r><w:fldChar w:fldCharType="end"/></w:r>]],
     "</w:p>",
   }))
+end
+
+-- The headings the contents should carry: everything down to level three
+-- that is not one of the headings marked unlisted. Collected here rather than
+-- left to Word's own field, which takes the built-in heading styles and so
+-- takes the title page, the author note and the rest along with them.
+local function collect_headings(blocks)
+  local out = pandoc.List({})
+  pandoc.Blocks(blocks):walk {
+    Header = function(h)
+      if h.level > 3 then return nil end
+      if h.classes:includes("unlisted") then return nil end
+      out:insert({ level = h.level, content = h.content, id = h.identifier })
+    end
+  }
+  return out
+end
+
+-- One line of the contents: the heading, indented by its level, a leader, and
+-- the page. The same shape as a line of the list of figures, and for the same
+-- reason -- the page number is a field, since nothing here knows where Word
+-- will break the pages.
+local function heading_paragraph(entry)
+  local indent = (entry.level - 1) * 360      -- quarter of an inch a level
+  local properties = "<w:tabs>"
+    .. [[<w:tab w:val="right" w:leader="dot" w:pos="]] .. kTabPosition .. [["/>]]
+    .. "</w:tabs>"
+  if indent > 0 then
+    properties = [[<w:ind w:left="]] .. indent .. [["/>]] .. properties
+  end
+
+  local body = runs(entry.content, false, false)
+  local id = entry.id or ""
+  if id == "" then
+    return pandoc.RawBlock("openxml",
+      "<w:p><w:pPr>" .. properties .. "</w:pPr>" .. body .. "</w:p>")
+  end
+
+  local anchor = xml_escape(bookmark_name(id))
+  return pandoc.RawBlock("openxml", table.concat({
+    "<w:p><w:pPr>", properties, "</w:pPr>",
+    [[<w:hyperlink w:anchor="]] .. anchor .. [[">]], body, "</w:hyperlink>",
+    "<w:r><w:tab/></w:r>",
+    [[<w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r>]],
+    [[<w:r><w:instrText xml:space="preserve"> PAGEREF ]] .. anchor
+      .. [[ \h </w:instrText></w:r>]],
+    [[<w:r><w:fldChar w:fldCharType="separate"/></w:r>]],
+    [[<w:r><w:fldChar w:fldCharType="end"/></w:r>]],
+    "</w:p>",
+  }))
+end
+
+local function build_contents(headings)
+  local out = pandoc.List({})
+  out:insert(unlisted_heading(
+    pandoc.Header(1, pandoc.Inlines({ pandoc.Str("Table of Contents") }),
+      pandoc.Attr("", { "unlisted" }))))
+  for _, entry in ipairs(headings) do
+    out:insert(heading_paragraph(entry))
+  end
+  return out
 end
 
 -- The list: a heading Word will not collect, then one line for each float.
@@ -220,10 +293,13 @@ return {
   {
     Pandoc = function(doc)
       local figures, tables = collect_floats(doc.blocks)
+      local headings = collect_headings(doc.blocks)
 
       local out = pandoc.List({})
       for _, block in ipairs(doc.blocks) do
-        if block.t == "Div" and block.classes:includes("list-of-figures") then
+        if block.t == "Div" and block.classes:includes("list-of-contents") then
+          out:extend(build_contents(headings))
+        elseif block.t == "Div" and block.classes:includes("list-of-figures") then
           out:extend(build_list("List of Figures", figures))
         elseif block.t == "Div" and block.classes:includes("list-of-tables") then
           out:extend(build_list("List of Tables", tables))
