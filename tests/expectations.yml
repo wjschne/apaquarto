@@ -581,3 +581,26 @@
     html:
       contains:
         - 'ORCID-iD_icon'
+
+# ------------------------------------------------------- justified body --
+
+- fixture: justified-jou.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # ragged2e's justifying, which turns off the RaggedRight the preamble
+        # asks for. The indent is set with it: the two lengths are only kept
+        # in step by whichever of the pair was asked for last.
+        - '\justifying'
+        - 'setlength{\JustifyingParindent}{\apajouparindent}'
+
+- fixture: justified-jou.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # The body is justified in this mode ...
+        - 'justify: true'
+        # ... and a table is not, so a left aligned column stays left aligned.
+        - 'show table: set par(justify: false)'

@@ -913,159 +913,73 @@
   columns: 1,
 )
 
-#show: document => man(
-  title: [Multipanel Notes],
+#show: document => jou(
+  title: [Justified in Journal Mode],
   authors: ([Test Author],),
-  runninghead: "MULTIPANEL NOTES",
+  runninghead: "JUSTIFIED",
   runningauthors: "Author",
   font: (<fonts>),
   numberdepth: 3,
   document,
 )
 
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Multipanel Notes]
+#place(top, scope: "parent", float: true, clearance: 1.5em)[
+#block(width: 100%)[
+#show heading.where(level: 1): set text(size: joutitlesize, weight: "regular")
+#heading(level: 1, outlined: false, numbering: none)[Justified in Journal Mode]
 <title>
 #set align(center)
 #block[
+#set par(..joubylinepar)
+#set block(spacing: 0.55em)
 /
+#set text(size: jouauthorsize)
 Test Author
 
+#set text(size: jouaffiliationsize)
 Test University
 
 ]
 #set align(left)
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Author Note]
-<author-note>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
+]
+]
+#jouauthornote(cols: auto)[
 Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
 
-#pagebreak()
-
-#heading(level: 1, numbering: none)[Multipanel Notes]
-<firstheader>
+]
 = Method
 <method>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-See #link(<fig-panels>)[Figure~1], #link(<fig-second>)[Figure~1B] and #link(<tbl-values>)[Table~1].
+The first paragraph of the body, written long enough that it wraps over several lines, because a paragraph of one line is justified and ragged alike and would show nothing at all. It runs on for a while so that the lines in between the first and the last have to be set one way or the other, and an eye or a measurement can tell which.
 
-#quarto_super(
-kind:
-"quarto-float-fig"
-,
-caption:
-[
-Two Panels
-]
-,
-label:
-<fig-panels>
-,
-position:
-top
-,
-supplement:
-"Figure"
-,
-subcapnumbering:
-"(a)"
-,
-[
-#grid(columns: 2, gutter: 2em,
-[
-#strong[Panel A]. First panel.
-
-#box(image("sampleimage.png"))
-<fig-first>
-#align(center)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-A note belonging to the first panel.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-],
-[
-#strong[Panel B]. Second panel.
-
-#box(image("sampleimage.png"))
-<fig-second>
-#align(center)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-A note belonging to the second panel.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-],
-)
-#align(left)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-#emph[Note]. A~note belonging to the whole figure.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-]
-)
 #figure([
 #table(
-  columns: 3,
-  align: (auto,right,right,),
-  table.header([Group], [Mean], [SD],),
+  columns: (35%, 65%),
+  align: (left,left,),
+  table.header([Scale], [Description],),
   table.hline(),
-  [A], [10.2], [1.1],
-  [B], [12.4], [1.3],
+  [Ratio], [A scale with a true zero, where it is meaningful to say that one value is twice another.],
+  [Ordinal], [A scale that ranks.],
 )
 #align(left)[
 #block[
 #set par(first-line-indent: 0mm)
 #block[
-#emph[Note]. A~note belonging to the table.
+#emph[Note]. A~note.
 ]
-#set par(first-line-indent: apaparindent(firstlineindent))
+#set par(first-line-indent: apaparindent(joufirstlineindent, all: true))
 ]
 ]
 ], caption: figure.caption(
 position: top,
 [
-Values by group.
+Scale types.
 ]),
 kind: "quarto-float-tbl",
 supplement: "Table",
 )
-<tbl-values>
+<tbl-scales>
 
 
-= Discussion
-<discussion>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-Text after the float, so that the spacing which follows a figure with a note has something to apply to (#link(<ref-schneiderCattellHornCarrollTheoryCognitive2018>)[Schneider & McGrew, 2018]).
-
-= References
-#set par(first-line-indent: 0in, hanging-indent: 0.5in)
-#block[
-#block[
-Schneider, W. J., & McGrew, K. S. (2018). The cattell-horn-carroll theory of cognitive abilities. In D. P. Flanagan & E. M. McDonough (Eds.), #emph[Contemporary intellectual assessment: Theories, tests, and issues] (4th ed., pp. 73--130). Guilford Press. #link("https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030")
-
-] <ref-schneiderCattellHornCarrollTheoryCognitive2018>
-] <refs>
-#set par(first-line-indent: apaparindent(firstlineindent), hanging-indent: 0in)
 
 
 

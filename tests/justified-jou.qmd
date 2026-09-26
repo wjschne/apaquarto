@@ -1,0 +1,44 @@
+---
+title: "Justified in Journal Mode"
+shorttitle: "Justified"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+documentmode: jou
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+A published article is justified where a manuscript is set flush left, and
+apaquarto-pdf was setting journal mode ragged right like the rest. The
+preamble asks for RaggedRight, which suits the other three modes, so journal
+mode turns it off again with ragged2e's justifying.
+
+The other half of this is that justification must not reach into a table. In
+typst `set par` applies inside a table as it does everywhere, so a cell long
+enough to wrap was justified too and a column the writer asked to be left
+aligned came out stretched to the column edge. APA sets no table that way.
+
+The body paragraph below is long enough to wrap several times, and the table
+has a left aligned column with a cell long enough to wrap in it.
+-->
+
+# Method
+
+The first paragraph of the body, written long enough that it wraps over
+several lines, because a paragraph of one line is justified and ragged alike
+and would show nothing at all. It runs on for a while so that the lines in
+between the first and the last have to be set one way or the other, and an
+eye or a measurement can tell which.
+
+| Scale | Description |
+|:------|:------------|
+| Ratio | A scale with a true zero, where it is meaningful to say that one value is twice another. |
+| Ordinal | A scale that ranks. |
+
+: Scale types. {#tbl-scales apa-note="A note."}

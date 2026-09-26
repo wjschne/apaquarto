@@ -239,7 +239,7 @@
 % The abstract, the impact statement and the lines under them: smaller, and in
 % a block narrower than the masthead, centred under the byline. apa7 sets its
 % journal abstract in a 4.6875in parbox, which is where the width comes from.
-% The text inside is set flush left, as it is in the typst masthead.
+% The text inside is justified, like the body of the article below it.
 /newlength{/apajounarrowwidth}
 /setlength{/apajounarrowwidth}{4.6875in}
 % parskip as well as leading: typst leaves a line and a bit between the
@@ -250,7 +250,7 @@
    /begin{minipage}{/apajounarrowwidth}%
    /fontsize{9}{11}/selectfont
    /setlength{/parskip}{6pt}%
-   /setlength{/parindent}{0pt}/setlength{/RaggedRightParindent}{0pt}/RaggedRight}
+   /setlength{/JustifyingParindent}{0pt}/justifying/setlength{/parindent}{0pt}}
   {/end{minipage}/par/vspace{10pt}}
 
 % The impact statement, ruled off from the abstract above it and the keywords
@@ -304,10 +304,14 @@
 /setlength{/apajounoteindent}{1.1em}
 /newsavebox{/apajounotebox}
 
+% Justified, like the body of the article above it. The orcid lines inside
+% the note are not: apajouorcid sets them flush left again, since justifying
+% one short name-and-link paragraph stretches its gaps across the measure.
 /newcommand{/apajounotetext}{%
   /fontsize{9}{11}/selectfont
-  /setlength{/parindent}{/apajounoteindent}%
-  /setlength{/RaggedRightParindent}{/apajounoteindent}/RaggedRight}
+  /setlength{/JustifyingParindent}{/apajounoteindent}%
+  /justifying
+  /setlength{/parindent}{/apajounoteindent}}
 
 /newcommand{/apajounoterule}{%
   /noindent/rule{/linewidth}{0.5pt}%
@@ -413,9 +417,15 @@
 % body size. Written in em so that it follows the type size, whatever the
 % writer has asked for.
 %
-% RaggedRight reads RaggedRightParindent when it is switched on, so the length
-% is set first and RaggedRight asked for again afterwards; setting parindent
-% alone would be undone by the ragged setting already in force.
+% The body of a published article is justified, where a manuscript is set
+% flush left with a ragged right edge. The preamble asks for RaggedRight,
+% which is right for the other three modes, so journal mode turns it back off
+% with ragged2e's own /justifying.
+%
+% /justifying reads /JustifyingParindent the way /RaggedRight reads
+% /RaggedRightParindent, so the length is set before it is switched on.
+% /parindent is set as well, since the two are only kept in step by whichever
+% of the pair was asked for last.
 %
 % Written into the body rather than the preamble. The half inch a manuscript
 % takes is set further down the preamble than an in-header include reaches, so
@@ -423,9 +433,9 @@
 /newlength{/apajouparindent}
 /setlength{/apajouparindent}{1.1em}
 /newcommand{/apajournalindent}{%
-  /setlength{/parindent}{/apajouparindent}%
-  /setlength{/RaggedRightParindent}{/apajouparindent}%
-  /RaggedRight}
+  /setlength{/JustifyingParindent}{/apajouparindent}%
+  /justifying
+  /setlength{/parindent}{/apajouparindent}}
 
 % booktabs' rules take an optional trim argument, written /midrule(rl), which
 % they look for by peeking at the single character that follows the rule.

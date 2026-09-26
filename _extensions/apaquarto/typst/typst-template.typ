@@ -461,6 +461,13 @@
     first-line-indent: apaparindent(firstlineindent, all: indentall)
   )
 
+  // A cell takes the alignment of its column and nothing else. set par reaches
+  // inside a table as it does everywhere, so in the modes whose body is
+  // justified -- jou and doc -- a cell long enough to wrap was justified too,
+  // and a column the writer had asked to be left aligned came out with its
+  // gaps stretched to the column edge. APA sets no table that way.
+  show table: set par(justify: false)
+
   // Also "leading" space between paragraphs
   set block(spacing: spacing, above: spacing, below: spacing)
 
