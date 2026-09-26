@@ -662,6 +662,12 @@
         # -- so each of these takes a style of apaquarto's own, which Word
         # does not know as a heading.
         'ApaUnlistedHeading': 6
+        # One break from the front matter, which opens the first list, then
+        # one after each of the three, so every list has a page to itself and
+        # the body starts on the page after the last of them. This is how
+        # typst sets them, where each outline is followed by a #pagebreak().
+        # Checked in Word: title page, contents, figures, tables, body.
+        '<w:br w:type="page"/>': 4
 
 # ---------------------------------------------------- numbering of floats --
 

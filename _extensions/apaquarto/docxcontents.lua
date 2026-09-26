@@ -277,6 +277,17 @@ local function build_contents(headings)
   return out
 end
 
+-- Each list stands on a page of its own and the body starts on the page
+-- after the last of them, which is how typst sets them: there, every outline
+-- is followed by a #pagebreak(). The break goes after each list rather than
+-- before it, so that the one the front matter already leaves after the
+-- supplemental materials is the one that opens the first list, and no blank
+-- page falls between them.
+local function page_break()
+  return pandoc.RawBlock("openxml",
+    [[<w:p><w:r><w:br w:type="page"/></w:r></w:p>]])
+end
+
 -- The list: a heading Word will not collect, then one line for each float.
 local function build_list(title, entries)
   local out = pandoc.List({})
@@ -299,10 +310,13 @@ return {
       for _, block in ipairs(doc.blocks) do
         if block.t == "Div" and block.classes:includes("list-of-contents") then
           out:extend(build_contents(headings))
+          out:insert(page_break())
         elseif block.t == "Div" and block.classes:includes("list-of-figures") then
           out:extend(build_list("List of Figures", figures))
+          out:insert(page_break())
         elseif block.t == "Div" and block.classes:includes("list-of-tables") then
           out:extend(build_list("List of Tables", tables))
+          out:insert(page_break())
         elseif block.t == "Header" and block.classes:includes("unlisted") then
           out:insert(unlisted_heading(block))
         else
