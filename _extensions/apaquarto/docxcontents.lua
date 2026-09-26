@@ -6,20 +6,33 @@
 -- field before the table shows anything at all. That is the prompt a reader
 -- meets on opening the file. The field itself is pandoc's and is written after
 -- every filter has run, so nothing here can reach it -- see the note in
--- _extension.yml. What is written here instead needs no field and no update:
--- ordinary paragraphs, each a link to the float it names, which Word shows the
--- moment the document opens.
+-- _extension.yml. What is written here instead is a list of its own: each
+-- entry is a link to the float it names, and carries a PAGEREF field for the
+-- page it is on, which is what Word writes for its own table of figures. The
+-- entry itself is there whether or not the field is ever run, so the list
+-- reads even in a viewer that leaves fields alone.
 --
--- The other thing is the TOC field's reach. It collects every paragraph whose
--- outline level is 1 to 3, which is every Heading 1 to 3 in the document, and
--- apaquarto gives four of its own headings that style: the title, the author
--- note, the abstract and the impact statement. All four were listed in the
--- table of contents, none of them belong there, and a heading the writer marks
--- {.unlisted} was listed too. Such a heading is written out here as word markup
--- of its own, keeping the Heading style it had so that it looks the same, and
--- carrying an outline level of 9 -- body text -- so the field passes over it.
--- Pandoc offers no way to ask for that on a header it writes itself, and a
--- custom-style div around one does not reach it.
+-- The other thing is the TOC field's reach. apaquarto gives four headings of
+-- its own the Heading 1 style -- the title, the author note, the abstract and
+-- the impact statement -- and all four were listed in the table of contents,
+-- along with any heading the writer marks {.unlisted}.
+--
+-- An outline level of 9 on such a paragraph is not enough, which Word settles
+-- plainly: TOC \o builds from the built-in heading styles, so a Heading 1
+-- paragraph is collected whatever outline level is set on it. The style has
+-- to be one Word does not know, so these headings take apaquarto's own
+-- ApaUnlistedHeading styles, which the reference document bases on the real
+-- headings -- the same look, and a writer's own changes to Heading 1 follow
+-- through -- and which carry the outline level of body text, which keeps them
+-- out of \u as well.
+--
+-- The figure and table titles were listed too, for the same reason from the
+-- other end: the FigureTitle style carried outline level 1. It carries body
+-- text now, which is what the title of a float is.
+--
+-- Pandoc offers no way to ask for any of this on a header it writes itself,
+-- and a custom-style div around one does not reach it, so the paragraph is
+-- written here as word markup.
 
 if FORMAT ~= "docx" then
   return
@@ -79,8 +92,9 @@ end
 -- Bookmark ids of our own, well clear of the ones pandoc hands out.
 local bookmark = 90000
 
--- A heading the table of contents should pass over: the Heading style it had,
--- so that it looks the same, and the outline level of body text.
+-- A heading the table of contents passes over: apaquarto's own heading style,
+-- which looks like the real one and is not a heading as far as Word's field
+-- is concerned.
 local function unlisted_heading(header)
   local level = header.level
   if level < 1 then level = 1 end
@@ -95,8 +109,7 @@ local function unlisted_heading(header)
   end
 
   return pandoc.RawBlock("openxml", before ..
-    "<w:p><w:pPr><w:pStyle w:val=\"Heading" .. level .. "\"/>" ..
-    "<w:outlineLvl w:val=\"9\"/></w:pPr>" ..
+    "<w:p><w:pPr><w:pStyle w:val=\"ApaUnlistedHeading" .. level .. "\"/></w:pPr>" ..
     runs(header.content, false, false) .. "</w:p>" .. after)
 end
 
@@ -146,28 +159,58 @@ local function collect_floats(blocks)
   return figures, tables
 end
 
--- The list itself: a heading Word will not collect, then one paragraph for
--- each entry. No field, so there is nothing for Word to update and nothing to
--- ask the reader about. Page numbers are left out rather than guessed: a
--- filter cannot know where Word will break the pages.
+-- A right tab with a dotted leader, at the width of the text block. Letter
+-- paper with the inch margins apaquarto asks for is 6.5in, which is 9360
+-- twentieths of a point; another paper size shifts the dots, not the number,
+-- which Word sets against the right margin either way.
+local kTabPosition = 9360
+
+-- One line of the list: what the float is called, a leader, and the page it
+-- is on.
+--
+-- The page number has to be a field. Nothing else in the file knows where
+-- Word will break the pages, and PAGEREF is what Word writes for its own
+-- table of figures. It is marked dirty so that Word fills it in when the
+-- document is opened, and nothing is cached inside it -- a number cached here
+-- would be a guess, and a wrong page number is worse than none. A reader
+-- whose Word does not run the field still sees the entry and its link; only
+-- the number after the dots is missing.
+local function entry_paragraph(entry)
+  local body = runs(pandoc.Inlines({ pandoc.Str(entry.title) }), true, false)
+  if entry.caption and #entry.caption > 0 then
+    body = body
+      .. runs(pandoc.Inlines({ pandoc.Str("."), pandoc.Space() }), false, false)
+      .. runs(entry.caption, false, false)
+  end
+
+  local id = entry.id or ""
+  if id == "" then
+    return pandoc.RawBlock("openxml", "<w:p>" .. body .. "</w:p>")
+  end
+
+  local anchor = xml_escape(id)
+  return pandoc.RawBlock("openxml", table.concat({
+    "<w:p><w:pPr><w:tabs>",
+    [[<w:tab w:val="right" w:leader="dot" w:pos="]] .. kTabPosition .. [["/>]],
+    "</w:tabs></w:pPr>",
+    [[<w:hyperlink w:anchor="]] .. anchor .. [[">]], body, "</w:hyperlink>",
+    "<w:r><w:tab/></w:r>",
+    [[<w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r>]],
+    [[<w:r><w:instrText xml:space="preserve"> PAGEREF ]] .. anchor
+      .. [[ \h </w:instrText></w:r>]],
+    [[<w:r><w:fldChar w:fldCharType="separate"/></w:r>]],
+    [[<w:r><w:fldChar w:fldCharType="end"/></w:r>]],
+    "</w:p>",
+  }))
+end
+
+-- The list: a heading Word will not collect, then one line for each float.
 local function build_list(title, entries)
   local out = pandoc.List({})
   out:insert(unlisted_heading(
     pandoc.Header(1, pandoc.Inlines({ pandoc.Str(title) }), pandoc.Attr("", { "unlisted" }))))
   for _, entry in ipairs(entries) do
-    local line = pandoc.Inlines({})
-    line:extend({ pandoc.Strong(pandoc.Inlines({ pandoc.Str(entry.title) })) })
-    if entry.caption and #entry.caption > 0 then
-      line:extend({ pandoc.Str("."), pandoc.Space() })
-      line:extend(entry.caption)
-    end
-    -- The whole entry is a link to the float, which is what a reader expects
-    -- of a list like this and is the nearest thing to a page number that does
-    -- not need a field.
-    if entry.id and entry.id ~= "" then
-      line = pandoc.Inlines({ pandoc.Link(line, "#" .. entry.id) })
-    end
-    out:insert(pandoc.Para(line))
+    out:insert(entry_paragraph(entry))
   end
   return out
 end

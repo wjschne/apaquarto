@@ -622,9 +622,16 @@
         # would need a field and so an update.
         - 'w:anchor="fig-one"'
         - 'w:anchor="tbl-one"'
+        # The page number of each entry, which has to be a field: nothing
+        # here knows where Word will break the pages.
+        - 'PAGEREF fig-one'
+        - 'PAGEREF tbl-one'
       count:
         # The title, the author note, the two list headings and the writer's
-        # own {.unlisted} heading: five headings the contents field passes
-        # over. Method and Discussion keep their outline level and are
-        # collected.
-        '<w:outlineLvl w:val="9"/>': 5
+        # own {.unlisted} heading. An outline level of 9 does not take a
+        # Heading 1 out of the contents field -- TOC \o collects the built-in
+        # heading styles whatever outline level is set -- so each of these
+        # takes a style of apaquarto's own instead, which Word does not know
+        # as a heading. Checked in Word: the contents then lists the article
+        # title, Method and Discussion, and nothing else.
+        'ApaUnlistedHeading': 5
