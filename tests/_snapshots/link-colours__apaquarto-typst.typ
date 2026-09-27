@@ -923,6 +923,18 @@
   document,
 )
 
+#show link: it => {
+  let d = it.dest
+  if type(d) == location { return it }
+  let c = if type(d) == str {
+    if d.starts-with("mailto:") or d.contains("://") { rgb("#00FF00") }
+    else { rgb("#800080") }
+  } else if type(d) == label and str(d).starts-with("ref-") {
+    rgb("#FF8000")
+  } else { rgb("#CC0000") }
+  text(fill: c, it)
+}
+
 /
 /
 #heading(level: 1, outlined: false, numbering: none)[The Colour a Link Takes]
@@ -945,6 +957,14 @@ Test University
 #v(apafirstparshift)
 Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
 
+#pagebreak()
+
+#heading(level: 1, outlined: false, numbering: none)[Abstract]
+<abstract>
+#block[
+An abstract with a link in it: #link("https://example.org")[abstractlink] and more words.
+
+]
 #pagebreak()
 
 
@@ -970,17 +990,6 @@ link(loc, it.indented(none, name + [. ] + it.inner()))}
 ]
 
 #pagebreak()
-
-#show link: it => {
-  let d = it.dest
-  let c = if type(d) == str {
-    if d.starts-with("mailto:") or d.contains("://") { rgb("#00FF00") }
-    else { rgb("#800080") }
-  } else if type(d) == label and str(d).starts-with("ref-") {
-    rgb("#FF8000")
-  } else { rgb("#CC0000") }
-  text(fill: c, it)
-}
 
 #heading(level: 1, numbering: none)[The Colour a Link Takes]
 <firstheader>

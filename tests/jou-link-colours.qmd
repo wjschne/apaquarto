@@ -9,8 +9,10 @@ author:
       - name: Test University
 documentmode: jou
 list-of-contents: true
+abstract: "An abstract with a link in it: [abstractlink](https://example.org) and more words."
 linkcolor: "#cc0000"
-toccolor: green
+urlcolor: green
+toccolor: teal
 format:
   apaquarto-typst: default
 ---
@@ -25,6 +27,11 @@ else. The rules are held back now and put in after the masthead is built.
 The page break that goes before a list is not written in journal mode, which
 runs continuously. It used to be dropped by the same split, which throws away
 every #pagebreak it is given.
+
+The rule goes at the head of the document rather than where the body begins,
+so that the masthead takes it too: the corresponding author's email is a
+link, and so is anything written into the abstract. Both were left the blue
+the template gives a link.
 -->
 
 # First Heading

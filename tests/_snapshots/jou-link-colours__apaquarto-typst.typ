@@ -923,6 +923,18 @@
   document,
 )
 
+#show link: it => {
+  let d = it.dest
+  if type(d) == location { return it }
+  let c = if type(d) == str {
+    if d.starts-with("mailto:") or d.contains("://") { rgb("#00FF00") }
+    else { rgb("#CC0000") }
+  } else if type(d) == label and str(d).starts-with("ref-") {
+    rgb("#CC0000")
+  } else { rgb("#CC0000") }
+  text(fill: c, it)
+}
+
 #place(top, scope: "parent", float: true, clearance: 1.5em)[
 #block(width: 100%)[
 #show heading.where(level: 1): set text(size: joutitlesize, weight: "regular")
@@ -942,6 +954,18 @@ Test University
 ]
 #set align(left)
 ]
+#align(center)[
+#block(width: jouabstractwidth, above: 1em, below: 0.6em)[
+#set align(left)
+#set text(size: jouabstractsize)
+#set par(leading: jouabstractleading, first-line-indent: 0pt)
+#show heading.where(level: 1): set text(size: jouabstractsize)
+#block[
+An abstract with a link in it: #link("https://example.org")[abstractlink] and more words.
+
+]
+]
+]
 ]
 #jouauthornote(cols: auto)[
 Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
@@ -949,21 +973,10 @@ Correspondence concerning this article should be addressed to Test Author, Test 
 ]
 
 
-#show outline.entry: it => {show link: set text(fill: rgb("#00FF00"))
+#show outline.entry: it => {show link: set text(fill: rgb("#008080"))
 link(it.element.location(),it.indented(none, it.inner(), ))}
 
 #outline(title: [Table of Contents], indent: 1.5em)
-
-#show link: it => {
-  let d = it.dest
-  let c = if type(d) == str {
-    if d.starts-with("mailto:") or d.contains("://") { rgb("#CC0000") }
-    else { rgb("#CC0000") }
-  } else if type(d) == label and str(d).starts-with("ref-") {
-    rgb("#CC0000")
-  } else { rgb("#CC0000") }
-  text(fill: c, it)
-}
 
 = First Heading
 <first-heading>

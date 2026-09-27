@@ -1405,6 +1405,11 @@ return {
         link_rule:extend({ pandoc.RawBlock('typst', table.concat({
           '#show link: it => {',
           '  let d = it.dest',
+          -- An entry of one of the lists is a link to a location, and the
+          -- list sets its own colour over its entries. Left to this rule it
+          -- would take linkcolor, since it points inside the document, and a
+          -- list would read as a page of cross references.
+          '  if type(d) == location { return it }',
           '  let c = if type(d) == str {',
           '    if d.starts-with("mailto:") or d.contains("://") { '
             .. typst_colour("urlcolor", link) .. ' }',
@@ -1475,8 +1480,6 @@ return {
           typst_extras:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
         end
       end
-
-      typst_extras:extend(link_rule)
 
       -- The same two lists in .docx. What they are lists of is not known
       -- yet: apacaption.lua has not run, so no figure has its number or its
@@ -1641,6 +1644,18 @@ return {
       else
         body:extend(doc.blocks)
       end
+      -- The rule that colours a link goes at the head of the document, so
+      -- that the front matter takes it too: the corresponding author's email
+      -- is a link, and so is anything written into the abstract. Put after
+      -- the lists rather than before them, it began where the body began and
+      -- left those the blue the template gives a link.
+      --
+      -- Each list writes a rule of its own over its entries, where the list
+      -- is, and that one is nearer the link and answers for it.
+      for i = #link_rule, 1, -1 do
+        body:insert(1, link_rule[i])
+      end
+
       return pandoc.Pandoc(body, meta)
     end
   }

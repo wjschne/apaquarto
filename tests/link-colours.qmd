@@ -9,6 +9,7 @@ author:
       - name: Test University
 list-of-contents: true
 list-of-figures: true
+abstract: "An abstract with a link in it: [abstractlink](https://example.org) and more words."
 linkcolor: "#cc0000"
 urlcolor: green
 citecolor: orange

@@ -885,8 +885,10 @@
         # for the last block of the note: the rule that colours a link ended
         # up inside the note, colouring the note's own links and no others.
         - "#link(\"mailto:test@example.com\")[test\\@example.com]\n\n]\n"
-        - '#show outline.entry: it => {show link: set text(fill: rgb("#00FF00"))'
-        - '#show link: it => {'
+        - '#show outline.entry: it => {show link: set text(fill: rgb("#008080"))'
+        # And it stands ahead of the masthead, so that the corresponding
+        # author's email and the link in the abstract take it too.
+        - "  text(fill: c, it)\n}\n\n#place(top, scope: \"parent\", float: true"
       absent:
         # Journal mode runs continuously: no list begins a page of its own.
         - '#pagebreak()'
@@ -904,6 +906,9 @@
         - '} else if type(d) == label and str(d).starts-with("ref-") {'
         - '    rgb("#FF8000")'
         - '} else { rgb("#CC0000") }'
+        # An entry of a list links to a location and is left to the rule
+        # the list writes over its own entries.
+        - '  if type(d) == location { return it }'
         # The entries of a list take toccolor, and the rule above is written
         # after the outlines so that it does not override them.
         - '#show outline.entry: it => {show link: set text(fill: rgb("#008080"))'
