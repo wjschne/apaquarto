@@ -597,7 +597,7 @@ author-note:
 
 # Options for .pdf
 
-All of the .pdf-specific options for apaquarto come directly from the [apa7 $\LaTeX$ package](https://ctan.org/pkg/apa7?lang=en). Consult the \[apa7 package documentation\](<https://ctan.org/pkg/apa7>) for greater detail.
+As of 6.0.0 the .pdf is set in plain $\LaTeX$ rather than with the apa7 class, so these are apaquarto's own options and no longer those of [apa7](https://ctan.org/pkg/apa7?lang=en). Four fields that belonged to that class --- `donotrepeattitle`, `draftfirst`, `draftall` and `nocorrespondence` --- no longer do anything; the first has become `suppress-title-introduction` and the last `suppress-corresponding-paragraph`, both of which work in every format. A document's own yaml is otherwise unchanged.
 
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
 | Field                                                | Explanation                                                                            |
@@ -639,15 +639,14 @@ All of the .pdf-specific options for apaquarto come directly from the [apa7 $\La
 |                                                      |                                                                                        |
 |                                                      | Options include `10pt`, `11pt`, and `12pt`                                             |
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
-| `a4paper`                                            | If `true`, uses a4 paper size instead of 8.5 by 11 in. letter size.                    |
+| `papersize`                                          | The paper size, `letter` by default. `a4` and the other sizes Quarto                   |
+|                                                      | knows are accepted, and reach the .docx as well.                                       |
+|                                                      |                                                                                        |
+|                                                      | Replaces apa7's `a4paper`, which no longer does anything.                              |
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
-| `donotrepeattitle`                                   | If `true`, suppresses title in the first page of text.                                 |
-+------------------------------------------------------+----------------------------------------------------------------------------------------+
-| `draftfirst`                                         | If `true`, puts draft watermark on first page.                                         |
-+------------------------------------------------------+----------------------------------------------------------------------------------------+
-| `draftall`                                           | If `true`, puts draft watermark on all pages.                                          |
-+------------------------------------------------------+----------------------------------------------------------------------------------------+
-| `nocorrespondence`                                   | If `true`, hides correspondence text                                                   |
+| `first-page`                                         | The number the first page carries, and the number the pages count on                   |
+|                                                      | from. Useful for a chapter or an article that begins partway into a                    |
+|                                                      | volume. Defaults to 1.                                                                 |
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
 
 # Document modes in pdf and typst
@@ -688,6 +687,43 @@ which is set as
 
 Every field is optional, and anything left out is simply left out: a `journal` with nothing but a `title` gives the name and the rule and no more. The words "Vol." and "No." can be changed with `journal-volume` and `journal-issue` in the `language` field.
 
+# Tables of contents, figures, and tables
+
+Each of these stands on a page of its own, after the abstract, the impact
+statement, the keywords and the supplemental materials, and before the body
+of the paper.
+
++------------------------------------------------------+----------------------------------------------------------------------------------------+
+| Field                                                | Explanation                                                                            |
++======================================================+========================================================================================+
+| `list-of-contents`                                   | A table of contents, in .docx.                                                         |
+|                                                      |                                                                                        |
+|                                                      | Set `toc: true` for a table of contents in .html and in typst. That                    |
+|                                                      | field is Pandoc's own, and for .docx it writes one at the very top of                  |
+|                                                      | the file, ahead of the title page, where nothing can move it. This                     |
+|                                                      | field is apaquarto's, so the contents goes where typst puts it and                     |
+|                                                      | carries only the headings that belong in it.                                           |
++------------------------------------------------------+----------------------------------------------------------------------------------------+
+| `list-of-figures`                                    | A list of figures, in .docx, typst and .pdf.                                           |
++------------------------------------------------------+----------------------------------------------------------------------------------------+
+| `list-of-tables`                                     | A list of tables, in .docx, typst and .pdf.                                            |
++------------------------------------------------------+----------------------------------------------------------------------------------------+
+
+An entry reads `Figure 1. The Figure Caption` in all three formats, with a
+leader out to the page number.
+
+In .docx those page numbers are fields, since nothing before Word lays the
+pages out knows what they are. They are blank when the file is opened and
+fill in correctly as soon as anything makes Word paginate: select all and
+press <kbd>F9</kbd>, or print, or export to pdf. Rendering says as much.
+
+``` yaml
+format:
+  apaquarto-docx:
+    list-of-contents: true
+    list-of-figures: true
+    list-of-tables: true
+```
 # Options for .html
 
 With one exception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.
