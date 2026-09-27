@@ -18,6 +18,7 @@ engine: knitr
 - Added support for list of tables and list of figures in .docx, .typst, and .pdf.
 - Table of contents for .docx can be added setting `list-of-contents: true`. A message letting the user know how to update the page fields is displayed.
 - `list-of-contents: true` gives a table of contents in every format: typst and the .pdf build one of their own, .docx is built by hand, and .html lists the headings as links, since it has no pages to number.
+- In .html a contents is added only when Quarto’s own is not already in the margin, so `toc: false` is needed alongside `list-of-contents: true` there. A list of figures or of tables is not built for .html at all, which has no pages to find.
 - An entry in any of the lists reads `Figure 1. The Figure Caption`, in .docx, typst and .pdf alike.
 - The apa7 class options `donotrepeattitle`, `draftfirst`, `draftall` and `nocorrespondence` have done nothing since 6.0.0, when the .pdf stopped using that class. `suppress-title-introduction` and `suppress-corresponding-paragraph` do the first and the last of them, in every format.
 
