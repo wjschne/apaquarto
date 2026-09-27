@@ -1,0 +1,34 @@
+---
+title: "Contents in Html With a Margin Toc"
+shorttitle: "Html Contents"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html:
+    toc: true
+    list-of-contents: true
+    list-of-figures: true
+    list-of-tables: true
+---
+
+<!--
+toc: true puts quarto's own contents in the margin of a .html page, which is
+where a reader of one looks, so apaquarto does not add a second in the body.
+Asking for both used to give two.
+
+A list of figures or of tables is a way of finding a page and .html has no
+pages, so it builds neither. Asking for one used to leave an empty div in
+the body.
+-->
+
+# Method
+
+Text.
+
+## Procedure
+
+More.

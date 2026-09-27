@@ -9,7 +9,11 @@ author:
       - name: Test University
 list-of-contents: true
 format:
-  apaquarto-html: default
+  apaquarto-html:
+    # apaquarto-html sets toc: true itself, and apaquarto adds no contents of
+    # its own while quarto's is in the margin, so the margin one is turned
+    # off here to see the one in the body.
+    toc: false
   apaquarto-docx: default
   apaquarto-typst: default
   apaquarto-pdf: default

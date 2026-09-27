@@ -764,3 +764,18 @@
       contains:
         - 'Table of Contents'
         - 'Procedure'
+
+- fixture: html-contents-toc.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      absent:
+        # quarto's contents is in the margin already, so apaquarto adds none
+        # of its own. Its heading is the one with a capital C.
+        - 'Table of Contents'
+        # Neither list is built here, and neither leaves a div behind.
+        - 'list-of-figures'
+        - 'list-of-tables'
+      contains:
+        # quarto's own is still there
+        - 'Procedure'

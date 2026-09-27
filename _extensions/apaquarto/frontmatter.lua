@@ -1400,9 +1400,23 @@ return {
       -- yet: apacaption.lua has not run, so no figure has its number or its
       -- title. A marker goes in at the place typst puts its outlines and
       -- docxcontents.lua fills it in once the captions exist.
+      -- .html builds a contents and nothing else: a list of figures or of
+      -- tables is a way of finding a page, and .html has no pages. Asking
+      -- for one there used to leave an empty div in the body.
+      --
+      -- Nor does it build a contents when toc: true has already put quarto's
+      -- own in the margin. Two of them on one page is one too many, and the
+      -- margin is where a reader of a web page looks.
+      local lists = { "list-of-contents", "list-of-figures", "list-of-tables" }
+      if FORMAT == "html" then
+        lists = {}
+        if not PANDOC_WRITER_OPTIONS["table_of_contents"] then
+          lists = { "list-of-contents" }
+        end
+      end
+
       if FORMAT == "docx" or FORMAT == "latex" or FORMAT == "html" then
-        for _, which in ipairs({ "list-of-contents", "list-of-figures",
-                                 "list-of-tables" }) do
+        for _, which in ipairs(lists) do
           if meta[which] and stringify(meta[which]) ~= "false" then
             body:extend({ pandoc.Div({}, pandoc.Attr("", { which })) })
           end

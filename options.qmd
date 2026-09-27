@@ -703,11 +703,21 @@ of the paper.
 |                                                      | neither pages nor fields, so an entry there is the heading and a link                  |
 |                                                      | to it.                                                                                 |
 |                                                      |                                                                                        |
-|                                                      | `toc: true` also works in typst, and in .html it puts Quarto's own                     |
-|                                                      | contents in the margin, which is a different thing and can be asked                    |
-|                                                      | for alongside this one. In .docx `toc: true` is Pandoc's, and writes                   |
-|                                                      | a contents at the very top of the file, ahead of the title page,                       |
-|                                                      | where nothing can move it.                                                             |
+|                                                      | `toc: true` also works in typst. In .html it puts Quarto's own                         |
+|                                                      | contents in the margin, which is where a reader of a web page looks,                   |
+|                                                      | so this field adds none of its own while that one is there. The .html                  |
+|                                                      | format sets `toc: true` itself, so a contents in the body of a web                     |
+|                                                      | page is asked for with both fields:                                                    |
+|                                                      |                                                                                        |
+|                                                      | ``` yaml                                                                               |
+|                                                      | format:                                                                                |
+|                                                      |   apaquarto-html:                                                                      |
+|                                                      |     toc: false                                                                         |
+|                                                      |     list-of-contents: true                                                             |
+|                                                      | ```                                                                                    |
+|                                                      |                                                                                        |
+|                                                      | In .docx `toc: true` is Pandoc's, and writes a contents at the very                    |
+|                                                      | top of the file, ahead of the title page, where nothing can move it.                   |
 |                                                      |                                                                                        |
 |                                                      | Only the headings that belong in a contents are listed: the title                      |
 |                                                      | page's headings and anything marked `{.unlisted}` are left out.                        |
@@ -719,7 +729,7 @@ of the paper.
 
 `list-of-figures` and `list-of-tables` are for .docx, typst and the .pdf;
 an entry in either reads `Figure 1. The Figure Caption`, with a leader out
-to the page number.
+to the page number. Neither is built for .html, which has no pages to find.
 
 In .docx those page numbers are fields, since nothing before Word lays the
 pages out knows what they are. They are blank when the file is opened and

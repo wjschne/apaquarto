@@ -303,6 +303,7 @@ window.Quarto = {
 <li>Made both journal modes (apauarto-pdf and apaquarto-typst) fully justified in their body text but not in markdown table text.</li>
 <li>Added support for list of tables and list of figures in .docx, .typst, and .pdf.</li>
 <li>Table of contents for .docx can be added setting <code>list-of-contents: true</code>. A message letting the user know how to update the page fields is displayed.</li>
+<li><code>list-of-contents: true</code> gives a table of contents in every format: typst and the .pdf build one of their own, .docx is built by hand, and .html lists the headings as links, since it has no pages to number.</li>
 <li>An entry in any of the lists reads <code>Figure 1. The Figure Caption</code>, in .docx, typst and .pdf alike.</li>
 <li>The apa7 class options <code>donotrepeattitle</code>, <code>draftfirst</code>, <code>draftall</code> and <code>nocorrespondence</code> have done nothing since 6.0.0, when the .pdf stopped using that class. <code>suppress-title-introduction</code> and <code>suppress-corresponding-paragraph</code> do the first and the last of them, in every format.</li>
 </ul>

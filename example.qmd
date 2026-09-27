@@ -161,7 +161,7 @@ format:
   apaquarto-docx: default
   apaquarto-typst: 
     # Options: manuscript (default), journal, student, document
-    documentmode: journal
+    documentmode: manuscript
   apaquarto-pdf:
     # Options: manuscript (default), journal, student, document
     documentmode: manuscript
