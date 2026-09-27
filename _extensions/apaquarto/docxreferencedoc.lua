@@ -260,7 +260,54 @@ local function set_line_numbers(document, linenumbers)
   return stripped:sub(1, last) .. marker .. wanted .. stripped:sub(last + 1)
 end
 
-local function patch_document(document, papersize, linenumbers)
+--- The margins, which live in the same section properties as the page size
+--- and which pandoc takes from the reference document just as it does the
+--- size. documentmode: thesis asks for the ones the Graduate School's
+--- handbook sets; every other mode keeps whatever the reference document
+--- shipped with.
+local function set_margins(document, margins)
+  local stripped = strip_marker(document, "margins")
+  local first, last = stripped:find("<w:pgMar[^>]*>")
+  if not first then return document end
+
+  --- The margins the reference document shipped with, as its attributes
+  local original = get_marker(document, "margins") or
+    stripped:sub(first, last):match("^<w:pgMar%s+(.-)%s*/?>$") or ""
+
+  local attributes = original
+  if margins then
+    for _, side in ipairs({ "top", "right", "bottom", "left" }) do
+      local twips = math.floor(margins[side] * 1440 + 0.5)
+      local name = "w:" .. side
+      if attributes:find(name .. '="', 1, true) then
+        attributes = attributes:gsub(name .. '="[^"]*"', name .. '="' .. twips .. '"')
+      else
+        attributes = attributes .. " " .. name .. '="' .. twips .. '"'
+      end
+    end
+  end
+
+  local marker = attributes ~= original and make_marker("margins", original) or ""
+  return stripped:sub(1, first - 1) .. marker ..
+    "<w:pgMar " .. attributes .. "/>" .. stripped:sub(last + 1)
+end
+
+--- A first page of its own, which is how word is told to leave the running
+--- head off a title page: w:titlePg makes the section take a separate header
+--- for its first page, and the reference document has no such header, so that
+--- page carries nothing. The element belongs after w:cols in the order the
+--- schema sets for section properties, which is why it goes in before
+--- w:docGrid rather than beside the page size.
+local function set_title_page(document, wanted)
+  local stripped = (document:gsub("<w:titlePg%s*/>", ""))
+  if not wanted then return stripped end
+  local at = stripped:find("<w:docGrid", 1, true)
+    or stripped:find("</w:sectPr>", 1, true)
+  if not at then return stripped end
+  return stripped:sub(1, at - 1) .. "<w:titlePg/>" .. stripped:sub(at)
+end
+
+local function patch_document(document, papersize, linenumbers, margins, titlepage)
   local stripped = strip_marker(document, "papersize")
   local first, last = stripped:find("<w:pgSz[^>]*>")
   if not first then return nil end
@@ -292,6 +339,8 @@ local function patch_document(document, papersize, linenumbers)
   local patched = stripped:sub(1, first - 1) .. marker ..
     "<w:pgSz " .. attributes .. "/>" .. stripped:sub(last + 1)
 
+  patched = set_margins(patched, margins)
+  patched = set_title_page(patched, titlepage)
   return set_line_numbers(patched, linenumbers) or patched
 end
 
@@ -373,6 +422,12 @@ function Pandoc(doc)
     trim(pandoc.utils.stringify(doc.meta.papersize)) or ""
   local linenumbers = doc.meta["numbered-lines"] ~= nil and
     pandoc.utils.stringify(doc.meta["numbered-lines"]) == "true"
+  --- A dissertation is bound at the left and wants a wider margin there, and
+  --- its title page carries no running head. Both belong to the section, and
+  --- the section is the reference document's.
+  local thesis = doc.meta.documentmode ~= nil and
+    pandoc.utils.stringify(doc.meta.documentmode) == "thesis"
+  local margins = thesis and require("utilsapa").thesis_margins or nil
   --- frontmatter.lua has already put the short title, upper cased, in the
   --- description, or a single space when the short title is suppressed. nil
   --- rather than "" when there is no description at all, which tells
@@ -415,7 +470,7 @@ function Pandoc(doc)
       end
     elseif entry.path == document_path then
       xml = entry:contents()
-      patched = patch_document(xml, papersize, linenumbers)
+      patched = patch_document(xml, papersize, linenumbers, margins, thesis)
       if not patched then
         quarto.log.warning("Reference document " .. refdoc ..
           " has no page size, so papersize and numbered-lines were not applied.")

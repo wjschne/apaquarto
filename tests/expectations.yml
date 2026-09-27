@@ -929,3 +929,96 @@
         # hyperref calls [text](figure.png) a url and colours it urlcolor, so
         # filecolor is set around such a link in a group of its own.
         - '\begingroup\hypersetup{urlcolor=violet}\href{sampleimage.png}{filelink}\endgroup'
+
+- fixture: thesis-title.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # The title in capitals, broken into an inverted pyramid: the first
+        # line longest, each line after it shorter. The lines are worked out
+        # in lua, so these are the same three in all four formats.
+        - '\bfseries A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY\\'
+        - 'WHEN THEY ARE STUDYING SOMETHING\\'
+        - 'AT LENGTH\par}'
+        # A rule under each of the three blocks below the title.
+        - '\rule{5.50in}{0.5pt}'
+        # The title page carries no number and no running head.
+        - '\thispagestyle{empty}'
+        # What the work is, what degree it answers to, who wrote it.
+        - 'A Dissertation\\'
+        - 'of the Requirements for the Degree\\'
+        - 'Iwishiwere A. Graduate\\'
+        # The committee, flush left at the foot.
+        - 'Examining Committee Members:\par}'
+        - 'Mentor Name, Advisory Chair, TU Department\\'
+        - 'Outside Name, External Member, Another University\par}'
+      absent:
+        # thesis mode has a front matter of its own, so the APA title page is
+        # not built as well. apatitlepageheading is what sets the headings of
+        # that page --- Author Note, Abstract, Impact Statement --- so none of
+        # it is here. Its definition in apalatex.tex is always written out;
+        # a call to it is what would mean the page was built.
+        - '\apatitlepageheading{'
+      count:
+        # The body begins on the page after the title page.
+        - text: '\clearpage'
+          times: 1
+
+- fixture: thesis-title.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY \'
+        - '#line(length: 5.50in, stroke: 0.5pt)'
+        - '#align(left)[Examining Committee Members:]'
+    pdf:
+      contains:
+        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY'
+        - 'the Temple University Graduate Board'
+        - 'Outside Name, External Member, Another University'
+
+- fixture: thesis-title.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        # The title is bold and centred, and its lines are broken where lua
+        # broke them rather than wherever word would have wrapped them.
+        - '<w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">A</w:t>'
+        - '<w:r><w:br/></w:r>'
+        # The rule is a paragraph with a border under it, which is how word
+        # draws one.
+        - '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:pBdr>'
+        # And the body begins on the page after it.
+        - '<w:br w:type="page"/>'
+    docx:
+      contains:
+        - 'Examining Committee Members:'
+        - 'Mentor Name, Advisory Chair, TU Department'
+
+- fixture: thesis-title.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'thesis-title-page'
+        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY'
+        - 'Examining Committee Members:'
+
+- fixture: thesis-title-breaks.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # The writer broke the title themselves, so those are the lines. They
+        # would otherwise have fitted on one.
+        - '\bfseries THIS IS THE FIRST LINE OF MY TITLE\\'
+        - 'AND THIS IS THE SECOND LINE\par}'
+        # A thesis rather than a dissertation.
+        - 'A Thesis\\'
+        - 'Master of Education\par}'
+      absent:
+        # No committee was written, so there is no committee block.
+        - 'Examining Committee Members:'

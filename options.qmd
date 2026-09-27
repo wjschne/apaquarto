@@ -682,6 +682,102 @@ which is set as
 
 Every field is optional, and anything left out is simply left out: a `journal` with nothing but a `title` gives the name and the rule and no more. The words "Vol." and "No." can be changed with `journal-volume` and `journal-issue` in the `language` field.
 
+# Dissertations and Theses
+
+`documentmode: thesis` sets a dissertation or thesis for the Temple
+University Graduate School, following its
+[Dissertation and Thesis Handbook](https://grad.temple.edu/sites/grad/files/media/document/Dissertation%20and%20Thesis%20Handbook%202024-2025%20(1).pdf).
+It is manuscript mode with a front matter of its own, and it works in all
+four formats. `dissertation` is accepted as an alias.
+
+**So far this builds the title page only.** The rest of the front matter ---
+the copyright page, the abstract, the dedication, the acknowledgments, the
+table of contents with its `CHAPTER` heading, the lists of tables and figures
+--- is not built yet, nor is the front matter's lower-case roman page
+numbering.
+
+The page takes its fields from a `thesis` block:
+
+``` yaml
+documentmode: thesis
+thesis:
+  type: Dissertation
+  submitted-to: the Temple University Graduate Board
+  degree: Doctor of Philosophy
+  date: May 2027
+  committee:
+    - name: Mentor's Name
+      role: Advisory Chair
+      affiliation: TU Department
+    - name: Committee Member's Name
+      affiliation: TU Department
+    - name: Committee Member's Name
+      role: External Member
+      affiliation: Another University
+```
+
++------------------+----------------------------------------------------------+
+| Field            | Explanation                                              |
++==================+==========================================================+
+| `type`           | What the work is: `Dissertation` or `Thesis`. The page   |
+|                  | reads "A Dissertation".                                  |
++------------------+----------------------------------------------------------+
+| `submitted-to`   | Who it is submitted to. Defaults to "the Temple          |
+|                  | University Graduate Board".                              |
++------------------+----------------------------------------------------------+
+| `degree`         | The degree it answers to, as Student Services Banner     |
+|                  | names it.                                                |
++------------------+----------------------------------------------------------+
+| `date`           | The diploma date, not the date of the defence.           |
++------------------+----------------------------------------------------------+
+| `committee`      | The examining committee, in order. Each entry takes      |
+|                  | `name`, an optional `role` (`Advisory Chair`,            |
+|                  | `External Member`) and an optional `affiliation`, and is |
+|                  | set as one line with commas between them.                |
++------------------+----------------------------------------------------------+
+
+Every field is optional: a block left out leaves its part of the page out,
+and the rule that sets it off goes with it.
+
+The author is the document's own `author`, and the title its own `title`.
+
+## The shape of the title
+
+The Graduate School asks for the title in capitals, and for an inverted
+pyramid when it runs to more than one line: the first line longest, each line
+after it shorter. apaquarto works the lines out for you. It measures the
+words and tries every arrangement from two lines up to eight, aiming each
+line at a straight taper --- for a title of four lines, the full measure,
+three quarters of it, half, a quarter --- and takes the arrangement that sits
+nearest. That settles how many lines the title wants without anyone having to
+say.
+
+The lines are worked out once, in Lua, and handed to all four formats, so the
+title page has the same shape in the .pdf, the .docx, the typst and the
+.html.
+
+To break the title yourself instead, write it as a block and end each line
+with a backslash:
+
+``` yaml
+title: |
+  This is the First Line of My Title \
+  And This is the Second Line
+```
+
+Those are then the lines, and nothing is worked out.
+
+## Margins
+
+The handbook asks for 1.5" at the left, where the work is bound, and 1"
+elsewhere, and says the margins are "the same for the entire manuscript,
+including front matter". `documentmode: thesis` sets them in the .pdf, the
+typst and the .docx. (The Graduate School's own title-page template is set at
+1" all round; the handbook is what the work is held to.)
+
+Confirm the current requirements with the Graduate School before submitting:
+apaquarto follows the 2024--2025 handbook, and a handbook is revised.
+
 # Tables of contents, figures, and tables
 
 Each of these stands on a page of its own, after the abstract, the impact statement, the keywords and the supplemental materials, and before the body of the paper.

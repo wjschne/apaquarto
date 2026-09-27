@@ -284,15 +284,28 @@ check_reference_doc <- function() {
   if (!file.exists(refdoc)) return(invisible())
   tmp <- tempfile()
   on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
-  xml <- tryCatch(
-    readLines(unzip(refdoc, "word/document.xml", exdir = tmp), warn = FALSE),
-    error = function(e) return(character())
-  )
-  if (any(grepl("apaquarto-original-", xml, fixed = TRUE))) {
-    stop("_extensions/apaquarto/apaquarto.docx was committed mid-patch: it ",
-         "still carries an apaquarto-original- marker left by a docx render. ",
-         "Render any document to docx without numbered-lines to restore it, ",
-         "then commit that.")
+  # Two parts of the reference document are written into by a render and put
+  # back by the next one: the section properties, which carry the page size,
+  # the margins and the line numbering, and the stylesheet, which carries the
+  # link colours. Each leaves a marker behind while it is patched, and a
+  # marker in the committed file means a render's leavings were committed
+  # with it.
+  parts <- c("word/document.xml", "word/styles.xml")
+  markers <- c("apaquarto-original-", "apaquarto-link-styles")
+  for (part in parts) {
+    xml <- tryCatch(
+      readLines(unzip(refdoc, part, exdir = tmp), warn = FALSE),
+      error = function(e) character()
+    )
+    for (marker in markers) {
+      if (any(grepl(marker, xml, fixed = TRUE))) {
+        stop("_extensions/apaquarto/apaquarto.docx was committed mid-patch: ",
+             part, " still carries a ", marker, " marker left by a docx ",
+             "render. Render any document to docx, with no colour fields and ",
+             "no numbered-lines and not in thesis mode, to restore it, then ",
+             "commit that.")
+      }
+    }
   }
   invisible()
 }

@@ -1,0 +1,52 @@
+---
+title: "A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Length"
+shorttitle: "Thesis Title"
+author:
+  - name: Iwishiwere A. Graduate
+    corresponding: true
+    email: graduate@example.edu
+    affiliations:
+      - name: Temple University
+documentmode: thesis
+thesis:
+  type: Dissertation
+  submitted-to: the Temple University Graduate Board
+  degree: Doctor of Philosophy
+  date: May 2027
+  committee:
+    - name: Mentor Name
+      role: Advisory Chair
+      affiliation: TU Department
+    - name: Member Name
+      affiliation: TU Department
+    - name: Outside Name
+      role: External Member
+      affiliation: Another University
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+<!--
+documentmode: thesis is APA manuscript mode with the Temple University
+Graduate School's front matter, and the title page is the first of it.
+
+The title is set in capitals in an inverted pyramid: the first line longest,
+each line after it shorter. The lines are worked out in lua rather than left
+to each format, because a .docx can measure nothing while it is being
+written, so all four are given the same ones and the page has the same shape
+in all four.
+
+Under the title, three centred blocks -- what the work is, what degree it
+answers to, who wrote it -- each set off by a rule 5.5 inches wide, and the
+examining committee flush left at the foot.
+
+The page carries no number and no running head, and the body begins on the
+page after it.
+-->
+
+# Introduction
+
+The body begins here.

@@ -933,55 +933,51 @@
   columns: 1,
 )
 
-#show: document => jou(
-  title: [Typst Journal Pagebreak Fixture],
-  authors: ([Ana Author],),
-  runninghead: "JOURNAL PAGEBREAK",
-  runningauthors: "Author",
+#show: document => thesis(
+  title: [A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Length],
+  authors: ([Iwishiwere A. Graduate],),
+  runninghead: "THESIS TITLE",
+  runningauthors: "Graduate",
   font: (<fonts>),
   numberdepth: 3,
+  suppresstitlepage: true,
   document,
 )
 
-#place(top, scope: "parent", float: true, clearance: 1.5em)[
-#block(width: 100%)[
-#show heading.where(level: 1): set text(size: joutitlesize, weight: "regular")
-#heading(level: 1, outlined: false, numbering: none)[Typst Journal Pagebreak Fixture]
-<title>
-#set align(center)
-#block[
-#set par(..joubylinepar)
-#set block(spacing: 0.55em)
-/
-#set text(size: jouauthorsize)
-Ana Author
-
-#set text(size: jouaffiliationsize)
-Example University
-
+#[
+#set par(leading: 0.65em, first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#v(70.0pt, weak: false)
+#align(center)[#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY /
+WHEN THEY ARE STUDYING SOMETHING /
+AT LENGTH]]
+#v(21.0pt, weak: false)
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
+#v(21.0pt, weak: false)
+#align(center)[A Dissertation /
+Submitted to /
+the Temple University Graduate Board]
+#v(21.0pt, weak: false)
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
+#v(21.0pt, weak: false)
+#align(center)[In Partial Fulfillment /
+of the Requirements for the Degree /
+Doctor of Philosophy]
+#v(21.0pt, weak: false)
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
+#v(21.0pt, weak: false)
+#align(center)[by /
+Iwishiwere A. Graduate /
+May 2027]
+#v(70.0pt, weak: false)
+#align(left)[Examining Committee Members:]
+#v(13.8pt, weak: false)
+#align(left)[Mentor Name, Advisory Chair, TU Department /
+Member Name, TU Department /
+Outside Name, External Member, Another University]
 ]
-#set align(left)
-]
-#align(center)[
-#block(width: jouabstractwidth, above: 1em, below: 0.6em)[
-#set align(left)
-#set text(size: jouabstractsize)
-#set par(leading: jouabstractleading, first-line-indent: 0pt)
-#show heading.where(level: 1): set text(size: jouabstractsize)
-#block[
-Confirms that a manual page break is legal in Typst journal mode (page-level columns, not a container).
-
-]
-]
-]
-]
-#jouauthornote(cols: auto)[
-Correspondence concerning this article should be addressed to Ana Author, Example University, Email: #link("mailto:ana@example.org")[ana/@example.org]
-
-]
-First section, before an explicit page break.
-
-#pagebreak()
-= Method
-<method>
-This section follows the manual page break.
+#pagebreak(weak: false)
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#v(apafirstparshift)
+The body begins here.

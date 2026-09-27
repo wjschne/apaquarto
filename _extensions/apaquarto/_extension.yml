@@ -182,6 +182,11 @@ contributes:
         # Warn when a pdf standard cannot work with the document's tables
         - at: post-render
           path: apapdfstandard.lua
+        # The title page of a dissertation or thesis, in every format.
+        # Last, so that what it writes for each format is passed straight
+        # through rather than picked over by the filters above.
+        - at: post-render
+          path: thesisfrontmatter.lua
     native: default
     html:
       filters:

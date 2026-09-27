@@ -352,6 +352,24 @@ function M.colour_hex(value)
   return xcolors[name:lower()]
 end
 
+-- The page a Temple dissertation or thesis is set on, in inches: 1.5" at the
+-- left, where the work is bound, and 1" elsewhere. That is what the Graduate
+-- School's handbook asks for, and it says the margins are "the same for the
+-- entire manuscript, including front matter", which is why the title page is
+-- set on them too. The Graduate School's own title-page template uses 1" all
+-- round; the handbook is what the work is held to.
+--
+-- Kept here because three files need them: the title page is broken against
+-- the measure they leave (thesisfrontmatter.lua), the pdf sets them as its
+-- geometry, and the .docx takes them from its reference document
+-- (docxreferencedoc.lua).
+M.thesis_margins = { left = 1.5, right = 1.0, top = 1.0, bottom = 1.0 }
+M.thesis_paper_width = 8.5
+
+function M.thesis_measure()
+  return M.thesis_paper_width - M.thesis_margins.left - M.thesis_margins.right
+end
+
 -- if any value in table
 function M.containsValue(tbl, value)
   for _, v in pairs(tbl) do

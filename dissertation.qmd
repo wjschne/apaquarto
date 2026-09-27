@@ -1,0 +1,54 @@
+---
+title: "SEL FOR DLLS: THE INFLUENCE OF SOCIAL-EMOTIONAL LEARNING PROGRAMS ON KEY OUTCOMES FOR DUAL LANGUAGE LEARNERS IN HEAD START"
+shorttitle: "My Dissertation Is Amazing"
+author:
+  - name: W. Joel Schneider
+    corresponding: true
+    orcid: 0000-0002-8393-5316
+    email: schneider@temple.edu
+    affiliations:
+      - name: Temple University
+        department: College of Education and Human Development
+        address: 358 Ritter Hall
+        city: Philadelphia
+        region: PA
+        postal-code: 19122-6091
+abstract: "This is my abstract."
+keywords: [keyword1, keyword2]
+author-note:
+  disclosures:
+    conflict of interest: The author has no conflict of interest to declare.
+bibliography: bibliography.bib
+documentmode: thesis
+thesis:
+  type: Dissertation
+  submitted-to: the Temple University Graduate Board
+  degree: Doctor of Philosophy
+  date: May 2027
+  committee:
+    - name: Mentor's Name
+      role: Advisory Chair
+      affiliation: TU Department
+    - name: Committee Member's Name
+      affiliation: TU Department
+    - name: Committee Member's Name
+      affiliation: TU Department
+    - name: Committee Member's Name
+      affiliation: TU Department
+    - name: Committee Member's Name
+      role: External Member
+      affiliation: Affiliation
+format:
+  apaquarto-typst: default
+  apaquarto-pdf: default
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+# Introduction
+
+The body of the dissertation begins here, on a page of its own.
+
+# Method
+
+Something about the method.

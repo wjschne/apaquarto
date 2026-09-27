@@ -75,10 +75,46 @@ local function makeauthorname(a)
   return authorname
 end
 
+--- A title written as a yaml block, which is how a writer breaks one over
+--- more than one line:
+---
+---   title: |
+---     This is the First Line of My Title \
+---     And This is the Second Line
+---
+--- reaches us as blocks rather than as inlines, and everything downstream
+--- wants inlines: the header the title becomes is built from them, and
+--- building one from blocks brought the render down. The paragraphs are run
+--- together here, with a line break between them, so that a title written
+--- either way is the same thing by the time anything reads it.
+--- A list of blocks and a list of inlines look alike from the outside, so
+--- what is in it is what says which it is: Para, Plain and LineBlock are
+--- blocks, and nothing that belongs in a stretch of inlines is.
+local block_kinds = { Para = true, Plain = true, LineBlock = true }
+
+local function title_inlines(title)
+  if type(title) ~= "table" or title[1] == nil then return title end
+  if not block_kinds[title[1].t] then return title end
+  local out = pandoc.Inlines({})
+  for _, block in ipairs(title) do
+    if #out > 0 then out:insert(pandoc.LineBreak()) end
+    if block.t == "LineBlock" then
+      for i, line in ipairs(block.content) do
+        if i > 1 then out:insert(pandoc.LineBreak()) end
+        out:extend(pandoc.Inlines(line))
+      end
+    elseif block.content then
+      out:extend(pandoc.Inlines(block.content))
+    end
+  end
+  return out
+end
+
 Meta = function(meta)
   meta.apatitle = nil
   meta.apatitledisplay = nil
   if meta.title then
+    meta.title = title_inlines(meta.title)
     meta.apatitle = meta.title:clone()
     meta.apatitledisplay = meta.title:clone()
   end

@@ -1,0 +1,33 @@
+---
+title: |
+  This is the First Line of My Title \
+  And This is the Second Line
+shorttitle: "Thesis Breaks"
+author:
+  - name: Iwishiwere A. Graduate
+    affiliations:
+      - name: Temple University
+documentmode: thesis
+thesis:
+  type: Thesis
+  degree: Master of Education
+  date: May 2027
+format:
+  apaquarto-pdf: default
+  apaquarto-docx: default
+---
+
+<!--
+A writer who does not want the shape apaquarto works out can break the title
+themselves, with a backslash at the end of the line, and those are the lines
+the title page takes. The words here would otherwise fit on one line, so the
+break only holds if the writer's own lines are read.
+
+A thesis rather than a dissertation, to check that the type is what the page
+says it is, and no committee, to check that a title page without one still
+comes out.
+-->
+
+# Introduction
+
+The body begins here.

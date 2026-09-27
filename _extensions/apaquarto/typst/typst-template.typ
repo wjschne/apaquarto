@@ -399,6 +399,15 @@
         )
       }
     }
+  } else if headerstyle == "thesis" {
+    // The title page of a dissertation is page i and shows no number; every
+    // page after it is numbered.
+    context {
+      let pg = counter(page).get().at(0)
+      if pg > first-page {
+        align(right)[#counter(page).display()]
+      }
+    }
   } else if headerstyle == "none" {
     none
   } else {
@@ -681,6 +690,17 @@
   headerstyle: "none",
   pagenumbering: "1",
   updatepagecounter: true,
+  ..args,
+)
+
+// documentmode: thesis — a Temple University dissertation or thesis.
+// Manuscript layout, with the margins the Graduate School asks for: 1.5" at
+// the left, where the work is bound, and 1" elsewhere. The front matter --
+// the title page first -- is built in thesisfrontmatter.lua, the same way for
+// all four formats.
+#let thesis(..args) = apa-layout(
+  margin: (left: 1.5in, right: 1in, top: 1in, bottom: 1in),
+  headerstyle: "thesis",
   ..args,
 )
 
