@@ -105,6 +105,18 @@
 % arrive as ordinary blocks from apaquarto's filters, and this file only says
 % how they are set. Each command below is used by formatlatex.lua.
 
+% The colour typst gives a link, which is its own named blue. The .pdf
+% asks for it by name in _extension.yml; the name has to exist before
+% pandoc's own hypersetup names it, and this file is read first.
+/definecolor{apalink}{HTML}{0074D9}
+% A link inside one of the lists takes the colour of the text around it,
+% which is what typst's outlines do with theirs. toccolor overrides it:
+% pandoc's latex template writes no toccolor of its own, so the lists
+% being apaquarto's own means honouring it here. formatlatex.lua
+% renews this when a document names one.
+/definecolor{apatext}{HTML}{000000}
+/newcommand{/apatoccolor}{apatext}
+
 /usepackage{setspace}
 /usepackage{fancyhdr}
 /usepackage{titlesec}
@@ -361,18 +373,30 @@
 /makeatother
 
 /newcommand{/apatableofcontents}{%
+  /begingroup
+  /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/contentsname}{Table of Contents}%
-  /tableofcontents}
+  /tableofcontents
+  /endgroup}
 
+% Whether a list starts a page of its own is formatlatex.lua's to say: it
+% does in every mode but jou, where a published article runs the lists on
+% in the columns as typst's journal mode does.
 % The heading each list carries, set like any other section heading. The
 % article class writes the heading itself from /listfigurename, so the name
 % is set first and the list follows.
 /newcommand{/apalistoffigures}{%
+  /begingroup
+  /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/listfigurename}{List of Figures}%
-  /listoffigures}
+  /listoffigures
+  /endgroup}
 /newcommand{/apalistoftables}{%
+  /begingroup
+  /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/listtablename}{List of Tables}%
-  /listoftables}
+  /listoftables
+  /endgroup}
 
 % --- Journal masthead -------------------------------------------------------
 % The band a published article carries at the head of its first page: the
@@ -729,10 +753,10 @@
 /makeatother
 /hypersetup{
   colorlinks=true,
-  linkcolor={blue},
-  filecolor={Maroon},
-  citecolor={blue},
-  urlcolor={blue},
+  linkcolor={apalink},
+  filecolor={apalink},
+  citecolor={apalink},
+  urlcolor={apalink},
   pdfcreator={LaTeX via pandoc}}
 
 

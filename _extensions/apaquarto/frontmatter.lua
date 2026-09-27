@@ -1349,6 +1349,29 @@ return {
         body = List:new {}
       end
 
+      -- The colour a document asks a link to take. Quarto's fields are
+      -- latex's -- linkcolor, urlcolor, citecolor, filecolor, toccolor -- and
+      -- typst understands the same names, so a name is passed through as it
+      -- stands and a #rrggbb is wrapped in rgb(). Nothing named leaves typst
+      -- with what it had.
+      local function typst_colour(field, fallback)
+        local value = meta[field]
+        if value == nil then return fallback end
+        local name = stringify(value)
+        if name == "" or name == "false" then return fallback end
+        if name:sub(1, 1) == "#" then return 'rgb("' .. name .. '")' end
+        return name
+      end
+
+      -- A link in the body takes linkcolor. typst-template.typ sets its own
+      -- blue, which is #0074D9; a show rule written after that one wins, so
+      -- this is only emitted when a document asks for something else.
+      if FORMAT:match 'typst' and meta.linkcolor then
+        body:extend({ pandoc.RawBlock('typst',
+          '#show link: set text(fill: '
+          .. typst_colour("linkcolor", "blue") .. ')\n\n') })
+      end
+
       -- list-of-contents asks for a table of contents in every format.
       -- typst also takes toc: true, which is what it has always answered to
       -- and what .html uses as well, so either will do there.
@@ -1356,7 +1379,7 @@ return {
         and stringify(meta["list-of-contents"]) ~= "false"
 
       if FORMAT:match 'typst' and (PANDOC_WRITER_OPTIONS["table_of_contents"] or wants_contents) then
-        body:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: black)\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
+        body:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
         body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
       end
 
@@ -1367,7 +1390,7 @@ return {
       if FORMAT:match 'typst' and meta["list-of-figures"] then
         body:extend({ pandoc.RawBlock('typst',
           '\n\n#[\n' ..
-          '#show outline.entry: it => {show link: set text(fill: black)\n' ..
+          '#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\n' ..
           'let loc = it.element.location()\n' ..
           'let n = it.element.counter.at(loc).first()\n' ..
           'let a = appendixcounter.at(loc).first()\n' ..
@@ -1385,7 +1408,7 @@ return {
       if FORMAT:match 'typst' and meta["list-of-tables"] then
         body:extend({ pandoc.RawBlock('typst',
           '\n\n#[\n' ..
-          '#show outline.entry: it => {show link: set text(fill: black)\n' ..
+          '#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\n' ..
           'let loc = it.element.location()\n' ..
           'let n = it.element.counter.at(loc).first()\n' ..
           'let a = appendixcounter.at(loc).first()\n' ..
@@ -1514,6 +1537,23 @@ return {
         -- split as typst makes, since the front matter it reads is the same;
         -- formatlatex.lua is what turns each part into latex, and it needs
         -- them marked off from one another to do it.
+        -- The three list markers are taken out before the front matter is
+        -- split up. They would otherwise be swept into the masthead's own
+        -- divs, where nothing looks for them, and the lists a journal-mode
+        -- paper asked for simply never appeared.
+        local lists = List:new {}
+        local kept = List:new {}
+        for _, block in ipairs(body) do
+          if block.t == "Div" and (block.classes:includes("list-of-contents")
+              or block.classes:includes("list-of-figures")
+              or block.classes:includes("list-of-tables")) then
+            lists:extend({ block })
+          else
+            kept:extend({ block })
+          end
+        end
+        body = kept
+
         local front, narrow, notes, tail = split_jou_frontmatter(body)
         local out = List:new {}
         local masthead = latex_journal_metadata(meta)
@@ -1533,6 +1573,7 @@ return {
             pandoc.Attr("", { "JournalNote" })) })
         end
         out:extend(tail)
+        out:extend(lists)
         out:extend(doc.blocks)
         body = out
       else

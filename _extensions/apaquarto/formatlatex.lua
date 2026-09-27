@@ -19,6 +19,11 @@ end
 local utilsapa = require("utilsapa")
 
 local mode = "man"
+
+-- Whether the document carries a list of contents, figures or tables.
+-- Set in blocks() and read in render_front(), which is where the body's
+-- title is written out.
+local haslist = false
 local shorttitle = nil
 local line_numbers = false
 local first_page = nil
@@ -73,6 +78,18 @@ end
 -- from where it begins in the issue rather than from one. Only a whole number
 -- is taken: the value is written straight into a latex counter, and anything
 -- else there is a compilation error rather than a page number.
+-- The colour a document asks for in its lists. Pandoc's own hypersetup
+-- carries linkcolor, filecolor, citecolor and urlcolor; toccolor it leaves
+-- out, so apaquarto reads it here and the lists honour it.
+local toc_colour = nil
+
+local function asked_for_toc_colour(m)
+  if m.toccolor == nil then return nil end
+  local name = utilsapa.stringify(m.toccolor)
+  if name == "" or name == "false" then return nil end
+  return name
+end
+
 local function asked_for_first_page(m)
   if m["first-page"] == nil then return nil end
   local text = utilsapa.stringify(m["first-page"])
@@ -204,6 +221,7 @@ local function meta(m)
   -- table here is set as a tabular instead, so the patch has nothing to do.
   line_numbers = asked_for_line_numbers(m)
   first_page = asked_for_first_page(m)
+  toc_colour = asked_for_toc_colour(m)
   if line_numbers then
     quarto.doc.include_text("in-header",
       "\\usepackage[nolongtablepatch]{lineno}")
@@ -285,8 +303,13 @@ local function render_front(list, jou)
       out:extend(command(jou and "apajoutitle" or "apatitle", block.content))
 
     elseif is_title(block) and block.identifier == "firstheader" then
-      -- The title again, at the head of the body.
-      if paged() then out:insert(raw("\\clearpage")) end
+      -- The title again, at the head of the body. A page of its own in the
+      -- modes that have a title page, and in any mode that has put a list of
+      -- contents, figures or tables in front of it -- jou excepted, where
+      -- the masthead owns the top of the first page.
+      if paged() or (haslist and not jou) then
+        out:insert(raw("\\clearpage"))
+      end
       out:extend(command("apatitle", block.content))
 
     elseif is_titlepage_heading(block) then
@@ -331,6 +354,19 @@ local function blocks(doc)
   -- it.
   local rest = pandoc.List({})
   local masthead, wide, narrow, note
+  -- Whether any of the three lists is in the document. Each of them starts a
+  -- page of its own, and the body wants one too: in man and stu the title
+  -- page sees to that, but doc has no title page and ran the body on under
+  -- the last list.
+  haslist = false
+  for _, block in ipairs(doc.blocks) do
+    if block.t == "Div" and (block.classes:includes("list-of-contents")
+        or block.classes:includes("list-of-figures")
+        or block.classes:includes("list-of-tables")) then
+      haslist = true
+    end
+  end
+
   for _, block in ipairs(doc.blocks) do
     if masthead == nil and front_div(block, "JournalMasthead") then
       masthead = block
@@ -340,14 +376,24 @@ local function blocks(doc)
       narrow = block
     elseif note == nil and front_div(block, "JournalNote") then
       note = block
-    elseif block.t == "Div" and block.classes:includes("list-of-contents") then
-      rest:insert(raw("\\apatableofcontents"))
-    elseif block.t == "Div" and block.classes:includes("list-of-figures") then
-      -- Every float has been writing its line into the .lof; this reads them
-      -- back. The heading and the shape of a line are set in apalatex.tex.
-      rest:insert(raw("\\apalistoffigures"))
-    elseif block.t == "Div" and block.classes:includes("list-of-tables") then
-      rest:insert(raw("\\apalistoftables"))
+    elseif block.t == "Div" and (block.classes:includes("list-of-contents")
+        or block.classes:includes("list-of-figures")
+        or block.classes:includes("list-of-tables")) then
+      -- A list stands on a page of its own, except in jou: a published
+      -- article runs them on in the columns, which is what typst's journal
+      -- mode does with the same three.
+      --
+      -- The figures and tables are read back out of the .lof and the .lot,
+      -- which every float has been writing its line into as it was set. The
+      -- heading and the shape of a line are in apalatex.tex.
+      if mode ~= "jou" then rest:insert(raw("\\clearpage")) end
+      if block.classes:includes("list-of-contents") then
+        rest:insert(raw("\\apatableofcontents"))
+      elseif block.classes:includes("list-of-figures") then
+        rest:insert(raw("\\apalistoffigures"))
+      else
+        rest:insert(raw("\\apalistoftables"))
+      end
     else
       rest:insert(block)
     end
@@ -390,6 +436,12 @@ local function blocks(doc)
   -- head of the body, after the page style, so that the first page carries it.
   if first_page then
     out:insert(raw("\\setcounter{page}{" .. first_page .. "}"))
+  end
+
+  -- toccolor, which pandoc's latex template does not write out. The
+  -- lists are apaquarto's own, so honouring it is apaquarto's to do.
+  if toc_colour then
+    out:insert(raw("\\renewcommand{\\apatoccolor}{" .. toc_colour .. "}"))
   end
 
   -- The author note, raised in the first column so that it falls to the foot

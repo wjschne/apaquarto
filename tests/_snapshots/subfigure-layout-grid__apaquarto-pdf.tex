@@ -105,6 +105,18 @@
 % arrive as ordinary blocks from apaquarto's filters, and this file only says
 % how they are set. Each command below is used by formatlatex.lua.
 
+% The colour typst gives a link, which is its own named blue. The .pdf
+% asks for it by name in _extension.yml; the name has to exist before
+% pandoc's own hypersetup names it, and this file is read first.
+/definecolor{apalink}{HTML}{0074D9}
+% A link inside one of the lists takes the colour of the text around it,
+% which is what typst's outlines do with theirs. toccolor overrides it:
+% pandoc's latex template writes no toccolor of its own, so the lists
+% being apaquarto's own means honouring it here. formatlatex.lua
+% renews this when a document names one.
+/definecolor{apatext}{HTML}{000000}
+/newcommand{/apatoccolor}{apatext}
+
 /usepackage{setspace}
 /usepackage{fancyhdr}
 /usepackage{titlesec}
@@ -361,18 +373,30 @@
 /makeatother
 
 /newcommand{/apatableofcontents}{%
+  /begingroup
+  /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/contentsname}{Table of Contents}%
-  /tableofcontents}
+  /tableofcontents
+  /endgroup}
 
+% Whether a list starts a page of its own is formatlatex.lua's to say: it
+% does in every mode but jou, where a published article runs the lists on
+% in the columns as typst's journal mode does.
 % The heading each list carries, set like any other section heading. The
 % article class writes the heading itself from /listfigurename, so the name
 % is set first and the list follows.
 /newcommand{/apalistoffigures}{%
+  /begingroup
+  /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/listfigurename}{List of Figures}%
-  /listoffigures}
+  /listoffigures
+  /endgroup}
 /newcommand{/apalistoftables}{%
+  /begingroup
+  /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/listtablename}{List of Tables}%
-  /listoftables}
+  /listoftables
+  /endgroup}
 
 % --- Journal masthead -------------------------------------------------------
 % The band a published article carries at the head of its first page: the
@@ -727,10 +751,10 @@
 /makeatother
 /hypersetup{
   colorlinks=true,
-  linkcolor={blue},
-  filecolor={Maroon},
-  citecolor={blue},
-  urlcolor={blue},
+  linkcolor={apalink},
+  filecolor={apalink},
+  citecolor={apalink},
+  urlcolor={apalink},
   pdfcreator={LaTeX via pandoc}}
 
 
@@ -781,7 +805,7 @@ Subfigure Layout Grid
 
 /section{Cases}/label{cases}
 
-A: captioned layout, no notes (Figure~/ref{fig-a}).
+A: captioned layout, no notes (/hyperref[fig-a]{Figure~/ref*{fig-a}}).
 
 /begin{figure}[H]
 
@@ -824,7 +848,8 @@ A: captioned layout, no notes (Figure~/ref{fig-a}).
 
 /end{figure}
 
-B: caption-less layout, no notes (Figure~/ref{fig-b}). Quarto writes no
+B: caption-less layout, no notes
+(/hyperref[fig-b]{Figure~/ref*{fig-b}}). Quarto writes no
 /texttt{/textbackslash{}caption} for a laid-out float whose caption is
 empty, and the /texttt{/textbackslash{}label} goes with it, so this one
 used to render unnumbered with a dangling reference.
@@ -866,7 +891,8 @@ used to render unnumbered with a dangling reference.
 
 /end{figure}
 
-C: captioned layout, both panels noted (Figure~/ref{fig-c}).
+C: captioned layout, both panels noted
+(/hyperref[fig-c]{Figure~/ref*{fig-c}}).
 
 /begin{figure}[H]
 
@@ -921,9 +947,9 @@ C: captioned layout, both panels noted (Figure~/ref{fig-c}).
 
 /end{figure}
 
-D: caption-less layout, both panels noted (Figure~/ref{fig-d}). The case
-from issue /#158, and the one that has to keep both the grid and its
-number.
+D: caption-less layout, both panels noted
+(/hyperref[fig-d]{Figure~/ref*{fig-d}}). The case from issue /#158, and
+the one that has to keep both the grid and its number.
 
 /begin{figure}[H]
 
@@ -975,8 +1001,8 @@ number.
 /end{figure}
 
 E: layout with a note on the whole figure rather than on the panels
-(Figure~/ref{fig-e}). The note belongs to the figure, so it is printed
-once, below the grid, and not copied onto each panel.
+(/hyperref[fig-e]{Figure~/ref*{fig-e}}). The note belongs to the figure,
+so it is printed once, below the grid, and not copied onto each panel.
 
 /begin{figure}[H]
 
@@ -1026,7 +1052,7 @@ once, below the grid, and not copied onto each panel.
 /end{figure}
 
 H: layout with a whole-figure note and no layout attribute at all
-(Figure~/ref{fig-h}).
+(/hyperref[fig-h]{Figure~/ref*{fig-h}}).
 
 /begin{figure}[H]
 
@@ -1069,7 +1095,7 @@ H: layout with a whole-figure note and no layout attribute at all
 /end{figure}
 
 I: three panels over two columns, with a whole-figure note
-(Figure~/ref{fig-i}).
+(/hyperref[fig-i]{Figure~/ref*{fig-i}}).
 
 /begin{figure}[H]
 
@@ -1131,7 +1157,8 @@ full width of it.
 
 /end{figure}
 
-J: explicit layout matrix with a whole-figure note (Figure~/ref{fig-j}).
+J: explicit layout matrix with a whole-figure note
+(/hyperref[fig-j]{Figure~/ref*{fig-j}}).
 
 /begin{figure}[H]
 
@@ -1180,8 +1207,9 @@ J: explicit layout matrix with a whole-figure note (Figure~/ref{fig-j}).
 
 /end{figure}
 
-F: plain single figure with a note (Figure~/ref{fig-f}). Not a layout;
-it still takes the hand-built wrapper.
+F: plain single figure with a note
+(/hyperref[fig-f]{Figure~/ref*{fig-f}}). Not a layout; it still takes
+the hand-built wrapper.
 
 /begin{figure}[H]
 
@@ -1209,7 +1237,8 @@ it still takes the hand-built wrapper.
 
 /end{figure}
 
-G: plain single figure, no note, no caption text (Figure~/ref{fig-g}).
+G: plain single figure, no note, no caption text
+(/hyperref[fig-g]{Figure~/ref*{fig-g}}).
 
 /begin{figure}[H]
 

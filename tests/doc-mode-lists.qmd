@@ -1,0 +1,46 @@
+---
+title: "Lists in Document Mode"
+shorttitle: "Document Mode"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+list-of-contents: true
+format:
+  apaquarto-pdf:
+    documentmode: doc
+    list-of-figures: true
+    list-of-tables: true
+---
+
+<!--
+Document mode has no title page, so nothing cleared the page before the body
+and it ran on under the last list: the title of the paper, its first heading
+and its first figure shared a page with the list of tables. Manuscript and
+student mode were never affected, since the title page clears it for them.
+
+A document mode paper with no list is continuous as it always was -- the
+break is there because a list is.
+-->
+
+# Method
+
+See @fig-one.
+
+![A figure.](sampleimage.png){#fig-one}
+
+## Procedure
+
+More.
+
+| A | B |
+|:--|--:|
+| 1 | 2 |
+
+: A table. {#tbl-one}
+
+# Discussion
+
+End.

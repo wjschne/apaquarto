@@ -172,6 +172,9 @@ contributes:
         # Process APA in-text citations (ampersand to and, possessive citation)
         - at: post-render
           path: apaandcite.lua
+        # The whole of a cross reference is the link, not just its number
+        - at: post-render
+          path: crossreflink.lua
         # Turn the blocks the filters above produced into latex. Last, so
         # that everything it writes out has been built by then.
         - at: post-render
@@ -254,9 +257,11 @@ contributes:
         - margin=1in
       indent: true
       colorlinks: true
-      linkcolor: blue
-      citecolor: blue
-      urlcolor: blue
+      linkcolor: apalink
+      citecolor: apalink
+      urlcolor: apalink
+      # Pandoc's own default here is Maroon, which matches nothing else.
+      filecolor: apalink
       number-sections: false
       documentmode: man
       include-in-header:

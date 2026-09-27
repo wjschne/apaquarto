@@ -1,0 +1,44 @@
+---
+title: "Lists in Journal Mode"
+shorttitle: "Journal Lists"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+list-of-contents: true
+journal:
+  title: "Nonexistent Journal"
+format:
+  apaquarto-pdf:
+    documentmode: jou
+    list-of-figures: true
+    list-of-tables: true
+---
+
+<!--
+A journal-mode paper asked for the three lists and got none of them: the
+markers the front matter leaves were swept into the masthead's own divs,
+where nothing looks for them.
+
+They run on in the columns rather than each taking a page, which is what
+typst's journal mode does with the same three. Every other mode gives each
+list a page of its own.
+-->
+
+# Method
+
+See @fig-one.
+
+![A figure.](sampleimage.png){#fig-one}
+
+| A | B |
+|:--|--:|
+| 1 | 2 |
+
+: A table. {#tbl-one}
+
+# Discussion
+
+End.

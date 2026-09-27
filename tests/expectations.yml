@@ -612,6 +612,10 @@
   expect:
     tex:
       contains:
+        # The whole of a cross reference is one link, not just its number:
+        # quarto writes the word, a hard space and a ref; hyperref colours
+        # only the number and leaves the word beside it plain.
+        - 'hyperref[fig-one]{Figure~'
         # Every float writes its own line; the two commands read them back.
         - 'addcontentsline{lof}{figure}'
         - 'addcontentsline{lot}{table}'
@@ -760,6 +764,17 @@
     tex:
       contains:
         - 'apatableofcontents'
+        # The colour typst gives a link, asked for by name so that pandoc's
+        # own hypersetup can name it. Measured off the page: an external
+        # link comes out #0074D9 and a contents entry #000000.
+        - 'definecolor{apalink}{HTML}{0074D9}'
+        - 'linkcolor={apalink}'
+        # A link inside one of the lists takes the colour of the text around
+        # it, as typst's outlines do. The colour is a macro so that toccolor
+        # can change it -- pandoc's latex template writes no toccolor of its
+        # own, so the lists being apaquarto's means honouring it here.
+        - 'newcommand{\apatoccolor}{apatext}'
+        - 'hypersetup{linkcolor=\apatoccolor,citecolor=\apatoccolor,urlcolor=\apatoccolor}'
     pdf:
       contains:
         - 'Table of Contents'
@@ -779,3 +794,39 @@
       contains:
         # quarto's own is still there
         - 'Procedure'
+
+- fixture: doc-mode-lists.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains:
+        - 'Table of Contents'
+        - 'List of Figures'
+        - 'List of Tables'
+    tex:
+      count:
+        # One in front of each of the three lists, so each has a page, and a
+        # fourth before the body: document mode has no title page to clear
+        # it, so without that one the paper began under the list of tables.
+        'clearpage': 4
+
+- fixture: jou-mode-lists.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains:
+        # All three, which journal mode used to drop altogether.
+        - 'Table of Contents'
+        - 'List of Figures'
+        - 'List of Tables'
+    tex:
+      contains:
+        - 'apatableofcontents'
+        - 'apalistoffigures'
+        - 'apalistoftables'
+      count:
+        # None at all. Journal mode runs the lists on in the columns, as
+        # typst's does, and nothing else in a jou paper clears a page: the
+        # masthead's own break belongs to 	wocolumn. Every other mode puts
+        # one in front of each list.
+        'clearpage': 0
