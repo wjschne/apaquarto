@@ -654,6 +654,13 @@
         # nothing, which is what the contents used to do for this heading.
         - 'w:name="Xc24c7f1fa98fcadd084ea98e1299ca9922ae76c"'
         - 'w:anchor="Xc24c7f1fa98fcadd084ea98e1299ca9922ae76c"'
+      absent:
+        # Not marked dirty. Word updates a dirty field while it loads the
+        # document, before the pages are laid out, so every PAGEREF answers
+        # 1, and the 1 stays once the update has cleared the flag. Left
+        # alone, the entry is there from the start and the numbers arrive
+        # correct the first time anything makes Word paginate and update.
+        - 'w:dirty'
       count:
         # The title, the author note and the three list headings, plus the
         # writer's own {.unlisted} heading. An outline level of 9 does not

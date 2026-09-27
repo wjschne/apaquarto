@@ -211,11 +211,20 @@ end
 --
 -- The page number has to be a field. Nothing else in the file knows where
 -- Word will break the pages, and PAGEREF is what Word writes for its own
--- table of figures. It is marked dirty so that Word fills it in when the
--- document is opened, and nothing is cached inside it -- a number cached here
--- would be a guess, and a wrong page number is worse than none. A reader
--- whose Word does not run the field still sees the entry and its link; only
--- the number after the dots is missing.
+-- table of figures. Nothing is cached inside it: a number cached here would
+-- be a guess, and a wrong page number is worse than none.
+--
+-- The field is not marked dirty, and that is deliberate. Word updates a
+-- dirty field while it is loading the document, before it has laid the pages
+-- out, so every PAGEREF answers 1 -- and the 1 then stays, because the field
+-- is no longer dirty. Marking them dirty bought a prompt on opening and a
+-- column of 1s. Left alone, the entry and its link are there from the start
+-- and the numbers arrive the moment anything makes Word paginate and update:
+-- select all and press F9, or print, or export to pdf.
+--
+-- Checked in Word on example.qmd, all 35 of them: dirty gives 1 1 1 1 1 on
+-- opening, and so does updateFields in settings.xml; without it they are
+-- empty, and after a repagination and an update they are 8 8 8 9 9.
 local function entry_paragraph(entry)
   local body = runs(pandoc.Inlines({ pandoc.Str(entry.title) }), false, false)
   if entry.caption and #entry.caption > 0 then
@@ -236,7 +245,7 @@ local function entry_paragraph(entry)
     "</w:tabs></w:pPr>",
     [[<w:hyperlink w:anchor="]] .. anchor .. [[">]], body, "</w:hyperlink>",
     "<w:r><w:tab/></w:r>",
-    [[<w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r>]],
+    [[<w:r><w:fldChar w:fldCharType="begin"/></w:r>]],
     [[<w:r><w:instrText xml:space="preserve"> PAGEREF ]] .. anchor
       .. [[ \h </w:instrText></w:r>]],
     [[<w:r><w:fldChar w:fldCharType="separate"/></w:r>]],
@@ -286,7 +295,7 @@ local function heading_paragraph(entry)
     "<w:p><w:pPr>", properties, "</w:pPr>",
     [[<w:hyperlink w:anchor="]] .. anchor .. [[">]], body, "</w:hyperlink>",
     "<w:r><w:tab/></w:r>",
-    [[<w:r><w:fldChar w:fldCharType="begin" w:dirty="true"/></w:r>]],
+    [[<w:r><w:fldChar w:fldCharType="begin"/></w:r>]],
     [[<w:r><w:instrText xml:space="preserve"> PAGEREF ]] .. anchor
       .. [[ \h </w:instrText></w:r>]],
     [[<w:r><w:fldChar w:fldCharType="separate"/></w:r>]],
