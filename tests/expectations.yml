@@ -675,6 +675,12 @@
         # typst sets them, where each outline is followed by a #pagebreak().
         # Checked in Word: title page, contents, figures, tables, body.
         '<w:br w:type="page"/>': 4
+    log:
+      contains:
+        # Said once at the end of the render, because the page numbers cannot
+        # be filled in from here and whoever asked for the list is the person
+        # who needs to know.
+        - 'select all with ctrl+a'
 
 # ---------------------------------------------------- numbering of floats --
 

@@ -337,6 +337,24 @@ local function build_list(title, entries)
   return out
 end
 
+-- Said once, after a render that carries any of the three lists. The page
+-- numbers in them are fields and Word leaves a field empty until it has
+-- laid the pages out, so a reader opening the file finds the entries and
+-- their links but no numbers until something makes Word update them. There
+-- is no way to fill them in from here -- see the note on the page number
+-- above -- so the next best thing is to say so plainly at the end of the
+-- render, where whoever asked for the list is looking.
+-- Kept to 80 columns a line: this goes to a terminal, and a paragraph that
+-- wraps where the window happens to end is harder to read than one that
+-- breaks where it was written to.
+local function say_how_to_update()
+  quarto.log.output(
+    "apaquarto: this .docx has a list of contents, figures or tables. Word\n" ..
+    "fills in their page numbers only once it has paginated, so they are blank\n" ..
+    "until you ask for them: open the file, select all with ctrl+a (cmd+a on a\n" ..
+    "mac) and press F9. Printing or exporting to pdf does it too.")
+end
+
 return {
   { Meta = get_language },
   {
@@ -346,22 +364,28 @@ return {
       local headings = collect_headings(doc.blocks)
 
       local out = pandoc.List({})
+      local listed = false
       for _, block in ipairs(doc.blocks) do
         if block.t == "Div" and block.classes:includes("list-of-contents") then
           out:extend(build_contents(headings))
+          listed = true
           out:insert(page_break())
         elseif block.t == "Div" and block.classes:includes("list-of-figures") then
           out:extend(build_list("List of Figures", figures))
+          listed = true
           out:insert(page_break())
         elseif block.t == "Div" and block.classes:includes("list-of-tables") then
           out:extend(build_list("List of Tables", tables))
           out:insert(page_break())
+          listed = true
         elseif block.t == "Header" and block.classes:includes("unlisted") then
           out:insert(unlisted_heading(block))
         else
           out:insert(block)
         end
       end
+
+      if listed then say_how_to_update() end
 
       doc.blocks = out
       return doc

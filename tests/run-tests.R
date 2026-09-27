@@ -117,7 +117,11 @@ readers <- list(
   "docx-xml" = list(ext = "docx", how = "docx-xml", squash = FALSE),
   pdf      = list(ext = "pdf",  how = "pdf", squash = TRUE),
   tex      = list(ext = "tex",  how = "plain", squash = FALSE),
-  typ      = list(ext = "typ",  how = "plain", squash = FALSE)
+  typ      = list(ext = "typ",  how = "plain", squash = FALSE),
+  # Not a file the render leaves beside the fixture but what it said while
+  # running, which is where a message meant for whoever asked for the render
+  # belongs -- the notice about Word's page numbers is one.
+  log      = list(ext = "log",  how = "plain", squash = TRUE)
 )
 
 # Everything a render might leave behind, for one fixture.
@@ -369,7 +373,7 @@ for (job in jobs) {
       next
     }
     ext <- reader$ext
-    path <- artifacts_of(stem)[[ext]]
+    path <- if (ext == "log") log_file else artifacts_of(stem)[[ext]]
     if (!file.exists(path)) {
       note_failure(id, paste0("expected a .", ext, " and there is none"))
       next
