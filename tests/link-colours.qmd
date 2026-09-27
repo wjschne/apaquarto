@@ -1,0 +1,61 @@
+---
+title: "The Colour a Link Takes"
+shorttitle: "Link Colours"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+list-of-contents: true
+list-of-figures: true
+linkcolor: "#cc0000"
+urlcolor: green
+citecolor: orange
+filecolor: violet
+toccolor: teal
+bibliography: references.bib
+format:
+  apaquarto-docx: default
+  apaquarto-html:
+    # The one apaquarto builds into the page, rather than quarto's margin
+    # contents, so that toccolor has an entry of its own to colour.
+    toc: false
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Quarto's colour fields are latex's: linkcolor for a link inside the document,
+urlcolor for one that leaves it, citecolor for a citation, filecolor for a
+file, and toccolor for the lists of contents, figures and tables.
+
+The pdf and the typst have answered to them for a while. .docx and .html did
+not: every .docx link carries the reference document's one Hyperlink style,
+and a web page takes its colours from the theme. Four character styles in the
+reference document and a stylesheet in the head are what they answer with.
+
+A colour is named the way latex names it, and xcolor's table is what resolves
+the name, so that green is the same green in all four.
+-->
+
+# First Heading
+
+An external link is [weblink](https://example.com)
+
+A file link is [filelink](sampleimage.png)
+
+A cross reference is @fig-one
+
+A citation is [@schneiderCattellHornCarrollTheoryCognitive2018]
+
+::: {#fig-one}
+![](sampleimage.png)
+
+A figure.
+:::
+
+# References
+
+::: {#refs}
+:::

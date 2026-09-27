@@ -1,0 +1,40 @@
+---
+title: "Colours in Journal Mode"
+shorttitle: "Journal Colours"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+documentmode: jou
+list-of-contents: true
+linkcolor: "#cc0000"
+toccolor: green
+format:
+  apaquarto-typst: default
+---
+
+<!--
+The show rule that gives a link its colour was written into the body, and in
+journal mode the front matter is split up before the body is assembled: a
+raw block at the end of it was taken for part of the author note and the rule
+ended up inside the note, where it coloured the note's own links and nothing
+else. The rules are held back now and put in after the masthead is built.
+
+The page break that goes before a list is not written in journal mode, which
+runs continuously. It used to be dropped by the same split, which throws away
+every #pagebreak it is given.
+-->
+
+# First Heading
+
+An external link is [weblink](https://example.com)
+
+A cross reference is @fig-one
+
+::: {#fig-one}
+![](sampleimage.png)
+
+A figure.
+:::

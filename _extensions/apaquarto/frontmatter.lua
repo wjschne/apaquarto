@@ -1351,25 +1351,71 @@ return {
 
       -- The colour a document asks a link to take. Quarto's fields are
       -- latex's -- linkcolor, urlcolor, citecolor, filecolor, toccolor -- and
-      -- typst understands the same names, so a name is passed through as it
-      -- stands and a #rrggbb is wrapped in rgb(). Nothing named leaves typst
-      -- with what it had.
+      -- a colour is named the way latex names it, so xcolor's table is what
+      -- resolves the name and typst is handed the code. typst knows some of
+      -- those names itself and means something else by them -- its green is
+      -- #2ECC40 where xcolor's is #00FF00 -- and knows nothing of violet or
+      -- brown at all, which stopped the compile outright. Nothing named
+      -- leaves typst with what it had.
       local function typst_colour(field, fallback)
-        local value = meta[field]
-        if value == nil then return fallback end
-        local name = stringify(value)
-        if name == "" or name == "false" then return fallback end
-        if name:sub(1, 1) == "#" then return 'rgb("' .. name .. '")' end
-        return name
+        if meta[field] == nil then return fallback end
+        local hex = utilsapa.colour_hex(meta[field])
+        if hex == nil then
+          quarto.log.warning(field .. " is \"" .. stringify(meta[field]) ..
+            "\", which is not a colour apaquarto knows, so it was left out." ..
+            " Name one of xcolor's colours, or write the code as #rrggbb.")
+          return fallback
+        end
+        return 'rgb("#' .. hex .. '")'
       end
 
-      -- A link in the body takes linkcolor. typst-template.typ sets its own
-      -- blue, which is #0074D9; a show rule written after that one wins, so
-      -- this is only emitted when a document asks for something else.
-      if FORMAT:match 'typst' and meta.linkcolor then
-        body:extend({ pandoc.RawBlock('typst',
-          '#show link: set text(fill: '
-          .. typst_colour("linkcolor", "blue") .. ')\n\n') })
+      -- In journal mode these rules and outlines are not written into the
+      -- body: split_jou_frontmatter would take a trailing raw block for part
+      -- of the author note and scope the rule to it, where it coloured
+      -- nothing but the note's own links. They are held here and put back
+      -- once the masthead has been assembled.
+      local typst_extras = List:new {}
+
+      -- The colour a link takes, by the kind of link it is: urlcolor for one
+      -- that leaves the document, citecolor for a citation, filecolor for a
+      -- file, and linkcolor for another anchor -- a cross reference, or a
+      -- link to a heading. The same reading latex makes of the four fields,
+      -- put to typst as a show rule that looks at where the link goes: a
+      -- string destination is a url or a path, and a label is a cross
+      -- reference or, when it names one of citeproc's entries, a citation.
+      --
+      -- typst-template.typ sets its own blue, which is #0074D9, and a show
+      -- rule written after that one wins. This is only emitted when a
+      -- document names one of the four, so that one naming none is written
+      -- exactly as it was before, blue and all.
+      local link_fields = { "linkcolor", "urlcolor", "citecolor", "filecolor" }
+      local names_a_colour = false
+      for _, field in ipairs(link_fields) do
+        if meta[field] then names_a_colour = true end
+      end
+
+      -- Written after the three outlines below rather than before them. A
+      -- show rule applies from where it stands, and this one, which names a
+      -- colour outright, would otherwise override the rule each outline sets
+      -- over its own entries and colour a whole list as if it were a page of
+      -- cross references.
+      local link_rule = List:new {}
+      if FORMAT:match 'typst' and names_a_colour then
+        local link = typst_colour("linkcolor", "blue")
+        link_rule:extend({ pandoc.RawBlock('typst', table.concat({
+          '#show link: it => {',
+          '  let d = it.dest',
+          '  let c = if type(d) == str {',
+          '    if d.starts-with("mailto:") or d.contains("://") { '
+            .. typst_colour("urlcolor", link) .. ' }',
+          '    else { ' .. typst_colour("filecolor", link) .. ' }',
+          '  } else if type(d) == label and str(d).starts-with("ref-") {',
+          '    ' .. typst_colour("citecolor", link),
+          '  } else { ' .. link .. ' }',
+          '  text(fill: c, it)',
+          '}',
+          '', '',
+        }, '\n')) })
       end
 
       -- list-of-contents asks for a table of contents in every format.
@@ -1378,9 +1424,16 @@ return {
       local wants_contents = meta["list-of-contents"]
         and stringify(meta["list-of-contents"]) ~= "false"
 
+      -- A list stands on its own page except in journal mode, which runs
+      -- continuously. The front-matter split used to take the page break
+      -- out of journal mode for us, by dropping every #pagebreak it was
+      -- given; now that these blocks go in after the split, it is simply
+      -- not written.
       if FORMAT:match 'typst' and (PANDOC_WRITER_OPTIONS["table_of_contents"] or wants_contents) then
-        body:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
-        body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
+        typst_extras:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
+        if not typst_jou then
+          typst_extras:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
+        end
       end
 
       -- "Figure 1. The Figure Caption", which is the line .docx gives. The
@@ -1388,7 +1441,7 @@ return {
       -- prefix, which dropped the "Figure 1" from these two outlines as well,
       -- so each gets a rule of its own inside a block that keeps it there.
       if FORMAT:match 'typst' and meta["list-of-figures"] then
-        body:extend({ pandoc.RawBlock('typst',
+        typst_extras:extend({ pandoc.RawBlock('typst',
           '\n\n#[\n' ..
           '#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\n' ..
           'let loc = it.element.location()\n' ..
@@ -1398,7 +1451,9 @@ return {
           '  else {[#it.element.supplement #n]}\n' ..
           'link(loc, it.indented(none, name + [. ] + it.inner()))}\n' ..
           '#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig"),)\n]\n\n') })
-        body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
+        if not typst_jou then
+          typst_extras:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
+        end
       end
 
       -- "Figure 1. The Figure Caption", which is the line .docx gives. The
@@ -1406,7 +1461,7 @@ return {
       -- prefix, which dropped the "Figure 1" from these two outlines as well,
       -- so each gets a rule of its own inside a block that keeps it there.
       if FORMAT:match 'typst' and meta["list-of-tables"] then
-        body:extend({ pandoc.RawBlock('typst',
+        typst_extras:extend({ pandoc.RawBlock('typst',
           '\n\n#[\n' ..
           '#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\n' ..
           'let loc = it.element.location()\n' ..
@@ -1416,8 +1471,12 @@ return {
           '  else {[#it.element.supplement #n]}\n' ..
           'link(loc, it.indented(none, name + [. ] + it.inner()))}\n' ..
           '#outline(title: [List of Tables], target: figure.where(kind: "quarto-float-tbl"),)\n]\n\n') })
-        body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
+        if not typst_jou then
+          typst_extras:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
+        end
       end
+
+      typst_extras:extend(link_rule)
 
       -- The same two lists in .docx. What they are lists of is not known
       -- yet: apacaption.lua has not run, so no figure has its number or its
@@ -1445,6 +1504,8 @@ return {
           end
         end
       end
+
+      if not typst_jou then body:extend(typst_extras) end
 
       if meta.apatitledisplay and not meta["suppress-title-introduction"] then
         local firstpageheader = documenttitle:clone()
@@ -1524,6 +1585,7 @@ return {
           out:extend({ pandoc.RawBlock('typst', ']') })
         end
         out:extend(tail)
+        out:extend(typst_extras)
         out:extend(doc.blocks)
         body = out
       elseif typst_doc then

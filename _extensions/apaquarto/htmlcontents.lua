@@ -51,6 +51,8 @@ local function build(headings, index, level)
   return pandoc.BulletList(items), index
 end
 
+-- The heading and the list together, in a div of their own so that toccolor
+-- has something to name.
 local function contents_blocks(headings)
   local out = pandoc.List({})
   out:insert(pandoc.Header(1, pandoc.Inlines({ pandoc.Str("Table of Contents") }),
@@ -59,7 +61,8 @@ local function contents_blocks(headings)
     local list = build(headings, 1, headings[1].level)
     out:insert(list)
   end
-  return out
+  return pandoc.List({
+    pandoc.Div(out, pandoc.Attr("", { "apaquarto-contents" })) })
 end
 
 function Pandoc(doc)

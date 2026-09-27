@@ -43,7 +43,16 @@ local utilsapa = require("utilsapa")
 local figureword = "Figure"
 local tableword = "Table"
 
-local function get_language(meta)
+-- toccolor, as six hex digits, or nil for the colour of the body text.
+--
+-- A run in these lists carries no character style -- pandoc's Hyperlink
+-- style is never applied to markup written here -- so there is nothing to
+-- colour but the run itself, and the colour goes straight into its rPr.
+-- The entries take it and the heading above them does not, which is what
+-- the other formats do: toccolor is the colour of a link in the list.
+local kEntryColour = nil
+
+local function read_meta(meta)
   if meta.language then
     if meta.language["crossref-fig-title"] then
       figureword = utilsapa.stringify(meta.language["crossref-fig-title"])
@@ -52,6 +61,7 @@ local function get_language(meta)
       tableword = utilsapa.stringify(meta.language["crossref-tbl-title"])
     end
   end
+  kEntryColour = utilsapa.colour_hex(meta["toccolor"])
 end
 
 local function xml_escape(text)
@@ -60,13 +70,16 @@ end
 
 -- Inlines as word runs. A heading carries little more than words and the odd
 -- bold or italic, and anything else is written as the text it stringifies to.
-local function runs(inlines, bold, italic)
+local function runs(inlines, bold, italic, colour)
   local out = {}
   for _, inline in ipairs(inlines) do
     if inline.t == "Str" then
       local properties = {}
       if bold then properties[#properties + 1] = "<w:b/>" end
       if italic then properties[#properties + 1] = "<w:i/>" end
+      if colour then
+        properties[#properties + 1] = [[<w:color w:val="]] .. colour .. [["/>]]
+      end
       local rpr = ""
       if #properties > 0 then
         rpr = "<w:rPr>" .. table.concat(properties) .. "</w:rPr>"
@@ -76,11 +89,11 @@ local function runs(inlines, bold, italic)
     elseif inline.t == "Space" or inline.t == "SoftBreak" then
       out[#out + 1] = [[<w:r><w:t xml:space="preserve"> </w:t></w:r>]]
     elseif inline.t == "Strong" then
-      out[#out + 1] = runs(inline.content, true, italic)
+      out[#out + 1] = runs(inline.content, true, italic, colour)
     elseif inline.t == "Emph" then
-      out[#out + 1] = runs(inline.content, bold, true)
+      out[#out + 1] = runs(inline.content, bold, true, colour)
     elseif inline.content then
-      out[#out + 1] = runs(inline.content, bold, italic)
+      out[#out + 1] = runs(inline.content, bold, italic, colour)
     else
       out[#out + 1] = "<w:r>" .. [[<w:t xml:space="preserve">]]
         .. xml_escape(pandoc.utils.stringify(inline)) .. "</w:t></w:r>"
@@ -226,11 +239,11 @@ end
 -- opening, and so does updateFields in settings.xml; without it they are
 -- empty, and after a repagination and an update they are 8 8 8 9 9.
 local function entry_paragraph(entry)
-  local body = runs(pandoc.Inlines({ pandoc.Str(entry.title) }), false, false)
+  local body = runs(pandoc.Inlines({ pandoc.Str(entry.title) }), false, false, kEntryColour)
   if entry.caption and #entry.caption > 0 then
     body = body
-      .. runs(pandoc.Inlines({ pandoc.Str("."), pandoc.Space() }), false, false)
-      .. runs(entry.caption, false, false)
+      .. runs(pandoc.Inlines({ pandoc.Str("."), pandoc.Space() }), false, false, kEntryColour)
+      .. runs(entry.caption, false, false, kEntryColour)
   end
 
   local id = entry.id or ""
@@ -283,7 +296,7 @@ local function heading_paragraph(entry)
     properties = [[<w:ind w:left="]] .. indent .. [["/>]] .. properties
   end
 
-  local body = runs(entry.content, false, false)
+  local body = runs(entry.content, false, false, kEntryColour)
   local id = entry.id or ""
   if id == "" then
     return pandoc.RawBlock("openxml",
@@ -356,7 +369,7 @@ local function say_how_to_update()
 end
 
 return {
-  { Meta = get_language },
+  { Meta = read_meta },
   {
     Pandoc = function(doc)
       measure_text_width()

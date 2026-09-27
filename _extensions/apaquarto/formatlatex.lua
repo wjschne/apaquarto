@@ -78,6 +78,73 @@ end
 -- from where it begins in the issue rather than from one. Only a whole number
 -- is taken: the value is written straight into a latex counter, and anything
 -- else there is a compilation error rather than a page number.
+-- A colour field written as an html code.
+--
+-- latex takes a colour by name, and pandoc's template hands hyperref the
+-- name as it stands: linkcolor: "#cc0000" reaches the preamble as
+-- \hypersetup{linkcolor={\#cc0000}} and the render stops on it. xcolor
+-- will take the code, so a field written that way is defined as a colour of
+-- its own and the field rewritten to name that colour. A field naming a
+-- colour xcolor already knows -- teal, violet, one of the rest -- is left
+-- alone, which is how they have always worked.
+local colour_fields = {
+  "linkcolor", "urlcolor", "citecolor", "filecolor", "toccolor"
+}
+
+local function define_html_colours(m)
+  for _, field in ipairs(colour_fields) do
+    if m[field] ~= nil then
+      local text = utilsapa.stringify(m[field])
+      if text:sub(1, 1) == "#" then
+        local hex = utilsapa.colour_hex(m[field])
+        if hex then
+          local name = "apacolor" .. field:gsub("color$", "")
+          quarto.doc.include_text("in-header",
+            "\\definecolor{" .. name .. "}{HTML}{" .. hex .. "}")
+          m[field] = pandoc.MetaString(name)
+        else
+          quarto.log.warning(field .. " is \"" .. text ..
+            "\", which is not a colour, so it was left out.")
+          m[field] = nil
+        end
+      end
+    end
+  end
+  return m
+end
+
+-- filecolor, for the links markdown actually writes.
+--
+-- hyperref colours a link by the kind of link it decides it is, and it knows
+-- a file link by its scheme. [text](figure.png) reaches it as an ordinary
+-- url, so filecolor applied to nothing a document was likely to contain. The
+-- colour is set around such a link instead, in a group of its own, and only
+-- when it differs from urlcolor -- which it does not by default, both being
+-- apalink, and a document that leaves them alone is written exactly as it
+-- was before.
+local file_colour = nil
+
+local function asked_for_file_colour(m)
+  local file = m.filecolor and utilsapa.stringify(m.filecolor) or nil
+  local url = m.urlcolor and utilsapa.stringify(m.urlcolor) or nil
+  if file == nil or file == "" or file == url then return nil end
+  return file
+end
+
+local function file_link(link)
+  if file_colour == nil then return nil end
+  if link.attributes["apa-filecolor"] ~= nil then return nil end
+  local target = link.target
+  if target:match("^#") or target:match("^%a[%w+.-]*:") then return nil end
+  link.attributes["apa-filecolor"] = "1"
+  return pandoc.Inlines({
+    pandoc.RawInline("latex",
+      "\\begingroup\\hypersetup{urlcolor=" .. file_colour .. "}"),
+    link,
+    pandoc.RawInline("latex", "\\endgroup"),
+  })
+end
+
 -- The colour a document asks for in its lists. Pandoc's own hypersetup
 -- carries linkcolor, filecolor, citecolor and urlcolor; toccolor it leaves
 -- out, so apaquarto reads it here and the lists honour it.
@@ -221,7 +288,9 @@ local function meta(m)
   -- table here is set as a tabular instead, so the patch has nothing to do.
   line_numbers = asked_for_line_numbers(m)
   first_page = asked_for_first_page(m)
+  m = define_html_colours(m)
   toc_colour = asked_for_toc_colour(m)
+  file_colour = asked_for_file_colour(m)
   if line_numbers then
     quarto.doc.include_text("in-header",
       "\\usepackage[nolongtablepatch]{lineno}")
@@ -512,6 +581,6 @@ end
 
 return {
   { Meta = meta },
-  { Div = div, RawBlock = guard_longtable },
+  { Div = div, RawBlock = guard_longtable, Link = file_link },
   { Pandoc = function(doc) return pandoc.Pandoc(blocks(doc), doc.meta) end },
 }

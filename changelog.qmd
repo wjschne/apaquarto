@@ -22,6 +22,7 @@ engine: knitr
 - An entry in any of the lists reads `Figure 1. The Figure Caption`, in .docx, typst and .pdf alike.
 - The apa7 class options `donotrepeattitle`, `draftfirst`, `draftall` and `nocorrespondence` have done nothing since 6.0.0, when the .pdf stopped using that class. `suppress-title-introduction` and `suppress-corresponding-paragraph` do the first and the last of them, in every format.
 - Footnotes in .docx are single spaced, as recommended at [apastyle.apa.org](https://apastyle.apa.org/style-grammar-guidelines/paper-format/line-spacing)
+- Every format is responsive to Quarto's `linkcolor`, `filecolor`, `citecolor`, `urlcolor` and `toccolor`, journal mode included, and `xcolor`'s table resolves a colour's name so that `green` is the same green in all four.
 
 # Version 6.0.0
 - 2026-09-12

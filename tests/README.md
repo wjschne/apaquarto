@@ -42,6 +42,7 @@ everyone to ignore the suite.
 | `html` | the `.html` | words, class names |
 | `docx` | the `.docx` | words, with the markup taken away |
 | `docx-xml` | the `.docx` | style names, table properties |
+| `docx-styles` | the `.docx` | the stylesheet: what a style is defined as |
 | `pdf` | the `.pdf` | words, whatever produced it |
 | `tex` | the `.tex` | structure: environments, labels |
 | `typ` | the `.typ` | structure: grids, alignment |

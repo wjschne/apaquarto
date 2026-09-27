@@ -310,6 +310,48 @@ function M.extension_file_relative(name)
   return table.concat(parts, "/")
 end
 
+-- The colour a document asks a link to take -------------------------------
+--
+-- Quarto's fields are latex's: linkcolor for a link inside the document,
+-- urlcolor for one that leaves it, citecolor for a citation, filecolor for a
+-- file, and toccolor for the lists of contents, figures and tables. Each
+-- names either one of the colours xcolor defines out of the box or an html
+-- code, #rrggbb or #rgb.
+--
+-- latex resolves such a name itself. .docx and .html cannot: word wants six
+-- hex digits and a stylesheet wants a colour css knows, and the two agree on
+-- fewer names than one would hope -- css green is 008000 where xcolor's is
+-- 00FF00. The table below is xcolor's, so that a document that names a
+-- colour gets the same colour in every format apaquarto writes.
+local xcolors = {
+  red = "FF0000", green = "00FF00", blue = "0000FF",
+  cyan = "00FFFF", magenta = "FF00FF", yellow = "FFFF00",
+  black = "000000", white = "FFFFFF", gray = "808080", grey = "808080",
+  darkgray = "404040", darkgrey = "404040",
+  lightgray = "BFBFBF", lightgrey = "BFBFBF",
+  brown = "BF8040", lime = "BFFF00", olive = "808000",
+  orange = "FF8000", pink = "FFBFBF", purple = "BF0040",
+  teal = "008080", violet = "800080",
+  -- apaquarto's own, which the pdf format names in every colour field and
+  -- which apalatex.tex defines. It is typst's blue.
+  apalink = "0074D9",
+}
+
+-- Six hex digits, upper cased, for a name or an html code; nil for anything
+-- neither table nor code knows, which leaves the format with what it had.
+function M.colour_hex(value)
+  if value == nil then return nil end
+  local name = M.stringify(value):gsub("^%s*(.-)%s*$", "%1")
+  if name == "" or name == "false" then return nil end
+  local code = name:match("^#(%x%x%x%x%x%x)$")
+  if code then return code:upper() end
+  local short = name:match("^#(%x%x%x)$")
+  if short then
+    return (short:upper():gsub("(%x)", "%1%1"))
+  end
+  return xcolors[name:lower()]
+end
+
 -- if any value in table
 function M.containsValue(tbl, value)
   for _, v in pairs(tbl) do

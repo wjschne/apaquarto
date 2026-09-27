@@ -103,9 +103,11 @@ quarto_bin <- function() {
   stop("quarto is not on the path")
 }
 
-# What each key in an expectation is read from. Two of them look at the same
-# .docx: "docx" reads the words, which is what a check about wording wants, and
-# "docx-xml" reads the markup underneath, which is where a style name lives.
+# What each key in an expectation is read from. Three of them look at the same
+# .docx: "docx" reads the words, which is what a check about wording wants,
+# "docx-xml" the markup of the document underneath, which is where a style a
+# paragraph or a run is given lives, and "docx-styles" the stylesheet, which
+# is where the style itself is defined.
 # `squash` runs every stretch of whitespace together into one space, which the
 # three readers that look at words want and the three that look at structure do
 # not. A .pdf wraps a table cell over as many lines as it needs and pads the
@@ -115,6 +117,7 @@ readers <- list(
   html     = list(ext = "html", how = "html", squash = TRUE),
   docx     = list(ext = "docx", how = "docx-text", squash = TRUE),
   "docx-xml" = list(ext = "docx", how = "docx-xml", squash = FALSE),
+  "docx-styles" = list(ext = "docx", how = "docx-styles", squash = FALSE),
   pdf      = list(ext = "pdf",  how = "pdf", squash = TRUE),
   tex      = list(ext = "tex",  how = "plain", squash = FALSE),
   typ      = list(ext = "typ",  how = "plain", squash = FALSE),
@@ -129,6 +132,18 @@ artifacts_of <- function(stem) {
   exts <- c("html", "docx", "pdf", "tex", "typ")
   paths <- file.path(tests_dir, paste0(stem, ".", exts))
   stats::setNames(paths, exts)
+}
+
+# One part of a .docx, as its xml. The stylesheet is a part of its own, and
+# not one docx_xml reads, so a check about a style definition needs this.
+docx_part <- function(path, part) {
+  tmp <- tempfile()
+  dir.create(tmp)
+  on.exit(unlink(tmp, recursive = TRUE), add = TRUE)
+  files <- utils::unzip(path, exdir = tmp)
+  found <- grep(part, files, value = TRUE)
+  if (length(found) == 0) return("")
+  paste(readLines(found[1], warn = FALSE, encoding = "UTF-8"), collapse = "\n")
 }
 
 docx_xml <- function(path) {
@@ -164,6 +179,7 @@ text_of <- function(path, how, squash = FALSE) {
     how,
     "docx-text" = docx_text(path),
     "docx-xml" = docx_xml(path),
+    "docx-styles" = docx_part(path, "word/styles[.]xml$"),
     "pdf" = {
       if (!requireNamespace("pdftools", quietly = TRUE)) {
         stop("the pdftools package is needed to read .pdf output")

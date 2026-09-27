@@ -191,6 +191,10 @@ contributes:
         # The table of contents list-of-contents asks for
         - at: post-render
           path: htmlcontents.lua
+        # The colour linkcolor, urlcolor, citecolor, filecolor and
+        # toccolor ask a link to take
+        - at: post-render
+          path: htmllinkcolor.lua
       toc: true
       toc-location: left
       anchor-sections: false
@@ -292,6 +296,11 @@ contributes:
         # tab stop against.
         - at: post-render
           path: docxcontents.lua
+        # The colour linkcolor, urlcolor, citecolor and filecolor ask a
+        # link to take. After docxreferencedoc.lua, whose patched styles it
+        # adds to.
+        - at: post-render
+          path: docxlinkcolor.lua
       knitr: 
         opts_chunk: 
           dev: ragg_png

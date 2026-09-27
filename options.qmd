@@ -743,6 +743,49 @@ format:
     list-of-figures: true
     list-of-tables: true
 ```
+# The Colour a Link Takes
+
+Quarto's five colour fields are LaTeX's, and apaquarto answers to all of them
+in all four formats.
+
++--------------+--------------------------------------------------------------+
+| Field        | The links it colours                                         |
++==============+==============================================================+
+| `linkcolor`  | A link inside the document: a cross reference, or a link to   |
+|              | a heading.                                                   |
++--------------+--------------------------------------------------------------+
+| `urlcolor`   | A link that leaves the document, an email address included.   |
++--------------+--------------------------------------------------------------+
+| `citecolor`  | A citation, which points at the reference list.               |
++--------------+--------------------------------------------------------------+
+| `filecolor`  | A link to a file.                                             |
++--------------+--------------------------------------------------------------+
+| `toccolor`   | The entries of the lists of contents, figures and tables.     |
+|              | Body-text black by default, so that a list reads as a list    |
+|              | rather than as a page of links.                               |
++--------------+--------------------------------------------------------------+
+
+A colour is named the way LaTeX names it --- one of the colours `xcolor`
+defines out of the box, or an HTML code:
+
+``` yaml
+linkcolor: "#cc0000"
+urlcolor: green
+citecolor: orange
+filecolor: violet
+toccolor: teal
+```
+
+`xcolor`'s table is what resolves a name, in every format, so `green` is the
+same green in the .docx, the .html, the typst and the .pdf. It is not always
+the green a browser means by that word: CSS `green` is `#008000` where
+`xcolor`'s is `#00FF00`. Write the code rather than the name to be sure of
+the shade.
+
+Left unset, each format keeps what it had: `#0074D9` in the .pdf and in
+typst, the reference document's `Hyperlink` style in .docx, and the theme's
+own colour in .html.
+
 # Options for .html
 
 With one exception, everything that works for .docx should work for .html. For .html, there is no benefit to having line numbers in the text because the text wrapping differs depending on the device and size of the window the document is being viewed.

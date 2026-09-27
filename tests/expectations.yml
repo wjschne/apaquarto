@@ -830,3 +830,97 @@
         # masthead's own break belongs to 	wocolumn. Every other mode puts
         # one in front of each list.
         'clearpage': 0
+
+- fixture: link-colours.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # A character style for each field, based on Hyperlink so that a
+        # writer's own changes to it still come through. Written as pandoc
+        # writes it: the styles are put into the reference document and
+        # pandoc reads that and writes the stylesheet out again itself.
+        - 'w:styleId="ApaUrlColor" w:type="character"><w:name w:val="ApaUrlColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="00FF00" /></w:rPr></w:style>'
+        - 'w:styleId="ApaFileColor" w:type="character"><w:name w:val="ApaFileColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="800080" /></w:rPr></w:style>'
+        - 'w:styleId="ApaLinkColor" w:type="character"><w:name w:val="ApaLinkColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="CC0000" /></w:rPr></w:style>'
+        - 'w:styleId="ApaCiteColor" w:type="character"><w:name w:val="ApaCiteColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="FF8000" /></w:rPr></w:style>'
+    docx-xml:
+      contains:
+        # A link reaches one of those styles only through a run inside it:
+        # pandoc ignores custom-style on a Link and honours it on a Span.
+        - '<w:rStyle w:val="ApaUrlColor" /></w:rPr><w:t xml:space="preserve">weblink</w:t>'
+        - '<w:rStyle w:val="ApaFileColor" /></w:rPr><w:t xml:space="preserve">filelink</w:t>'
+        - '<w:rStyle w:val="ApaLinkColor" /></w:rPr><w:t xml:space="preserve">Figure 1</w:t>'
+        - '<w:rStyle w:val="ApaCiteColor" /></w:rPr><w:t xml:space="preserve">Schneider &amp; McGrew, 2018</w:t>'
+        # toccolor is written into the runs of the lists, which carry no
+        # style of their own to hang it on.
+        - '<w:color w:val="008080"/></w:rPr><w:t xml:space="preserve">First</w:t>'
+      absent:
+        # The heading above a list is not a link and takes no toccolor.
+        - '<w:color w:val="008080"/></w:rPr><w:t xml:space="preserve">Contents</w:t>'
+
+- fixture: link-colours.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'main a[href^="#"] { color: #CC0000; }'
+        - 'main a[href*="//"], main a[href^="mailto:"] { color: #00FF00; }'
+        - 'main .citation a { color: #FF8000; }'
+        - 'main .apaquarto-contents a, nav#TOC a.nav-link { color: #008080; }'
+        # filecolor is what is neither an anchor nor a url.
+        - 'main a[href]:not([href^="#"]):not([href*="//"]):not([href^="mailto:"]) { color: #800080; }'
+        # The contents apaquarto builds into the page is in a div of its own,
+        # which is what toccolor names.
+        - 'apaquarto-contents'
+
+- fixture: jou-link-colours.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # The author note holds the correspondence line and nothing else.
+        # The show rules used to be written into the body before the front
+        # matter was split, and the split took a raw block at the end of it
+        # for the last block of the note: the rule that colours a link ended
+        # up inside the note, colouring the note's own links and no others.
+        - "#link(\"mailto:test@example.com\")[test\\@example.com]\n\n]\n"
+        - '#show outline.entry: it => {show link: set text(fill: rgb("#00FF00"))'
+        - '#show link: it => {'
+      absent:
+        # Journal mode runs continuously: no list begins a page of its own.
+        - '#pagebreak()'
+
+- fixture: link-colours.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # typst knows some of xcolor's names and means something else by
+        # them, and knows nothing of violet at all, so the name is resolved
+        # here and typst is handed the code.
+        - 'if d.starts-with("mailto:") or d.contains("://") { rgb("#00FF00") }'
+        - 'else { rgb("#800080") }'
+        - '} else if type(d) == label and str(d).starts-with("ref-") {'
+        - '    rgb("#FF8000")'
+        - '} else { rgb("#CC0000") }'
+        # The entries of a list take toccolor, and the rule above is written
+        # after the outlines so that it does not override them.
+        - '#show outline.entry: it => {show link: set text(fill: rgb("#008080"))'
+
+- fixture: link-colours.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # hyperref takes a colour by name, so a code is defined as a colour
+        # of its own and the field rewritten to name it.
+        - '\definecolor{apacolorlink}{HTML}{CC0000}'
+        - 'linkcolor={apacolorlink},'
+        - 'citecolor={orange},'
+        - 'urlcolor={green},'
+        # toccolor, which pandoc's template does not write out at all.
+        - '\renewcommand{\apatoccolor}{teal}'
+        # hyperref calls [text](figure.png) a url and colours it urlcolor, so
+        # filecolor is set around such a link in a group of its own.
+        - '\begingroup\hypersetup{urlcolor=violet}\href{sampleimage.png}{filelink}\endgroup'
