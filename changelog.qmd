@@ -17,11 +17,7 @@ engine: knitr
 - Made both journal modes (apauarto-pdf and apaquarto-typst) fully justified in their body text but not in markdown table text.
 - Added support for list of tables and list of figures in .docx, .typst, and .pdf.
 - Table of contents for .docx can be added setting `list-of-contents: true`. A message letting the user know how to update the page fields is displayed.
-- Each list of contents, figures or tables stands on a page of its own in .docx, as it does in typst.
 - An entry in any of the lists reads `Figure 1. The Figure Caption`, in .docx, typst and .pdf alike.
-- Headings apaquarto writes itself --- the title, the author note, the abstract and the impact statement --- no longer appear in a .docx table of contents, nor does a heading marked `{.unlisted}`, nor do the figure and table titles.
-- In .docx a multipanel figure takes its own number instead of repeating the number of the float before it, so a document no longer has two Figure 1s.
-- In typst the lists of figures and tables give a float in an appendix its letter: `Figure A1` rather than `Figure 1`.
 - The apa7 class options `donotrepeattitle`, `draftfirst`, `draftall` and `nocorrespondence` have done nothing since 6.0.0, when the .pdf stopped using that class. `suppress-title-introduction` and `suppress-corresponding-paragraph` do the first and the last of them, in every format.
 
 # Version 6.0.0

@@ -152,18 +152,19 @@ journal:
   issn: 0024-7662
   copyrightnotice: 2025
   copyrighttext: "The Author(s)"
+list-of-contents: false
+list-of-figures: false
+list-of-tables: false
 format:
   apaquarto-html: 
     toc: true
-  apaquarto-docx: 
-    toc: false
-    list-of-figures: true
+  apaquarto-docx: default
   apaquarto-typst: 
     # Options: manuscript (default), journal, student, document
     documentmode: journal
   apaquarto-pdf:
     # Options: manuscript (default), journal, student, document
-    documentmode: journal
+    documentmode: manuscript
 ---
 
 ```{r}
