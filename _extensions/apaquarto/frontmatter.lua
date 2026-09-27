@@ -1349,7 +1349,13 @@ return {
         body = List:new {}
       end
 
-      if FORMAT:match 'typst' and PANDOC_WRITER_OPTIONS["table_of_contents"] then
+      -- list-of-contents asks for a table of contents in every format.
+      -- typst also takes toc: true, which is what it has always answered to
+      -- and what .html uses as well, so either will do there.
+      local wants_contents = meta["list-of-contents"]
+        and stringify(meta["list-of-contents"]) ~= "false"
+
+      if FORMAT:match 'typst' and (PANDOC_WRITER_OPTIONS["table_of_contents"] or wants_contents) then
         body:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: black)\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
         body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
       end
@@ -1394,7 +1400,7 @@ return {
       -- yet: apacaption.lua has not run, so no figure has its number or its
       -- title. A marker goes in at the place typst puts its outlines and
       -- docxcontents.lua fills it in once the captions exist.
-      if FORMAT == "docx" or FORMAT == "latex" then
+      if FORMAT == "docx" or FORMAT == "latex" or FORMAT == "html" then
         for _, which in ipairs({ "list-of-contents", "list-of-figures",
                                  "list-of-tables" }) do
           if meta[which] and stringify(meta[which]) ~= "false" then

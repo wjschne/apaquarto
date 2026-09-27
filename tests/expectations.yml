@@ -718,3 +718,49 @@
       contains:
         - 'Figure A1'
         - 'Table A1'
+
+# ------------------------------------------- a contents in every format --
+
+- fixture: contents-everywhere.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'Table of Contents'
+        # The entry is a link to the heading, since .html has no pages.
+        - 'href="#method"'
+        - 'href="#procedure"'
+
+- fixture: contents-everywhere.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Table of Contents'
+    docx-xml:
+      contains:
+        - 'PAGEREF method'
+
+- fixture: contents-everywhere.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # typst's own outline, which list-of-contents now asks for as well
+        # as toc: true.
+        - '#outline(title: [Table of Contents]'
+    pdf:
+      contains:
+        - 'Table of Contents'
+        - 'Procedure'
+
+- fixture: contents-everywhere.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - 'apatableofcontents'
+    pdf:
+      contains:
+        - 'Table of Contents'
+        - 'Procedure'

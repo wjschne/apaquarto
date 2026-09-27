@@ -696,21 +696,30 @@ of the paper.
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
 | Field                                                | Explanation                                                                            |
 +======================================================+========================================================================================+
-| `list-of-contents`                                   | A table of contents, in .docx.                                                         |
+| `list-of-contents`                                   | A table of contents, in every format.                                                  |
 |                                                      |                                                                                        |
-|                                                      | Set `toc: true` for a table of contents in .html and in typst. That                    |
-|                                                      | field is Pandoc's own, and for .docx it writes one at the very top of                  |
-|                                                      | the file, ahead of the title page, where nothing can move it. This                     |
-|                                                      | field is apaquarto's, so the contents goes where typst puts it and                     |
-|                                                      | carries only the headings that belong in it.                                           |
+|                                                      | Each format reaches it differently: typst has an outline of its own,                   |
+|                                                      | the .pdf has LaTeX's, the .docx is built by hand, and .html has                        |
+|                                                      | neither pages nor fields, so an entry there is the heading and a link                  |
+|                                                      | to it.                                                                                 |
+|                                                      |                                                                                        |
+|                                                      | `toc: true` also works in typst, and in .html it puts Quarto's own                     |
+|                                                      | contents in the margin, which is a different thing and can be asked                    |
+|                                                      | for alongside this one. In .docx `toc: true` is Pandoc's, and writes                   |
+|                                                      | a contents at the very top of the file, ahead of the title page,                       |
+|                                                      | where nothing can move it.                                                             |
+|                                                      |                                                                                        |
+|                                                      | Only the headings that belong in a contents are listed: the title                      |
+|                                                      | page's headings and anything marked `{.unlisted}` are left out.                        |
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
 | `list-of-figures`                                    | A list of figures, in .docx, typst and .pdf.                                           |
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
 | `list-of-tables`                                     | A list of tables, in .docx, typst and .pdf.                                            |
 +------------------------------------------------------+----------------------------------------------------------------------------------------+
 
-An entry reads `Figure 1. The Figure Caption` in all three formats, with a
-leader out to the page number.
+`list-of-figures` and `list-of-tables` are for .docx, typst and the .pdf;
+an entry in either reads `Figure 1. The Figure Caption`, with a leader out
+to the page number.
 
 In .docx those page numbers are fields, since nothing before Word lays the
 pages out knows what they are. They are blank when the file is opened and

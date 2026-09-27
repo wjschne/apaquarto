@@ -352,6 +352,19 @@
 /let /l@table /l@figure
 /makeatother
 
+% The table of contents. Its lines are set like the lists of figures and
+% tables above -- the heading, a leader, the page -- but indented a level at
+% a time, which is what tells a subsection from a section.
+/makeatletter
+/renewcommand*/l@section{/@dottedtocline{1}{0em}{0em}}
+/renewcommand*/l@subsection{/@dottedtocline{2}{1.5em}{0em}}
+/renewcommand*/l@subsubsection{/@dottedtocline{3}{3em}{0em}}
+/makeatother
+
+/newcommand{/apatableofcontents}{%
+  /renewcommand{/contentsname}{Table of Contents}%
+  /tableofcontents}
+
 % The heading each list carries, set like any other section heading. The
 % article class writes the heading itself from /listfigurename, so the name
 % is set first and the list follows.

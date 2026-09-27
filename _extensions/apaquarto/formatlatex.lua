@@ -340,6 +340,8 @@ local function blocks(doc)
       narrow = block
     elseif note == nil and front_div(block, "JournalNote") then
       note = block
+    elseif block.t == "Div" and block.classes:includes("list-of-contents") then
+      rest:insert(raw("\\apatableofcontents"))
     elseif block.t == "Div" and block.classes:includes("list-of-figures") then
       -- Every float has been writing its line into the .lof; this reads them
       -- back. The heading and the shape of a line are set in apalatex.tex.

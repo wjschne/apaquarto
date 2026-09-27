@@ -185,6 +185,9 @@ contributes:
         # Place tinytable tables with tbl-align, left by default
         - at: post-quarto
           path: apatinytablehtml.lua
+        # The table of contents list-of-contents asks for
+        - at: post-render
+          path: htmlcontents.lua
       toc: true
       toc-location: left
       anchor-sections: false

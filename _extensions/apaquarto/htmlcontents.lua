@@ -1,0 +1,80 @@
+-- The table of contents in .html, which list-of-contents asks for in every
+-- format.
+--
+-- There is no field to fill in and no page to number here, so an entry is
+-- the heading and a link to it, nested a level at a time. Quarto's own
+-- toc: true puts a contents in the margin and leaves the body alone; this
+-- one is part of the document, in the place the other formats put it, and
+-- the two can be asked for together.
+
+if FORMAT ~= "html" then
+  return
+end
+
+-- Everything down to level three that is not one of the headings apaquarto
+-- marks unlisted -- the title, the author note, the abstract, the impact
+-- statement -- and not one the writer marked so either.
+local function collect_headings(blocks)
+  local out = pandoc.List({})
+  pandoc.Blocks(blocks):walk {
+    Header = function(h)
+      if h.level > 3 then return nil end
+      if h.classes:includes("unlisted") then return nil end
+      out:insert(h)
+    end
+  }
+  return out
+end
+
+-- The entries as a nested list: each heading is a link to itself, and a
+-- deeper heading goes in a list inside the entry above it.
+local function build(headings, index, level)
+  local items = pandoc.List({})
+  while index <= #headings do
+    local h = headings[index]
+    if h.level < level then break end
+    if h.level > level then
+      local nested, next_index = build(headings, index, h.level)
+      if #items > 0 and #nested.content > 0 then
+        items[#items]:insert(nested)
+      end
+      index = next_index
+    else
+      local label = h.content
+      if h.identifier ~= "" then
+        label = pandoc.Inlines({ pandoc.Link(h.content, "#" .. h.identifier) })
+      end
+      items:insert(pandoc.Blocks({ pandoc.Plain(label) }))
+      index = index + 1
+    end
+  end
+  return pandoc.BulletList(items), index
+end
+
+local function contents_blocks(headings)
+  local out = pandoc.List({})
+  out:insert(pandoc.Header(1, pandoc.Inlines({ pandoc.Str("Table of Contents") }),
+    pandoc.Attr("apaquarto-contents", { "unlisted", "unnumbered" })))
+  if #headings > 0 then
+    local list = build(headings, 1, headings[1].level)
+    out:insert(list)
+  end
+  return out
+end
+
+function Pandoc(doc)
+  local headings = collect_headings(doc.blocks)
+  local out = pandoc.List({})
+  local found = false
+  for _, block in ipairs(doc.blocks) do
+    if block.t == "Div" and block.classes:includes("list-of-contents") then
+      out:extend(contents_blocks(headings))
+      found = true
+    else
+      out:insert(block)
+    end
+  end
+  if not found then return nil end
+  doc.blocks = out
+  return doc
+end

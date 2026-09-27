@@ -1,0 +1,42 @@
+---
+title: "Contents in Every Format"
+shorttitle: "Contents Everywhere"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+list-of-contents: true
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+<!--
+list-of-contents asks for a table of contents in all four formats, in the
+place the other two lists go.
+
+Each format gets there differently. typst has an outline of its own and took
+toc: true before this; the pdf has latex's tableofcontents, with its lines
+flattened to the shape the lists use; .docx is built by hand, since pandoc's
+own contents field cannot be moved off the top of the file; and .html has
+neither pages nor a field, so an entry is the heading and a link to it.
+
+Quarto's toc: true still puts a contents in the .html margin. This one is
+part of the document.
+-->
+
+# Method
+
+See the procedure.
+
+## Procedure
+
+More.
+
+# Discussion
+
+End.
