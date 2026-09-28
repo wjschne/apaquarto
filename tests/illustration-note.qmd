@@ -1,0 +1,50 @@
+---
+title: "A Note Under an Illustration"
+shorttitle: "Illustration Notes"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+# Method
+
+![A figure caption.](sampleimage.png){#fig-img apa-note="zqfigimg"}
+
+::: {#fig-div apa-note="zqfigdiv"}
+![](sampleimage.png)
+
+A figure caption.
+:::
+
+![An illustration caption.](sampleimage.png){#ill-img apa-note="zqillimg"}
+
+::: {#ill-div apa-note="zqilldiv"}
+![](sampleimage.png)
+
+An illustration caption.
+:::
+
+| A | B |
+|---|---|
+| 1 | 2 |
+
+: A table caption. {#tbl-one apa-note="zqtbl"}
+
+A float with no note is styled as one with none, and the paragraph after it
+takes the spacing that goes with that, for an illustration as for a figure.
+
+![A figure caption.](sampleimage.png){#fig-bare}
+
+A paragraph after the bare figure.
+
+![An illustration caption.](sampleimage.png){#ill-bare}
+
+A paragraph after the bare illustration.

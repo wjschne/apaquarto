@@ -3,13 +3,24 @@ if FORMAT ~= "docx" then
   return
 end
 
+local utilsapa = require("utilsapa")
+
+-- The identifier prefixes a float can carry. Read from the document, because
+-- a document may declare kinds of its own under crossref.custom --- an
+-- Illustration is the one apaquarto ships --- and quarto wraps one of those
+-- exactly as it wraps a figure. Left unwrapped, the float stayed a table cell,
+-- and word takes the paragraphs of a cell as its own: the title over the
+-- caption and the note held on the page with what it describes are styles of
+-- apaquarto's, and every line of such a float came out as body text instead.
+local prefixes = { fig = true, tbl = true }
+
 -- Quarto encloses tables and figures in a table environment
 -- This function removes that table environment
-function Table(tb)
+local function unwrap(tb)
   local mydivs = pandoc.List()
   tb:walk {
     Div = function(div)
-      if div.identifier:find("^tbl%-") or div.identifier:find("^fig%-") then
+      if utilsapa.is_float(div.identifier, prefixes) then
         div.content = div.content:walk { RawInline = function(ri) return {} end }
         mydivs:insert(div)
       end
@@ -27,3 +38,8 @@ function Table(tb)
   end
   if #mydivs > 0 and ncells == 1 then return mydivs end
 end
+
+return {
+  { Meta = function(m) prefixes = utilsapa.float_prefixes(m) end },
+  { Table = unwrap },
+}

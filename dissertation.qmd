@@ -103,11 +103,15 @@ A figure caption that says what the figure shows.
 A table caption that says what the table shows.
 :::
 
-::: {#ill-example}
-![](tests/sampleimage.png)
+::: {#ill-example apa-note="The backtick is sometimes called the grave accent symbol."}
+![](img/keyboardwithbacktick.jpeg)
 
-An illustration caption that says what the illustration shows.
+The location of the backtick key on a standard keyboard.
 :::
+
+## Conclusion
+
+This is the answer.
 
 # References
 

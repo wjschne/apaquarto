@@ -1,6 +1,12 @@
--- Finds divs that are Tables and Figures.
+-- Finds divs that are floats: tables, figures, and every other kind a
+-- document declares under crossref.custom.
 -- Adds FigureWithNote or FigureWithoutNote class to the Div
+local utilsapa = require("utilsapa")
+
 function Pandoc(doc)
+  -- An Illustration is a figure as far as these styles go: only a table is
+  -- treated apart, and then only in .docx.
+  local prefixes = utilsapa.float_prefixes(doc.meta)
   local isfigure = false
   local istable = false
   local hasnote = false
@@ -9,11 +15,10 @@ function Pandoc(doc)
     istable = false
     hasnote = false
     if doc.blocks[i].identifier then
-      if doc.blocks[i].identifier:find("^fig%-") then
-        isfigure = true
-      end
       if doc.blocks[i].identifier:find("^tbl%-") then
         istable = true
+      elseif utilsapa.is_float(doc.blocks[i].identifier, prefixes) then
+        isfigure = true
       end
     end
     if doc.blocks[i].attributes and doc.blocks[i].attributes["apa-note"] then
@@ -23,11 +28,10 @@ function Pandoc(doc)
       doc.blocks[i].content:walk {
         Div = function(div)
           if div.identifier then
-            if div.identifier:find("^fig%-") then
-              isfigure = true
-            end
             if div.identifier:find("^tbl%-") then
               istable = true
+            elseif utilsapa.is_float(div.identifier, prefixes) then
+              isfigure = true
             end
           end
           -- An {{< embed other.qmd#fig-x >}} wraps the cell in a div of its

@@ -337,6 +337,35 @@ local xcolors = {
   apalink = "0074D9",
 }
 
+-- The identifier prefixes a float can carry.
+--
+-- fig and tbl are quarto's own. A document may declare other kinds of float
+-- under crossref.custom --- an Illustration, keyed ill, is the one apaquarto
+-- ships --- and such a float is a float like the rest: it takes the same
+-- title, the same caption and the same note, and in .docx the same styles,
+-- which are what hold a note on the page with the thing it describes. So the
+-- filters that do that work ask here rather than naming fig and tbl
+-- themselves.
+function M.float_prefixes(meta)
+  local prefixes = { fig = true, tbl = true }
+  local custom = meta and meta.crossref and meta.crossref.custom
+  if custom then
+    for _, entry in ipairs(custom) do
+      if entry.key then
+        prefixes[M.stringify(entry.key)] = true
+      end
+    end
+  end
+  return prefixes
+end
+
+-- Whether an identifier is a float's, given the prefixes above
+function M.is_float(identifier, prefixes)
+  if identifier == nil or identifier == "" then return false end
+  local prefix = identifier:match("^(%a+)%-")
+  return prefix ~= nil and prefixes[prefix] == true
+end
+
 -- Six hex digits, upper cased, for a name or an html code; nil for anything
 -- neither table nor code knows, which leaves the format with what it had.
 function M.colour_hex(value)

@@ -1406,3 +1406,56 @@
         - 'blockquote p, .blockquote p { line-height: 1em; }'
         - '.csl-bib-body .csl-entry { line-height: 1em; margin-bottom: 1em; }'
         - '.footnotes li p { line-height: 1em; }'
+
+# An apa-note belongs to a float of any kind, written either way round: on the
+# image, or on the div that holds it. An Illustration is the kind apaquarto
+# declares under crossref.custom, and it takes the note, the styles and the
+# spacing a figure takes.
+- fixture: illustration-note.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains: ['zqfigimg', 'zqfigdiv', 'zqillimg', 'zqilldiv', 'zqtbl']
+
+- fixture: illustration-note.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains: ['zqfigimg', 'zqfigdiv', 'zqillimg', 'zqilldiv', 'zqtbl']
+      count:
+        # Once each. Two filters can each take the note for theirs to write,
+        # which is what prints it twice.
+        'zqfigimg': 1
+        'zqfigdiv': 1
+        'zqillimg': 1
+        'zqilldiv': 1
+        'zqtbl': 1
+
+- fixture: illustration-note.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains: ['zqfigimg', 'zqfigdiv', 'zqillimg', 'zqilldiv', 'zqtbl']
+      count:
+        # Once each. Two filters can each take the note for theirs to write,
+        # which is what prints it twice.
+        'zqfigimg': 1
+        'zqfigdiv': 1
+        'zqillimg': 1
+        'zqilldiv': 1
+        'zqtbl': 1
+
+- fixture: illustration-note.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains: ['zqfigimg', 'zqfigdiv', 'zqillimg', 'zqilldiv', 'zqtbl']
+    docx-xml:
+      contains:
+        # An illustration is styled as a figure is: the note held on the page
+        # with it, and the paragraph after a float with no note given the
+        # spacing that goes with that.
+        - '<w:pStyle w:val="FigureNote" />'
+        - '<w:pStyle w:val="FigureWithNote" />'
+        - '<w:pStyle w:val="FigureWithoutNote" />'
+        - '<w:pStyle w:val="AfterWithoutNote" />'

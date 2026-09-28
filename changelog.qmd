@@ -12,18 +12,16 @@ engine: knitr
 - Implement missing .docx features
     * Right-align equation numbers
 
+# Version 7.0.0
+- 2026-09-28
+- `documentmode: thesis` sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication, the acknowledgments, the table of contents, a list for every kind of float the document holds, and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.
+- A float a document declares for itself under `crossref.custom` --- an Illustration is the one apaquarto ships --- is set the way a figure is, with its number on a line of its own and its caption under it, in all four formats.
+- The `apa-note` of such a float is written and styled the way a figure's is.
+
 # Version 6.0.1
 - 2026-09-26
 - [#166](https://github.com/wjschne/apaquarto/issues/166) `documentmode: stu` puts the course, the instructor and the due date on the title page, and drops the running head, in .pdf, .docx and .html as well as typst.
-- `documentmode: thesis` sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication, the acknowledgments, the table of contents, a list for every kind of float the document holds, and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.
 - In apaquarto-pdf each appendix begins a page of its own again, as it does in .docx and typst. The apa7 class had been opening the page, and 6.0.0 stopped building the pdf with that class without taking the work over, so an appendix ran on from whatever came before it. An appendix written the older way --- `# Appendix A` over a title of its own --- no longer leaves a blank page before it, which it had been doing in .docx.
-- In thesis mode a block quotation is single spaced and half an inch in from both margins, the entries of the reference list and of every list of contents are single spaced with a double space between one entry and the next, notes are single spaced with their first line indented half an inch, and widows and orphans are avoided.
-- In thesis mode the table of contents and a list for each kind of float are set unless the document says otherwise, and a list with nothing in it is left out along with its heading and its line in the contents.
-- In thesis mode the entries of the contents and of the lists are black unless `toccolor` says otherwise, and `APPENDICES` is a column label like `CHAPTER`, with no leader and no page beside it.
-- In thesis mode every level-one heading is set in capitals, every major division begins a page of its own --- each chapter, the references, and each appendix --- and over each chapter stands the word CHAPTER and its number, which the table of contents does not list: it names a chapter by its own heading.
-- `toc-depth` says how many levels of heading a table of contents lists, in every format. Nothing read it before: .html and .docx counted three levels, the .pdf three, and typst listed every level there was.
-- A float a document declares for itself under `crossref.custom` --- an Illustration is the one apaquarto ships --- is set the way a figure is, with its number on a line of its own and its caption under it, in all four formats.
-- In thesis mode a heading reading *Introduction* at the head of the body is kept rather than taken out, since a dissertation names its chapters and that heading is the first chapter’s name.
 - In apaquarto-typst, `documentmode: doc` numbers its pages again. The layout told the page it had no footer, which stopped the number it had asked for from being drawn at all.
 - Made both journal modes (apauarto-pdf and apaquarto-typst) fully justified in their body text but not in markdown table text.
 - Added support for list of tables and list of figures in .docx, .typst, and .pdf.

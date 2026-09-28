@@ -907,7 +907,11 @@ caption, leader dots and the page.
 An illustration is a figure with a word and a count of its own, so it is
 numbered from one rather than continuing after the figures, and its caption
 is set the way a figure's is: the number on a line of its own with the
-caption under it.
+caption under it. `apa-note` works on it as it does on a figure, written
+either on the image or on the div that holds it, and in .docx it is given the
+same styles a figure has, which hold the note on the page with the
+illustration it belongs to. The same goes for any other kind of float a
+document declares.
 
 ``` yaml
 format:
