@@ -1,0 +1,44 @@
+---
+title: "Which Lists a Dissertation Carries"
+shorttitle: "Thesis Lists"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+abstract: "An abstract."
+documentmode: thesis
+list-of-illustrations: false
+thesis:
+  type: Thesis
+  degree: Master of Arts
+  date: May 2027
+format:
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+<!--
+A dissertation carries a contents and a list for each kind of float unless it
+says otherwise, which is the other way round from the rest of apaquarto.
+
+Three things at once here. There is a figure, so a list of figures is set
+without being asked for. There is no table, so no list of tables is set: a
+heading over an empty page helps nobody, and the Graduate School's own
+template says "if no tables, delete this page". And there is an illustration
+but list-of-illustrations is false, so that list is left out and the contents
+does not name it either.
+-->
+
+# Introduction
+
+See @fig-one.
+
+![A figure of some kind](sampleimage.png){#fig-one}
+
+::: {#ill-one}
+![](sampleimage.png)
+
+An illustration.
+:::

@@ -196,7 +196,56 @@ local function set_style_font(style, font)
   return style:sub(1, #style - #closetag) .. rpr .. closetag
 end
 
-local function patch_styles(styles, monofont)
+--- The paragraph properties a dissertation's styles take. The Graduate School
+--- sets the body double spaced, which is what Normal carries, but a block
+--- quotation, a note and the entries of the reference list single spaced, with
+--- a double space between one entry and the next and the whole of a quotation
+--- half an inch in from both margins. A line of twelve point Times is 13.8
+--- points deep in word, so the 276 twips under a paragraph are the second line
+--- that makes the gap between two of them a double space.
+---
+--- A block quotation is given those 276 twips as well. Word hangs the extra
+--- half of a double-spaced line below the line rather than above it, so a
+--- single-spaced paragraph leaves nothing under its last line, and the
+--- paragraph after a quotation would otherwise sit a single space from it
+--- while the paragraph before it sits a double space away.
+---
+--- Each style's properties are written out in full rather than added to what
+--- the reference document ships, so that they read as the handbook's rule
+--- rather than as a difference from it, and so that a document that brings a
+--- reference document of its own still gets them. What was there before is
+--- kept in a marker, and every other mode puts it back.
+local single_spaced = '<w:spacing w:after="276" w:line="240" w:lineRule="auto"/>'
+local thesis_properties = {
+  BlockText = single_spaced .. '<w:ind w:left="720" w:right="720" w:firstLine="0"/>',
+  NextBlockText = single_spaced .. '<w:ind w:firstLine="720"/>',
+  Bibliography = single_spaced .. '<w:ind w:left="720" w:hanging="720"/>',
+  --- A numbered note, whose first line the handbook asks to be indented half
+  --- an inch. Its turned lines run to the margin.
+  FootnoteText = single_spaced .. '<w:ind w:firstLine="720"/>'
+}
+
+--- Give a style the paragraph properties it is to carry, or take away the ones
+--- it has when properties is nil, and say what it had.
+local function set_style_properties(style, properties)
+  local first, last = style:find("<w:pPr>.-</w:pPr>")
+  local original = first and
+    style:sub(first, last):match("^<w:pPr>(.-)</w:pPr>$") or ""
+  local ppr = properties and "<w:pPr>" .. properties .. "</w:pPr>" or ""
+  if first then
+    return style:sub(1, first - 1) .. ppr .. style:sub(last + 1), original
+  end
+  if ppr == "" then return style, original end
+  --- w:pPr comes before w:rPr in a style
+  local rpr = style:find("<w:rPr>", 1, true)
+  if rpr then
+    return style:sub(1, rpr - 1) .. ppr .. style:sub(rpr), original
+  end
+  local closetag = "</w:style>"
+  return style:sub(1, #style - #closetag) .. ppr .. closetag, original
+end
+
+local function patch_styles(styles, monofont, thesis)
   --- The fonts the reference document shipped with. The highlighting
   --- styles and the code styles are recorded separately because the code
   --- styles have no font of their own by default.
@@ -208,12 +257,38 @@ local function patch_styles(styles, monofont)
   local mono = monofont ~= "" and monofont or original_mono
   local code = monofont ~= "" and monofont or original_code
 
+  --- The properties those styles had before any render changed them. An empty
+  --- marker is a style that carried none, which is what every mode but thesis
+  --- puts back.
+  local original_properties = {}
+  for id in pairs(thesis_properties) do
+    original_properties[id] = get_marker(styles, "ppr" .. id)
+    styles = strip_marker(styles, "ppr" .. id)
+  end
+
   styles = strip_marker(strip_marker(styles, "monofont"), "codefont")
   local first, last = styles:find("<w:styles%s[^>]*>")
   if not first then return nil end
 
+  local property_markers = {}
   local newstyles = styles:gsub("<w:style%s.-</w:style>", function(style)
     local id = style:match('w:styleId="([^"]*)"') or ""
+    if thesis_properties[id] then
+      local _, had = set_style_properties(style, nil)
+      local original = original_properties[id] or had
+      local wanted = thesis and thesis_properties[id]
+        or (original ~= "" and original or nil)
+      --- The marker is written whenever the style is not left as it shipped,
+      --- and not only when this render is the one that changes it: a second
+      --- thesis render finds the properties already set and would otherwise
+      --- drop the marker that says what it replaced.
+      if (wanted or "") ~= original then
+        property_markers[#property_markers + 1] =
+          make_marker("ppr" .. id, original)
+      end
+      if (wanted or "") == had then return nil end
+      return (set_style_properties(style, wanted))
+    end
     if code_styles[id] then
       return set_style_font(style, code)
     elseif id:match("Tok$") then
@@ -221,9 +296,9 @@ local function patch_styles(styles, monofont)
     end
   end)
 
-  local markers = ""
+  local markers = table.concat(property_markers)
   if mono ~= original_mono or code ~= original_code then
-    markers = make_marker("monofont", original_mono) ..
+    markers = markers .. make_marker("monofont", original_mono) ..
       make_marker("codefont", original_code)
   end
 
@@ -595,7 +670,7 @@ function Pandoc(doc)
       end
     elseif entry.path == styles_path then
       xml = entry:contents()
-      patched = patch_styles(xml, monofont)
+      patched = patch_styles(xml, monofont, thesis)
       if not patched then
         quarto.log.warning("Reference document " .. refdoc ..
           " has no styles, monofont was not applied.")

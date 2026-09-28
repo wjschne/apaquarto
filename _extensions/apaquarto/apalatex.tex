@@ -621,6 +621,81 @@
 \@ifundefined{cslhangindent}{}{\setlength{\cslhangindent}{0.5in}}
 \makeatother
 
+% --- A dissertation's line spacing ------------------------------------------
+% The Graduate School sets the body of a dissertation double spaced, but a
+% block quotation and the entries of the reference list single spaced, with a
+% double space between one entry and the next. Set for thesis mode by
+% formatlatex.lua.
+
+% Single spacing, and with it the space that has to stand between two entries
+% for them to read as double spaced: the skip the document is set with, less
+% the skip a single-spaced entry takes. \selectfont is what asks for the skip
+% to be worked out again --- setspace folds the stretch into the size command,
+% so \setstretch on its own leaves \baselineskip as it was.
+%
+% \setstretch rather than \singlespacing, which is \setstretch and a bare
+% \vskip\baselineskip after it, its "correction for coming into singlespace".
+% That skip is a line of space wherever this is used, and every one of them is
+% somewhere a line of space does not belong: under the heading of a reference
+% list, over a block quotation, and between the page column of a table of
+% contents and its first entry.
+\newlength{\apathesisentrysep}
+\newcommand{\apathesissingle}{%
+  \setlength{\apathesisentrysep}{\baselineskip}%
+  \setstretch{1}\selectfont
+  \addtolength{\apathesisentrysep}{-\baselineskip}}
+
+% A block quotation is indented half an inch from both margins, where a LaTeX
+% quote takes the 2.5em of \leftmargini, and is single spaced.
+\newcommand{\apathesisquote}{%
+  \renewenvironment{quote}
+    {\list{}{\leftmargin=0.5in\rightmargin=0.5in}%
+     \item\relax\apathesissingle}
+    {\endlist}}
+
+% Quarto writes the reference list as pandoc's CSLReferences list, whose
+% entries are the items of a LaTeX list. The spacing is appended to what that
+% environment does rather than run ahead of it, because the list sets
+% \itemsep itself, from the entry spacing quarto passes, which is zero.
+% \@outerparskip is set there too. A list that opens directly under a heading
+% is given no top separation at all --- LaTeX leaves the space to the heading
+% --- and takes \@outerparskip less \parskip instead, so that is where the
+% space for the entry opening the list goes: it stands as far below the
+% heading as the entries stand from one another, which is what the other three
+% formats do. Guarded: a document with no bibliography never defines the
+% environment.
+\makeatletter
+\newcommand{\apathesisreferences}{%
+  \@ifundefined{CSLReferences}{}{%
+    \apptocmd{\CSLReferences}%
+      {\apathesissingle
+       \setlength{\itemsep}{\apathesisentrysep}%
+       \advance\@outerparskip\apathesisentrysep}{}{}}}
+\makeatother
+
+% A numbered note: single spaced, which setspace already sets a footnote, with
+% its first line indented half an inch and a double space between one note and
+% the next. \footnotesep is the height of the strut each note opens with, and
+% a note stands that far below the depth of the note before it, so two of the
+% note's own lines less that depth is what leaves a double space between them.
+% Worked out at \footnotesize with the stretch taken off, which is the size a
+% note is set at and the spacing setspace gives it.
+\makeatletter
+\newcommand{\apathesisnotes}{%
+  \renewcommand\@makefntext[1]{%
+    \setlength{\parindent}{0.5in}%
+    \indent\@makefnmark\,##1}%
+  {\apathesissingle\footnotesize
+   \global\footnotesep=\dimexpr 2\baselineskip - \dp\strutbox\relax}}
+\makeatother
+
+% Widows and orphans are to be avoided, so a page breaks neither after the
+% first line of a paragraph nor before its last.
+\newcommand{\apathesispenalties}{%
+  \widowpenalty=10000
+  \clubpenalty=10000
+  \displaywidowpenalty=10000}
+
 % A published article hangs its references by the same amount it indents the
 % first line of a paragraph by, which is a good deal less than the half inch a
 % manuscript takes: half an inch of a column this narrow leaves the turned

@@ -882,6 +882,21 @@ there is the words and a link to them.
 
 ## The lists of tables, figures and illustrations
 
+A dissertation carries a table of contents and a list for each kind of float
+unless it says otherwise, which is the other way round from apaquarto's other
+modes: `list-of-contents`, `list-of-tables`, `list-of-figures` and
+`list-of-illustrations` are all true here, and the field says what to leave
+out rather than what to put in.
+
+``` yaml
+list-of-illustrations: false
+```
+
+A list with nothing in it is left out whatever the field says, and the
+contents does not name it: a heading reading `LIST OF TABLES` over an empty
+page helps nobody, and the Graduate School's own template says as much ---
+"if no tables, delete this page".
+
 A list is built for every kind of float the document holds --- tables first,
 then figures, then anything the document declared for itself under
 `crossref.custom`. Each stands under a heading of its own, `LIST OF TABLES`
@@ -911,6 +926,37 @@ options, and its own LaTeX code then stops on the missing field.
 
 The lists are listed in the table of contents, as the handbook asks, and are
 numbered in the same lower-case roman as the rest of the front matter.
+
+## Line spacing
+
+The handbook sets the line spacing part by part, and `documentmode: thesis`
+follows it in all four formats.
+
+The body is double spaced, and so are the abstract, the dedication, the
+acknowledgments and the preface.
+
+A block quotation is single spaced and indented half an inch from the left
+margin *and* half an inch from the right, which is what marks it out as
+quoted.
+
+The entries of the reference list are single spaced within an entry, with a
+double space between one entry and the next, hanging half an inch. The table
+of contents and the lists of tables, figures and illustrations are set the
+same way: a title of two or more lines is single spaced and turns over under
+its own first word, and a double space stands between one entry and the next.
+
+Notes are single spaced within a note, with a double space between one note
+and the next and the first line indented half an inch, which is where the
+note's number sits. In .html the number belongs to the list the browser draws
+and is left where it is; the line spacing is the same.
+
+Widows and orphans are avoided, so no page breaks after the first line of a
+paragraph or before its last. The .pdf is the one that has to be told; .docx
+and typst avoid them already, and .html has no pages to break.
+
+Each format takes its own single spacing --- what Word, LaTeX and typst each
+call a single-spaced line differs by a point or so --- and its own double,
+which is what every other `documentmode` does too.
 
 ## Page numbering
 

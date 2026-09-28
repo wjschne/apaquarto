@@ -988,75 +988,146 @@
   columns: 1,
 )
 
-#show: document => man(
-  title: [Appendix Pagination],
+#show: document => thesis(
+  title: [Which Lists a Dissertation Carries],
   authors: ([A B],),
-  runninghead: "APPENDIX PAGINATION",
+  runninghead: "THESIS LISTS",
   runningauthors: "B",
   font: (<fonts>),
   numberdepth: 3,
+  suppresstitlepage: true,
   document,
 )
 
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Appendix Pagination]
-<title>
-#counter(figure.where(kind: "quarto-float-fig")).update(0)
-#counter(figure.where(kind: "quarto-float-tbl")).update(0)
-#appendixcounter.step()
-#set align(center)
-#block[
-/
-A B
-
-X
+#let apatocline(indent, number, body, target, roman, dots) = context {
+  let found = if target == none { () } else { query(target) }
+  let dest = if found.len() > 0 { found.first().location() } else { none }
+  let pg = if dest == none { none } else {
+    let n = counter(page).at(dest).first()
+    if roman { numbering("i", n) } else { numbering("1", n) }
+  }
+  block(above: 19.4pt, below: 0pt, inset: (left: indent), width: 100%)[
+    #set text(fill: rgb("#000000"))
+    // A show rule as well as the set: typst-template.typ sets its own blue
+    // over every link, and a set does not reach inside a link that rule has
+    // already coloured. This one stands nearer and wins.
+    #show link: set text(fill: rgb("#000000"))
+    #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { 0.25in })[
+      #if number != none [#box(width: 0.25in)[#number]]
+      #if dest == none { body } else { link(dest)[#body] }
+      #if dots [#box(width: 1fr, repeat[.]) #pg]
+    ]
+  ]
+}
+#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#v(70.0pt, weak: false)
+#align(center)[#par(leading: 0.65em)[#strong[WHICH LISTS A DISSERTATION CARRIES]]]
+#v(21.0pt, weak: false)
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
+#v(21.0pt, weak: false)
+#align(center)[#par(leading: 0.65em)[A Thesis /
+Submitted to /
+the Temple University Graduate Board]]
+#v(21.0pt, weak: false)
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
+#v(21.0pt, weak: false)
+#align(center)[#par(leading: 0.65em)[In Partial Fulfillment /
+of the Requirements for the Degree /
+Master of Arts]]
+#v(21.0pt, weak: false)
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
+#v(21.0pt, weak: false)
+#align(center)[#par(leading: 0.65em)[by /
+A B /
+May 2027]]
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#v(289.0pt, weak: false)
+#align(center)[© Copyright 2027 by A B /
+All Rights Reserved]
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#metadata(none) <apathesis-abstract>
+#align(center)[#par(leading: 0.65em)[#strong[ABSTRACT]]]
+#v(27.6pt, weak: false)
+An abstract.
 
 ]
-#set align(left)
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Author Note]
-<author-note>
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#align(center)[#par(leading: 0.65em)[#strong[TABLE OF CONTENTS]]]
+#v(27.6pt, weak: false)
+#align(right)[#par(leading: 0.65em)[Page]]
+#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)
+#apatocline(0.00in, none, [LIST OF FIGURES], <apathesis-list-of-figure>, true, true)
+#apatocline(0.00in, none, [CHAPTER], none, false, false)
+#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#metadata(none) <apathesis-list-of-figure>
+#align(center)[#par(leading: 0.65em)[#strong[LIST OF FIGURES]]]
+#v(27.6pt, weak: false)
+#block(above: 19.4pt, below: 0pt, width: 100%)[Figure #box(width: 1fr) Page]
+#apatocline(0.00in, [1.], [A figure of some kind], <fig-one>, false, true)
+]
+]
+
+#set page(numbering: "1")
+#counter(page).update(1)
+#heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]
+= INTRODUCTION
+<introduction>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-Correspondence concerning this article should be addressed to A B, X, Email: #link("mailto:a@b.edu")[a/@b.edu]
+See #link(<fig-one>)[Figure~1].
 
-#pagebreak()
+#figure([
+#box(image("sampleimage.png"))
+], caption: figure.caption(
+position: top,
+[
+A figure of some kind
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-one>
 
-#heading(level: 1, numbering: none)[Appendix Pagination]
-<firstheader>
-#counter(figure.where(kind: "quarto-float-fig")).update(0)
-#counter(figure.where(kind: "quarto-float-tbl")).update(0)
-#appendixcounter.step()
-= Method
-<method>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-Some body text.
 
-#pagebreak(weak: true)
-= Appendix A
-#counter(figure.where(kind: "quarto-float-fig")).update(0)
-#counter(figure.where(kind: "quarto-float-tbl")).update(0)
-#appendixcounter.step()
-= First Appendix
-<apx-one>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-The first appendix.
+#figure([
+#box(image("sampleimage.png"))
+], caption: figure.caption(
+position: top,
+[
+An illustration.
+]),
+kind: "quarto-float-ill",
+supplement: "Illustration",
+)
+<ill-one>
 
-#pagebreak(weak: true)
-= Appendix B
-#counter(figure.where(kind: "quarto-float-fig")).update(0)
-#counter(figure.where(kind: "quarto-float-tbl")).update(0)
-#appendixcounter.step()
-= Second Appendix
-<apx-two>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-The second appendix.
+
+#thesisreferences[#set par(first-line-indent: 0in, hanging-indent: 0.5in)
+]
+
+
+

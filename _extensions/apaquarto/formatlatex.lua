@@ -223,6 +223,21 @@ local function meta(m)
     quarto.doc.include_text("in-header", "\\apastudenthead")
   end
 
+  -- A dissertation sets a block quotation, a note and the entries of its
+  -- reference list single spaced, indents a quotation half an inch from both
+  -- margins and a note's first line half an inch, and keeps a page from
+  -- breaking after the first line of a paragraph or before its last. The reference list is patched at the start of the document
+  -- rather than in the preamble: the environment quarto writes it in is one
+  -- of pandoc's own, and where an include lands among those is a detail of
+  -- pandoc's template rather than something to lean on.
+  if mode == "thesis" then
+    quarto.doc.include_text("in-header", "\\apathesisquote")
+    quarto.doc.include_text("in-header", "\\apathesisnotes")
+    quarto.doc.include_text("in-header", "\\apathesispenalties")
+    quarto.doc.include_text("in-header",
+      "\\AtBeginDocument{\\apathesisreferences}")
+  end
+
   -- A published article is set in two columns and carries the authors' names
   -- in the head rather than the manuscript's short title.
   if mode == "jou" then

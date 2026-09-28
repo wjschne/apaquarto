@@ -71,6 +71,11 @@ local utilsapa = require("utilsapa")
 local bodyindent = "apaparindent(firstlineindent)"
 local hangingindent = "0.5in"
 
+-- Whether the reference list takes a dissertation's line spacing: single
+-- spaced within an entry and a double space between one entry and the next.
+-- The template's thesisreferences is what sets it.
+local thesisrefs = false
+
 -- Numbered lines, which APA wants on a manuscript sent out for review.
 --
 -- apa7 draws them with lineno and leaves that package's own look alone: a
@@ -137,6 +142,8 @@ local function set_body_indent(meta)
   elseif mode == "doc" then
     bodyindent = "apaparindent(docfirstlineindent)"
     hangingindent = "docfirstlineindent"
+  elseif mode == "thesis" then
+    thesisrefs = true
   end
 end
 
@@ -516,6 +523,13 @@ return {
       
       -- Hanging indent on refs
       if div.identifier == "refs" then
+        -- A dissertation's list is wrapped in thesisreferences, which holds
+        -- the line spacing as well, and the indent goes inside that wrapper:
+        -- everything set there stops with the list, so nothing has to be put
+        -- back after it.
+        if thesisrefs then
+          return {pandoc.RawBlock("typst", "#thesisreferences[#set par(first-line-indent: 0in, hanging-indent: " .. hangingindent .. ")"), div, pandoc.RawBlock("typst", "]") }
+        end
         return {pandoc.RawBlock("typst", "#set par(first-line-indent: 0in, hanging-indent: " .. hangingindent .. ")"), div, pandoc.RawBlock("typst","#set par(first-line-indent: " .. bodyindent .. ", hanging-indent: 0in)") }
       end
       

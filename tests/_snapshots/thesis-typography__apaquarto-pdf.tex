@@ -8,7 +8,7 @@
   letterpaper,
   12pt]{article}
 /usepackage{xcolor}
-/usepackage[margin=1in]{geometry}
+/usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -85,6 +85,39 @@
 /makeatother
 
 
+% definitions for citeproc citations
+/NewDocumentCommand/citeproctext{}{}
+/NewDocumentCommand/citeproc{mm}{%
+  /begingroup/def/citeproctext{#2}/cite{#1}/endgroup}
+/makeatletter
+ % allow citations to break across lines
+ /let/@cite@ofmt/@firstofone
+ % avoid brackets around text for /cite:
+ /def/@biblabel#1{}
+ /def/@cite#1#2{{#1/if@tempswa , #2/fi}}
+/makeatother
+/newlength{/cslhangindent}
+/setlength{/cslhangindent}{1.5em}
+/newlength{/csllabelwidth}
+/setlength{/csllabelwidth}{3em}
+/newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {/begin{list}{}{%
+  /setlength{/itemindent}{0pt}
+  /setlength{/leftmargin}{0pt}
+  /setlength{/parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  /ifodd #1
+   /setlength{/leftmargin}{/cslhangindent}
+   /setlength{/itemindent}{-1/cslhangindent}
+  /fi
+  % set entry spacing
+  /setlength{/itemsep}{#2/baselineskip}}}
+ {/end{list}}
+/usepackage{calc}
+/newcommand{/CSLBlock}[1]{/hfill/break/parbox[t]{/linewidth}{/strut/ignorespaces#1/strut}}
+/newcommand{/CSLLeftMargin}[1]{/parbox[t]{/csllabelwidth}{/strut#1/strut}}
+/newcommand{/CSLRightInline}[1]{/parbox[t]{/linewidth - /csllabelwidth}{/strut#1/strut}}
+/newcommand{/CSLIndent}[1]{/hspace{/cslhangindent}#1}
 
 
 
@@ -855,7 +888,12 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{IMAGE PANELS}
+/setapashorttitle{THESIS TYPOGRAPHY}
+/apathesisquote
+/apathesisnotes
+/apathesispenalties
+/AtBeginDocument{/apathesisreferences}
+/definecolor{apathesistoc}{HTML}{000000}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -872,115 +910,143 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{Test Author}
+/author{A B}
 /date{}
 /begin{document}
 
 
-/hfill/break
+/apathesishead/pagenumbering{roman}
 
-/hfill/break
+/newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}
 
-/vspace*{3/baselineskip}
+/thispagestyle{empty}
 
-/apatitle{
+/vspace*{70.0pt}
 
-Multipanel Notes, Image Panels
+/singlespacing
 
-}
+{/centering
+/bfseries THE TYPOGRAPHY A DISSERTATION ASKS FOR/par}
 
-/begin{apaauthor}
+/vspace*{21.0pt}
 
-/hfill/break
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-Test Author
+/vspace*{21.0pt}
 
-Test University
+{/centering
+A Thesis//
+Submitted to//
+the Temple University Graduate Board/par}
 
-/end{apaauthor}
+/vspace*{21.0pt}
 
-/hfill/break
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-/hfill/break
+/vspace*{21.0pt}
 
-/apatitlepageheading{
+{/centering
+In Partial Fulfillment//
+of the Requirements for the Degree//
+Master of Arts/par}
 
-Author Note
+/vspace*{21.0pt}
 
-}
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
+/vspace*{21.0pt}
+
+{/centering
+by//
+A B//
+May 2027/par}
 
 /clearpage
 
-/apatitle{
+/newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}
 
-Multipanel Notes, Image Panels
+/vspace*{289.0pt}
+
+/doublespacing
+
+{/centering
+© Copyright 2027 by A B//
+All Rights Reserved/par}
+
+/clearpage
+
+/singlespacing
+
+{/centering
+/bfseries TABLE OF CONTENTS/par}
+
+/vspace*{27.6pt}
+
+{/raggedleft
+Page/par}
+
+/doublespacing
+
+{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
+
+{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents]{/textcolor{apathesistoc}{AN INTRODUCTION WHOSE TITLE IS LONG ENOUGH TO TURN OVER ONTO A SECOND
+LINE OF THE TABLE OF CONTENTS}}/apadotfill/hyperref[an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents]{/textcolor{apathesistoc}{/pageref{an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents}}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[references]{/textcolor{apathesistoc}{REFERENCES}}/apadotfill/hyperref[references]{/textcolor{apathesistoc}{/pageref{references}}}/par}
 
 }
 
-/section{Method}/label{method}
+/clearpage
 
-See /hyperref[fig-images]{Figure~/ref*{fig-images}}.
+/restoregeometry/doublespacing/pagenumbering{arabic}
 
-/begin{figure}[H]
+/section*{CHAPTER 1}
 
-/setcounter{figure}{0}
+/section{AN INTRODUCTION WHOSE TITLE IS LONG ENOUGH TO TURN OVER ONTO A
+SECOND LINE OF THE TABLE OF
+CONTENTS}/label{an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents}
 
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-images}
+The body is double spaced, and runs on for long enough here that its
+line spacing can be measured against the quotation and the references
+below it without any guessing about which line belongs to what.
 
-/apafloattitle{Figure 1}
+/begin{quote}
+A block quotation is single spaced and indented half an inch from the
+left margin and half an inch from the right, which is narrower than the
+body and is what marks it out as quoted rather than written.
+/end{quote}
 
-/apafloatcaption{Two Image Panels}
+Some text after the quotation
+(/citeproc{ref-austenMansfieldPark1990}{Austen, 1814/1990};
+/citeproc{ref-schneiderCattellHornCarrollTheoryCognitive2018}{Schneider
+/& McGrew, 2018}), so that the list below has two entries and the space
+between them can be measured as well as the space inside them.
 
-/apafigureskip
+A sentence carrying a note./footnote{A note is a numbered entry, single
+  spaced within itself and long enough here to run onto a second line so
+  that its spacing can be measured.} And a second one./footnote{The note
+  after it, so that the space between two notes can be measured as well.}
 
-/addcontentsline{lof}{figure}{Figure 1. Two Image Panels}
+/clearpage
 
-/begin{apapanel}{0.4900}%
-/textbf{Panel A}. First panel.
+/section{REFERENCES}/label{references}
 
-/apafigureskip
+/protect/phantomsection/label{refs}
+/begin{CSLReferences}{1}{0}
+/bibitem[/citeproctext]{ref-austenMansfieldPark1990}
+Austen, J. (1990). /emph{Mansfield {P}ark}. Oxford University Press.
+(Original work published 1814)
 
-/pandocbounded{/includegraphics[keepaspectratio,alt={First panel.}]{sampleimage.png}}
+/bibitem[/citeproctext]{ref-schneiderCattellHornCarrollTheoryCognitive2018}
+Schneider, W. J., /& McGrew, K. S. (2018). The cattell-horn-carroll
+theory of cognitive abilities. In D. P. Flanagan /& E. M. McDonough
+(Eds.), /emph{Contemporary intellectual assessment: Theories, tests, and
+issues} (4th ed., pp. 73--130). Guilford Press.
+/url{https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030}
 
-/begin{apapanelnote}
-
-A note belonging to the left panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/hfill
-/begin{apapanel}{0.4900}%
-/textbf{Panel B}. Second panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Second panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the right panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/par
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note belonging to the whole figure.
-
-/end{apafloatnote}
-
-/end{figure}
-
-/section{Discussion}/label{discussion}
-
-Text after the float.
+/end{CSLReferences}
 
 
 

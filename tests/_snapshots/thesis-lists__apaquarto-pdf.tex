@@ -8,7 +8,7 @@
   letterpaper,
   12pt]{article}
 /usepackage{xcolor}
-/usepackage[margin=1in]{geometry}
+/usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -855,7 +855,12 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{IMAGE PANELS}
+/setapashorttitle{THESIS LISTS}
+/apathesisquote
+/apathesisnotes
+/apathesispenalties
+/AtBeginDocument{/apathesisreferences}
+/definecolor{apathesistoc}{HTML}{000000}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -872,58 +877,144 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{Test Author}
+/author{A B}
 /date{}
 /begin{document}
 
 
-/hfill/break
+/apathesishead/pagenumbering{roman}
 
-/hfill/break
+/newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}
 
-/vspace*{3/baselineskip}
+/thispagestyle{empty}
 
-/apatitle{
+/vspace*{70.0pt}
 
-Multipanel Notes, Image Panels
+/singlespacing
 
-}
+{/centering
+/bfseries WHICH LISTS A DISSERTATION CARRIES/par}
 
-/begin{apaauthor}
+/vspace*{21.0pt}
 
-/hfill/break
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-Test Author
+/vspace*{21.0pt}
 
-Test University
+{/centering
+A Thesis//
+Submitted to//
+the Temple University Graduate Board/par}
 
-/end{apaauthor}
+/vspace*{21.0pt}
 
-/hfill/break
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-/hfill/break
+/vspace*{21.0pt}
 
-/apatitlepageheading{
+{/centering
+In Partial Fulfillment//
+of the Requirements for the Degree//
+Master of Arts/par}
 
-Author Note
+/vspace*{21.0pt}
 
-}
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
+/vspace*{21.0pt}
+
+{/centering
+by//
+A B//
+May 2027/par}
 
 /clearpage
 
-/apatitle{
+/newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}
 
-Multipanel Notes, Image Panels
+/vspace*{289.0pt}
+
+/doublespacing
+
+{/centering
+© Copyright 2027 by A B//
+All Rights Reserved/par}
+
+/clearpage
+
+/label{apathesis-abstract}
+
+/singlespacing
+
+{/centering
+/bfseries ABSTRACT/par}
+
+/vspace*{27.6pt}
+
+/doublespacing
+
+{/setlength{/parindent}{0pt}
+
+An abstract.
 
 }
 
-/section{Method}/label{method}
+/clearpage
 
-See /hyperref[fig-images]{Figure~/ref*{fig-images}}.
+/singlespacing
+
+{/centering
+/bfseries TABLE OF CONTENTS/par}
+
+/vspace*{27.6pt}
+
+{/raggedleft
+Page/par}
+
+/doublespacing
+
+{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-abstract]{/textcolor{apathesistoc}{ABSTRACT}}/apadotfill/hyperref[apathesis-abstract]{/textcolor{apathesistoc}{/pageref{apathesis-abstract}}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-list-of-figure]{/textcolor{apathesistoc}{LIST OF FIGURES}}/apadotfill/hyperref[apathesis-list-of-figure]{/textcolor{apathesistoc}{/pageref{apathesis-list-of-figure}}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{/textcolor{apathesistoc}{INTRODUCTION}}/apadotfill/hyperref[introduction]{/textcolor{apathesistoc}{/pageref{introduction}}}/par}
+
+}
+
+/clearpage
+
+/label{apathesis-list-of-figure}
+
+/singlespacing
+
+{/centering
+/bfseries LIST OF FIGURES/par}
+
+/vspace*{27.6pt}
+
+{/parindent=0pt/noindent Figure/hfill Page/par}
+
+/doublespacing
+
+{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[fig-one]{/textcolor{apathesistoc}{A figure of some kind}}/apadotfill/hyperref[fig-one]{/textcolor{apathesistoc}{/pageref{fig-one}}}/par}
+
+}
+
+/clearpage
+
+/restoregeometry/doublespacing/pagenumbering{arabic}
+
+/section*{CHAPTER 1}
+
+/section{INTRODUCTION}/label{introduction}
+
+See /hyperref[fig-one]{Figure~/ref*{fig-one}}.
 
 /begin{figure}[H]
 
@@ -931,56 +1022,39 @@ See /hyperref[fig-images]{Figure~/ref*{fig-images}}.
 
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-images}
+/label{fig-one}
 
 /apafloattitle{Figure 1}
 
-/apafloatcaption{Two Image Panels}
+/apafloatcaption{A figure of some kind}
 
 /apafigureskip
 
-/addcontentsline{lof}{figure}{Figure 1. Two Image Panels}
+/addcontentsline{lof}{figure}{Figure 1. A figure of some kind}
 
-/begin{apapanel}{0.4900}%
-/textbf{Panel A}. First panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={First panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the left panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/hfill
-/begin{apapanel}{0.4900}%
-/textbf{Panel B}. Second panel.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Second panel.}]{sampleimage.png}}
-
-/begin{apapanelnote}
-
-A note belonging to the right panel.
-
-/end{apapanelnote}
-/end{apapanel}%
-/par
-
-/begin{apafloatnote}
-
-/emph{Note}. A~note belonging to the whole figure.
-
-/end{apafloatnote}
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
 
 /end{figure}
 
-/section{Discussion}/label{discussion}
+/begin{figure}[H]
 
-Text after the float.
+/setcounter{illustration}{0}
+
+/refstepcounter{illustration}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{ill-one}
+
+/apafloattitle{Illustration 1}
+
+/apafloatcaption{An illustration.}
+
+/apafigureskip
+
+/addcontentsline{lof}{figure}{Illustration 1. An illustration.}
+
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
+
+/end{figure}
 
 
 

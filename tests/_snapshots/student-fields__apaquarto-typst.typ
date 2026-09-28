@@ -236,6 +236,24 @@
 #let joufirstlineindent = 0.15in
 #let docfirstlineindent = 0.25in
 
+// A dissertation sets its body double spaced, but a block quotation and the
+// entries of its reference list single spaced. thesissingleleading is typst's
+// own leading, which is what single spacing is here the way thesisleading is
+// what double spacing is.
+#let thesissingleleading = 0.65em
+#let thesisleading = 18pt
+
+// The entries of a dissertation's reference list: single spaced within an
+// entry, with a double space between one entry and the next, which is the
+// space the body's own lines stand apart. formattypst.lua wraps the list in
+// this rather than setting the spacing around it, so that the settings reach
+// the entries and stop there --- an appendix follows the references and takes
+// the body's spacing again.
+#let thesisreferences(body) = {
+  set par(leading: thesissingleleading, spacing: thesisleading)
+  body
+}
+
 // first-line-indent takes a plain length before typst 0.13 and accepts a
 // dictionary from 0.13 on, where all: true indents the paragraph that opens a
 // section as well as the ones that follow. Everything that sets the indent
@@ -535,6 +553,12 @@
   quoteparspace: none,
   quotespace: none,
   quoteindentall: none,
+  // Numbered notes. none leaves a footnote as typst sets one: its number in a
+  // box of its own at the head of the entry, and the entries a little apart.
+  // noteindent is how far in a note's first line begins, its turned lines
+  // running to the margin; notegap is the space between one note and the next.
+  noteindent: none,
+  notegap: none,
   // Space above a figure or table, ahead of its "Figure 1" / "Table 1" title.
   // none follows the body's space between blocks. Typst takes the larger of
   // this and whatever the element above asks for below itself, so a float
@@ -686,6 +710,16 @@
 
   // Also "leading" space between paragraphs
   set block(spacing: spacing, above: spacing, below: spacing)
+
+  // A note, where a mode asks for measurements of its own. Gathered and spread
+  // rather than named one by one: naming either at typst's own value is not
+  // the same as leaving it alone, since typst works both out from the size a
+  // note is set at, and a set rule written inside an if reaches only as far as
+  // that block.
+  let noteargs = (:)
+  if noteindent != none { noteargs.insert("indent", noteindent) }
+  if notegap != none { noteargs.insert("gap", notegap) }
+  set footnote.entry(..noteargs)
 
   set text(
     font: font,
@@ -920,6 +954,18 @@
   // the body begins again at 1 in arabic, set where the front matter ends.
   headerstyle: "none",
   pagenumbering: "i",
+  leading: thesisleading,
+  // A block quotation is single spaced and indented half an inch from both
+  // margins, which quoteinset already is.
+  quoteleading: thesissingleleading,
+  // A note's first line begins half an inch in, its turned lines running to
+  // the margin, and a double space stands between one note and the next. A
+  // note is set smaller than the body, so what reads as a double space there
+  // is not the body's 18pt: typst measures a gap from the depth of one entry
+  // to the cap height of the next, and 17.25pt is what leaves the first line
+  // of a note two of its own lines below the last line of the one above it.
+  noteindent: 0.5in,
+  notegap: 17.25pt,
   ..args,
 )
 

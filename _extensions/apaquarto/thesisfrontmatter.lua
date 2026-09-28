@@ -522,7 +522,10 @@ local function build_pages(meta, blocks)
       chapter = text(language(meta, "thesis-chapter-column", "CHAPTER")),
       appendices = text(language(meta, "thesis-appendices", "APPENDICES")),
     })
-  local contents = contents_page(meta, front, body)
+  local contents = nil
+  if wants_list(meta, "list-of-contents") then
+    contents = contents_page(meta, front, body)
+  end
   if contents then built:insert(contents) end
   built:extend(lists)
 
@@ -664,10 +667,20 @@ local function render_latex(pages, meta)
           .. written(item.left, "latex") .. "\\hfill "
           .. written(item.right, "latex") .. "\\par}"))
       elseif item.kind == "contents" then
+        -- A title of two or more lines is single spaced, and a double space
+        -- stands between one entry and the next. \apathesissingle works the
+        -- second out from the first, so it is asked for while the double
+        -- spacing is still in force, and the list is set in a group so that
+        -- what follows it takes the page's spacing again. The skip is
+        -- \parskip, which stands between the column heading and the first
+        -- entry as well as between one entry and the next.
         set_spacing(true)
+        out:insert(raw("latex", "{\\apathesissingle"
+          .. "\\setlength{\\parskip}{\\apathesisentrysep}"))
         for _, entry in ipairs(item.entries) do
           out:insert(raw("latex", latex_contents_line(entry)))
         end
+        out:insert(raw("latex", "}"))
       elseif item.kind == "blocks" then
         -- Prose, which the handbook asks to be double spaced. The first line
         -- is not indented: an abstract begins at the margin, which is where
@@ -814,6 +827,26 @@ local function render_typst(pages, meta)
   return out
 end
 
+-- The line spacing a dissertation asks for, which is where .html differs from
+-- the stylesheet every other mode shares. The body stays double spaced, but a
+-- block quotation, a note and the entries of the reference list are single
+-- spaced, and a double space stands between one entry and the next: a line of
+-- space under an entry puts the line after it twice as far down as the one
+-- before. The half inch a quotation is indented from both margins is in
+-- apa.css already.
+--
+-- A note's first line is not indented here. In the three paged formats the
+-- half inch the handbook asks for is where the note's number goes; in .html
+-- the number belongs to the list the browser draws, which is left alone.
+--
+-- 1em is single and 2em is double throughout that stylesheet.
+local kHtmlThesisStyle = table.concat({
+  "blockquote p, .blockquote p { line-height: 1em; }",
+  ".csl-bib-body .csl-entry { line-height: 1em; margin-bottom: 1em; }",
+  ".footnotes li p { line-height: 1em; }",
+  ".footnotes li { margin-bottom: 1em; }",
+}, "\n")
+
 -- html. There are no pages here, so the gaps are the only thing that carries
 -- the arrangement across, and there is nothing to number.
 local function render_html(pages, meta)
@@ -822,7 +855,7 @@ local function render_html(pages, meta)
   -- says what they take instead, and black is what it says unless a document
   -- asks otherwise.
   out:insert(raw("html", "<style>.thesis-front-matter-page a { color: #"
-    .. contents_colour(meta) .. "; }</style>"))
+    .. contents_colour(meta) .. "; }\n" .. kHtmlThesisStyle .. "</style>"))
   for _, page in ipairs(pages) do
     out:insert(raw("html", '<div class="thesis-front-matter-page">'))
     for _, item in ipairs(page.items) do
@@ -1004,7 +1037,11 @@ local function docx_contents_line(entry, measure, colour)
   local tab = twips(measure * 72) - indent
 
   local properties = string.format(
-    '<w:spacing w:before="0" w:after="0" w:line="480" w:lineRule="auto"/>'
+    --- A title of two or more lines is single spaced, and the 276 twips
+    --- ahead of an entry are the second line that leaves a double space
+    --- between it and whatever it follows --- the entry before it, or the
+    --- column heading the list opens under.
+    '<w:spacing w:before="276" w:after="0" w:line="240" w:lineRule="auto"/>'
     .. '<w:ind w:left="%d" w:hanging="%d"/>', indent + hanging, hanging)
   if entry.kind ~= "label" then
     properties = properties .. "<w:tabs>"

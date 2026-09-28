@@ -1313,3 +1313,96 @@
     docx-xml:
       contains:
         - '<w:br w:type="page"/>'
+
+- fixture: thesis-lists.qmd
+  to: apaquarto-typst
+  expect:
+    pdf:
+      contains:
+        # A contents and a list of figures, neither asked for: a dissertation
+        # carries all four unless it says otherwise.
+        - 'TABLE OF CONTENTS'
+        - 'LIST OF FIGURES'
+      absent:
+        # No table in the document, so no list of tables. A heading over an
+        # empty page helps nobody.
+        - 'LIST OF TABLES'
+        # And list-of-illustrations is false, so that one is left out though
+        # the document has an illustration --- and the contents does not name
+        # it either.
+        - 'LIST OF ILLUSTRATIONS'
+
+- fixture: thesis-lists.qmd
+  to: apaquarto-pdf
+  expect:
+    pdf:
+      contains:
+        - 'TABLE OF CONTENTS'
+        - 'LIST OF FIGURES'
+      absent:
+        - 'LIST OF TABLES'
+        - 'LIST OF ILLUSTRATIONS'
+
+# The line spacing the Graduate School asks for: a block quotation single
+# spaced and half an inch in from both margins, the entries of the reference
+# list and of the table of contents single spaced within an entry and a double
+# space apart, and widows and orphans avoided. The measurements are in the
+# snapshots; what is checked here is that each format is asked for them.
+- fixture: thesis-typography.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - '\apathesisquote'
+        - '\apathesisreferences'
+        - '\apathesispenalties'
+        - '\apathesisnotes'
+        # The contents entries are set single and stand a double space apart.
+        - '\apathesissingle\setlength{\parskip}{\apathesisentrysep}'
+    pdf:
+      contains:
+        - 'TABLE OF CONTENTS'
+        - 'REFERENCES'
+
+- fixture: thesis-typography.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # The reference list is wrapped rather than set around, so the spacing
+        # stops with the list and an appendix after it is unaffected.
+        - '#thesisreferences['
+        # A note's first line begins half an inch in, and a double space
+        # stands between one note and the next.
+        - 'noteindent: 0.5in'
+        - 'notegap: 17.25pt'
+    pdf:
+      contains:
+        - 'TABLE OF CONTENTS'
+        - 'REFERENCES'
+
+- fixture: thesis-typography.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # Block Text, NextBlockText, Bibliography and Footnote Text all take
+        # it. Written without the closing bracket, since pandoc rewrites the
+        # stylesheet and closes an empty element with a space before the
+        # slash, and reorders the attributes of the element below.
+        - '<w:spacing w:after="276" w:line="240" w:lineRule="auto"'
+        # A note's first line is indented half an inch.
+        - '<w:ind w:firstLine="720" />'
+    docx-xml:
+      contains:
+        # And the contents entries, which are written out rather than styled.
+        - '<w:spacing w:before="276" w:after="0" w:line="240" w:lineRule="auto"/>'
+
+- fixture: thesis-typography.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'blockquote p, .blockquote p { line-height: 1em; }'
+        - '.csl-bib-body .csl-entry { line-height: 1em; margin-bottom: 1em; }'
+        - '.footnotes li p { line-height: 1em; }'
