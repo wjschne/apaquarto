@@ -150,6 +150,11 @@
 /definecolor{apatext}{HTML}{000000}
 /newcommand{/apatoccolor}{apatext}
 
+% How many levels of heading the contents lists, which is quarto's
+% toc-depth. The article class counts three of its own accord;
+% formatlatex.lua renews this where a document asks for another number.
+/newcommand{/apatocdepth}{3}
+
 /usepackage{setspace}
 /usepackage{fancyhdr}
 /usepackage{titlesec}
@@ -211,6 +216,14 @@
   /fancyhead[RO]{/thepage}%
   /fancyhead[CE]{{/apaheadsize/apaauthorline}}%
   /fancyhead[CO]{{/apaheadsize/apashorttitle}}}
+
+% The head a student paper carries: the page number and nothing else. APA
+% seventh edition drops the running head from student work, which is what
+% apaquarto's typst format does and what the apa7 class did for the .pdf
+% before 6.0.0 stopped using it. Issue #166.
+/newcommand{/apastudenthead}{%
+  /fancyhf{}%
+  /fancyhead[R]{/thepage}}
 
 % The head a dissertation carries, which is none. The Temple University
 % Graduate School's handbook asks for the page number and nothing else, and
@@ -427,6 +440,7 @@
   /begingroup
   /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/contentsname}{Table of Contents}%
+  /setcounter{tocdepth}{/apatocdepth}%
   /tableofcontents
   /endgroup}
 
@@ -961,6 +975,12 @@ Page/par}
 
 {/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-acknowledgments]{ACKNOWLEDGMENTS}/apadotfill/hyperref[apathesis-acknowledgments]{/pageref{apathesis-acknowledgments}}/par}
 
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-list-of-table]{LIST OF TABLES}/apadotfill/hyperref[apathesis-list-of-table]{/pageref{apathesis-list-of-table}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-list-of-figure]{LIST OF FIGURES}/apadotfill/hyperref[apathesis-list-of-figure]{/pageref{apathesis-list-of-figure}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-list-of-illustration]{LIST OF ILLUSTRATIONS}/apadotfill/hyperref[apathesis-list-of-illustration]{/pageref{apathesis-list-of-illustration}}/par}
+
 {/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
 
 {/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{INTRODUCTION}/apadotfill/hyperref[introduction]{/pageref{introduction}}/par}
@@ -977,7 +997,60 @@ Page/par}
 
 /clearpage
 
+/label{apathesis-list-of-table}
+
+/singlespacing
+
+{/centering
+/bfseries LIST OF TABLES/par}
+
+/vspace*{27.6pt}
+
+{/parindent=0pt/noindent Table/hfill Page/par}
+
+/doublespacing
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{B1.}/hyperref[tbl-scales]{A table of two columns.}/apadotfill/hyperref[tbl-scales]{/pageref{tbl-scales}}/par}
+
+/clearpage
+
+/label{apathesis-list-of-figure}
+
+/singlespacing
+
+{/centering
+/bfseries LIST OF FIGURES/par}
+
+/vspace*{27.6pt}
+
+{/parindent=0pt/noindent Figure/hfill Page/par}
+
+/doublespacing
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{B1.}/hyperref[fig-diagram]{A figure of some kind}/apadotfill/hyperref[fig-diagram]{/pageref{fig-diagram}}/par}
+
+/clearpage
+
+/label{apathesis-list-of-illustration}
+
+/singlespacing
+
+{/centering
+/bfseries LIST OF ILLUSTRATIONS/par}
+
+/vspace*{27.6pt}
+
+{/parindent=0pt/noindent Illustration/hfill Page/par}
+
+/doublespacing
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[ill-sketch]{A sketch of the apparatus.}/apadotfill/hyperref[ill-sketch]{/pageref{ill-sketch}}/par}
+
+/clearpage
+
 /restoregeometry/doublespacing/pagenumbering{arabic}
+
+/renewcommand{/apatocdepth}{1}
 
 /section{Introduction}/label{introduction}
 
@@ -1017,6 +1090,77 @@ The measures.
 /section{Consent Forms}/label{apx-consent}
 
 The forms.
+
+/subsection{Floats}/label{floats}
+
+/par/addvspace{/baselineskip}
+
+/setcounter{table}{0}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{B1}/makeatother%
+/label{tbl-scales}
+
+/apafloattitle{Table B1}
+
+/apafloatcaption{A table of two columns.}
+
+/addcontentsline{lot}{table}{Table B1. A table of two columns.}
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}ll@{}}
+/toprule/noalign{}
+A & B //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+1 & 2 //
+/end{longtable}
+}
+
+/par/addvspace{/baselineskip}
+
+/begin{figure}[H]
+
+/setcounter{figure}{0}
+
+/refstepcounter{figure}%
+/makeatletter/def/@currentlabel{B1}/makeatother%
+/label{fig-diagram}
+
+/apafloattitle{Figure B1}
+
+/apafloatcaption{A figure of some kind}
+
+/apafigureskip
+
+/addcontentsline{lof}{figure}{Figure B1. A figure of some kind}
+
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
+
+/end{figure}
+
+/begin{figure}[H]
+
+/setcounter{illustration}{0}
+
+/refstepcounter{illustration}%
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{ill-sketch}
+
+/apafloattitle{Illustration 1}
+
+/apafloatcaption{A sketch of the apparatus.}
+
+/apafigureskip
+
+/addcontentsline{lof}{figure}{Illustration 1. A sketch of the
+apparatus.}
+
+/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
+
+/end{figure}
 
 
 

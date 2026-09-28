@@ -729,37 +729,45 @@
   show "TeX": TeX
   show "LaTeX": LaTeX
 
-  // format figure captions
-  show figure.where(kind: "quarto-float-fig"): it => block(width: 100%, breakable: false, above: fspace)[
-  #if type(it.numbering) == function [
-      #it
-    ] else [
-    #if int(appendixcounter.display().at(0)) > 0 [
-      #heading(level: 2, outlined: false)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
-    ] else [
-      #heading(level: 2, outlined: false)[#it.supplement #it.counter.display()]
-    ]
-    #align(left)[#par(first-line-indent: 0pt)[#emph[#it.caption.body]]]
-    #align(center)[#it.body]
-
-  ]]
-
-  // format table captions
-  // skip custom formatting for sub-figures inside quarto_super (their numbering is set to a function)
-  show figure.where(kind: "quarto-float-tbl"): it => {
-    if type(it.numbering) == function {
-      it
+  // How a float is set: its number on a line of its own, the caption under it
+  // in italics, and the float itself below that. APA sets a figure and a table
+  // this way and so does every other kind of float a document declares for
+  // itself under crossref.custom --- an Illustration is the one apaquarto
+  // ships. A table is set flush left throughout; everything else centres what
+  // it holds.
+  //
+  // One rule for all of them, dispatching on the kind, rather than a rule per
+  // kind: a rule per kind would have to name every kind a document might
+  // declare, and the ones it did not name would fall back on typst's own
+  // caption, which runs the number and the caption together on one line.
+  //
+  // A sub-figure inside a multipanel float has its numbering set to a
+  // function, and is left alone: quarto keeps the count on the panels and
+  // apaquarto labels them itself.
+  let apafloatlabel(it) = {
+    if int(appendixcounter.display().at(0)) > 0 {
+      heading(level: 2, outlined: false, numbering: none)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
     } else {
-      block(width: 100%, breakable: false, above: fspace)[#align(left)[
+      heading(level: 2, outlined: false, numbering: none)[#it.supplement #it.counter.display()]
+    }
+  }
 
-        #if int(appendixcounter.display().at(0)) > 0 [
-          #heading(level: 2, outlined: false, numbering: none)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
-        ] else [
-          #heading(level: 2, outlined: false, numbering: none)[#it.supplement #it.counter.display()]
-        ]
+  show figure: it => {
+    if (type(it.numbering) == function or type(it.kind) != str or
+        not it.kind.starts-with("quarto-float-")) {
+      it
+    } else if it.kind == "quarto-float-tbl" {
+      block(width: 100%, breakable: false, above: fspace)[#align(left)[
+        #apafloatlabel(it)
         #par(first-line-indent: 0pt)[#emph[#it.caption.body]]
         #block[#it.body]
       ]]
+    } else {
+      block(width: 100%, breakable: false, above: fspace)[
+        #apafloatlabel(it)
+        #align(left)[#par(first-line-indent: 0pt)[#emph[#it.caption.body]]]
+        #align(center)[#it.body]
+      ]
     }
   }
 
@@ -945,6 +953,20 @@
   document,
 )
 
+#let apatocline(indent, number, body, target, roman, dots) = context {
+  let found = if target == none { () } else { query(target) }
+  let pg = if found.len() > 0 {
+    let n = counter(page).at(found.first().location()).first()
+    if roman { numbering("i", n) } else { numbering("1", n) }
+  } else { none }
+  block(above: 19.4pt, below: 0pt, inset: (left: indent), width: 100%)[
+    #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { 0.25in })[
+      #if number != none [#box(width: 0.25in)[#number]]
+      #if target == none { body } else { link(target)[#body] }
+      #if dots [#box(width: 1fr, repeat[.]) #pg]
+    ]
+  ]
+}
 #page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
 #[
 #set par(first-line-indent: 0pt, justify: false)
@@ -1026,23 +1048,12 @@ Thanks to everyone who read a draft.
 #align(center)[#par(leading: 0.65em)[#strong[TABLE OF CONTENTS]]]
 #v(27.6pt, weak: false)
 #align(right)[#par(leading: 0.65em)[Page]]
-#let apatocline(indent, number, body, target, roman, dots) = context {
-  let found = if target == none { () } else { query(target) }
-  let pg = if found.len() > 0 {
-    let n = counter(page).at(found.first().location()).first()
-    if roman { numbering("i", n) } else { numbering("1", n) }
-  } else { none }
-  block(above: 19.4pt, below: 0pt, inset: (left: indent), width: 100%)[
-    #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { 0.25in })[
-      #if number != none [#box(width: 0.25in)[#number]]
-      #if target == none { body } else { link(target)[#body] }
-      #if dots [#box(width: 1fr, repeat[.]) #pg]
-    ]
-  ]
-}
 #apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)
 #apatocline(0.00in, none, [DEDICATION], <apathesis-dedication>, true, true)
 #apatocline(0.00in, none, [ACKNOWLEDGMENTS], <apathesis-acknowledgments>, true, true)
+#apatocline(0.00in, none, [LIST OF TABLES], <apathesis-list-of-table>, true, true)
+#apatocline(0.00in, none, [LIST OF FIGURES], <apathesis-list-of-figure>, true, true)
+#apatocline(0.00in, none, [LIST OF ILLUSTRATIONS], <apathesis-list-of-illustration>, true, true)
 #apatocline(0.00in, none, [CHAPTER], none, false, false)
 #apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)
 #apatocline(0.00in, [2.], [METHOD], <method>, false, true)
@@ -1050,6 +1061,39 @@ Thanks to everyone who read a draft.
 #apatocline(0.00in, none, [APPENDICES], <apx-measures>, false, true)
 #apatocline(0.00in, [A.], [MEASURES USED], <apx-measures>, false, true)
 #apatocline(0.00in, [B.], [CONSENT FORMS], <apx-consent>, false, true)
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#metadata(none) <apathesis-list-of-table>
+#align(center)[#par(leading: 0.65em)[#strong[LIST OF TABLES]]]
+#v(27.6pt, weak: false)
+#block(above: 19.4pt, below: 0pt, width: 100%)[Table #box(width: 1fr) Page]
+#apatocline(0.00in, [B1.], [A table of two columns.], <tbl-scales>, false, true)
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#metadata(none) <apathesis-list-of-figure>
+#align(center)[#par(leading: 0.65em)[#strong[LIST OF FIGURES]]]
+#v(27.6pt, weak: false)
+#block(above: 19.4pt, below: 0pt, width: 100%)[Figure #box(width: 1fr) Page]
+#apatocline(0.00in, [B1.], [A figure of some kind], <fig-diagram>, false, true)
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#metadata(none) <apathesis-list-of-illustration>
+#align(center)[#par(leading: 0.65em)[#strong[LIST OF ILLUSTRATIONS]]]
+#v(27.6pt, weak: false)
+#block(above: 19.4pt, below: 0pt, width: 100%)[Illustration #box(width: 1fr) Page]
+#apatocline(0.00in, [1.], [A sketch of the apparatus.], <ill-sketch>, false, true)
 ]
 ]
 
@@ -1109,3 +1153,54 @@ The measures.
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
 The forms.
+
+== Floats
+<floats>
+#figure([
+#table(
+  columns: 2,
+  align: (auto,auto,),
+  table.header([A], [B],),
+  table.hline(),
+  [1], [2],
+)
+], caption: figure.caption(
+position: top,
+[
+A table of two columns.
+]),
+kind: "quarto-float-tbl",
+supplement: "Table",
+)
+<tbl-scales>
+
+
+#figure([
+#box(image("sampleimage.png"))
+], caption: figure.caption(
+position: top,
+[
+A figure of some kind
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-diagram>
+
+
+#figure([
+#box(image("sampleimage.png"))
+], caption: figure.caption(
+position: top,
+[
+A sketch of the apparatus.
+]),
+kind: "quarto-float-ill",
+supplement: "Illustration",
+)
+<ill-sketch>
+
+
+
+
+

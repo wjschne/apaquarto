@@ -52,6 +52,9 @@ local tableword = "Table"
 -- the other formats do: toccolor is the colour of a link in the list.
 local kEntryColour = nil
 
+-- How many levels of heading the contents lists, which is quarto's toc-depth.
+local kTocDepth = 3
+
 local function read_meta(meta)
   if meta.language then
     if meta.language["crossref-fig-title"] then
@@ -62,6 +65,7 @@ local function read_meta(meta)
     end
   end
   kEntryColour = utilsapa.colour_hex(meta["toccolor"])
+  kTocDepth = utilsapa.toc_depth(meta, 3)
 end
 
 local function xml_escape(text)
@@ -275,7 +279,7 @@ local function collect_headings(blocks)
   local out = pandoc.List({})
   pandoc.Blocks(blocks):walk {
     Header = function(h)
-      if h.level > 3 then return nil end
+      if h.level > kTocDepth then return nil end
       if h.classes:includes("unlisted") then return nil end
       out:insert({ level = h.level, content = h.content, id = h.identifier })
     end

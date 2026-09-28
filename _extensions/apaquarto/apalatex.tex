@@ -17,6 +17,11 @@
 \definecolor{apatext}{HTML}{000000}
 \newcommand{\apatoccolor}{apatext}
 
+% How many levels of heading the contents lists, which is quarto's
+% toc-depth. The article class counts three of its own accord;
+% formatlatex.lua renews this where a document asks for another number.
+\newcommand{\apatocdepth}{3}
+
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -302,6 +307,7 @@
   \begingroup
   \hypersetup{linkcolor=\apatoccolor,citecolor=\apatoccolor,urlcolor=\apatoccolor}%
   \renewcommand{\contentsname}{Table of Contents}%
+  \setcounter{tocdepth}{\apatocdepth}%
   \tableofcontents
   \endgroup}
 

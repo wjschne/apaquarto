@@ -982,6 +982,18 @@
         - '\hyperref[references]{REFERENCES}'
         - '\makebox[0.25in][l]{A.}\hyperref[apx-measures]{MEASURES USED}'
         - '\makebox[0.25in][l]{B.}\hyperref[apx-consent]{CONSENT FORMS}'
+        # The lists of tables, figures and illustrations, each under a
+        # heading of its own with the two column labels over the entries.
+        # The contents lists them too, with the pages they begin on.
+        - '\bfseries LIST OF TABLES\par}'
+        - '\bfseries LIST OF FIGURES\par}'
+        - '\bfseries LIST OF ILLUSTRATIONS\par}'
+        - '\hyperref[apathesis-list-of-table]{LIST OF TABLES}'
+        - '{\parindent=0pt\noindent Table\hfill Page\par}'
+        - '{\parindent=0pt\noindent Illustration\hfill Page\par}'
+        # An illustration is a figure with a word and a count of its own, so
+        # it is numbered from one rather than after the figures.
+        - '\makebox[0.25in][l]{1.}\hyperref[ill-sketch]'
         # The spacing is set between the blocks rather than inside them:
         # setspace works the stretch into the size command, and a stretch
         # asked for inside the group that holds a paragraph does not reach
@@ -1041,6 +1053,9 @@
         - '#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)'
         - '#apatocline(0.00in, [A.], [MEASURES USED], <apx-measures>, false, true)'
         - '#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)'
+        - '#strong[LIST OF TABLES]'
+        - '#strong[LIST OF ILLUSTRATIONS]'
+        - '#apatocline(0.00in, [1.], [A sketch of the apparatus.], <ill-sketch>, false, true)'
     pdf:
       contains:
         - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
@@ -1094,6 +1109,9 @@
         - 'Thanks to everyone who read a draft.'
         - 'TABLE OF CONTENTS'
         - 'CHAPTER'
+        - 'LIST OF TABLES'
+        - 'LIST OF ILLUSTRATIONS'
+        - 'A sketch of the apparatus.'
 
 - fixture: thesis-title.qmd
   to: apaquarto-html
@@ -1107,6 +1125,7 @@
         # link to them and nothing more.
         - 'TABLE OF CONTENTS'
         - '<a href="#apx-measures">A. MEASURES USED</a>'
+        - 'LIST OF ILLUSTRATIONS'
 
 - fixture: thesis-title-breaks.qmd
   to: apaquarto-pdf
@@ -1173,3 +1192,54 @@
       contains:
         - 'Statistics 101'
         - 'Dr Example'
+
+- fixture: toc-depth.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # The article class counts three levels of its own accord, so only a
+        # depth that is not three is written out.
+        - '\renewcommand{\apatocdepth}{2}'
+    pdf:
+      contains:
+        # Two levels listed, and the third heading is in the body where it
+        # belongs.
+        - 'Participants . . .'
+        - 'Recruitment'
+      absent:
+        # But not in the contents, where a leader follows it.
+        - 'Recruitment . . .'
+
+- fixture: toc-depth.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # typst listed every level there was until it was told a depth.
+        - '#outline(title: [Table of Contents], indent: 1.5em, depth: 2)'
+    pdf:
+      absent:
+        - 'Recruitment . . .'
+
+- fixture: toc-depth.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        # An entry of the contents is a link to the heading and a field for
+        # the page it is on.
+        - ' PAGEREF participants \h '
+      absent:
+        # The level-three heading is in the body and not in the contents.
+        - ' PAGEREF recruitment \h '
+
+- fixture: toc-depth.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'apaquarto-contents'
+        - '<a href="#participants">'
+      absent:
+        - '<a href="#recruitment">'

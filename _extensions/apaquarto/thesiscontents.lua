@@ -133,13 +133,56 @@ function M.body_entries(blocks, depth, words)
   return out
 end
 
--- How deep a document asks its contents to go.
+-- Where thesisfloats.lua leaves what it noted down.
+M.field = "apathesis-floats"
+
+-- The floats thesisfloats.lua noted down while they could still be read,
+-- grouped by what they are called: Table, Figure, and whatever else the
+-- document declared for itself.
+--
+-- The order the kinds come back in is the order a dissertation lists them:
+-- tables first, then figures, then the rest as they were declared.
+function M.float_kinds(meta)
+  local noted = meta[M.field]
+  local kinds, order = {}, pandoc.List({})
+  if noted == nil then return order, kinds end
+
+  for _, float in ipairs(noted) do
+    local kind = stringify(float.kind)
+    if kinds[kind] == nil then
+      kinds[kind] = pandoc.List({})
+      order:insert(kind)
+    end
+    kinds[kind]:insert({
+      kind = "entry",
+      indent = 0,
+      number = stringify(float.number) ~= ""
+        and (stringify(float.number) .. ".") or nil,
+      text = pandoc.Inlines(float.caption or {}),
+      target = stringify(float.id),
+    })
+  end
+
+  -- Tables, then figures, then whatever else in the order it was first
+  -- seen. The order a kind was seen in is kept so that the sort settles the
+  -- same way every time: lua's own is not a stable one.
+  local seen = {}
+  for index, kind in ipairs(order) do seen[kind] = index end
+  table.sort(order, function(a, b)
+    local rank = { Table = 1, Figure = 2 }
+    local ra, rb = rank[a] or 3, rank[b] or 3
+    if ra ~= rb then return ra < rb end
+    return seen[a] < seen[b]
+  end)
+  return order, kinds
+end
+
+-- How deep a dissertation's contents goes, which is quarto's toc-depth like
+-- every other contents apaquarto builds. Three levels of subheading is as
+-- deep as the handbook allows, so four counting the chapter, and that is
+-- where this stops whatever is asked for.
 function M.depth(meta)
-  local thesis = meta.thesis
-  if thesis == nil or thesis["contents-depth"] == nil then return 1 end
-  local written = tonumber(stringify(thesis["contents-depth"]))
-  if written == nil then return 1 end
-  return math.max(1, math.min(M.max_depth, math.floor(written)))
+  return math.min(M.max_depth, utilsapa.toc_depth(meta, 3))
 end
 
 return M

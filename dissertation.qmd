@@ -42,7 +42,8 @@ thesis:
       role: External Member
       affiliation: Department of Teaching and Learning, Temple University  
 format:
-  apaquarto-typst: default
+  apaquarto-typst: 
+    toc-depth: 3
   apaquarto-pdf: default
   apaquarto-docx: default
   apaquarto-html: default
@@ -54,6 +55,10 @@ The body of the dissertation begins here, on a page of its own.
 ## Background
 
 Some background.
+
+## Deeper Knowledge
+
+Cool stuff to know.
 
 # Literature Review
 

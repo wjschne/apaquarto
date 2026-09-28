@@ -729,37 +729,45 @@
   show "TeX": TeX
   show "LaTeX": LaTeX
 
-  // format figure captions
-  show figure.where(kind: "quarto-float-fig"): it => block(width: 100%, breakable: false, above: fspace)[
-  #if type(it.numbering) == function [
-      #it
-    ] else [
-    #if int(appendixcounter.display().at(0)) > 0 [
-      #heading(level: 2, outlined: false)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
-    ] else [
-      #heading(level: 2, outlined: false)[#it.supplement #it.counter.display()]
-    ]
-    #align(left)[#par(first-line-indent: 0pt)[#emph[#it.caption.body]]]
-    #align(center)[#it.body]
-
-  ]]
-
-  // format table captions
-  // skip custom formatting for sub-figures inside quarto_super (their numbering is set to a function)
-  show figure.where(kind: "quarto-float-tbl"): it => {
-    if type(it.numbering) == function {
-      it
+  // How a float is set: its number on a line of its own, the caption under it
+  // in italics, and the float itself below that. APA sets a figure and a table
+  // this way and so does every other kind of float a document declares for
+  // itself under crossref.custom --- an Illustration is the one apaquarto
+  // ships. A table is set flush left throughout; everything else centres what
+  // it holds.
+  //
+  // One rule for all of them, dispatching on the kind, rather than a rule per
+  // kind: a rule per kind would have to name every kind a document might
+  // declare, and the ones it did not name would fall back on typst's own
+  // caption, which runs the number and the caption together on one line.
+  //
+  // A sub-figure inside a multipanel float has its numbering set to a
+  // function, and is left alone: quarto keeps the count on the panels and
+  // apaquarto labels them itself.
+  let apafloatlabel(it) = {
+    if int(appendixcounter.display().at(0)) > 0 {
+      heading(level: 2, outlined: false, numbering: none)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
     } else {
-      block(width: 100%, breakable: false, above: fspace)[#align(left)[
+      heading(level: 2, outlined: false, numbering: none)[#it.supplement #it.counter.display()]
+    }
+  }
 
-        #if int(appendixcounter.display().at(0)) > 0 [
-          #heading(level: 2, outlined: false, numbering: none)[#it.supplement #appendixcounter.display("A")#it.counter.display()]
-        ] else [
-          #heading(level: 2, outlined: false, numbering: none)[#it.supplement #it.counter.display()]
-        ]
+  show figure: it => {
+    if (type(it.numbering) == function or type(it.kind) != str or
+        not it.kind.starts-with("quarto-float-")) {
+      it
+    } else if it.kind == "quarto-float-tbl" {
+      block(width: 100%, breakable: false, above: fspace)[#align(left)[
+        #apafloatlabel(it)
         #par(first-line-indent: 0pt)[#emph[#it.caption.body]]
         #block[#it.body]
       ]]
+    } else {
+      block(width: 100%, breakable: false, above: fspace)[
+        #apafloatlabel(it)
+        #align(left)[#par(first-line-indent: 0pt)[#emph[#it.caption.body]]]
+        #align(center)[#it.body]
+      ]
     }
   }
 
@@ -997,7 +1005,7 @@ Correspondence concerning this article should be addressed to Test Author, Test 
 #show outline.entry: it => {show link: set text(fill: rgb("#008080"))
 link(it.element.location(),it.indented(none, it.inner(), ))}
 
-#outline(title: [Table of Contents], indent: 1.5em)
+#outline(title: [Table of Contents], indent: 1.5em, depth: 3)
 
 = First Heading
 <first-heading>

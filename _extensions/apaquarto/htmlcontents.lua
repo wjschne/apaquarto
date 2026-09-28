@@ -14,11 +14,13 @@ end
 -- Everything down to level three that is not one of the headings apaquarto
 -- marks unlisted -- the title, the author note, the abstract, the impact
 -- statement -- and not one the writer marked so either.
+local depth = 3
+
 local function collect_headings(blocks)
   local out = pandoc.List({})
   pandoc.Blocks(blocks):walk {
     Header = function(h)
-      if h.level > 3 then return nil end
+      if h.level > depth then return nil end
       if h.classes:includes("unlisted") then return nil end
       out:insert(h)
     end
@@ -66,6 +68,7 @@ local function contents_blocks(headings)
 end
 
 function Pandoc(doc)
+  depth = require("utilsapa").toc_depth(doc.meta, 3)
   local headings = collect_headings(doc.blocks)
   local out = pandoc.List({})
   local found = false

@@ -942,11 +942,11 @@
   columns: 1,
 )
 
-#show: document => stu(
-  title: [Typst Student Paper Fixture],
-  authors: ([Sam Student],),
-  runninghead: "STUDENT PAPER",
-  runningauthors: "Student",
+#show: document => man(
+  title: [How Deep the Contents Goes],
+  authors: ([Test Author],),
+  runninghead: "CONTENTS DEPTH",
+  runningauthors: "Author",
   font: (<fonts>),
   numberdepth: 3,
   document,
@@ -954,32 +954,14 @@
 
 /
 /
-#heading(level: 1, outlined: false, numbering: none)[Typst Student Paper Fixture]
+#heading(level: 1, outlined: false, numbering: none)[How Deep the Contents Goes]
 <title>
 #set align(center)
 #block[
 /
-Sam Student
+Test Author
 
-Example University
-
-]
-#set align(left)
-#set align(center)
-#block[
-Introduction to Statistics (EDUC 5101)
-
-]
-#set align(left)
-#set align(center)
-#block[
-Dr.~W. Joel Schneider
-
-]
-#set align(left)
-#set align(center)
-#block[
-December 22, 2026
+Test University
 
 ]
 #set align(left)
@@ -990,21 +972,34 @@ December 22, 2026
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-Correspondence concerning this article should be addressed to Sam Student, Example University, Email: #link("mailto:sam@example.edu")[sam/@example.edu]
+Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
 
 #pagebreak()
 
-#heading(level: 1, outlined: false, numbering: none)[Abstract]
-<abstract>
-#block[
-Exercises Typst student mode (page-number-only header, student title fields).
 
-]
+
+#show outline.entry: it => {show link: set text(fill: black)
+link(it.element.location(),it.indented(none, it.inner(), ))}
+
+#outline(title: [Table of Contents], indent: 1.5em, depth: 2)
+
 #pagebreak()
 
-#heading(level: 1, numbering: none)[Typst Student Paper Fixture]
+#heading(level: 1, numbering: none)[How Deep the Contents Goes]
 <firstheader>
+= Method
+<method>
+== Participants
+<participants>
+=== Recruitment
+<recruitment>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-Body text for the student paper fixture.
+Not listed: toc-depth stops at two.
+
+= Results
+<results>
+
+
+

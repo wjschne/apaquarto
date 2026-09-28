@@ -690,15 +690,11 @@ University Graduate School, following its
 It is manuscript mode with a front matter of its own, and it works in all
 four formats. `dissertation` is accepted as an alias.
 
-**So far this builds the title page, the copyright page, the abstract, the
-dedication, the acknowledgments, the table of contents and the page
-numbering.** The lists of tables, figures and illustrations are not built
-yet.
-
-The pages come in the order the handbook sets --- title, copyright,
-abstract, dedication, acknowledgments, contents --- and each is left out when
-the document gives it nothing to set. The numbering runs on over whatever is
-there.
+The front matter is built for you, in the order the handbook sets it: title,
+copyright, abstract, dedication, acknowledgments, table of contents, and a
+list for each kind of float the document holds. Each page is left out when
+the document gives it nothing to set, and the numbering runs on over whatever
+is there.
 
 The page takes its fields from a `thesis` block:
 
@@ -745,11 +741,6 @@ thesis:
 | `acknowledgments`| The acknowledgments, under a heading of their own.       |
 |                  | `acknowledgements` is read too, and either may be        |
 |                  | written at the top level instead.                        |
-+------------------+----------------------------------------------------------+
-| `contents-depth` | How deep the table of contents goes. `1`, the default,   |
-|                  | lists the chapters and nothing under them; `4` lists     |
-|                  | three levels of subheading, which is as deep as the      |
-|                  | handbook allows.                                         |
 +------------------+----------------------------------------------------------+
 | `committee`      | The examining committee, in order. Each entry takes      |
 |                  | `name`, an optional `role` (`Advisory Chair`,            |
@@ -840,13 +831,18 @@ heading, and leader dots run out to the page numbers.
 Neither the copyright page nor the contents itself is listed, which is what
 the handbook asks.
 
-Subheadings are not listed unless you ask for them. `contents-depth: 2` adds
-one level, and `4` adds the three the handbook allows:
+How deep it goes is quarto's own `toc-depth`, counting levels of heading:
+`1` lists the chapters and nothing under them, `4` adds the three levels of
+subheading the handbook allows, and anything deeper is cut back to four.
+Quarto's default is `3`.
 
 ``` yaml
-thesis:
-  contents-depth: 2
+toc-depth: 1
 ```
+
+The handbook asks that a level listed for one chapter be listed for every
+chapter that has it, which is worth a look before you go deeper than the
+chapters.
 
 A chapter is a level-one heading in the body. In thesis mode a heading
 reading *Introduction* at the head of the body is kept rather than taken out
@@ -858,6 +854,38 @@ set. In .docx they are fields, as the lists of figures and tables are, and
 they are blank until something makes Word paginate: select all and press
 <kbd>F9</kbd>, or print, or export to PDF. .html has no pages, so an entry
 there is the words and a link to them.
+
+## The lists of tables, figures and illustrations
+
+A list is built for every kind of float the document holds --- tables first,
+then figures, then anything the document declared for itself under
+`crossref.custom`. Each stands under a heading of its own, `LIST OF TABLES`
+and the rest, with two column labels over the entries: what the list is of at
+the left margin and `Page` at the right. An entry is the float's number, its
+caption, leader dots and the page.
+
+An illustration is a figure with a word and a count of its own, so it is
+numbered from one rather than continuing after the figures, and its caption
+is set the way a figure's is: the number on a line of its own with the
+caption under it.
+
+``` yaml
+format:
+  apaquarto-pdf:
+    crossref:
+      custom:
+        - kind: float
+          reference-prefix: Illustration
+          key: ill
+          latex-env: illustration
+```
+
+Declare a custom float **in each format block** rather than once for all of
+them. Quarto drops `latex-env` on the way through an extension's shared
+options, and its own LaTeX code then stops on the missing field.
+
+The lists are listed in the table of contents, as the handbook asks, and are
+numbered in the same lower-case roman as the rest of the front matter.
 
 ## Page numbering
 
@@ -881,6 +909,11 @@ Each of these stands on a page of its own, after the abstract, the impact statem
 | Field              | Explanation                                                                                                                                                                                                                                                                                                      |
 +====================+==================================================================================================================================================================================================================================================================================================================+
 | `list-of-contents` | A table of contents, in every format.                                                                                                                                                                                                                                                                            |
+                     |                                                                                                                                                                                                                                                                                                                  |
+                     | How many levels of heading it lists is quarto's `toc-depth`, which                                                                                                                                                                                                                                               |
+                     | is three unless a document says otherwise. Nothing read that field                                                                                                                                                                                                                                               |
+                     | before 6.0.1: .html and .docx counted three levels, the .pdf three,                                                                                                                                                                                                                                              |
+                     | and typst listed every level there was.                                                                                                                                                                                                                                                                          |
 |                    |                                                                                                                                                                                                                                                                                                                  |
 |                    | Each format reaches it differently: typst has an outline of its own, the .pdf has LaTeX's, the .docx is built by hand, and .html has neither pages nor fields, so an entry there is the heading and a link to it.                                                                                                |
 |                    |                                                                                                                                                                                                                                                                                                                  |

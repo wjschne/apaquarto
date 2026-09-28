@@ -64,8 +64,10 @@ local function float_caption(float)
 end
 
 local floats = pandoc.List({})
+local wanted = false
 
 local function note_float(float)
+  if not wanted then return nil end
   if float.identifier == nil or float.identifier == "" then return nil end
   -- A panel of a multipanel float is a float of its own and carries a label,
   -- but a list of figures wants the figure rather than each of its panels.
@@ -80,14 +82,23 @@ local function note_float(float)
   return nil
 end
 
+-- Three passes over the one document: what mode it is in, then the floats,
+-- then the note left in the metadata for thesisfrontmatter.lua. The floats
+-- are read through quarto's own FloatRefTarget rather than walked for, since
+-- a walk does not descend into the nodes quarto adds to the ast.
 return {
   {
+    Meta = function(m)
+      wanted = is_thesis(m)
+      return nil
+    end
+  },
+  { FloatRefTarget = note_float },
+  {
     Pandoc = function(doc)
-      if not is_thesis(doc.meta) then return nil end
-      floats = pandoc.List({})
-      doc.blocks:walk { FloatRefTarget = note_float }
+      if not wanted then return nil end
       doc.meta[kField] = pandoc.MetaList(floats)
       return doc
     end
-  }
+  },
 }

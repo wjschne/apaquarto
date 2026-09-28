@@ -1452,7 +1452,7 @@ return {
       -- given; now that these blocks go in after the split, it is simply
       -- not written.
       if FORMAT:match 'typst' and (PANDOC_WRITER_OPTIONS["table_of_contents"] or wants_contents) then
-        typst_extras:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em)\n\n') })
+        typst_extras:extend({ pandoc.RawBlock('typst', '\n\n#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\nlink(it.element.location(),it.indented(none, it.inner(), ))}\n\n#outline(title: [Table of Contents], indent: 1.5em, depth: ' .. tostring(utilsapa.toc_depth(meta, 3)) .. ')\n\n') })
         if not typst_jou then
           typst_extras:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
         end

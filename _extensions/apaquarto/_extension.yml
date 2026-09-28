@@ -133,6 +133,11 @@ contributes:
           path: apafigtblappendix.lua
         - at: post-quarto
           path: floatwithsubfigure.lua
+        # Note down every float while it can still be read, for the lists
+        # of tables, figures and illustrations a dissertation carries. Before
+        # floatlatex.lua, which turns each one into latex.
+        - at: post-quarto
+          path: thesisfloats.lua
         # Set figures and tables the APA way in latex
         - at: post-quarto
           path: floatlatex.lua

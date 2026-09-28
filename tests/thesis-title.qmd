@@ -13,6 +13,7 @@ dedication: |
 acknowledgments: |
   Thanks to everyone who read a draft.
 bibliography: references.bib
+toc-depth: 1
 documentmode: thesis
 thesis:
   type: Dissertation
@@ -60,8 +61,9 @@ indented.
 The table of contents lists the front matter in capitals, then the chapters
 under a label reading CHAPTER with their arabic numbers, then the back
 matter: the references, and the appendices lettered in the order they are
-mentioned. It lists neither the copyright page nor itself, and it lists no
-subheading unless contents-depth asks for one.
+mentioned. It lists neither the copyright page nor itself, and it lists as many levels
+of heading as toc-depth asks for --- one here, which is the chapters and
+nothing under them, against the three quarto counts by default.
 -->
 
 # Introduction
@@ -88,3 +90,20 @@ The measures.
 # Consent Forms {#apx-consent}
 
 The forms.
+
+## Floats
+
+| A | B |
+|---|---|
+| 1 | 2 |
+
+: A table of two columns. {#tbl-scales}
+
+![A figure of some kind](sampleimage.png){#fig-diagram}
+
+::: {#ill-sketch}
+![](sampleimage.png)
+
+A sketch of the apparatus.
+:::
+

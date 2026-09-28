@@ -149,6 +149,7 @@ end
 -- carries linkcolor, filecolor, citecolor and urlcolor; toccolor it leaves
 -- out, so apaquarto reads it here and the lists honour it.
 local toc_colour = nil
+local toc_depth = nil
 
 local function asked_for_toc_colour(m)
   if m.toccolor == nil then return nil end
@@ -299,6 +300,12 @@ local function meta(m)
   first_page = asked_for_first_page(m)
   m = define_html_colours(m)
   toc_colour = asked_for_toc_colour(m)
+  -- Quarto hands toc-depth to pandoc as a writer option, so it is read from
+  -- there rather than from the metadata. Only a depth that is not the
+  -- article class's own three is written out, so that a document which never
+  -- mentions the field is set exactly as it was before.
+  local depth = utilsapa.toc_depth(m, 3)
+  if depth ~= 3 then toc_depth = depth end
   file_colour = asked_for_file_colour(m)
   if line_numbers then
     quarto.doc.include_text("in-header",
@@ -520,6 +527,12 @@ local function blocks(doc)
   -- lists are apaquarto's own, so honouring it is apaquarto's to do.
   if toc_colour then
     out:insert(raw("\\renewcommand{\\apatoccolor}{" .. toc_colour .. "}"))
+  end
+
+  -- And how deep it goes, which is quarto's toc-depth. The article class
+  -- counts three levels of its own accord and nothing read the field.
+  if toc_depth then
+    out:insert(raw("\\renewcommand{\\apatocdepth}{" .. toc_depth .. "}"))
   end
 
   -- The author note, raised in the first column so that it falls to the foot

@@ -171,6 +171,11 @@ local function collector()
         items:insert({ kind = "contents", entries = entries })
       end
     end,
+    -- The two column labels a list stands under: what the list is of at the
+    -- left margin, and Page at the right.
+    columns = function(left, right)
+      items:insert({ kind = "columns", left = left, right = right })
+    end,
     -- A mark a page can be pointed at, for a contents entry to reference.
     anchor = function(name)
       items:insert({ kind = "anchor", name = name })
@@ -314,6 +319,31 @@ local function contents_page(meta, front, body)
   return items
 end
 
+-- A list of tables, of figures, or of whatever else the document declares.
+--
+-- The same shape as the contents and for the same reason: the handbook asks
+-- for the entries at the left margin with leader dots out to the page
+-- numbers, and a front matter that is consistent with itself is easier to
+-- defend than one that is not. Above the entries stand two column labels ---
+-- what the list is of, and Page.
+--
+-- The heading is the kind in the plural and in capitals: LIST OF TABLES.
+-- language can name it, for a kind whose plural is not its word and an s.
+local function list_page(meta, kind, entries)
+  if #entries == 0 then return nil end
+
+  local key = "thesis-list-of-" .. kind:lower()
+  local heading = language(meta, key,
+    "LIST OF " .. pandoc.text.upper(kind) .. "S")
+
+  local items, add = collector()
+  add.para("center", { text(heading) }, { bold = true })
+  add.gap(kAbstractGap)
+  add.columns(text(kind), text(language(meta, "thesis-page-column", "Page")))
+  add.contents(entries)
+  return items
+end
+
 -- The front matter, page by page. Each page says what margins it is set on
 -- and whether it carries its number; the numbering itself is lower-case
 -- roman throughout, and the body that follows begins again at 1 in arabic.
@@ -434,6 +464,23 @@ local function build_pages(meta, blocks)
     end
   end
 
+  -- The lists come after the contents, and the contents lists them, so each
+  -- one is named and marked before the contents is built.
+  local kinds, floats = thesiscontents.float_kinds(meta)
+  local lists = pandoc.List({})
+  for _, kind in ipairs(kinds) do
+    local items = list_page(meta, kind, floats[kind])
+    if items then
+      local anchor = "apathesis-list-of-" .. kind:lower()
+      items:insert(1, { kind = "anchor", name = anchor })
+      lists:insert(items)
+      front:insert({ kind = "entry", indent = 0, front = true,
+        text = text(language(meta, "thesis-list-of-" .. kind:lower(),
+          "LIST OF " .. pandoc.text.upper(kind) .. "S")),
+        target = anchor })
+    end
+  end
+
   local body = thesiscontents.body_entries(blocks,
     thesiscontents.depth(meta), {
       chapter = text(language(meta, "thesis-chapter-column", "CHAPTER")),
@@ -441,6 +488,7 @@ local function build_pages(meta, blocks)
     })
   local contents = contents_page(meta, front, body)
   if contents then built:insert(contents) end
+  built:extend(lists)
 
   for _, items in ipairs(built) do
     pages:insert({
@@ -568,6 +616,11 @@ local function render_latex(pages)
           "{" .. align .. indent .. "\n" .. body .. "\\par}"))
       elseif item.kind == "anchor" then
         out:insert(raw("latex", "\\label{" .. item.name .. "}"))
+      elseif item.kind == "columns" then
+        set_spacing(false)
+        out:insert(raw("latex", "{\\parindent=0pt\\noindent "
+          .. written(item.left, "latex") .. "\\hfill "
+          .. written(item.right, "latex") .. "\\par}"))
       elseif item.kind == "contents" then
         set_spacing(true)
         for _, entry in ipairs(item.entries) do
@@ -635,7 +688,22 @@ end
 
 local function render_typst(pages)
   local out = pandoc.List({})
-  local helper_written = false
+
+  -- The helper goes in at the head of the document rather than where it is
+  -- first wanted. Each page is set inside a #page block of its own, which is
+  -- a scope: a let written in one of them is not there for the next, and the
+  -- lists of tables and figures that follow the contents could not see it.
+  local wants_helper = false
+  for _, page in ipairs(pages) do
+    for _, item in ipairs(page.items) do
+      if item.kind == "contents" then wants_helper = true end
+    end
+  end
+  if wants_helper then
+    out:insert(raw("typst", (kTypstHelper
+      :gsub("NUMBERCOLUMN", string.format("%.2fin", kNumberColumn))
+      :gsub("LINESPACE", string.format("%.1fpt", kContentsLead)))))
+  end
   for _, page in ipairs(pages) do
     out:insert(raw("typst", string.format(
       "#page(margin: (left: %.2fin, right: %.2fin, top: %.2fin, bottom: %.2fin)%s)[\n",
@@ -675,14 +743,12 @@ local function render_typst(pages)
         out:insert(raw("typst", body))
       elseif item.kind == "anchor" then
         out:insert(raw("typst", "#metadata(none) <" .. item.name .. ">"))
+      elseif item.kind == "columns" then
+        out:insert(raw("typst",
+          "#block(above: " .. string.format("%.1fpt", kContentsLead)
+          .. ", below: 0pt, width: 100%)[" .. written(item.left, "typst")
+          .. " #box(width: 1fr) " .. written(item.right, "typst") .. "]"))
       elseif item.kind == "contents" then
-        if not helper_written then
-          local helper = kTypstHelper
-            :gsub("NUMBERCOLUMN", string.format("%.2fin", kNumberColumn))
-            :gsub("LINESPACE", string.format("%.1fpt", kContentsLead))
-          out:insert(raw("typst", helper))
-          helper_written = true
-        end
         for _, entry in ipairs(item.entries) do
           out:insert(raw("typst", typst_contents_line(entry)))
         end
@@ -727,6 +793,12 @@ local function render_html(pages)
           (item.double and "2" or "1.15") .. '">' .. body .. "</p>"))
       elseif item.kind == "anchor" then
         out:insert(raw("html", '<span id="' .. item.name .. '"></span>'))
+      elseif item.kind == "columns" then
+        out:insert(raw("html",
+          '<p style="margin:0;text-indent:0;display:flex;'
+          .. 'justify-content:space-between"><span>'
+          .. written(item.left, "html") .. "</span><span>"
+          .. written(item.right, "html") .. "</span></p>"))
       elseif item.kind == "contents" then
         -- No pages here, so no page numbers: an entry is the words and a
         -- link to them, which is all a web page can offer.
@@ -913,9 +985,16 @@ end
 local function render_docx(pages)
   local out = pandoc.List({})
   local footers = reference_footers()
+  local pending_anchor = ""
 
   for index, page in ipairs(pages) do
     local pending = 0
+    -- A bookmark waiting for the next paragraph to mark.
+    local function anchors()
+      local held = pending_anchor
+      pending_anchor = ""
+      return held
+    end
     local function properties(extra, double)
       local spacing = string.format(
         '<w:spacing w:before="%d" w:after="0" w:line="%d" w:lineRule="auto"/>',
@@ -934,7 +1013,8 @@ local function render_docx(pages)
         local extra = '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0"'
           .. ' w:color="auto"/></w:pBdr>'
           .. string.format('<w:ind w:left="%d" w:right="%d"/>', inset, inset)
-        out:insert(raw("openxml", "<w:p>" .. properties(extra) .. "</w:p>"))
+        out:insert(raw("openxml",
+          "<w:p>" .. properties(extra) .. anchors() .. "</w:p>"))
       elseif item.kind == "para" then
         local runs = pandoc.List({})
         for i, line in ipairs(item.lines) do
@@ -949,13 +1029,30 @@ local function render_docx(pages)
             twips(item.indent * 72))
         end
         out:insert(raw("openxml",
-          "<w:p>" .. properties(extra, item.double)
+          "<w:p>" .. properties(extra, item.double) .. anchors()
           .. table.concat(runs) .. "</w:p>"))
       elseif item.kind == "anchor" then
-        out:insert(raw("openxml", string.format(
-          '<w:p><w:bookmarkStart w:id="%d" w:name="%s"/>'
-          .. '<w:bookmarkEnd w:id="%d"/></w:p>',
-          bookmark_id(), item.name, bookmark_id(true))))
+        -- Held back rather than set in a paragraph of its own: an empty
+        -- paragraph is a blank line, and the heading under it came out a
+        -- line further down the page than the other formats put it. A
+        -- bookmark may stand inside the paragraph it marks, between the
+        -- properties and the runs, so that is where it goes.
+        pending_anchor = pending_anchor .. string.format(
+          '<w:bookmarkStart w:id="%d" w:name="%s"/>'
+          .. '<w:bookmarkEnd w:id="%d"/>',
+          bookmark_id(), item.name, bookmark_id(true))
+      elseif item.kind == "columns" then
+        local tab = twips(page.measure * 72)
+        local extra = "<w:tabs>"
+          .. string.format('<w:tab w:val="right" w:pos="%d"/>', tab)
+          .. "</w:tabs>"
+        out:insert(raw("openxml", table.concat({
+          "<w:p>", properties(extra), anchors(),
+          docx_runs(item.left, false, false),
+          "<w:r><w:tab/></w:r>",
+          docx_runs(item.right, false, false),
+          "</w:p>",
+        })))
       elseif item.kind == "contents" then
         for _, entry in ipairs(item.entries) do
           out:insert(raw("openxml",
@@ -1017,6 +1114,10 @@ function Pandoc(doc)
   if render == nil then return nil end
 
   local pages = build_pages(doc.meta, doc.blocks)
+  -- What thesisfloats.lua left for this filter is of no use to anything
+  -- downstream, and metadata a writer does not expect is metadata that can
+  -- go wrong.
+  doc.meta[thesiscontents.field] = nil
   if #pages == 0 then return nil end
 
   local blocks = pandoc.List({})

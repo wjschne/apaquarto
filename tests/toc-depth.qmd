@@ -1,0 +1,38 @@
+---
+title: "How Deep the Contents Goes"
+shorttitle: "Contents Depth"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+list-of-contents: true
+toc-depth: 2
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+  apaquarto-html:
+    toc: false
+---
+
+<!--
+toc-depth is quarto's own field and nothing read it: .html and .docx counted
+three levels because that is what was written into them, the .pdf three
+because that is the article class's own, and typst listed every level there
+was. So a contents was a different contents in each of the four, and asking
+for another depth did nothing anywhere.
+
+Two levels here, so the level-three heading is left out of all four.
+-->
+
+# Method
+
+## Participants
+
+### Recruitment
+
+Not listed: toc-depth stops at two.
+
+# Results

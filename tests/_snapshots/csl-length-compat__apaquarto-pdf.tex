@@ -150,6 +150,11 @@
 /definecolor{apatext}{HTML}{000000}
 /newcommand{/apatoccolor}{apatext}
 
+% How many levels of heading the contents lists, which is quarto's
+% toc-depth. The article class counts three of its own accord;
+% formatlatex.lua renews this where a document asks for another number.
+/newcommand{/apatocdepth}{3}
+
 /usepackage{setspace}
 /usepackage{fancyhdr}
 /usepackage{titlesec}
@@ -211,6 +216,14 @@
   /fancyhead[RO]{/thepage}%
   /fancyhead[CE]{{/apaheadsize/apaauthorline}}%
   /fancyhead[CO]{{/apaheadsize/apashorttitle}}}
+
+% The head a student paper carries: the page number and nothing else. APA
+% seventh edition drops the running head from student work, which is what
+% apaquarto's typst format does and what the apa7 class did for the .pdf
+% before 6.0.0 stopped using it. Issue #166.
+/newcommand{/apastudenthead}{%
+  /fancyhf{}%
+  /fancyhead[R]{/thepage}}
 
 % The head a dissertation carries, which is none. The Temple University
 % Graduate School's handbook asks for the page number and nothing else, and
@@ -427,6 +440,7 @@
   /begingroup
   /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
   /renewcommand{/contentsname}{Table of Contents}%
+  /setcounter{tocdepth}{/apatocdepth}%
   /tableofcontents
   /endgroup}
 

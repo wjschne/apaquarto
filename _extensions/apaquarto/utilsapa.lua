@@ -385,6 +385,32 @@ function M.thesis_title_measure()
   return measure(M.thesis_title_margins)
 end
 
+-- How many levels of heading a table of contents lists, which is quarto's
+-- own toc-depth. Nothing read it before: .html and .docx counted three
+-- levels because that is what was written into them, the .pdf three because
+-- that is the article class's own, and typst listed every level there was.
+-- One reading of the field, so that a contents is the same contents in all
+-- four.
+--
+-- Quarto hands it to pandoc as a writer option rather than leaving it in the
+-- metadata --- toc-depth is pandoc's own field, as toc is --- so that is
+-- where it is read from, and the metadata is looked at only for a document
+-- that puts it there itself. Pandoc's own default is three, so a document
+-- that never mentions the field reads three here as well.
+function M.toc_depth(meta, fallback)
+  local written = nil
+  if PANDOC_WRITER_OPTIONS ~= nil then
+    written = PANDOC_WRITER_OPTIONS.toc_depth
+  end
+  if written == nil and meta ~= nil then written = meta["toc-depth"] end
+  if written == nil then return fallback end
+  local depth = tonumber(M.stringify(written))
+  if depth == nil then return fallback end
+  depth = math.floor(depth)
+  if depth < 1 then return 1 end
+  return depth
+end
+
 -- if any value in table
 function M.containsValue(tbl, value)
   for _, v in pairs(tbl) do
