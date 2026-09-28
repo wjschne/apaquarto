@@ -188,6 +188,15 @@
   /fancyhf{}%
   /fancyfoot[C]{/thepage}}
 
+% The leader dots of a table of contents, set closer together than /dotfill
+% sets them. /dotfill leaves 0.44em between dots, which reads as a dotted
+% line rather than as a leader; a contents wants them tighter, and tighter is
+% what the Graduate School's own template shows.
+/makeatletter
+/newcommand{/apadotfill}{%
+  /leavevmode/cleaders/hb@xt@ .3em{/hss./hss}/hfill/kern/z@}
+/makeatother
+
 % Float placement in a published article.
 %
 % A float spanning both columns can only go at the top of a page, at the foot
@@ -710,6 +719,13 @@
   /@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{/apajouparindent}}}
 /makeatother
 /makeatletter
+/@ifpackageloaded{float}{}{/usepackage{float}}
+/floatstyle{plain}
+/@ifundefined{c@chapter}{/newfloat{illustration}{h}{loill}}{/newfloat{illustration}{h}{loill}[chapter]}
+/floatname{illustration}{Illustration}
+/newcommand*/listofillustrations{/listof{illustration}{List of Illustrations}}
+/makeatother
+/makeatletter
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /AtBeginDocument{%
 /ifdefined/contentsname
@@ -833,7 +849,27 @@ All Rights Reserved/par}
 
 /clearpage
 
+/singlespacing
+
+{/centering
+/bfseries TABLE OF CONTENTS/par}
+
+/vspace*{27.6pt}
+
+{/raggedleft
+Page/par}
+
+/doublespacing
+
+{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{INTRODUCTION}/apadotfill/hyperref[introduction]{/pageref{introduction}}/par}
+
+/clearpage
+
 /restoregeometry/doublespacing/pagenumbering{arabic}
+
+/section{Introduction}/label{introduction}
 
 The body begins here.
 

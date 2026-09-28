@@ -992,6 +992,7 @@ All Rights Reserved]
 #[
 #set par(first-line-indent: 0pt, justify: false)
 #set block(spacing: 0pt)
+#metadata(none) <apathesis-abstract>
 #align(center)[#par(leading: 0.65em)[#strong[ABSTRACT]]]
 #v(27.6pt, weak: false)
 An abstract that says what the work found, flush at the margin and double spaced, as the handbook asks.
@@ -1002,14 +1003,109 @@ An abstract that says what the work found, flush at the margin and double spaced
 #[
 #set par(first-line-indent: 0pt, justify: false)
 #set block(spacing: 0pt)
+#metadata(none) <apathesis-dedication>
 #v(164.0pt, weak: false)
 #align(center)[For the committee, who read it all.]
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#metadata(none) <apathesis-acknowledgments>
+#align(center)[#par(leading: 0.65em)[#strong[ACKNOWLEDGMENTS]]]
+#v(27.6pt, weak: false)
+Thanks to everyone who read a draft.
+
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#align(center)[#par(leading: 0.65em)[#strong[TABLE OF CONTENTS]]]
+#v(27.6pt, weak: false)
+#align(right)[#par(leading: 0.65em)[Page]]
+#let apatocline(indent, number, body, target, roman, dots) = context {
+  let found = if target == none { () } else { query(target) }
+  let pg = if found.len() > 0 {
+    let n = counter(page).at(found.first().location()).first()
+    if roman { numbering("i", n) } else { numbering("1", n) }
+  } else { none }
+  block(above: 19.4pt, below: 0pt, inset: (left: indent), width: 100%)[
+    #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { 0.25in })[
+      #if number != none [#box(width: 0.25in)[#number]]
+      #if target == none { body } else { link(target)[#body] }
+      #if dots [#box(width: 1fr, repeat[.]) #pg]
+    ]
+  ]
+}
+#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)
+#apatocline(0.00in, none, [DEDICATION], <apathesis-dedication>, true, true)
+#apatocline(0.00in, none, [ACKNOWLEDGMENTS], <apathesis-acknowledgments>, true, true)
+#apatocline(0.00in, none, [CHAPTER], none, false, false)
+#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)
+#apatocline(0.00in, [2.], [METHOD], <method>, false, true)
+#apatocline(0.00in, none, [REFERENCES], <references>, false, true)
+#apatocline(0.00in, none, [APPENDICES], <apx-measures>, false, true)
+#apatocline(0.00in, [A.], [MEASURES USED], <apx-measures>, false, true)
+#apatocline(0.00in, [B.], [CONSENT FORMS], <apx-consent>, false, true)
 ]
 ]
 
 #set page(numbering: "1")
 #counter(page).update(1)
+= Introduction
+<introduction>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
 The body begins here.
+
+== Background
+<background>
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#v(apafirstparshift)
+Not listed: the contents lists chapters and no deeper unless asked.
+
+= Method
+<method>
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#v(apafirstparshift)
+What was done (#link(<ref-schneiderCattellHornCarrollTheoryCognitive2018>)[Schneider & McGrew, 2018]).
+
+= References
+<references>
+#set par(first-line-indent: 0in, hanging-indent: 0.5in)
+#block[
+#block[
+Schneider, W. J., & McGrew, K. S. (2018). The cattell-horn-carroll theory of cognitive abilities. In D. P. Flanagan & E. M. McDonough (Eds.), #emph[Contemporary intellectual assessment: Theories, tests, and issues] (4th ed., pp. 73--130). Guilford Press. #link("https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030")
+
+] <ref-schneiderCattellHornCarrollTheoryCognitive2018>
+] <refs>
+#set par(first-line-indent: apaparindent(firstlineindent), hanging-indent: 0in)
+#pagebreak(weak: true)
+= Appendix A
+#counter(figure.where(kind: "quarto-float-fig")).update(0)
+#counter(figure.where(kind: "quarto-float-tbl")).update(0)
+#appendixcounter.step()
+= Measures Used
+<apx-measures>
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#v(apafirstparshift)
+The measures.
+
+#pagebreak(weak: true)
+= Appendix B
+#counter(figure.where(kind: "quarto-float-fig")).update(0)
+#counter(figure.where(kind: "quarto-float-tbl")).update(0)
+#appendixcounter.step()
+= Consent Forms
+<apx-consent>
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#v(apafirstparshift)
+The forms.

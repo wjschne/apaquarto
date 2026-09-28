@@ -14,7 +14,8 @@ engine: knitr
 
 # Version 6.0.1
 - 2026-09-26
-- `documentmode: thesis` sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.
+- `documentmode: thesis` sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication, the acknowledgments, the table of contents and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.
+- In thesis mode a heading reading *Introduction* at the head of the body is kept rather than taken out, since a dissertation names its chapters and that heading is the first chapter’s name.
 - In apaquarto-typst, `documentmode: doc` numbers its pages again. The layout told the page it had no footer, which stopped the number it had asked for from being drawn at all.
 - Made both journal modes (apauarto-pdf and apaquarto-typst) fully justified in their body text but not in markdown table text.
 - Added support for list of tables and list of figures in .docx, .typst, and .pdf.

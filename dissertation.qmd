@@ -18,9 +18,11 @@ keywords: [keyword1, keyword2]
 author-note:
   disclosures:
     conflict of interest: The author has no conflict of interest to declare.
-bibliography: bibliography.bib
+bibliography: tests/references.bib
 dedication: |
   For everyone who wondered whether this would ever be finished.
+acknowledgments: |
+  Thanks to my committee, my family, and the coffee shop on Cecil B. Moore.
 documentmode: thesis
 thesis:
   type: Dissertation
@@ -45,19 +47,31 @@ format:
   apaquarto-docx: default
   apaquarto-html: default
 ---
-
-# Chapter 1
-
 # Introduction
 
 The body of the dissertation begins here, on a page of its own.
 
-# Chapter 2
+## Background
+
+Some background.
 
 # Literature Review
 
-# Chapter 3
+What others have found [@schneiderCattellHornCarrollTheoryCognitive2018].
 
 # Methods
 
 Something about the method.
+
+# References
+
+::: {#refs}
+:::
+
+# Measures Used {#apx-measures}
+
+The measures.
+
+# Consent Forms {#apx-consent}
+
+The forms.

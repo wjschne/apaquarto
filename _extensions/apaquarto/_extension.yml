@@ -189,6 +189,12 @@ contributes:
           path: thesisfrontmatter.lua
     native: default
     html:
+      crossref:
+        custom:
+          - kind: float
+            reference-prefix: Illustration
+            key: ill
+            latex-env: illustration
       filters:
         # Place tinytable tables with tbl-align, left by default
         - at: post-quarto
@@ -229,6 +235,12 @@ contributes:
         opts_chunk: 
           dev: svglite
     pdf:
+      crossref:
+        custom:
+          - kind: float
+            reference-prefix: Illustration
+            key: ill
+            latex-env: illustration
       # Plain latex. There is no apa7 class here: the title page, the
       # headings, the running head and the notes below floats arrive as
       # ordinary blocks from the same filters that build the .html, the .docx
@@ -279,6 +291,12 @@ contributes:
         opts_chunk:
           dev: ragg_png
     docx: 
+      crossref:
+        custom:
+          - kind: float
+            reference-prefix: Illustration
+            key: ill
+            latex-env: illustration
       reference-doc: apaquarto.docx
       filters: 
         # Add custom styles to docx
@@ -310,6 +328,12 @@ contributes:
         opts_chunk: 
           dev: ragg_png
     typst:
+      crossref:
+        custom:
+          - kind: float
+            reference-prefix: Illustration
+            key: ill
+            latex-env: illustration
       # Draw R figures with svglite, as the .html format does.
       #
       # Quarto leaves typst on R's own svg device, which draws through cairo,

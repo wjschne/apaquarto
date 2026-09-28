@@ -691,13 +691,14 @@ It is manuscript mode with a front matter of its own, and it works in all
 four formats. `dissertation` is accepted as an alias.
 
 **So far this builds the title page, the copyright page, the abstract, the
-dedication and the page numbering.** The acknowledgments, the table of
-contents with its `CHAPTER` heading and the lists of tables and figures are
-not built yet.
+dedication, the acknowledgments, the table of contents and the page
+numbering.** The lists of tables, figures and illustrations are not built
+yet.
 
-The pages that are built come in the order the handbook sets --- title,
-copyright, abstract, dedication --- and each is left out when the document
-gives it nothing to set. The numbering runs on over whatever is there.
+The pages come in the order the handbook sets --- title, copyright,
+abstract, dedication, acknowledgments, contents --- and each is left out when
+the document gives it nothing to set. The numbering runs on over whatever is
+there.
 
 The page takes its fields from a `thesis` block:
 
@@ -740,6 +741,15 @@ thesis:
 | `dedication`     | The dedication, centred on a page of its own with no     |
 |                  | heading. May also be written as a top-level              |
 |                  | `dedication`, beside `abstract`.                         |
++------------------+----------------------------------------------------------+
+| `acknowledgments`| The acknowledgments, under a heading of their own.       |
+|                  | `acknowledgements` is read too, and either may be        |
+|                  | written at the top level instead.                        |
++------------------+----------------------------------------------------------+
+| `contents-depth` | How deep the table of contents goes. `1`, the default,   |
+|                  | lists the chapters and nothing under them; `4` lists     |
+|                  | three levels of subheading, which is as deep as the      |
+|                  | handbook allows.                                         |
 +------------------+----------------------------------------------------------+
 | `committee`      | The examining committee, in order. Each entry takes      |
 |                  | `name`, an optional `role` (`Advisory Chair`,            |
@@ -791,22 +801,63 @@ block pushed right by the binding margin. That is what the dissertations
 Temple publishes do, and what the Graduate School's own template draws. The
 title is broken against the measure that page has, not the body's.
 
-## The abstract and the dedication
+## The abstract, the dedication and the acknowledgments
 
-The abstract is the document's own `abstract`. It is set under a heading of
-its own, flush at the margin with no first line indented, and double spaced,
-as the handbook asks. It runs as long as it runs and takes a second page if
-it needs one.
+The abstract is the document's own `abstract`, and the acknowledgments are
+`acknowledgments` (or `acknowledgements`). Each is set under a heading of its
+own, in capitals and centred, with the prose flush at the margin, no first
+line indented, and double spaced, as the handbook asks. Either runs as long
+as it runs and takes a second page if it needs one.
 
-The dedication is `dedication`, either at the top level beside `abstract` or
-inside the `thesis` block. It carries no heading and is centred, double
+The dedication is `dedication`. It carries no heading and is centred, double
 spaced, well down its own page.
+
+All three may be written at the top level, beside `abstract`, or inside the
+`thesis` block.
 
 ``` yaml
 abstract: "What the work found."
 dedication: |
   For everyone who wondered whether this would ever be finished.
+acknowledgments: |
+  Thanks to my committee, and to everyone who read a draft.
 ```
+
+The Graduate School's own template sets its abstract and its acknowledgments
+differently from one another --- one begins at the margin and the other is
+indented, and the air under the heading is not the same on both. apaquarto
+sets them alike.
+
+## The table of contents
+
+The contents lists the front matter in capitals --- the abstract, the
+dedication, the acknowledgments --- then the chapters under a column label
+reading `CHAPTER`, each with its arabic number and its title in capitals, and
+then the back matter: the references, and the appendices, lettered in the
+order they are mentioned. `Page` stands at the right margin under the
+heading, and leader dots run out to the page numbers.
+
+Neither the copyright page nor the contents itself is listed, which is what
+the handbook asks.
+
+Subheadings are not listed unless you ask for them. `contents-depth: 2` adds
+one level, and `4` adds the three the handbook allows:
+
+``` yaml
+thesis:
+  contents-depth: 2
+```
+
+A chapter is a level-one heading in the body. In thesis mode a heading
+reading *Introduction* at the head of the body is kept rather than taken out
+--- a dissertation's chapters are named, and that heading is the first
+chapter's name.
+
+In the .pdf and in typst the page numbers are worked out as the document is
+set. In .docx they are fields, as the lists of figures and tables are, and
+they are blank until something makes Word paginate: select all and press
+<kbd>F9</kbd>, or print, or export to PDF. .html has no pages, so an entry
+there is the words and a link to them.
 
 ## Page numbering
 

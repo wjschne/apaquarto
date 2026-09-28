@@ -22,6 +22,7 @@
 
 local utilsapa = require("utilsapa")
 local thesistitle = require("thesistitle")
+local thesiscontents = require("thesiscontents")
 local stringify = utilsapa.stringify
 
 -- The margins the handbook asks for, which every page but the first takes.
@@ -58,6 +59,15 @@ local kAbstractGap = 27.6
 -- page of its own rather than as a heading, which is where the Graduate
 -- School's template puts it.
 local kCopyrightDrop = 289
+-- The column of page numbers is at the right margin and the leader dots run
+-- out to meet it, so a line of the contents is as wide as the measure.
+local kNumberColumn = 0.25   -- inches from a chapter number to its title
+local kSubheadingStep = 0.5  -- inches a level of subheading is indented
+-- A line of the contents is a block of its own, and typst measures such a
+-- block by the glyphs in it rather than by the line it sits on --- about 8
+-- points at 12pt Times --- so the space above it is what settles how far
+-- apart two entries are. This leaves a double-spaced line between them.
+local kContentsLead = kDoubleSpace - 8.2
 
 local function language(meta, key, fallback)
   if meta.language and meta.language[key] then
@@ -152,6 +162,18 @@ local function collector()
           indent = options.indent })
       end
       return #kept > 0
+    end,
+    -- The lines of a table of contents, each with its leader dots and the
+    -- page it points at. What the entries are is thesiscontents.lua's; how
+    -- they are set is each format's.
+    contents = function(entries)
+      if entries and #entries > 0 then
+        items:insert({ kind = "contents", entries = entries })
+      end
+    end,
+    -- A mark a page can be pointed at, for a contents entry to reference.
+    anchor = function(name)
+      items:insert({ kind = "anchor", name = name })
     end,
     -- Prose that flows, rather than lines set where they are put: the
     -- abstract, which runs as long as it runs and may take a second page.
@@ -270,6 +292,28 @@ local function copyright_page(meta)
   return items
 end
 
+-- The table of contents.
+--
+-- "Page" stands at the right margin under the heading, the front matter is
+-- listed first, then the chapters under a label reading CHAPTER, then the
+-- back matter. The copyright page is not listed and neither is this page,
+-- which is what the handbook asks.
+local function contents_page(meta, front, body)
+  if #front == 0 and #body == 0 then return nil end
+
+  local items, add = collector()
+  add.para("center", { text(language(meta, "thesis-contents",
+    "TABLE OF CONTENTS")) }, { bold = true })
+  add.gap(kAbstractGap)
+  add.para("right", { text(language(meta, "thesis-page-column", "Page")) })
+
+  local entries = pandoc.List({})
+  entries:extend(front)
+  entries:extend(body)
+  add.contents(entries)
+  return items
+end
+
 -- The front matter, page by page. Each page says what margins it is set on
 -- and whether it carries its number; the numbering itself is lower-case
 -- roman throughout, and the body that follows begins again at 1 in arabic.
@@ -287,20 +331,43 @@ local function prose(value)
   return pandoc.Blocks({ pandoc.Para(pandoc.Inlines(value)) })
 end
 
--- The abstract, under a heading of its own, double spaced and running as
--- long as it runs. apastriptitle.lua keeps a copy in apaabstract, which is
--- the one to read: the .docx has its abstract taken off the metadata so that
--- pandoc does not set one of its own.
-local function abstract_page(meta)
-  local blocks = prose(meta.apaabstract or meta.abstract)
+-- A page of prose under a heading of its own: the abstract, and the
+-- acknowledgments after it. The heading is in capitals and centred, a blank
+-- double-spaced line stands under it, and the prose runs as long as it runs
+-- and takes a second page where it needs one.
+--
+-- The Graduate School's own template sets these two pages differently from
+-- one another --- its abstract begins at the margin and its acknowledgments
+-- are indented, and the air under the heading is not the same on both. They
+-- are set alike here: a front matter that is consistent with itself is
+-- easier to defend than one that copies a template's slips.
+local function prose_page(written, heading)
+  local blocks = prose(written)
   if blocks == nil then return nil end
 
   local items, add = collector()
-  add.para("center",
-    { text(language(meta, "thesis-abstract", "ABSTRACT")) }, { bold = true })
+  add.para("center", { text(heading) }, { bold = true })
   add.gap(kAbstractGap)
   add.blocks(blocks)
   return items
+end
+
+-- apastriptitle.lua keeps a copy of the abstract in apaabstract, which is the
+-- one to read: the .docx has its abstract taken off the metadata so that
+-- pandoc does not set one of its own.
+local function abstract_page(meta)
+  return prose_page(meta.apaabstract or meta.abstract,
+    language(meta, "thesis-abstract", "ABSTRACT"))
+end
+
+-- Acknowledgments, which the Graduate School spells without an e in the
+-- middle. The field is read either way, since a writer may not.
+local function acknowledgments_page(meta)
+  local thesis = meta.thesis
+  local written = meta.acknowledgments or meta.acknowledgements
+    or (thesis and (thesis.acknowledgments or thesis.acknowledgements))
+  return prose_page(written,
+    language(meta, "thesis-acknowledgments", "ACKNOWLEDGMENTS"))
 end
 
 -- The dedication, which carries no heading: it is a page with a line or two
@@ -322,7 +389,7 @@ local function dedication_page(meta)
   return items
 end
 
-local function build_pages(meta)
+local function build_pages(meta, blocks)
   local pages = pandoc.List({})
   local title = title_page(meta)
   if #title > 0 then
@@ -334,19 +401,54 @@ local function build_pages(meta)
       items = title,
     })
   end
+
   -- The order the handbook sets for the front matter: the copyright page,
-  -- the abstract, the dedication. Each is left out when the document gives
-  -- it nothing to set, and the numbering runs on over whatever is there.
-  for _, build in ipairs({ copyright_page, abstract_page, dedication_page }) do
-    local items = build(meta)
+  -- the abstract, the dedication, the acknowledgments, the contents. Each is
+  -- left out when the document gives it nothing to set, and the numbering
+  -- runs on over whatever is there.
+  --
+  -- The copyright page is not listed in the contents and the contents does
+  -- not list itself, so those two carry no anchor and no entry of their own.
+  local specs = {
+    { build = copyright_page },
+    { build = abstract_page, anchor = "apathesis-abstract",
+      listed = "thesis-abstract", fallback = "ABSTRACT" },
+    { build = dedication_page, anchor = "apathesis-dedication",
+      listed = "thesis-dedication", fallback = "DEDICATION" },
+    { build = acknowledgments_page, anchor = "apathesis-acknowledgments",
+      listed = "thesis-acknowledgments", fallback = "ACKNOWLEDGMENTS" },
+  }
+
+  local front = pandoc.List({})
+  local built = pandoc.List({})
+  for _, spec in ipairs(specs) do
+    local items = spec.build(meta)
     if items and #items > 0 then
-      pages:insert({
-        margins = kMargins,
-        measure = kBodyMeasureInches,
-        numbered = true,
-        items = items,
-      })
+      if spec.anchor then
+        items:insert(1, { kind = "anchor", name = spec.anchor })
+        front:insert({ kind = "entry", indent = 0, front = true,
+          text = text(language(meta, spec.listed, spec.fallback)),
+          target = spec.anchor })
+      end
+      built:insert(items)
     end
+  end
+
+  local body = thesiscontents.body_entries(blocks,
+    thesiscontents.depth(meta), {
+      chapter = text(language(meta, "thesis-chapter-column", "CHAPTER")),
+      appendices = text(language(meta, "thesis-appendices", "APPENDICES")),
+    })
+  local contents = contents_page(meta, front, body)
+  if contents then built:insert(contents) end
+
+  for _, items in ipairs(built) do
+    pages:insert({
+      margins = kMargins,
+      measure = kBodyMeasureInches,
+      numbered = true,
+      items = items,
+    })
   end
   return pages
 end
@@ -381,6 +483,39 @@ end
 --
 -- A change of geometry puts the spacing back to the document's, so the state
 -- is forgotten whenever the geometry changes and asked for again.
+-- One line of the contents: the number in a box of its own so that every
+-- title begins at the same place, the title, the leader dots, and the page.
+-- The left skip takes in the width of the number box and the number is set
+-- back into it, so that a title too long for its line turns over under its
+-- own first word rather than under the number.
+local function latex_contents_line(entry)
+  local indent = entry.indent * kSubheadingStep
+  if entry.kind == "label" then
+    return string.format(
+      "{\\parindent=0pt\\leftskip=%.2fin\\noindent %s\\par}",
+      indent, written(entry.text, "latex"))
+  end
+
+  local number, back = "", ""
+  if entry.number then
+    number = string.format("\\makebox[%.2fin][l]{%s}",
+      kNumberColumn, entry.number)
+    back = string.format("\\hspace*{-%.2fin}", kNumberColumn)
+    indent = indent + kNumberColumn
+  end
+
+  local body = written(entry.text, "latex")
+  local page = ""
+  if entry.target then
+    body = "\\hyperref[" .. entry.target .. "]{" .. body .. "}"
+    page = "\\apadotfill\\hyperref[" .. entry.target .. "]{\\pageref{"
+      .. entry.target .. "}}"
+  end
+  return string.format(
+    "{\\parindent=0pt\\leftskip=%.2fin\\noindent%s%s%s%s\\par}",
+    indent, back, number, body, page)
+end
+
 local function render_latex(pages)
   local out = pandoc.List({})
   -- No running head, the page number at the centre of the foot, and the
@@ -425,11 +560,19 @@ local function render_latex(pages)
         local body = table.concat(lines, "\\\\\n")
         if item.bold then body = "\\bfseries " .. body end
         local align = item.align == "center" and "\\centering"
+          or item.align == "right" and "\\raggedleft"
           or "\\raggedright\\noindent"
         local indent = item.indent
           and string.format("\\leftskip=%.2fin\\relax", item.indent) or ""
         out:insert(raw("latex",
           "{" .. align .. indent .. "\n" .. body .. "\\par}"))
+      elseif item.kind == "anchor" then
+        out:insert(raw("latex", "\\label{" .. item.name .. "}"))
+      elseif item.kind == "contents" then
+        set_spacing(true)
+        for _, entry in ipairs(item.entries) do
+          out:insert(raw("latex", latex_contents_line(entry)))
+        end
       elseif item.kind == "blocks" then
         -- Prose, which the handbook asks to be double spaced. The first line
         -- is not indented: an abstract begins at the margin, which is where
@@ -456,8 +599,43 @@ end
 -- and for the title page no footer at all, which is what leaves it
 -- unnumbered. What comes after begins a new page, so no page break has to be
 -- written.
+-- typst is told where an entry points and works the page out for itself, at
+-- the place that label stands. The front matter is numbered in roman and the
+-- body in arabic, and the counter restarts between them, so which of the two
+-- a page takes is said here rather than read off the counter.
+local kTypstHelper = [==[
+#let apatocline(indent, number, body, target, roman, dots) = context {
+  let found = if target == none { () } else { query(target) }
+  let pg = if found.len() > 0 {
+    let n = counter(page).at(found.first().location()).first()
+    if roman { numbering("i", n) } else { numbering("1", n) }
+  } else { none }
+  block(above: LINESPACE, below: 0pt, inset: (left: indent), width: 100%)[
+    #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { NUMBERCOLUMN })[
+      #if number != none [#box(width: NUMBERCOLUMN)[#number]]
+      #if target == none { body } else { link(target)[#body] }
+      #if dots [#box(width: 1fr, repeat[.]) #pg]
+    ]
+  ]
+}
+]==]
+
+local function typst_contents_line(entry)
+  local indent = string.format("%.2fin", entry.indent * kSubheadingStep)
+  local body = written(entry.text, "typst")
+  if entry.kind == "label" then
+    return "#apatocline(" .. indent .. ", none, [" .. body ..
+      "], none, false, false)"
+  end
+  local number = entry.number and ("[" .. entry.number .. "]") or "none"
+  local target = entry.target and ("<" .. entry.target .. ">") or "none"
+  return "#apatocline(" .. indent .. ", " .. number .. ", [" .. body ..
+    "], " .. target .. ", " .. tostring(entry.front == true) .. ", true)"
+end
+
 local function render_typst(pages)
   local out = pandoc.List({})
+  local helper_written = false
   for _, page in ipairs(pages) do
     out:insert(raw("typst", string.format(
       "#page(margin: (left: %.2fin, right: %.2fin, top: %.2fin, bottom: %.2fin)%s)[\n",
@@ -495,6 +673,19 @@ local function render_typst(pages)
             .. body .. "]"
         end
         out:insert(raw("typst", body))
+      elseif item.kind == "anchor" then
+        out:insert(raw("typst", "#metadata(none) <" .. item.name .. ">"))
+      elseif item.kind == "contents" then
+        if not helper_written then
+          local helper = kTypstHelper
+            :gsub("NUMBERCOLUMN", string.format("%.2fin", kNumberColumn))
+            :gsub("LINESPACE", string.format("%.1fpt", kContentsLead))
+          out:insert(raw("typst", helper))
+          helper_written = true
+        end
+        for _, entry in ipairs(item.entries) do
+          out:insert(raw("typst", typst_contents_line(entry)))
+        end
       elseif item.kind == "blocks" then
         out:extend(item.blocks)
       end
@@ -534,6 +725,21 @@ local function render_html(pages)
         out:insert(raw("html", '<p style="text-align:' .. item.align ..
           ";margin:0" .. indent .. ";text-indent:0;line-height:" ..
           (item.double and "2" or "1.15") .. '">' .. body .. "</p>"))
+      elseif item.kind == "anchor" then
+        out:insert(raw("html", '<span id="' .. item.name .. '"></span>'))
+      elseif item.kind == "contents" then
+        -- No pages here, so no page numbers: an entry is the words and a
+        -- link to them, which is all a web page can offer.
+        for _, entry in ipairs(item.entries) do
+          local body = written(entry.text, "html")
+          if entry.number then body = entry.number .. " " .. body end
+          if entry.target then
+            body = '<a href="#' .. entry.target .. '">' .. body .. "</a>"
+          end
+          out:insert(raw("html", string.format(
+            '<p style="margin:0;text-indent:0;margin-left:%.2fin">%s</p>',
+            entry.indent * kSubheadingStep, body)))
+        end
       elseif item.kind == "blocks" then
         out:extend(item.blocks)
       end
@@ -642,6 +848,68 @@ local function docx_section(page, footers, start)
   })
 end
 
+-- Word will not tell anything the page it is on except through a field, so
+-- an entry carries a PAGEREF just as the lists of figures and tables do. It
+-- is not marked dirty: word runs a dirty field while it is loading, before
+-- it has laid the pages out, and every answer comes back 1 and stays there.
+-- The number arrives the moment anything makes word paginate --- select all
+-- and press F9, or print, or export to pdf --- which is what the notice
+-- docxcontents.lua prints is about.
+--
+-- A bookmark name longer than forty characters is not one word will take, so
+-- pandoc hashes it, and a link here has to ask for the same name.
+local function bookmark_name(identifier)
+  if #identifier <= 40 then return identifier end
+  return "X" .. pandoc.utils.sha1(identifier):sub(2)
+end
+
+local next_bookmark = 8000
+local function bookmark_id(same)
+  if not same then next_bookmark = next_bookmark + 1 end
+  return next_bookmark
+end
+
+local function docx_contents_line(entry, measure)
+  local indent = twips(entry.indent * kSubheadingStep * 72)
+  local hanging = entry.number and twips(kNumberColumn * 72) or 0
+  local tab = twips(measure * 72) - indent
+
+  local properties = string.format(
+    '<w:spacing w:before="0" w:after="0" w:line="480" w:lineRule="auto"/>'
+    .. '<w:ind w:left="%d" w:hanging="%d"/>', indent + hanging, hanging)
+  if entry.kind ~= "label" then
+    properties = properties .. "<w:tabs>"
+      .. (entry.number and string.format(
+        '<w:tab w:val="left" w:pos="%d"/>', indent + hanging) or "")
+      .. string.format(
+        '<w:tab w:val="right" w:leader="dot" w:pos="%d"/>', tab)
+      .. "</w:tabs>"
+  end
+
+  local body = docx_runs(entry.text, false, false)
+  if entry.number then
+    body = docx_runs(pandoc.Inlines({ pandoc.Str(entry.number) }), false, false)
+      .. "<w:r><w:tab/></w:r>" .. body
+  end
+
+  if entry.kind == "label" or entry.target == nil then
+    return "<w:p><w:pPr>" .. properties .. "</w:pPr>" .. body .. "</w:p>"
+  end
+
+  local anchor = xml_escape(bookmark_name(entry.target))
+  return table.concat({
+    "<w:p><w:pPr>", properties, "</w:pPr>",
+    '<w:hyperlink w:anchor="', anchor, '">', body, "</w:hyperlink>",
+    "<w:r><w:tab/></w:r>",
+    '<w:r><w:fldChar w:fldCharType="begin"/></w:r>',
+    '<w:r><w:instrText xml:space="preserve"> PAGEREF ', anchor,
+    ' \\h </w:instrText></w:r>',
+    '<w:r><w:fldChar w:fldCharType="separate"/></w:r>',
+    '<w:r><w:fldChar w:fldCharType="end"/></w:r>',
+    "</w:p>",
+  })
+end
+
 local function render_docx(pages)
   local out = pandoc.List({})
   local footers = reference_footers()
@@ -673,8 +941,9 @@ local function render_docx(pages)
           if i > 1 then runs:insert("<w:r><w:br/></w:r>") end
           runs:insert(docx_runs(line, item.bold, false))
         end
-        local extra = item.align == "center"
-          and '<w:jc w:val="center"/>' or '<w:jc w:val="left"/>'
+        local extra = string.format('<w:jc w:val="%s"/>',
+          item.align == "center" and "center"
+            or item.align == "right" and "right" or "left")
         if item.indent then
           extra = extra .. string.format('<w:ind w:left="%d"/>',
             twips(item.indent * 72))
@@ -682,6 +951,16 @@ local function render_docx(pages)
         out:insert(raw("openxml",
           "<w:p>" .. properties(extra, item.double)
           .. table.concat(runs) .. "</w:p>"))
+      elseif item.kind == "anchor" then
+        out:insert(raw("openxml", string.format(
+          '<w:p><w:bookmarkStart w:id="%d" w:name="%s"/>'
+          .. '<w:bookmarkEnd w:id="%d"/></w:p>',
+          bookmark_id(), item.name, bookmark_id(true))))
+      elseif item.kind == "contents" then
+        for _, entry in ipairs(item.entries) do
+          out:insert(raw("openxml",
+            docx_contents_line(entry, page.measure)))
+        end
       elseif item.kind == "blocks" then
         -- Prose word sets for itself. A gap standing before it is carried by
         -- an empty paragraph, since the blocks are not ours to give
@@ -737,7 +1016,7 @@ function Pandoc(doc)
   local render = FORMAT:match("typst") and render_typst or renderers[FORMAT]
   if render == nil then return nil end
 
-  local pages = build_pages(doc.meta)
+  local pages = build_pages(doc.meta, doc.blocks)
   if #pages == 0 then return nil end
 
   local blocks = pandoc.List({})

@@ -189,6 +189,15 @@
   /fancyhf{}%
   /fancyfoot[C]{/thepage}}
 
+% The leader dots of a table of contents, set closer together than /dotfill
+% sets them. /dotfill leaves 0.44em between dots, which reads as a dotted
+% line rather than as a leader; a contents wants them tighter, and tighter is
+% what the Graduate School's own template shows.
+/makeatletter
+/newcommand{/apadotfill}{%
+  /leavevmode/cleaders/hb@xt@ .3em{/hss./hss}/hfill/kern/z@}
+/makeatother
+
 % Float placement in a published article.
 %
 % A float spanning both columns can only go at the top of a page, at the foot
@@ -709,6 +718,13 @@
 /makeatletter
 /newcommand{/apajouhangindent}{%
   /@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{/apajouparindent}}}
+/makeatother
+/makeatletter
+/@ifpackageloaded{float}{}{/usepackage{float}}
+/floatstyle{plain}
+/@ifundefined{c@chapter}{/newfloat{illustration}{h}{loill}}{/newfloat{illustration}{h}{loill}[chapter]}
+/floatname{illustration}{Illustration}
+/newcommand*/listofillustrations{/listof{illustration}{List of Illustrations}}
 /makeatother
 /makeatletter
 /@ifpackageloaded{caption}{}{/usepackage{caption}}

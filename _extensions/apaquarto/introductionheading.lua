@@ -15,6 +15,11 @@
 -- appendix, a supplement -- and is the writer's business rather than APA's.
 --
 -- Set keep-introduction-heading: true to leave it alone.
+--
+-- documentmode: thesis leaves it alone of its own accord. A dissertation is
+-- set in chapters and its table of contents lists them by name, so the
+-- heading that opens the first one is the chapter's title rather than a
+-- label APA would object to. Taking it out cost the first chapter its name.
 
 local kOption = "keep-introduction-heading"
 local kLanguage = "section-title-introduction"
@@ -40,6 +45,10 @@ local function normalize(text)
 end
 
 local function meta(m)
+  if m.documentmode ~= nil
+      and pandoc.utils.stringify(m.documentmode) == "thesis" then
+    keep = true
+  end
   if m[kOption] ~= nil then
     keep = pandoc.utils.stringify(m[kOption]) ~= "false"
   end

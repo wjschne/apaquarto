@@ -966,6 +966,22 @@
         - '\bfseries ABSTRACT\par}'
         - '{\setlength{\parindent}{0pt}'
         - 'For the committee, who read it all.\par}'
+        # The acknowledgments, set like the abstract: a heading in capitals
+        # and prose flush at the margin under it.
+        - '\bfseries ACKNOWLEDGMENTS\par}'
+        - 'Thanks to everyone who read a draft.'
+        # The contents: the front matter in capitals, the chapters under a
+        # label reading CHAPTER with their arabic numbers, and the back
+        # matter --- the references, and the appendices lettered in the
+        # order they are mentioned. The copyright page is not listed and
+        # neither is the contents itself.
+        - '\bfseries TABLE OF CONTENTS\par}'
+        - '\hyperref[apathesis-abstract]{ABSTRACT}\apadotfill'
+        - '\makebox[0.25in][l]{1.}\hyperref[introduction]{INTRODUCTION}'
+        - '\makebox[0.25in][l]{2.}\hyperref[method]{METHOD}'
+        - '\hyperref[references]{REFERENCES}'
+        - '\makebox[0.25in][l]{A.}\hyperref[apx-measures]{MEASURES USED}'
+        - '\makebox[0.25in][l]{B.}\hyperref[apx-consent]{CONSENT FORMS}'
         # The spacing is set between the blocks rather than inside them:
         # setspace works the stretch into the size command, and a stretch
         # asked for inside the group that holds a paragraph does not reach
@@ -987,10 +1003,15 @@
         # it is here. Its definition in apalatex.tex is always written out;
         # a call to it is what would mean the page was built.
         - '\apatitlepageheading{'
+        # A subheading is listed only where contents-depth asks for one, and
+        # the copyright page is never listed in the contents.
+        - 'Background}\apadotfill'
+        - 'Copyright}\apadotfill'
       count:
-        # Two pages of front matter: the title page and the copyright page.
+        # Six pages of front matter: the title page, the copyright page, the
+        # abstract, the dedication, the acknowledgments and the contents.
         - text: '\clearpage'
-          times: 2
+          times: 6
 
 - fixture: thesis-title.qmd
   to: apaquarto-typst
@@ -1011,6 +1032,15 @@
         - '#pad(left: 0.50in)'
         - '#strong[ABSTRACT]'
         - 'For the committee, who read it all.'
+        - '#strong[ACKNOWLEDGMENTS]'
+        # The contents, whose page numbers typst works out for itself at the
+        # place each label stands: roman for the front matter, arabic for the
+        # body, since the counter restarts between them.
+        - '#strong[TABLE OF CONTENTS]'
+        - '#apatocline(0.00in, none, [CHAPTER], none, false, false)'
+        - '#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)'
+        - '#apatocline(0.00in, [A.], [MEASURES USED], <apx-measures>, false, true)'
+        - '#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)'
     pdf:
       contains:
         - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
@@ -1018,6 +1048,7 @@
         - 'Outside Name, External Member, Another University'
         - 'All Rights Reserved'
         - 'An abstract that says what the work found'
+        - 'Thanks to everyone who read a draft.'
         - 'For the committee, who read it all.'
 
 - fixture: thesis-title.qmd
@@ -1045,12 +1076,24 @@
         # which is the one with no first line indented.
         - '<w:ind w:left="720"/>'
         - '<w:pStyle w:val="AbstractFirstParagraph" />'
+        # A contents entry is a link to a bookmark and a PAGEREF field for
+        # the page it is on, with a right tab and dot leaders between them.
+        # Nothing else in a .docx knows where word will break the pages.
+        - '<w:tab w:val="right" w:leader="dot" w:pos="8640"/>'
+        - '<w:hyperlink w:anchor="apathesis-abstract">'
+        - ' PAGEREF apathesis-abstract \h '
+        - ' PAGEREF apx-consent \h '
+        # And the front matter pages carry the bookmarks those point at.
+        - '<w:bookmarkStart w:id="8001" w:name="apathesis-abstract"/>'
     docx:
       contains:
         - 'Examining Committee Members:'
         - 'Mentor Name, Advisory Chair, TU Department'
         - 'All Rights Reserved'
         - 'For the committee, who read it all.'
+        - 'Thanks to everyone who read a draft.'
+        - 'TABLE OF CONTENTS'
+        - 'CHAPTER'
 
 - fixture: thesis-title.qmd
   to: apaquarto-html
@@ -1060,6 +1103,10 @@
         - 'thesis-front-matter-page'
         - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
         - 'Examining Committee Members:'
+        # There are no pages here, so a contents entry is the words and a
+        # link to them and nothing more.
+        - 'TABLE OF CONTENTS'
+        - '<a href="#apx-measures">A. MEASURES USED</a>'
 
 - fixture: thesis-title-breaks.qmd
   to: apaquarto-pdf

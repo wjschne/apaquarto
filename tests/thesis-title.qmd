@@ -10,6 +10,9 @@ author:
 abstract: "An abstract that says what the work found, flush at the margin and double spaced, as the handbook asks."
 dedication: |
   For the committee, who read it all.
+acknowledgments: |
+  Thanks to everyone who read a draft.
+bibliography: references.bib
 documentmode: thesis
 thesis:
   type: Dissertation
@@ -53,8 +56,35 @@ the body, which begins again at 1 in arabic.
 The examining committee begins where the rules above it begin rather than out
 at the margin, and the abstract begins at the margin with no first line
 indented.
+
+The table of contents lists the front matter in capitals, then the chapters
+under a label reading CHAPTER with their arabic numbers, then the back
+matter: the references, and the appendices lettered in the order they are
+mentioned. It lists neither the copyright page nor itself, and it lists no
+subheading unless contents-depth asks for one.
 -->
 
 # Introduction
 
 The body begins here.
+
+## Background
+
+Not listed: the contents lists chapters and no deeper unless asked.
+
+# Method
+
+What was done [@schneiderCattellHornCarrollTheoryCognitive2018].
+
+# References
+
+::: {#refs}
+:::
+
+# Measures Used {#apx-measures}
+
+The measures.
+
+# Consent Forms {#apx-consent}
+
+The forms.

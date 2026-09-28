@@ -85,6 +85,39 @@
 /makeatother
 
 
+% definitions for citeproc citations
+/NewDocumentCommand/citeproctext{}{}
+/NewDocumentCommand/citeproc{mm}{%
+  /begingroup/def/citeproctext{#2}/cite{#1}/endgroup}
+/makeatletter
+ % allow citations to break across lines
+ /let/@cite@ofmt/@firstofone
+ % avoid brackets around text for /cite:
+ /def/@biblabel#1{}
+ /def/@cite#1#2{{#1/if@tempswa , #2/fi}}
+/makeatother
+/newlength{/cslhangindent}
+/setlength{/cslhangindent}{1.5em}
+/newlength{/csllabelwidth}
+/setlength{/csllabelwidth}{3em}
+/newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {/begin{list}{}{%
+  /setlength{/itemindent}{0pt}
+  /setlength{/leftmargin}{0pt}
+  /setlength{/parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  /ifodd #1
+   /setlength{/leftmargin}{/cslhangindent}
+   /setlength{/itemindent}{-1/cslhangindent}
+  /fi
+  % set entry spacing
+  /setlength{/itemsep}{#2/baselineskip}}}
+ {/end{list}}
+/usepackage{calc}
+/newcommand{/CSLBlock}[1]{/hfill/break/parbox[t]{/linewidth}{/strut/ignorespaces#1/strut}}
+/newcommand{/CSLLeftMargin}[1]{/parbox[t]{/csllabelwidth}{/strut#1/strut}}
+/newcommand{/CSLRightInline}[1]{/parbox[t]{/linewidth - /csllabelwidth}{/strut#1/strut}}
+/newcommand{/CSLIndent}[1]{/hspace{/cslhangindent}#1}
 
 
 
@@ -187,6 +220,15 @@
 /newcommand{/apathesishead}{%
   /fancyhf{}%
   /fancyfoot[C]{/thepage}}
+
+% The leader dots of a table of contents, set closer together than /dotfill
+% sets them. /dotfill leaves 0.44em between dots, which reads as a dotted
+% line rather than as a leader; a contents wants them tighter, and tighter is
+% what the Graduate School's own template shows.
+/makeatletter
+/newcommand{/apadotfill}{%
+  /leavevmode/cleaders/hb@xt@ .3em{/hss./hss}/hfill/kern/z@}
+/makeatother
 
 % Float placement in a published article.
 %
@@ -710,6 +752,13 @@
   /@ifundefined{cslhangindent}{}{/setlength{/cslhangindent}{/apajouparindent}}}
 /makeatother
 /makeatletter
+/@ifpackageloaded{float}{}{/usepackage{float}}
+/floatstyle{plain}
+/@ifundefined{c@chapter}{/newfloat{illustration}{h}{loill}}{/newfloat{illustration}{h}{loill}[chapter]}
+/floatname{illustration}{Illustration}
+/newcommand*/listofillustrations{/listof{illustration}{List of Illustrations}}
+/makeatother
+/makeatletter
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /AtBeginDocument{%
 /ifdefined/contentsname
@@ -846,6 +895,8 @@ All Rights Reserved/par}
 
 /clearpage
 
+/label{apathesis-abstract}
+
 /singlespacing
 
 {/centering
@@ -864,6 +915,8 @@ double spaced, as the handbook asks.
 
 /clearpage
 
+/label{apathesis-dedication}
+
 /vspace*{164.0pt}
 
 {/centering
@@ -871,9 +924,99 @@ For the committee, who read it all./par}
 
 /clearpage
 
+/label{apathesis-acknowledgments}
+
+/singlespacing
+
+{/centering
+/bfseries ACKNOWLEDGMENTS/par}
+
+/vspace*{27.6pt}
+
+/doublespacing
+
+{/setlength{/parindent}{0pt}
+
+Thanks to everyone who read a draft.
+
+}
+
+/clearpage
+
+/singlespacing
+
+{/centering
+/bfseries TABLE OF CONTENTS/par}
+
+/vspace*{27.6pt}
+
+{/raggedleft
+Page/par}
+
+/doublespacing
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-abstract]{ABSTRACT}/apadotfill/hyperref[apathesis-abstract]{/pageref{apathesis-abstract}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-dedication]{DEDICATION}/apadotfill/hyperref[apathesis-dedication]{/pageref{apathesis-dedication}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-acknowledgments]{ACKNOWLEDGMENTS}/apadotfill/hyperref[apathesis-acknowledgments]{/pageref{apathesis-acknowledgments}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{INTRODUCTION}/apadotfill/hyperref[introduction]{/pageref{introduction}}/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{2.}/hyperref[method]{METHOD}/apadotfill/hyperref[method]{/pageref{method}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[references]{REFERENCES}/apadotfill/hyperref[references]{/pageref{references}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apx-measures]{APPENDICES}/apadotfill/hyperref[apx-measures]{/pageref{apx-measures}}/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{A.}/hyperref[apx-measures]{MEASURES USED}/apadotfill/hyperref[apx-measures]{/pageref{apx-measures}}/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{B.}/hyperref[apx-consent]{CONSENT FORMS}/apadotfill/hyperref[apx-consent]{/pageref{apx-consent}}/par}
+
+/clearpage
+
 /restoregeometry/doublespacing/pagenumbering{arabic}
 
+/section{Introduction}/label{introduction}
+
 The body begins here.
+
+/subsection{Background}/label{background}
+
+Not listed: the contents lists chapters and no deeper unless asked.
+
+/section{Method}/label{method}
+
+What was done
+(/citeproc{ref-schneiderCattellHornCarrollTheoryCognitive2018}{Schneider
+/& McGrew, 2018}).
+
+/section{References}/label{references}
+
+/protect/phantomsection/label{refs}
+/begin{CSLReferences}{1}{0}
+/bibitem[/citeproctext]{ref-schneiderCattellHornCarrollTheoryCognitive2018}
+Schneider, W. J., /& McGrew, K. S. (2018). The cattell-horn-carroll
+theory of cognitive abilities. In D. P. Flanagan /& E. M. McDonough
+(Eds.), /emph{Contemporary intellectual assessment: Theories, tests, and
+issues} (4th ed., pp. 73--130). Guilford Press.
+/url{https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030}
+
+/end{CSLReferences}
+
+/section{Appendix A}
+
+/section{Measures Used}/label{apx-measures}
+
+The measures.
+
+/section{Appendix B}
+
+/section{Consent Forms}/label{apx-consent}
+
+The forms.
 
 
 
