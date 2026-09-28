@@ -59,9 +59,49 @@ Some background.
 
 What others have found [@schneiderCattellHornCarrollTheoryCognitive2018].
 
+![APA Shiny](img/apa7maker.png){#ill-apashiny}
+
 # Methods
 
 Something about the method.
+
+# Results
+
+| Scale    | Description                    |
+|:---------|:-------------------------------|
+| Nominal  | Categories without an order    |
+| Ordinal  | Ordered categories             |
+| Interval | Quantities without a true zero |
+| Ratio    | Quantities with a true zero    |
+
+: Classic Scale Types. {#tbl-noir apa-note="My note"}
+
+
+![Path Diagram](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure" fig-alt="A path diagram in which A causes B, and B causes C."}
+
+# Discussion
+
+## Figures and Illustrations
+
+::: {#fig-example}
+![](tests/sampleimage.png)
+
+A figure caption that says what the figure shows.
+:::
+
+::: {#tbl-example}
+| A | B |
+|---|---|
+| 1 | 2 |
+
+A table caption that says what the table shows.
+:::
+
+::: {#ill-example}
+![](tests/sampleimage.png)
+
+An illustration caption that says what the illustration shows.
+:::
 
 # References
 
