@@ -704,6 +704,14 @@
         'Figure 1': 3
         'Figure 2': 3
         'Figure 3': 2
+    docx-xml:
+      count:
+        # One break before the appendix, not two. This fixture writes its
+        # appendix the older way --- "# Appendix A" over a title of its own
+        # --- which leaves two headings in a row that both open an appendix,
+        # and a break before each left the first alone on a page.
+        - text: '<w:br w:type="page"/>'
+          times: 4
 
 - fixture: float-numbering.qmd
   to: apaquarto-typst
@@ -722,6 +730,13 @@
       contains:
         - 'Figure A1'
         - 'Table A1'
+    tex:
+      count:
+        # One break before the appendix, not two: this fixture writes its
+        # appendix the older way, which leaves two headings in a row that
+        # both open one. The .pdf had no break at all until 6.0.1.
+        - text: "\\clearpage\n\n\\section{Appendix}"
+          times: 1
 
 # ------------------------------------------- a contents in every format --
 
@@ -976,24 +991,40 @@
         # order they are mentioned. The copyright page is not listed and
         # neither is the contents itself.
         - '\bfseries TABLE OF CONTENTS\par}'
-        - '\hyperref[apathesis-abstract]{ABSTRACT}\apadotfill'
-        - '\makebox[0.25in][l]{1.}\hyperref[introduction]{INTRODUCTION}'
-        - '\makebox[0.25in][l]{2.}\hyperref[method]{METHOD}'
-        - '\hyperref[references]{REFERENCES}'
-        - '\makebox[0.25in][l]{A.}\hyperref[apx-measures]{MEASURES USED}'
-        - '\makebox[0.25in][l]{B.}\hyperref[apx-consent]{CONSENT FORMS}'
+        - '\hyperref[apathesis-abstract]{\textcolor{apathesistoc}{ABSTRACT}}\apadotfill'
+        - '\makebox[0.25in][l]{1.}\hyperref[introduction]{\textcolor{apathesistoc}{INTRODUCTION}}'
+        - '\makebox[0.25in][l]{2.}\hyperref[method]{\textcolor{apathesistoc}{METHOD}}'
+        - '\hyperref[references]{\textcolor{apathesistoc}{REFERENCES}}'
+        - '\makebox[0.25in][l]{A.}\hyperref[apx-measures]{\textcolor{apathesistoc}{MEASURES USED}}'
+        - '\makebox[0.25in][l]{B.}\hyperref[apx-consent]{\textcolor{apathesistoc}{CONSENT FORMS}}'
         # The lists of tables, figures and illustrations, each under a
         # heading of its own with the two column labels over the entries.
         # The contents lists them too, with the pages they begin on.
         - '\bfseries LIST OF TABLES\par}'
         - '\bfseries LIST OF FIGURES\par}'
         - '\bfseries LIST OF ILLUSTRATIONS\par}'
-        - '\hyperref[apathesis-list-of-table]{LIST OF TABLES}'
+        # The entries of a contents are black unless toccolor says
+        # otherwise: they are links and would take the link colour.
+        - '\definecolor{apathesistoc}{HTML}{000000}'
+        - '\hyperref[apathesis-list-of-table]{\textcolor{apathesistoc}{LIST OF TABLES}}'
         - '{\parindent=0pt\noindent Table\hfill Page\par}'
         - '{\parindent=0pt\noindent Illustration\hfill Page\par}'
         # An illustration is a figure with a word and a count of its own, so
         # it is numbered from one rather than after the figures.
         - '\makebox[0.25in][l]{1.}\hyperref[ill-sketch]'
+        # In the body every level-one heading is in capitals, and over each
+        # chapter stands the word CHAPTER and its number. The references
+        # have a part of their own to play and get no such line.
+        - '\section*{CHAPTER 1}'
+        - '\section*{CHAPTER 2}'
+        - '\section{INTRODUCTION}'
+        - '\section{METHOD}'
+        - '\section{REFERENCES}'
+        # Every major division begins a page of its own: each chapter, the
+        # sources section, and each appendix. The break before an appendix is
+        # written for .docx and typst elsewhere, so only latex wants one here.
+        - "\\clearpage\n\n\\section{REFERENCES}"
+        - "\\clearpage\n\n\\section{APPENDIX A}"
         # The spacing is set between the blocks rather than inside them:
         # setspace works the stretch into the size command, and a stretch
         # asked for inside the group that holds a paragraph does not reach
@@ -1019,6 +1050,10 @@
         # the copyright page is never listed in the contents.
         - 'Background}\apadotfill'
         - 'Copyright}\apadotfill'
+        # Only the chapters carry a CHAPTER line, and the contents lists a
+        # chapter by its own name rather than by the line above it.
+        - '\section*{CHAPTER 3}'
+        - 'CHAPTER 1}\apadotfill'
       count:
         # Six pages of front matter: the title page, the copyright page, the
         # abstract, the dedication, the acknowledgments and the contents.
@@ -1055,6 +1090,8 @@
         - '#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)'
         - '#strong[LIST OF TABLES]'
         - '#strong[LIST OF ILLUSTRATIONS]'
+        - '#heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]'
+        - '= INTRODUCTION'
         - '#apatocline(0.00in, [1.], [A sketch of the apparatus.], <ill-sketch>, false, true)'
     pdf:
       contains:
@@ -1112,6 +1149,8 @@
         - 'LIST OF TABLES'
         - 'LIST OF ILLUSTRATIONS'
         - 'A sketch of the apparatus.'
+        - 'CHAPTER 1'
+        - 'INTRODUCTION'
 
 - fixture: thesis-title.qmd
   to: apaquarto-html
@@ -1243,3 +1282,34 @@
         - '<a href="#participants">'
       absent:
         - '<a href="#recruitment">'
+
+- fixture: appendix-pages.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # A break before each appendix. The .pdf had none of its own since
+        # 6.0.0 stopped building it with the apa7 class, which had been
+        # opening the page.
+        - "\\clearpage\n\n\\section{Appendix A}"
+        - "\\clearpage\n\n\\section{Appendix B}"
+    pdf:
+      contains:
+        # Four pages: the title page, the body, and an appendix on each of
+        # the last two, which is what typst and .docx have always given.
+        - 'First Appendix'
+        - 'Second Appendix'
+
+- fixture: appendix-pages.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '#pagebreak(weak: true)'
+
+- fixture: appendix-pages.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        - '<w:br w:type="page"/>'

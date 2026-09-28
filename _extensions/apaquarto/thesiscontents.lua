@@ -28,7 +28,7 @@ local stringify = utilsapa.stringify
 -- the chapter itself.
 M.max_depth = 4
 
-local function upper(inlines)
+function M.upper(inlines)
   return pandoc.Inlines(inlines):walk {
     Str = function(s) return pandoc.Str(pandoc.text.upper(s.text)) end
   }
@@ -36,7 +36,7 @@ end
 
 -- An appendix is a level-one heading that crossrefprefix.lua has marked, by
 -- the apx identifier a writer gives it or by the title it wrote onto it.
-local function is_appendix(header)
+function M.is_appendix(header)
   if header.identifier and header.identifier:find("^apx%-") then return true end
   return header.attributes ~= nil
     and header.attributes.appendixtitle ~= nil
@@ -45,7 +45,7 @@ end
 -- The references heading is the level-one heading that stands over the div
 -- citeproc fills. Quarto calls that div refs, and the heading above it is
 -- whatever the writer called it.
-local function references_identifier(blocks)
+function M.references_identifier(blocks)
   local last_header = nil
   for _, block in ipairs(blocks) do
     if block.t == "Header" and block.level == 1 then
@@ -57,7 +57,7 @@ local function references_identifier(blocks)
   return nil
 end
 
-local function listed(header)
+function M.listed(header)
   if header.classes:includes("unlisted") then return false end
   if header.classes:includes("title") then return false end
   return true
@@ -71,7 +71,7 @@ end
 -- is the deepest it allows.
 function M.body_entries(blocks, depth, words)
   depth = math.max(1, math.min(M.max_depth, depth or 1))
-  local refs = references_identifier(blocks)
+  local refs = M.references_identifier(blocks)
 
   local chapters = pandoc.List({})
   local back = pandoc.List({})
@@ -80,18 +80,18 @@ function M.body_entries(blocks, depth, words)
   local in_back = false
 
   for _, block in ipairs(blocks) do
-    if block.t == "Header" and listed(block) then
+    if block.t == "Header" and M.listed(block) then
       local identifier = block.identifier
       if identifier == "" then identifier = nil end
 
       if block.level == 1 and identifier ~= nil and identifier == refs then
         in_back = true
         back:insert({ kind = "entry", indent = 0,
-          text = upper(block.content), target = identifier })
-      elseif block.level == 1 and is_appendix(block) then
+          text = M.upper(block.content), target = identifier })
+      elseif block.level == 1 and M.is_appendix(block) then
         in_back = true
         appendices:insert({ kind = "entry", indent = 0,
-          letter = true, text = upper(block.content), target = identifier })
+          letter = true, text = M.upper(block.content), target = identifier })
       elseif not in_back then
         if block.level == 1 and identifier == nil then
           -- A level-one heading with no identifier of its own is not a
@@ -104,7 +104,7 @@ function M.body_entries(blocks, depth, words)
           chapter_number = chapter_number + 1
           chapters:insert({ kind = "entry", indent = 0,
             number = tostring(chapter_number) .. ".",
-            text = upper(block.content), target = identifier })
+            text = M.upper(block.content), target = identifier })
         elseif block.level <= depth then
           chapters:insert({ kind = "entry", indent = block.level - 1,
             text = pandoc.Inlines(block.content), target = identifier })
@@ -120,14 +120,82 @@ function M.body_entries(blocks, depth, words)
   end
   out:extend(back)
   if #appendices > 0 then
-    -- The heading over them, pointing at the first, and then each one
-    -- lettered in the order it is mentioned.
-    out:insert({ kind = "entry", indent = 0, text = words.appendices,
-      target = appendices[1].target })
+    -- The word over them, set like the CHAPTER above the chapters: a column
+    -- label rather than an entry, so it carries no leader and no page. The
+    -- appendices themselves follow, each lettered in the order it is
+    -- mentioned.
+    out:insert({ kind = "label", indent = 0, text = words.appendices })
     for i, appendix in ipairs(appendices) do
       appendix.number = string.char(string.byte("A") + i - 1) .. "."
       appendix.letter = nil
       out:insert(appendix)
+    end
+  end
+  return out
+end
+
+-- What each level-one heading of the body is, and for a chapter what number
+-- it carries.
+--
+-- A dissertation's body is a run of major divisions, and the handbook says
+-- each of them begins a page of its own: every chapter, the sources section,
+-- and every appendix. What they are is worked out once here, so that the
+-- CHAPTER written over a heading, the number beside it in the contents and
+-- the page it begins on cannot disagree with one another.
+--
+--   chapter        a heading that is none of the others, and is numbered
+--   references     the heading over the div citeproc fills
+--   appendix       a heading a writer gave an apx identifier
+--   appendixlabel  the "Appendix A" crossrefprefix.lua writes over one
+--
+-- The first division is not given a break: the front matter has just ended a
+-- page, and a second break would leave a blank one between them.
+function M.divisions(blocks)
+  local refs = M.references_identifier(blocks)
+  local out = {}
+  local number = 0
+  local in_back = false
+  local previous = nil
+  local first = true
+
+  for index, block in ipairs(blocks) do
+    if block.t == "Header" and block.level == 1 and M.listed(block) then
+      local identifier = block.identifier
+      if identifier == "" then identifier = nil end
+
+      local kind
+      if identifier ~= nil and identifier == refs then
+        kind, in_back = "references", true
+      elseif M.is_appendix(block) then
+        kind, in_back = "appendix", true
+      elseif identifier == nil then
+        kind = "appendixlabel"
+      elseif not in_back then
+        kind = "chapter"
+        number = number + 1
+      else
+        kind = "other"
+      end
+
+      -- Every major division opens a page. An appendix that the label above
+      -- it already opened one for does not open a second.
+      local opens = kind == "chapter" or kind == "references"
+        or kind == "appendixlabel"
+        or (kind == "appendix" and previous ~= "appendixlabel")
+
+      -- apafloatstoend.lua writes the break before an appendix, in every
+      -- format that has pages, so this one does not: a second would leave a
+      -- blank page before each of them.
+      local mine = kind ~= "appendix" and kind ~= "appendixlabel"
+
+      out[index] = {
+        kind = kind,
+        number = kind == "chapter" and number or nil,
+        page = opens and not first,
+        others_break = not mine,
+      }
+      if opens then first = false end
+      previous = kind
     end
   end
   return out

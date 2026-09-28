@@ -942,275 +942,75 @@
   columns: 1,
 )
 
-#show: document => thesis(
-  title: [A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Considerable and Notable Length],
-  authors: ([Iwishiwere A. Graduate],),
-  runninghead: "THESIS TITLE",
-  runningauthors: "Graduate",
+#show: document => man(
+  title: [Appendix Pagination],
+  authors: ([A B],),
+  runninghead: "APPENDIX PAGINATION",
+  runningauthors: "B",
   font: (<fonts>),
   numberdepth: 3,
-  suppresstitlepage: true,
   document,
 )
 
-#let apatocline(indent, number, body, target, roman, dots) = context {
-  let found = if target == none { () } else { query(target) }
-  let dest = if found.len() > 0 { found.first().location() } else { none }
-  let pg = if dest == none { none } else {
-    let n = counter(page).at(dest).first()
-    if roman { numbering("i", n) } else { numbering("1", n) }
-  }
-  block(above: 19.4pt, below: 0pt, inset: (left: indent), width: 100%)[
-    #set text(fill: rgb("#000000"))
-    // A show rule as well as the set: typst-template.typ sets its own blue
-    // over every link, and a set does not reach inside a link that rule has
-    // already coloured. This one stands nearer and wins.
-    #show link: set text(fill: rgb("#000000"))
-    #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { 0.25in })[
-      #if number != none [#box(width: 0.25in)[#number]]
-      #if dest == none { body } else { link(dest)[#body] }
-      #if dots [#box(width: 1fr, repeat[.]) #pg]
-    ]
-  ]
-}
-#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#v(70.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN /
-THEY ARE STUDYING SOMETHING AT CONSIDERABLE /
-AND NOTABLE LENGTH]]]
-#v(21.0pt, weak: false)
-#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[A Dissertation /
-Submitted to /
-the Temple University Graduate Board]]
-#v(21.0pt, weak: false)
-#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[In Partial Fulfillment /
-of the Requirements for the Degree /
-Doctor of Philosophy]]
-#v(21.0pt, weak: false)
-#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[by /
-Iwishiwere A. Graduate /
-May 2027]]
-#v(70.0pt, weak: false)
-#pad(left: 0.50in)[#align(left)[#par(leading: 0.65em)[Examining Committee Members:]]]
-#v(13.8pt, weak: false)
-#pad(left: 0.50in)[#align(left)[#par(leading: 0.65em)[Mentor Name, Advisory Chair, TU Department /
-Member Name, TU Department /
-Outside Name, External Member, Another University]]]
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#v(289.0pt, weak: false)
-#align(center)[© Copyright 2027 by Iwishiwere A. Graduate /
-All Rights Reserved]
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-abstract>
-#align(center)[#par(leading: 0.65em)[#strong[ABSTRACT]]]
-#v(27.6pt, weak: false)
-An abstract that says what the work found, flush at the margin and double spaced, as the handbook asks.
+/
+/
+#heading(level: 1, outlined: false, numbering: none)[Appendix Pagination]
+<title>
+#counter(figure.where(kind: "quarto-float-fig")).update(0)
+#counter(figure.where(kind: "quarto-float-tbl")).update(0)
+#appendixcounter.step()
+#set align(center)
+#block[
+/
+A B
+
+X
 
 ]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-dedication>
-#v(164.0pt, weak: false)
-#align(center)[For the committee, who read it all.]
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-acknowledgments>
-#align(center)[#par(leading: 0.65em)[#strong[ACKNOWLEDGMENTS]]]
-#v(27.6pt, weak: false)
-Thanks to everyone who read a draft.
-
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#align(center)[#par(leading: 0.65em)[#strong[TABLE OF CONTENTS]]]
-#v(27.6pt, weak: false)
-#align(right)[#par(leading: 0.65em)[Page]]
-#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)
-#apatocline(0.00in, none, [DEDICATION], <apathesis-dedication>, true, true)
-#apatocline(0.00in, none, [ACKNOWLEDGMENTS], <apathesis-acknowledgments>, true, true)
-#apatocline(0.00in, none, [LIST OF TABLES], <apathesis-list-of-table>, true, true)
-#apatocline(0.00in, none, [LIST OF FIGURES], <apathesis-list-of-figure>, true, true)
-#apatocline(0.00in, none, [LIST OF ILLUSTRATIONS], <apathesis-list-of-illustration>, true, true)
-#apatocline(0.00in, none, [CHAPTER], none, false, false)
-#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)
-#apatocline(0.00in, [2.], [METHOD], <method>, false, true)
-#apatocline(0.00in, none, [REFERENCES], <references>, false, true)
-#apatocline(0.00in, none, [APPENDICES], none, false, false)
-#apatocline(0.00in, [A.], [MEASURES USED], <apx-measures>, false, true)
-#apatocline(0.00in, [B.], [CONSENT FORMS], <apx-consent>, false, true)
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-list-of-table>
-#align(center)[#par(leading: 0.65em)[#strong[LIST OF TABLES]]]
-#v(27.6pt, weak: false)
-#block(above: 19.4pt, below: 0pt, width: 100%)[Table #box(width: 1fr) Page]
-#apatocline(0.00in, [B1.], [A table of two columns.], <tbl-scales>, false, true)
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-list-of-figure>
-#align(center)[#par(leading: 0.65em)[#strong[LIST OF FIGURES]]]
-#v(27.6pt, weak: false)
-#block(above: 19.4pt, below: 0pt, width: 100%)[Figure #box(width: 1fr) Page]
-#apatocline(0.00in, [B1.], [A figure of some kind], <fig-diagram>, false, true)
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-list-of-illustration>
-#align(center)[#par(leading: 0.65em)[#strong[LIST OF ILLUSTRATIONS]]]
-#v(27.6pt, weak: false)
-#block(above: 19.4pt, below: 0pt, width: 100%)[Illustration #box(width: 1fr) Page]
-#apatocline(0.00in, [1.], [A sketch of the apparatus.], <ill-sketch>, false, true)
-]
-]
-
-#set page(numbering: "1")
-#counter(page).update(1)
-#heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]
-= INTRODUCTION
-<introduction>
+#set align(left)
+/
+/
+#heading(level: 1, outlined: false, numbering: none)[Author Note]
+<author-note>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-The body begins here.
+Correspondence concerning this article should be addressed to A B, X, Email: #link("mailto:a@b.edu")[a/@b.edu]
 
-== Background
-<background>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-Not listed: the contents lists chapters and no deeper unless asked.
+#pagebreak()
 
-#pagebreak(weak: true)
-#heading(level: 1, outlined: false, numbering: none)[CHAPTER 2]
-= METHOD
+#heading(level: 1, numbering: none)[Appendix Pagination]
+<firstheader>
+#counter(figure.where(kind: "quarto-float-fig")).update(0)
+#counter(figure.where(kind: "quarto-float-tbl")).update(0)
+#appendixcounter.step()
+= Method
 <method>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-What was done (#link(<ref-schneiderCattellHornCarrollTheoryCognitive2018>)[Schneider & McGrew, 2018]).
+Some body text.
 
 #pagebreak(weak: true)
-= REFERENCES
-<references>
-#set par(first-line-indent: 0in, hanging-indent: 0.5in)
-#block[
-#block[
-Schneider, W. J., & McGrew, K. S. (2018). The cattell-horn-carroll theory of cognitive abilities. In D. P. Flanagan & E. M. McDonough (Eds.), #emph[Contemporary intellectual assessment: Theories, tests, and issues] (4th ed., pp. 73--130). Guilford Press. #link("https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030")
-
-] <ref-schneiderCattellHornCarrollTheoryCognitive2018>
-] <refs>
-#set par(first-line-indent: apaparindent(firstlineindent), hanging-indent: 0in)
-#pagebreak(weak: true)
-= APPENDIX A
+= Appendix A
 #counter(figure.where(kind: "quarto-float-fig")).update(0)
 #counter(figure.where(kind: "quarto-float-tbl")).update(0)
 #appendixcounter.step()
-= MEASURES USED
-<apx-measures>
+= First Appendix
+<apx-one>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-The measures.
+The first appendix.
 
 #pagebreak(weak: true)
-= APPENDIX B
+= Appendix B
 #counter(figure.where(kind: "quarto-float-fig")).update(0)
 #counter(figure.where(kind: "quarto-float-tbl")).update(0)
 #appendixcounter.step()
-= CONSENT FORMS
-<apx-consent>
+= Second Appendix
+<apx-two>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-The forms.
-
-== Floats
-<floats>
-#figure([
-#table(
-  columns: 2,
-  align: (auto,auto,),
-  table.header([A], [B],),
-  table.hline(),
-  [1], [2],
-)
-], caption: figure.caption(
-position: top,
-[
-A table of two columns.
-]),
-kind: "quarto-float-tbl",
-supplement: "Table",
-)
-<tbl-scales>
-
-
-#figure([
-#box(image("sampleimage.png"))
-], caption: figure.caption(
-position: top,
-[
-A figure of some kind
-]),
-kind: "quarto-float-fig",
-supplement: "Figure",
-)
-<fig-diagram>
-
-
-#figure([
-#box(image("sampleimage.png"))
-], caption: figure.caption(
-position: top,
-[
-A sketch of the apparatus.
-]),
-kind: "quarto-float-ill",
-supplement: "Illustration",
-)
-<ill-sketch>
-
-
-
-
-
+The second appendix.

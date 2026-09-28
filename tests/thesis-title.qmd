@@ -64,6 +64,12 @@ matter: the references, and the appendices lettered in the order they are
 mentioned. It lists neither the copyright page nor itself, and it lists as many levels
 of heading as toc-depth asks for --- one here, which is the chapters and
 nothing under them, against the three quarto counts by default.
+
+In the body every level-one heading is in capitals, and over each chapter
+stands the word CHAPTER and its number, set like the heading under it. Only a
+chapter gets one: the references and the appendices have a part of their own
+to play. The CHAPTER lines are not in the contents, which lists a chapter by
+its own name, and each chapter begins a page of its own.
 -->
 
 # Introduction

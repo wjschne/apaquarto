@@ -1,0 +1,40 @@
+---
+title: "Appendix Pagination"
+shorttitle: "Appendix Pagination"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+documentmode: man
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+---
+
+<!--
+Each appendix begins a page of its own, which is the convention for a
+manuscript sent out for review.
+
+The .docx and typst had done this for a long while; the .pdf had not since
+6.0.0, which stopped building it with the apa7 class. The class had been
+opening the page, and nothing took the work over, so an appendix ran on from
+whatever came before it while the other two began a page.
+
+Journal mode is left out: a published article runs continuously, and in two
+columns a break would strand most of a page.
+-->
+
+# Method
+
+Some body text.
+
+# First Appendix {#apx-one}
+
+The first appendix.
+
+# Second Appendix {#apx-two}
+
+The second appendix.

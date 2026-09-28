@@ -1,8 +1,8 @@
 ---
-title: "SEL FOR DLLS: THE INFLUENCE OF SOCIAL-EMOTIONAL LEARNING PROGRAMS ON KEY OUTCOMES FOR DUAL LANGUAGE LEARNERS IN HEAD START"
-shorttitle: "My Dissertation Is Amazing"
+title: "An Inquiry into Vexing Problems at the Intersection of Digital Typography, Tasseomancy, and Badminton"
+shorttitle: "Typography, Tasseomancy, and Badminton"
 author:
-  - name: Codie Kane
+  - name: W. Joel Schneider
     corresponding: true
     orcid: 0000-0002-8393-5316
     email: schneider@temple.edu
@@ -22,7 +22,7 @@ bibliography: tests/references.bib
 dedication: |
   For everyone who wondered whether this would ever be finished.
 acknowledgments: |
-  Thanks to my committee, my family, and the coffee shop on Cecil B. Moore.
+  Thanks to my committee, my family, and the miracle of coffee.
 documentmode: thesis
 thesis:
   type: Dissertation
@@ -30,20 +30,17 @@ thesis:
   degree: Doctor of Philosophy
   date: May 2027
   committee:
-    - name: Lia E. Sandilos, Ph.D.
+    - name: Nedra Goings, Ph.D.
       role: Advisory Chair
-      affiliation: Department of Education and Human Services, Lehigh University 
-    - name: Renée M. Tobin, Ph.D.
-      affiliation: Psychological Studies in Education, Temple University
-    - name: W. Joel Schneider, Ph.D.
-      affiliation: Psychological Studies in Education, Temple University 
+      affiliation: Department of Loving Candor and Cosmic Discernment
+    - name: Leslie Eccles, Ph.D.
+      affiliation: Department of Post-Prandial Musings and Aesthetic Abundance
       role: Examining Chair
-    - name: Sabina Neugebauer, Ph.D.
+    - name: Kristin Moh, Ph.D.
+      affiliation: Department of Musical Self Actualization and the Universal Groove
       role: External Member
-      affiliation: Department of Teaching and Learning, Temple University  
 format:
-  apaquarto-typst: 
-    toc-depth: 3
+  apaquarto-typst: default
   apaquarto-pdf: default
   apaquarto-docx: default
   apaquarto-html: default

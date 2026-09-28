@@ -1443,7 +1443,13 @@ return {
       -- list-of-contents asks for a table of contents in every format.
       -- typst also takes toc: true, which is what it has always answered to
       -- and what .html uses as well, so either will do there.
-      local wants_contents = meta["list-of-contents"]
+      --
+      -- Not in thesis mode. A dissertation has a contents and lists of its
+      -- own, built by thesisfrontmatter.lua in the shape the Graduate School
+      -- asks for, and building these as well would set two of each.
+      local thesis_mode = meta.documentmode ~= nil
+        and stringify(meta.documentmode) == "thesis"
+      local wants_contents = not thesis_mode and meta["list-of-contents"]
         and stringify(meta["list-of-contents"]) ~= "false"
 
       -- A list stands on its own page except in journal mode, which runs
@@ -1462,7 +1468,8 @@ return {
       -- show rule written for the table of contents above passes none as the
       -- prefix, which dropped the "Figure 1" from these two outlines as well,
       -- so each gets a rule of its own inside a block that keeps it there.
-      if FORMAT:match 'typst' and meta["list-of-figures"] then
+      if FORMAT:match 'typst' and meta["list-of-figures"]
+          and not thesis_mode then
         typst_extras:extend({ pandoc.RawBlock('typst',
           '\n\n#[\n' ..
           '#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\n' ..
@@ -1482,7 +1489,8 @@ return {
       -- show rule written for the table of contents above passes none as the
       -- prefix, which dropped the "Figure 1" from these two outlines as well,
       -- so each gets a rule of its own inside a block that keeps it there.
-      if FORMAT:match 'typst' and meta["list-of-tables"] then
+      if FORMAT:match 'typst' and meta["list-of-tables"]
+          and not thesis_mode then
         typst_extras:extend({ pandoc.RawBlock('typst',
           '\n\n#[\n' ..
           '#show outline.entry: it => {show link: set text(fill: ' .. typst_colour("toccolor", "black") .. ')\n' ..
@@ -1510,7 +1518,8 @@ return {
       -- own in the margin. Two of them on one page is one too many, and the
       -- margin is where a reader of a web page looks.
       local lists = { "list-of-contents", "list-of-figures", "list-of-tables" }
-      if FORMAT == "html" then
+      if thesis_mode then lists = {} end
+      if FORMAT == "html" and not thesis_mode then
         lists = {}
         if not PANDOC_WRITER_OPTIONS["table_of_contents"] then
           lists = { "list-of-contents" }

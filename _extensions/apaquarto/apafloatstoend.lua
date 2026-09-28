@@ -91,20 +91,39 @@ Pandoc = function(doc)
   end
 
 
-  -- Insert page breaks for each appendix in docx and typst
-  -- html does not need page breaks, and latex inserts pagebreaks automatically
+  -- Insert page breaks for each appendix in docx, typst and latex
+  -- html does not need page breaks
+  -- latex had been left out, on the understanding that the apa7 class
+  -- opened the page itself. The pdf stopped being built with that class in
+  -- 6.0.0 and nothing took the work over, so an appendix ran on from
+  -- whatever came before it while docx and typst each began a page.
   -- Journal mode is a published article, which runs continuously: starting each
   -- appendix on a fresh page is a manuscript-submission convention, and in two
   -- columns it would strand most of a page. So jou gets no appendix breaks.
-  if (FORMAT == "docx" or FORMAT == "typst") and documentmode ~= "jou" then
+  if (FORMAT == "docx" or FORMAT == "typst" or FORMAT == "latex")
+      and documentmode ~= "jou" then
+    -- Is this the heading that opens an appendix?
+    local function opens_appendix(block)
+      return block ~= nil and block.tag == "Header" and block.level == 1
+        and block.content[1] ~= nil
+        and block.content[1].text == appendixword
+    end
+
     for i = #doc.blocks, 1, -1 do
       if doc.blocks[i].tag == "Header" then
-        if doc.blocks[i].level == 1 and doc.blocks[i].content[1].text == appendixword then
+        -- The one before it is skipped when it opens an appendix too. The
+        -- older way of writing an appendix -- "# Appendix A" over a title of
+        -- its own -- leaves two such headings in a row, and a break before
+        -- each of them left the first alone on a page of its own.
+        if opens_appendix(doc.blocks[i]) and not opens_appendix(doc.blocks[i - 1]) then
           if FORMAT == "docx" then
             table.insert(doc.blocks, i, pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>'))
           end
           if FORMAT == "typst" then
             table.insert(doc.blocks, i, pandoc.RawBlock('typst', '#pagebreak(weak: true)'))
+          end
+          if FORMAT == "latex" then
+            table.insert(doc.blocks, i, pandoc.RawBlock('latex', '\\clearpage'))
           end
         end
       end

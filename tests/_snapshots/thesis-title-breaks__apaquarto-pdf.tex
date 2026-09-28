@@ -781,6 +781,7 @@
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
 /setapashorttitle{THESIS BREAKS}
+/definecolor{apathesistoc}{HTML}{000000}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -877,13 +878,15 @@ Page/par}
 
 {/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
 
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{INTRODUCTION}/apadotfill/hyperref[introduction]{/pageref{introduction}}/par}
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{/textcolor{apathesistoc}{INTRODUCTION}}/apadotfill/hyperref[introduction]{/textcolor{apathesistoc}{/pageref{introduction}}}/par}
 
 /clearpage
 
 /restoregeometry/doublespacing/pagenumbering{arabic}
 
-/section{Introduction}/label{introduction}
+/section*{CHAPTER 1}
+
+/section{INTRODUCTION}/label{introduction}
 
 The body begins here.
 

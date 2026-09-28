@@ -1091,7 +1091,6 @@ supplement: "Table",
 #counter(figure.where(kind: "quarto-float-fig")).update(0)
 #counter(figure.where(kind: "quarto-float-tbl")).update(0)
 #appendixcounter.step()
-#pagebreak(weak: true)
 = Appendix
 <apx-appendix-a>
 #counter(figure.where(kind: "quarto-float-fig")).update(0)

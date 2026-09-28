@@ -780,7 +780,7 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
-/setapashorttitle{NUMBERING}
+/setapashorttitle{APPENDIX PAGINATION}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -797,7 +797,7 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{Test Author}
+/author{A B}
 /date{}
 /begin{document}
 
@@ -810,7 +810,7 @@
 
 /apatitle{
 
-Numbering Floats
+Appendix Pagination
 
 }
 
@@ -818,9 +818,9 @@ Numbering Floats
 
 /hfill/break
 
-Test Author
+A B
 
-Test University
+X
 
 /end{apaauthor}
 
@@ -834,190 +834,36 @@ Author Note
 
 }
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
-
-/clearpage
-
-/apalistoffigures
-
-/clearpage
-
-/apalistoftables
+Correspondence concerning this article should be addressed to A
+B, X, Email: /href{mailto:a@b.edu}{/nolinkurl{a@b.edu}}
 
 /clearpage
 
 /apatitle{
 
-Numbering Floats
+Appendix Pagination
 
 }
 
 /section{Method}/label{method}
 
-See /hyperref[fig-first]{Figure~/ref*{fig-first}},
-/hyperref[fig-panels]{Figure~/ref*{fig-panels}},
-/hyperref[tbl-values]{Table~/ref*{tbl-values}},
-/hyperref[fig-appendix]{Figure~/ref*{fig-appendix}} and
-/hyperref[tbl-appendix]{Table~/ref*{tbl-appendix}}.
-
-/begin{figure}[H]
-
-/setcounter{figure}{0}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-first}
-
-/apafloattitle{Figure 1}
-
-/apafloatcaption{The first figure.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 1. The first figure.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/end{figure}
-
-/begin{figure}[H]
-
-/setcounter{figure}{1}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{2}/makeatother%
-/label{fig-panels}
-
-/apafloattitle{Figure 2}
-
-/apafloatcaption{The second figure.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 2. The second figure.}
-
-/begin{apapanel}{0.4900}%
-Left.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Left.}]{sampleimage.png}}
-/end{apapanel}%
-/hfill
-/begin{apapanel}{0.4900}%
-Right.
-
-/apafigureskip
-
-/pandocbounded{/includegraphics[keepaspectratio,alt={Right.}]{sampleimage.png}}
-/end{apapanel}%
-/par
-
-/end{figure}
-
-/begin{figure}[H]
-
-/setcounter{figure}{2}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{3}/makeatother%
-/label{fig-third}
-
-/apafloattitle{Figure 3}
-
-/apafloatcaption{The third figure.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 3. The third figure.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/end{figure}
-
-/par/addvspace{/baselineskip}
-
-/setcounter{table}{0}
-
-/refstepcounter{table}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{tbl-values}
-
-/apafloattitle{Table 1}
-
-/apafloatcaption{The first table.}
-
-/addcontentsline{lot}{table}{Table 1. The first table.}
-
-{/def/LTcaptype{none} % do not increment counter
-/begin{longtable}[]{@{}lr@{}}
-/toprule/noalign{}
-A & B //
-/midrule/noalign{}
-/endhead
-/bottomrule/noalign{}
-/endlastfoot
-1 & 2 //
-/end{longtable}
-}
-
-/par/addvspace{/baselineskip}
+Some body text.
 
 /clearpage
 
-/section{Appendix}
+/section{Appendix A}
 
-/section{Appendix}/label{apx-appendix-a}
+/section{First Appendix}/label{apx-one}
 
-/begin{figure}[H]
+The first appendix.
 
-/setcounter{figure}{0}
+/clearpage
 
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{A1}/makeatother%
-/label{fig-appendix}
+/section{Appendix B}
 
-/apafloattitle{Figure A1}
+/section{Second Appendix}/label{apx-two}
 
-/apafloatcaption{The appendix figure.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure A1. The appendix figure.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/end{figure}
-
-/par/addvspace{/baselineskip}
-
-/setcounter{table}{0}
-
-/refstepcounter{table}%
-/makeatletter/def/@currentlabel{A1}/makeatother%
-/label{tbl-appendix}
-
-/apafloattitle{Table A1}
-
-/apafloatcaption{The appendix table.}
-
-/addcontentsline{lot}{table}{Table A1. The appendix table.}
-
-{/def/LTcaptype{none} % do not increment counter
-/begin{longtable}[]{@{}lr@{}}
-/toprule/noalign{}
-C & D //
-/midrule/noalign{}
-/endhead
-/bottomrule/noalign{}
-/endlastfoot
-3 & 4 //
-/end{longtable}
-}
-
-/par/addvspace{/baselineskip}
+The second appendix.
 
 
 

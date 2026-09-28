@@ -829,7 +829,14 @@ order they are mentioned. `Page` stands at the right margin under the
 heading, and leader dots run out to the page numbers.
 
 Neither the copyright page nor the contents itself is listed, which is what
-the handbook asks.
+the handbook asks. `CHAPTER` and `APPENDICES` are column labels rather than
+entries: they carry no leader and no page, and the chapters and appendices
+under them carry both.
+
+The entries are black. They are links, and a link would otherwise take
+`linkcolor` and leave the contents reading as a page of cross references
+rather than as a list; `toccolor` says what they take instead, in the lists
+of tables and figures as well.
 
 How deep it goes is quarto's own `toc-depth`, counting levels of heading:
 `1` lists the chapters and nothing under them, `4` adds the three levels of
@@ -844,10 +851,28 @@ The handbook asks that a level listed for one chapter be listed for every
 chapter that has it, which is worth a look before you go deeper than the
 chapters.
 
+## Chapters
+
 A chapter is a level-one heading in the body. In thesis mode a heading
 reading *Introduction* at the head of the body is kept rather than taken out
 --- a dissertation's chapters are named, and that heading is the first
 chapter's name.
+
+Every level-one heading is set in capitals, and over each chapter stands the
+word `CHAPTER` and its number, on a line of its own and set like the heading
+under it.
+
+Every major division begins a page of its own, which is what the handbook
+asks: each chapter, the references, and each appendix.
+
+A level-one heading with a part of its own to play --- the references, an
+appendix, the label over an appendix --- is not a chapter. It is set in
+capitals like the rest but carries no `CHAPTER` line and is not counted in
+the numbering.
+
+The `CHAPTER` lines are not listed in the table of contents, which names a
+chapter by its own heading. The word can be changed with
+`thesis-chapter-label` in the `language` field.
 
 In the .pdf and in typst the page numbers are worked out as the document is
 set. In .docx they are fields, as the lists of figures and tables are, and

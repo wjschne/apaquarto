@@ -69,6 +69,39 @@ local kSubheadingStep = 0.5  -- inches a level of subheading is indented
 -- apart two entries are. This leaves a double-spaced line between them.
 local kContentsLead = kDoubleSpace - 8.2
 
+-- The colour the entries of a contents take, which is quarto's toccolor.
+--
+-- Black unless a document asks otherwise. They are links, and a link would
+-- otherwise take linkcolor and leave the contents reading as a page of
+-- cross references rather than as a list. This is what the lists apaquarto
+-- builds for its other modes already do; a dissertation's are built here and
+-- had been taking the link colour.
+-- Whether a document asks for one of the four lists.
+--
+-- All four are set in a dissertation unless it says otherwise, which is the
+-- other way round from the rest of apaquarto: the Graduate School expects a
+-- contents and a list for each kind of float, so the field says what to
+-- leave out rather than what to put in.
+--
+-- A list with nothing in it is left out whatever the field says. A heading
+-- reading LIST OF TABLES over an empty page helps nobody, and the handbook's
+-- own template says as much: "if no tables, delete this page".
+local function wants_list(meta, field)
+  local asked = meta[field]
+  if asked == nil then return true end
+  return stringify(asked) ~= "false"
+end
+
+-- What the field for a kind of float is called: list-of-tables for a Table,
+-- list-of-illustrations for an Illustration.
+local function list_field(kind)
+  return "list-of-" .. pandoc.text.lower(kind) .. "s"
+end
+
+local function contents_colour(meta)
+  return utilsapa.colour_hex(meta and meta.toccolor) or "000000"
+end
+
 local function language(meta, key, fallback)
   if meta.language and meta.language[key] then
     return stringify(meta.language[key])
@@ -469,7 +502,10 @@ local function build_pages(meta, blocks)
   local kinds, floats = thesiscontents.float_kinds(meta)
   local lists = pandoc.List({})
   for _, kind in ipairs(kinds) do
-    local items = list_page(meta, kind, floats[kind])
+    local items = nil
+    if wants_list(meta, list_field(kind)) then
+      items = list_page(meta, kind, floats[kind])
+    end
     if items then
       local anchor = "apathesis-list-of-" .. kind:lower()
       items:insert(1, { kind = "anchor", name = anchor })
@@ -555,16 +591,22 @@ local function latex_contents_line(entry)
   local body = written(entry.text, "latex")
   local page = ""
   if entry.target then
-    body = "\\hyperref[" .. entry.target .. "]{" .. body .. "}"
-    page = "\\apadotfill\\hyperref[" .. entry.target .. "]{\\pageref{"
-      .. entry.target .. "}}"
+    -- The colour is set on the words rather than through hyperref: a
+    -- \hypersetup inside a group did not reach a \hyperref set in it and
+    -- every entry came out the colour a link takes. \textcolor sits
+    -- inside the link and is the colour that shows. apathesistoc is
+    -- defined in the preamble from toccolor, black unless asked otherwise.
+    body = "\\hyperref[" .. entry.target .. "]{\\textcolor{apathesistoc}{"
+      .. body .. "}}"
+    page = "\\apadotfill\\hyperref[" .. entry.target
+      .. "]{\\textcolor{apathesistoc}{\\pageref{" .. entry.target .. "}}}"
   end
   return string.format(
     "{\\parindent=0pt\\leftskip=%.2fin\\noindent%s%s%s%s\\par}",
     indent, back, number, body, page)
 end
 
-local function render_latex(pages)
+local function render_latex(pages, meta)
   local out = pandoc.List({})
   -- No running head, the page number at the centre of the foot, and the
   -- front matter numbered in lower-case roman. The title page is page i and
@@ -659,14 +701,20 @@ end
 local kTypstHelper = [==[
 #let apatocline(indent, number, body, target, roman, dots) = context {
   let found = if target == none { () } else { query(target) }
-  let pg = if found.len() > 0 {
-    let n = counter(page).at(found.first().location()).first()
+  let dest = if found.len() > 0 { found.first().location() } else { none }
+  let pg = if dest == none { none } else {
+    let n = counter(page).at(dest).first()
     if roman { numbering("i", n) } else { numbering("1", n) }
-  } else { none }
+  }
   block(above: LINESPACE, below: 0pt, inset: (left: indent), width: 100%)[
+    #set text(fill: TOCCOLOUR)
+    // A show rule as well as the set: typst-template.typ sets its own blue
+    // over every link, and a set does not reach inside a link that rule has
+    // already coloured. This one stands nearer and wins.
+    #show link: set text(fill: TOCCOLOUR)
     #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { NUMBERCOLUMN })[
       #if number != none [#box(width: NUMBERCOLUMN)[#number]]
-      #if target == none { body } else { link(target)[#body] }
+      #if dest == none { body } else { link(dest)[#body] }
       #if dots [#box(width: 1fr, repeat[.]) #pg]
     ]
   ]
@@ -686,7 +734,7 @@ local function typst_contents_line(entry)
     "], " .. target .. ", " .. tostring(entry.front == true) .. ", true)"
 end
 
-local function render_typst(pages)
+local function render_typst(pages, meta)
   local out = pandoc.List({})
 
   -- The helper goes in at the head of the document rather than where it is
@@ -702,7 +750,8 @@ local function render_typst(pages)
   if wants_helper then
     out:insert(raw("typst", (kTypstHelper
       :gsub("NUMBERCOLUMN", string.format("%.2fin", kNumberColumn))
-      :gsub("LINESPACE", string.format("%.1fpt", kContentsLead)))))
+      :gsub("LINESPACE", string.format("%.1fpt", kContentsLead))
+      :gsub("TOCCOLOUR", 'rgb("#' .. contents_colour(meta) .. '")'))))
   end
   for _, page in ipairs(pages) do
     out:insert(raw("typst", string.format(
@@ -767,8 +816,13 @@ end
 
 -- html. There are no pages here, so the gaps are the only thing that carries
 -- the arrangement across, and there is nothing to number.
-local function render_html(pages)
+local function render_html(pages, meta)
   local out = pandoc.List({})
+  -- The entries are links and would take the theme's link colour; toccolor
+  -- says what they take instead, and black is what it says unless a document
+  -- asks otherwise.
+  out:insert(raw("html", "<style>.thesis-front-matter-page a { color: #"
+    .. contents_colour(meta) .. "; }</style>"))
   for _, page in ipairs(pages) do
     out:insert(raw("html", '<div class="thesis-front-matter-page">'))
     for _, item in ipairs(page.items) do
@@ -830,13 +884,16 @@ local function xml_escape(s)
   return (s:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
 end
 
-local function docx_runs(inlines, bold, italic)
+local function docx_runs(inlines, bold, italic, colour)
   local out = {}
   for _, inline in ipairs(inlines) do
     if inline.t == "Str" then
       local properties = {}
       if bold then properties[#properties + 1] = "<w:b/>" end
       if italic then properties[#properties + 1] = "<w:i/>" end
+      if colour then
+        properties[#properties + 1] = '<w:color w:val="' .. colour .. '"/>'
+      end
       local rpr = ""
       if #properties > 0 then
         rpr = "<w:rPr>" .. table.concat(properties) .. "</w:rPr>"
@@ -846,11 +903,11 @@ local function docx_runs(inlines, bold, italic)
     elseif inline.t == "Space" or inline.t == "SoftBreak" then
       out[#out + 1] = '<w:r><w:t xml:space="preserve"> </w:t></w:r>'
     elseif inline.t == "Strong" then
-      out[#out + 1] = docx_runs(inline.content, true, italic)
+      out[#out + 1] = docx_runs(inline.content, true, italic, colour)
     elseif inline.t == "Emph" then
-      out[#out + 1] = docx_runs(inline.content, bold, true)
+      out[#out + 1] = docx_runs(inline.content, bold, true, colour)
     elseif inline.content then
-      out[#out + 1] = docx_runs(inline.content, bold, italic)
+      out[#out + 1] = docx_runs(inline.content, bold, italic, colour)
     else
       out[#out + 1] = "<w:r>" .. '<w:t xml:space="preserve">'
         .. xml_escape(pandoc.utils.stringify(inline)) .. "</w:t></w:r>"
@@ -941,7 +998,7 @@ local function bookmark_id(same)
   return next_bookmark
 end
 
-local function docx_contents_line(entry, measure)
+local function docx_contents_line(entry, measure, colour)
   local indent = twips(entry.indent * kSubheadingStep * 72)
   local hanging = entry.number and twips(kNumberColumn * 72) or 0
   local tab = twips(measure * 72) - indent
@@ -958,10 +1015,10 @@ local function docx_contents_line(entry, measure)
       .. "</w:tabs>"
   end
 
-  local body = docx_runs(entry.text, false, false)
+  local body = docx_runs(entry.text, false, false, colour)
   if entry.number then
-    body = docx_runs(pandoc.Inlines({ pandoc.Str(entry.number) }), false, false)
-      .. "<w:r><w:tab/></w:r>" .. body
+    body = docx_runs(pandoc.Inlines({ pandoc.Str(entry.number) }), false,
+      false, colour) .. "<w:r><w:tab/></w:r>" .. body
   end
 
   if entry.kind == "label" or entry.target == nil then
@@ -982,7 +1039,7 @@ local function docx_contents_line(entry, measure)
   })
 end
 
-local function render_docx(pages)
+local function render_docx(pages, meta)
   local out = pandoc.List({})
   local footers = reference_footers()
   local pending_anchor = ""
@@ -1056,7 +1113,7 @@ local function render_docx(pages)
       elseif item.kind == "contents" then
         for _, entry in ipairs(item.entries) do
           out:insert(raw("openxml",
-            docx_contents_line(entry, page.measure)))
+            docx_contents_line(entry, page.measure, contents_colour(meta))))
         end
       elseif item.kind == "blocks" then
         -- Prose word sets for itself. A gap standing before it is carried by
@@ -1087,6 +1144,67 @@ local renderers = {
 
 -- ----------------------------------------------------------------------------
 
+-- A page break, in whatever this format calls one. .html has no pages and
+-- gets nothing.
+local function page_break()
+  if FORMAT == "latex" then return raw("latex", "\\clearpage") end
+  if FORMAT:match("typst") then
+    return raw("typst", "#pagebreak(weak: true)")
+  end
+  if FORMAT == "docx" then
+    return raw("openxml", '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
+  end
+  return nil
+end
+
+-- The body of a dissertation: its level-one headings in capitals, and over
+-- each chapter the word CHAPTER and its number, on a line of its own and set
+-- like the heading under it.
+--
+-- Only a chapter gets one. A level-one heading with a part to play --- the
+-- references, an appendix, the label over an appendix --- is not a chapter
+-- and is left with its own name and nothing above it. The front matter is
+-- not here at all: those pages are built by this filter rather than written
+-- as headings.
+--
+-- Done after the contents has been built, and for that reason: the contents
+-- lists a chapter by its own name, not by the CHAPTER over it, and a label
+-- inserted before the contents was made would have been listed as though it
+-- were a heading of the paper.
+local function decorate_body(meta, blocks)
+  local divisions = thesiscontents.divisions(blocks)
+  local word = language(meta, "thesis-chapter-label", "CHAPTER")
+  local out = pandoc.List({})
+
+  for index, block in ipairs(blocks) do
+    local division = divisions[index]
+    if division then
+      -- Every major division begins a page of its own: each chapter, the
+      -- sources section, and each appendix. The break before an appendix is
+      -- written by apafloatstoend.lua, in every format that has pages, so
+      -- what is written here is the break before a chapter and before the
+      -- references.
+      if division.page and not division.others_break then
+        local brk = page_break()
+        if brk then out:insert(brk) end
+      end
+      if division.number then
+        local label = pandoc.Header(1, pandoc.Inlines({
+          pandoc.Str(word), pandoc.Space(),
+          pandoc.Str(tostring(division.number)) }))
+        -- Unlisted and unnumbered, so that nothing else takes it for a
+        -- heading of the paper, and with no identifier so that nothing can
+        -- point at it instead of at the chapter.
+        label.classes = { "unnumbered", "unlisted" }
+        out:insert(label)
+      end
+      block.content = thesiscontents.upper(block.content)
+    end
+    out:insert(block)
+  end
+  return out
+end
+
 local function is_thesis(meta)
   return meta.documentmode ~= nil and stringify(meta.documentmode) == "thesis"
 end
@@ -1097,6 +1215,10 @@ end
 -- typst-template.typ, and .docx from its reference document.
 function Meta(meta)
   if not is_thesis(meta) then return nil end
+  if FORMAT == "latex" then
+    quarto.doc.include_text("in-header",
+      "\\definecolor{apathesistoc}{HTML}{" .. contents_colour(meta) .. "}")
+  end
   if FORMAT == "latex" then
     meta.geometry = pandoc.MetaList({
       pandoc.MetaString(string.format("left=%.2fin", kMargins.left)),
@@ -1121,8 +1243,8 @@ function Pandoc(doc)
   if #pages == 0 then return nil end
 
   local blocks = pandoc.List({})
-  blocks:extend(render(pages))
-  blocks:extend(doc.blocks)
+  blocks:extend(render(pages, doc.meta))
+  blocks:extend(decorate_body(doc.meta, doc.blocks))
   doc.blocks = blocks
   return doc
 end
