@@ -19,6 +19,8 @@ author-note:
   disclosures:
     conflict of interest: The author has no conflict of interest to declare.
 bibliography: bibliography.bib
+dedication: |
+  For everyone who wondered whether this would ever be finished.
 documentmode: thesis
 thesis:
   type: Dissertation
@@ -44,10 +46,18 @@ format:
   apaquarto-html: default
 ---
 
+# Chapter 1
+
 # Introduction
 
 The body of the dissertation begins here, on a page of its own.
 
-# Method
+# Chapter 2
+
+# Literature Review
+
+# Chapter 3
+
+# Methods
 
 Something about the method.

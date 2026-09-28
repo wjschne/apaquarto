@@ -21,6 +21,13 @@ example.typ
 example.out
 example-pdf-man.pdf
 example_files/
+dissertation.html
+dissertation.docx
+dissertation.pdf
+dissertation.tex
+dissertation.typ
+dissertation.log
+dissertation_files/
 Features.html
 minimal.docx
 minimal.html

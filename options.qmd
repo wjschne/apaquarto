@@ -690,10 +690,14 @@ University Graduate School, following its
 It is manuscript mode with a front matter of its own, and it works in all
 four formats. `dissertation` is accepted as an alias.
 
-**So far this builds the title page, the copyright page and the page
-numbering.** The rest of the front matter --- the abstract, the dedication,
-the acknowledgments, the table of contents with its `CHAPTER` heading, the
-lists of tables and figures --- is not built yet.
+**So far this builds the title page, the copyright page, the abstract, the
+dedication and the page numbering.** The acknowledgments, the table of
+contents with its `CHAPTER` heading and the lists of tables and figures are
+not built yet.
+
+The pages that are built come in the order the handbook sets --- title,
+copyright, abstract, dedication --- and each is left out when the document
+gives it nothing to set. The numbering runs on over whatever is there.
 
 The page takes its fields from a `thesis` block:
 
@@ -732,6 +736,10 @@ thesis:
 | `copyright`      | The year on the copyright page. Taken from the year in   |
 |                  | `date` when it is not written. `false` leaves the page   |
 |                  | out.                                                     |
++------------------+----------------------------------------------------------+
+| `dedication`     | The dedication, centred on a page of its own with no     |
+|                  | heading. May also be written as a top-level              |
+|                  | `dedication`, beside `abstract`.                         |
 +------------------+----------------------------------------------------------+
 | `committee`      | The examining committee, in order. Each entry takes      |
 |                  | `name`, an optional `role` (`Advisory Chair`,            |
@@ -782,6 +790,23 @@ of it stands at the centre of the paper rather than at the centre of a text
 block pushed right by the binding margin. That is what the dissertations
 Temple publishes do, and what the Graduate School's own template draws. The
 title is broken against the measure that page has, not the body's.
+
+## The abstract and the dedication
+
+The abstract is the document's own `abstract`. It is set under a heading of
+its own, flush at the margin with no first line indented, and double spaced,
+as the handbook asks. It runs as long as it runs and takes a second page if
+it needs one.
+
+The dedication is `dedication`, either at the top level beside `abstract` or
+inside the `thesis` block. It carries no heading and is centred, double
+spaced, well down its own page.
+
+``` yaml
+abstract: "What the work found."
+dedication: |
+  For everyone who wondered whether this would ever be finished.
+```
 
 ## Page numbering
 

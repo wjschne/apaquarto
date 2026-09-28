@@ -972,11 +972,11 @@ Doctor of Philosophy]]
 Iwishiwere A. Graduate /
 May 2027]]
 #v(70.0pt, weak: false)
-#align(left)[#par(leading: 0.65em)[Examining Committee Members:]]
+#pad(left: 0.50in)[#align(left)[#par(leading: 0.65em)[Examining Committee Members:]]]
 #v(13.8pt, weak: false)
-#align(left)[#par(leading: 0.65em)[Mentor Name, Advisory Chair, TU Department /
+#pad(left: 0.50in)[#align(left)[#par(leading: 0.65em)[Mentor Name, Advisory Chair, TU Department /
 Member Name, TU Department /
-Outside Name, External Member, Another University]]
+Outside Name, External Member, Another University]]]
 ]
 ]
 #page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
@@ -986,6 +986,24 @@ Outside Name, External Member, Another University]]
 #v(289.0pt, weak: false)
 #align(center)[© Copyright 2027 by Iwishiwere A. Graduate /
 All Rights Reserved]
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#align(center)[#par(leading: 0.65em)[#strong[ABSTRACT]]]
+#v(27.6pt, weak: false)
+An abstract that says what the work found, flush at the margin and double spaced, as the handbook asks.
+
+]
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#v(164.0pt, weak: false)
+#align(center)[For the committee, who read it all.]
 ]
 ]
 

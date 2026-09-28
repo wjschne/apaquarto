@@ -7,6 +7,9 @@ author:
     email: graduate@example.edu
     affiliations:
       - name: Temple University
+abstract: "An abstract that says what the work found, flush at the margin and double spaced, as the handbook asks."
+dedication: |
+  For the committee, who read it all.
 documentmode: thesis
 thesis:
   type: Dissertation
@@ -43,8 +46,13 @@ Under the title, three centred blocks -- what the work is, what degree it
 answers to, who wrote it -- each set off by a rule 5.5 inches wide, and the
 examining committee flush left at the foot.
 
-The page carries no number and no running head, and the body begins on the
-page after it.
+The page carries no number and no running head. After it come the copyright
+page, the abstract and the dedication, numbered in lower-case roman, and then
+the body, which begins again at 1 in arabic.
+
+The examining committee begins where the rules above it begin rather than out
+at the margin, and the abstract begins at the margin with no first line
+indented.
 -->
 
 # Introduction

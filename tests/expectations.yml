@@ -948,7 +948,7 @@
         - '\apathesishead\pagenumbering{roman}'
         # The front matter is in lower-case roman and the body begins again
         # at 1 in arabic.
-        - '\endgroup\restoregeometry\pagenumbering{arabic}'
+        - '\restoregeometry\doublespacing\pagenumbering{arabic}'
         # The title page is set on 1" all round, so that its block stands at
         # the centre of the paper; every page after it takes the handbook's
         # 1.5" binding margin. A change of geometry puts the line spacing
@@ -956,9 +956,22 @@
         # after each one.
         - '\newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}'
         - '\newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}'
-        - '\linespread{1}\selectfont'
         # The copyright page, whose year is the year of the diploma date.
         - '© Copyright 2027 by Iwishiwere A. Graduate'
+        # The examining committee begins where the rules above it begin
+        # rather than out at the margin.
+        - '\raggedright\noindent\leftskip=0.50in\relax'
+        # The abstract, under a heading of its own and flush at the margin,
+        # and the dedication, centred with no heading at all.
+        - '\bfseries ABSTRACT\par}'
+        - '{\setlength{\parindent}{0pt}'
+        - 'For the committee, who read it all.\par}'
+        # The spacing is set between the blocks rather than inside them:
+        # setspace works the stretch into the size command, and a stretch
+        # asked for inside the group that holds a paragraph does not reach
+        # the lines of it.
+        - '\singlespacing'
+        - '\doublespacing'
         # What the work is, what degree it answers to, who wrote it.
         - 'A Dissertation\\'
         - 'of the Requirements for the Degree\\'
@@ -993,12 +1006,19 @@
         - '#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)'
         - '#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))'
         - '#counter(page).update(1)'
+        # The committee sits under the rules, and the abstract and the
+        # dedication are pages of their own.
+        - '#pad(left: 0.50in)'
+        - '#strong[ABSTRACT]'
+        - 'For the committee, who read it all.'
     pdf:
       contains:
         - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
         - 'the Temple University Graduate Board'
         - 'Outside Name, External Member, Another University'
         - 'All Rights Reserved'
+        - 'An abstract that says what the work found'
+        - 'For the committee, who read it all.'
 
 - fixture: thesis-title.qmd
   to: apaquarto-docx
@@ -1020,11 +1040,17 @@
         - '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/><w:pgNumType w:fmt="lowerRoman" w:start="1"/><w:cols w:space="720"/><w:titlePg/>'
         # The copyright page continues the roman numbering and does carry it.
         - '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2160" w:header="720" w:footer="720" w:gutter="0"/><w:pgNumType w:fmt="lowerRoman"/>'
+        # The committee begins where the rules begin, and the abstract takes
+        # the style apaquarto gives the first paragraph of an APA abstract,
+        # which is the one with no first line indented.
+        - '<w:ind w:left="720"/>'
+        - '<w:pStyle w:val="AbstractFirstParagraph" />'
     docx:
       contains:
         - 'Examining Committee Members:'
         - 'Mentor Name, Advisory Chair, TU Department'
         - 'All Rights Reserved'
+        - 'For the committee, who read it all.'
 
 - fixture: thesis-title.qmd
   to: apaquarto-html

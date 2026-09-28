@@ -45,7 +45,15 @@ local kRuleSpace = 21        -- points above and below each rule
 local kTitleDrop = 70        -- points from the top margin down to the title
 local kCommitteeDrop = 70    -- points from the last block down to the committee
 local kLineSpace = 13.8      -- a single-spaced line of 12pt Times
+local kDedicationDrop = 164  -- points from the top margin to a dedication
+-- The examining committee begins where the rules above it begin, rather
+-- than out at the margin: the rules are narrower than the measure and are
+-- centred in it, so this is the half-inch that leaves on either side.
+local kCommitteeIndent = (kMeasureInches - kRuleWidth) / 2
 local kDoubleSpace = 27.6    -- and a double-spaced one
+-- From the abstract heading down to the first line of the abstract, which
+-- is a blank double-spaced line between them.
+local kAbstractGap = 27.6
 -- Where the copyright notice sits: far enough down the page to read as a
 -- page of its own rather than as a heading, which is where the Graduate
 -- School's template puts it.
@@ -132,16 +140,27 @@ local function collector()
     rule = function()
       items:insert({ kind = "rule" })
     end,
-    para = function(align, lines, bold, double)
+    para = function(align, lines, options)
+      options = options or {}
       local kept = pandoc.List({})
       for _, line in ipairs(lines) do
         if line and #line > 0 then kept:insert(line) end
       end
       if #kept > 0 then
         items:insert({ kind = "para", align = align, lines = kept,
-          bold = bold, double = double })
+          bold = options.bold, double = options.double,
+          indent = options.indent })
       end
       return #kept > 0
+    end,
+    -- Prose that flows, rather than lines set where they are put: the
+    -- abstract, which runs as long as it runs and may take a second page.
+    -- The blocks are the document's own and every format writes them as it
+    -- writes any other prose.
+    blocks = function(blocks)
+      if blocks and #blocks > 0 then
+        items:insert({ kind = "blocks", blocks = pandoc.Blocks(blocks) })
+      end
     end,
   }
 end
@@ -151,7 +170,7 @@ local function title_page(meta)
   local items, add = collector()
 
   add.gap(kTitleDrop)
-  add.para("center", title_lines(meta), true)
+  add.para("center", title_lines(meta), { bold = true })
 
   -- What the work is: "A Dissertation / Submitted to / the Temple University
   -- Graduate Board".
@@ -205,9 +224,9 @@ local function title_page(meta)
     end
     add.gap(kCommitteeDrop)
     add.para("left", { text(language(meta, "thesis-committee",
-      "Examining Committee Members:")) })
+      "Examining Committee Members:")) }, { indent = kCommitteeIndent })
     add.gap(kLineSpace)
-    add.para("left", lines)
+    add.para("left", lines, { indent = kCommitteeIndent })
   end
 
   return items
@@ -247,13 +266,62 @@ local function copyright_page(meta)
   add.para("center", {
     notice,
     text(language(meta, "thesis-rights-reserved", "All Rights Reserved")),
-  }, false, true)
+  }, { double = true })
   return items
 end
 
 -- The front matter, page by page. Each page says what margins it is set on
 -- and whether it carries its number; the numbering itself is lower-case
 -- roman throughout, and the body that follows begins again at 1 in arabic.
+-- Metadata that is prose, as blocks. A field written as a yaml string comes
+-- through as inlines and one written as a block comes through as blocks, and
+-- a page wants the same thing from either.
+local function prose(value)
+  if value == nil then return nil end
+  local first = value[1]
+  if first == nil then return nil end
+  if first.t == "Para" or first.t == "Plain" or first.t == "BlockQuote"
+      or first.t == "Div" or first.t == "LineBlock" then
+    return pandoc.Blocks(value)
+  end
+  return pandoc.Blocks({ pandoc.Para(pandoc.Inlines(value)) })
+end
+
+-- The abstract, under a heading of its own, double spaced and running as
+-- long as it runs. apastriptitle.lua keeps a copy in apaabstract, which is
+-- the one to read: the .docx has its abstract taken off the metadata so that
+-- pandoc does not set one of its own.
+local function abstract_page(meta)
+  local blocks = prose(meta.apaabstract or meta.abstract)
+  if blocks == nil then return nil end
+
+  local items, add = collector()
+  add.para("center",
+    { text(language(meta, "thesis-abstract", "ABSTRACT")) }, { bold = true })
+  add.gap(kAbstractGap)
+  add.blocks(blocks)
+  return items
+end
+
+-- The dedication, which carries no heading: it is a page with a line or two
+-- on it, centred and set well down the page.
+local function dedication_page(meta)
+  local thesis = meta.thesis
+  local written = meta.dedication or (thesis and thesis.dedication)
+  local blocks = prose(written)
+  if blocks == nil then return nil end
+
+  local lines = pandoc.List({})
+  for _, block in ipairs(blocks) do
+    if block.content then lines:insert(pandoc.Inlines(block.content)) end
+  end
+
+  local items, add = collector()
+  add.gap(kDedicationDrop)
+  add.para("center", lines, { double = true })
+  return items
+end
+
 local function build_pages(meta)
   local pages = pandoc.List({})
   local title = title_page(meta)
@@ -266,14 +334,19 @@ local function build_pages(meta)
       items = title,
     })
   end
-  local copyright = copyright_page(meta)
-  if copyright then
-    pages:insert({
-      margins = kMargins,
-      measure = kBodyMeasureInches,
-      numbered = true,
-      items = copyright,
-    })
+  -- The order the handbook sets for the front matter: the copyright page,
+  -- the abstract, the dedication. Each is left out when the document gives
+  -- it nothing to set, and the numbering runs on over whatever is there.
+  for _, build in ipairs({ copyright_page, abstract_page, dedication_page }) do
+    local items = build(meta)
+    if items and #items > 0 then
+      pages:insert({
+        margins = kMargins,
+        measure = kBodyMeasureInches,
+        numbered = true,
+        items = items,
+      })
+    end
   end
   return pages
 end
@@ -290,19 +363,40 @@ local function raw(format, s)
   return pandoc.RawBlock(format, s)
 end
 
--- latex. setspace is loaded by apalatex.tex, so the pages can be set single
--- spaced inside a group and leave the body's spacing alone. geometry's
+-- latex. The spacing is set on each paragraph rather than on the front
+-- matter as a whole: the pages hold single-spaced lines and double-spaced
+-- ones side by side, and a group around the lot could only be one of them.
+-- It has to be per paragraph in any case, since a change of geometry puts
+-- the line spacing back to the document's. geometry's
 -- \newgeometry sets a page's own margins and \restoregeometry gives the body
 -- back the ones the document asked for.
+-- latex.
+--
+-- The spacing is set between the blocks rather than inside them. setspace
+-- works the stretch into the size command, and a \setstretch or a
+-- \linespread inside the group that holds a paragraph does not reach the
+-- lines of that paragraph: the front matter came out double spaced whatever
+-- was asked for, and the title page ran onto a page more than it needed. Set
+-- between them, where the size command is run again, it holds.
+--
+-- A change of geometry puts the spacing back to the document's, so the state
+-- is forgotten whenever the geometry changes and asked for again.
 local function render_latex(pages)
   local out = pandoc.List({})
   -- No running head, the page number at the centre of the foot, and the
   -- front matter numbered in lower-case roman. The title page is page i and
   -- is counted, which is why the numbering starts before it.
   out:insert(raw("latex", "\\apathesishead\\pagenumbering{roman}"))
-  out:insert(raw("latex", "\\begingroup\\linespread{1}\\selectfont"))
 
-  local geometry = nil
+  local geometry, spacing = nil, nil
+  local function set_spacing(double)
+    local wanted = double and "\\doublespacing" or "\\singlespacing"
+    if wanted ~= spacing then
+      out:insert(raw("latex", wanted))
+      spacing = wanted
+    end
+  end
+
   for _, page in ipairs(pages) do
     local wanted = string.format(
       "\\newgeometry{left=%.2fin,right=%.2fin,top=%.2fin,bottom=%.2fin}",
@@ -310,12 +404,7 @@ local function render_latex(pages)
       page.margins.top, page.margins.bottom)
     if wanted ~= geometry then
       out:insert(raw("latex", wanted))
-      -- Asking for the single spacing again, because a change of geometry
-      -- puts the line spacing back to the document's. Without this the front
-      -- matter came out double spaced however it was asked not to, and the
-      -- title page ran onto a second page.
-      out:insert(raw("latex", "\\linespread{1}\\selectfont"))
-      geometry = wanted
+      geometry, spacing = wanted, nil
     end
     if not page.numbered then
       out:insert(raw("latex", "\\thispagestyle{empty}"))
@@ -328,27 +417,38 @@ local function render_latex(pages)
         out:insert(raw("latex", string.format(
           "{\\centering\\noindent\\rule{%.2fin}{0.5pt}\\par}", kRuleWidth)))
       elseif item.kind == "para" then
+        set_spacing(item.double)
         local lines = pandoc.List({})
         for _, line in ipairs(item.lines) do
           lines:insert(written(line, "latex"))
         end
-        local separator = item.double
-          and string.format("\\\\[%.1fpt]\n", kDoubleSpace - kLineSpace)
-          or "\\\\\n"
-        local body = table.concat(lines, separator)
+        local body = table.concat(lines, "\\\\\n")
         if item.bold then body = "\\bfseries " .. body end
         local align = item.align == "center" and "\\centering"
           or "\\raggedright\\noindent"
-        out:insert(raw("latex", "{" .. align .. "\n" .. body .. "\\par}"))
+        local indent = item.indent
+          and string.format("\\leftskip=%.2fin\\relax", item.indent) or ""
+        out:insert(raw("latex",
+          "{" .. align .. indent .. "\n" .. body .. "\\par}"))
+      elseif item.kind == "blocks" then
+        -- Prose, which the handbook asks to be double spaced. The first line
+        -- is not indented: an abstract begins at the margin, which is where
+        -- the Graduate School's template begins one and where the other
+        -- formats begin it.
+        set_spacing(true)
+        out:insert(raw("latex", "{\\setlength{\\parindent}{0pt}"))
+        out:extend(item.blocks)
+        out:insert(raw("latex", "}"))
       end
     end
     out:insert(raw("latex", "\\clearpage"))
   end
 
   -- The body begins again at 1, in arabic, which is what \pagenumbering does
-  -- to the counter as well as to the shape of the numeral.
+  -- to the counter as well as to the shape of the numeral. The spacing goes
+  -- back to the document's along with the geometry.
   out:insert(raw("latex",
-    "\\endgroup\\restoregeometry\\pagenumbering{arabic}"))
+    "\\restoregeometry\\doublespacing\\pagenumbering{arabic}"))
   return out
 end
 
@@ -389,8 +489,14 @@ local function render_typst(pages)
         if not item.double then
           body = "#par(leading: 0.65em)[" .. body .. "]"
         end
-        out:insert(raw("typst",
-          "#align(" .. item.align .. ")[" .. body .. "]"))
+        body = "#align(" .. item.align .. ")[" .. body .. "]"
+        if item.indent then
+          body = string.format("#pad(left: %.2fin)[", item.indent)
+            .. body .. "]"
+        end
+        out:insert(raw("typst", body))
+      elseif item.kind == "blocks" then
+        out:extend(item.blocks)
       end
     end
     out:insert(raw("typst", "]\n]\n"))
@@ -423,9 +529,13 @@ local function render_html(pages)
         end
         local body = table.concat(lines, "<br>\n")
         if item.bold then body = "<strong>" .. body .. "</strong>" end
+        local indent = item.indent
+          and string.format(";margin-left:%.2fin", item.indent) or ""
         out:insert(raw("html", '<p style="text-align:' .. item.align ..
-          ";margin:0;text-indent:0;line-height:" ..
+          ";margin:0" .. indent .. ";text-indent:0;line-height:" ..
           (item.double and "2" or "1.15") .. '">' .. body .. "</p>"))
+      elseif item.kind == "blocks" then
+        out:extend(item.blocks)
       end
     end
     out:insert(raw("html", "</div>"))
@@ -565,9 +675,27 @@ local function render_docx(pages)
         end
         local extra = item.align == "center"
           and '<w:jc w:val="center"/>' or '<w:jc w:val="left"/>'
+        if item.indent then
+          extra = extra .. string.format('<w:ind w:left="%d"/>',
+            twips(item.indent * 72))
+        end
         out:insert(raw("openxml",
           "<w:p>" .. properties(extra, item.double)
           .. table.concat(runs) .. "</w:p>"))
+      elseif item.kind == "blocks" then
+        -- Prose word sets for itself. A gap standing before it is carried by
+        -- an empty paragraph, since the blocks are not ours to give
+        -- properties to.
+        if pending > 0 then
+          out:insert(raw("openxml", "<w:p>" .. properties() .. "</w:p>"))
+        end
+        -- Flush left, with no first line indented: an abstract begins at the
+        -- margin. The reference document has the style for it already ---
+        -- it is the one apaquarto gives the first paragraph of an APA
+        -- abstract --- and a div carrying a custom style hands it to every
+        -- paragraph inside.
+        out:insert(pandoc.Div(item.blocks,
+          pandoc.Attr("", {}, { ["custom-style"] = "AbstractFirstParagraph" })))
       end
     end
     out:insert(raw("openxml", docx_section(page, footers, index == 1)))
