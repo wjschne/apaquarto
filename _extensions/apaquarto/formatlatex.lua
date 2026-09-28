@@ -213,6 +213,15 @@ local function meta(m)
       "\\AtBeginDocument{\\apalongtableastabular}")
   end
 
+  -- A student paper carries the page number and nothing else. APA seventh
+  -- edition drops the running head from student work, which is what the
+  -- typst format does and what the apa7 class did for the .pdf before 6.0.0
+  -- stopped using it: a student paper has carried a manuscript's running
+  -- head ever since. Issue #166.
+  if mode == "stu" then
+    quarto.doc.include_text("in-header", "\\apastudenthead")
+  end
+
   -- A published article is set in two columns and carries the authors' names
   -- in the head rather than the manuscript's short title.
   if mode == "jou" then

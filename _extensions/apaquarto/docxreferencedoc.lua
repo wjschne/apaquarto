@@ -543,6 +543,14 @@ function Pandoc(doc)
   --- patch_header to leave the header alone.
   local runninghead = doc.meta.description ~= nil and
     trim(pandoc.utils.stringify(doc.meta.description)) or nil
+  --- A student paper carries the page number and nothing else. APA seventh
+  --- edition drops the running head from student work, and the control is
+  --- emptied rather than left out so that the number beside it stays.
+  --- Issue #166.
+  if doc.meta.documentmode ~= nil
+      and pandoc.utils.stringify(doc.meta.documentmode) == "stu" then
+    runninghead = ""
+  end
 
   local data = read_file(refdoc)
   if not data then

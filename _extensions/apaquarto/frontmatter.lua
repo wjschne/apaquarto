@@ -803,6 +803,14 @@ return {
       local typst_jou = is_typst_mode(meta, "jou")
       local typst_doc = is_typst_mode(meta, "doc")
       local typst_stu = is_typst_mode(meta, "stu")
+      -- A student paper, whatever it is being written to. The fields below
+      -- were gated on typst for as long as the .pdf was built with the apa7
+      -- class, which set them from the class options; the .pdf stopped using
+      -- that class in 6.0.0 and nothing took the work over, so a student
+      -- paper came out with no course, no instructor and no due date in
+      -- every format but typst. Issue #166.
+      local student = meta.documentmode ~= nil
+        and stringify(meta.documentmode) == "stu"
 
       local documenttitle = ""
       local intabovetitle = 2
@@ -924,7 +932,7 @@ return {
         body:extend({ authordiv })
       end
 
-      if typst_stu and not mask then
+      if student and not mask then
         add_student_field(body, meta, "course")
         add_student_field(body, meta, "professor")
         add_student_field(body, meta, "duedate")
@@ -1339,7 +1347,16 @@ return {
           v.text = pandoc.text.upper(v.text)
         end
       end
-      if not meta["suppress-short-title"] then
+      -- The description is what the running head is read from in .docx: the
+      -- head is a content control bound to it, and word fills the control
+      -- from that binding whatever text is written into it.
+      --
+      -- A student paper has no running head --- APA seventh edition drops it
+      -- from student work --- so there is nothing for the control to say.
+      -- .docx only: the other formats take their head from elsewhere, and
+      -- the description is what a browser reads a page by. Issue #166.
+      if not meta["suppress-short-title"]
+          and not (FORMAT == "docx" and student) then
         meta.description = myshorttitle
       else
         meta.description = " "

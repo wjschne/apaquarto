@@ -1,0 +1,35 @@
+---
+title: "Final Paper"
+shorttitle: "Final Paper"
+author:
+  - name: Author Name
+    corresponding: true
+    email: author@example.edu
+    affiliations:
+      - name: Quarto University
+        department: Typesetting
+documentmode: stu
+course: Statistics 101
+professor: Dr Example
+duedate: "2026-09-30"
+format:
+  apaquarto-pdf: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-html: default
+---
+
+<!--
+https://github.com/wjschne/apaquarto/issues/166
+
+documentmode: stu puts the course, the instructor and the due date on the
+title page, and a student paper carries the page number and no running head.
+
+Both were typst's alone. The .pdf got them from the apa7 class until 6.0.0
+stopped using that class and nothing took the work over, and the fields were
+gated on typst besides, so .docx and .html never had them either. A student
+paper came out with a manuscript's running head and none of its own fields
+in three formats out of four.
+-->
+
+Some body text.

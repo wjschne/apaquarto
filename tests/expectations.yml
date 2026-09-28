@@ -1123,3 +1123,53 @@
       absent:
         # No committee was written, so there is no committee block.
         - 'Examining Committee Members:'
+
+- fixture: student-fields.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # The page number and nothing else: a student paper has no running
+        # head. The .pdf had a manuscript's ever since it stopped being built
+        # with the apa7 class.
+        - '\apastudenthead'
+        # And the fields a student paper puts on its title page, which were
+        # written for typst alone.
+        - 'Statistics 101'
+        - 'Dr Example'
+        - '2026-09-30'
+    pdf:
+      contains:
+        - 'Statistics 101'
+        - 'Dr Example'
+      absent:
+        # The running head would be the short title in capitals.
+        - 'FINAL PAPER'
+
+- fixture: student-fields.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Statistics 101'
+        - 'Dr Example'
+        - '2026-09-30'
+
+- fixture: student-fields.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'Statistics 101'
+        - 'Dr Example'
+    pdf:
+      absent:
+        - 'FINAL PAPER'
+
+- fixture: student-fields.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'Statistics 101'
+        - 'Dr Example'
