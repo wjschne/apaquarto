@@ -180,6 +180,15 @@
   /fancyhead[CE]{{/apaheadsize/apaauthorline}}%
   /fancyhead[CO]{{/apaheadsize/apashorttitle}}}
 
+% The head a dissertation carries, which is none. The Temple University
+% Graduate School's handbook asks for the page number and nothing else, and
+% the dissertations it publishes set it at the centre of the foot. The title
+% page is counted but not numbered, which /thispagestyle{empty} does where the
+% page is built.
+/newcommand{/apathesishead}{%
+  /fancyhf{}%
+  /fancyfoot[C]{/thepage}}
+
 % Float placement in a published article.
 %
 % A float spanning both columns can only go at the top of a page, at the foot

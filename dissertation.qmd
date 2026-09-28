@@ -2,7 +2,7 @@
 title: "SEL FOR DLLS: THE INFLUENCE OF SOCIAL-EMOTIONAL LEARNING PROGRAMS ON KEY OUTCOMES FOR DUAL LANGUAGE LEARNERS IN HEAD START"
 shorttitle: "My Dissertation Is Amazing"
 author:
-  - name: W. Joel Schneider
+  - name: Codie Kane
     corresponding: true
     orcid: 0000-0002-8393-5316
     email: schneider@temple.edu
@@ -26,18 +26,17 @@ thesis:
   degree: Doctor of Philosophy
   date: May 2027
   committee:
-    - name: Mentor's Name
+    - name: Lia E. Sandilos, Ph.D.
       role: Advisory Chair
-      affiliation: TU Department
-    - name: Committee Member's Name
-      affiliation: TU Department
-    - name: Committee Member's Name
-      affiliation: TU Department
-    - name: Committee Member's Name
-      affiliation: TU Department
-    - name: Committee Member's Name
+      affiliation: Department of Education and Human Services, Lehigh University 
+    - name: Renée M. Tobin, Ph.D.
+      affiliation: Psychological Studies in Education, Temple University
+    - name: W. Joel Schneider, Ph.D.
+      affiliation: Psychological Studies in Education, Temple University 
+      role: Examining Chair
+    - name: Sabina Neugebauer, Ph.D.
       role: External Member
-      affiliation: Affiliation
+      affiliation: Department of Teaching and Learning, Temple University  
 format:
   apaquarto-typst: default
   apaquarto-pdf: default

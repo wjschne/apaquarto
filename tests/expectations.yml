@@ -938,13 +938,27 @@
         # The title in capitals, broken into an inverted pyramid: the first
         # line longest, each line after it shorter. The lines are worked out
         # in lua, so these are the same three in all four formats.
-        - '\bfseries A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY\\'
-        - 'WHEN THEY ARE STUDYING SOMETHING\\'
-        - 'AT LENGTH\par}'
+        - '\bfseries A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN\\'
+        - 'THEY ARE STUDYING SOMETHING AT CONSIDERABLE\\'
+        - 'AND NOTABLE LENGTH\par}'
         # A rule under each of the three blocks below the title.
         - '\rule{5.50in}{0.5pt}'
-        # The title page carries no number and no running head.
+        # Page i carries no number, and there is no running head at all.
         - '\thispagestyle{empty}'
+        - '\apathesishead\pagenumbering{roman}'
+        # The front matter is in lower-case roman and the body begins again
+        # at 1 in arabic.
+        - '\endgroup\restoregeometry\pagenumbering{arabic}'
+        # The title page is set on 1" all round, so that its block stands at
+        # the centre of the paper; every page after it takes the handbook's
+        # 1.5" binding margin. A change of geometry puts the line spacing
+        # back to the document's, so the single spacing is asked for again
+        # after each one.
+        - '\newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}'
+        - '\newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}'
+        - '\linespread{1}\selectfont'
+        # The copyright page, whose year is the year of the diploma date.
+        - '© Copyright 2027 by Iwishiwere A. Graduate'
         # What the work is, what degree it answers to, who wrote it.
         - 'A Dissertation\\'
         - 'of the Requirements for the Degree\\'
@@ -961,23 +975,30 @@
         # a call to it is what would mean the page was built.
         - '\apatitlepageheading{'
       count:
-        # The body begins on the page after the title page.
+        # Two pages of front matter: the title page and the copyright page.
         - text: '\clearpage'
-          times: 1
+          times: 2
 
 - fixture: thesis-title.qmd
   to: apaquarto-typst
   expect:
     typ:
       contains:
-        - '#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY \'
+        - '#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN \'
         - '#line(length: 5.50in, stroke: 0.5pt)'
-        - '#align(left)[Examining Committee Members:]'
+        - 'Examining Committee Members:'
+        # The title page on 1" all round and carrying nothing at the foot,
+        # the copyright page on the handbook's margins and numbered, and the
+        # body beginning again at 1.
+        - '#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)'
+        - '#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))'
+        - '#counter(page).update(1)'
     pdf:
       contains:
-        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY'
+        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
         - 'the Temple University Graduate Board'
         - 'Outside Name, External Member, Another University'
+        - 'All Rights Reserved'
 
 - fixture: thesis-title.qmd
   to: apaquarto-docx
@@ -991,20 +1012,27 @@
         # The rule is a paragraph with a border under it, which is how word
         # draws one.
         - '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:pBdr>'
-        # And the body begins on the page after it.
-        - '<w:br w:type="page"/>'
+        # The title page is a section of its own, which is how it gets
+        # margins that are not the rest of the document's: 1" all round,
+        # against the 1.5" binding margin every page after it takes. It names
+        # no header, so no running head, and w:titlePg sends its one page to
+        # the empty "first" footer, so no number either.
+        - '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/><w:pgNumType w:fmt="lowerRoman" w:start="1"/><w:cols w:space="720"/><w:titlePg/>'
+        # The copyright page continues the roman numbering and does carry it.
+        - '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2160" w:header="720" w:footer="720" w:gutter="0"/><w:pgNumType w:fmt="lowerRoman"/>'
     docx:
       contains:
         - 'Examining Committee Members:'
         - 'Mentor Name, Advisory Chair, TU Department'
+        - 'All Rights Reserved'
 
 - fixture: thesis-title.qmd
   to: apaquarto-html
   expect:
     html:
       contains:
-        - 'thesis-title-page'
-        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY'
+        - 'thesis-front-matter-page'
+        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
         - 'Examining Committee Members:'
 
 - fixture: thesis-title-breaks.qmd

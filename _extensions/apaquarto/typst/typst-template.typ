@@ -399,15 +399,6 @@
         )
       }
     }
-  } else if headerstyle == "thesis" {
-    // The title page of a dissertation is page i and shows no number; every
-    // page after it is numbered.
-    context {
-      let pg = counter(page).get().at(0)
-      if pg > first-page {
-        align(right)[#counter(page).display()]
-      }
-    }
   } else if headerstyle == "none" {
     none
   } else {
@@ -435,7 +426,13 @@
       }
     }
   } else {
-    none
+    // auto, not none. A page told outright that it has no footer shows no
+    // page number either, whatever its numbering says, so pagenumbering did
+    // nothing at all in the modes that set one: doc numbered no page, and
+    // neither did thesis. auto leaves typst to draw the number it was asked
+    // for, at the centre of the foot, and shows nothing where the numbering
+    // is none.
+    auto
   }
 
   set page(
@@ -700,7 +697,11 @@
 // all four formats.
 #let thesis(..args) = apa-layout(
   margin: (left: 1.5in, right: 1in, top: 1in, bottom: 1in),
-  headerstyle: "thesis",
+  // No running head: the Graduate School asks for the page number and nothing
+  // else. Numbered in lower-case roman, which is what the front matter takes;
+  // the body begins again at 1 in arabic, set where the front matter ends.
+  headerstyle: "none",
+  pagenumbering: "i",
   ..args,
 )
 

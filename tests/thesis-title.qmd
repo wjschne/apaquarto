@@ -1,5 +1,5 @@
 ---
-title: "A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Length"
+title: "A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Considerable and Notable Length"
 shorttitle: "Thesis Title"
 author:
   - name: Iwishiwere A. Graduate

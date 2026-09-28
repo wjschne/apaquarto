@@ -55,6 +55,8 @@ local theme_path = "word/theme/theme1.xml"
 local styles_path = "word/styles.xml"
 local document_path = "word/document.xml"
 local header_pattern = "^word/header%d*%.xml$"
+local footer_pattern = "^word/footer%d*%.xml$"
+local rels_path = "word/_rels/document.xml.rels"
 
 --- Styles that hold code but take their font from the theme by default
 local code_styles = {
@@ -292,22 +294,123 @@ local function set_margins(document, margins)
     "<w:pgMar " .. attributes .. "/>" .. stripped:sub(last + 1)
 end
 
---- A first page of its own, which is how word is told to leave the running
---- head off a title page: w:titlePg makes the section take a separate header
---- for its first page, and the reference document has no such header, so that
---- page carries nothing. The element belongs after w:cols in the order the
---- schema sets for section properties, which is why it goes in before
---- w:docGrid rather than beside the page size.
-local function set_title_page(document, wanted)
-  local stripped = (document:gsub("<w:titlePg%s*/>", ""))
-  if not wanted then return stripped end
-  local at = stripped:find("<w:docGrid", 1, true)
+--- How the pages of the body are numbered.
+---
+--- A dissertation numbers its front matter in lower-case roman and starts
+--- again at 1 for the first page of the body, so the body is a section of its
+--- own with a w:pgNumType saying so. The title page's own section is written
+--- by thesisfrontmatter.lua, at the end of the page it builds; this is the
+--- section that holds everything after it.
+---
+--- w:pgNumType belongs after w:lnNumType and before w:cols in the order the
+--- schema sets for section properties.
+---
+--- An earlier version of this left the running head off the title page with a
+--- w:titlePg here. The title page has a section of its own now and carries no
+--- header reference at all, so the element is taken out wherever a render of
+--- that version left one behind.
+local function set_page_numbering(document, numbering)
+  local stripped = strip_marker(document, "pagenumbering")
+  stripped = (stripped:gsub("<w:titlePg%s*/>", ""))
+
+  local original = get_marker(document, "pagenumbering") or
+    stripped:match("<w:pgNumType[^>]*>") or ""
+  stripped = (stripped:gsub("<w:pgNumType[^>]*>", ""))
+
+  local wanted = numbering or original
+  local marker = wanted ~= original and make_marker("pagenumbering", original) or ""
+
+  local at = stripped:find("<w:cols", 1, true)
     or stripped:find("</w:sectPr>", 1, true)
   if not at then return stripped end
-  return stripped:sub(1, at - 1) .. "<w:titlePg/>" .. stripped:sub(at)
+  return stripped:sub(1, at - 1) .. marker .. wanted .. stripped:sub(at)
 end
 
-local function patch_document(document, papersize, linenumbers, margins, titlepage)
+--- The running head, which a dissertation does not have.
+---
+--- The Graduate School asks for the page number and nothing else, so in
+--- thesis mode the section names no header at all and word draws none.
+---
+--- The references are taken out as one stretch and the marker goes in where
+--- they stood, holding exactly what was there. Putting them back is then
+--- putting that stretch back in its own place, so that a reference document
+--- which has been through thesis mode and out again holds what it held
+--- before, in the order it held it, rather than the same references
+--- rearranged.
+local function set_header_references(document, strip)
+  --- Whatever a render left behind, back where it came from
+  local restored = (document:gsub(marker_pattern("headers"),
+    function(text) return text end))
+  if not strip then return restored end
+
+  local first = restored:find("<w:headerReference", 1, true)
+  if not first then return restored end
+  --- To the end of the last of them, which takes in any footer reference
+  --- standing between two header references. Those come back untouched.
+  local last = first
+  while true do
+    local from, to = restored:find("<w:headerReference[^>]*/>", last)
+    if not from then break end
+    last = to + 1
+  end
+  local span = restored:sub(first, last - 1)
+  if span == "" then return restored end
+  return restored:sub(1, first - 1) .. make_marker("headers", span)
+    .. restored:sub(last)
+end
+
+--- The page number at the centre of the foot, which is where the
+--- dissertations Temple publishes put it. Word needs a field in a footer to
+--- show one, and the reference document's footers are empty, so the field is
+--- written into the one the section names as its default.
+local footer_page_number = table.concat({
+  '<w:p><w:pPr><w:pStyle w:val="Footer"/><w:jc w:val="center"/></w:pPr>',
+  '<w:r><w:fldChar w:fldCharType="begin"/></w:r>',
+  '<w:r><w:instrText xml:space="preserve"> PAGE </w:instrText></w:r>',
+  '<w:r><w:fldChar w:fldCharType="separate"/></w:r>',
+  '<w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>',
+})
+
+--- What the footer held before is kept in a marker, so that every other mode
+--- gets it back. A marker is an xml comment and an xml comment cannot hold a
+--- double hyphen, so a footer with one in it is left alone and said so.
+local function patch_footer(footer, wanted)
+  local _, open = footer:find("<w:ftr[^>]*>")
+  local close = footer:find("</w:ftr>", 1, true)
+  if not open or not close then return nil end
+
+  local original = get_marker(footer, "footer")
+  if original == nil then
+    if not wanted then return nil end
+    original = footer:sub(open + 1, close - 1)
+    if original:find("--", 1, true) then
+      quarto.log.warning("The reference document's footer cannot be replaced " ..
+        "with a page number, so the pages are not numbered at the foot.")
+      return nil
+    end
+  end
+
+  local body = original
+  if wanted then
+    body = make_marker("footer", original) .. footer_page_number
+  end
+  return footer:sub(1, open) .. body .. footer:sub(close)
+end
+
+--- Which footer the section calls its default, as a path in the archive.
+local function default_footer_path(document, rels)
+  local id = document:match('<w:footerReference w:type="default" r:id="([^"]+)"')
+  if not id then return nil end
+  for element in rels:gmatch("<Relationship[^>]*>") do
+    if element:match('Id="' .. id .. '"') then
+      local target = element:match('Target="([^"]+)"')
+      if target then return "word/" .. (target:gsub("^/", "")) end
+    end
+  end
+  return nil
+end
+
+local function patch_document(document, papersize, linenumbers, margins, numbering)
   local stripped = strip_marker(document, "papersize")
   local first, last = stripped:find("<w:pgSz[^>]*>")
   if not first then return nil end
@@ -340,7 +443,8 @@ local function patch_document(document, papersize, linenumbers, margins, titlepa
     "<w:pgSz " .. attributes .. "/>" .. stripped:sub(last + 1)
 
   patched = set_margins(patched, margins)
-  patched = set_title_page(patched, titlepage)
+  patched = set_page_numbering(patched, numbering)
+  patched = set_header_references(patched, numbering ~= nil)
   return set_line_numbers(patched, linenumbers) or patched
 end
 
@@ -428,6 +532,11 @@ function Pandoc(doc)
   local thesis = doc.meta.documentmode ~= nil and
     pandoc.utils.stringify(doc.meta.documentmode) == "thesis"
   local margins = thesis and require("utilsapa").thesis_margins or nil
+  --- The body of a dissertation begins again at 1, in arabic; the front
+  --- matter before it is in lower-case roman, which the title page's own
+  --- section sets.
+  local numbering = thesis and '<w:pgNumType w:fmt="decimal" w:start="1"/>'
+    or nil
   --- frontmatter.lua has already put the short title, upper cased, in the
   --- description, or a single space when the short title is suppressed. nil
   --- rather than "" when there is no description at all, which tells
@@ -450,6 +559,21 @@ function Pandoc(doc)
     return nil
   end
 
+  --- Which footer the page number goes in. Every footer is looked at, not
+  --- just that one, so that a footer an earlier render wrote a number into is
+  --- put back when the mode changes.
+  local footer_path = nil
+  do
+    local docxml, relsxml
+    for _, entry in ipairs(archive.entries) do
+      if entry.path == document_path then docxml = entry:contents() end
+      if entry.path == rels_path then relsxml = entry:contents() end
+    end
+    if thesis and docxml and relsxml then
+      footer_path = default_footer_path(docxml, relsxml)
+    end
+  end
+
   local changed = false
   local newentries = {}
   for _, entry in ipairs(archive.entries) do
@@ -470,7 +594,7 @@ function Pandoc(doc)
       end
     elseif entry.path == document_path then
       xml = entry:contents()
-      patched = patch_document(xml, papersize, linenumbers, margins, thesis)
+      patched = patch_document(xml, papersize, linenumbers, margins, numbering)
       if not patched then
         quarto.log.warning("Reference document " .. refdoc ..
           " has no page size, so papersize and numbered-lines were not applied.")
@@ -480,6 +604,9 @@ function Pandoc(doc)
       --- others have no such control and patch_header leaves them alone.
       xml = entry:contents()
       patched = patch_header(xml, runninghead)
+    elseif entry.path:match(footer_pattern) then
+      xml = entry:contents()
+      patched = patch_footer(xml, entry.path == footer_path)
     end
     if patched and patched ~= xml then
       changed = true

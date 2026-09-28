@@ -366,8 +366,23 @@ end
 M.thesis_margins = { left = 1.5, right = 1.0, top = 1.0, bottom = 1.0 }
 M.thesis_paper_width = 8.5
 
+-- The title page is the exception. The dissertations Temple publishes set
+-- theirs on 1" all round, so that the block of it stands at the centre of the
+-- page rather than at the centre of a text block pushed right by the binding
+-- margin, and that is the page the Graduate School's own template draws. It
+-- is one page and it is set on its own, so it takes margins of its own.
+M.thesis_title_margins = { left = 1.0, right = 1.0, top = 1.0, bottom = 1.0 }
+
+local function measure(margins)
+  return M.thesis_paper_width - margins.left - margins.right
+end
+
 function M.thesis_measure()
-  return M.thesis_paper_width - M.thesis_margins.left - M.thesis_margins.right
+  return measure(M.thesis_margins)
+end
+
+function M.thesis_title_measure()
+  return measure(M.thesis_title_margins)
 end
 
 -- if any value in table

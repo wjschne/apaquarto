@@ -690,11 +690,10 @@ University Graduate School, following its
 It is manuscript mode with a front matter of its own, and it works in all
 four formats. `dissertation` is accepted as an alias.
 
-**So far this builds the title page only.** The rest of the front matter ---
-the copyright page, the abstract, the dedication, the acknowledgments, the
-table of contents with its `CHAPTER` heading, the lists of tables and figures
---- is not built yet, nor is the front matter's lower-case roman page
-numbering.
+**So far this builds the title page, the copyright page and the page
+numbering.** The rest of the front matter --- the abstract, the dedication,
+the acknowledgments, the table of contents with its `CHAPTER` heading, the
+lists of tables and figures --- is not built yet.
 
 The page takes its fields from a `thesis` block:
 
@@ -729,6 +728,10 @@ thesis:
 |                  | names it.                                                |
 +------------------+----------------------------------------------------------+
 | `date`           | The diploma date, not the date of the defence.           |
++------------------+----------------------------------------------------------+
+| `copyright`      | The year on the copyright page. Taken from the year in   |
+|                  | `date` when it is not written. `false` leaves the page   |
+|                  | out.                                                     |
 +------------------+----------------------------------------------------------+
 | `committee`      | The examining committee, in order. Each entry takes      |
 |                  | `name`, an optional `role` (`Advisory Chair`,            |
@@ -772,8 +775,24 @@ Those are then the lines, and nothing is worked out.
 The handbook asks for 1.5" at the left, where the work is bound, and 1"
 elsewhere, and says the margins are "the same for the entire manuscript,
 including front matter". `documentmode: thesis` sets them in the .pdf, the
-typst and the .docx. (The Graduate School's own title-page template is set at
-1" all round; the handbook is what the work is held to.)
+typst and the .docx.
+
+The title page is the exception: it is set on 1" all round, so that the block
+of it stands at the centre of the paper rather than at the centre of a text
+block pushed right by the binding margin. That is what the dissertations
+Temple publishes do, and what the Graduate School's own template draws. The
+title is broken against the measure that page has, not the body's.
+
+## Page numbering
+
+The handbook asks for lower-case roman numerals through the front matter and
+arabic numerals from the first page of the body, and says that "the Title
+Page is page i, but does not show a page number". That is what
+`documentmode: thesis` sets: the title page is counted and carries nothing,
+the copyright page is ii, and the body begins again at 1.
+
+There is no running head. The number sits at the centre of the foot, which is
+where the dissertations Temple publishes put it.
 
 Confirm the current requirements with the Graduate School before submitting:
 apaquarto follows the 2024--2025 handbook, and a handbook is revised.

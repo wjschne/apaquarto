@@ -609,15 +609,6 @@
         )
       }
     }
-  } else if headerstyle == "thesis" {
-    // The title page of a dissertation is page i and shows no number; every
-    // page after it is numbered.
-    context {
-      let pg = counter(page).get().at(0)
-      if pg > first-page {
-        align(right)[#counter(page).display()]
-      }
-    }
   } else if headerstyle == "none" {
     none
   } else {
@@ -645,7 +636,13 @@
       }
     }
   } else {
-    none
+    // auto, not none. A page told outright that it has no footer shows no
+    // page number either, whatever its numbering says, so pagenumbering did
+    // nothing at all in the modes that set one: doc numbered no page, and
+    // neither did thesis. auto leaves typst to draw the number it was asked
+    // for, at the centre of the foot, and shows nothing where the numbering
+    // is none.
+    auto
   }
 
   set page(
@@ -910,7 +907,11 @@
 // all four formats.
 #let thesis(..args) = apa-layout(
   margin: (left: 1.5in, right: 1in, top: 1in, bottom: 1in),
-  headerstyle: "thesis",
+  // No running head: the Graduate School asks for the page number and nothing
+  // else. Numbered in lower-case roman, which is what the front matter takes;
+  // the body begins again at 1 in arabic, set where the front matter ends.
+  headerstyle: "none",
+  pagenumbering: "i",
   ..args,
 )
 
@@ -934,7 +935,7 @@
 )
 
 #show: document => thesis(
-  title: [A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Length],
+  title: [A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Considerable and Notable Length],
   authors: ([Iwishiwere A. Graduate],),
   runninghead: "THESIS TITLE",
   runningauthors: "Graduate",
@@ -944,39 +945,52 @@
   document,
 )
 
+#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
 #[
-#set par(leading: 0.65em, first-line-indent: 0pt, justify: false)
+#set par(first-line-indent: 0pt, justify: false)
 #set block(spacing: 0pt)
 #v(70.0pt, weak: false)
-#align(center)[#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY /
-WHEN THEY ARE STUDYING SOMETHING /
-AT LENGTH]]
+#align(center)[#par(leading: 0.65em)[#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN /
+THEY ARE STUDYING SOMETHING AT CONSIDERABLE /
+AND NOTABLE LENGTH]]]
 #v(21.0pt, weak: false)
 #align(center)[#line(length: 5.50in, stroke: 0.5pt)]
 #v(21.0pt, weak: false)
-#align(center)[A Dissertation /
+#align(center)[#par(leading: 0.65em)[A Dissertation /
 Submitted to /
-the Temple University Graduate Board]
+the Temple University Graduate Board]]
 #v(21.0pt, weak: false)
 #align(center)[#line(length: 5.50in, stroke: 0.5pt)]
 #v(21.0pt, weak: false)
-#align(center)[In Partial Fulfillment /
+#align(center)[#par(leading: 0.65em)[In Partial Fulfillment /
 of the Requirements for the Degree /
-Doctor of Philosophy]
+Doctor of Philosophy]]
 #v(21.0pt, weak: false)
 #align(center)[#line(length: 5.50in, stroke: 0.5pt)]
 #v(21.0pt, weak: false)
-#align(center)[by /
+#align(center)[#par(leading: 0.65em)[by /
 Iwishiwere A. Graduate /
-May 2027]
+May 2027]]
 #v(70.0pt, weak: false)
-#align(left)[Examining Committee Members:]
+#align(left)[#par(leading: 0.65em)[Examining Committee Members:]]
 #v(13.8pt, weak: false)
-#align(left)[Mentor Name, Advisory Chair, TU Department /
+#align(left)[#par(leading: 0.65em)[Mentor Name, Advisory Chair, TU Department /
 Member Name, TU Department /
-Outside Name, External Member, Another University]
+Outside Name, External Member, Another University]]
 ]
-#pagebreak(weak: false)
+]
+#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
+#[
+#set par(first-line-indent: 0pt, justify: false)
+#set block(spacing: 0pt)
+#v(289.0pt, weak: false)
+#align(center)[© Copyright 2027 by Iwishiwere A. Graduate /
+All Rights Reserved]
+]
+]
+
+#set page(numbering: "1")
+#counter(page).update(1)
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
