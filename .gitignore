@@ -19,7 +19,9 @@ example.log
 example.tex
 example.typ
 example.out
-example-pdf-man.pdf
+example-pdf-*
+example-typst-*
+example-docx.docx
 example_files/
 dissertation.html
 dissertation.docx
