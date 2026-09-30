@@ -1,0 +1,29 @@
+---
+# A figure note in a document with lang: de.
+#
+# Should: begin the note with Quarto's own German for "Note" (its
+# callout-note-title, "Hinweis"), and still give the words Quarto does not
+# translate, such as the Author Note heading, their English defaults.
+#
+# A guard rather than a fix: apaquarto's English defaults are kept out of
+# _extension.yml, in apalanguage.lua, so that none of them can stand in for a
+# translation. This goes off if one of them ever does.
+title: "Eine Abbildung"
+shorttitle: "Abbildung"
+lang: de
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+# Methode
+
+![Eine Beschriftung.](sampleimage.png){#fig-img apa-note="zqnote"}

@@ -47,23 +47,11 @@ contributes:
       suppress-supplemental-materials: false
       suppress-title-introduction: false
       no-ampersand-parenthetical: false
-      language: 
-        citation-last-author-separator: "and"
-        citation-masked-author: "Masked Author"
-        citation-masked-title: "Masked Title"
-        citation-masked-date: "n.d."
-        email: "Email"
-        figure-table-note: "Note"
-        figure-panel: "Panel"
-        journal-volume: "Vol."
-        journal-issue: "No."
-        title-block-author-note: "Author Note"
-        title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
-        title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
-        title-impact-statement: "Impact Statement"
-        title-supplemental-materials: "Supplemental materials"
-        title-word-count: "Word Count"
-        references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
+      # No language: block here. The English defaults for apaquarto's own
+      # words live in one place, apalanguage.lua, which uses them only when
+      # neither the document nor Quarto's translation for lang supplies one.
+      # A language: block here would join Quarto's translation table, where a
+      # key that Quarto also translates could override its translation.
       filters:
         # Resolve documentmode aliases (journal, manuscript, document, student)
         # before anything reads the field

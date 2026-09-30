@@ -66,7 +66,7 @@ and still return early; the formats column says where it does real work.
 | Filter | Formats | Job |
 |---|---|---|
 | `documentmode.lua` | all | Turns journal/manuscript/document/student/dissertation into `jou`/`man`/`doc`/`stu`/`thesis`; thesis turns on `suppress-title-page` |
-| `apalanguage.lua` | all | Fills `meta.language.*` from the top-level key, Quarto's filter params, `crossref.*`, then the `language:` defaults in `_extension.yml` |
+| `apalanguage.lua` | all | Fills `meta.language.*` from the document's `language:` or top-level key, then `crossref.*`, then Quarto's translation for `lang`, then its own English defaults. It holds the only list of those defaults; `_extension.yml` deliberately has no `language:` block, so no apaquarto default can override a Quarto translation |
 | `abstractsection.lua` | all | Moves an `# Abstract` / `# Impact Statement` section into `meta.abstract` / `meta["impact-statement"]` |
 | `introductionheading.lua` | all | Removes a leading level-1 "Introduction" heading (not in thesis mode) |
 | `apatablenote.lua` | all (typst reads it) | Keeps a markdown table's `apa-note` as markdown in `meta["apa-table-notes"]` before Quarto flattens the caption |
@@ -263,26 +263,20 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    is that `docxreferencedoc` and `docxlinkcolor` each unzip and rewrite the
    file separately (and `docxcontents` reads it a third time), and two renders
    at once can race on it.
-4. **Two lists of language defaults**: the `language:` block in
-   `_extension.yml` and the table in `apalanguage.lua`. The yml block reaches
-   `meta.language` first, so it wins, and the translated fallbacks
-   `apalanguage.lua` reads from Quarto's own language files (such as
-   `callout-note-title` for "Note") never apply to the keys it lists.
-   Removing it would change the output of non-English documents.
-5. **Repeated small logic** that belongs in `utilsapa`: language lookups,
+4. **Repeated small logic** that belongs in `utilsapa`: language lookups,
    `documentmode` parsing, true/false flags (`numbered-lines` is read
    differently in docx than in latex and typst), page breaks, appendix
    detection (six filters), `fig-`/`tbl-` hard-coded where
    `utilsapa.float_prefixes` would include `ill-`, link-kind classification
    and colour validation (four formats), heading collection for contents.
-6. **Two caption parsers** for markdown tables (`apatablenote`,
+5. **Two caption parsers** for markdown tables (`apatablenote`,
    `markdowntable`) and two appendix-link builders (`apaciteappendix`,
    `apafigtblappendix`).
-7. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
+6. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
    each have their own author, title, abstract, page-break and contents code,
    and in thesis mode `frontmatter.lua` builds a title page only for it to be
    discarded.
-8. **The citation `hash` side channel** uses an undocumented Pandoc field.
+7. **The citation `hash` side channel** uses an undocumented Pandoc field.
 
 ## Testing
 

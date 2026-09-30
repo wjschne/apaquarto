@@ -1,5 +1,11 @@
 -- This filter allows English language defaults to be changed
 -- to any other language (or any other English words)
+--
+-- This is the one list of apaquarto's language defaults. Each word comes from
+-- the document's own language field (or a top-level field of the same name),
+-- then the document's crossref field, then Quarto's translation for lang, and
+-- only then the English default below. _extension.yml deliberately sets none
+-- of them, so that no default of apaquarto's can stand in for a translation.
 
 -- from quarto-cli/src/resources/pandoc/datadir/init.lua
 -- global quarto params
@@ -33,6 +39,7 @@ local fields = {
   { field = "citation-masked-date",            default = "n.d." },
   { field = "email",                           default = "Email" },
   { field = "figure-table-note",               default = "Note" },
+  { field = "figure-panel",                    default = "Panel" },
   { field = "journal-volume",                  default = "Vol." },
   { field = "journal-issue",                   default = "No." },
   { field = "section-title-abstract",          default = "Abstract" },

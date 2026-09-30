@@ -1459,3 +1459,35 @@
         - '<w:pStyle w:val="FigureWithNote" />'
         - '<w:pStyle w:val="FigureWithoutNote" />'
         - '<w:pStyle w:val="AfterWithoutNote" />'
+
+# ------------------------------------------------------------- translation --
+
+- fixture: translated-note.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        # Not translated by Quarto, so the English default still applies.
+        - 'Author Note'
+        - 'zqnote'
+      count:
+        # The note's own word, and nowhere else in the document.
+        '<em>Hinweis</em>': 1
+
+- fixture: translated-note.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains: ['Hinweis', 'Author Note', 'zqnote']
+
+- fixture: translated-note.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains: ['Hinweis', 'zqnote']
+
+- fixture: translated-note.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains: ['Hinweis', 'zqnote']
