@@ -47,9 +47,11 @@ everyone to ignore the suite.
 | `tex` | the `.tex` | structure: environments, labels |
 | `typ` | the `.typ` | structure: grids, alignment |
 
-Under each: `contains`, `absent`, and `count` (text, and exactly how many
-times). All of them are matched literally, never as a regular expression, so
-keep the strings in single quotes and write a backslash as a backslash.
+Under each: `contains`, `absent`, `count` (text, and exactly how many
+times), and `order` (a list of texts that must appear in that order, each
+after the one before it). All of them are matched literally, never as a
+regular expression, so keep the strings in single quotes and write a backslash
+as a backslash.
 
 ## Known failures
 

@@ -23,6 +23,9 @@ engine: knitr
 - A document with cross-references but no citations no longer gets stray reference-list spacing in typst.
 - `numbered-lines` is read the same way in .docx as in .pdf and typst: anything but `false` turns it on.
 - In typst, a paper whose title begins with the word "Appendix" no longer numbers the figures in its body as though they were in an appendix.
+- In .html and .docx a figure's or table's note is written inside the float, as it already was in .pdf and typst, so the two always travel together.
+- A figure with sub-figures and no layout no longer prints its note twice in .html and .docx.
+- In .docx a panel's own note is centred under its panel (the SubPanelNote style), as in .html.
 
 # Version 6.0.1
 - 2026-09-26

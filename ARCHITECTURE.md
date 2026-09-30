@@ -18,9 +18,9 @@ ordinary Quarto output, reshaped by filters.
          ─► [post-ast]      1 filter
          ─► [pre-quarto]    6 filters   title page is built here (frontmatter.lua)
          ─► Quarto crossref, layout     numbering, subfigure layout
-         ─► [post-quarto]   8 filters   typst writer and docx styler run HERE
+         ─► [post-quarto]   9 filters   typst writer and docx styler run HERE
          ─► Quarto renders floats       FloatRefTarget → html Divs / docx table / typst #figure
-         ─► [post-render]  21 filters   notes, captions, citeproc, then the LaTeX writer
+         ─► [post-render]  20 filters   notes, captions, citeproc, then the LaTeX writer
          ─► Pandoc writer + template     typst-*.typ, apalatex.tex, apaquarto.docx, apa.scss
 ```
 
@@ -120,6 +120,7 @@ and still return early; the formats column says where it does real work.
 | Filter | Formats | Job |
 |---|---|---|
 | `floatwithsubfigure.lua` | html, docx, latex | Laid-out figures: "Panel A" labels, whole-figure note inside the float, explicit layout matrix |
+| `floatnote.lua` | html, docx | Every other float's note inside the float, from `floatrecord`; each panel's note inside the panel as `SubPanelNote`; copies a code cell's note down to its one float |
 | `thesisfloats.lua` | thesis | Records every float in `meta["apathesis-floats"]` for the thesis lists |
 | `floatlatex.lua` | latex | Each figure and table as a complete APA float in raw LaTeX |
 | `apaoneauthoraffiliation.lua` | all | Stops the render when there are no authors, an author has no affiliation, or no author is corresponding |
@@ -134,9 +135,8 @@ and still return early; the formats column says where it does real work.
 |---|---|---|
 | `apaextractfigure.lua` | docx | Unwraps the one-cell table Quarto puts around docx floats |
 | `embednote.lua` | html, docx, typst | Recovers the `apa-note` of an `{{< embed >}}` float from its notebook |
-| `apanote.lua` | all | Writes any remaining `apa-note` as a `FigureNote` block |
+| `apanote.lua` | all | Writes the notes no earlier filter could: a figure embedded from a notebook (its note recovered by `embednote`), a div that is not a float, a cell holding several floats. Skips anything carrying this document's `apa-note-written` mark |
 | `apafloat.lua` | all | `FigureWithNote` / `FigureWithoutNote` on top-level floats |
-| `subpanelnote.lua` | html, docx | A panel's own note becomes `SubPanelNote` |
 | `apacaption.lua` | html, docx | Splits Quarto's `Figure 1: caption` into `FigureTitle` and `Caption` |
 | `apaafternote.lua` | all | `AfterWithoutNote` on the paragraph after a float with no note |
 | `docxlayout.lua` | docx | Rebuilds multipanel figures as one table, panel captions above |
@@ -172,9 +172,9 @@ filter across a stage boundary, breaks a consumer that may be far away.
 | `apa-appendix` class on the heading that opens an appendix | `crossrefprefix` (its inserted "Appendix X", and an old-style "# Appendix A") | `apafloatstoend`, `apaomitrefsdiv` |
 | `meta["apa-appendix-count"]` | `crossrefprefix` | `apaciteappendix`, `apaomitrefsdiv` |
 | `appendixtitle` attribute | `crossrefprefix` | `apaciteappendix`, `thesiscontents` |
-| `hassubfigs` attribute | `crossrefprefix` | `floatwithsubfigure`, `subpanelnote` |
+| `hassubfigs` attribute | `crossrefprefix` | `floatwithsubfigure` |
 | `meta["apa-table-notes"]` | `markdowntable` | `apanote`, `floatlatex`, `formattypst`, through `utilsapa.table_notes` |
-| `apa-note-written` attribute | `floatwithsubfigure` (`"true"`), `apanote` (a hash of the input path) | `apanote`, `floatlatex` |
+| `apa-note-written` attribute | `floatwithsubfigure`, `floatnote`, `apanote`, all with `utilsapa.note_mark()` (a digest of this document's path) | `apanote`, `floatnote`, `floatlatex` |
 | `// apaquarto-wide-float:<id>` raw typst | `apatwocolumntypstcollect` | `apatwocolumntypst` (wraps the next block; the id is not checked) |
 | `apatitle`, `apatitledisplay`, `apaauthor`, `apaabstract`, `by-author[].apaauthordisplay` | `apastriptitle` | `frontmatter`, `thesisfrontmatter`, `typst-show.typ` |
 | `meta.wordn` | `wordcount` | `frontmatter` |
@@ -183,7 +183,7 @@ filter across a stage boundary, breaks a consumer that may be far away.
 | `.list-of-contents`, `.list-of-figures`, `.list-of-tables` Divs | `frontmatter` | `htmlcontents`, `docxcontents`, `formatlatex` (typst builds `#outline` in `frontmatter` instead) |
 | `FigureNote`, `NoIndent` | `utilsapa.make_note` (via `apanote`, `floatwithsubfigure`, `floatlatex`, `formattypst`) | `formatlatex`, css, reference doc, `docxlayout`, `apatwocolumntypst` |
 | `FigureTitle`, `Caption` | `apacaption` | `docxlayout`, `docxcontents`, css, reference doc |
-| `FigureWithNote`, `FigureWithoutNote` | `apafloat` | `subpanelnote`, `apaafternote`, `docxlayout` |
+| `FigureWithNote`, `FigureWithoutNote` | `apafloat` | `apaafternote`, `docxlayout` |
 | `citations[1].hash` = 1 (possessive), 2 (`&`), 3 (both) | `citeprocr` | `apaandcite` |
 | `meta["apathesis-floats"]` | `thesisfloats` | `thesisfrontmatter` |
 
@@ -210,13 +210,12 @@ All formats share the pre-ast steps: `markdowntable` (for
 markdown tables), `crossrefprefix`, `apafloatstoend`, then `apafigtblappendix`
 at pre-quarto.
 
-- **html**: `floatwithsubfigure` (laid-out figures only) → Quarto renders →
-  `apanote` writes the note → `apafloat` → `subpanelnote` → `apacaption`
+- **html**: `floatwithsubfigure` (laid-out figures) → `floatnote` writes
+  the note inside the float → Quarto renders → `apafloat` → `apacaption`
   re-parses the rendered caption → `apaafternote` → css.
-- **docx**: `floatwithsubfigure` → `docxstyler` → Quarto renders a one-cell
-  table → `apaextractfigure` unwraps it → `apanote` writes the note →
-  `apafloat` → `subpanelnote` → `apacaption` → `apaafternote` → `docxlayout`
-  → `docxcontents` lists it.
+- **docx**: `floatwithsubfigure` → `floatnote` → `docxstyler` → Quarto
+  renders a one-cell table → `apaextractfigure` unwraps it → `apafloat` →
+  `apacaption` → `apaafternote` → `docxlayout` → `docxcontents` lists it.
 - **latex**: `floatwithsubfigure` → `floatlatex` writes the whole float,
   note included, as raw LaTeX → the common post-render float filters run but
   find nothing → `formatlatex` turns `FigureNote` into `apafloatnote`.
@@ -224,10 +223,12 @@ at pre-quarto.
   and its own panel `#grid` → Quarto renders `#figure` → `apanote` writes
   any note `formattypst` left → `apatwocolumntypst` in journal mode.
 
-So a note is written in four places (`floatwithsubfigure`, `floatlatex`,
-`formattypst`, `apanote`), panels are laid out three ways (LaTeX minipages,
-typst `#grid`, docx table merging), and two filters parse Quarto's rendered
-output back apart (`apacaption`, `apaextractfigure`).
+So every format writes a float's note inside the float at post-quarto, from
+`floatrecord`: `floatnote` (html, docx), `floatlatex`, `formattypst`, and
+`floatwithsubfigure` for the whole-figure note of a laid-out float. `apanote`
+writes only what those cannot see. Panels are laid out three ways (LaTeX
+minipages, typst `#grid`, docx table merging), and two filters parse Quarto's
+rendered output back apart (`apacaption`, `apaextractfigure`).
 
 ## Citations
 
@@ -260,7 +261,7 @@ upgrade.
 - LaTeX `Word~\ref{...}`: `crossreflink`.
 - Classes `cell`, `quarto-layout-cell`, `quarto-layout-cell-subref`,
   `quarto-layout-panel`, `quarto-embed-nb-cell`, attribute `ref-parent`:
-  `apanote`, `subpanelnote`, `embednote`.
+  `apanote`, `embednote`.
 - `PANDOC_WRITER_OPTIONS.reference_doc`: `docxreferencedoc` and
   `docxlinkcolor` rewrite that file on disk, which is usually the installed
   `_extensions/apaquarto/apaquarto.docx`. Never commit it straight after a
@@ -270,13 +271,12 @@ upgrade.
 
 Recorded so a change does not make it worse. Roughly in order of payoff.
 
-1. **Floats.** `floatrecord.lua` now reads each `FloatRefTarget` once for
-   latex and typst. html and docx still go their own way: `apanote` writes
-   their notes at post-render, and `apacaption` re-parses the caption Quarto
-   has rendered. Having those two formats write the note inside the float at
-   post-quarto from the same record would retire `apanote`'s float handling,
-   `apacaption`'s re-parsing, `subpanelnote`, and the two meanings of
-   `apa-note-written`.
+1. **Captions in html and docx.** `apacaption` re-parses the caption Quarto
+   has rendered, `Figure`, nbsp, number, `:`, into a title and a caption.
+   This cannot move to post-quarto: Quarto writes that caption after the last
+   filter point, and writes a "Figure 1" of its own even for a float whose
+   caption has been emptied. It breaks if Quarto changes how it renders a
+   caption.
 2. **Writers.** About 500 lines of raw typst layout live in `frontmatter.lua`
    rather than `formattypst.lua`. LaTeX already has the intended shape:
    `frontmatter` emits classed blocks and `formatlatex` writes them.

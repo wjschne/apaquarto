@@ -14,41 +14,16 @@ local function getnote(m)
 end
 
 -- Set on a float once its note has been written, so that a second run of this
--- filter leaves it alone. A document in an apaquarto format that also names
--- apanote in its own `filters:` runs this twice, which without the mark prints
--- every note twice. The mark is added rather than apa-note being taken off,
--- because apafloat.lua reads apa-note afterwards to tell a float that has a
--- note from one that has none.
---
--- What is marked is which document the note was written for, not merely that
--- it was written. A manuscript project renders a notebook on its own before
--- the article embeds a cell out of it, and the cell arrives carrying whatever
--- was marked on it during that render -- while the note itself stays behind,
--- since only the cell's output is embedded. A mark that said no more than
--- "written" would silence the article and lose the note altogether. Naming the
--- document tells the two apart: the same name means this filter has already
--- been over this float in this render, a different one means the note belongs
--- to another document and has still to be written here.
-local kWritten = "apa-note-written"
-
--- A short digest of the document being rendered. The path itself would do the
--- job but would also be written into the output, where a reader has no use for
--- someone else's directory names.
-local function written_by()
-  local ok, input = pcall(function() return quarto.doc.input_file end)
-  if not ok or not input or input == "" then return "true" end
-  local hash = 2166136261
-  for i = 1, #input do
-    hash = (hash ~ input:byte(i)) * 16777619 % 4294967296
-  end
-  return string.format("%08x", hash)
-end
-
-local written_mark = nil
-local function mark()
-  if written_mark == nil then written_mark = written_by() end
-  return written_mark
-end
+-- filter leaves it alone, and so that a note floatnote.lua or
+-- floatwithsubfigure.lua has already written inside a float is not written
+-- again here. A document in an apaquarto format that also names apanote in its
+-- own `filters:` runs this twice, which without the mark prints every note
+-- twice. The mark is added rather than apa-note being taken off, because
+-- apafloat.lua reads apa-note afterwards to tell a float that has a note from
+-- one that has none. utilsapa.note_mark says what the mark is and why it names
+-- the document.
+local kWritten = utilsapa.note_written
+local mark = utilsapa.note_mark
 
 -- Where inside a cell the note should go, or nil for a float that is not a
 -- cell, whose note follows it as before.

@@ -20,7 +20,13 @@ function Pandoc(doc)
     if doc.blocks[i + 1].t == "Para" and doc.blocks[i].t == "Div" then
       -- If the div is a figure or table without a note,
       -- set the paragraph's custom style to be AfterWithoutNote
-      if (doc.blocks[i].attributes["custom-style"] == "FigureWithoutNote") or doc.blocks[i].identifier:find("^tbl%-") then
+      -- A table with a note of its own is not one of them. Its note used to
+      -- follow it as a block of its own, which kept this from reaching the
+      -- paragraph after; now the note is inside the table's float, so the
+      -- float says itself that it has one.
+      local style = doc.blocks[i].attributes["custom-style"]
+      if style == "FigureWithoutNote"
+          or (doc.blocks[i].identifier:find("^tbl%-") and style ~= "FigureWithNote") then
         doc.blocks[i + 1] = makeafternote(doc.blocks[i + 1])
       end
     end

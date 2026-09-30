@@ -1,0 +1,76 @@
+---
+title: "Every Way a Note Can Be Attached"
+shorttitle: "Note Sources"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+floatsintext: true
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+<!--
+An apa-note reaches a float by several roads, and each road has been taken by
+a different filter at one time or another: a code chunk's option, which quarto
+sets on the cell div and on the float alike; a markdown image, which carries it
+on the image and on the float; a fenced div; a markdown table's caption, which
+quarto flattens; and a div that is not a float at all.
+
+A successful run gives, in every format, each note exactly once, under the
+float it belongs to and before whatever comes after that float.
+-->
+
+# Method
+
+The figures and tables are @fig-chunk, @tbl-chunk, @fig-md, @fig-div and
+@tbl-md.
+
+```{r}
+#| label: fig-chunk
+#| fig-cap: "Zqcapchunkfig."
+#| apa-note: "Zqnotechunkfig."
+plot(1:3)
+```
+
+Zqafterchunkfig.
+
+```{r}
+#| label: tbl-chunk
+#| tbl-cap: "Zqcapchunktbl."
+#| apa-note: "Zqnotechunktbl."
+knitr::kable(data.frame(a = 1:2, b = 3:4))
+```
+
+Zqafterchunktbl.
+
+![Zqcapmdfig.](sampleimage.png){#fig-md apa-note="Zqnotemdfig."}
+
+Zqaftermdfig.
+
+::: {#fig-div apa-note="Zqnotedivfig."}
+![](sampleimage.png)
+
+Zqcapdivfig.
+:::
+
+Zqafterdivfig.
+
+| A | B |
+|---|---|
+| 1 | 2 |
+
+: Zqcapmdtbl. {#tbl-md apa-note="Zqnotemdtbl."}
+
+Zqaftermdtbl.
+
+::: {apa-note="Zqnoteplaindiv."}
+Zqplaindivtext.
+:::
+
+Zqafterplaindiv.

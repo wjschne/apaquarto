@@ -486,6 +486,45 @@ function M.table_notes(meta)
   return notes
 end
 
+-- The mark a float carries in apa-note-written once its note has been
+-- written, so that no other filter writes it again.
+--
+-- What is marked is which document the note was written for, not merely that
+-- it was written. A manuscript project renders a notebook on its own before
+-- the article embeds a cell out of it, and the cell arrives carrying whatever
+-- was marked on it during that render -- while the note itself stays behind,
+-- since only the cell's output is embedded. A mark that said no more than
+-- "written" would silence the article and lose the note altogether. Naming the
+-- document tells the two apart: the same mark means the note has been written
+-- in this render, a different one means it belongs to another document and has
+-- still to be written here.
+--
+-- The mark is a short digest of the document's path. The path itself would do
+-- the job but would also be written into the output, where a reader has no use
+-- for someone else's directory names.
+M.note_written = "apa-note-written"
+local note_mark_value = nil
+function M.note_mark()
+  if note_mark_value ~= nil then return note_mark_value end
+  local ok, input = pcall(function() return quarto.doc.input_file end)
+  if not ok or not input or input == "" then
+    note_mark_value = "true"
+    return note_mark_value
+  end
+  local hash = 2166136261
+  for i = 1, #input do
+    hash = (hash ~ input:byte(i)) * 16777619 % 4294967296
+  end
+  note_mark_value = string.format("%08x", hash)
+  return note_mark_value
+end
+
+-- Whether a float's note has been written in this render
+function M.note_is_written(el)
+  return el.attributes ~= nil
+    and el.attributes[M.note_written] == M.note_mark()
+end
+
 -- A word from meta.language, or the fallback when the document has none.
 --
 -- apalanguage.lua fills in every word it knows before the other filters read

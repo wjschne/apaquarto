@@ -7,8 +7,9 @@
 #   contains  text that must appear
 #   absent    text that must not appear
 #   count     text, and exactly how many times it must appear
+#   order     texts that must appear in the order listed
 #
-# All three are plain text, matched literally, never as a regular expression.
+# All four are plain text, matched literally, never as a regular expression.
 # Keep every string in single quotes so that a backslash means a backslash.
 #
 # What to assert: the thing the fixture is for. A check that merely restates
@@ -1557,3 +1558,142 @@
   expect:
     tex:
       contains: ['\emph{zqemph}', '\textbf{zqbold}', '\texttt{zqcode}']
+
+# ------------------------------------------------------------ note sources --
+# Every road an apa-note takes to its float: a code chunk, a markdown image, a
+# fenced div, a markdown table, and a div that is no float at all. Each note
+# once, under what it belongs to and before what follows. typst writes a
+# figure's caption after its body, so only the counts are read there.
+
+- fixture: note-sources.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      count:
+        '</em>. Zqnotechunkfig': 1
+        '</em>. Zqnotechunktbl': 1
+        '</em>. Zqnotemdfig': 1
+        '</em>. Zqnotedivfig': 1
+        '</em>. Zqnotemdtbl': 1
+        '</em>. Zqnoteplaindiv': 1
+      order:
+        - 'Zqcapchunkfig'
+        - '</em>. Zqnotechunkfig'
+        - 'Zqafterchunkfig'
+        - 'Zqcapchunktbl'
+        - '</em>. Zqnotechunktbl'
+        - 'Zqafterchunktbl'
+        - 'Zqcapmdfig'
+        - '</em>. Zqnotemdfig'
+        - 'Zqaftermdfig'
+        - 'Zqcapdivfig'
+        - '</em>. Zqnotedivfig'
+        - 'Zqafterdivfig'
+        - 'Zqcapmdtbl'
+        - '</em>. Zqnotemdtbl'
+        - 'Zqaftermdtbl'
+        - 'Zqplaindivtext'
+        - '</em>. Zqnoteplaindiv'
+        - 'Zqafterplaindiv'
+
+- fixture: note-sources.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      count:
+        'Zqnotechunkfig': 1
+        'Zqnotechunktbl': 1
+        'Zqnotemdfig': 1
+        'Zqnotedivfig': 1
+        'Zqnotemdtbl': 1
+        'Zqnoteplaindiv': 1
+      order:
+        - 'Zqcapchunkfig'
+        - 'Zqnotechunkfig'
+        - 'Zqafterchunkfig'
+        - 'Zqcapchunktbl'
+        - 'Zqnotechunktbl'
+        - 'Zqafterchunktbl'
+        - 'Zqcapmdfig'
+        - 'Zqnotemdfig'
+        - 'Zqaftermdfig'
+        - 'Zqcapdivfig'
+        - 'Zqnotedivfig'
+        - 'Zqafterdivfig'
+        - 'Zqcapmdtbl'
+        - 'Zqnotemdtbl'
+        - 'Zqaftermdtbl'
+        - 'Zqplaindivtext'
+        - 'Zqnoteplaindiv'
+        - 'Zqafterplaindiv'
+
+- fixture: note-sources.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      count:
+        'Zqnotechunkfig': 1
+        'Zqnotechunktbl': 1
+        'Zqnotemdfig': 1
+        'Zqnotedivfig': 1
+        'Zqnotemdtbl': 1
+        'Zqnoteplaindiv': 1
+
+- fixture: note-sources.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      count:
+        'Zqnotechunkfig': 1
+        'Zqnotechunktbl': 1
+        'Zqnotemdfig': 1
+        'Zqnotedivfig': 1
+        'Zqnotemdtbl': 1
+        'Zqnoteplaindiv': 1
+
+# ----------------------------------------------------------- embedded notes --
+
+- fixture: embed-note.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      count:
+        '</em>. Zqnoteembfig.': 1
+      order: ['Zqcapembfig.', '</em>. Zqnoteembfig.', 'Zqafterembfig.']
+
+- fixture: embed-note.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      count:
+        'Zqnoteembfig.': 1
+      order: ['Zqcapembfig.', 'Zqnoteembfig.', 'Zqafterembfig.']
+
+- fixture: embed-note-link.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      count:
+        '</em>. Zqnoteembfig.': 1
+      order: ['Zqcapembfig.', '</em>. Zqnoteembfig.', 'Source:', 'Zqafterembfig.']
+
+# The same figures in .html and .docx. fig-h has sub-figures but asks for no
+# layout, so no filter lays it out, and its note used to be written twice: once
+# by the filter that writes float notes and once more under the float. Three
+# figures carry the whole-figure note, so it appears three times.
+- fixture: subfigure-layout-grid.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      count:
+        '</em>. A note belonging to the whole figure.': 3
+        '</em>. Note for the left panel.': 2
+        '</em>. Note for the right panel.': 2
+        'class="SubPanelNote': 4
+
+- fixture: subfigure-layout-grid.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      count:
+        'note belonging to the whole figure.': 3

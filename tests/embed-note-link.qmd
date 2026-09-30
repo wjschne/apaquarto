@@ -1,0 +1,33 @@
+---
+title: "A Figure Brought In With Embed"
+shorttitle: "Embedded Note Source Link"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html:
+    notebook-view: true
+---
+
+<!--
+A figure brought in with {{< embed >}} from another document. Its apa-note is
+a chunk option, which the embedded output does not carry, so embednote.lua
+reads it back out of the other document.
+
+With notebook-view on, quarto puts a "Source:" link to the other document
+under the figure. The note belongs to the figure and goes above the link.
+
+A successful run gives the note once, under the figure, above the link and
+before the text that follows it.
+-->
+
+# Method
+
+See @fig-emb.
+
+{{< embed embed-note-source.qmd#fig-emb >}}
+
+Zqafterembfig.

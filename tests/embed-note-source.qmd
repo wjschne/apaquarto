@@ -1,0 +1,16 @@
+---
+title: "Embedded Figure Source"
+---
+
+<!--
+Not a fixture of its own: embed-note.qmd embeds the figure below. Quarto
+renders this document to read the cell out of it, and the note travels on the
+cell's options rather than in its output.
+-->
+
+```{r}
+#| label: fig-emb
+#| fig-cap: "Zqcapembfig."
+#| apa-note: "Zqnoteembfig."
+plot(1:3)
+```

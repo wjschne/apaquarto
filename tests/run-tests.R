@@ -427,6 +427,21 @@ for (job in jobs) {
                                 "], expected ", expected))
       }
     }
+    # Each string after the one before it: a note under its figure and above
+    # the link that follows both, say. Every string is looked for from where
+    # the last one was found, so the check reads the document top to bottom.
+    if (length(wanted$order) > 0) {
+      from <- 1L
+      for (needle in wanted$order) {
+        rest <- substring(text, from)
+        at <- regexpr(needle, rest, fixed = TRUE)
+        if (at < 0) {
+          note_failure(id, paste0(key, " is missing, in order: ", needle))
+          break
+        }
+        from <- from + at + attr(at, "match.length") - 1L
+      }
+    }
   }
 
   # ----------------------------------------------------------- snapshots --

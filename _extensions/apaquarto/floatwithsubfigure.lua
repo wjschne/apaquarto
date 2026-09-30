@@ -276,15 +276,15 @@ local mynote = function(float)
       local apanotedivs = utilsapa.make_note(float.attributes['apa-note'], prefix)
 
       -- Say that the note has been written, so that a filter which also writes
-      -- notes of its own -- floatlatex.lua does -- leaves this one alone
-      -- rather than printing it a second time. The apa-note attribute
+      -- notes of its own -- floatnote.lua, floatlatex.lua and apanote.lua do
+      -- -- leaves this one alone rather than printing it a second time. The apa-note attribute
       -- stays where it is, since apafloat.lua reads it afterwards to tell a
       -- float that has a note from one that has none.
       --
       -- The note goes inside the float for every format. Returning it beside
       -- the float instead costs the float the caption and label quarto
       -- registered for it, in .docx as well as in typst.
-      float.attributes["apa-note-written"] = "true"
+      float.attributes[utilsapa.note_written] = utilsapa.note_mark()
 
       note_gets_its_own_row(float)
       float.content:extend({ apanotedivs })
