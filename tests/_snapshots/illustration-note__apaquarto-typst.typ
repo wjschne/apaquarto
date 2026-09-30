@@ -1040,8 +1040,12 @@ supplement: "Figure",
 
 
 #block[
+#block[#set par(first-line-indent: 0em)
+#block[
 #block[
 #emph[Note]. zqfigimg
+]
+]
 ]
 ]
 #figure([
@@ -1080,8 +1084,12 @@ supplement: "Illustration",
 
 
 #block[
+#block[#set par(first-line-indent: 0em)
+#block[
 #block[
 #emph[Note]. zqillimg
+]
+]
 ]
 ]
 #figure([

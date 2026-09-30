@@ -215,6 +215,24 @@ end)()
 --- and latex builds it there too, but latex also has to know before the body
 --- is written, since a masthead is what decides whether the article opens with
 --- twocolumn or with a masthead handed to twocolumn.
+-- "(c) 2025 The Author(s)", from whichever of copyrightnotice and
+-- copyrighttext was given, for the journal masthead; nil when neither was.
+function M.journal_copyright(meta)
+  local notice = M.journal_field(meta, "copyrightnotice")
+  local text = M.journal_field(meta, "copyrighttext")
+  if not (notice or text) then return nil end
+  local out = pandoc.List({ pandoc.Str("\u{00A9}") })
+  if notice then
+    out:extend({ pandoc.Space() })
+    out:extend(notice)
+  end
+  if text then
+    out:extend({ pandoc.Space() })
+    out:extend(text)
+  end
+  return out
+end
+
 function M.has_journal_masthead(meta)
   if meta == nil then return false end
   local fields = { "url", "logo", "issn", "copyrightnotice", "copyrighttext" }

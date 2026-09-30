@@ -1,0 +1,31 @@
+---
+# Two figures and a plain div, all with the same note.
+#
+# Should: print the note three times, once under each.
+#
+# Used to: print it twice. The filters that write a float's note inside the
+# float then took the same note off any div whose note read the same, which
+# they did to stop a code cell writing its float's note a second time, and so
+# took it off the plain div as well.
+title: "The Same Note Three Times"
+shorttitle: "Same Note"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+![First.](sampleimage.png){#fig-one apa-note="Zqsame."}
+
+![Second.](sampleimage.png){#fig-two apa-note="Zqsame."}
+
+::: {apa-note="Zqsame."}
+Zqplaintext.
+:::

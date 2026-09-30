@@ -50,6 +50,8 @@ anything else here:
 | `_extensions/apaquarto/utilsapa.lua` | Shared helpers, loaded with `require("utilsapa")` |
 | `_extensions/apaquarto/thesistitle.lua`, `thesiscontents.lua` | Modules loaded by `thesisfrontmatter.lua`; not filters |
 | `_extensions/apaquarto/floatrecord.lua` | Module that reads a float once (caption, content, note, columns, panels) for `floatlatex` and `formattypst`; not a filter |
+| `_extensions/apaquarto/frontmatterlayout.lua` | Module that reads the front matter's shape for a journal or document layout (the journal split, spacing, list markers, ORCID lines, impact box), for `frontmatter` (latex jou) and `typstfrontmatter`; not a filter |
+| `_extensions/apaquarto/typst/typstfrontmatter.lua` | Module `formattypst` runs first: lays the typst front matter out by mode, writes the list outlines and the link-colour rule; not a filter |
 | `_extensions/apaquarto/typst/` | `formattypst.lua`, plus the `typst-show.typ` and `typst-template.typ` partials |
 | `_extensions/apaquarto/apalatex.tex` | The LaTeX definitions `formatlatex.lua` writes against; Quarto's own pdf template is used unmodified |
 | `_extensions/apaquarto/apaquarto.docx` | Reference doc; its styles are the docx half of the class vocabulary |
@@ -108,10 +110,10 @@ and still return early; the formats column says where it does real work.
 
 | Filter | Formats | Job |
 |---|---|---|
-| `apaheader.lua` | all | Periods after level-4/5 headings; in docx, run-in raw openxml headings |
+| `apaheader.lua` | all | Periods after level-4/5 headings; in docx marks them `apa-runin` for `docxcontents` to write |
 | `apastriptitle.lua` | all | Copies title/author/date/abstract to `apa*` keys and builds `apaauthordisplay`; in docx clears the originals |
 | `wordcount.lua` | all | `meta.wordn` for the title page |
-| `frontmatter.lua` | all | Title page, byline, author note, abstract, impact statement, keywords, contents markers, journal layout. Emits classed blocks for docx/html/latex and raw typst for typst |
+| `frontmatter.lua` | all | Title page, byline, author note, abstract, impact statement, keywords and list markers, as classed blocks for every format, one function per part. Lays out latex journal mode; for typst wraps the front matter in `Div.apa-frontmatter` for `formattypst` to lay out |
 | `apaquote.lua` | docx | `NextBlockText` for the paragraphs after the first in a block quote |
 | `apafigtblappendix.lua` | html, docx, typst | `@fig-`/`@tbl-`/`@ill-` become "Figure A1" links, from `meta["apa-float-labels"]`, which it then removes |
 
@@ -127,7 +129,7 @@ and still return early; the formats column says where it does real work.
 | `apatinytablehtml.lua` | html | Aligns tinytable tables by `tbl-align` |
 | `docxstyler.lua` | docx | Copies a Div's or Span's first class into `custom-style` when it is on its list. Of the filters' own blocks only `Author`, `Abstract` and `AbstractFirstParagraph` reach it; the rest of the list serves divs authors write themselves, such as `::: {.NoIndent}` |
 | `docxlisting.lua` | docx | Code listings flush left |
-| `typst/formattypst.lua` | typst | The typst writer: fonts, float notes, panel `#grid`, `NoIndent`, hanging references, line numbers |
+| `typst/formattypst.lua` | typst | The typst writer: the front matter by mode (through `typstfrontmatter`), fonts, float notes, panel `#grid`, `NoIndent`, hanging references, line numbers |
 
 ### post-render
 
@@ -151,7 +153,7 @@ and still return early; the formats column says where it does real work.
 | `htmllinkcolor.lua` | html | Link colours as scoped CSS |
 | `docxformatlatexsymbol.lua` | docx | `\LaTeX` and `\TeX` math as plain text |
 | `docxreferencedoc.lua` | docx | Patches the reference doc: fonts, paper size, margins, line numbers, running head |
-| `docxcontents.lua` | docx | Table of contents and lists of figures/tables as openxml fields; after `docxreferencedoc`, whose page size it measures |
+| `docxcontents.lua` | docx | Table of contents and lists of figures/tables as openxml fields, and the run-in level-4/5 headings (`apa-runin`) with their formatting and bookmarks; after `docxreferencedoc`, whose page size it measures |
 | `docxlinkcolor.lua` | docx | A character style per link kind; patches `styles.xml` |
 
 The yml lists the common filters and each format's own filters separately.
@@ -180,7 +182,8 @@ filter across a stage boundary, breaks a consumer that may be far away.
 | `meta.wordn` | `wordcount` | `frontmatter` |
 | `meta.description` (running head) | `frontmatter` | `docxreferencedoc` |
 | `jou-running-authors` | `frontmatter` | `typst-show.typ`, `formatlatex` |
-| `.list-of-contents`, `.list-of-figures`, `.list-of-tables` Divs | `frontmatter` | `htmlcontents`, `docxcontents`, `formatlatex` (typst builds `#outline` in `frontmatter` instead) |
+| `.list-of-contents`, `.list-of-figures`, `.list-of-tables` Divs | `frontmatter` | `htmlcontents`, `docxcontents`, `formatlatex`, `typstfrontmatter` |
+| `Div.apa-frontmatter` (typst) | `frontmatter` | `typstfrontmatter`, which lays it out and removes it |
 | `FigureNote`, `NoIndent` | `utilsapa.make_note` (via `apanote`, `floatwithsubfigure`, `floatlatex`, `formattypst`) | `formatlatex`, css, reference doc, `docxlayout`, `apatwocolumntypst` |
 | `FigureTitle`, `Caption` | `apacaption` | `docxlayout`, `docxcontents`, css, reference doc |
 | `FigureWithNote`, `FigureWithoutNote` | `apafloat` | `apaafternote`, `docxlayout` |
@@ -277,9 +280,9 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    filter point, and writes a "Figure 1" of its own even for a float whose
    caption has been emptied. It breaks if Quarto changes how it renders a
    caption.
-2. **Writers.** About 500 lines of raw typst layout live in `frontmatter.lua`
-   rather than `formattypst.lua`. LaTeX already has the intended shape:
-   `frontmatter` emits classed blocks and `formatlatex` writes them.
+2. **The latex journal layout** is still assembled in `frontmatter.lua`
+   (from `frontmatterlayout`), where typst's is in its writer. Moving it into
+   `formatlatex.lua` would give every format the same shape.
 3. **The reference doc is patched in place, twice.** This is deliberate:
    Pandoc reads `PANDOC_WRITER_OPTIONS.reference_doc` after the filters run,
    so there is nowhere else to put fonts, page size, line numbers and link
@@ -289,15 +292,11 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    is that `docxreferencedoc` and `docxlinkcolor` each unzip and rewrite the
    file separately (and `docxcontents` reads it a third time), and two renders
    at once can race on it.
-4. **Custom floats are not in every list.** `docxcontents` and the lists
-   of figures and tables know figures and tables only, so an Illustration is
-   numbered and cross-referenced everywhere but listed nowhere outside
-   thesis mode.
-5. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
+4. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
    each have their own author, title, abstract, page-break and contents code,
    and in thesis mode `frontmatter.lua` builds a title page only for it to be
    discarded.
-6. **The citation `hash` side channel** uses an undocumented Pandoc field.
+5. **The citation `hash` side channel** uses an undocumented Pandoc field.
 
 ## Testing
 

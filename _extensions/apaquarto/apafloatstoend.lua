@@ -30,23 +30,12 @@ Pandoc = function(doc)
   local prefixes = utilsapa.float_prefixes(doc.meta)
 
 
-  -- An explicit floatsintext (true OR false) is an override and must win. Test
-  -- for nil, not truthiness: a YAML `false` arrives as Lua false, so the old
-  -- `if doc.meta.floatsintext` treated `floatsintext: false` as unset and let
-  -- the journal default below override it.
-  if doc.meta.floatsintext ~= nil then
-    if pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
-      movefloatstoend = false
-    end
-  elseif FORMAT == "typst" then
-    -- Journal (published-article) and document (continuous, LaTeX-article-like)
-    -- modes place figures and tables inline by default, unless the author sets
-    -- floatsintext. This matches the .pdf side, where these modes also keep
-    -- floats in place; manuscript (man) and student (stu) modes keep the
-    -- submission convention of collecting floats at the end.
-    if documentmode == "jou" or documentmode == "doc" then
-      movefloatstoend = false
-    end
+  -- floatsintext always has a value: _extension.yml sets it to true for every
+  -- format, and a document may set it to false. Test for nil, not
+  -- truthiness: a YAML `false` arrives as Lua false.
+  if doc.meta.floatsintext ~= nil
+      and pandoc.utils.stringify(doc.meta.floatsintext) == "true" then
+    movefloatstoend = false
   end
 
   -- Take the block at i out of the body and onto the front of list, each on a
@@ -99,11 +88,10 @@ Pandoc = function(doc)
   if (FORMAT == "docx" or FORMAT == "typst" or FORMAT == "latex")
       and documentmode ~= "jou" then
     for i = #doc.blocks, 1, -1 do
-      -- The one before it is skipped when it opens an appendix too. The
-      -- older way of writing an appendix -- "# Appendix A" over a title of
-      -- its own -- leaves two such headings in a row, and a break before
-      -- each of them left the first alone on a page of its own.
-      if opens_appendix(doc.blocks[i]) and not opens_appendix(doc.blocks[i - 1]) then
+      -- One heading opens each appendix, the older way of writing one --
+      -- "# Appendix A" over a title of its own -- included: crossrefprefix.lua
+      -- marks the label and not the title, so nothing comes between them.
+      if opens_appendix(doc.blocks[i]) then
         table.insert(doc.blocks, i, utilsapa.page_break(true))
       end
     end

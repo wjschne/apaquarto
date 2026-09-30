@@ -1052,11 +1052,8 @@ supplement: "Illustration",
 #counter(figure.where(kind: "quarto-float-fig")).update(0)
 #counter(figure.where(kind: "quarto-float-tbl")).update(0)
 #appendixcounter.step()
-= Appendix
+= Appendix Title
 <apx-one>
-#counter(figure.where(kind: "quarto-float-fig")).update(0)
-#counter(figure.where(kind: "quarto-float-tbl")).update(0)
-#appendixcounter.step()
 #figure([
 #box(image("sampleimage.png"))
 ], caption: figure.caption(

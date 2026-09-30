@@ -1,0 +1,40 @@
+---
+# The contents and the lists of figures and tables, with lang: de, and an
+# Illustration.
+#
+# Should: head each list with Quarto's German for it, and list the
+# Illustration with the figures, as the .pdf always has.
+#
+# Used to: head every list in English in every format, and leave the
+# Illustration out of the .docx and typst lists.
+title: "Verzeichnisse"
+shorttitle: "Verzeichnisse"
+lang: de
+list-of-contents: true
+list-of-figures: true
+list-of-tables: true
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html:
+    toc: false
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+# Methode
+
+![Zqfigure.](sampleimage.png){#fig-a}
+
+![Zqillustration.](sampleimage.png){#ill-a}
+
+| A | B |
+|---|---|
+| 1 | 2 |
+
+: Zqtable. {#tbl-a}

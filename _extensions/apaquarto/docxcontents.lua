@@ -52,7 +52,22 @@ local kEntryColour = nil
 -- How many levels of heading the contents lists, which is quarto's toc-depth.
 local kTocDepth = 3
 
+-- The headings of the three lists, in the document's language
+local kTitles = {
+  contents = "Table of Contents",
+  figures = "List of Figures",
+  tables = "List of Tables",
+}
+-- The identifier prefixes of every kind of float: fig and tbl, and the
+-- document's own, such as ill for an Illustration, which is listed with the
+-- figures as it is in the .pdf
+local kPrefixes = utilsapa.float_prefixes(nil)
+
 local function read_meta(meta)
+  kTitles.contents = utilsapa.lang(meta, "toc-title-document", kTitles.contents)
+  kTitles.figures = utilsapa.lang(meta, "crossref-lof-title", kTitles.figures)
+  kTitles.tables = utilsapa.lang(meta, "crossref-lot-title", kTitles.tables)
+  kPrefixes = utilsapa.float_prefixes(meta)
   kEntryColour = utilsapa.colour_hex(meta["toccolor"])
   kTocDepth = utilsapa.toc_depth(meta, 3)
 end
@@ -129,6 +144,36 @@ local function unlisted_heading(header)
     runs(header.content, false, false) .. "</w:p>" .. after)
 end
 
+-- A level-four or level-five heading, which APA runs in with the paragraph
+-- after it. apaheader.lua marks it; it is written here, at the end of the
+-- chain, so that quarto has resolved every reference to it by then.
+--
+-- The paragraph mark is hidden (a "style separator"), which is what lets the
+-- heading and the paragraph after it read as one line while the heading keeps
+-- its heading style for the table of contents. The heading's own bold and
+-- italic are kept, and it carries the bookmark pandoc would have given it, so
+-- that a link to it arrives.
+local kRunIn = "apa-runin"
+
+local function run_in_heading(header)
+  local level = header.level
+  if level < 1 then level = 1 end
+  if level > 9 then level = 9 end
+
+  local before, after = "", ""
+  if header.identifier ~= "" then
+    bookmark = bookmark + 1
+    before = [[<w:bookmarkStart w:id="]] .. bookmark .. [[" w:name="]]
+      .. xml_escape(bookmark_name(header.identifier)) .. [["/>]]
+    after = [[<w:bookmarkEnd w:id="]] .. bookmark .. [["/>]]
+  end
+
+  return pandoc.RawBlock("openxml", "<w:p><w:pPr><w:pStyle w:val=\"Heading"
+    .. level .. "\"/><w:rPr><w:vanish/><w:specVanish/></w:rPr></w:pPr>"
+    .. before .. runs(header.content, false, false) .. after
+    .. [[<w:r><w:t xml:space="preserve"> </w:t></w:r></w:p>]])
+end
+
 -- Every figure and table in the document, in the order they appear, as the
 -- number apacaption.lua gave them, the caption that followed it and the
 -- identifier a reader can be sent to.
@@ -155,7 +200,7 @@ local function scan(blocks, figures, tables)
   for _, block in ipairs(blocks) do
     if block.t == "Div" then
       local id = block.identifier
-      if id:match("^fig%-") or id:match("^tbl%-") then
+      if utilsapa.is_float(id, kPrefixes) then
         local entry = float_entry(block)
         if entry then
           if id:match("^tbl%-") then tables:insert(entry) else figures:insert(entry) end
@@ -305,7 +350,7 @@ end
 local function build_contents(headings)
   local out = pandoc.List({})
   out:insert(unlisted_heading(
-    pandoc.Header(1, pandoc.Inlines({ pandoc.Str("Table of Contents") }),
+    pandoc.Header(1, pandoc.Inlines({ pandoc.Str(kTitles.contents) }),
       pandoc.Attr("", { "unlisted" }))))
   for _, entry in ipairs(headings) do
     out:insert(heading_paragraph(entry))
@@ -369,11 +414,11 @@ return {
           listed = true
           out:insert(page_break())
         elseif block.t == "Div" and block.classes:includes("list-of-figures") then
-          out:extend(build_list("List of Figures", figures))
+          out:extend(build_list(kTitles.figures, figures))
           listed = true
           out:insert(page_break())
         elseif block.t == "Div" and block.classes:includes("list-of-tables") then
-          out:extend(build_list("List of Tables", tables))
+          out:extend(build_list(kTitles.tables, tables))
           out:insert(page_break())
           listed = true
         elseif block.t == "Header" and block.classes:includes("unlisted") then
@@ -385,7 +430,13 @@ return {
 
       if listed then say_how_to_update() end
 
-      doc.blocks = out
+      -- Last, so that the contents above has been built from them as
+      -- headings. They may sit inside a div, an appendix for one.
+      doc.blocks = pandoc.Blocks(out):walk {
+        Header = function(h)
+          if h.classes:includes(kRunIn) then return run_in_heading(h) end
+        end
+      }
       return doc
     end
   }

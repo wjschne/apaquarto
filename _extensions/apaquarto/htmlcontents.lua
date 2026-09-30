@@ -17,6 +17,8 @@ local utilsapa = require("utilsapa")
 -- marks unlisted -- the title, the author note, the abstract, the impact
 -- statement -- and not one the writer marked so either.
 local depth = 3
+-- The heading of the contents, in the document's language
+local contents_title = "Table of Contents"
 
 local function collect_headings(blocks)
   return utilsapa.contents_headings(blocks, depth)
@@ -51,7 +53,7 @@ end
 -- has something to name.
 local function contents_blocks(headings)
   local out = pandoc.List({})
-  out:insert(pandoc.Header(1, pandoc.Inlines({ pandoc.Str("Table of Contents") }),
+  out:insert(pandoc.Header(1, pandoc.Inlines({ pandoc.Str(contents_title) }),
     pandoc.Attr("apaquarto-contents", { "unlisted", "unnumbered" })))
   if #headings > 0 then
     local list = build(headings, 1, headings[1].level)
@@ -63,6 +65,7 @@ end
 
 function Pandoc(doc)
   depth = utilsapa.toc_depth(doc.meta, 3)
+  contents_title = utilsapa.lang(doc.meta, "toc-title-document", contents_title)
   local headings = collect_headings(doc.blocks)
   local out = pandoc.List({})
   local found = false

@@ -54,6 +54,11 @@ local fields = {
   { field = "title-supplemental-materials",    default = "Supplemental materials" },
   { field = "title-word-count",                default = "Word Count" },
   { field = "references-meta-analysis",        default = "References marked with an asterisk indicate studies included in the meta-analysis." },
+  -- The headings of the lists list-of-contents, list-of-figures and
+  -- list-of-tables ask for. Quarto translates all three.
+  { field = "crossref-lof-title",              default = "List of Figures" },
+  { field = "crossref-lot-title",              default = "List of Tables" },
+  { field = "toc-title-document",              default = "Table of Contents" },
 }
 
 Meta = function(m)
@@ -81,6 +86,12 @@ Meta = function(m)
     end
   end
 
+  -- Quarto's English for the contents is "Table of contents". APA sets a
+  -- heading in title case, which is what apaquarto has always printed, so the
+  -- English is put in title case unless the document asked for it as it is.
+  local toc_asked = m.language["toc-title-document"] ~= nil
+    or m["toc-title-document"] ~= nil
+
   for i, x in ipairs(fields) do
     -- In case someone assigned variable to top-level meta instead of to language
     if m[x.field] then
@@ -95,6 +106,11 @@ Meta = function(m)
         end
       end
     end
+  end
+
+  if not toc_asked and m.language["toc-title-document"] ~= nil
+      and pandoc.utils.stringify(m.language["toc-title-document"]) == "Table of contents" then
+    m.language["toc-title-document"] = "Table of Contents"
   end
 
   return m

@@ -1,0 +1,30 @@
+---
+# Front matter that used to stop the render or be ignored.
+#
+# Should: render a title that ends in emphasis and has a subtitle; fall back
+# to two blank lines when blank-lines-above-author-note is not a number; and
+# leave the .pdf with no running head when suppress-short-title is set.
+#
+# Used to: crash on the title (apastriptitle.lua read the text of its last
+# inline, which emphasis has none of); crash on the blank lines
+# (math.floor of nil); and print the short title in the .pdf running head
+# regardless, where typst and .docx left it out.
+title: "A Title Ending in *Zqemphasis*"
+subtitle: "Zqsubtitle"
+shorttitle: "Zqshort"
+suppress-short-title: true
+blank-lines-above-author-note: many
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+Zqbody.

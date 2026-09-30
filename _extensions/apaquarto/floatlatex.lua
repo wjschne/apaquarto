@@ -133,9 +133,12 @@ end
 
 -- The note, as the same blocks every other format gets, so that a note reads
 -- the same whichever way the document is written out.
--- Every note this filter has written, so that the div around the float can be
--- told not to write it again.
-local written_notes = {}
+
+-- The attribute the div a float is written into carries, holding the note
+-- written into it, so that the cell the float came from can be told not to
+-- write it again. It is not the float's identifier, which would give pandoc
+-- a second \label to write.
+local kWrittenNote = "apa-written-note"
 
 local function note_blocks(record)
   local attributes = record.float.attributes or {}
@@ -143,8 +146,6 @@ local function note_blocks(record)
   -- marks the float when it has, so that it is not written twice.
   if attributes["apa-note-written"] then return nil end
   if not record.note then return nil end
-  written_notes[record.note] = true
-  if attributes["apa-note"] then written_notes[attributes["apa-note"]] = true end
   return floatrecord.note_blocks(record.note, noteword)
 end
 
@@ -156,14 +157,28 @@ end
 -- inside the float, which is where APA wants it and where floatsintext can
 -- carry it; apanote.lua, which runs later and reads divs, then found the
 -- attribute still on the cell and wrote the note a second time underneath the
--- whole table. Only the note this filter has actually written is taken off, so
--- a note on a div holding no float is left for apanote.lua as before.
+-- whole table. Only a note written into a float inside this div is taken off,
+-- so a note on a div holding no float is left for apanote.lua as before,
+-- whatever it says.
 --
 -- The float is inside the div, so it has already been through processfloat by
 -- the time the div is reached.
 local function clear_written_note(div)
   local note = div.attributes and div.attributes["apa-note"]
-  if note and written_notes[note] then
+  if not note then return nil end
+  local written = false
+  div.content:walk {
+    Div = function(child)
+      local inner = child.attributes and child.attributes[kWrittenNote]
+      if inner == note then written = true end
+      -- The note of a markdown table is written as it was typed, and the
+      -- cell carries the flattened copy; the float carries both.
+      if child.attributes and child.attributes["apa-note-flat"] == note then
+        written = true
+      end
+    end
+  }
+  if written then
     div.attributes["apa-note"] = nil
     return div
   end
@@ -457,6 +472,13 @@ local function processfloat(float)
   end
 
   local note = note_blocks(record)
+  local out = pandoc.Div({})
+  if note then
+    out.attributes[kWrittenNote] = record.note
+    if (float.attributes or {})["apa-note"] then
+      out.attributes["apa-note-flat"] = float.attributes["apa-note"]
+    end
+  end
   if note then
     -- A table's note sits under the rule that closes the table, and needs
     -- the rule cleared. A figure's note follows the picture and does not.
@@ -474,7 +496,8 @@ local function processfloat(float)
   else
     blocks:insert(raw("\\par\\addvspace{\\baselineskip}"))
   end
-  return pandoc.Div(blocks)
+  out.content = blocks
+  return out
 end
 
 return {

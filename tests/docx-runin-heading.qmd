@@ -1,0 +1,25 @@
+---
+# A level-four heading in .docx, and a reference to it.
+#
+# Should: keep the heading's italics, run it in with the paragraph after it,
+# and give it a bookmark the reference links to.
+#
+# Used to: write the heading as plain text, and before quarto had resolved
+# references, so the reference printed as ?@sec-four and had nowhere to go.
+title: "Run-in Headings"
+shorttitle: "Run-in Headings"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-docx: default
+---
+
+# Method
+
+#### A *Zqitalic* Heading {#sec-four}
+
+Text under it. See @sec-four.

@@ -1045,8 +1045,12 @@ supplement: "Figure",
 
 
 #block[
+#block[#set par(first-line-indent: 0em)
+#block[
 #block[
 #emph[Note]. Zqnotechunkfig.
+]
+]
 ]
 ]
 #[#set par.line(numbering: none)
@@ -1075,8 +1079,12 @@ supplement: "Table",
 
 
 #block[
+#block[#set par(first-line-indent: 0em)
+#block[
 #block[
 #emph[Note]. Zqnotechunktbl.
+]
+]
 ]
 ]
 #[#set par.line(numbering: none)
@@ -1098,8 +1106,12 @@ supplement: "Figure",
 
 
 #block[
+#block[#set par(first-line-indent: 0em)
+#block[
 #block[
 #emph[Note]. Zqnotemdfig.
+]
+]
 ]
 ]
 #[#set par.line(numbering: none)
@@ -1172,8 +1184,12 @@ Zqplaindivtext.
 
 ]
 #block[
+#block[#set par(first-line-indent: 0em)
+#block[
 #block[
 #emph[Note]. Zqnoteplaindiv.
+]
+]
 ]
 ]
 #[#set par.line(numbering: none)

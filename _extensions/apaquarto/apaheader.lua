@@ -7,9 +7,13 @@ local function ends_with_punctuation(content)
   return pandoc.utils.stringify(content):match("[.?!]%s*$") ~= nil
 end
 
--- The header text below is put into raw openxml, so it is escaped first.
-local xml_escape = require("utilsapa").xml_escape
-
+-- APA runs a level-four or level-five heading in with the paragraph after
+-- it. In .docx that takes raw openxml, which docxcontents.lua writes at the
+-- end of the chain; here the heading is only marked. It has to stay a heading
+-- until then: quarto resolves a reference to it after this runs, and a
+-- heading already turned into raw openxml had nothing to be found by, so
+-- @sec- to one printed as ?@sec-x.
+local kRunIn = "apa-runin"
 
 function Header(hx)
   if hx.level > 3 then
@@ -18,12 +22,7 @@ function Header(hx)
       hx.content[#hx.content + 1] = pandoc.Str(".")
     end
     if FORMAT == "docx" then
-      -- Adds a "Style Separator" character that allows the headier to appear as if it were on the same line as the subsequent paragraph.
-      local htext = pandoc.utils.stringify(hx.content)
-      local prefix = "<w:p><w:pPr><w:pStyle w:val=\"Heading" ..
-      hx.level .. "\"/><w:rPr><w:vanish/><w:specVanish/></w:rPr></w:pPr><w:r><w:t>"
-      local suffix = "</w:t></w:r><w:r><w:t xml:space=\"preserve\"> </w:t></w:r></w:p>"
-      return pandoc.RawBlock('openxml', prefix .. xml_escape(htext) .. suffix)
+      hx.classes:insert(kRunIn)
     end
     return hx
   end

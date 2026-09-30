@@ -1,0 +1,25 @@
+---
+# A note that apanote.lua writes, in typst journal mode.
+#
+# Should: turn the first-line indent off for the note.
+#
+# Used to: indent it. Journal mode indents every paragraph, and the note
+# written after formattypst.lua had run missed the setting it gives notes.
+title: "A Note in Journal Mode"
+shorttitle: "Journal Note"
+documentmode: jou
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-typst: default
+---
+
+# Method
+
+::: {apa-note="Zqjounote."}
+Zqplaintext.
+:::

@@ -26,6 +26,14 @@ engine: knitr
 - In .html and .docx a figure's or table's note is written inside the float, as it already was in .pdf and typst, so the two always travel together.
 - A figure with sub-figures and no layout no longer prints its note twice in .html and .docx.
 - In .docx a panel's own note is centred under its panel (the SubPanelNote style), as in .html.
+- A title that ends in emphasis or code, with a subtitle, no longer stops the render.
+- `blank-lines-above-title` is honoured, and a `blank-lines-above-author-note` that is not a number falls back to 2 with a warning instead of stopping the render.
+- In .docx a level-four or level-five heading keeps its italics and bold, and a cross-reference to it links to it rather than printing `?@sec-`.
+- Appendices written the older way (`# Appendix A` over a title of its own) are lettered once, so their figures and tables are A1, B1, and "Appendix A" is no longer printed twice.
+- In .pdf `suppress-short-title` leaves the running head empty, as it does in .docx and typst.
+- A note on a plain div is no longer lost when a figure or table carries a note with the same words.
+- In typst journal mode a note written under a plain div, a markdown image or a code-chunk table is no longer indented.
+- The table of contents and the lists of figures and tables take their headings from the document's language, and an Illustration is listed with the figures in .docx and typst as it is in .pdf.
 
 # Version 6.0.1
 - 2026-09-26

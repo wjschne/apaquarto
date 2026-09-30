@@ -1061,7 +1061,7 @@ let a = appendixcounter.at(loc).first()
 let name = if a > 0 {[#it.element.supplement #numbering("A", a)#n]}
   else {[#it.element.supplement #n]}
 link(loc, it.indented(none, name + [. ] + it.inner()))}
-#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig"),)
+#outline(title: [List of Figures], target: figure.where(kind: "quarto-float-fig").or(figure.where(kind: "quarto-float-ill")),)
 ]
 
 #pagebreak()

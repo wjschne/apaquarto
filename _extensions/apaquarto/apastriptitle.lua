@@ -1,7 +1,8 @@
---- Does the string end with a specific character?
---- http://lua-users.org/wiki/StringRecipes
-local function ends_with(str, ending)
-  return string.sub(str.text, -1) == ending
+--- Does the title end with a specific character? The whole title is read
+--- rather than its last inline, which has no text of its own when the title
+--- ends in emphasis, code or a line break, and brought the render down.
+local function ends_with(inlines, ending)
+  return pandoc.utils.stringify(inlines):sub(-#ending) == ending
 end
 
 --- Trim string
@@ -62,7 +63,7 @@ local function makeauthorname(a)
   -- Make author name
   if pandoc.utils.type(a.literal) == "List" then
     if a.literal[1].literal then
-      authorname = a[1].literal
+      authorname = a.literal[1].literal
     else
       authorname = ""
       authorname = authorname .. prependspace(a.literal[1].given)
@@ -128,7 +129,7 @@ Meta = function(meta)
   end
 
   if meta.subtitle then
-    if not ends_with(meta.apatitledisplay[#meta.apatitledisplay], ":") then
+    if not ends_with(meta.apatitledisplay, ":") then
       meta.apatitledisplay:insert(pandoc.Str(":"))
     end
     meta.apatitledisplay:insert(pandoc.Space())

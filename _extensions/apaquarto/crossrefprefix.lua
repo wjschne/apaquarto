@@ -123,7 +123,14 @@ end
 
 
 local after_reference = false
+-- The older way of writing an appendix is "# Appendix A" over a heading of
+-- its own: the first is the label, the second the title, and the two are one
+-- appendix. After such a label, the next level-one heading is its title.
+local awaiting_title = false
 local walkblock = function(b)
+  -- Whether an "Appendix X" heading is written over this one. Not over the
+  -- label of the older style, which is one already, nor over its title.
+  local write_label = true
   
   if b.tag == "Div" and b.identifier and b.identifier:find("^apx%-") then
     after_reference = true
@@ -138,19 +145,35 @@ local walkblock = function(b)
       after_reference = true
       return nil
     end
-    if headerfirstword == appendixword or headerfirstword == "Appendix" or (b.identifier and b.identifier:find("^apx%-")) or after_reference then
+    -- An older-style label is "Appendix" or "Appendix A" written as a
+    -- heading of its own. A heading given an apx identifier is a new-style
+    -- appendix whatever its title begins with.
+    local is_label = (headerfirstword == appendixword or headerfirstword == "Appendix")
+      and not (b.identifier and b.identifier:find("^apx%-"))
+    if awaiting_title and not is_label then
+      -- The title under an older-style label: the same appendix, so it takes
+      -- the letter the label took rather than one of its own.
+      awaiting_title = false
+      write_label = false
+      if not (b.identifier and b.identifier:find("^apx%-")) then
+        b.identifier = "apx-" .. b.identifier
+      end
+      b.attr.attributes.appendixtitle = prefix
+    elseif is_label or (b.identifier and b.identifier:find("^apx%-")) or after_reference then
       after_reference = true
+      awaiting_title = is_label
+      write_label = not is_label
       if not (b.identifier and b.identifier:find("^apx%-")) then
         b.identifier = "apx-" .. b.identifier
       end
       
-      -- The older way of writing an appendix, "# Appendix A" over a heading
-      -- of its own, is a heading that opens an appendix as well, and is
-      -- marked as one so that nothing is set between it and its title.
-      if headerfirstword == appendixword or headerfirstword == "Appendix" then
+      -- The label of the older style opens the appendix itself, and is
+      -- marked as the heading that does, since no "Appendix X" is written
+      -- over it.
+      if is_label then
         b.classes:insert(kAppendixClass)
       end
-      if (headerfirstword == appendixword or headerfirstword == "Appendix") and newsppendixstyle then
+      if is_label and newsppendixstyle then
         quarto.log.warning(
         "This style of creating appendices is deprecated:\n\n# Appendix A\n\n#Relationship Descriptive Scale\n\nInstead, use a single descriptive level-1 heading,\nfollowed by a an identifier with the apx prefix:\n\n# Relationship Description Scale {#apx-relationship}\n")
         newsppendixstyle = false
@@ -238,7 +261,7 @@ local walkblock = function(b)
       end
     end
 
-    if b.identifier:find("^apx%-") then
+    if b.identifier:find("^apx%-") and write_label then
       local a = pandoc.Header(1, appendixword .. " " .. prefix)
       a.classes:insert(kAppendixClass)
       return pandoc.List({ a, b })

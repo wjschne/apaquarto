@@ -436,10 +436,16 @@
 /renewcommand*/l@subsubsection{/@dottedtocline{3}{3em}{0em}}
 /makeatother
 
+% The headings of the three lists, which formatlatex.lua sets from the
+% document's language.
+/newcommand{/apacontentsname}{Table of Contents}
+/newcommand{/apalistfigurename}{List of Figures}
+/newcommand{/apalisttablename}{List of Tables}
+
 /newcommand{/apatableofcontents}{%
   /begingroup
   /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
-  /renewcommand{/contentsname}{Table of Contents}%
+  /renewcommand{/contentsname}{/apacontentsname}%
   /setcounter{tocdepth}{/apatocdepth}%
   /tableofcontents
   /endgroup}
@@ -453,13 +459,13 @@
 /newcommand{/apalistoffigures}{%
   /begingroup
   /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
-  /renewcommand{/listfigurename}{List of Figures}%
+  /renewcommand{/listfigurename}{/apalistfigurename}%
   /listoffigures
   /endgroup}
 /newcommand{/apalistoftables}{%
   /begingroup
   /hypersetup{linkcolor=/apatoccolor,citecolor=/apatoccolor,urlcolor=/apatoccolor}%
-  /renewcommand{/listtablename}{List of Tables}%
+  /renewcommand{/listtablename}{/apalisttablename}%
   /listoftables
   /endgroup}
 
@@ -888,6 +894,9 @@
 /@ifpackageloaded{caption}{}{/usepackage{caption}}
 /@ifpackageloaded{subcaption}{}{/usepackage{subcaption}}
 /makeatother
+/renewcommand{/apacontentsname}{Table of Contents}
+/renewcommand{/apalistfigurename}{List of Figures}
+/renewcommand{/apalisttablename}{List of Tables}
 /setapashorttitle{LINK COLOURS}
 /definecolor{apacolorlink}{HTML}{CC0000}
 /usepackage{bookmark}

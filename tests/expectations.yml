@@ -1697,3 +1697,183 @@
     docx:
       count:
         'note belonging to the whole figure.': 3
+
+# ------------------------------------------------------------- bug fixes --
+
+- fixture: frontmatter-edges.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains: ['Zqsubtitle', 'Zqbody.']
+
+- fixture: frontmatter-edges.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains: ['Zqsubtitle', 'Zqbody.']
+
+- fixture: frontmatter-edges.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains: ['Zqsubtitle', 'Zqbody.']
+
+- fixture: frontmatter-edges.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains: ['Zqsubtitle', 'Zqbody.']
+      absent:
+        # The running head the short title would have given.
+        - '\setapashorttitle{'
+
+- fixture: docx-runin-heading.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      absent: ['?@sec-four']
+    docx-xml:
+      contains:
+        - '<w:bookmarkStart w:id="90003" w:name="sec-four"/>'
+        - '<w:hyperlink w:anchor="sec-four">'
+        # The heading's italics, which it used to lose.
+        - '<w:i/></w:rPr><w:t xml:space="preserve">Zqitalic</w:t>'
+        # Run in with the paragraph after it.
+        - '<w:specVanish/>'
+
+- fixture: appendix-old-style.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      count:
+        '>Appendix A</h1>': 1
+        '>Appendix B</h1>': 1
+      contains: ['Figure A1', 'Table B1']
+      absent: ['Figure B1', 'Appendix C']
+
+- fixture: appendix-old-style.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      count:
+        'Appendix A': 1
+        'Appendix B': 1
+      contains: ['Figure A1', 'Table B1']
+
+- fixture: appendix-old-style.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      count:
+        '#appendixcounter.step()': 2
+
+- fixture: appendix-old-style.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains: ['\apafloattitle{Figure A1}', '\apafloattitle{Table B1}']
+
+- fixture: note-same-text.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      count:
+        '</em>. Zqsame.': 3
+
+- fixture: note-same-text.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      count:
+        'Zqsame.': 3
+
+- fixture: note-same-text.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      count:
+        'Zqsame.': 3
+
+- fixture: note-same-text.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      count:
+        'Zqsame.': 3
+
+- fixture: jou-note-indent.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      order: ['#block[#set par(first-line-indent: 0em)', 'Zqjounote.']
+
+- fixture: list-titles-de.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains: ['Inhaltsverzeichnis']
+      absent: ['Table of Contents']
+
+- fixture: list-titles-de.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains: ['Inhaltsverzeichnis', 'Abbildungsverzeichnis', 'Tabellenverzeichnis']
+      absent: ['List of Figures', 'List of Tables', 'Table of Contents']
+      count:
+        # The caption, and its line in the list of figures.
+        'Zqillustration.': 2
+
+- fixture: list-titles-de.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '#outline(title: [Inhaltsverzeichnis]'
+        - '#outline(title: [Abbildungsverzeichnis], target: figure.where(kind: "quarto-float-fig").or(figure.where(kind: "quarto-float-ill"))'
+        - '#outline(title: [Tabellenverzeichnis]'
+
+- fixture: list-titles-de.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - '\renewcommand{\apacontentsname}{Inhaltsverzeichnis}'
+        - '\renewcommand{\apalistfigurename}{Abbildungsverzeichnis}'
+        - '\renewcommand{\apalisttablename}{Tabellenverzeichnis}'
+
+# ------------------------------------------------------- typst front matter --
+# The two layouts typst gives the front matter beyond a manuscript's, with
+# everything they lay out. The snapshots are what these are for: they hold
+# the whole of the markup, so a change to how either is built shows.
+
+- fixture: typst-jou-frontmatter.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      order:
+        - '#place(top, scope: "parent", float: true, clearance: 1.5em)['
+        - '#joumastheadlift()'
+        - 'Zqjournal of Things'
+        - 'A Journal Article'
+        - 'Zqabstract text.'
+        - '#block(width: 100%, inset: 6pt, above: 9pt, below: 9pt, stroke: .5pt + black)['
+        - 'Zqimpact statement.'
+        - '#jouauthornote(cols: 2)['
+        - '#set par(justify: false, first-line-indent: 0pt)'
+        - '#outline(title: [List of Figures]'
+        - '#outline(title: [List of Tables]'
+
+- fixture: typst-doc-frontmatter.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '#apadoctitle['
+        - '#apadocabstract['
+        - '#apadocauthornote['
+        - '#outline(title: [Table of Contents]'
+        - '#outline(title: [List of Figures]'
+      absent:
+        # A document runs on: no page break, not even under a list.
+        - '#pagebreak'

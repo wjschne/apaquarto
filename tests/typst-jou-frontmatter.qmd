@@ -1,0 +1,47 @@
+---
+# The whole of a journal article's front matter in typst.
+#
+# Should: set the journal's masthead (logo, name, rule, copyright, issn,
+# issue, doi), the title and byline, and the abstract, impact statement and
+# keywords in the narrow block with the impact statement boxed, all across
+# both columns; the author note, its ORCID lines set off, at the foot of the
+# first column across both columns as asked; and the lists in the body.
+title: "A Journal Article"
+shorttitle: "Journal Article"
+documentmode: jou
+author:
+  - name: Ann Author
+    corresponding: true
+    email: ann@example.edu
+    orcid: 0000-0002-1825-0097
+    affiliations:
+      - name: Test University
+  - name: Ben Author
+    orcid: 0000-0002-1825-0098
+    affiliations:
+      - name: Other University
+author-note:
+  status-changes:
+    affiliation-change: "Zqaffiliationchange."
+  author-note-columns: 2
+abstract: "Zqabstract text."
+impact-statement: "Zqimpact statement."
+keywords: [zqone, zqtwo]
+journal:
+  title: "Zqjournal of Things"
+  logo: default
+  issn: "1234-5678"
+  url: "https://doi.org/10.1234/zq"
+  copyrightnotice: "2026"
+  copyrighttext: "The Authors"
+  volume: 3
+  issue: 2
+list-of-figures: true
+list-of-tables: true
+format:
+  apaquarto-typst: default
+---
+
+# Method
+
+![Zqfigure.](sampleimage.png){#fig-a}

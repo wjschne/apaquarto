@@ -109,6 +109,18 @@ local function apanote(elem)
       local prefix = pandoc.Para({ pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."), pandoc.Space() })
       local note = tablenotes[elem.identifier] or elem.attributes["apa-note"]
       local apanotedivs = utilsapa.make_note(note, prefix)
+      -- A note is not indented. formattypst.lua sees to that for the notes it
+      -- writes, but it has run by now, so a note written here in typst turns
+      -- the indent off for itself, inside a block that ends the setting with
+      -- the note. In journal mode, which indents every paragraph, the note
+      -- was indented without this.
+      if FORMAT == "typst" then
+        apanotedivs = pandoc.Div({
+          pandoc.RawBlock("typst", "#block[#set par(first-line-indent: 0em)"),
+          apanotedivs,
+          pandoc.RawBlock("typst", "]"),
+        })
+      end
       elem.attributes[kWritten] = mark()
       local at = note_position(elem)
       if at then

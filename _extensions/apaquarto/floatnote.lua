@@ -29,9 +29,6 @@ local floatrecord = require("floatrecord")
 local noteword = "Note"
 -- The notes of markdown tables as they were written, by identifier
 local tablenotes = {}
--- Every note written here, so that the cell a float came from can be told
--- not to write it again
-local written_notes = {}
 
 local function meta(m)
   noteword = utilsapa.lang(m, "figure-table-note", noteword)
@@ -112,21 +109,20 @@ local function write_note(float)
   content:insert(floatrecord.note_blocks(record.note, noteword))
   float.content = content
   float.attributes[utilsapa.note_written] = utilsapa.note_mark()
-  written_notes[record.note] = true
-  if float.attributes["apa-note"] then
-    written_notes[float.attributes["apa-note"]] = true
-  end
   return float
 end
 
--- Gives a float the note of the code cell it came from.
+-- Gives a float the note of the code cell it came from, and takes it off the
+-- cell.
 --
 -- A figure made by a code chunk carries its apa-note on the cell div quarto
 -- wraps the chunk's output in, not on the float itself (a table made by a
 -- chunk carries it on both). The note is copied down to the float here, in a
--- pass of its own, so that it is there by the time write_note reads it. Only a
--- cell holding one float is given this: a cell holding several leaves no way
--- to tell whose note it is, and is left for apanote.lua as before.
+-- pass of its own, so that it is there by the time write_note reads it, and
+-- taken off the cell, where apanote.lua would find it and write it a second
+-- time. Only a cell holding one float is given this: a cell holding several
+-- leaves no way to tell whose note it is, and is left for apanote.lua as
+-- before. A div holding no float is never touched, whatever its note says.
 local function push_cell_note(div)
   local note = div.attributes and div.attributes["apa-note"]
   if not note or note == "" then return nil end
@@ -142,31 +138,21 @@ local function push_cell_note(div)
   -- already, which read no note off the cell, so the cell's note is left for
   -- apanote.lua to write as before.
   if floatrecord.columns(floats[1], true) then return nil end
-  if not floats[1].attributes["apa-note"] then
-    floats[1].attributes["apa-note"] = note
+  local float = floats[1]
+  if not float.attributes["apa-note"] then
+    float.attributes["apa-note"] = note
   end
-  return nil
-end
-
--- Takes the apa-note off the cell a float came from, once the note has been
--- written into the float.
---
--- A float made by a code chunk sits inside the cell div quarto builds for that
--- chunk, and the chunk's apa-note is set on both. apanote.lua reads divs, and
--- would find the note still on the cell and write it a second time under it.
--- Only a note written here is taken off, so a note on a div holding no float
--- is left for apanote.lua. The float is inside the div, so it has been
--- through write_note by the time the div is reached.
-local function clear_written_note(div)
-  local note = div.attributes and div.attributes["apa-note"]
-  if note and written_notes[note] and not utilsapa.note_is_written(div) then
+  -- The float writes the note now; the cell keeps a different note of its
+  -- own, should it have one.
+  if float.attributes["apa-note"] == note then
     div.attributes["apa-note"] = nil
     return div
   end
+  return nil
 end
 
 return {
   { Meta = meta },
   { Div = push_cell_note },
-  { FloatRefTarget = write_note, Div = clear_written_note },
+  { FloatRefTarget = write_note },
 }

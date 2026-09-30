@@ -1041,8 +1041,12 @@ supplement: "Abbildung",
 
 
 #block[
+#block[#set par(first-line-indent: 0em)
+#block[
 #block[
 #emph[Hinweis]. zqnote
+]
+]
 ]
 ]
 

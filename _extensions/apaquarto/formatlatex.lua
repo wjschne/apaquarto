@@ -174,6 +174,26 @@ local function meta(m)
   end
   -- The running head is a preamble setting, so it goes in the header rather
   -- than into the body where the rest of this filter works.
+  -- The headings of the lists, in the document's language
+  local function latex_text(text)
+    return (text:gsub("([\\{}%$&#%^_~%%])", "\\%1"))
+  end
+  for _, pair in ipairs({
+    { "apacontentsname", "toc-title-document" },
+    { "apalistfigurename", "crossref-lof-title" },
+    { "apalisttablename", "crossref-lot-title" },
+  }) do
+    local macro, key = pair[1], pair[2]
+    local word = utilsapa.lang(m, key, nil)
+    if word then
+      quarto.doc.include_text("in-header",
+        "\\renewcommand{\\" .. macro .. "}{" .. latex_text(word) .. "}")
+    end
+  end
+
+  -- suppress-short-title leaves the running head empty, as it does in typst
+  -- and .docx: \apashorttitle is empty until something sets it.
+  if utilsapa.flag(m, "suppress-short-title") then shorttitle = nil end
   if shorttitle and shorttitle ~= "" then
     quarto.doc.include_text("in-header",
       "\\setapashorttitle{" .. shorttitle:gsub("([\\{}%$&#%^_~%%])", "\\%1") .. "}")

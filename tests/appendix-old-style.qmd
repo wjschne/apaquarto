@@ -1,0 +1,43 @@
+---
+# Appendices written the older way: "# Appendix A" over a heading of its own.
+#
+# Should: letter each such pair once -- the figure in the first is A1, the
+# table in the second B1 -- and print each "Appendix X" once.
+#
+# Used to: give the title a letter of its own as well, so the first
+# appendix's figure was B1, and write a second "Appendix A" over the one the
+# writer typed.
+title: "Old-Style Appendices"
+shorttitle: "Old-Style Appendices"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+# Method
+
+See @fig-old and @tbl-old.
+
+# Appendix A
+
+# Zqfirsttitle
+
+![A figure.](sampleimage.png){#fig-old}
+
+# Appendix B
+
+# Zqsecondtitle
+
+| A | B |
+|---|---|
+| 1 | 2 |
+
+: A table. {#tbl-old}

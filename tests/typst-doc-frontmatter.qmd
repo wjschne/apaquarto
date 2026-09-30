@@ -1,0 +1,35 @@
+---
+# The whole of a document's front matter in typst.
+#
+# Should: run the title, byline and inset abstract on as one flow, set the
+# author note at the foot of the first page, and write the contents and the
+# lists with no page of their own.
+title: "A Document"
+shorttitle: "Document"
+documentmode: doc
+author:
+  - name: Ann Author
+    corresponding: true
+    email: ann@example.edu
+    orcid: 0000-0002-1825-0097
+    affiliations:
+      - name: Test University
+  - name: Ben Author
+    orcid: 0000-0002-1825-0098
+    affiliations:
+      - name: Other University
+author-note:
+  status-changes:
+    affiliation-change: "Zqaffiliationchange."
+abstract: "Zqabstract text."
+impact-statement: "Zqimpact statement."
+keywords: [zqone, zqtwo]
+list-of-contents: true
+list-of-figures: true
+format:
+  apaquarto-typst: default
+---
+
+# Method
+
+![Zqfigure.](sampleimage.png){#fig-a}

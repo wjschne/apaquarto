@@ -69,6 +69,7 @@ end
 
 local utilsapa = require("utilsapa")
 local floatrecord = require("floatrecord")
+local typstfrontmatter = require("typstfrontmatter")
 
 -- The body first-line indent differs by mode, and the template names each one.
 -- A block that suspends the indent (references, a note) has to put back the
@@ -347,6 +348,9 @@ return {
       return meta
     end
   },
+  -- The front matter, laid out for the document's mode, before the passes
+  -- below read it as the blocks typst is given.
+  { Pandoc = typstfrontmatter.lay_out },
   {
     -- Find the tables whose note is already on a surrounding div. A float is
     -- a custom node, which a walk sees only as the div standing in for it, so
