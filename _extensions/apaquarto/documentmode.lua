@@ -1,6 +1,6 @@
 -- Accepts spelled-out aliases for documentmode and rewrites them to the codes
--- everything downstream expects: the apa7 class option in doc-class.tex, the
--- show rule in typst-show.typ, and the filters that branch on "jou". This runs
+-- everything downstream expects: the show rule in typst-show.typ, and the
+-- filters that branch on "jou", "stu", "thesis" and the rest. This runs
 -- first, before any of them read the field, so the alias is resolved in one
 -- place rather than in each of them.
 --

@@ -7,14 +7,20 @@ end
 
 --- Is the class included in the customclasses table?
 --- https://stackoverflow.com/a/2282542/4513316
-function utils_Set(list)
+local function utils_Set(list)
   local set = {}
   for _, l in ipairs(list) do set[l] = true end
   return set
 end
 
 -- Classes that are converted. Add additional classes as needed.
-customclasses = {
+--
+-- Most of these are set by filters that give the block its custom-style
+-- themselves, and several are only made at post-render, after this runs. The
+-- list stays whole anyway: an author may write any of them as a div of their
+-- own, and writing.qmd tells them to write ::: {.NoIndent}, which gets its
+-- style in .docx only from here.
+local customclasses = {
   "Author",
   "AuthorNote",
   "Abstract",
@@ -34,7 +40,7 @@ customclasses = {
 }
 
 -- Consult some value
-_set = utils_Set(customclasses)
+local _set = utils_Set(customclasses)
 
 
 -- https://jmablog.com/post/pandoc-filters/

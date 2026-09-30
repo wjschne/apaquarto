@@ -84,14 +84,9 @@ local function get_and(m)
   end
 end
 
----http://lua-users.org/wiki/StringRecipes
-local function ends_with(str, ending)
-  return string.sub(str.text, -1) == ending
-end
-
 -- Check if meta is present or if it has length of 0
 local function chkmeta(meta_item)
-  ispresent = false
+  local ispresent = false
   if meta_item then
     if #meta_item > 0 then
       ispresent = true
@@ -802,7 +797,6 @@ return {
         and stringify(meta.documentmode) == "jou"
       local typst_jou = is_typst_mode(meta, "jou")
       local typst_doc = is_typst_mode(meta, "doc")
-      local typst_stu = is_typst_mode(meta, "stu")
       -- A student paper, whatever it is being written to. The fields below
       -- were gated on typst for as long as the .pdf was built with the apa7
       -- class, which set them from the class options; the .pdf stopped using
@@ -887,7 +881,7 @@ return {
           for i, a in ipairs(affiliations) do
             affiliations_str = List()
 
-            mysep = pandoc.Str("")
+            local mysep = pandoc.Str("")
 
             if affilations_different and not meta["suppress-author"] then
               affiliations_str:extend({ pandoc.Superscript(stringify(a.number)) })
@@ -940,11 +934,11 @@ return {
       end
 
       if meta["draft-date"] then
-        draftdate = os.date("%B %d, %Y")
+        local draftdate = os.date("%B %d, %Y")
         if type(meta["draft-date"]) == "table" then
           draftdate = meta["draft-date"]
         end
-        draftdatediv = pandoc.Div({
+        local draftdatediv = pandoc.Div({
           pandoc.Para(draftdate)
         })
         draftdatediv.classes:insert("Author")
@@ -1013,7 +1007,7 @@ return {
               img = pandoc.Image("Orcid ID Logo: A green circle with white letters ID", orcidfile or kOrcidIcon)
               img.attr = pandoc.Attr('orcid', { 'img-fluid' }, { width = '4.23mm' })
             end
-            pp = pandoc.Para(pandoc.Str(""))
+            local pp = pandoc.Para(pandoc.Str(""))
             pp.content:extend(a.apaauthordisplay)
             pp.content:extend({ pandoc.Space(), img })
             pp.content:extend({ pandoc.Space(), pandoc.Link("https://orcid.org/" .. stringify(a.orcid),

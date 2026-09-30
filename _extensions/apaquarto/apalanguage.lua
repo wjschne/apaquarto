@@ -28,7 +28,7 @@ local fields = {
   { field = "crossref-tbl-title",              default = "Table" },
   { field = "crossref-apx-title",              default = "Appendix" },
   { field = "citation-last-author-separator",  default = "and" },
-  { field = "citation-masked-author",          default = "Masked Citation" },
+  { field = "citation-masked-author",          default = "Masked Author" },
   { field = "citation-masked-title",           default = "Masked Title" },
   { field = "citation-masked-date",            default = "n.d." },
   { field = "email",                           default = "Email" },

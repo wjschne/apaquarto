@@ -26,7 +26,7 @@ local newsppendixstyle = true
 -- Word for appendix
 local appendixword = "Appendix"
 local referenceword = "References"
-getappendixword = function(meta)
+local getappendixword = function(meta)
   if meta.language and meta.language["crossref-apx-prefix"] then
     appendixword = pandoc.utils.stringify(meta.language["crossref-apx-prefix"])
   end

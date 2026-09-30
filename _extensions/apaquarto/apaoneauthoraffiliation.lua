@@ -1,26 +1,11 @@
--- Latex needs to know if there is only one author and/or one affiliation
--- Checks to make sure all authors have an affiliation (or address)
+-- Checks that there is at least one author, that every author has an
+-- affiliation (or an address), and that one of them is the corresponding
+-- author.
 Meta = function(meta)
-  -- Is the only one author?
-  if meta["by-author"] then
-    if #meta["by-author"] == 1 then
-      meta.oneauthor = true
-    else
-      meta.oneauthor = false
-    end
-  else
+  if not meta["by-author"] then
     -- There are no authors
     error(
     "At least one author must be specified in your yaml metadata. \nFor example, \n\nauthor:\n  - name: Fred Jones\n    affiliations: Generic University\n    email: fred.jones@generic.edu\n    corresponding: true\n")
-  end
-
-  -- Is the only one affiliation?
-  if meta["by-affiliation"] then
-    if #meta["by-affiliation"] == 1 then
-      meta.oneaffiliation = true
-    else
-      meta.oneaffiliation = false
-    end
   end
 
   local corresponsingauthor = false

@@ -40,9 +40,6 @@ end
 
 local utilsapa = require("utilsapa")
 
-local figureword = "Figure"
-local tableword = "Table"
-
 -- toccolor, as six hex digits, or nil for the colour of the body text.
 --
 -- A run in these lists carries no character style -- pandoc's Hyperlink
@@ -56,14 +53,6 @@ local kEntryColour = nil
 local kTocDepth = 3
 
 local function read_meta(meta)
-  if meta.language then
-    if meta.language["crossref-fig-title"] then
-      figureword = utilsapa.stringify(meta.language["crossref-fig-title"])
-    end
-    if meta.language["crossref-tbl-title"] then
-      tableword = utilsapa.stringify(meta.language["crossref-tbl-title"])
-    end
-  end
   kEntryColour = utilsapa.colour_hex(meta["toccolor"])
   kTocDepth = utilsapa.toc_depth(meta, 3)
 end

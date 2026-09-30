@@ -95,7 +95,7 @@ contributes:
         # Move figures and tables to end of document
         - at: pre-ast
           path: apafloatstoend.lua
-        # Mark apa-twocolumn floats (and capture table notes) AFTER float
+        # Mark apa-twocolumn floats AFTER float
         # placement but before Quarto realizes markdown tables, so the marker
         # stays adjacent to a float that floatsintext: false has moved to the end.
         - at: pre-ast
@@ -122,7 +122,7 @@ contributes:
         # Word count
         - at: pre-quarto
           path: wordcount.lua
-        # Formats title page, abstract (all except latex)
+        # Formats title page, abstract
         - at: pre-quarto
           path: frontmatter.lua
         # Formats multi-paragraph quotes
@@ -141,7 +141,8 @@ contributes:
         # Set figures and tables the APA way in latex
         - at: post-quarto
           path: floatlatex.lua
-        # Tell latex if there is one author and/or one affiliation
+        # Stop the render if there are no authors, an author has no
+        # affiliation, or no author is the corresponding author
         - at: post-quarto
           path: apaoneauthoraffiliation.lua
         # Removes surrounding table environment for docx figures and tables

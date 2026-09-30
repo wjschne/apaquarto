@@ -193,10 +193,6 @@ return {
         if meta.language["citation-masked-title"] then
           maskedtitle = pandoc.utils.stringify(meta.language["citation-masked-title"])
         end
-        -- Is there another phrase for masked sources?
-        if meta.language["citation-masked-source"] then
-          maskedsource = pandoc.utils.stringify(meta.language["citation-masked-source"])
-        end
         -- Is there another phrase for masked dates?
         if meta.language["citation-masked-date"] then
           maskeddate = pandoc.utils.stringify(meta.language["citation-masked-date"])
@@ -239,7 +235,7 @@ return {
       drop_blank_bibliography(doc.meta)
       fix_blank_csl(doc.meta)
       doc.meta.references = pandoc.utils.references(doc)
-      maskedref = {
+      local maskedref = {
         author = pandoc.List:new({ { literal = maskedauthor } }),
         id = "maskedreference",
         issued = { literal = maskeddate },

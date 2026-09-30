@@ -483,13 +483,6 @@ return {
       -- here, that note would be written outside the grid.
       if float.parent_id then return nil end
 
-      -- floatwithsubfigure.lua writes the note of a float laid out in panels
-      -- for the other formats, and marks the float when it has. Writing it
-      -- again here would print it twice.
-      if float.attributes and float.attributes["apa-note-written"] then
-        return nil
-      end
-
       local ncol = panel_columns(float)
       if ncol then
         return laid_out_float(float, ncol)

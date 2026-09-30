@@ -1,9 +1,9 @@
 -- Sets the blocks apaquarto's filters produce, in latex.
 --
 -- This is the plain latex format's counterpart to typst/formattypst.lua. By
--- the time it runs, frontmatter.lua has written the title page, apanote.lua
--- has written the notes and apacaption.lua the figure and table titles, all as
--- ordinary divs and headers carrying the classes those filters use. Nothing
+-- the time it runs, frontmatter.lua has written the title page and
+-- floatlatex.lua the figures and tables with their titles and notes, the
+-- notes as ordinary divs carrying the classes those filters use. Nothing
 -- here decides what a document says; it only wraps each of those in the
 -- command that apalatex.tex defines for it.
 --

@@ -276,12 +276,12 @@ local mynote = function(float)
     end
 
     if float.attributes['apa-note'] then
-      prefix = pandoc.Para({ pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."), pandoc.Space() })
-      apanotedivs = utilsapa.make_note(float.attributes['apa-note'], prefix)
+      local prefix = pandoc.Para({ pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."), pandoc.Space() })
+      local apanotedivs = utilsapa.make_note(float.attributes['apa-note'], prefix)
 
-      -- Say that the note has been written, so that a format which also writes
-      -- notes of its own -- typst does, in formattypst.lua -- leaves this one
-      -- alone rather than printing it a second time. The apa-note attribute
+      -- Say that the note has been written, so that a filter which also writes
+      -- notes of its own -- floatlatex.lua does -- leaves this one alone
+      -- rather than printing it a second time. The apa-note attribute
       -- stays where it is, since apafloat.lua reads it afterwards to tell a
       -- float that has a note from one that has none.
       --

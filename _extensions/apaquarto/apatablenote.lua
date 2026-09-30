@@ -10,7 +10,8 @@
 --
 -- The caption still writes back out as markdown here, so the note is
 -- recovered from it and carried in the metadata, which quarto leaves alone.
--- apafloatlatex.lua prefers this copy over the flattened attribute.
+-- Only typst/formattypst.lua reads this copy so far; the other formats still
+-- write the flattened attribute.
 
 local notes = {}
 

@@ -6,11 +6,6 @@
 -- figure, and the note below. So the float is taken apart here and written
 -- back out in that order, using the commands apalatex.tex defines.
 --
--- This is the plain latex format's counterpart to apafloatlatex.lua, which
--- does the same job for apaquarto-pdf but has to talk the apa7 class round
--- first. Here there is no class to argue with and the whole of it is the
--- handful of blocks below.
---
 -- It runs at post-quarto, which is the last point at which a float is still a
 -- FloatRefTarget that can be read. By post-render the writer has already made
 -- its own figure out of it, which is why apanote.lua, which works on divs,
@@ -463,8 +458,8 @@ end
 -- The float carries it too, and this format writes the label itself, from the
 -- number the reader sees. Pandoc's latex writer turns an identified table into
 -- a longtable that opens with a \caption and a \label of its own: the
--- caption is empty, apacaption.lua having lifted the title out of it long
--- before, but \caption still steps the table counter and sets an empty
+-- caption is empty, quarto having moved the title onto the float, but
+-- \caption still steps the table counter and sets an empty
 -- caption line above the rules, and the second \label makes the identifier
 -- multiply defined, so a reference to it could resolve to either. The one on
 -- the table is taken off and the float's own is left.

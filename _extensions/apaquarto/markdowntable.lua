@@ -88,6 +88,5 @@ local function table_identifier(tb)
 end
 
 return {
-  { Meta = getmeta },
   { Table = table_identifier },
 }

@@ -3,7 +3,7 @@
 -- Pandoc's own latex template writes the class option as $papersize$paper, so
 -- a4 becomes a4paper. Papersize is written several ways though, and the names
 -- quarto uses for typst are among them, so they are all reduced to the stem
--- the class option is built from. doc-class.tex writes it out.
+-- the class option is built from.
 --
 -- Only latex is touched. Typst takes its own paper names, and the docx format
 -- reads papersize as written, so neither wants this.
@@ -13,7 +13,7 @@ if FORMAT ~= "latex" then
   return
 end
 
---- The paper sizes the standard classes, and so apa7, accept
+--- The paper sizes the standard classes accept
 local stems = {
   a4 = true,
   a5 = true,

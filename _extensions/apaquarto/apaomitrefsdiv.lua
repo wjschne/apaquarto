@@ -11,7 +11,7 @@ local hasrefheader = false
 local fixloneappendix = function(h)
   if appendixcount == 1 then
     if h.level == 1 then
-      hcontent = pandoc.utils.stringify(h.content)
+      local hcontent = pandoc.utils.stringify(h.content)
       if hcontent == appendixword .. " A" or hcontent == "Appendix A" then
         h.content = h.content[1]
         return h

@@ -87,6 +87,7 @@ local function apanote(elem)
   if elem.attributes[kWritten] == mark() then
     return nil
   end
+  local hasnote = false
 
   
  -- If div contains image with note
@@ -128,8 +129,8 @@ local function apanote(elem)
 
     if hasnote then
       -- Make note
-      prefix = pandoc.Para({ pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."), pandoc.Space() })
-      apanotedivs = utilsapa.make_note(elem.attributes["apa-note"], prefix)
+      local prefix = pandoc.Para({ pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."), pandoc.Space() })
+      local apanotedivs = utilsapa.make_note(elem.attributes["apa-note"], prefix)
       elem.attributes[kWritten] = mark()
       local at = note_position(elem)
       if at then

@@ -48,20 +48,6 @@ function Pandoc(doc)
       }
     end
     if isfigure or istable then
-      if istable and FORMAT == "docx" then
-        doc.blocks[i].content = doc.blocks[i].content:walk {
-          Table = function(tb)
-            if tb.classes:includes("do-not-create-environment") then
-
-            else
-              tb.classes:insert(1, "do-not-create-environment")
-              return tb
-            end
-          end
-        }
-      end
-
-
       if hasnote then
         doc.blocks[i].classes:insert("FigureWithNote")
         doc.blocks[i].attributes["custom-style"] = "FigureWithNote"

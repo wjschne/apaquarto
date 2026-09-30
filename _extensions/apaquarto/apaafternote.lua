@@ -1,14 +1,9 @@
--- apaquarto-pdf leaves this spacing to apa7, so this filter stands down for
--- it. apaquarto-latex-pdf does not use apa7 and needs it like every other
--- format; the two are told apart from the metadata, inside Pandoc below.
-local utilsapa = require("utilsapa")
-
 -- The spacing in paragraphs after a figure or table
 -- without a note makes a special style necessary.
 
 -- Set custom style in paragraph by setting it in a custom div
 local function makeafternote(p)
-  div = pandoc.Div(p)
+  local div = pandoc.Div(p)
   div.classes:insert("AfterWithoutNote")
   div.attributes['custom-style'] = 'AfterWithoutNote'
   return div
