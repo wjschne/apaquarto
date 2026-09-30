@@ -11,6 +11,10 @@ Rscript tests/run-tests.R --filter typst
 Rscript tests/run-tests.R --no-snapshots
 ```
 
+A run says how many jobs it has at the start, numbers each one as it
+begins (`[12/122]`), and after each prints a bar with how many are done,
+passed and failed, and roughly how long the rest will take.
+
 You need Quarto, R, and the packages named in `DESCRIPTION`
 (`pak::pak(".")` or `remotes::install_deps(dependencies = TRUE)` installs
 them). PDF fixtures need a LaTeX installation.

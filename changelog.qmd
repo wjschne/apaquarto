@@ -34,6 +34,7 @@ engine: knitr
 - A note on a plain div is no longer lost when a figure or table carries a note with the same words.
 - In typst journal mode a note written under a plain div, a markdown image or a code-chunk table is no longer indented.
 - The table of contents and the lists of figures and tables take their headings from the document's language, and an Illustration is listed with the figures in .docx and typst as it is in .pdf.
+- In .pdf journal mode the ORCID lines of the author note are set flush left and unjustified, as they are in typst.
 
 # Version 6.0.1
 - 2026-09-26

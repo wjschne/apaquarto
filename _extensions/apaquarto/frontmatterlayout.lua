@@ -125,11 +125,20 @@ function M.fit_orcid(blocks)
   }
 end
 
+-- Whether a paragraph is an ORCID line: one holding the ORCID icon, which is
+-- an image in typst and the raw \orcidlink command in latex, where
+-- frontmatter.lua writes the mark rather than an svg that would need
+-- converting.
 local function has_orcid(block)
   local found = false
   block:walk {
     Image = function(img)
       if img.identifier == "orcid" then found = true end
+    end,
+    RawInline = function(ri)
+      if ri.format == "latex" and ri.text:find("\\orcidlink{", 1, true) then
+        found = true
+      end
     end
   }
   return found

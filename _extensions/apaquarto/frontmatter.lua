@@ -254,103 +254,8 @@ end
 -- latex side, which reads the journal fields through utilsapa as well.
 local meta_inlines = utilsapa.meta_inlines
 
--- Journal masthead for jou mode, following the way the journals set one: the
--- journal's name at the right of the page with its logo opposite, a rule
--- under both, and the issue on the right beneath it with the copyright on the
--- left. Journal of Educational Psychology is the model.
---
--- The fields belong under journal, but an author who writes any of them at
--- the top level gets the same reading of them, which is how volume,
--- copyrightnotice and copyrighttext were given before there was anywhere else
--- to put them.
-
-local journal_title = utilsapa.journal_title
-local journal_field = utilsapa.journal_field
-local journal_issue_line = utilsapa.journal_issue_line
-local journal_copyright = utilsapa.journal_copyright
-
--- The apaquarto logo, asked for by writing logo: default. utilsapa finds the
--- extension folder it ships in.
-local kDefaultLogo = "default"
-local kShippedLogo = "apaquarto-logo.png"
+-- The ORCID icon the byline sets beside an author's ORCID.
 local kOrcidIcon = "ORCID-iD_icon-vector.svg"
-
--- One side of the masthead's lower row as inlines rather than blocks, which is
--- what the latex masthead passes to a command.
-local function masthead_inlines(first, second)
-  local out = pandoc.Inlines({})
-  if first then out:extend(first) end
-  if second then
-    if #out > 0 then out:insert(pandoc.LineBreak()) end
-    out:extend(second)
-  end
-  if #out == 0 then return nil end
-  return out
-end
-
--- The journal's logo, resolved from logo: default to the file apaquarto ships.
--- Returns the path as the writer in question wants to read it, or nil.
-local function masthead_logo(meta, resolve)
-  local logo = journal_field(meta, "logo")
-  if not logo then return nil end
-  if stringify(logo) ~= kDefaultLogo then return stringify(logo) end
-  local shipped = resolve(kShippedLogo)
-  if shipped then return shipped end
-  quarto.log.warning(
-    "logo: default could not find " .. kShippedLogo ..
-    " in the apaquarto extension folder, so the masthead has no logo.")
-  return nil
-end
-
--- The masthead for the .pdf, built out of the commands apalatex.tex defines
--- and set in a div formatlatex.lua knows to hand to \twocolumn. The band is
--- the one typst/formattypst.lua sets for typst, off the Journal of
--- Educational Psychology, and the pieces go in the same order: the logo and
--- the journal's name on one line, a rule, then the copyright and the issn at
--- the left with the issue and the doi at the right.
-local function latex_journal_metadata(meta)
-  if not utilsapa.has_journal_masthead(meta) then return nil end
-
-  local title = journal_title(meta)
-  local logo = masthead_logo(meta, utilsapa.extension_file_relative)
-  local url = journal_field(meta, "url")
-  local issn = journal_field(meta, "issn")
-
-  local url_line
-  if url then url_line = List:new { pandoc.Link(url, stringify(url)) } end
-  local issn_line
-  if issn then
-    issn_line = List:new { pandoc.Str("ISSN:"), pandoc.Space() }
-    issn_line:extend(issn)
-  end
-
-  local left = masthead_inlines(journal_copyright(meta), issn_line)
-  local right = masthead_inlines(journal_issue_line(meta), url_line)
-
-  local blocks = List:new {}
-
-  local head = pandoc.Inlines({ pandoc.RawInline("latex",
-    "\\apamastheadhead{" ..
-    (logo and ("\\apamastheadlogo{" .. logo:gsub("\\", "/") .. "}") or "") ..
-    "}{") })
-  if title then head:extend(title) end
-  head:insert(pandoc.RawInline("latex", "}"))
-  blocks:insert(pandoc.Para(head))
-
-  blocks:insert(pandoc.RawBlock("latex", "\\apamastheadline"))
-
-  if left or right then
-    local foot = pandoc.Inlines({
-      pandoc.RawInline("latex", "\\apamastheadfoot{") })
-    if left then foot:extend(left) end
-    foot:insert(pandoc.RawInline("latex", "}{"))
-    if right then foot:extend(right) end
-    foot:insert(pandoc.RawInline("latex", "}"))
-    blocks:insert(pandoc.Para(foot))
-  end
-
-  return pandoc.Div(blocks, pandoc.Attr("", { "JournalMasthead" }))
-end
 
 -- ---------------------------------------------------------------------------
 -- The parts of the front matter, in the order they are set. Each adds its
@@ -991,57 +896,18 @@ end
 -- The front matter and the body, arranged for the format and the mode, as
 -- the blocks of the document.
 local function arrange(ctx, blocks)
-  local meta, body = ctx.meta, ctx.body
-  local latex_jou = FORMAT == "latex" and utilsapa.mode(meta) == "jou"
-  if FORMAT:match 'typst' then
-    -- typst/formattypst.lua lays the front matter out for the document's
-    -- mode: one block after another for a manuscript, a masthead across
-    -- both columns for a journal article, one flow for a document. It is
-    -- handed over in a div of its own, which it takes away again, so
-    -- that it can tell the front matter from the body.
+  local body = ctx.body
+  if FORMAT:match 'typst' or FORMAT == "latex" then
+    -- The writer lays the front matter out for the document's mode: one
+    -- block after another for a manuscript, a masthead across both columns
+    -- for a journal article, one flow for a typst document.
+    -- typst/formattypst.lua does it for typst and formatlatex.lua for the
+    -- .pdf. It is handed over in a div of its own, which the writer takes
+    -- away again, so that it can tell the front matter from the body.
     body = List:new {
       pandoc.Div(body, pandoc.Attr("", { layout.kFrontMatterClass })) }
-    body:extend(blocks)
-  elseif latex_jou then
-    -- A published article in plain latex, laid out the way the typst one
-    -- is: the masthead, the title and the byline, then the abstract and
-    -- what follows it in a narrower block, all of it spanning the page;
-    -- the author note goes to the foot of the first column. The same
-    -- split as typst makes, since the front matter it reads is the same;
-    -- formatlatex.lua is what turns each part into latex, and it needs
-    -- them marked off from one another to do it.
-    -- The three list markers are taken out before the front matter is
-    -- split up. They would otherwise be swept into the masthead's own
-    -- divs, where nothing looks for them, and the lists a journal-mode
-    -- paper asked for simply never appeared.
-    local kept, lists = layout.take_list_markers(body)
-    local front, narrow, notes, tail = layout.split_journal(kept)
-    local out = List:new {}
-    local masthead = latex_journal_metadata(meta)
-    if masthead then out:extend({ masthead }) end
-    out:extend({ pandoc.Div(front, pandoc.Attr("", { "JournalWide" })) })
-    if #narrow > 0 then
-      out:extend({ pandoc.Div(layout.box_impact(narrow,
-        pandoc.RawBlock("latex", "\\begin{apajouimpact}"),
-        pandoc.RawBlock("latex", "\\end{apajouimpact}")),
-        pandoc.Attr("", { "JournalNarrow" })) })
-    end
-    if #notes > 0 then
-      -- The orcid lines are set off from the prose of the note, and the
-      -- icon sized to the note's text.
-      out:extend({ pandoc.Div(
-        layout.set_off_orcid(layout.fit_orcid(notes),
-          pandoc.RawBlock("latex", "\\begin{apajouorcid}"),
-          pandoc.RawBlock("latex", "\\end{apajouorcid}")),
-        pandoc.Attr("", { "JournalNote" })) })
-    end
-    out:extend(tail)
-    out:extend(lists)
-    out:extend(blocks)
-    body = out
-  else
-    body:extend(blocks)
   end
+  body:extend(blocks)
   return body
 end
 

@@ -454,12 +454,170 @@ local function render_front(list, jou)
   return out
 end
 
+-- ---------------------------------------------------------------------------
+-- The front matter
+
+local layout = require("frontmatterlayout")
+local List = require 'pandoc.List'
+local stringify = utilsapa.stringify
+
+-- Journal masthead for jou mode, following the way the journals set one: the
+-- journal's name at the right of the page with its logo opposite, a rule
+-- under both, and the issue on the right beneath it with the copyright on the
+-- left. Journal of Educational Psychology is the model.
+--
+-- The fields belong under journal, but an author who writes any of them at
+-- the top level gets the same reading of them, which is how volume,
+-- copyrightnotice and copyrighttext were given before there was anywhere else
+-- to put them.
+
+local journal_title = utilsapa.journal_title
+local journal_field = utilsapa.journal_field
+local journal_issue_line = utilsapa.journal_issue_line
+local journal_copyright = utilsapa.journal_copyright
+
+-- The apaquarto logo, asked for by writing logo: default. utilsapa finds the
+-- extension folder it ships in.
+local kDefaultLogo = "default"
+local kShippedLogo = "apaquarto-logo.png"
+
+-- One side of the masthead's lower row as inlines rather than blocks, which is
+-- what the latex masthead passes to a command.
+local function masthead_inlines(first, second)
+  local out = pandoc.Inlines({})
+  if first then out:extend(first) end
+  if second then
+    if #out > 0 then out:insert(pandoc.LineBreak()) end
+    out:extend(second)
+  end
+  if #out == 0 then return nil end
+  return out
+end
+
+-- The journal's logo, resolved from logo: default to the file apaquarto ships.
+-- Returns the path as the writer in question wants to read it, or nil.
+local function masthead_logo(meta, resolve)
+  local logo = journal_field(meta, "logo")
+  if not logo then return nil end
+  if stringify(logo) ~= kDefaultLogo then return stringify(logo) end
+  local shipped = resolve(kShippedLogo)
+  if shipped then return shipped end
+  quarto.log.warning(
+    "logo: default could not find " .. kShippedLogo ..
+    " in the apaquarto extension folder, so the masthead has no logo.")
+  return nil
+end
+
+-- The masthead for the .pdf, built out of the commands apalatex.tex defines
+-- and set in a div formatlatex.lua knows to hand to \twocolumn. The band is
+-- the one typst/formattypst.lua sets for typst, off the Journal of
+-- Educational Psychology, and the pieces go in the same order: the logo and
+-- the journal's name on one line, a rule, then the copyright and the issn at
+-- the left with the issue and the doi at the right.
+local function latex_journal_metadata(meta)
+  if not utilsapa.has_journal_masthead(meta) then return nil end
+
+  local title = journal_title(meta)
+  local logo = masthead_logo(meta, utilsapa.extension_file_relative)
+  local url = journal_field(meta, "url")
+  local issn = journal_field(meta, "issn")
+
+  local url_line
+  if url then url_line = List:new { pandoc.Link(url, stringify(url)) } end
+  local issn_line
+  if issn then
+    issn_line = List:new { pandoc.Str("ISSN:"), pandoc.Space() }
+    issn_line:extend(issn)
+  end
+
+  local left = masthead_inlines(journal_copyright(meta), issn_line)
+  local right = masthead_inlines(journal_issue_line(meta), url_line)
+
+  local blocks = List:new {}
+
+  local head = pandoc.Inlines({ pandoc.RawInline("latex",
+    "\\apamastheadhead{" ..
+    (logo and ("\\apamastheadlogo{" .. logo:gsub("\\", "/") .. "}") or "") ..
+    "}{") })
+  if title then head:extend(title) end
+  head:insert(pandoc.RawInline("latex", "}"))
+  blocks:insert(pandoc.Para(head))
+
+  blocks:insert(pandoc.RawBlock("latex", "\\apamastheadline"))
+
+  if left or right then
+    local foot = pandoc.Inlines({
+      pandoc.RawInline("latex", "\\apamastheadfoot{") })
+    if left then foot:extend(left) end
+    foot:insert(pandoc.RawInline("latex", "}{"))
+    if right then foot:extend(right) end
+    foot:insert(pandoc.RawInline("latex", "}"))
+    blocks:insert(pandoc.Para(foot))
+  end
+
+  return pandoc.Div(blocks, pandoc.Attr("", { "JournalMasthead" }))
+end
+
+-- A published article, laid out the way the typst one is: the masthead, the
+-- title and the byline, then the abstract and what follows it in a narrower
+-- block, all of it spanning the page; the author note goes to the foot of the
+-- first column. Each part is a div of its own (JournalMasthead, JournalWide,
+-- JournalNarrow, JournalNote), which blocks() below writes out. The three
+-- list markers are taken out first: they would otherwise be swept into the
+-- masthead's own divs, and the lists a journal paper asked for would never
+-- appear.
+local function journal(meta, front)
+  local kept, lists = layout.take_list_markers(front)
+  local head, narrow, notes, tail = layout.split_journal(kept)
+  local out = List:new {}
+  local masthead = latex_journal_metadata(meta)
+  if masthead then out:extend({ masthead }) end
+  out:extend({ pandoc.Div(head, pandoc.Attr("", { "JournalWide" })) })
+  if #narrow > 0 then
+    out:extend({ pandoc.Div(layout.box_impact(narrow,
+      raw("\\begin{apajouimpact}"), raw("\\end{apajouimpact}")),
+      pandoc.Attr("", { "JournalNarrow" })) })
+  end
+  if #notes > 0 then
+    -- The orcid lines are set off from the prose of the note, and the icon
+    -- sized to the note's text.
+    out:extend({ pandoc.Div(
+      layout.set_off_orcid(layout.fit_orcid(notes),
+        raw("\\begin{apajouorcid}"), raw("\\end{apajouorcid}")),
+      pandoc.Attr("", { "JournalNote" })) })
+  end
+  out:extend(tail)
+  out:extend(lists)
+  return out
+end
+
+-- The document's blocks with the front matter frontmatter.lua handed over
+-- laid out for the mode: sorted into the parts of a journal article, or
+-- otherwise put back where it stood.
+local function lay_out_front(doc)
+  local out = pandoc.List({})
+  for _, block in ipairs(doc.blocks) do
+    if block.t == "Div" and block.classes:includes(layout.kFrontMatterClass) then
+      if mode == "jou" then
+        out:extend(journal(doc.meta, List:new(block.content)))
+      else
+        out:extend(block.content)
+      end
+    else
+      out:insert(block)
+    end
+  end
+  return out
+end
+
 local function blocks(doc)
   local out = pandoc.List({})
 
-  -- The front matter of a published article, which frontmatter.lua has
-  -- already sorted into the masthead, the title and byline, the abstract and
-  -- what follows it, and the author note.
+  doc.blocks = lay_out_front(doc)
+
+  -- The front matter of a published article, which lay_out_front has
+  -- sorted into the masthead, the title and byline, the abstract and what
+  -- follows it, and the author note.
   --
   -- The first three span the page, which in two columns only the optional
   -- argument of \twocolumn can do, and \twocolumn has to be the first thing

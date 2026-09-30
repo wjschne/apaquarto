@@ -1,5 +1,5 @@
 ---
-# The whole of a journal article's front matter in typst.
+# The whole of a journal article's front matter, in typst and in the .pdf.
 #
 # Should: set the journal's masthead (logo, name, rule, copyright, issn,
 # issue, doi), the title and byline, and the abstract, impact statement and
@@ -40,6 +40,7 @@ list-of-figures: true
 list-of-tables: true
 format:
   apaquarto-typst: default
+  apaquarto-pdf: default
 ---
 
 # Method

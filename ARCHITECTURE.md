@@ -113,7 +113,7 @@ and still return early; the formats column says where it does real work.
 | `apaheader.lua` | all | Periods after level-4/5 headings; in docx marks them `apa-runin` for `docxcontents` to write |
 | `apastriptitle.lua` | all | Copies title/author/date/abstract to `apa*` keys and builds `apaauthordisplay`; in docx clears the originals |
 | `wordcount.lua` | all | `meta.wordn` for the title page |
-| `frontmatter.lua` | all | Title page, byline, author note, abstract, impact statement, keywords and list markers, as classed blocks for every format, one function per part. Lays out latex journal mode; for typst wraps the front matter in `Div.apa-frontmatter` for `formattypst` to lay out |
+| `frontmatter.lua` | all | Title page, byline, author note, abstract, impact statement, keywords and list markers, as classed blocks for every format, one function per part. For latex and typst wraps the front matter in `Div.apa-frontmatter` for the writer to lay out |
 | `apaquote.lua` | docx | `NextBlockText` for the paragraphs after the first in a block quote |
 | `apafigtblappendix.lua` | html, docx, typst | `@fig-`/`@tbl-`/`@ill-` become "Figure A1" links, from `meta["apa-float-labels"]`, which it then removes |
 
@@ -146,7 +146,7 @@ and still return early; the formats column says where it does real work.
 | `citeprocr.lua` | all | Runs citeproc itself (the yml sets `citeproc: false`), meta-analysis asterisks, masked references |
 | `apaandcite.lua` | all | "&" to "and" in narrative citations, possessives, strips meta-analysis asterisks |
 | `crossreflink.lua` | latex | The whole "Figure 1" is the link |
-| `formatlatex.lua` | latex | The LaTeX writer: wraps the class vocabulary in `apalatex.tex` commands |
+| `formatlatex.lua` | latex | The LaTeX writer: lays out the front matter by mode (the journal masthead and its parts, from `frontmatterlayout`), then wraps the class vocabulary in `apalatex.tex` commands |
 | `apapdfstandard.lua` | latex | Warns when a PDF standard needs tagging and flextable is in use |
 | `thesisfrontmatter.lua` | thesis | Dissertation front matter for every format; last so nothing downstream rewrites it |
 | `htmlcontents.lua` | html | Fills the `list-of-contents` marker |
@@ -183,7 +183,7 @@ filter across a stage boundary, breaks a consumer that may be far away.
 | `meta.description` (running head) | `frontmatter` | `docxreferencedoc` |
 | `jou-running-authors` | `frontmatter` | `typst-show.typ`, `formatlatex` |
 | `.list-of-contents`, `.list-of-figures`, `.list-of-tables` Divs | `frontmatter` | `htmlcontents`, `docxcontents`, `formatlatex`, `typstfrontmatter` |
-| `Div.apa-frontmatter` (typst) | `frontmatter` | `typstfrontmatter`, which lays it out and removes it |
+| `Div.apa-frontmatter` (latex, typst) | `frontmatter` | `formatlatex` and `typstfrontmatter`, which lay it out and remove it |
 | `FigureNote`, `NoIndent` | `utilsapa.make_note` (via `apanote`, `floatwithsubfigure`, `floatlatex`, `formattypst`) | `formatlatex`, css, reference doc, `docxlayout`, `apatwocolumntypst` |
 | `FigureTitle`, `Caption` | `apacaption` | `docxlayout`, `docxcontents`, css, reference doc |
 | `FigureWithNote`, `FigureWithoutNote` | `apafloat` | `apaafternote`, `docxlayout` |
@@ -194,8 +194,9 @@ The class vocabulary each writer understands:
 
 - **latex** (`formatlatex`): Header `.title` (ids `title`, `firstheader`),
   Header `.AuthorNote`, Div `.Author`, `.AbstractFirstParagraph`,
-  `.JournalMasthead`, `.JournalWide`, `.JournalNarrow`, `.JournalNote`,
-  `.list-of-*`, `.FigureNote`.
+  `.list-of-*`, `.FigureNote`, and `Div.apa-frontmatter`, which it sorts
+  itself into `.JournalMasthead`, `.JournalWide`, `.JournalNarrow` and
+  `.JournalNote` in journal mode.
 - **typst** (`formattypst`): Div `.Author`, `.NoIndent`, `#refs`, float
   attributes `apa-note` and `layout-*`, `meta["apa-table-notes"]`.
 - **docx**: `custom-style` values set by the producers themselves
@@ -280,10 +281,7 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    filter point, and writes a "Figure 1" of its own even for a float whose
    caption has been emptied. It breaks if Quarto changes how it renders a
    caption.
-2. **The latex journal layout** is still assembled in `frontmatter.lua`
-   (from `frontmatterlayout`), where typst's is in its writer. Moving it into
-   `formatlatex.lua` would give every format the same shape.
-3. **The reference doc is patched in place, twice.** This is deliberate:
+2. **The reference doc is patched in place, twice.** This is deliberate:
    Pandoc reads `PANDOC_WRITER_OPTIONS.reference_doc` after the filters run,
    so there is nowhere else to put fonts, page size, line numbers and link
    colours. The original values are kept in `apaquarto-original-*` comments
@@ -292,11 +290,11 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    is that `docxreferencedoc` and `docxlinkcolor` each unzip and rewrite the
    file separately (and `docxcontents` reads it a third time), and two renders
    at once can race on it.
-4. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
+3. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
    each have their own author, title, abstract, page-break and contents code,
    and in thesis mode `frontmatter.lua` builds a title page only for it to be
    discarded.
-5. **The citation `hash` side channel** uses an undocumented Pandoc field.
+4. **The citation `hash` side channel** uses an undocumented Pandoc field.
 
 ## Testing
 

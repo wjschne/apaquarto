@@ -17,6 +17,11 @@
 #     Rscript tests/run-tests.R --filter typst   jobs whose id matches
 #     Rscript tests/run-tests.R --update-snapshots
 #     Rscript tests/run-tests.R --no-snapshots   content checks only
+#     Rscript tests/run-tests.R --jobs 1         one render at a time
+#
+# Fixtures are rendered several at a time, each by a worker copy of this
+# script; --jobs says how many (by default one fewer than the machine has
+# cores, and no more than four).
 #
 # Exits 1 if any check fails, which is what continuous integration reads.
 
@@ -29,6 +34,22 @@ suppressWarnings(suppressMessages({
 args <- commandArgs(trailingOnly = TRUE)
 opt_update <- "--update-snapshots" %in% args
 opt_nosnap <- "--no-snapshots" %in% args
+value_of <- function(flag) {
+  at <- match(flag, args)
+  if (!is.na(at) && length(args) > at) args[at + 1] else NULL
+}
+# A worker is this same script, started by the main one with --worker and the
+# directory the two share; it runs fixtures and reports on each, and leaves
+# the rest -- the extension copy, the progress, the summary -- to the main one.
+opt_worker <- value_of("--worker")
+opt_worker_id <- value_of("--worker-id")
+opt_jobs <- local({
+  asked <- suppressWarnings(as.integer(value_of("--jobs")))
+  if (!is.na(asked) && length(asked) == 1) return(max(1L, asked))
+  cores <- suppressWarnings(parallel::detectCores())
+  if (is.na(cores)) cores <- 2L
+  as.integer(min(4, max(1, cores - 1)))
+})
 filter_at <- match("--filter", args)
 opt_filter <- if (!is.na(filter_at) && length(args) > filter_at) {
   args[filter_at + 1]
@@ -60,7 +81,17 @@ bold <- function(x) x
 pass_mark <- "PASS"
 fail_mark <- "FAIL"
 
-say <- function(...) cat(..., "\n", sep = "")
+# In a worker, what would be printed is kept instead, and handed to the main
+# process with the job's result, which prints it.
+say_buffer <- NULL
+say <- function(...) {
+  line <- paste(unlist(list(...)), collapse = "")
+  if (!is.null(say_buffer)) {
+    say_buffer <<- c(say_buffer, line)
+  } else {
+    cat(line, "\n", sep = "")
+  }
+}
 
 # The extensions the fixtures render against are a copy, kept out of git. A
 # stale copy makes every result describe filters that are no longer being
@@ -310,9 +341,10 @@ check_reference_doc <- function() {
   invisible()
 }
 
-check_reference_doc()
-
-sync_extensions()
+if (is.null(opt_worker)) {
+  check_reference_doc()
+  sync_extensions()
+}
 # Quarto is given a fixture by name and resolves its images and bibliography
 # beside it, so the renders are run from the tests directory whatever directory
 # the script was called from.
@@ -338,12 +370,51 @@ note_failure <- function(id, message) {
   say("  ", fail_mark, " ", message)
 }
 
-for (job in jobs) {
+# ----------------------------------------------------------------- progress --
+# How far the run has got, printed after every job: a bar, the jobs done out
+# of all of them, how many passed and failed, and a guess at the time left
+# from the average so far. Written as a line of its own rather than redrawn
+# in place, so that it reads the same in a log as in a terminal.
+total_jobs <- length(jobs)
+done_jobs <- 0
+passed_jobs <- 0
+failed_jobs <- 0
+known_jobs <- 0
+run_started <- Sys.time()
+
+duration <- function(seconds) {
+  seconds <- round(seconds)
+  if (seconds < 60) return(paste0(seconds, " s"))
+  paste0(seconds %/% 60, " min ", seconds %% 60, " s")
+}
+
+progress <- function(id) {
+  done_jobs <<- done_jobs + 1
+  if (any(startsWith(failures, paste0(id, ":")))) {
+    failed_jobs <<- failed_jobs + 1
+  } else if (any(startsWith(known, paste0(id, ":")))) {
+    known_jobs <<- known_jobs + 1
+  } else {
+    passed_jobs <<- passed_jobs + 1
+  }
+  width <- 30
+  filled <- round(width * done_jobs / total_jobs)
+  elapsed <- as.numeric(difftime(Sys.time(), run_started, units = "secs"))
+  left <- elapsed / done_jobs * (total_jobs - done_jobs)
+  say("  [", strrep("#", filled), strrep("-", width - filled), "] ",
+      done_jobs, "/", total_jobs, " done: ", passed_jobs, " passed, ",
+      failed_jobs, " failed",
+      if (known_jobs > 0) paste0(", ", known_jobs, " known") else "",
+      if (done_jobs < total_jobs) paste0(", about ", duration(left), " left")
+      else paste0(", in ", duration(elapsed)))
+}
+
+# One job: the render and every check on what it made. Its failures go
+# through note_failure, and what it has to say through say.
+run_job <- function(job) {
   id <- job_id(job)
   stem <- tools::file_path_sans_ext(job$fixture)
-  current_known <- job$known_failure
-  say("")
-  say(bold(id))
+  current_known <<- job$known_failure
   if (!is.null(current_known)) say("  known failure: ", current_known)
 
   # Anything a previous run left behind, so that a render that quietly produces
@@ -362,32 +433,46 @@ for (job in jobs) {
     note_failure(id, paste0("could not clear ", paste(names(stuck), collapse = ", "),
                             " left by an earlier render; another process is ",
                             "holding it open"))
-    next
+    return(invisible())
   }
 
-  rendered <- system2(
-    quarto_bin(),
-    # Not quoted: system2 passes each element as one argument, and a shell
-    # quote of its own is taken literally by cmd.exe on windows.
-    c("render", job$fixture, "--to", job$to,
-      "-M", "keep-tex:true", "-M", "keep-typ:true"),
-    stdout = TRUE, stderr = TRUE
-  )
+  render <- function() {
+    system2(
+      quarto_bin(),
+      # Not quoted: system2 passes each element as one argument, and a shell
+      # quote of its own is taken literally by cmd.exe on windows.
+      c("render", job$fixture, "--to", job$to,
+        "-M", "keep-tex:true", "-M", "keep-typ:true"),
+      stdout = TRUE, stderr = TRUE
+    )
+  }
+  rendered <- render()
   status <- attr(rendered, "status")
+  # A sync client such as Dropbox holds a file for a moment after it changes,
+  # and quarto, clearing out a folder it made, stops at the first file it
+  # cannot remove: "The process cannot access the file because it is being
+  # used by another process (os error 32)". Nothing in the document is wrong,
+  # so the render is given one more go.
+  if (!is.null(status) && status != 0 &&
+      any(grepl("os error 32", rendered, fixed = TRUE))) {
+    Sys.sleep(3)
+    rendered <- render()
+    status <- attr(rendered, "status")
+  }
   log_file <- file.path(results_dir, paste0(id, ".log"))
   writeLines(rendered, log_file)
 
   if (!is.null(status) && status != 0) {
     note_failure(id, paste0("render failed (exit ", status, "); see ",
                             basename(log_file)))
-    next
+    return(invisible())
   }
 
   produced <- artifacts_of(stem)
   produced <- produced[file.exists(produced)]
   if (length(produced) == 0) {
     note_failure(id, "render produced no output")
-    next
+    return(invisible())
   }
   say("  rendered: ", paste(names(produced), collapse = ", "))
 
@@ -477,12 +562,136 @@ for (job in jobs) {
   if (!job_failed) {
     say("  ", pass_mark)
     if (!is.null(current_known)) {
-      current_known <- NULL
+      current_known <<- NULL
       note_failure(id, paste0("marked known_failure but every check passed; ",
                               "take the flag off"))
     }
   }
 }
+
+# The fixtures in the groups the workers take one at a time. A fixture's jobs
+# stay together and run in order, since they write the same files -- a typst
+# render and a .pdf render both leave a .pdf -- and so do fixtures that embed
+# the same document, since quarto renders that document for each of them.
+job_groups <- function(jobs) {
+  groups <- list()
+  for (i in seq_along(jobs)) {
+    fixture <- jobs[[i]]$fixture
+    key <- tools::file_path_sans_ext(fixture)
+    text <- tryCatch(readLines(file.path(tests_dir, fixture), warn = FALSE),
+                     error = function(e) character())
+    embed <- regmatches(text, regexpr("\\{\\{<\\s*embed\\s+[^#\\s>]+", text,
+                                      perl = TRUE))
+    if (length(embed) > 0) {
+      key <- paste0("embed-", tools::file_path_sans_ext(basename(
+        sub("^\\{\\{<\\s*embed\\s+", "", embed[1], perl = TRUE))))
+    }
+    groups[[key]] <- c(groups[[key]], i)
+  }
+  groups
+}
+
+# ------------------------------------------------------------------ workers --
+# A worker takes the next group no other worker has claimed -- a claim is a
+# directory, which only one process can create -- runs its jobs, and leaves the
+# result of each in done/ for the main process to pick up.
+run_worker <- function(dir) {
+  exit_file <- file.path(dir, paste0("exit-", opt_worker_id))
+  on.exit(writeLines("done", exit_file), add = TRUE)
+  groups <- job_groups(jobs)
+  for (key in names(groups)) {
+    if (!dir.create(file.path(dir, "claims", key), showWarnings = FALSE)) next
+    for (i in groups[[key]]) {
+      say_buffer <<- character(0)
+      failures <<- character(0)
+      known <<- character(0)
+      tryCatch(run_job(jobs[[i]]), error = function(e) {
+        note_failure(job_id(jobs[[i]]),
+                     paste0("the runner stopped: ", conditionMessage(e)))
+      })
+      result <- list(index = i, id = job_id(jobs[[i]]), lines = say_buffer,
+                     failures = failures, known = known)
+      tmp <- file.path(dir, "done", paste0(i, ".tmp"))
+      saveRDS(result, tmp)
+      file.rename(tmp, file.path(dir, "done", paste0(i, ".rds")))
+    }
+  }
+}
+
+if (!is.null(opt_worker)) {
+  run_worker(opt_worker)
+  quit(status = 0)
+}
+
+say(total_jobs, " jobs to run", if (opt_jobs > 1) paste0(", ", opt_jobs,
+    " at a time") else "")
+
+previous_id <- NULL
+if (opt_jobs <= 1) {
+  for (job in jobs) {
+    # The last job's line of progress, now that nothing more can go wrong in
+    # it. It is written here rather than after run_job because a job can stop
+    # partway.
+    if (!is.null(previous_id)) progress(previous_id)
+    id <- job_id(job)
+    previous_id <- id
+    say("")
+    say("[", done_jobs + 1, "/", total_jobs, "] ", bold(id))
+    run_job(job)
+  }
+} else {
+  # The workers, each a copy of this script given the directory they share.
+  # Their own output goes to a log each, which is where to look when one stops.
+  work_dir <- file.path(results_dir, "_workers")
+  unlink(work_dir, recursive = TRUE)
+  dir.create(file.path(work_dir, "claims"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(file.path(work_dir, "done"), recursive = TRUE, showWarnings = FALSE)
+  rscript <- file.path(R.home("bin"),
+                       if (.Platform$OS.type == "windows") "Rscript.exe" else "Rscript")
+  if (.Platform$OS.type == "windows") rscript <- utils::shortPathName(rscript)
+  passed_on <- args
+  jobs_at <- match("--jobs", passed_on)
+  if (!is.na(jobs_at)) passed_on <- passed_on[-c(jobs_at, jobs_at + 1)]
+  workers <- min(opt_jobs, length(job_groups(jobs)))
+  for (k in seq_len(workers)) {
+    log <- file.path(work_dir, paste0("worker-", k, ".log"))
+    system2(rscript, c(script_path, passed_on, "--worker", work_dir,
+                       "--worker-id", k),
+            wait = FALSE, stdout = log, stderr = log)
+  }
+
+  # Each job's report as it arrives, in the order the jobs finish.
+  seen <- rep(FALSE, total_jobs)
+  repeat {
+    for (file in list.files(file.path(work_dir, "done"), "[.]rds$",
+                            full.names = TRUE)) {
+      result <- readRDS(file)
+      if (seen[result$index]) next
+      seen[result$index] <- TRUE
+      say("")
+      say("[", done_jobs + 1, "/", total_jobs, "] ", bold(result$id))
+      for (line in result$lines) say(line)
+      failures <- c(failures, result$failures)
+      known <- c(known, result$known)
+      progress(result$id)
+    }
+    if (all(seen)) break
+    exits <- list.files(work_dir, "^exit-")
+    if (length(exits) >= workers && !any(file.exists(
+        file.path(work_dir, "done", paste0(which(!seen), ".rds"))))) {
+      # Every worker has stopped and some jobs never reported: a worker died.
+      for (i in which(!seen)) {
+        failures <- c(failures, paste0(job_id(jobs[[i]]),
+          ": no result; see the worker logs in ", work_dir))
+      }
+      break
+    }
+    Sys.sleep(1)
+  }
+  previous_id <- NULL
+}
+
+if (!is.null(previous_id)) progress(previous_id)
 
 say("")
 if (length(known) > 0) {

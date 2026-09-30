@@ -1864,6 +1864,17 @@
         - '#outline(title: [List of Figures]'
         - '#outline(title: [List of Tables]'
 
+- fixture: typst-jou-frontmatter.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      order:
+        - '\apamastheadhead{'
+        - 'A Journal Article'
+        - '\begin{apajouimpact}'
+        - '\begin{apajounote}'
+        - '\begin{apajouorcid}'
+
 - fixture: typst-doc-frontmatter.qmd
   to: apaquarto-typst
   expect:
