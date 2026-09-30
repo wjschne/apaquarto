@@ -74,9 +74,7 @@ end
 -- the caption looking as it did when pandoc was writing it.
 local kCaptionStyle = "ImageCaption"
 
-local function xml_escape(text)
-  return (text:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
-end
+local xml_escape = require("utilsapa").xml_escape
 
 -- Inlines as word runs. Only the marking a caption is likely to carry is
 -- understood; anything else is written as its text, which is what pandoc's own

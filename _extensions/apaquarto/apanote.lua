@@ -5,10 +5,12 @@ local utilsapa = require("utilsapa")
 -- Default word for note
 local beginapanote = "Note"
 -- Replace note word, if specified
+-- The notes of markdown tables as they were written, by identifier
+local tablenotes = {}
+
 local function getnote(m)
-  if m.language and m.language["figure-table-note"] then
-    beginapanote = pandoc.utils.stringify(m.language["figure-table-note"])
-  end
+  beginapanote = utilsapa.lang(m, "figure-table-note", beginapanote)
+  tablenotes = utilsapa.table_notes(m)
 end
 
 -- Set on a float once its note has been written, so that a second run of this
@@ -130,7 +132,8 @@ local function apanote(elem)
     if hasnote then
       -- Make note
       local prefix = pandoc.Para({ pandoc.Emph(pandoc.Str(beginapanote)), pandoc.Str("."), pandoc.Space() })
-      local apanotedivs = utilsapa.make_note(elem.attributes["apa-note"], prefix)
+      local note = tablenotes[elem.identifier] or elem.attributes["apa-note"]
+      local apanotedivs = utilsapa.make_note(note, prefix)
       elem.attributes[kWritten] = mark()
       local at = note_position(elem)
       if at then

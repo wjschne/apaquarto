@@ -26,16 +26,8 @@ end
 
 local utilsapa = require("utilsapa")
 
--- Which field a link's target asks for. The same reading latex makes:
--- anything with a scheme leaves the document, a citation points at the
--- bibliography quarto writes, another anchor is a cross reference or a link
--- to a heading, and what is left is a path to a file.
-local function field_for(target)
-  if target:match("^#ref%-") then return "citecolor" end
-  if target:match("^#") then return "linkcolor" end
-  if target:match("^%a[%w+.-]*:") then return "urlcolor" end
-  return "filecolor"
-end
+-- Which field a link's target asks for, read the way latex reads it
+local field_for = utilsapa.link_field
 
 local styles = {
   linkcolor = "ApaLinkColor",

@@ -1,127 +1,74 @@
+-- Makes a citation of a float, @fig-x, @tbl-x or one of the document's own
+-- kinds such as @ill-x, into a link reading "Figure A1", with the appendix
+-- letter a float in an appendix carries.
+--
+-- The numbers are the ones crossrefprefix.lua worked out and left in
+-- meta["apa-float-labels"], which is read here and then taken out of the
+-- metadata. References to appendices are apaciteappendix.lua's. Latex writes
+-- its own references from the labels floatlatex.lua sets, so it is left alone.
+
 if FORMAT == "latex" then
   return
 end
 
-local i = 1
-local tbl = {}
-local fig = {}
-local app = {}
+local utilsapa = require("utilsapa")
+
 local kAriaExpanded = "aria-expanded"
--- Get names for Figure and Table in language specified in lang field
-local figureword = "Figure"
-local tableword = "Table"
-local appendixword = "Appendix"
+local kLabels = "apa-float-labels"
 local refhyperlinks = true
-local appendixcount = 0
+-- The number a reader sees, by identifier
+local labels = {}
+-- The word for each kind of float, by the prefix of its identifier
+local words = { fig = "Figure", tbl = "Table" }
 
-local function gettablefig(m)
-  -- Get names for Figure and Table specified in language field
-  if m.language then
-    if m.language["crossref-fig-title"] then
-      figureword = pandoc.utils.stringify(m.language["crossref-fig-title"])
+local function read_meta(m)
+  words.fig = utilsapa.lang(m, "crossref-fig-title", words.fig)
+  words.tbl = utilsapa.lang(m, "crossref-tbl-title", words.tbl)
+  if m.crossref and m.crossref.custom then
+    for _, entry in ipairs(m.crossref.custom) do
+      if entry.key and entry["reference-prefix"] then
+        words[utilsapa.stringify(entry.key)] =
+          utilsapa.stringify(entry["reference-prefix"])
+      end
     end
-
-    if m.language["crossref-tbl-title"] then
-      tableword = pandoc.utils.stringify(m.language["crossref-tbl-title"])
-    end
-
-    if m.language and m.language["crossref-apx-prefix"] then
-      appendixword = pandoc.utils.stringify(m.language["crossref-apx-prefix"])
-    end
-  else
-
   end
 
   if m["ref-hyperlink"] == false then
     refhyperlinks = false
   end
 
-  -- Create arrays with figure and table information
-  while quarto._quarto.ast.custom_node_data[tostring(i)] do
-    local float = quarto._quarto.ast.custom_node_data[tostring(i)]
-    --Is the float a table?
-    if float.identifier and string.find(float.identifier, "^tbl%-") then
-      -- is the table already in the array?
-      if tbl[float.identifier] then
-        -- Table is already in the array. Do not add.
-      else
-        --Add table to array
-        tbl[float.identifier] = float.attributes.prefix .. float.attributes.tblnum
-      end
+  if m[kLabels] then
+    for id, label in pairs(m[kLabels]) do
+      labels[id] = utilsapa.stringify(label)
     end
-    --Is the float a figure?
-    if float.identifier and string.find(float.identifier, "^fig%-") then
-      -- is the figure already in the array?
-      if fig[float.identifier] then
-        -- Figure is already in the array. Do not add.
-      else
-        --Add figure to array (only if prefix and fignum exist)
-        if float.attributes.prefix and float.attributes.fignum then
-          fig[float.identifier] = float.attributes.prefix .. float.attributes.fignum
-        end
-      end
-    end
-    i = i + 1
+    m[kLabels] = nil
   end
+  return m
 end
-
-local function getappendix(h)
-  if h.attr.attributes.appendixtitle then
-    app[h.identifier] = h.attr.attributes.appendixtitle
-    appendixcount = appendixcount + 1
-  end
-end
-
 
 local function figtblconvert(ct)
-  local floatreftext
-  --Is the citation a reference to a table?
-  if #ct.citations == 1 and string.find(ct.citations[1].id, "^tbl%-") then
-    if tbl[ct.citations[1].id] then
-      -- Text for table reference
-      floatreftext = pandoc.Inlines({ pandoc.Str(tableword), pandoc.Str('\u{a0}'), pandoc.Str(tbl[ct.citations[1].id]) })
-    end
-  end
-  --Is the citation a reference to a figure?
-  if #ct.citations == 1 and string.find(ct.citations[1].id, "^fig%-") then
-    -- Text for figure reference
-    if fig[ct.citations[1].id] then
-      floatreftext = pandoc.Inlines({ pandoc.Str(figureword), pandoc.Str('\u{a0}'), pandoc.Str(fig[ct.citations[1].id]) })
-    end
+  if #ct.citations ~= 1 then return nil end
+  local id = ct.citations[1].id
+  local kind = id:match("^(%a+)%-")
+  if not (kind and words[kind]) then return nil end
+
+  if not labels[id] then
+    quarto.log.warning("Cannot find @" .. id)
+    return nil
   end
 
-  --Is the citation a reference to a section?
-  if #ct.citations == 1 and string.find(ct.citations[1].id, "^sec%-") and app[ct.citations[1].id] then
-    -- Text for section reference
-    if appendixcount == 1 then
-      floatreftext = pandoc.Inlines({ pandoc.Str(appendixword) })
-    else
-      floatreftext = pandoc.Inlines({ pandoc.Str(appendixword), pandoc.Str('\u{a0}'), pandoc.Str(app[ct.citations[1].id]) })
-    end
+  local floatreftext = pandoc.Inlines({ pandoc.Str(words[kind]), pandoc.Str('\u{a0}'), pandoc.Str(labels[id]) })
+  if refhyperlinks then
+    local reflink = pandoc.Link(floatreftext, "#" .. id)
+    reflink.classes = { "quarto-xref" }
+    reflink.attributes[kAriaExpanded] = "false"
+    return reflink
   end
-
-
-  --Is the citation a reference to a table or figure?
-  if #ct.citations == 1 and (string.find(ct.citations[1].id, "^fig%-") or string.find(ct.citations[1].id, "^tbl%-") or string.find(ct.citations[1].id, "^sec%-")) then
-    if floatreftext == nil then
-      quarto.log.warning("Cannot find @" .. ct.citations[1].id)
-      return floatreftext
-    end
-    if refhyperlinks then
-      -- create link
-      local reflink = pandoc.Link(floatreftext, "#" .. ct.citations[1].id)
-      reflink.classes = { "quarto-xref" }
-      reflink.attributes[kAriaExpanded] = "false"
-      return reflink
-    else
-      return floatreftext
-    end
-  end
+  return floatreftext
 end
 
 
 return {
-  { Meta = gettablefig },
-  { Header = getappendix },
+  { Meta = read_meta },
   { Cite = figtblconvert }
 }

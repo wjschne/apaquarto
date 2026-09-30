@@ -102,12 +102,7 @@ local function contents_colour(meta)
   return utilsapa.colour_hex(meta and meta.toccolor) or "000000"
 end
 
-local function language(meta, key, fallback)
-  if meta.language and meta.language[key] then
-    return stringify(meta.language[key])
-  end
-  return fallback
-end
+local language = utilsapa.lang
 
 -- A field of the thesis block, as inlines, or nil when it was not written.
 local function field(thesis, key)
@@ -913,9 +908,7 @@ end
 -- Written as word markup so that the spacing is exact and the pages still
 -- read as ordinary paragraphs a writer can edit in word.
 
-local function xml_escape(s)
-  return (s:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
-end
+local xml_escape = utilsapa.xml_escape
 
 local function docx_runs(inlines, bold, italic, colour)
   local out = {}
@@ -1184,14 +1177,7 @@ local renderers = {
 -- A page break, in whatever this format calls one. .html has no pages and
 -- gets nothing.
 local function page_break()
-  if FORMAT == "latex" then return raw("latex", "\\clearpage") end
-  if FORMAT:match("typst") then
-    return raw("typst", "#pagebreak(weak: true)")
-  end
-  if FORMAT == "docx" then
-    return raw("openxml", '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
-  end
-  return nil
+  return utilsapa.page_break(true)
 end
 
 -- The body of a dissertation: its level-one headings in capitals, and over
@@ -1243,7 +1229,7 @@ local function decorate_body(meta, blocks)
 end
 
 local function is_thesis(meta)
-  return meta.documentmode ~= nil and stringify(meta.documentmode) == "thesis"
+  return utilsapa.mode(meta) == "thesis"
 end
 
 -- The margins the handbook asks for. Quarto's pdf format sets 1" all round

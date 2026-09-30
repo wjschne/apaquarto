@@ -1,0 +1,37 @@
+---
+# An Illustration in an appendix, and one in the body with floatsintext off.
+#
+# Should: number the appendix illustration A1 in its caption and in the
+# reference to it, as a figure there would be, and move the body
+# illustration to the end with the figures.
+#
+# Used to: number it 2, Quarto's count across the whole document, because
+# crossrefprefix.lua gave appendix letters to figures and tables only; and
+# leave the body illustration where it stood.
+title: "An Illustration in an Appendix"
+shorttitle: "Appendix Illustration"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+floatsintext: false
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+# Body
+
+See @ill-body and @ill-apx.
+
+![Zqbodyill.](sampleimage.png){#ill-body}
+
+Zqlastparagraph.
+
+# Appendix Title {#apx-one}
+
+![Zqapxill.](sampleimage.png){#ill-apx}

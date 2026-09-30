@@ -28,11 +28,7 @@ local stringify = utilsapa.stringify
 -- the chapter itself.
 M.max_depth = 4
 
-function M.upper(inlines)
-  return pandoc.Inlines(inlines):walk {
-    Str = function(s) return pandoc.Str(pandoc.text.upper(s.text)) end
-  }
-end
+M.upper = utilsapa.upper
 
 -- An appendix is a level-one heading that crossrefprefix.lua has marked, by
 -- the apx identifier a writer gives it or by the title it wrote onto it.

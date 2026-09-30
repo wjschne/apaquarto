@@ -1,4 +1,5 @@
 -- Get names for Figure and Table in language specified in lang field
+local utilsapa = require("utilsapa")
 local figureword = "Figure"
 local tableword = "Table"
 local labelnum = ""
@@ -21,15 +22,8 @@ end
 
 local function gettablefig(m)
   -- Get names for Figure and Table specified in language field
-  if m.language then
-    if m.language["crossref-fig-title"] then
-      figureword = pandoc.utils.stringify(m.language["crossref-fig-title"])
-    end
-
-    if m.language["crossref-tbl-title"] then
-      tableword = pandoc.utils.stringify(m.language["crossref-tbl-title"])
-    end
-  end
+  figureword = utilsapa.lang(m, "crossref-fig-title", figureword)
+  tableword = utilsapa.lang(m, "crossref-tbl-title", tableword)
   floatwords = { [figureword] = true, [tableword] = true }
 
   if m.crossref and m.crossref.custom then
@@ -107,6 +101,10 @@ local divcaption = function(div)
       end
       if div.attributes.tblnum then
         labelnum = div.attributes.prefix .. string.match(div.attributes.tblnum, "%d+")
+      end
+      -- A float of the document's own kind, such as an Illustration
+      if div.attributes.floatnum then
+        labelnum = div.attributes.prefix .. string.match(div.attributes.floatnum, "%d+")
       end
     end
 

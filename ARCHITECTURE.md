@@ -13,7 +13,7 @@ ordinary Quarto output, reshaped by filters.
 
 ```
 .qmd ─► knitr/jupyter ─► Pandoc parse
-         ─► [pre-ast]      12 filters   raw markdown AST; floats are plain Div/Table/Figure
+         ─► [pre-ast]      11 filters   raw markdown AST; floats are plain Div/Table/Figure
          ─► Quarto normalize            floats become FloatRefTarget custom nodes
          ─► [post-ast]      1 filter
          ─► [pre-quarto]    6 filters   title page is built here (frontmatter.lua)
@@ -56,6 +56,26 @@ anything else here:
 | `_extensions/apanote/` | A second extension that only names `apaextractfigure`, `embednote` and `apanote` from its sibling, so a non-apaquarto document can have figure notes |
 | `tests/` | Fixtures, `expectations.yml` and snapshots; see `tests/README.md` |
 
+## Shared helpers
+
+`utilsapa.lua` holds what more than one filter needs. Use these rather than
+writing another copy:
+
+| Helper | What it gives |
+|---|---|
+| `lang(meta, key, fallback)` | A word from `meta.language`; always pass the English fallback, since the `apanote` extension runs without `apalanguage.lua` |
+| `mode(meta)` | `documentmode` as its short code, `man` when unset |
+| `flag(meta, key)` | A yes/no field: off when absent or `false`, on otherwise |
+| `attr_true(el, name)` | Whether an element's attribute says true, however it was written |
+| `page_break(weak)` | A raw page break for docx, latex or typst; nil for html |
+| `float_prefixes(meta)`, `is_float(id, prefixes)` | Every float kind, `fig`, `tbl` and the document's own such as `ill` |
+| `table_notes(meta)` | The markdown notes of markdown tables, by identifier |
+| `make_note(text, prefix)`, `note_inlines(text)` | A note's blocks and inlines from its markdown |
+| `link_fields`, `link_field(target)` | The four link colour fields, and which one a link asks for |
+| `contents_headings(blocks, depth)` | The headings a table of contents lists |
+| `colour_hex(value)`, `toc_depth(meta, fallback)` | A colour as six hex digits; the contents depth |
+| `xml_escape`, `trim`, `upper`, `stringify` | Small string and inline helpers |
+
 ## Filters in run order
 
 `all` means html, docx, latex and typst. A filter can be listed for all formats
@@ -69,13 +89,12 @@ and still return early; the formats column says where it does real work.
 | `apalanguage.lua` | all | Fills `meta.language.*` from the document's `language:` or top-level key, then `crossref.*`, then Quarto's translation for `lang`, then its own English defaults. It holds the only list of those defaults; `_extension.yml` deliberately has no `language:` block, so no apaquarto default can override a Quarto translation |
 | `abstractsection.lua` | all | Moves an `# Abstract` / `# Impact Statement` section into `meta.abstract` / `meta["impact-statement"]` |
 | `introductionheading.lua` | all | Removes a leading level-1 "Introduction" heading (not in thesis mode) |
-| `apatablenote.lua` | all (typst reads it) | Keeps a markdown table's `apa-note` as markdown in `meta["apa-table-notes"]` before Quarto flattens the caption |
-| `markdowntable.lua` | all | Parses a markdown table caption's `{#tbl-x ...}` into id, classes and attributes |
-| `crossrefprefix.lua` | all | Finds appendices, letters them, numbers figures and tables per appendix; writes `prefix`, `fignum`, `tblnum`, `hassubfigs`, `appendixtitle`; inserts an "Appendix X" heading |
+| `markdowntable.lua` | all | Parses a markdown table caption's `{#tbl-x ...}` into id, classes and attributes, and keeps its `apa-note` as written in `meta["apa-table-notes"]`, before Quarto flattens the caption |
+| `crossrefprefix.lua` | all | The one appendix detector. Letters appendices and numbers figures, tables and custom floats (`ill-`) per appendix; writes `prefix`, `fignum`/`tblnum`/`floatnum`, `hassubfigs`, `appendixtitle`; inserts an "Appendix X" heading with class `apa-appendix`; publishes `apa-appendix-count` and `apa-float-labels`; calls a lone appendix "Appendix" |
 | `apafloatstoend.lua` | all | With `floatsintext: false`, moves floats before the first appendix; page breaks before appendices |
 | `apatwocolumntypstcollect.lua` | typst jou | Puts `// apaquarto-wide-float:<id>` before a block marked `apa-twocolumn` |
 | `apapapersize.lua` | latex | Reduces `papersize` to the name LaTeX's class option expects |
-| `apaciteappendix.lua` | all | `@sec-`/`@apx-` references to appendices become "Appendix A" links |
+| `apaciteappendix.lua` | all | `@sec-`/`@apx-` references to appendices become "Appendix A" links (every appendix reference, in every format) |
 | `apaomitrefsdiv.lua` | all | Adds a References heading and `#refs` div if missing; one appendix is "Appendix", not "Appendix A" |
 
 ### post-ast
@@ -93,7 +112,7 @@ and still return early; the formats column says where it does real work.
 | `wordcount.lua` | all | `meta.wordn` for the title page |
 | `frontmatter.lua` | all | Title page, byline, author note, abstract, impact statement, keywords, contents markers, journal layout. Emits classed blocks for docx/html/latex and raw typst for typst |
 | `apaquote.lua` | docx | `NextBlockText` for the paragraphs after the first in a block quote |
-| `apafigtblappendix.lua` | html, docx, typst | `@fig-`/`@tbl-` become "Figure A1" links with appendix prefixes |
+| `apafigtblappendix.lua` | html, docx, typst | `@fig-`/`@tbl-`/`@ill-` become "Figure A1" links, from `meta["apa-float-labels"]`, which it then removes |
 
 ### post-quarto
 
@@ -147,11 +166,13 @@ filter across a stage boundary, breaks a consumer that may be far away.
 |---|---|---|
 | `documentmode` short codes | `documentmode.lua` | nearly every filter; typst uses the code as a template function name |
 | `meta.language.*` | `apalanguage.lua` | nearly every filter |
-| `prefix`, `fignum`, `tblnum` attributes | `crossrefprefix` | `apafloatstoend`, `apafigtblappendix` (through `quarto._quarto.ast.custom_node_data`), `floatlatex`, `thesisfloats`, `apacaption` |
-| inserted "Appendix X" heading text | `crossrefprefix` | `apafloatstoend`, `apaomitrefsdiv` (matched as text) |
-| `appendixtitle` attribute | `crossrefprefix` | `apaciteappendix`, `apaomitrefsdiv`, `apafigtblappendix`, `thesiscontents` |
+| `prefix`, `fignum`, `tblnum`, `floatnum` attributes | `crossrefprefix` | `apafloatstoend` (`prefix == ""` means in the body), `floatlatex`, `thesisfloats`, `apacaption` |
+| `meta["apa-float-labels"]` (id → "A1") | `crossrefprefix` | `apafigtblappendix`, which removes it |
+| `apa-appendix` class on the heading that opens an appendix | `crossrefprefix` (its inserted "Appendix X", and an old-style "# Appendix A") | `apafloatstoend`, `apaomitrefsdiv` |
+| `meta["apa-appendix-count"]` | `crossrefprefix` | `apaciteappendix`, `apaomitrefsdiv` |
+| `appendixtitle` attribute | `crossrefprefix` | `apaciteappendix`, `thesiscontents` |
 | `hassubfigs` attribute | `crossrefprefix` | `floatwithsubfigure`, `subpanelnote` |
-| `meta["apa-table-notes"]` | `apatablenote` | `formattypst` only |
+| `meta["apa-table-notes"]` | `markdowntable` | `apanote`, `floatlatex`, `formattypst`, through `utilsapa.table_notes` |
 | `apa-note-written` attribute | `floatwithsubfigure` (`"true"`), `apanote` (a hash of the input path) | `apanote`, `floatlatex` |
 | `// apaquarto-wide-float:<id>` raw typst | `apatwocolumntypstcollect` | `apatwocolumntypst` (wraps the next block; the id is not checked) |
 | `apatitle`, `apatitledisplay`, `apaauthor`, `apaabstract`, `by-author[].apaauthordisplay` | `apastriptitle` | `frontmatter`, `thesisfrontmatter`, `typst-show.typ` |
@@ -184,7 +205,7 @@ The class vocabulary each writer understands:
 
 ## A figure with an apa-note, by format
 
-All formats share the pre-ast steps: `apatablenote` and `markdowntable` (for
+All formats share the pre-ast steps: `markdowntable` (for
 markdown tables), `crossrefprefix`, `apafloatstoend`, then `apafigtblappendix`
 at pre-quarto.
 
@@ -228,7 +249,9 @@ These break silently when Quarto changes. Look here first after a Quarto
 upgrade.
 
 - `quarto._quarto.ast.custom_node_data` and `__quarto_custom_id`:
-  `apafigtblappendix`, `floatlatex`, `formattypst`.
+  `floatlatex`, `formattypst`.
+- Quarto rebuilding a markdown table's attributes from its caption, which
+  is why `markdowntable` keeps the note in the metadata.
 - The `QUARTO_FILTER_PARAMS` environment variable: `apalanguage`.
 - The rendered html caption shape `Figure`, nbsp, number, `:` : `apacaption`.
 - The docx one-cell wrapper table and per-panel tables: `apaextractfigure`,
@@ -263,20 +286,15 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    is that `docxreferencedoc` and `docxlinkcolor` each unzip and rewrite the
    file separately (and `docxcontents` reads it a third time), and two renders
    at once can race on it.
-4. **Repeated small logic** that belongs in `utilsapa`: language lookups,
-   `documentmode` parsing, true/false flags (`numbered-lines` is read
-   differently in docx than in latex and typst), page breaks, appendix
-   detection (six filters), `fig-`/`tbl-` hard-coded where
-   `utilsapa.float_prefixes` would include `ill-`, link-kind classification
-   and colour validation (four formats), heading collection for contents.
-5. **Two caption parsers** for markdown tables (`apatablenote`,
-   `markdowntable`) and two appendix-link builders (`apaciteappendix`,
-   `apafigtblappendix`).
-6. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
+4. **Custom floats are not in every list.** `docxcontents` and the lists
+   of figures and tables know figures and tables only, so an Illustration is
+   numbered and cross-referenced everywhere but listed nowhere outside
+   thesis mode.
+5. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
    each have their own author, title, abstract, page-break and contents code,
    and in thesis mode `frontmatter.lua` builds a title page only for it to be
    discarded.
-7. **The citation `hash` side channel** uses an undocumented Pandoc field.
+6. **The citation `hash` side channel** uses an undocumented Pandoc field.
 
 ## Testing
 

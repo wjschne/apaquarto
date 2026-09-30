@@ -138,10 +138,6 @@ Meta = function(meta)
   meta.apaauthor = meta.author
   meta.apadate = meta.date
   meta.apaabstract = meta.abstract
-  if meta.documentmode then
-  else
-    meta.documentmode = "man"
-  end
   --Prevents pandoc from fomatting .docx document the way it thinks it should.
   if FORMAT == "docx" then
     meta.title = nil

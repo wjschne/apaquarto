@@ -989,10 +989,10 @@
 )
 
 #show: document => man(
-  title: [Multipanel Notes, Image Panels],
-  authors: ([Test Author],),
-  runninghead: "IMAGE PANELS",
-  runningauthors: "Author",
+  title: [An Illustration in an Appendix],
+  authors: ([A B],),
+  runninghead: "APPENDIX ILLUSTRATION",
+  runningauthors: "B",
   font: (<fonts>),
   numberdepth: 3,
   document,
@@ -1000,14 +1000,14 @@
 
 /
 /
-#heading(level: 1, outlined: false, numbering: none)[Multipanel Notes, Image Panels]
+#heading(level: 1, outlined: false, numbering: none)[An Illustration in an Appendix]
 <title>
 #set align(center)
 #block[
 /
-Test Author
+A B
 
-Test University
+X
 
 ]
 #set align(left)
@@ -1018,73 +1018,58 @@ Test University
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
+Correspondence concerning this article should be addressed to A B, X, Email: #link("mailto:a@b.edu")[a/@b.edu]
 
 #pagebreak()
 
-#heading(level: 1, numbering: none)[Multipanel Notes, Image Panels]
+#heading(level: 1, numbering: none)[An Illustration in an Appendix]
 <firstheader>
-= Method
-<method>
+= Body
+<body>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #v(apafirstparshift)
-See #link(<fig-images>)[Figure~1].
+See #link(<ill-body>)[Illustration~1] and #link(<ill-apx>)[Illustration~A1].
 
+Zqlastparagraph.
+
+#pagebreak(weak: true)
 #figure([
-#grid(columns: 2, gutter: 2em,
-[
-#strong[Panel A]. First panel.
-
-#box(image("sampleimage.png", alt: "First panel."))
-#align(center)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-A note belonging to the left panel.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-],
-[
-#strong[Panel B]. Second panel.
-
-#box(image("sampleimage.png", alt: "Second panel."))
-#align(center)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-A note belonging to the right panel.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-],
-)
-#align(left)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-#emph[Note]. A~note belonging to the whole figure.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
+#box(image("sampleimage.png"))
 ], caption: figure.caption(
 position: top,
 [
-Two Image Panels
+Zqbodyill.
 ]),
-kind: "quarto-float-fig",
-supplement: "Figure",
+kind: "quarto-float-ill",
+supplement: "Illustration",
 )
-<fig-images>
+<ill-body>
 
 
-= Discussion
-<discussion>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-Text after the float.
+#pagebreak(weak: true)
+= Appendix
+#counter(figure.where(kind: "quarto-float-fig")).update(0)
+#counter(figure.where(kind: "quarto-float-tbl")).update(0)
+#appendixcounter.step()
+= Appendix
+<apx-one>
+#counter(figure.where(kind: "quarto-float-fig")).update(0)
+#counter(figure.where(kind: "quarto-float-tbl")).update(0)
+#appendixcounter.step()
+#figure([
+#box(image("sampleimage.png"))
+], caption: figure.caption(
+position: top,
+[
+Zqapxill.
+]),
+kind: "quarto-float-ill",
+supplement: "Illustration",
+)
+<ill-apx>
+
+
+
+
+

@@ -70,8 +70,7 @@ end
 -- Whether the writer asked for numbered lines, which APA wants on a
 -- manuscript sent out for review.
 local function asked_for_line_numbers(m)
-  if m["numbered-lines"] == nil then return false end
-  return utilsapa.stringify(m["numbered-lines"]) ~= "false"
+  return utilsapa.flag(m, "numbered-lines")
 end
 
 -- The number the first page carries, for an article whose pages are numbered
@@ -87,9 +86,8 @@ end
 -- its own and the field rewritten to name that colour. A field naming a
 -- colour xcolor already knows -- teal, violet, one of the rest -- is left
 -- alone, which is how they have always worked.
-local colour_fields = {
-  "linkcolor", "urlcolor", "citecolor", "filecolor", "toccolor"
-}
+local colour_fields = { table.unpack(utilsapa.link_fields) }
+table.insert(colour_fields, "toccolor")
 
 local function define_html_colours(m)
   for _, field in ipairs(colour_fields) do
@@ -134,8 +132,7 @@ end
 local function file_link(link)
   if file_colour == nil then return nil end
   if link.attributes["apa-filecolor"] ~= nil then return nil end
-  local target = link.target
-  if target:match("^#") or target:match("^%a[%w+.-]*:") then return nil end
+  if utilsapa.link_field(link.target) ~= "filecolor" then return nil end
   link.attributes["apa-filecolor"] = "1"
   return pandoc.Inlines({
     pandoc.RawInline("latex",
@@ -169,7 +166,7 @@ local function asked_for_first_page(m)
 end
 
 local function meta(m)
-  if m.documentmode then mode = utilsapa.stringify(m.documentmode) end
+  mode = utilsapa.mode(m)
   if m.shorttitle then
     shorttitle = utilsapa.stringify(m.shorttitle)
   elseif m.title then

@@ -57,9 +57,7 @@ local function read_meta(meta)
   kTocDepth = utilsapa.toc_depth(meta, 3)
 end
 
-local function xml_escape(text)
-  return (text:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
-end
+local xml_escape = utilsapa.xml_escape
 
 -- Inlines as word runs. A heading carries little more than words and the odd
 -- bold or italic, and anything else is written as the text it stringifies to.
@@ -265,15 +263,9 @@ end
 -- left to Word's own field, which takes the built-in heading styles and so
 -- takes the title page, the author note and the rest along with them.
 local function collect_headings(blocks)
-  local out = pandoc.List({})
-  pandoc.Blocks(blocks):walk {
-    Header = function(h)
-      if h.level > kTocDepth then return nil end
-      if h.classes:includes("unlisted") then return nil end
-      out:insert({ level = h.level, content = h.content, id = h.identifier })
-    end
-  }
-  return out
+  return utilsapa.contents_headings(blocks, kTocDepth):map(function(h)
+    return { level = h.level, content = h.content, id = h.identifier }
+  end)
 end
 
 -- One line of the contents: the heading, indented by its level, a leader, and

@@ -77,9 +77,8 @@ local paper_sizes = {
   tabloid = {15840, 24480, 3}
 }
 
-local function trim(s)
-  return (s:gsub("^%s*(.-)%s*$", "%1"))
-end
+local utilsapa = require("utilsapa")
+local trim = utilsapa.trim
 
 --- mainfont and monofont can be a stack of fonts (the html format sets
 --- "Times, Times New Roman, serif"). Word wants a single font, and the
@@ -599,14 +598,12 @@ function Pandoc(doc)
   local monofont = clean_font(doc.meta.monofont)
   local papersize = doc.meta.papersize and
     trim(pandoc.utils.stringify(doc.meta.papersize)) or ""
-  local linenumbers = doc.meta["numbered-lines"] ~= nil and
-    pandoc.utils.stringify(doc.meta["numbered-lines"]) == "true"
+  local linenumbers = utilsapa.flag(doc.meta, "numbered-lines")
   --- A dissertation is bound at the left and wants a wider margin there, and
   --- its title page carries no running head. Both belong to the section, and
   --- the section is the reference document's.
-  local thesis = doc.meta.documentmode ~= nil and
-    pandoc.utils.stringify(doc.meta.documentmode) == "thesis"
-  local margins = thesis and require("utilsapa").thesis_margins or nil
+  local thesis = utilsapa.mode(doc.meta) == "thesis"
+  local margins = thesis and utilsapa.thesis_margins or nil
   --- The body of a dissertation begins again at 1, in arabic; the front
   --- matter before it is in lower-case roman, which the title page's own
   --- section sets.
@@ -622,8 +619,7 @@ function Pandoc(doc)
   --- edition drops the running head from student work, and the control is
   --- emptied rather than left out so that the number beside it stays.
   --- Issue #166.
-  if doc.meta.documentmode ~= nil
-      and pandoc.utils.stringify(doc.meta.documentmode) == "stu" then
+  if utilsapa.mode(doc.meta) == "stu" then
     runninghead = ""
   end
 

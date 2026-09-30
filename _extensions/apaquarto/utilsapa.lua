@@ -366,6 +366,36 @@ function M.is_float(identifier, prefixes)
   return prefix ~= nil and prefixes[prefix] == true
 end
 
+-- The four fields that give a link its colour, one for each kind of link.
+-- toccolor, which colours the entries of a contents list, is the fifth of
+-- the colour fields but belongs to no kind of link.
+M.link_fields = { "linkcolor", "urlcolor", "citecolor", "filecolor" }
+
+-- Which of those fields a link's target asks for. The reading latex makes:
+-- a citation points at the bibliography quarto writes, another anchor is a
+-- cross reference or a link to a heading, anything with a scheme leaves the
+-- document, and what is left is a path to a file.
+function M.link_field(target)
+  if target:match("^#ref%-") then return "citecolor" end
+  if target:match("^#") then return "linkcolor" end
+  if target:match("^%a[%w+.-]*:") then return "urlcolor" end
+  return "filecolor"
+end
+
+-- The headings a table of contents lists: every heading down to depth that
+-- is not marked unlisted, in the order they come.
+function M.contents_headings(blocks, depth)
+  local out = pandoc.List({})
+  pandoc.Blocks(blocks):walk {
+    Header = function(h)
+      if h.level > depth then return nil end
+      if h.classes:includes("unlisted") then return nil end
+      out:insert(h)
+    end
+  }
+  return out
+end
+
 -- Six hex digits, upper cased, for a name or an html code; nil for anything
 -- neither table nor code knows, which leaves the format with what it had.
 function M.colour_hex(value)
@@ -438,6 +468,94 @@ function M.toc_depth(meta, fallback)
   depth = math.floor(depth)
   if depth < 1 then return 1 end
   return depth
+end
+
+-- The apa-note of each plain markdown table as the writer typed it, by the
+-- table's identifier, which markdowntable.lua leaves in the metadata. Quarto
+-- rebuilds a markdown table's attributes from its caption, flattening the
+-- note's emphasis, code and raw spans, so a note writer asks here first and
+-- takes the attribute only for a table that is not listed.
+function M.table_notes(meta)
+  local notes = {}
+  local recovered = meta and meta["apa-table-notes"]
+  if recovered then
+    for id, note in pairs(recovered) do
+      notes[id] = pandoc.utils.stringify(note)
+    end
+  end
+  return notes
+end
+
+-- A word from meta.language, or the fallback when the document has none.
+--
+-- apalanguage.lua fills in every word it knows before the other filters read
+-- them, so inside the apaquarto formats the fallback is seldom reached. The
+-- apanote extension runs a few of these filters without apalanguage.lua,
+-- though, so every caller still names the English word it wants.
+function M.lang(meta, key, fallback)
+  local value = meta and meta.language and meta.language[key]
+  if value == nil then return fallback end
+  return pandoc.utils.stringify(value)
+end
+
+-- The documentmode, as the short code documentmode.lua leaves it in: man,
+-- jou, doc, stu or thesis. A document that names none is a manuscript.
+function M.mode(meta)
+  if meta == nil or meta.documentmode == nil then return "man" end
+  return pandoc.utils.stringify(meta.documentmode)
+end
+
+-- Whether a yes-or-no field is on. Absent is off, and so is false; anything
+-- else the writer put there is taken as asking for it, which is how latex
+-- and typst have always read numbered-lines.
+function M.flag(meta, key)
+  local value = meta and meta[key]
+  if value == nil then return false end
+  return pandoc.utils.stringify(value) ~= "false"
+end
+
+-- Whether an element's attribute says true. Written in markdown it is the
+-- string "true"; set from a chunk option it may arrive as a boolean, or as a
+-- string with quotes or brackets left on it.
+function M.attr_true(el, name)
+  -- Not every block has attributes, and asking one that has none may raise.
+  local ok, attrs = pcall(function() return el.attributes end)
+  if not ok or not attrs then return false end
+  local value = attrs[name]
+  if value == nil then return false end
+  if value == true or tostring(value) == "true" then return true end
+  return pandoc.utils.stringify(value):lower():gsub("[^%a]", "") == "true"
+end
+
+-- A page break in the format being written, or nil for html, which has no
+-- pages. A weak break in typst is dropped when the page is already fresh.
+function M.page_break(weak)
+  if FORMAT == "docx" then
+    return pandoc.RawBlock("openxml", '<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
+  elseif FORMAT == "latex" then
+    return pandoc.RawBlock("latex", "\\clearpage")
+  elseif FORMAT:match("typst") then
+    return pandoc.RawBlock("typst", weak and "#pagebreak(weak: true)" or "#pagebreak()\n\n")
+  end
+  return nil
+end
+
+-- Text made safe to put inside raw openxml, where these characters are
+-- markup. Word refuses to open a file with an unescaped ampersand in it.
+function M.xml_escape(text)
+  return (text:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
+end
+
+-- A string without the white space at either end.
+function M.trim(s)
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+-- Inlines in capitals, their markup kept.
+function M.upper(inlines)
+  return pandoc.Inlines(inlines):walk {
+    Str = function(s) return pandoc.Str(pandoc.text.upper(s.text)) end
+  }
 end
 
 return M

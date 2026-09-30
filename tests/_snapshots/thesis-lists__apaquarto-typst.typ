@@ -1126,8 +1126,6 @@ supplement: "Illustration",
 <ill-one>
 
 
-#thesisreferences[#set par(first-line-indent: 0in, hanging-indent: 0.5in)
-]
 
 
 

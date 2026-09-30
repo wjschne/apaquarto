@@ -5,12 +5,8 @@ local panelword = "Panel"
 local letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 local function getnote(m)
-  if m.language and m.language["figure-table-note"] then
-    beginapanote = pandoc.utils.stringify(m.language["figure-table-note"])
-  end
-  if m.language and m.language["figure-panel"] then
-    panelword = pandoc.utils.stringify(m.language["figure-panel"])
-  end
+  beginapanote = utilsapa.lang(m, "figure-table-note", beginapanote)
+  panelword = utilsapa.lang(m, "figure-panel", panelword)
 end
 
 -- APA labels the panels of a figure Panel A, Panel B, and describes them in

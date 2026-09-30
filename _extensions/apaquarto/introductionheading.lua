@@ -21,6 +21,8 @@
 -- heading that opens the first one is the chapter's title rather than a
 -- label APA would object to. Taking it out cost the first chapter its name.
 
+local utilsapa = require("utilsapa")
+
 local kOption = "keep-introduction-heading"
 local kLanguage = "section-title-introduction"
 local kDefault = "Introduction"
@@ -45,16 +47,13 @@ local function normalize(text)
 end
 
 local function meta(m)
-  if m.documentmode ~= nil
-      and pandoc.utils.stringify(m.documentmode) == "thesis" then
+  if utilsapa.mode(m) == "thesis" then
     keep = true
   end
   if m[kOption] ~= nil then
     keep = pandoc.utils.stringify(m[kOption]) ~= "false"
   end
-  if m.language and m.language[kLanguage] then
-    introword = pandoc.utils.stringify(m.language[kLanguage])
-  end
+  introword = utilsapa.lang(m, kLanguage, introword)
 end
 
 local function blocks(doc)

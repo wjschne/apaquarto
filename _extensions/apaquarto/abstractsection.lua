@@ -33,6 +33,8 @@
 -- frontmatter.lua sets the title page.
 
 -- What each section fills in, and the language field that names it.
+local utilsapa = require("utilsapa")
+
 local targets = {
   {
     field = "abstract",
@@ -65,11 +67,8 @@ end
 -- so that a document written in another language is matched too.
 local function read_language(meta)
   for _, target in ipairs(targets) do
-    local title = target.fallback
-    if meta.language and meta.language[target.language] then
-      title = pandoc.utils.stringify(meta.language[target.language])
-    end
-    target.title = normalize(title)
+    target.title = normalize(
+      utilsapa.lang(meta, target.language, target.fallback))
   end
 end
 

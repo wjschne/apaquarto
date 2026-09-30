@@ -60,11 +60,7 @@ function M.width(inlines)
 end
 
 -- The title in capitals, which is how the Graduate School asks for it.
-function M.upper(inlines)
-  return pandoc.Inlines(inlines):walk {
-    Str = function(s) return pandoc.Str(pandoc.text.upper(s.text)) end
-  }
-end
+M.upper = require("utilsapa").upper
 
 -- The words of the title, each with the width it will take.
 local function words_of(inlines)

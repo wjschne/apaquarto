@@ -1072,8 +1072,6 @@ supplement: "Figure",
 <fig-one>
 
 
-#set par(first-line-indent: 0in, hanging-indent: joufirstlineindent)
-#set par(first-line-indent: apaparindent(joufirstlineindent, all: true), hanging-indent: 0in)
 
 
 

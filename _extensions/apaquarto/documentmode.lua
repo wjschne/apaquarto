@@ -26,6 +26,12 @@ local implied = {
 }
 
 function Meta(m)
+  -- A document that names no mode is a manuscript. Said here, first, so that
+  -- every filter and template after this one finds a mode, and typst-show.typ,
+  -- which calls the mode by name, finds one it can call.
+  if not m.documentmode then
+    m.documentmode = "man"
+  end
   if m.documentmode then
     local mode = pandoc.utils.stringify(m.documentmode)
     local alias = aliases[mode]

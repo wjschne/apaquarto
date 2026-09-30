@@ -22,6 +22,8 @@ local utilsapa = require("utilsapa")
 local figureword = "Figure"
 local tableword = "Table"
 local noteword = "Note"
+-- The notes of markdown tables as they were written, by identifier
+local tablenotes = {}
 local floatsintext = true
 local mode = "man"
 
@@ -41,18 +43,11 @@ local function meta(m)
       if name and env then customfloats[name] = env end
     end
   end
-  if m.documentmode then mode = utilsapa.stringify(m.documentmode) end
-  if m.language then
-    if m.language["crossref-fig-title"] then
-      figureword = utilsapa.stringify(m.language["crossref-fig-title"])
-    end
-    if m.language["crossref-tbl-title"] then
-      tableword = utilsapa.stringify(m.language["crossref-tbl-title"])
-    end
-    if m.language["figure-table-note"] then
-      noteword = utilsapa.stringify(m.language["figure-table-note"])
-    end
-  end
+  mode = utilsapa.mode(m)
+  tablenotes = utilsapa.table_notes(m)
+  figureword = utilsapa.lang(m, "crossref-fig-title", figureword)
+  tableword = utilsapa.lang(m, "crossref-tbl-title", tableword)
+  noteword = utilsapa.lang(m, "figure-table-note", noteword)
   if m.floatsintext ~= nil then
     floatsintext = utilsapa.stringify(m.floatsintext) ~= "false"
   end
@@ -78,7 +73,7 @@ end
 -- and leaves it as an attribute; quarto's own count stands in when it has not.
 local function number(float)
   local attributes = float.attributes or {}
-  local given = attributes.fignum or attributes.tblnum
+  local given = attributes.fignum or attributes.tblnum or attributes.floatnum
   if given and given ~= "" then return tostring(given) end
   if type(float.order) == "table" and float.order.order then
     return tostring(float.order.order)
@@ -171,9 +166,10 @@ local function note_blocks(float)
   -- floatwithsubfigure.lua writes the note of a float laid out in panels, and
   -- marks the float when it has, so that it is not written twice.
   if attributes["apa-note-written"] then return nil end
-  local note = attributes["apa-note"]
+  local note = tablenotes[float.identifier] or attributes["apa-note"]
   if not note or note == "" then return nil end
   written_notes[note] = true
+  if attributes["apa-note"] then written_notes[attributes["apa-note"]] = true end
   local prefix = pandoc.Para({
     pandoc.Emph(pandoc.Str(noteword)), pandoc.Str("."), pandoc.Space() })
   return utilsapa.make_note(note, prefix)

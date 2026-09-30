@@ -1145,7 +1145,7 @@ Thanks to everyone who read a draft.
 #align(center)[#par(leading: 0.65em)[#strong[LIST OF ILLUSTRATIONS]]]
 #v(27.6pt, weak: false)
 #block(above: 19.4pt, below: 0pt, width: 100%)[Illustration #box(width: 1fr) Page]
-#apatocline(0.00in, [1.], [A sketch of the apparatus.], <ill-sketch>, false, true)
+#apatocline(0.00in, [B1.], [A sketch of the apparatus.], <ill-sketch>, false, true)
 ]
 ]
 

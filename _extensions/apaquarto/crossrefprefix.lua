@@ -1,4 +1,21 @@
 -- This filter creates prefixes for figures and tables in appendices.
+--
+-- It is also the one place that decides what an appendix is. Everything after
+-- it reads what it leaves rather than looking at heading text again:
+--
+--   * the heading it writes over each appendix, "Appendix A", carries the
+--     class apa-appendix (kAppendixClass below);
+--   * the heading of the appendix itself carries appendixtitle, its letter;
+--   * meta["apa-appendix-count"] is how many appendices there are;
+--   * meta["apa-float-labels"] maps each float's identifier to the number a
+--     reader sees, "A1" or "3", for the filter that writes cross references.
+--
+-- When there is only one appendix it is called "Appendix", with no letter.
+-- That is settled here too, once the count is known.
+
+local utilsapa = require("utilsapa")
+
+local kAppendixClass = "apa-appendix"
 
 -- List of appendix names
 local abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -22,18 +39,44 @@ local tbl = {}
 local fig = {}
 -- New style already used
 local newsppendixstyle = true
+-- Float kinds of the document's own, such as ill for an Illustration, each
+-- with its own count, which starts again in every appendix
+local customkinds = {}
+local customnum = {}
+local custom = {}
+-- The number a reader sees for each float, appendix letter and all, by
+-- identifier: what apafigtblappendix.lua writes into a cross reference
+local labels = {}
 
 -- Word for appendix
 local appendixword = "Appendix"
 local referenceword = "References"
 local getappendixword = function(meta)
-  if meta.language and meta.language["crossref-apx-prefix"] then
-    appendixword = pandoc.utils.stringify(meta.language["crossref-apx-prefix"])
+  appendixword = utilsapa.lang(meta, "crossref-apx-prefix", appendixword)
+  referenceword = utilsapa.lang(meta, "section-title-references", referenceword)
+  for kind in pairs(utilsapa.float_prefixes(meta)) do
+    if kind ~= "fig" and kind ~= "tbl" then
+      customkinds[kind] = true
+    end
   end
-  -- Is there another word for reference section?
-  if meta.language and meta.language["section-title-references"] then
-    referenceword = pandoc.utils.stringify(meta.language["section-title-references"])
+end
+
+-- The kind of a float of the document's own, from its identifier, or nil
+local function custom_kind(id)
+  local kind = id and id:match("^(%a+)%-")
+  if kind and customkinds[kind] then return kind end
+  return nil
+end
+
+-- return the number of a float of the document's own kind
+local customlabel = function(id)
+  if custom[id] == nil then
+    local kind = custom_kind(id)
+    customnum[kind] = (customnum[kind] or 0) + 1
+    custom[id] = customnum[kind]
+    labels[id] = prefix .. custom[id]
   end
+  return custom[id]
 end
 
 
@@ -47,6 +90,7 @@ local tbllabel = function(id)
       -- Add id to tbl
       tblnum = tblnum + 1
       tbl[id] = tblnum
+      labels[id] = prefix .. tblnum
     end
     return tbl[id]
   end
@@ -71,6 +115,9 @@ local figlabel = function(id, ss)
     end
   end
 
+  if fig[id] ~= nil and labels[id] == nil then
+    labels[id] = prefix .. fig[id]
+  end
   return fig[id]
 end
 
@@ -97,6 +144,12 @@ local walkblock = function(b)
         b.identifier = "apx-" .. b.identifier
       end
       
+      -- The older way of writing an appendix, "# Appendix A" over a heading
+      -- of its own, is a heading that opens an appendix as well, and is
+      -- marked as one so that nothing is set between it and its title.
+      if headerfirstword == appendixword or headerfirstword == "Appendix" then
+        b.classes:insert(kAppendixClass)
+      end
       if (headerfirstword == appendixword or headerfirstword == "Appendix") and newsppendixstyle then
         quarto.log.warning(
         "This style of creating appendices is deprecated:\n\n# Appendix A\n\n#Relationship Descriptive Scale\n\nInstead, use a single descriptive level-1 heading,\nfollowed by a an identifier with the apx prefix:\n\n# Relationship Description Scale {#apx-relationship}\n")
@@ -113,6 +166,7 @@ local walkblock = function(b)
       intprefix = intprefix + 1
       tblnum = 0
       fignum = 0
+      customnum = {}
       prefix = preprefix .. pandoc.text.sub(abc, intprefix, intprefix)
       if b.attr then
         b.attr.attributes.appendixtitle = prefix
@@ -125,6 +179,16 @@ local walkblock = function(b)
     if b.identifier:find("^tbl%-") then
       b.attributes.prefix = prefix
       b.attributes.tblnum = tbllabel(b.identifier)
+    elseif custom_kind(b.identifier) then
+      b.attributes.prefix = prefix
+      b.attributes.floatnum = customlabel(b.identifier)
+      local id = b.identifier
+      b.content:walk {
+        Image = function(img)
+          img.attributes.prefix = prefix
+          img.attributes.floatnum = customlabel(id)
+        end
+      }
     else
       if b.identifier:find("^fig%-") then
         b.attributes.prefix = prefix
@@ -176,6 +240,7 @@ local walkblock = function(b)
 
     if b.identifier:find("^apx%-") then
       local a = pandoc.Header(1, appendixword .. " " .. prefix)
+      a.classes:insert(kAppendixClass)
       return pandoc.List({ a, b })
     else
       return b
@@ -185,10 +250,39 @@ end
 
 
 
-local filter = {
-  traverse = 'topdown',
-  Meta = getappendixword,
-  Block = walkblock
-}
+-- What the walk found, left for the filters after this one.
+local function publish(doc)
+  local published = {}
+  for id, label in pairs(labels) do
+    published[id] = pandoc.MetaString(label)
+  end
+  doc.meta["apa-appendix-count"] = pandoc.MetaString(tostring(appnum))
+  doc.meta["apa-float-labels"] = pandoc.MetaMap(published)
 
-return filter
+  -- One appendix is "Appendix", not "Appendix A". The older way of writing
+  -- one, "# Appendix A" over the text, is caught by its words, since it is the
+  -- writer's own heading and carries no class.
+  if appnum == 1 then
+    local lone = appendixword .. " A"
+    doc.blocks = doc.blocks:walk {
+      Header = function(h)
+        if h.level ~= 1 then return nil end
+        local text = pandoc.utils.stringify(h.content)
+        if h.classes:includes(kAppendixClass)
+            or text == lone or text == "Appendix A" then
+          h.content = pandoc.Inlines({ h.content[1] })
+          return h
+        end
+      end
+    }
+  end
+  return doc
+end
+
+-- The words are read in a pass of their own, so that they are known before
+-- the first heading is looked at.
+return {
+  { Meta = getappendixword },
+  { traverse = 'topdown', Block = walkblock },
+  { Pandoc = publish },
+}

@@ -70,11 +70,9 @@ contributes:
         # Introduction heading first in the body.
         - at: pre-ast
           path: introductionheading.lua
-        # Recover the apa-note of a plain markdown table before quarto
-        # flattens it
-        - at: pre-ast
-          path: apatablenote.lua
-        # Prepare plain markdown tables to be used by crossrefprefix.lua
+        # Read a plain markdown table's caption attributes onto the table,
+        # its apa-note as written, before quarto flattens it. Before
+        # crossrefprefix.lua, which numbers the table by its identifier.
         - at: pre-ast
           path: markdowntable.lua
         # Give figures and tables appendix prefixes

@@ -6,29 +6,13 @@ if FORMAT ~= "typst" then
   return
 end
 
-local stringify = pandoc.utils.stringify
+local utilsapa = require("utilsapa")
 
 -- Wide spanning only exists in the two-column journal layout, so only the jou
 -- mode needs these markers. Gating here keeps marker comments out of the Typst
 -- generated for the one-column modes (man/doc/stu).
 local function is_journal_mode(meta)
-  return meta.documentmode and stringify(meta.documentmode) == "jou"
-end
-
-local function attributes(el)
-  local ok, attrs = pcall(function() return el.attributes end)
-  if ok and attrs then
-    return attrs
-  end
-
-  ok, attrs = pcall(function()
-    if el.attr then
-      return el.attr.attributes
-    end
-  end)
-  if ok then
-    return attrs
-  end
+  return utilsapa.mode(meta) == "jou"
 end
 
 local function identifier(el)
@@ -48,14 +32,7 @@ local function identifier(el)
 end
 
 local function attr_true(el)
-  local attrs = attributes(el)
-  if not (attrs and attrs["apa-twocolumn"]) then
-    return false
-  end
-
-  local value = attrs["apa-twocolumn"]
-  local normalized = stringify(value):lower():gsub("[^%a]", "")
-  return value == true or tostring(value) == "true" or normalized == "true"
+  return utilsapa.attr_true(el, "apa-twocolumn")
 end
 
 local function marker(id)

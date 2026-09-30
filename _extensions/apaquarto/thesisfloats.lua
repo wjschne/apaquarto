@@ -20,8 +20,7 @@ local utilsapa = require("utilsapa")
 local kField = "apathesis-floats"
 
 local function is_thesis(meta)
-  return meta.documentmode ~= nil
-    and utilsapa.stringify(meta.documentmode) == "thesis"
+  return utilsapa.mode(meta) == "thesis"
 end
 
 -- What the float is called. Quarto's own two are Figure and Table; a float a
@@ -36,7 +35,7 @@ end
 -- an appendix is involved --- B1, B2 --- and quarto counts otherwise.
 local function float_number(float)
   local attributes = float.attributes or {}
-  local given = attributes.fignum or attributes.tblnum
+  local given = attributes.fignum or attributes.tblnum or attributes.floatnum
   local number = nil
   if given and given ~= "" then
     number = tostring(given):match("%d+")

@@ -7,11 +7,8 @@ local function ends_with_punctuation(content)
   return pandoc.utils.stringify(content):match("[.?!]%s*$") ~= nil
 end
 
--- The header text below is put into raw openxml, where these characters are
--- markup. Word refuses to open a file with an unescaped ampersand in it.
-local function xml_escape(s)
-  return (s:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
-end
+-- The header text below is put into raw openxml, so it is escaped first.
+local xml_escape = require("utilsapa").xml_escape
 
 
 function Header(hx)

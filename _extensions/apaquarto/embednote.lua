@@ -23,6 +23,11 @@ end
 local kEmbedClass = "quarto-embed-nb-cell"
 local kCellPrefix = "^cell%-"
 
+local utilsapa = require("utilsapa")
+-- The identifier prefixes a float can carry, the document's own kinds among
+-- them, read from the metadata before the divs are looked at
+local prefixes = utilsapa.float_prefixes(nil)
+
 -- Notebooks are read once each, however many cells are embedded from them.
 local cache = {}
 
@@ -174,7 +179,7 @@ local function attach(div, note)
   div.content = div.content:walk {
     Div = function(inner)
       if done or not inner.identifier then return nil end
-      if inner.identifier:find("^fig%-") or inner.identifier:find("^tbl%-") then
+      if utilsapa.is_float(inner.identifier, prefixes) then
         inner.attributes["apa-note"] = note
         done = true
         return inner
@@ -206,5 +211,6 @@ local function embed(div)
 end
 
 return {
+  { Meta = function(m) prefixes = utilsapa.float_prefixes(m) end },
   { Div = embed }
 }

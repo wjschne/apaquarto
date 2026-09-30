@@ -1131,8 +1131,6 @@ supplement: "Table",
 
 
 #pagebreak(weak: true)
-#set par(first-line-indent: 0in, hanging-indent: 0.5in)
-#set par(first-line-indent: apaparindent(firstlineindent), hanging-indent: 0in)
 = Appendix
 #counter(figure.where(kind: "quarto-float-fig")).update(0)
 #counter(figure.where(kind: "quarto-float-tbl")).update(0)

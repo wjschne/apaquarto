@@ -1010,8 +1010,10 @@
         - '{\parindent=0pt\noindent Table\hfill Page\par}'
         - '{\parindent=0pt\noindent Illustration\hfill Page\par}'
         # An illustration is a figure with a word and a count of its own, so
-        # it is numbered from one rather than after the figures.
-        - '\makebox[0.25in][l]{1.}\hyperref[ill-sketch]'
+        # it is numbered from one rather than after the figures. It is in the
+        # second appendix, so it carries that letter, as the table and the
+        # figure beside it do.
+        - '\makebox[0.25in][l]{B1.}\hyperref[ill-sketch]'
         # In the body every level-one heading is in capitals, and over each
         # chapter stands the word CHAPTER and its number. The references
         # have a part of their own to play and get no such line.
@@ -1092,7 +1094,7 @@
         - '#strong[LIST OF ILLUSTRATIONS]'
         - '#heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]'
         - '= INTRODUCTION'
-        - '#apatocline(0.00in, [1.], [A sketch of the apparatus.], <ill-sketch>, false, true)'
+        - '#apatocline(0.00in, [B1.], [A sketch of the apparatus.], <ill-sketch>, false, true)'
     pdf:
       contains:
         - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
@@ -1491,3 +1493,60 @@
   expect:
     tex:
       contains: ['Hinweis', 'zqnote']
+
+# --------------------------------------------------------- appendix floats --
+
+- fixture: appendix-illustration.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'Illustration A1'
+      absent:
+        - 'Illustration 2'
+
+- fixture: appendix-illustration.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains: ['Illustration A1']
+      absent: ['Illustration 2']
+
+- fixture: appendix-illustration.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains: ['Illustration~A1']
+
+- fixture: appendix-illustration.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains: ['\apafloattitle{Illustration A1}']
+      absent: ['\apafloattitle{Illustration 2}']
+
+# ----------------------------------------------------- markdown table notes --
+
+- fixture: table-note-markdown.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains: ['<em>zqemph</em>', '<strong>zqbold</strong>', '<code>zqcode</code>']
+
+- fixture: table-note-markdown.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains: ['<w:t xml:space="preserve">zqemph</w:t>']
+
+- fixture: table-note-markdown.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains: ['#emph[zqemph]', '#strong[zqbold]']
+
+- fixture: table-note-markdown.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains: ['\emph{zqemph}', '\textbf{zqbold}', '\texttt{zqcode}']

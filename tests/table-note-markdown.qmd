@@ -1,0 +1,33 @@
+---
+# The apa-note of a plain markdown table, written with markdown in it.
+#
+# Should: keep the emphasis, the bold and the code of the note in every
+# format.
+#
+# Used to: keep them in typst only. Quarto rebuilds a markdown table's
+# attributes from its caption, which flattens the note, and only
+# formattypst.lua read the copy of the note kept as it was written.
+title: "A Table Note With Markdown"
+shorttitle: "Table Note"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+format:
+  apaquarto-html: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+# Body
+
+| A | B |
+|---|---|
+| 1 | 2 |
+
+: A table. {#tbl-fmt apa-note="Zqnote with *zqemph*, **zqbold** and `zqcode`."}
+
+See @tbl-fmt.

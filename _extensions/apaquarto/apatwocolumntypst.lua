@@ -6,38 +6,13 @@ if FORMAT ~= "typst" then
   return
 end
 
-local stringify = pandoc.utils.stringify
-
-local function attributes(el)
-  local ok, attrs = pcall(function() return el.attributes end)
-  if ok and attrs then
-    return attrs
-  end
-
-  ok, attrs = pcall(function()
-    if el.attr then
-      return el.attr.attributes
-    end
-  end)
-  if ok then
-    return attrs
-  end
-end
+local utilsapa = require("utilsapa")
 
 local function is_journal_mode(meta)
-  return meta.documentmode and stringify(meta.documentmode) == "jou"
+  return utilsapa.mode(meta) == "jou"
 end
 
-local function attr_true(el, name)
-  local attrs = attributes(el)
-  if not (attrs and attrs[name]) then
-    return false
-  end
-
-  local value = attrs[name]
-  local normalized = stringify(value):lower():gsub("[^%a]", "")
-  return value == true or tostring(value) == "true" or normalized == "true"
-end
+local attr_true = utilsapa.attr_true
 
 local function marker_id(block)
   if block.t == "RawBlock" and block.format == "typst" then

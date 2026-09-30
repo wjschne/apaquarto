@@ -39,9 +39,7 @@ local function default_mainfont()
     "Times New Roman, Liberation Serif, Nimbus Roman"
 end
 
-local function trim(s)
-  return (s:gsub("^%s*(.-)%s*$", "%1"))
-end
+local trim = require("utilsapa").trim
 
 local function fontlist(value)
   local fonts = pandoc.List({})
@@ -123,10 +121,8 @@ local function asked_for_number_font(meta)
 end
 
 local function line_numbering(meta)
-  if meta["numbered-lines"] == nil then return nil end
-  if pandoc.utils.stringify(meta["numbered-lines"]) == "false" then return nil end
-  local mode = meta.documentmode and
-    pandoc.utils.stringify(meta.documentmode) or "man"
+  if not utilsapa.flag(meta, "numbered-lines") then return nil end
+  local mode = utilsapa.mode(meta)
   local clearance = (mode == "jou") and "5pt" or "10pt"
   local font = asked_for_number_font(meta) or "linenumberfont"
   return pandoc.RawBlock("typst",
@@ -135,7 +131,7 @@ local function line_numbering(meta)
 end
 
 local function set_body_indent(meta)
-  local mode = meta.documentmode and pandoc.utils.stringify(meta.documentmode) or "man"
+  local mode = utilsapa.mode(meta)
   if mode == "jou" then
     bodyindent = "apaparindent(joufirstlineindent, all: true)"
     hangingindent = "joufirstlineindent"
@@ -147,7 +143,7 @@ local function set_body_indent(meta)
   end
 end
 
--- Word for "note", and the notes apatablenote.lua recovered from markdown
+-- Word for "note", and the notes markdowntable.lua recovered from markdown
 -- table captions, keyed by table identifier
 local noteword = "Note"
 local tablenotes = {}
@@ -437,17 +433,11 @@ return {
       if not meta.mainfont then
         meta.mainfont = fontlist(pandoc.MetaString(default_mainfont()))
       end
-      if meta.language and meta.language["figure-table-note"] then
-        noteword = pandoc.utils.stringify(meta.language["figure-table-note"])
-      end
-      if meta.language and meta.language["figure-panel"] then
-        panelword = pandoc.utils.stringify(meta.language["figure-panel"])
-      end
+      noteword = utilsapa.lang(meta, "figure-table-note", noteword)
+      panelword = utilsapa.lang(meta, "figure-panel", panelword)
       set_body_indent(meta)
       if meta["apa-table-notes"] then
-        for id, note in pairs(meta["apa-table-notes"]) do
-          tablenotes[id] = pandoc.utils.stringify(note)
-        end
+        tablenotes = utilsapa.table_notes(meta)
       end
       return meta
     end
@@ -556,14 +546,10 @@ return {
       -- This function inserts a blank  paragraph and then negative vertical space
       -- before any first paragraph. Hoping that typst will fix this and that this function
       -- becomes unnecessary.
-      local appendixword = "Appendix"
-      if doc.meta.language and doc.meta.language["crossref-apx-prefix"] then
-        appendixword = pandoc.utils.stringify(doc.meta.language["crossref-apx-prefix"])
-      end
+      local appendixword = utilsapa.lang(doc.meta, "crossref-apx-prefix", "Appendix")
       -- The first-paragraph indent fix is for the manuscript body; in journal
       -- mode it would land inside the masthead and author note, so skip it.
-      local journalmode = doc.meta.documentmode and
-        pandoc.utils.stringify(doc.meta.documentmode) == "jou"
+      local journalmode = utilsapa.mode(doc.meta) == "jou"
 
       for i = #doc.blocks, 1, -1 do
         if i > 1 and not journalmode and doc.blocks[i].t == "Para" and doc.blocks[i-1].t ~= "Para" then

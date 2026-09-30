@@ -17,6 +17,11 @@ engine: knitr
 - `documentmode: thesis` sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication, the acknowledgments, the table of contents, a list for every kind of float the document holds, and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.
 - A float a document declares for itself under `crossref.custom` --- an Illustration is the one apaquarto ships --- is set the way a figure is, with its number on a line of its own and its caption under it, in all four formats.
 - The `apa-note` of such a float is written and styled the way a figure's is.
+- Such a float in an appendix is numbered with the appendix letter (Illustration A1), in its caption and in references to it, and moves to the end with the figures when `floatsintext: false`.
+- The `apa-note` of a plain markdown table keeps its emphasis, bold and code in .html, .docx and .pdf, as it already did in typst.
+- `ref-hyperlink: false` applies to references to appendices as well.
+- A document with cross-references but no citations no longer gets stray reference-list spacing in typst.
+- `numbered-lines` is read the same way in .docx as in .pdf and typst: anything but `false` turns it on.
 
 # Version 6.0.1
 - 2026-09-26

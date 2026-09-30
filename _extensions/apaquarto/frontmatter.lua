@@ -178,8 +178,7 @@ end
 -- Typst document-mode helpers ------------------------------------------------
 
 local function is_typst_mode(meta, mode)
-  return FORMAT:match 'typst' and meta.documentmode and
-    stringify(meta.documentmode) == mode
+  return FORMAT:match 'typst' and utilsapa.mode(meta) == mode
 end
 
 -- Manuscript front matter uses explicit line and page breaks to space the title
@@ -793,8 +792,7 @@ return {
       local body = List:new {}
       local meta = doc.meta
 
-      local latex_jou = FORMAT == "latex" and meta.documentmode
-        and stringify(meta.documentmode) == "jou"
+      local latex_jou = FORMAT == "latex" and utilsapa.mode(meta) == "jou"
       local typst_jou = is_typst_mode(meta, "jou")
       local typst_doc = is_typst_mode(meta, "doc")
       -- A student paper, whatever it is being written to. The fields below
@@ -1207,12 +1205,8 @@ return {
         local abstractheader = pandoc.Header(1, abstractheadertext)
         abstractheader.classes = { "unnumbered", "unlisted", "AuthorNote" }
         abstractheader.identifier = "abstract"
-        if FORMAT:match 'docx' then
-          body:extend({ pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>') })
-        end
-
-        if FORMAT:match 'typst' then
-          body:extend({ pandoc.RawBlock('typst', '#pagebreak()\n\n') })
+        if FORMAT:match 'docx' or FORMAT:match 'typst' then
+          body:extend({ utilsapa.page_break() })
         end
 
         if FORMAT:match 'html' then
@@ -1309,7 +1303,7 @@ return {
       end
 
       if FORMAT:match 'docx' then
-        body:extend({ pandoc.RawBlock('openxml', '<w:p><w:r><w:br w:type="page"/></w:r></w:p>') })
+        body:extend({ utilsapa.page_break() })
       end
 
       if FORMAT:match 'typst' then
@@ -1399,7 +1393,7 @@ return {
       -- rule written after that one wins. This is only emitted when a
       -- document names one of the four, so that one naming none is written
       -- exactly as it was before, blue and all.
-      local link_fields = { "linkcolor", "urlcolor", "citecolor", "filecolor" }
+      local link_fields = utilsapa.link_fields
       local names_a_colour = false
       for _, field in ipairs(link_fields) do
         if meta[field] then names_a_colour = true end
@@ -1441,8 +1435,7 @@ return {
       -- Not in thesis mode. A dissertation has a contents and lists of its
       -- own, built by thesisfrontmatter.lua in the shape the Graduate School
       -- asks for, and building these as well would set two of each.
-      local thesis_mode = meta.documentmode ~= nil
-        and stringify(meta.documentmode) == "thesis"
+      local thesis_mode = utilsapa.mode(meta) == "thesis"
       local wants_contents = not thesis_mode and meta["list-of-contents"]
         and stringify(meta["list-of-contents"]) ~= "false"
 
