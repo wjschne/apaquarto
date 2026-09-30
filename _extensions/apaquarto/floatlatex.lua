@@ -18,6 +18,7 @@ if FORMAT ~= "latex" then
   return
 end
 local utilsapa = require("utilsapa")
+local floatrecord = require("floatrecord")
 
 local figureword = "Figure"
 local tableword = "Table"
@@ -96,31 +97,6 @@ local function label_inlines(float)
   return pandoc.Inlines({ pandoc.Str(word .. " " .. prefix .. n) })
 end
 
--- The title of the float. Quarto hands this over as a single Block for the
--- ordinary one-line caption, and as Blocks or Inlines elsewhere, so all three
--- are taken.
-local function caption_inlines(float)
-  local caption = float.caption_long
-  if not caption then return nil end
-  local kind = pandoc.utils.type(caption)
-  local inlines
-  if kind == "Inlines" then
-    inlines = caption
-  elseif kind == "Block" then
-    if caption.content then
-      inlines = caption.content
-    else
-      local ok, converted = pcall(pandoc.utils.blocks_to_inlines, { caption })
-      inlines = ok and converted or nil
-    end
-  elseif kind == "Blocks" then
-    local ok, converted = pcall(pandoc.utils.blocks_to_inlines, caption)
-    inlines = ok and converted or nil
-  end
-  if not inlines or #inlines == 0 then return nil end
-  return inlines
-end
-
 -- \label on its own refers to whatever counter was last stepped, which for a
 -- float written without \caption is the wrong one, and every reference to it
 -- comes out as ??. The counter is set to the number the float is being given
@@ -161,18 +137,15 @@ end
 -- told not to write it again.
 local written_notes = {}
 
-local function note_blocks(float)
-  local attributes = float.attributes or {}
+local function note_blocks(record)
+  local attributes = record.float.attributes or {}
   -- floatwithsubfigure.lua writes the note of a float laid out in panels, and
   -- marks the float when it has, so that it is not written twice.
   if attributes["apa-note-written"] then return nil end
-  local note = tablenotes[float.identifier] or attributes["apa-note"]
-  if not note or note == "" then return nil end
-  written_notes[note] = true
+  if not record.note then return nil end
+  written_notes[record.note] = true
   if attributes["apa-note"] then written_notes[attributes["apa-note"]] = true end
-  local prefix = pandoc.Para({
-    pandoc.Emph(pandoc.Str(noteword)), pandoc.Str("."), pandoc.Space() })
-  return utilsapa.make_note(note, prefix)
+  return floatrecord.note_blocks(record.note, noteword)
 end
 
 -- Takes the apa-note off the cell a float came from, once the note has been
@@ -209,92 +182,20 @@ end
 local panelword = "Panel"
 local letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
--- The number of columns the float is asking for, or nil if it holds one thing.
---
--- floatwithsubfigure.lua has already been over the float and, for latex, has
--- written the layout out as an explicit matrix of rows so that the figure's
--- note can have a row to itself. So the matrix is read first and the plainer
--- layout-ncol only when there is none.
-local function panel_columns(float)
-  local a = float.attributes or {}
-  local explicit = a["layout"]
-  if explicit then
-    local ok, rows = pcall(quarto.json.decode, explicit)
-    if ok and type(rows) == "table" and #rows > 0 then
-      local first = rows[1]
-      if type(first) == "table" and #first > 0 then return #first end
-      return #rows
-    end
-  end
-  local ncol = tonumber(a["layout-ncol"])
-  if not ncol then
-    local nrow = tonumber(a["layout-nrow"])
-    if nrow and nrow > 0 then
-      ncol = math.ceil(#float.content / nrow)
-    end
-  end
-  if not ncol or ncol < 1 then return nil end
-  return ncol
-end
+-- The number of columns comes from floatrecord.columns, which reads first the
+-- explicit matrix floatwithsubfigure.lua has written for latex, so that the
+-- figure's note can have a row to itself.
 
 -- Whether a block is the note of the whole figure, which floatwithsubfigure.lua
 -- put among the panels for the formats that lay a float out from a matrix. Here
 -- the grid is built by hand, so the note is taken back out of it and set under
 -- the grid at the full width.
-local function is_figure_note(block)
-  local found = false
-  block:walk {
-    Div = function(d)
-      if d.classes:includes("FigureNote") then found = true end
-    end
-  }
-  return found
-end
+local is_figure_note = floatrecord.is_figure_note
 
 -- Whether a block holds nothing at all, which is what the padding cell added
 -- to fill out a short row comes to.
 local function is_empty(block)
   return pandoc.utils.stringify(block) == "" and not is_figure_note(block)
-end
-
--- The float a div is standing in for. A float is a custom node, and a walk of
--- the document sees only the div carrying its id. A panel that was given a
--- label of its own arrives this way; one written as a plain code chunk arrives
--- as a pandoc figure instead, which figure_inside finds.
-local function float_behind(block)
-  if block.t ~= "Div" then return nil end
-  local id = block.attributes and block.attributes["__quarto_custom_id"]
-  if not id then return nil end
-  local ok, float = pcall(function()
-    return quarto._quarto.ast.custom_node_data[tostring(id)]
-  end)
-  if not ok then return nil end
-  return float
-end
-
--- The first pandoc Figure inside a block, which is what a panel is once quarto
--- has laid the cell out.
-local function figure_inside(block)
-  -- A panel written as a markdown image is the figure, rather than holding
-  -- one, and a walk of it visits its children and never itself. Without this
-  -- such a panel kept the caption typst or latex writes under a figure of its
-  -- own instead of taking the caption up beside its panel label.
-  if block.t == "Figure" then return block end
-  local found = nil
-  block:walk {
-    Figure = function(fig)
-      if not found then found = fig end
-    end
-  }
-  return found
-end
-
-local function figure_caption(figure)
-  local caption = figure.caption and figure.caption.long
-  if not caption then return nil end
-  local ok, inlines = pcall(pandoc.utils.blocks_to_inlines, caption)
-  if not ok or not inlines or #inlines == 0 then return nil end
-  return inlines
 end
 
 -- One panel, written out as latex.
@@ -307,7 +208,7 @@ end
 --
 -- The panel's caption already carries its APA label, put there by
 -- floatwithsubfigure.lua, so none is added here.
-local function panel_latex(block, width, parentnumber, letter)
+local function panel_latex(panel, width, parentnumber, letter)
   local out = {}
   out[#out + 1] = string.format("\\begin{apapanel}{%.4f}%%", width)
 
@@ -317,22 +218,9 @@ local function panel_latex(block, width, parentnumber, letter)
   -- as a figure environment of its own, and latex sets a figure inside a
   -- figure one under the other whatever the layout asked for.
   local body = pandoc.List({})
-  local caption, content, identifier, note
-  local sub = float_behind(block)
-  if sub then
-    caption = caption_inlines(sub)
-    content = sub.content
-    identifier = sub.identifier
-    note = sub.attributes and sub.attributes["apa-note"]
-  else
-    local figure = figure_inside(block)
-    if figure then
-      caption = figure_caption(figure)
-      content = figure.content
-      identifier = figure.identifier
-    end
-    note = block.attributes and block.attributes["apa-note"]
-  end
+  local block = panel.block
+  local caption, content, identifier, note =
+    panel.caption, panel.content, panel.identifier, panel.note
 
   -- The caption already carries its APA panel label, put there by
   -- floatwithsubfigure.lua, so none is added here. It is followed by the same
@@ -362,10 +250,8 @@ local function panel_latex(block, width, parentnumber, letter)
   end
 
   if note and note ~= "" then
-    local prefix = pandoc.Para({
-      pandoc.Emph(pandoc.Str(noteword)), pandoc.Str("."), pandoc.Space() })
     body:insert(pandoc.RawBlock("latex", "\\begin{apapanelnote}"))
-    body:insert(utilsapa.make_note(note, prefix))
+    body:insert(floatrecord.note_blocks(note, noteword))
     body:insert(pandoc.RawBlock("latex", "\\end{apapanelnote}"))
   end
 
@@ -377,13 +263,15 @@ end
 
 -- Every panel, in rows of ncol minipages, and then the note of the whole
 -- figure under them.
-local function panel_grid(float, ncol)
-  local parentnumber = number(float)
+local function panel_grid(record)
+  local ncol = record.columns
+  local parentnumber = number(record.float)
   local notes = pandoc.List({})
   local pieces = {}
   local width = 0.98 / ncol
   local index = 0
-  for _, block in ipairs(float.content) do
+  for _, panel in ipairs(record.panels) do
+    local block = panel.block
     if is_figure_note(block) then
       notes:insert(block)
     elseif not is_empty(block) then
@@ -395,7 +283,7 @@ local function panel_grid(float, ncol)
           pieces[#pieces + 1] = "\\hfill"
         end
       end
-      pieces[#pieces + 1] = panel_latex(block, width, parentnumber,
+      pieces[#pieces + 1] = panel_latex(panel, width, parentnumber,
         letters:sub(index, index))
     end
   end
@@ -435,7 +323,7 @@ local function push_cell_attributes(div)
   local moved = false
   div.content:walk {
     Div = function(child)
-      local float = float_behind(child)
+      local float = floatrecord.float_behind(child)
       if not float or not float.attributes then return nil end
       if not float.attributes["apa-twocolumn"] then
         float.attributes["apa-twocolumn"] = span
@@ -476,6 +364,8 @@ local function processfloat(float)
   -- would become a figure environment of its own.
   if float.parent_id then return nil end
 
+  local record = floatrecord.read(float,
+    { tablenotes = tablenotes, read_matrix = true })
   local istable = float.type == "Table"
   local environment = istable and "table" or "figure"
 
@@ -529,7 +419,7 @@ local function processfloat(float)
   blocks:extend(label_blocks(float))
   blocks:insert(command("apafloattitle", label_inlines(float)))
 
-  local caption = caption_inlines(float)
+  local caption = record.caption
   if caption then
     blocks:insert(command("apafloatcaption", caption))
     if not istable then
@@ -557,21 +447,16 @@ local function processfloat(float)
   addline:insert(pandoc.RawInline("latex", "}"))
   blocks:insert(pandoc.Plain(addline))
 
-  local ncol = panel_columns(float)
   local panelnotes = nil
-  if ncol then
-    local grid, notes = panel_grid(float, ncol)
+  if record.columns then
+    local grid, notes = panel_grid(record)
     blocks:extend(grid)
     panelnotes = notes
-  elseif float.content then
-    if pandoc.utils.type(float.content) == "Blocks" then
-      blocks:extend(strip_table_identifier(float.content))
-    else
-      blocks:extend(strip_table_identifier(pandoc.Blocks({ float.content })))
-    end
+  else
+    blocks:extend(strip_table_identifier(record.content))
   end
 
-  local note = note_blocks(float)
+  local note = note_blocks(record)
   if note then
     -- A table's note sits under the rule that closes the table, and needs
     -- the rule cleared. A figure's note follows the picture and does not.

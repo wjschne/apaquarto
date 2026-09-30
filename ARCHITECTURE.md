@@ -49,6 +49,7 @@ anything else here:
 | `_extensions/apaquarto/*.lua` | The filters (below) |
 | `_extensions/apaquarto/utilsapa.lua` | Shared helpers, loaded with `require("utilsapa")` |
 | `_extensions/apaquarto/thesistitle.lua`, `thesiscontents.lua` | Modules loaded by `thesisfrontmatter.lua`; not filters |
+| `_extensions/apaquarto/floatrecord.lua` | Module that reads a float once (caption, content, note, columns, panels) for `floatlatex` and `formattypst`; not a filter |
 | `_extensions/apaquarto/typst/` | `formattypst.lua`, plus the `typst-show.typ` and `typst-template.typ` partials |
 | `_extensions/apaquarto/apalatex.tex` | The LaTeX definitions `formatlatex.lua` writes against; Quarto's own pdf template is used unmodified |
 | `_extensions/apaquarto/apaquarto.docx` | Reference doc; its styles are the docx half of the class vocabulary |
@@ -249,7 +250,7 @@ These break silently when Quarto changes. Look here first after a Quarto
 upgrade.
 
 - `quarto._quarto.ast.custom_node_data` and `__quarto_custom_id`:
-  `floatlatex`, `formattypst`.
+  `floatrecord.float_behind`, the one place that reads them.
 - Quarto rebuilding a markdown table's attributes from its caption, which
   is why `markdowntable` keeps the note in the metadata.
 - The `QUARTO_FILTER_PARAMS` environment variable: `apalanguage`.
@@ -269,11 +270,13 @@ upgrade.
 
 Recorded so a change does not make it worse. Roughly in order of payoff.
 
-1. **Floats.** There is no single representation of a float. Resolving each
-   `FloatRefTarget` once at post-quarto into one record (kind, id, label,
-   title, caption, note, panels, rows, twocolumn) and writing the note inside
-   the float for every format would retire three of the four note writers and
-   `apacaption`'s re-parsing.
+1. **Floats.** `floatrecord.lua` now reads each `FloatRefTarget` once for
+   latex and typst. html and docx still go their own way: `apanote` writes
+   their notes at post-render, and `apacaption` re-parses the caption Quarto
+   has rendered. Having those two formats write the note inside the float at
+   post-quarto from the same record would retire `apanote`'s float handling,
+   `apacaption`'s re-parsing, `subpanelnote`, and the two meanings of
+   `apa-note-written`.
 2. **Writers.** About 500 lines of raw typst layout live in `frontmatter.lua`
    rather than `formattypst.lua`. LaTeX already has the intended shape:
    `frontmatter` emits classed blocks and `formatlatex` writes them.

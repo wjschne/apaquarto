@@ -22,6 +22,7 @@ engine: knitr
 - `ref-hyperlink: false` applies to references to appendices as well.
 - A document with cross-references but no citations no longer gets stray reference-list spacing in typst.
 - `numbered-lines` is read the same way in .docx as in .pdf and typst: anything but `false` turns it on.
+- In typst, a paper whose title begins with the word "Appendix" no longer numbers the figures in its body as though they were in an appendix.
 
 # Version 6.0.1
 - 2026-09-26

@@ -1308,6 +1308,13 @@
     typ:
       contains:
         - '#pagebreak(weak: true)'
+      count:
+        # One step of the appendix counter for each of the two appendices.
+        # The title of this document begins with the word Appendix, and when
+        # appendices were found by their heading text the title and its repeat
+        # at the head of the body each stepped the counter as well, so that
+        # the body's figures were numbered as though they were in one.
+        '#appendixcounter.step()': 2
 
 - fixture: appendix-pages.qmd
   to: apaquarto-docx

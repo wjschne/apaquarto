@@ -1002,9 +1002,6 @@
 /
 #heading(level: 1, outlined: false, numbering: none)[Appendix Pagination]
 <title>
-#counter(figure.where(kind: "quarto-float-fig")).update(0)
-#counter(figure.where(kind: "quarto-float-tbl")).update(0)
-#appendixcounter.step()
 #set align(center)
 #block[
 /
@@ -1027,9 +1024,6 @@ Correspondence concerning this article should be addressed to A B, X, Email: #li
 
 #heading(level: 1, numbering: none)[Appendix Pagination]
 <firstheader>
-#counter(figure.where(kind: "quarto-float-fig")).update(0)
-#counter(figure.where(kind: "quarto-float-tbl")).update(0)
-#appendixcounter.step()
 = Method
 <method>
 #[#set par.line(numbering: none)
