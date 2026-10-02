@@ -1,0 +1,44 @@
+---
+title: "A Table Set in the Text Flow"
+shorttitle: "Table scope"
+author:
+  - name: Test Author
+    affiliations:
+      - name: Test University
+keep-tex: true
+format:
+  apaquarto-pdf: default
+---
+
+<!--
+Outside journal mode a table is set in the text flow, not in a float. A float
+is a group, so whatever a table package declares at its start ends with it; in
+the flow nothing ended it. kableExtra opens every table it centres with a bare
+\centering, which then ran on to the end of the document: every paragraph after
+the first such table was set centred.
+
+The float also kept the table's number and title with the table. In the flow
+nothing did, so the number and title could be left at the foot of a page with
+the table on the next, and a title of two lines could be split between them.
+
+Render from the tests directory:
+
+    quarto render table-in-flow-scope.qmd
+
+The paragraph after the table should be set flush left and indented, like the
+one before it.
+-->
+
+This paragraph comes before the table and is set like any other.
+
+```{r}
+#| label: tbl-centred
+#| tbl-cap: "A Table That kableExtra Centres"
+#| echo: false
+# What kableExtra::kable_styling(position = "center") writes: a bare
+# \centering ahead of the tabular.
+knitr::asis_output(paste0("\\centering\n", knitr::kable(
+  data.frame(x = 1:2, y = c("a", "b")), format = "latex", booktabs = TRUE)))
+```
+
+This paragraph comes after the table and should not be centred.

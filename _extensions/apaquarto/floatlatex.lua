@@ -427,8 +427,11 @@ local function processfloat(float)
   if floated then
     blocks:insert(raw("\\begin{" .. environment .. "}" .. placement))
   else
-    -- The space a float would have left around itself.
-    blocks:insert(raw("\\par\\addvspace{\\baselineskip}"))
+    -- The space a float would have left around itself, and the group a float
+    -- would have been. Without it whatever a table package declares ahead of
+    -- its tabular is never ended: the bare \centering kableExtra writes set
+    -- every paragraph after the table centred.
+    blocks:insert(raw("\\par\\addvspace{\\baselineskip}\\begingroup"))
   end
 
   blocks:extend(label_blocks(float))
@@ -494,7 +497,7 @@ local function processfloat(float)
   if floated then
     blocks:insert(raw("\\end{" .. environment .. "}"))
   else
-    blocks:insert(raw("\\par\\addvspace{\\baselineskip}"))
+    blocks:insert(raw("\\par\\endgroup\\addvspace{\\baselineskip}"))
   end
   out.content = blocks
   return out

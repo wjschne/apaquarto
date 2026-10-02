@@ -659,10 +659,14 @@
 % APA puts the number above the title, the title above the figure, and the note
 % below it, all flush left. The blocks arrive already in that order, so these
 % only set them.
+%
+% A table outside journal mode is set in the text flow, where no float keeps
+% its number and title with it, so neither may be parted from what follows,
+% nor a title of two lines split between pages.
 /newcommand{/apafloattitle}[1]{%
-  {/par/noindent/bfseries #1/par}}
+  {/par/noindent/bfseries #1/par/nopagebreak}}
 /newcommand{/apafloatcaption}[1]{%
-  {/par/noindent/itshape #1/par}}
+  {/par/noindent/itshape/interlinepenalty10000 #1/par/nopagebreak}}
 
 % The blank line APA leaves between a figure's title and the figure itself.
 %
@@ -929,7 +933,7 @@ A Table Cell That Opens With a Parenthesis
 /section{1. A markdown table, which pandoc
 writes}/label{a-markdown-table-which-pandoc-writes}
 
-/par/addvspace{/baselineskip}
+/par/addvspace{/baselineskip}/begingroup
 
 /setcounter{table}{0}
 
@@ -958,12 +962,12 @@ x & 2.0 //
 /end{longtable}
 }
 
-/par/addvspace{/baselineskip}
+/par/endgroup/addvspace{/baselineskip}
 
 /section{2. A latex table with booktabs
 rules}/label{a-latex-table-with-booktabs-rules}
 
-/par/addvspace{/baselineskip}
+/par/addvspace{/baselineskip}/begingroup
 
 /setcounter{table}{1}
 
@@ -986,12 +990,12 @@ x & 2.0//
 /bottomrule
 /end{tabular}
 
-/par/addvspace{/baselineskip}
+/par/endgroup/addvspace{/baselineskip}
 
 /section{3. A latex table with booktabs rules in a
 longtable}/label{a-latex-table-with-booktabs-rules-in-a-longtable}
 
-/par/addvspace{/baselineskip}
+/par/addvspace{/baselineskip}/begingroup
 
 /setcounter{table}{2}
 
@@ -1016,7 +1020,7 @@ x & 2.0//
 /bottomrule
 /end{longtable*}
 
-/par/addvspace{/baselineskip}
+/par/endgroup/addvspace{/baselineskip}
 
 /section{4. A longtable written by
 hand}/label{a-longtable-written-by-hand}
