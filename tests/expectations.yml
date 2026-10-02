@@ -1888,3 +1888,16 @@
       absent:
         # A document runs on: no page break, not even under a list.
         - '#pagebreak'
+
+- fixture: table-in-flow-scope.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      order:
+        # The table is set in a group of its own, so the \centering kableExtra
+        # writes ends with the table instead of running on to the end of the
+        # document.
+        - '\addvspace{\baselineskip}\begingroup'
+        - '\centering'
+        - '\endgroup\addvspace{\baselineskip}'
+        - 'This paragraph comes after the table'

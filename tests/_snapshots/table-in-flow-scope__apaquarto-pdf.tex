@@ -868,7 +868,7 @@
 /renewcommand{/apacontentsname}{Table of Contents}
 /renewcommand{/apalistfigurename}{List of Figures}
 /renewcommand{/apalisttablename}{List of Tables}
-/setapashorttitle{ILLUSTRATION NOTES}
+/setapashorttitle{TABLE SCOPE}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -885,7 +885,7 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{A B}
+/author{Test Author}
 /date{}
 /begin{document}
 
@@ -898,7 +898,7 @@
 
 /apatitle{
 
-A Note Under an Illustration
+A Table Set in the Text Flow
 
 }
 
@@ -906,9 +906,9 @@ A Note Under an Illustration
 
 /hfill/break
 
-A B
+Test Author
 
-X
+Test University
 
 /end{apaauthor}
 
@@ -922,122 +922,15 @@ Author Note
 
 }
 
-Correspondence concerning this article should be addressed to A
-B, X, Email: /href{mailto:a@b.edu}{/nolinkurl{a@b.edu}}
-
 /clearpage
 
 /apatitle{
 
-A Note Under an Illustration
+A Table Set in the Text Flow
 
 }
 
-/section{Method}/label{method}
-
-/begin{figure}[H]
-
-/setcounter{figure}{0}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-img}
-
-/apafloattitle{Figure 1}
-
-/apafloatcaption{A figure caption.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 1. A figure caption.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/begin{apafloatnote}
-
-/emph{Note}. zqfigimg
-
-/end{apafloatnote}
-
-/end{figure}
-
-/begin{figure}[H]
-
-/setcounter{figure}{1}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{2}/makeatother%
-/label{fig-div}
-
-/apafloattitle{Figure 2}
-
-/apafloatcaption{A figure caption.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 2. A figure caption.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/begin{apafloatnote}
-
-/emph{Note}. zqfigdiv
-
-/end{apafloatnote}
-
-/end{figure}
-
-/begin{figure}[H]
-
-/setcounter{illustration}{0}
-
-/refstepcounter{illustration}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{ill-img}
-
-/apafloattitle{Illustration 1}
-
-/apafloatcaption{An illustration caption.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Illustration 1. An illustration caption.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/begin{apafloatnote}
-
-/emph{Note}. zqillimg
-
-/end{apafloatnote}
-
-/end{figure}
-
-/begin{figure}[H]
-
-/setcounter{illustration}{1}
-
-/refstepcounter{illustration}%
-/makeatletter/def/@currentlabel{2}/makeatother%
-/label{ill-div}
-
-/apafloattitle{Illustration 2}
-
-/apafloatcaption{An illustration caption.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Illustration 2. An illustration caption.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/begin{apafloatnote}
-
-/emph{Note}. zqilldiv
-
-/end{apafloatnote}
-
-/end{figure}
+This paragraph comes before the table and is set like any other.
 
 /par/addvspace{/baselineskip}/begingroup
 
@@ -1045,83 +938,28 @@ A Note Under an Illustration
 
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
-/label{tbl-one}
+/label{tbl-centred}
 
 /apafloattitle{Table 1}
 
-/apafloatcaption{A table caption.}
+/apafloatcaption{A Table That kableExtra Centres}
 
-/addcontentsline{lot}{table}{Table 1. A table caption.}
+/addcontentsline{lot}{table}{Table 1. A Table That kableExtra Centres}
 
-{/def/LTcaptype{none} % do not increment counter
-/begin{longtable}[]{@{}ll@{}}
-/toprule/noalign{}
-A & B //
-/midrule/noalign{}
-/endhead
-/bottomrule/noalign{}
-/endlastfoot
-1 & 2 //
-/end{longtable}
-}
+/centering
 
-/apatablenoteskip
-
-/begin{apafloatnote}
-
-/emph{Note}. zqtbl
-
-/end{apafloatnote}
+/begin{tabular}{rl}
+/toprule
+x & y//
+/midrule
+1 & a//
+2 & b//
+/bottomrule
+/end{tabular}
 
 /par/endgroup/addvspace{/baselineskip}
 
-A float with no note is styled as one with none, and the paragraph after
-it takes the spacing that goes with that, for an illustration as for a
-figure.
-
-/begin{figure}[H]
-
-/setcounter{figure}{2}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{3}/makeatother%
-/label{fig-bare}
-
-/apafloattitle{Figure 3}
-
-/apafloatcaption{A figure caption.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 3. A figure caption.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/end{figure}
-
-A paragraph after the bare figure.
-
-/begin{figure}[H]
-
-/setcounter{illustration}{2}
-
-/refstepcounter{illustration}%
-/makeatletter/def/@currentlabel{3}/makeatother%
-/label{ill-bare}
-
-/apafloattitle{Illustration 3}
-
-/apafloatcaption{An illustration caption.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Illustration 3. An illustration caption.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/end{figure}
-
-A paragraph after the bare illustration.
+This paragraph comes after the table and should not be centred.
 
 
 
