@@ -174,6 +174,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#future-version-wishlist" id="toc-future-version-wishlist" class="nav-link active" data-scroll-target="#future-version-wishlist">Future Version Wishlist</a></li>
+  <li><a href="#version-7.0.0" id="toc-version-7.0.0" class="nav-link" data-scroll-target="#version-7.0.0">Version 7.0.0</a></li>
   <li><a href="#version-6.0.1" id="toc-version-6.0.1" class="nav-link" data-scroll-target="#version-6.0.1">Version 6.0.1</a></li>
   <li><a href="#version-6.0.0" id="toc-version-6.0.0" class="nav-link" data-scroll-target="#version-6.0.0">Version 6.0.0</a></li>
   <li><a href="#version-5.0.18" id="toc-version-5.0.18" class="nav-link" data-scroll-target="#version-5.0.18">Version 5.0.18</a></li>
@@ -296,10 +297,40 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
+<section id="version-7.0.0" class="level1">
+<h1>Version 7.0.0</h1>
+<ul>
+<li>2026-09-28</li>
+<li><code>documentmode: thesis</code> sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication, the acknowledgments, the table of contents, a list for every kind of float the document holds, and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.</li>
+<li>A float a document declares for itself under <code>crossref.custom</code> — an Illustration is the one apaquarto ships — is set the way a figure is, with its number on a line of its own and its caption under it, in all four formats.</li>
+<li>The <code>apa-note</code> of such a float is written and styled the way a figure’s is.</li>
+<li>Such a float in an appendix is numbered with the appendix letter (Illustration A1), in its caption and in references to it, and moves to the end with the figures when <code>floatsintext: false</code>.</li>
+<li>The <code>apa-note</code> of a plain markdown table keeps its emphasis, bold and code in .html, .docx and .pdf, as it already did in typst.</li>
+<li><code>ref-hyperlink: false</code> applies to references to appendices as well.</li>
+<li>A document with cross-references but no citations no longer gets stray reference-list spacing in typst.</li>
+<li><code>numbered-lines</code> is read the same way in .docx as in .pdf and typst: anything but <code>false</code> turns it on.</li>
+<li>In typst, a paper whose title begins with the word “Appendix” no longer numbers the figures in its body as though they were in an appendix.</li>
+<li>In .html and .docx a figure’s or table’s note is written inside the float, as it already was in .pdf and typst, so the two always travel together.</li>
+<li>A figure with sub-figures and no layout no longer prints its note twice in .html and .docx.</li>
+<li>In .docx a panel’s own note is centred under its panel (the SubPanelNote style), as in .html.</li>
+<li>A title that ends in emphasis or code, with a subtitle, no longer stops the render.</li>
+<li><code>blank-lines-above-title</code> is honoured, and a <code>blank-lines-above-author-note</code> that is not a number falls back to 2 with a warning instead of stopping the render.</li>
+<li>In .docx a level-four or level-five heading keeps its italics and bold, and a cross-reference to it links to it rather than printing <code>?@sec-</code>.</li>
+<li>Appendices written the older way (<code># Appendix A</code> over a title of its own) are lettered once, so their figures and tables are A1, B1, and “Appendix A” is no longer printed twice.</li>
+<li>In .pdf <code>suppress-short-title</code> leaves the running head empty, as it does in .docx and typst.</li>
+<li>A note on a plain div is no longer lost when a figure or table carries a note with the same words.</li>
+<li>In typst journal mode a note written under a plain div, a markdown image or a code-chunk table is no longer indented.</li>
+<li>The table of contents and the lists of figures and tables take their headings from the document’s language, and an Illustration is listed with the figures in .docx and typst as it is in .pdf.</li>
+<li>In .pdf journal mode the ORCID lines of the author note are set flush left and unjustified, as they are in typst.</li>
+</ul>
+</section>
 <section id="version-6.0.1" class="level1">
 <h1>Version 6.0.1</h1>
 <ul>
 <li>2026-09-26</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/166">#166</a> <code>documentmode: stu</code> puts the course, the instructor and the due date on the title page, and drops the running head, in .pdf, .docx and .html as well as typst.</li>
+<li>In apaquarto-pdf each appendix begins a page of its own again, as it does in .docx and typst. The apa7 class had been opening the page, and 6.0.0 stopped building the pdf with that class without taking the work over, so an appendix ran on from whatever came before it. An appendix written the older way — <code># Appendix A</code> over a title of its own — no longer leaves a blank page before it, which it had been doing in .docx.</li>
+<li>In apaquarto-typst, <code>documentmode: doc</code> numbers its pages again. The layout told the page it had no footer, which stopped the number it had asked for from being drawn at all.</li>
 <li>Made both journal modes (apauarto-pdf and apaquarto-typst) fully justified in their body text but not in markdown table text.</li>
 <li>Added support for list of tables and list of figures in .docx, .typst, and .pdf.</li>
 <li>Table of contents for .docx can be added setting <code>list-of-contents: true</code>. A message letting the user know how to update the page fields is displayed.</li>
@@ -308,7 +339,7 @@ window.Quarto = {
 <li>An entry in any of the lists reads <code>Figure 1. The Figure Caption</code>, in .docx, typst and .pdf alike.</li>
 <li>The apa7 class options <code>donotrepeattitle</code>, <code>draftfirst</code>, <code>draftall</code> and <code>nocorrespondence</code> have done nothing since 6.0.0, when the .pdf stopped using that class. <code>suppress-title-introduction</code> and <code>suppress-corresponding-paragraph</code> do the first and the last of them, in every format.</li>
 <li>Footnotes in .docx are single spaced, as recommended at <a href="https://apastyle.apa.org/style-grammar-guidelines/paper-format/line-spacing">apastyle.apa.org</a></li>
-<li>Every format is responsive to Quarto’s <code>linkcolor</code>, <code>filecolor</code>, <code>citecolor</code>, <code>urlcolor</code> and <code>toccolor</code>, journal mode included, and <code>xcolor</code>’s table resolves a colour’s name so that <code>green</code> is the same green in all four.</li>
+<li>Every format is responsive to Quarto’s <code>linkcolor</code>, <code>filecolor</code>, <code>citecolor</code>, <code>urlcolor</code> and <code>toccolor</code>, journal mode included, and <code>xcolor</code>’s table resolves a color’s name so that <code>green</code> is the same green in all four.</li>
 </ul>
 </section>
 <section id="version-6.0.0" class="level1">

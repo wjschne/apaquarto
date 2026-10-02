@@ -1,0 +1,17 @@
+@media screen {
+  /* Simulates physical pages in the browser window */
+  .page-break {
+    display: block;
+    page-break-after: always;
+    break-after: page;
+    border-bottom: 2px dashed #ccc; /* Visual line indicating a new page */
+    padding-top: 2em;
+  }
+}
+
+@media print {
+  .page-break {
+    display: block;
+    break-after: page;
+  }
+}

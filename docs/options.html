@@ -223,6 +223,17 @@ window.Quarto = {
   <li><a href="#options-for-.docx-and-typst" id="toc-options-for-.docx-and-typst" class="nav-link" data-scroll-target="#options-for-.docx-and-typst">Options for .docx and typst</a></li>
   <li><a href="#options-for-.pdf" id="toc-options-for-.pdf" class="nav-link" data-scroll-target="#options-for-.pdf">Options for .pdf</a></li>
   <li><a href="#document-modes-in-pdf-and-typst" id="toc-document-modes-in-pdf-and-typst" class="nav-link" data-scroll-target="#document-modes-in-pdf-and-typst">Document modes in pdf and typst</a></li>
+  <li><a href="#dissertations-and-theses" id="toc-dissertations-and-theses" class="nav-link" data-scroll-target="#dissertations-and-theses">Dissertations and Theses</a>
+  <ul class="collapse">
+  <li><a href="#the-shape-of-the-title" id="toc-the-shape-of-the-title" class="nav-link" data-scroll-target="#the-shape-of-the-title">The shape of the title</a></li>
+  <li><a href="#margins" id="toc-margins" class="nav-link" data-scroll-target="#margins">Margins</a></li>
+  <li><a href="#the-abstract-the-dedication-and-the-acknowledgments" id="toc-the-abstract-the-dedication-and-the-acknowledgments" class="nav-link" data-scroll-target="#the-abstract-the-dedication-and-the-acknowledgments">The abstract, the dedication and the acknowledgments</a></li>
+  <li><a href="#the-table-of-contents" id="toc-the-table-of-contents" class="nav-link" data-scroll-target="#the-table-of-contents">The table of contents</a></li>
+  <li><a href="#chapters" id="toc-chapters" class="nav-link" data-scroll-target="#chapters">Chapters</a></li>
+  <li><a href="#the-lists-of-tables-figures-and-illustrations" id="toc-the-lists-of-tables-figures-and-illustrations" class="nav-link" data-scroll-target="#the-lists-of-tables-figures-and-illustrations">The lists of tables, figures and illustrations</a></li>
+  <li><a href="#line-spacing" id="toc-line-spacing" class="nav-link" data-scroll-target="#line-spacing">Line spacing</a></li>
+  <li><a href="#page-numbering" id="toc-page-numbering" class="nav-link" data-scroll-target="#page-numbering">Page numbering</a></li>
+  </ul></li>
   <li><a href="#tables-of-contents-figures-and-tables" id="toc-tables-of-contents-figures-and-tables" class="nav-link" data-scroll-target="#tables-of-contents-figures-and-tables">Tables of contents, figures, and tables</a></li>
   <li><a href="#the-colour-a-link-takes" id="toc-the-colour-a-link-takes" class="nav-link" data-scroll-target="#the-colour-a-link-takes">The Colour a Link Takes</a></li>
   <li><a href="#options-for-.html" id="toc-options-for-.html" class="nav-link" data-scroll-target="#options-for-.html">Options for .html</a></li>
@@ -950,10 +961,158 @@ window.Quarto = {
 <p><code>logo</code> is a path to an image file, read the same way a path in the document is. Writing <code>logo: default</code> instead of a path uses the apaquarto logo, which the extension ships with, so that a masthead can be seen without one having to be found first.</p>
 <p>Every field is optional, and anything left out is simply left out: a <code>journal</code> with nothing but a <code>title</code> gives the name and the rule and no more. The words “Vol.” and “No.” can be changed with <code>journal-volume</code> and <code>journal-issue</code> in the <code>language</code> field.</p>
 </section>
+<section id="dissertations-and-theses" class="level1">
+<h1>Dissertations and Theses</h1>
+<p><code>documentmode: thesis</code> sets a dissertation or thesis for the Temple University Graduate School, following its <a href="https://grad.temple.edu/sites/grad/files/media/document/Dissertation%20and%20Thesis%20Handbook%202024-2025%20(1).pdf">Dissertation and Thesis Handbook</a>. It is manuscript mode with a front matter of its own, and it works in all four formats. <code>dissertation</code> is accepted as an alias.</p>
+<p>The front matter is built for you, in the order the handbook sets it: title, copyright, abstract, dedication, acknowledgments, table of contents, and a list for each kind of float the document holds. Each page is left out when the document gives it nothing to set, and the numbering runs on over whatever is there.</p>
+<p>The page takes its fields from a <code>thesis</code> block:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">documentmode</span><span class="kw">:</span><span class="at"> thesis</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">thesis</span><span class="kw">:</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> Dissertation</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">submitted-to</span><span class="kw">:</span><span class="at"> the Temple University Graduate Board</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">degree</span><span class="kw">:</span><span class="at"> Doctor of Philosophy</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">date</span><span class="kw">:</span><span class="at"> May 2027</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">committee</span><span class="kw">:</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Mentor's Name</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">role</span><span class="kw">:</span><span class="at"> Advisory Chair</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> TU Department</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Committee Member's Name</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> TU Department</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Committee Member's Name</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">role</span><span class="kw">:</span><span class="at"> External Member</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> Another University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>type</code></td>
+<td>What the work is: <code>Dissertation</code> or <code>Thesis</code>. The page reads “A Dissertation”.</td>
+</tr>
+<tr class="even">
+<td><code>submitted-to</code></td>
+<td>Who it is submitted to. Defaults to “the Temple University Graduate Board”.</td>
+</tr>
+<tr class="odd">
+<td><code>degree</code></td>
+<td>The degree it answers to, as Student Services Banner names it.</td>
+</tr>
+<tr class="even">
+<td><code>date</code></td>
+<td>The diploma date, not the date of the defence.</td>
+</tr>
+<tr class="odd">
+<td><code>copyright</code></td>
+<td>The year on the copyright page. Taken from the year in <code>date</code> when it is not written. <code>false</code> leaves the page out.</td>
+</tr>
+<tr class="even">
+<td><code>dedication</code></td>
+<td>The dedication, centred on a page of its own with no heading. May also be written as a top-level <code>dedication</code>, beside <code>abstract</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>acknowledgments</code></td>
+<td>The acknowledgments, under a heading of their own. <code>acknowledgements</code> is read too, and either may be written at the top level instead.</td>
+</tr>
+<tr class="even">
+<td><code>committee</code></td>
+<td>The examining committee, in order. Each entry takes <code>name</code>, an optional <code>role</code> (<code>Advisory Chair</code>, <code>External Member</code>) and an optional <code>affiliation</code>, and is set as one line with commas between them.</td>
+</tr>
+</tbody>
+</table>
+<p>Every field is optional: a block left out leaves its part of the page out, and the rule that sets it off goes with it.</p>
+<p>The author is the document’s own <code>author</code>, and the title its own <code>title</code>.</p>
+<section id="the-shape-of-the-title" class="level2">
+<h2 class="anchored" data-anchor-id="the-shape-of-the-title">The shape of the title</h2>
+<p>The Graduate School asks for the title in capitals, and for an inverted pyramid when it runs to more than one line: the first line longest, each line after it shorter. apaquarto works the lines out for you. It measures the words and tries every arrangement from two lines up to eight, aiming each line at a straight taper — for a title of four lines, the full measure, three quarters of it, half, a quarter — and takes the arrangement that sits nearest. That settles how many lines the title wants without anyone having to say.</p>
+<p>The lines are worked out once, in Lua, and handed to all four formats, so the title page has the same shape in the .pdf, the .docx, the typst and the .html.</p>
+<p>To break the title yourself instead, write it as a block and end each line with a backslash:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  This is the First Line of My Title \</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  And This is the Second Line</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Those are then the lines, and nothing is worked out.</p>
+</section>
+<section id="margins" class="level2">
+<h2 class="anchored" data-anchor-id="margins">Margins</h2>
+<p>The handbook asks for 1.5” at the left, where the work is bound, and 1” elsewhere, and says the margins are “the same for the entire manuscript, including front matter”. <code>documentmode: thesis</code> sets them in the .pdf, the typst and the .docx.</p>
+<p>The title page is the exception: it is set on 1” all round, so that the block of it stands at the centre of the paper rather than at the centre of a text block pushed right by the binding margin. That is what the dissertations Temple publishes do, and what the Graduate School’s own template draws. The title is broken against the measure that page has, not the body’s.</p>
+</section>
+<section id="the-abstract-the-dedication-and-the-acknowledgments" class="level2">
+<h2 class="anchored" data-anchor-id="the-abstract-the-dedication-and-the-acknowledgments">The abstract, the dedication and the acknowledgments</h2>
+<p>The abstract is the document’s own <code>abstract</code>, and the acknowledgments are <code>acknowledgments</code> (or <code>acknowledgements</code>). Each is set under a heading of its own, in capitals and centred, with the prose flush at the margin, no first line indented, and double spaced, as the handbook asks. Either runs as long as it runs and takes a second page if it needs one.</p>
+<p>The dedication is <code>dedication</code>. It carries no heading and is centred, double spaced, well down its own page.</p>
+<p>All three may be written at the top level, beside <code>abstract</code>, or inside the <code>thesis</code> block.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> </span><span class="st">"What the work found."</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dedication</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  For everyone who wondered whether this would ever be finished.</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acknowledgments</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  Thanks to my committee, and to everyone who read a draft.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Graduate School’s own template sets its abstract and its acknowledgments differently from one another — one begins at the margin and the other is indented, and the air under the heading is not the same on both. apaquarto sets them alike.</p>
+</section>
+<section id="the-table-of-contents" class="level2">
+<h2 class="anchored" data-anchor-id="the-table-of-contents">The table of contents</h2>
+<p>The contents lists the front matter in capitals — the abstract, the dedication, the acknowledgments — then the chapters under a column label reading <code>CHAPTER</code>, each with its arabic number and its title in capitals, and then the back matter: the references, and the appendices, lettered in the order they are mentioned. <code>Page</code> stands at the right margin under the heading, and leader dots run out to the page numbers.</p>
+<p>Neither the copyright page nor the contents itself is listed, which is what the handbook asks. <code>CHAPTER</code> and <code>APPENDICES</code> are column labels rather than entries: they carry no leader and no page, and the chapters and appendices under them carry both.</p>
+<p>The entries are black. They are links, and a link would otherwise take <code>linkcolor</code> and leave the contents reading as a page of cross references rather than as a list; <code>toccolor</code> says what they take instead, in the lists of tables and figures as well.</p>
+<p>How deep it goes is quarto’s own <code>toc-depth</code>, counting levels of heading: <code>1</code> lists the chapters and nothing under them, <code>4</code> adds the three levels of subheading the handbook allows, and anything deeper is cut back to four. Quarto’s default is <code>3</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">toc-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The handbook asks that a level listed for one chapter be listed for every chapter that has it, which is worth a look before you go deeper than the chapters.</p>
+</section>
+<section id="chapters" class="level2">
+<h2 class="anchored" data-anchor-id="chapters">Chapters</h2>
+<p>A chapter is a level-one heading in the body. In thesis mode a heading reading <em>Introduction</em> at the head of the body is kept rather than taken out — a dissertation’s chapters are named, and that heading is the first chapter’s name.</p>
+<p>Every level-one heading is set in capitals, and over each chapter stands the word <code>CHAPTER</code> and its number, on a line of its own and set like the heading under it.</p>
+<p>Every major division begins a page of its own, which is what the handbook asks: each chapter, the references, and each appendix.</p>
+<p>A level-one heading with a part of its own to play — the references, an appendix, the label over an appendix — is not a chapter. It is set in capitals like the rest but carries no <code>CHAPTER</code> line and is not counted in the numbering.</p>
+<p>The <code>CHAPTER</code> lines are not listed in the table of contents, which names a chapter by its own heading. The word can be changed with <code>thesis-chapter-label</code> in the <code>language</code> field.</p>
+<p>In the .pdf and in typst the page numbers are worked out as the document is set. In .docx they are fields, as the lists of figures and tables are, and they are blank until something makes Word paginate: select all and press <kbd>F9</kbd>, or print, or export to PDF. .html has no pages, so an entry there is the words and a link to them.</p>
+</section>
+<section id="the-lists-of-tables-figures-and-illustrations" class="level2">
+<h2 class="anchored" data-anchor-id="the-lists-of-tables-figures-and-illustrations">The lists of tables, figures and illustrations</h2>
+<p>A dissertation carries a table of contents and a list for each kind of float unless it says otherwise, which is the other way round from apaquarto’s other modes: <code>list-of-contents</code>, <code>list-of-tables</code>, <code>list-of-figures</code> and <code>list-of-illustrations</code> are all true here, and the field says what to leave out rather than what to put in.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list-of-illustrations</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A list with nothing in it is left out whatever the field says, and the contents does not name it: a heading reading <code>LIST OF TABLES</code> over an empty page helps nobody, and the Graduate School’s own template says as much — “if no tables, delete this page”.</p>
+<p>A list is built for every kind of float the document holds — tables first, then figures, then anything the document declared for itself under <code>crossref.custom</code>. Each stands under a heading of its own, <code>LIST OF TABLES</code> and the rest, with two column labels over the entries: what the list is of at the left margin and <code>Page</code> at the right. An entry is the float’s number, its caption, leader dots and the page.</p>
+<p>An illustration is a figure with a word and a count of its own, so it is numbered from one rather than continuing after the figures, and its caption is set the way a figure’s is: the number on a line of its own with the caption under it. <code>apa-note</code> works on it as it does on a figure, written either on the image or on the div that holds it, and in .docx it is given the same styles a figure has, which hold the note on the page with the illustration it belongs to. The same goes for any other kind of float a document declares.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">crossref</span><span class="kw">:</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">custom</span><span class="kw">:</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">kind</span><span class="kw">:</span><span class="at"> float</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">reference-prefix</span><span class="kw">:</span><span class="at"> Illustration</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">key</span><span class="kw">:</span><span class="at"> ill</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">latex-env</span><span class="kw">:</span><span class="at"> illustration</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Declare a custom float <strong>in each format block</strong> rather than once for all of them. Quarto drops <code>latex-env</code> on the way through an extension’s shared options, and its own LaTeX code then stops on the missing field.</p>
+<p>The lists are listed in the table of contents, as the handbook asks, and are numbered in the same lower-case roman as the rest of the front matter.</p>
+</section>
+<section id="line-spacing" class="level2">
+<h2 class="anchored" data-anchor-id="line-spacing">Line spacing</h2>
+<p>The handbook sets the line spacing part by part, and <code>documentmode: thesis</code> follows it in all four formats.</p>
+<p>The body is double spaced, and so are the abstract, the dedication, the acknowledgments and the preface.</p>
+<p>A block quotation is single spaced and indented half an inch from the left margin <em>and</em> half an inch from the right, which is what marks it out as quoted.</p>
+<p>The entries of the reference list are single spaced within an entry, with a double space between one entry and the next, hanging half an inch. The table of contents and the lists of tables, figures and illustrations are set the same way: a title of two or more lines is single spaced and turns over under its own first word, and a double space stands between one entry and the next.</p>
+<p>Notes are single spaced within a note, with a double space between one note and the next and the first line indented half an inch, which is where the note’s number sits. In .html the number belongs to the list the browser draws and is left where it is; the line spacing is the same.</p>
+<p>Widows and orphans are avoided, so no page breaks after the first line of a paragraph or before its last. The .pdf is the one that has to be told; .docx and typst avoid them already, and .html has no pages to break.</p>
+<p>Each format takes its own single spacing — what Word, LaTeX and typst each call a single-spaced line differs by a point or so — and its own double, which is what every other <code>documentmode</code> does too.</p>
+</section>
+<section id="page-numbering" class="level2">
+<h2 class="anchored" data-anchor-id="page-numbering">Page numbering</h2>
+<p>The handbook asks for lower-case roman numerals through the front matter and arabic numerals from the first page of the body, and says that “the Title Page is page i, but does not show a page number”. That is what <code>documentmode: thesis</code> sets: the title page is counted and carries nothing, the copyright page is ii, and the body begins again at 1.</p>
+<p>There is no running head. The number sits at the centre of the foot, which is where the dissertations Temple publishes put it.</p>
+<p>Confirm the current requirements with the Graduate School before submitting: apaquarto follows the 2024–2025 handbook, and a handbook is revised.</p>
+</section>
+</section>
 <section id="tables-of-contents-figures-and-tables" class="level1">
 <h1>Tables of contents, figures, and tables</h1>
 <p>Each of these stands on a page of its own, after the abstract, the impact statement, the keywords and the supplemental materials, and before the body of the paper.</p>
-<table class="caption-top table">
+<table class="caption-top">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 93%">
@@ -965,23 +1124,39 @@ window.Quarto = {
 </tr>
 </thead>
 <tbody>
+</tbody>
+</table>
+<pre><code>                 |                                                                                                                                                                                                                                                                                                                  |
+                 | How many levels of heading it lists is quarto's `toc-depth`, which                                                                                                                                                                                                                                               |
+                 | is three unless a document says otherwise. Nothing read that field                                                                                                                                                                                                                                               |
+                 | before 6.0.1: .html and .docx counted three levels, the .pdf three,                                                                                                                                                                                                                                              |
+                 | and typst listed every level there was.                                                                                                                                                                                                                                                                          |</code></pre>
+<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| Each format reaches it differently: typst has an outline of its own, the .pdf has LaTeX’s, the .docx is built by hand, and .html has neither pages nor fields, so an entry there is the heading and a link to it. |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <code>toc: true</code> also works in typst. In .html it puts Quarto’s own contents in the margin, which is where a reader of a web page looks, so this field adds none of its own while that one is there. The .html format sets <code>toc: true</code> itself, so a contents in the body of a web page is asked for with both fields: |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ``` yaml |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| format: |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| apaquarto-html: |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| toc: false |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| list-of-contents: true |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ``` |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| In .docx <code>toc: true</code> is Pandoc’s, and writes a contents at the very top of the file, ahead of the title page, where nothing can move it. |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| Only the headings that belong in a contents are listed: the title page’s headings and anything marked <code>{.unlisted}</code> are left out. |</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 93%">
+</colgroup>
+<tbody>
 <tr class="odd">
-<td><code>list-of-contents</code></td>
-<td><p>A table of contents, in every format.</p>
-<p>Each format reaches it differently: typst has an outline of its own, the .pdf has LaTeX’s, the .docx is built by hand, and .html has neither pages nor fields, so an entry there is the heading and a link to it.</p>
-<p><code>toc: true</code> also works in typst. In .html it puts Quarto’s own contents in the margin, which is where a reader of a web page looks, so this field adds none of its own while that one is there. The .html format sets <code>toc: true</code> itself, so a contents in the body of a web page is asked for with both fields:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-contents</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In .docx <code>toc: true</code> is Pandoc’s, and writes a contents at the very top of the file, ahead of the title page, where nothing can move it.</p>
-<p>Only the headings that belong in a contents are listed: the title page’s headings and anything marked <code>{.unlisted}</code> are left out.</p></td>
-</tr>
-<tr class="even">
 <td><code>list-of-figures</code></td>
 <td>A list of figures, in .docx, typst and .pdf.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>list-of-tables</code></td>
 <td>A list of tables, in .docx, typst and .pdf.</td>
 </tr>
@@ -989,11 +1164,11 @@ window.Quarto = {
 </table>
 <p><code>list-of-figures</code> and <code>list-of-tables</code> are for .docx, typst and the .pdf; an entry in either reads <code>Figure 1. The Figure Caption</code>, with a leader out to the page number. Neither is built for .html, which has no pages to find.</p>
 <p>In .docx those page numbers are fields, since nothing before Word lays the pages out knows what they are. They are blank when the file is opened and fill in correctly as soon as anything makes Word paginate: select all and press <kbd>F9</kbd>, or print, or export to pdf. Rendering says as much.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-contents</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-figures</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-tables</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-contents</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-figures</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-tables</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="the-colour-a-link-takes" class="level1">
 <h1>The Colour a Link Takes</h1>
@@ -1033,11 +1208,11 @@ window.Quarto = {
 </tbody>
 </table>
 <p>A colour is named the way LaTeX names it — one of the colours <code>xcolor</code> defines out of the box, or an HTML code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linkcolor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#cc0000"</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">urlcolor</span><span class="kw">:</span><span class="at"> green</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">citecolor</span><span class="kw">:</span><span class="at"> orange</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filecolor</span><span class="kw">:</span><span class="at"> violet</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">toccolor</span><span class="kw">:</span><span class="at"> teal</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linkcolor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#cc0000"</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">urlcolor</span><span class="kw">:</span><span class="at"> green</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">citecolor</span><span class="kw">:</span><span class="at"> orange</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filecolor</span><span class="kw">:</span><span class="at"> violet</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">toccolor</span><span class="kw">:</span><span class="at"> teal</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>xcolor</code>’s table is what resolves a name, in every format, so <code>green</code> is the same green in the .docx, the .html, the typst and the .pdf. It is not always the green a browser means by that word: CSS <code>green</code> is <code>#008000</code> where <code>xcolor</code>’s is <code>#00FF00</code>. Write the code rather than the name to be sure of the shade.</p>
 <p>Left unset, each link color defaults to <code>#0074D9</code>.</p>
 </section>
@@ -1050,14 +1225,14 @@ window.Quarto = {
 <p>APA does not label the introduction. The title of the paper stands at the top of the first page of text and the introduction runs on underneath it, so a heading reading <em>Introduction</em> is one heading too many.</p>
 <p>apaquarto takes such a heading out for you. If the first heading in the body is a level-one heading whose text is <em>Introduction</em>, it is removed and the text under it is left where it is. A heading called <em>Introduction</em> anywhere else — inside an appendix, say — is left alone, as is one at any other level.</p>
 <p>This matters most when the abstract is written as a section of the document, since something has to mark where the abstract ends and a heading is the obvious thing to reach for:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>The abstract goes here.</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>The body of the paper starts here, and the heading above it does not</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>appear in the output.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abstract</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>The abstract goes here.</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>The body of the paper starts here, and the heading above it does not</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>appear in the output.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The word it looks for is <code>section-title-introduction</code> in the <code>language</code> field, so a paper written in another language is matched too. To keep the heading, set <code>keep-introduction-heading: true</code>.</p>
 </section>
 <section id="suppress-elements" class="level1">
@@ -1266,7 +1441,7 @@ window.Quarto = {
 <tr class="even">
 <td><code>citation-masked-author</code></td>
 <td>The phrase to replace author names in masked citations.</td>
-<td><em>Masked Citation</em></td>
+<td><em>Masked Author</em></td>
 </tr>
 <tr class="odd">
 <td><code>citation-masked-date</code></td>
@@ -1285,7 +1460,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td><code>figure-table-note</code></td>
-<td>The translation for “Note” in table and figure notes</td>
+<td>The translation for “Note” in table and figure notes. If not set, Quarto’s translation of <code>callout-note-title</code> for <code>lang</code> is used.</td>
 <td><em>Note</em></td>
 </tr>
 <tr class="odd">
@@ -1326,21 +1501,21 @@ window.Quarto = {
 </tbody>
 </table>
 <p>All these options must be listed under the <code>language</code> field . For example, if we set the <code>lang</code> field to <code>es</code> (Spanish), the remaining options can also be set:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-last-author-separator</span><span class="kw">:</span><span class="at"> </span><span class="st">"y"</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Cita Enmascarada"</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Título Enmascarado"</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">citation-masked-date</span><span class="kw">:</span><span class="at"> </span><span class="st">"n.f."</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-author-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nota de Autores"</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-correspondence-note</span><span class="kw">:</span><span class="at"> </span><span class="st">"La correspondencia relativa a este artículo debe dirigirse a"</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-block-role-introduction</span><span class="kw">:</span><span class="at"> </span><span class="st">"Los roles de autor se clasificaron utilizando la taxonomía de roles de colaborador (CRediT; https://credit.niso.org/) de la siguiente manera:"</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">references-meta-analysis</span><span class="kw">:</span><span class="at"> </span><span class="st">"Las referencias marcadas con un asterisco indican estudios incluidos en el metanálisis."</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-impact-statement</span><span class="kw">:</span><span class="at"> </span><span class="st">"Declaración de Impacto"</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title-word-count</span><span class="kw">:</span><span class="at"> </span><span class="st">"Recuento de Palabras"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>In addition, many terms that are translated automatically can be overridden. The full list is <a href="https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/language/_language.yml">here</a>. For example, if I wanted “Figure” in figure captions to be “Plot” instead, I would specify the change like so:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here are the language terms most likely to be used in apaquarto:</p>
 <table class="caption-top table">
 <thead>
