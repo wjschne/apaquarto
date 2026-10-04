@@ -7,7 +7,8 @@ This article template creates [APA Style 7th Edition
 documents](https://apastyle.apa.org/) in .docx, .html. and .pdf. The
 .pdf format can be rendered via Latex (i.e., apaquarto-pdf) or via Typst
 (apaquarto-typst). The Typst output for this extension is still
-experimental and requires Quarto 1.9 or greater, as does the rest of apaquarto.
+experimental and requires Quarto 1.9 or greater, as does the rest of
+apaquarto.
 
 Because the .docx format is still widely used—and often required—my main
 priority was to ensure compatibility for .docx. This is still a work in
@@ -21,14 +22,16 @@ here](https://wjschne.github.io/apaquarto/).
 
 ## Example Outputs
 
-The apaquarto-docx form looks like this:
+The manuscript (apaquarto-docx) form looks like this:
 
-![Preview of .docx output](img/docx.png)
+![Preview of Manuscript .docx output](img/docx.png)
 
-The .html and .pdf output (in manuscript mode) look similar. The .pdf in
-journal mode looks like this:
+The journal mode (Typst and LaTeX .pdf) looks like this:
 
-![Preview of .pdf output in journal mode](img/journalmode.png)
+![Preview of .pdf output in journal mode](img/journalmode.png) The
+Temple University Thesis/Dissertation mode looks like this:
+
+![Preview of thesis mode](img/thesismode.png)
 
 ## Creating a New Article
 
@@ -180,7 +183,8 @@ keywords: [keyword1, keyword2]
 author-note:
   disclosures:
     conflict of interest: The author has no conflict of interest to declare.
-bibliography: mybibfile.bib     
+bibliography: mybibfile.bib 
+documentmode: manscript
 format:
   apaquarto-docx: default
   apaquarto-html: default

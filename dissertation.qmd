@@ -26,18 +26,18 @@ acknowledgments: |
 documentmode: thesis
 thesis:
   type: Dissertation
-  submitted-to: the Temple University Graduate Board
-  degree: Doctor of Philosophy
+  submitted-to: the Generic University Graduate Board
+  degree: Doctor of Sophilography
   date: May 2027
   committee:
-    - name: Nedra Goings, Ph.D.
+    - name: N. J. Goings, Ph.D.
       role: Advisory Chair
-      affiliation: Department of Loving Candor and Cosmic Discernment
-    - name: Leslie Eccles, Ph.D.
-      affiliation: Department of Post-Prandial Musings and Aesthetic Abundance
+      affiliation: Department of Cosmic Discernment
+    - name: L. Eccles, Ph.D.
+      affiliation: Department of Aesthetic Abundance
       role: Examining Chair
-    - name: Kristin Moh, Ph.D.
-      affiliation: Department of Musical Self-Actualization and the Universal Groove
+    - name: K. Moh, Ph.D.
+      affiliation: Department of Harmonic Self-Actualization
       role: External Member
 format:
   apaquarto-typst: default

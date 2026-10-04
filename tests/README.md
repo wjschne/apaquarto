@@ -31,8 +31,7 @@ every fixture is read after it is rendered.
 
 1. Write the smallest document that shows the problem, and say in a comment
    what should happen and what used to happen instead.
-2. Add an entry to `expectations.yml` naming the fixture, the format, and what
-   should be in the output.
+2. Add an entry to `expectations.yml` naming the fixture, the format, and what should be in the output.
 3. Run `make test`. It should fail before your fix and pass after it.
 
 Assert the thing the fixture is for. A check that merely restates what the
@@ -51,11 +50,7 @@ everyone to ignore the suite.
 | `tex` | the `.tex` | structure: environments, labels |
 | `typ` | the `.typ` | structure: grids, alignment |
 
-Under each: `contains`, `absent`, `count` (text, and exactly how many
-times), and `order` (a list of texts that must appear in that order, each
-after the one before it). All of them are matched literally, never as a
-regular expression, so keep the strings in single quotes and write a backslash
-as a backslash.
+Under each: `contains`, `absent`, `count` (text, and exactly how many times), and `order` (a list of texts that must appear in that order, each after the one before it). All of them are matched literally, never as a regular expression, so keep the strings in single quotes and write a backslash as a backslash.
 
 ## Known failures
 
