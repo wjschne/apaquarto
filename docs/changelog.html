@@ -324,6 +324,12 @@ window.Quarto = {
 <li>In .pdf journal mode the ORCID lines of the author note are set flush left and unjustified, as they are in typst.</li>
 <li>A document’s <code>geometry</code> sets the .pdf’s margins in every mode, journal and dissertation included, on top of the mode’s own page.</li>
 <li><code>margin</code> sets the margins in .docx as it does in typst, with the same keys (<code>x</code>, <code>y</code>, <code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code>).</li>
+<li>The word count’s label takes <code>title-word-count</code> from the <code>language</code> field, as documented; it had always read <em>Word Count</em>.</li>
+<li>apaquarto reads Quarto’s <code>section-title-appendices</code> (it had spelled it <code>section-title-appendixes</code>, which still works), and a dissertation’s contents labels its appendices with it.</li>
+<li>The heading of a dissertation’s list of tables is named by <code>thesis-list-of-tables</code>, after the <code>list-of-tables</code> field, and every word of the front matter is listed on the options page.</li>
+<li>In typst the space between paragraphs is the line spacing (<code>leading</code>), so a manuscript is evenly double spaced and a journal article’s paragraphs are no longer set apart by extra space.</li>
+<li>In journal mode, .pdf and typst alike, level one to three headings are set the way the Journal of Educational Psychology sets them: a point larger than the body, with 26pt from the line above and 18pt to the line below.</li>
+<li>In a dissertation the document’s own margins reach the front matter as well as the body, and <code>thesis: title-margin</code> sets the title page’s.</li>
 </ul>
 </section>
 <section id="version-6.0.1" class="level1">

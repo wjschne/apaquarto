@@ -181,12 +181,16 @@ end
 
 local function meta(m)
   mode = utilsapa.mode(m)
-  -- The page each mode is set on. A document's own geometry is written after
-  -- it, and geometry takes the last value it is given for a key, so a
-  -- writer's margins win in every mode while what they leave unsaid --- the
-  -- head and foot of a journal page, say --- stays as the mode sets it. A
-  -- dissertation's front matter sets its own margins page by page
-  -- (thesislatex.lua), and \restoregeometry hands the body back these.
+  -- The page each mode is set on. A document's margin field is written after
+  -- it, the same field typst and .docx read, and then its own geometry
+  -- options, for anything else geometry can do. geometry takes the last
+  -- value it is given for a key, so a writer's margins win in every mode
+  -- while what they leave unsaid --- the head and foot of a journal page,
+  -- say --- stays as the mode sets it, and geometry wins over margin where
+  -- both name a side. A dissertation's front matter sets its own margins
+  -- page by page (thesislatex.lua), and \restoregeometry hands the body back
+  -- these.
+  local asked_margin = utilsapa.margin_sides(m.margin, true) or {}
   local asked_geometry = asked_for_geometry(m)
   local mode_geometry = { "margin=1in" }
   if mode == "thesis" then
@@ -357,6 +361,12 @@ local function meta(m)
   local geometry = pandoc.MetaList({})
   for _, option in ipairs(mode_geometry) do
     geometry:insert(pandoc.MetaString(option))
+  end
+  for _, side in ipairs({ "left", "right", "top", "bottom" }) do
+    if asked_margin[side] then
+      geometry:insert(pandoc.MetaString(
+        string.format("%s=%gin", side, asked_margin[side])))
+    end
   end
   for _, option in ipairs(asked_geometry) do
     geometry:insert(pandoc.MetaString(option))

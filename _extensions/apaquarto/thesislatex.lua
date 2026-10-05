@@ -3,7 +3,6 @@
 
 local thesispages = require("thesispages")
 
-local kRuleWidth = thesispages.rule_width
 local kNumberColumn = thesispages.number_column
 local kSubheadingStep = thesispages.subheading_step
 local written = thesispages.written
@@ -91,7 +90,7 @@ local function render_latex(pages, meta)
           string.format("\\vspace*{%.1fpt}", item.points)))
       elseif item.kind == "rule" then
         out:insert(raw("latex", string.format(
-          "{\\centering\\noindent\\rule{%.2fin}{0.5pt}\\par}", kRuleWidth)))
+          "{\\centering\\noindent\\rule{%.2fin}{0.5pt}\\par}", item.width)))
       elseif item.kind == "para" then
         set_spacing(item.double)
         local lines = pandoc.List({})

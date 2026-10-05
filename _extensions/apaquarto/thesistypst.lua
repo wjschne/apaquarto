@@ -3,7 +3,6 @@
 
 local thesispages = require("thesispages")
 
-local kRuleWidth = thesispages.rule_width
 local kNumberColumn = thesispages.number_column
 local kSubheadingStep = thesispages.subheading_step
 local kContentsLead = thesispages.contents_lead
@@ -92,7 +91,7 @@ local function render_typst(pages, meta)
           string.format("#v(%.1fpt, weak: false)", item.points)))
       elseif item.kind == "rule" then
         out:insert(raw("typst", string.format(
-          "#align(center)[#line(length: %.2fin, stroke: 0.5pt)]", kRuleWidth)))
+          "#align(center)[#line(length: %.2fin, stroke: 0.5pt)]", item.width)))
       elseif item.kind == "para" then
         local lines = pandoc.List({})
         for _, line in ipairs(item.lines) do

@@ -230,19 +230,26 @@ general:
     description: |
       Set the paper size. Default is `us-letter`. Other options include `a3`,
       `a4`, `a5`, `b5`, `executive`, `legal`, `letter`, `tabloid`
+  - name: margin
+    default: '1in all round (journal mode: 0.75in at the sides and top, 1in at the foot)'
+    description: |
+      The margins, in the .pdf, the .docx and typst alike: one length, or
+      any of `x` (left and right), `y` (top and bottom), `left`, `right`,
+      `top` and `bottom`, in `in`, `cm`, `mm` or `pt`. A side left out keeps
+      the mode's margin.
+
+      ``` yaml
+      margin:
+        x: 1.25in
+        top: 1in
+      ```
   - name: geometry
     description: |
-      The .pdf's margins, as LaTeX's geometry options: `margin=1.25in`, or a
-      list such as `[left=1.5in, right=1in]`. Written after the mode's own
-      page, so what it names wins and what it leaves out keeps the mode's
-      setting. Default: 1in all round (journal mode: 0.75in, with 1in at the
-      foot).
-  - name: margin
-    description: |
-      The margins in typst and .docx: one length, or any of `x`, `y`, `left`,
-      `right`, `top` and `bottom` (`in`, `cm`, `mm` or `pt` in .docx). A side
-      left out keeps the mode's margin. Default: 1in all round (journal mode
-      in typst: 0.75in at the sides).
+      .pdf only, and seldom needed: LaTeX's geometry options, for anything
+      the geometry package can do that `margin` cannot (`includehead`,
+      `footskip`). Written after `margin`, so where both name a side,
+      `geometry` wins: `geometry: left=1.5in`, or a list such as
+      `[left=1.5in, includehead]`.
 
 # Affiliations
 affiliations:
@@ -656,6 +663,21 @@ thesis:
       The examining committee, in order. Each entry takes `name`, an optional
       `role` (`Advisory Chair`, `External Member`) and an optional
       `affiliation`, and is set as one line with commas between them.
+  - name: title-margin
+    default: '1in all round'
+    description: |
+      The title page's margins, in the same shape as `margin`: one length,
+      or any of `x`, `y`, `left`, `right`, `top` and `bottom`. A side left
+      out keeps its inch. The title is broken into its inverted pyramid
+      against the measure these leave, and the rules under its blocks are
+      5.5in or the whole measure, whichever is narrower. The other pages
+      take the document's own margins (see Margins, above).
+
+      ``` yaml
+      thesis:
+        title-margin:
+          x: 1.25in
+      ```
 
 # Dissertations and Theses: the words of the front matter, under language
 language-thesis:

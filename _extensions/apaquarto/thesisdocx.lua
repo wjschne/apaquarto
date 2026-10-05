@@ -4,7 +4,6 @@
 local thesispages = require("thesispages")
 local utilsapa = require("utilsapa")
 
-local kRuleWidth = thesispages.rule_width
 local kNumberColumn = thesispages.number_column
 local kSubheadingStep = thesispages.subheading_step
 local contents_colour = thesispages.contents_colour
@@ -155,7 +154,7 @@ local function render_docx(pages, meta)
       elseif item.kind == "rule" then
         -- A rule is a paragraph with a border under it, which is how word
         -- draws one. The indents narrow the paragraph to the rule's width.
-        local inset = twips((page.measure - kRuleWidth) / 2 * 72)
+        local inset = twips((page.measure - item.width) / 2 * 72)
         local extra = '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0"'
           .. ' w:color="auto"/></w:pBdr>'
           .. string.format('<w:ind w:left="%d" w:right="%d"/>', inset, inset)

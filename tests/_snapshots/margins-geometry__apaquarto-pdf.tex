@@ -6,10 +6,9 @@
 %
 /documentclass[
   letterpaper,
-  10pt,
-  twoside]{article}
+  12pt]{article}
 /usepackage{xcolor}
-/usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in,includehead,headheight=13pt,headsep=4pt,footskip=18pt,left=2in,right=2in]{geometry}
+/usepackage[margin=1in,left=2in,left=3in,includehead]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -898,16 +897,7 @@
 /renewcommand{/apacontentsname}{Table of Contents}
 /renewcommand{/apalistfigurename}{List of Figures}
 /renewcommand{/apalisttablename}{List of Tables}
-/setapashorttitle{JOURNAL MARGINS}
-/AtBeginDocument{/apalongtableastabular}
-/singlespacing
-/apatwocolumn
-/apajournalhead
-/apajoucolumnsep
-/apajoufloats
-/apajouhangindent
-/apajouheadings
-/setapaauthorline{Author}
+/setapashorttitle{GEOMETRY}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -929,41 +919,49 @@
 /begin{document}
 
 
-/begin{lrbox}{/apamastheadbox}%
+/hfill/break
 
-/begin{minipage}{/textwidth}
+/hfill/break
 
-/apajoutitle{
+/vspace*{3/baselineskip}
 
-Margins in a Journal Article
+/apatitle{
+
+Geometry Over Margin
 
 }
 
-/begin{apajoubyline}
+/begin{apaauthor}
+
+/hfill/break
 
 Test Author
 
-/apajouaffiliationsize
-
 Test University
 
-/end{apajoubyline}
+/end{apaauthor}
 
-/end{minipage}/end{lrbox}
+/hfill/break
 
-/twocolumn[/apamastheadlift/usebox{/apamastheadbox}]
+/hfill/break
 
-/thispagestyle{apajoufirstpage}
+/apatitlepageheading{
 
-/apajournalindent
+Author Note
 
-/begin{apajounote}
+}
 
 Correspondence concerning this article should be addressed to Test
 Author, Test University, Email:
 /href{mailto:test@example.com}{/nolinkurl{test@example.com}}
 
-/end{apajounote}
+/clearpage
+
+/apatitle{
+
+Geometry Over Margin
+
+}
 
 Some text.
 

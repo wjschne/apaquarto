@@ -24,6 +24,8 @@ dedication: |
 acknowledgments: |
   Thanks to my committee, my family, and the miracle of coffee.
 documentmode: thesis
+margin: 
+  left: 1in
 thesis:
   type: Dissertation
   submitted-to: the Generic University Graduate Board

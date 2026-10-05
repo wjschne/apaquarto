@@ -13,21 +13,26 @@ thesis:
   type: Thesis
   degree: Master of Arts
   date: May 2027
-geometry: left=2in
 margin:
   left: 2in
 format:
   apaquarto-pdf: default
   apaquarto-docx: default
+  apaquarto-typst: default
 ---
 
 <!--
 A dissertation is set on the Graduate School's margins: an inch and a half
-at the left, where it is bound, and an inch elsewhere. Those used to be
-written over whatever the document asked for. Now the body takes a margin the
-document names and keeps the Graduate School's for the sides it does not.
-The front matter keeps the Graduate School's margins whatever is asked:
-those pages are a requirement, set page by page.
+at the left, where it is bound, and an inch elsewhere. A side the document
+names replaces the Graduate School's on every page but the title page --- the
+front matter as well as the body, since the handbook asks for the margins to
+be "the same for the entire manuscript, including front matter" --- and the
+sides it does not name keep theirs. The title page keeps its inch all round
+unless thesis: title-margin says otherwise (margins-thesis-title.qmd).
+
+The front matter used to keep the Graduate School's margins whatever was
+asked, so a document that moved its binding margin had its first pages and
+its body set on different ones.
 -->
 
 # Introduction

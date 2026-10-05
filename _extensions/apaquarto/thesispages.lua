@@ -31,13 +31,15 @@ local stringify = utilsapa.stringify
 
 local M = {}
 
--- The margins the handbook asks for, which every page but the first takes.
+-- The margins every page but the first takes: the handbook's, with any side
+-- the document names laid over them (utilsapa.thesis_body_margins).
 local kMargins = utilsapa.thesis_margins
 -- The title page is set on 1" all round, which is what the dissertations
 -- Temple publishes do and what the Graduate School's template draws: the
 -- block of the page stands at the centre of the paper rather than at the
 -- centre of a text block pushed right by the binding margin. So the title is
 -- broken against the measure the title page has, not the one the body has.
+-- thesis: title-margin changes it.
 local kTitleMargins = utilsapa.thesis_title_margins
 local kMeasureInches = utilsapa.thesis_title_measure()
 local kBodyMeasureInches = utilsapa.thesis_measure()
@@ -46,8 +48,10 @@ local kTitleSize = 12
 -- thesistitle measures a word in.
 local kMeasure = kMeasureInches * 72 / kTitleSize * 1000
 
--- The rule under each block: the width the Graduate School's template draws.
-local kRuleWidth = 5.5
+-- The rule under each block: the width the Graduate School's template draws,
+-- or the whole measure of a title page narrower than that.
+local kTemplateRuleWidth = 5.5
+local kRuleWidth = kTemplateRuleWidth
 local kRuleSpace = 21        -- points above and below each rule
 local kTitleDrop = 70        -- points from the top margin down to the title
 local kCommitteeDrop = 70    -- points from the last block down to the committee
@@ -57,6 +61,18 @@ local kDedicationDrop = 164  -- points from the top margin to a dedication
 -- than out at the margin: the rules are narrower than the measure and are
 -- centred in it, so this is the half-inch that leaves on either side.
 local kCommitteeIndent = (kMeasureInches - kRuleWidth) / 2
+
+-- The margins and the measures they leave, for this document. Every value
+-- above that hangs on the margins is set again here, before a page is built.
+local function set_geometry(meta)
+  kMargins = utilsapa.thesis_body_margins(meta)
+  kTitleMargins = utilsapa.thesis_page_one_margins(meta)
+  kMeasureInches = utilsapa.thesis_title_measure(kTitleMargins)
+  kBodyMeasureInches = utilsapa.thesis_measure(kMargins)
+  kMeasure = kMeasureInches * 72 / kTitleSize * 1000
+  kRuleWidth = math.min(kTemplateRuleWidth, kMeasureInches)
+  kCommitteeIndent = (kMeasureInches - kRuleWidth) / 2
+end
 local kDoubleSpace = 27.6    -- and a double-spaced one
 -- From the abstract heading down to the first line of the abstract, which
 -- is a blank double-spaced line between them.
@@ -76,7 +92,6 @@ local kSubheadingStep = 0.5  -- inches a level of subheading is indented
 local kContentsLead = kDoubleSpace - 8.2
 
 -- The measures the renderers need as well, to set what is built here.
-M.rule_width = kRuleWidth
 M.number_column = kNumberColumn
 M.subheading_step = kSubheadingStep
 M.contents_lead = kContentsLead
@@ -187,8 +202,9 @@ local function collector()
     gap = function(points)
       items:insert({ kind = "gap", points = points })
     end,
+    -- At the width this document's title page leaves room for.
     rule = function()
-      items:insert({ kind = "rule" })
+      items:insert({ kind = "rule", width = kRuleWidth })
     end,
     para = function(align, lines, options)
       options = options or {}
@@ -466,6 +482,7 @@ end
 -- and whether it carries its number; the numbering itself is lower-case
 -- roman throughout, and the body that follows begins again at 1 in arabic.
 function M.build(meta, blocks)
+  set_geometry(meta)
   local pages = pandoc.List({})
   local title = title_page(meta)
   if #title > 0 then

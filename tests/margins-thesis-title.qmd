@@ -1,0 +1,35 @@
+---
+title: "A Title Page on Margins of Its Own"
+shorttitle: "Title Margins"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+abstract: "An abstract."
+documentmode: thesis
+thesis:
+  type: Thesis
+  degree: Master of Arts
+  date: May 2027
+  title-margin:
+    x: 1.75in
+format:
+  apaquarto-pdf: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+---
+
+<!--
+thesis: title-margin sets the title page's margins, in the same shape as
+margin. Here they are an inch and three quarters at either side, which
+leaves a 5in measure: narrower than the 5.5in rules the Graduate School's
+template draws, so the rules shrink to the measure rather than running into
+the margins, and the examining committee, which begins where the rules do,
+begins at the margin. The other pages keep the Graduate School's margins.
+-->
+
+# Introduction
+
+Some text.

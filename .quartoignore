@@ -1,42 +1,56 @@
+# What `quarto use template wjschne/apaquarto` leaves out of a new project.
+#
+# A new project gets the extension (_extensions, which Quarto installs on its
+# own), template.qmd renamed after the project, the bibliography it cites,
+# and example.qmd with the image it uses. Everything else here is for
+# developing apaquarto or for building its website.
+#
+# Quarto already leaves out dotfiles (.github, .gitignore and the like),
+# README.md, LICENSE, CHANGELOG.md and CLAUDE.md. Each line below is a glob
+# and is read as written: a comment must go on a line of its own, since a
+# trailing "# ..." would leave spaces at the end of the pattern.
+
+# Developing apaquarto
+tests
+ARCHITECTURE.md
+ARCHITECTURE.html
+CITATION.cff
+DESCRIPTION
+Makefile
+apaquarto.Rproj
+README.qmd
+dissertation.qmd
+tenzing.R
+contributors_table_template_tenzing.xlsx
+
+# The website (docs/ is what it publishes, _freeze/ its cached output)
 _quarto.yml
+_freeze
+docs
+site_libs
+apaquarto.scss
+index.qmd
+installation.qmd
+apashiny.qmd
+options.qmd
+options.yml
+options-helpers.R
+writing.qmd
+resources.qmd
+changelog.qmd
+img
+references.bib
 apa.csl
 apa-cv.csl
-apaquarto.Rproj
-apaquarto.scss
-changelog.qmd
-CITATION.cff
-example.html
-example_files/
-docs
-index.qmd
-img/
-img/sample_image
-img/console.png
-img/cover.png
-img/docx.png
-img/insertchunk.png
-img/journalmode.png
-img/keyboardwithbacktick.jpeg
-img/menuworkingdirectory.png
-img/newquartodocument.png
-img/yamlmetadata.png
-img/terminal.png
-installation.qmd
-Makefile
-options.qmd
-README.qmd
-references.bib
-resources.qmd
-template.pdf
+
+# Rendered output kept in the repository
 example_journal.pdf
 example_manuscript.pdf
 example-pdf-man.pdf
+example.html
+example_files
+template.pdf
+template.tex
 template_journal.pdf
 template_manuscript.pdf
 template.rmarkdown
-template.tex
-writing.qmd
-tenzing.R
-contributors_table_template_tenzing.xlsx
-apashiny.qmd
-img/apa7maker.png

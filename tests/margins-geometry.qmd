@@ -1,0 +1,26 @@
+---
+title: "Geometry Over Margin"
+shorttitle: "Geometry"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+margin:
+  left: 2in
+geometry:
+  - left=3in
+  - includehead
+format:
+  apaquarto-pdf: default
+---
+
+<!--
+margin is the one field for margins in every format, and in the .pdf
+geometry is still there for anything else the geometry package can do. It is
+written after margin, so where both name a side geometry wins: the left
+margin here is three inches, and includehead is passed through as written.
+-->
+
+Some text.

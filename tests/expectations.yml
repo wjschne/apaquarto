@@ -2000,7 +2000,18 @@
   expect:
     tex:
       contains:
-        - '\usepackage[margin=1in,margin=2in]{geometry}'
+        # The mode's inch, then the document's margin: x is left and right,
+        # and 2cm is 0.787402in.
+        - '\usepackage[margin=1in,left=1.5in,right=1.5in,top=0.787402in]{geometry}'
+
+- fixture: margins-geometry.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # geometry after margin, so it wins where both name a side, and an
+        # option margin has no word for is passed through.
+        - '\usepackage[margin=1in,left=2in,left=3in,includehead]{geometry}'
 
 - fixture: margins.qmd
   to: apaquarto-typst
@@ -2025,7 +2036,7 @@
       contains:
         # The journal page first, then the document's margin, which wins; the
         # head and foot settings it does not mention stay.
-        - '\usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in,includehead,headheight=13pt,headsep=4pt,footskip=18pt,margin=2in]{geometry}'
+        - '\usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in,includehead,headheight=13pt,headsep=4pt,footskip=18pt,left=2in,right=2in]{geometry}'
 
 - fixture: margins-jou.qmd
   to: apaquarto-typst
@@ -2040,8 +2051,12 @@
     tex:
       contains:
         - '\usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in,left=2in]{geometry}'
-        # The front matter keeps the Graduate School's margins.
-        - '\newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}'
+        # The front matter after the title page takes the document's margin
+        # too, and the title page keeps its inch all round.
+        - '\newgeometry{left=2.00in,right=1.00in,top=1.00in,bottom=1.00in}'
+        - '\newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}'
+      absent:
+        - '\newgeometry{left=1.50in'
 
 - fixture: margins-thesis.qmd
   to: apaquarto-docx
@@ -2052,9 +2067,55 @@
         # School's inch elsewhere.
         - '<w:pgMar w:bottom="1440" w:footer="720" w:gutter="0" w:header="720" w:left="2880" w:right="1440" w:top="1440" />'
       count:
-        # The front matter after the title page keeps the Graduate School's
-        # inch and a half.
-        '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2160"': 3
+        # The front matter after the title page takes the document's two
+        # inches as well.
+        '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2880"': 3
+        '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2160"': 0
+
+- fixture: margins-thesis.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # The body: the document's margin, after the thesis layout's.
+        - '  margin: (left: 2in,),'
+        # The title page keeps its inch all round.
+        - '#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none'
+      count:
+        # The front matter after the title page: the document's two inches.
+        '#page(margin: (left: 2.00in, right: 1.00in, top: 1.00in, bottom: 1.00in))[': 3
+
+# thesis: title-margin, and a title page narrow enough that the rules have to
+# shrink to its measure.
+- fixture: margins-thesis-title.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - '\newgeometry{left=1.75in,right=1.75in,top=1.00in,bottom=1.00in}'
+        - '\newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}'
+      count:
+        '\rule{5.00in}{0.5pt}': 3
+      absent:
+        - '\rule{5.50in}'
+
+- fixture: margins-thesis-title.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        - '<w:pgMar w:top="1440" w:right="2520" w:bottom="1440" w:left="2520"'
+        # The rules span the whole measure, so they are inset by nothing.
+        - '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:pBdr><w:ind w:left="0" w:right="0"/>'
+
+- fixture: margins-thesis-title.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '#page(margin: (left: 1.75in, right: 1.75in, top: 1.00in, bottom: 1.00in), header: none'
+      count:
+        '#line(length: 5.00in, stroke: 0.5pt)': 3
 
 # The word count's label, from the language field. check-options.R found
 # frontmatter.lua reading a key nothing sets.

@@ -402,11 +402,25 @@ elsewhere, and says the margins are "the same for the entire manuscript,
 including front matter". `documentmode: thesis` sets them in the .pdf, the
 typst and the .docx.
 
+A margin the document names with `margin` replaces the handbook's on every
+page but the title page, the front matter as well as the body, so the whole
+work moves together, in all three formats. A side left out keeps the
+handbook's.
+
+``` yaml
+margin:
+  left: 1.25in
+```
+
 The title page is the exception: it is set on 1" all round, so that the block
 of it stands at the centre of the paper rather than at the centre of a text
 block pushed right by the binding margin. That is what the dissertations
 Temple publishes do, and what the Graduate School's own template draws. The
 title is broken against the measure that page has, not the body's.
+`title-margin` under `thesis` gives it margins of its own.
+
+Confirm with the Graduate School before submitting on margins other than the
+handbook's.
 
 ## The abstract, the dedication and the acknowledgments
 

@@ -450,16 +450,140 @@ M.thesis_paper_width = 8.5
 -- is one page and it is set on its own, so it takes margins of its own.
 M.thesis_title_margins = { left = 1.0, right = 1.0, top = 1.0, bottom = 1.0 }
 
-local function measure(margins)
+-- The width of the text block a page's margins leave, in inches.
+function M.thesis_measure(margins)
+  margins = margins or M.thesis_margins
   return M.thesis_paper_width - margins.left - margins.right
 end
 
-function M.thesis_measure()
-  return measure(M.thesis_margins)
+function M.thesis_title_measure(margins)
+  return M.thesis_measure(margins or M.thesis_title_margins)
 end
 
-function M.thesis_title_measure()
-  return measure(M.thesis_title_margins)
+-- Margins a document asks for --------------------------------------------
+
+local kInchesPer = { ["in"] = 1, cm = 1 / 2.54, mm = 1 / 25.4, pt = 1 / 72 }
+
+-- A length as inches: "1in", "2.5cm", "25mm" or "72pt". nil for anything
+-- else.
+function M.length_in_inches(value)
+  if value == nil then return nil end
+  local number, unit = M.trim(pandoc.utils.stringify(value))
+    :match("^([%d%.]+)%s*(%a+)$")
+  number = tonumber(number)
+  local per = unit and kInchesPer[unit:lower()]
+  if number == nil or per == nil then return nil end
+  return number * per
+end
+
+-- A margin field read the way typst reads one, since the typst format takes
+-- the same field: one length for every side, or a map of x (left and right),
+-- y (top and bottom), rest, and the sides themselves, the more particular key
+-- winning. Sides as inches; nil when it names none. With warn, a length
+-- that cannot be read is said so and left out.
+function M.margin_sides(value, warn)
+  if value == nil then return nil end
+  local sides = {}
+  local function set(names, raw)
+    local inches = M.length_in_inches(raw)
+    if inches == nil then
+      if warn then
+        quarto.log.warning("margin: " .. pandoc.utils.stringify(raw) ..
+          " is not a length apaquarto can use (in, cm, mm or pt), so it" ..
+          " was left out.")
+      end
+      return
+    end
+    for _, side in ipairs(names) do sides[side] = inches end
+  end
+  local kind = pandoc.utils.type(value)
+  if kind == "Inlines" or kind == "string" then
+    set({ "top", "right", "bottom", "left" }, value)
+  elseif type(value) == "table" then
+    if value.rest then set({ "top", "right", "bottom", "left" }, value.rest) end
+    if value.x then set({ "left", "right" }, value.x) end
+    if value.y then set({ "top", "bottom" }, value.y) end
+    for _, side in ipairs({ "top", "right", "bottom", "left" }) do
+      if value[side] then set({ side }, value[side]) end
+    end
+  end
+  if next(sides) == nil then return nil end
+  return sides
+end
+
+-- The margins latex's geometry options ask for, as inches: margin, hmargin
+-- and vmargin, and the sides by any of their names. Options that do not set
+-- a margin (includehead, footskip) are passed over, and so is a value that is
+-- not a plain length. Later options win, as they do in geometry itself.
+local kGeometrySides = {
+  margin = { "top", "right", "bottom", "left" },
+  hmargin = { "left", "right" }, vmargin = { "top", "bottom" },
+  left = { "left" }, lmargin = { "left" }, inner = { "left" },
+  right = { "right" }, rmargin = { "right" }, outer = { "right" },
+  top = { "top" }, tmargin = { "top" },
+  bottom = { "bottom" }, bmargin = { "bottom" },
+}
+
+function M.geometry_sides(value)
+  if value == nil then return nil end
+  local options = {}
+  if pandoc.utils.type(value) == "List" then
+    for _, item in ipairs(value) do options[#options + 1] = M.stringify(item) end
+  else
+    options[1] = M.stringify(value)
+  end
+  local sides = {}
+  for _, written in ipairs(options) do
+    for option in written:gmatch("[^,]+") do
+      local key, length = option:match("^%s*([%a]+)%s*=%s*(.-)%s*$")
+      local names = key and kGeometrySides[key]
+      local inches = names and M.length_in_inches(length)
+      if inches then
+        for _, side in ipairs(names) do sides[side] = inches end
+      end
+    end
+  end
+  if next(sides) == nil then return nil end
+  return sides
+end
+
+-- The margins the document asks for: margin in every format, and in the .pdf
+-- its geometry options laid over that, which is the order formatlatex.lua
+-- writes them in. nil when it asks for none. warn as for margin_sides.
+function M.asked_margins(meta, warn)
+  if meta == nil then return nil end
+  local sides = M.margin_sides(meta.margin, warn)
+  if FORMAT == "latex" then
+    local geometry = M.geometry_sides(meta.geometry)
+    if geometry then
+      sides = sides or {}
+      for side, inches in pairs(geometry) do sides[side] = inches end
+    end
+  end
+  return sides
+end
+
+local function overlay(base, sides)
+  local out = {}
+  for side, inches in pairs(base) do out[side] = inches end
+  for side, inches in pairs(sides or {}) do out[side] = inches end
+  return out
+end
+
+-- A dissertation's margins, the Graduate School's with whatever sides the
+-- document names laid over them. Every page but the title page takes these,
+-- the front matter as well as the body, since the handbook asks for the
+-- margins to be "the same for the entire manuscript, including front matter".
+function M.thesis_body_margins(meta, warn)
+  return overlay(M.thesis_margins, M.asked_margins(meta, warn))
+end
+
+-- The title page's: 1" all round unless thesis: title-margin says otherwise,
+-- in the same shape as margin.
+function M.thesis_page_one_margins(meta)
+  local thesis = meta and meta.thesis
+  return overlay(M.thesis_title_margins,
+    M.margin_sides(thesis and thesis["title-margin"], true))
 end
 
 -- How many levels of heading a table of contents lists, which is quarto's

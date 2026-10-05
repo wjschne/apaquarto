@@ -7,7 +7,6 @@ author:
     email: test@example.com
     affiliations:
       - name: Test University
-geometry: margin=2in
 margin:
   x: 1.5in
   top: 2cm
@@ -18,15 +17,14 @@ format:
 ---
 
 <!--
-A writer sets the margins with the field each format reads: geometry for the
-.pdf, margin for typst and for .docx. The .pdf used to have its margins only
-from apaquarto's own default, the inch written in _extension.yml, which a
-document's geometry replaced; now formatlatex.lua writes the mode's page and
-the document's geometry after it, and geometry takes the last value. .docx
-had no margin option at all, only its reference document.
+One field sets the margins in every format with pages: margin, in typst's
+shape. typst reads it itself; formatlatex.lua turns it into geometry options
+for the .pdf, written after the mode's page; docxreferencedoc.lua writes it
+into the .docx's reference document. The .pdf used to read only geometry,
+and .docx had no margin option at all.
 
-For .docx, x sets the left and right and top the top; the bottom is not
-named and keeps the reference document's inch.
+x sets the left and right and top the top; the bottom is not named and keeps
+the mode's inch. 2cm is 0.787402in.
 -->
 
 Some text.

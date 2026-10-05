@@ -3,7 +3,6 @@
 
 local thesispages = require("thesispages")
 
-local kRuleWidth = thesispages.rule_width
 local kSubheadingStep = thesispages.subheading_step
 local contents_colour = thesispages.contents_colour
 local written = thesispages.written
@@ -47,7 +46,7 @@ local function render_html(pages, meta)
       elseif item.kind == "rule" then
         out:insert(raw("html", string.format(
           '<hr style="width:%.2fin;margin:0 auto;border:none;'
-          .. 'border-top:0.5pt solid currentColor">', kRuleWidth)))
+          .. 'border-top:0.5pt solid currentColor">', item.width)))
       elseif item.kind == "para" then
         local lines = pandoc.List({})
         for _, line in ipairs(item.lines) do

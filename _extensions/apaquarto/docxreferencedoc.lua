@@ -326,50 +326,6 @@ local function set_line_numbers(document, linenumbers)
   return stripped:sub(1, last) .. marker .. wanted .. stripped:sub(last + 1)
 end
 
---- A length as inches: "1in", "2.5cm", "25mm" or "72pt". nil for anything
---- else.
-local inches_per = { ["in"] = 1, cm = 1 / 2.54, mm = 1 / 25.4, pt = 1 / 72 }
-
-local function length_in_inches(value)
-  local number, unit = trim(pandoc.utils.stringify(value)):match("^([%d%.]+)%s*(%a+)$")
-  number = tonumber(number)
-  local per = unit and inches_per[unit:lower()]
-  if number == nil or per == nil then return nil end
-  return number * per
-end
-
---- The margin field, read the way typst reads it, since the typst format
---- takes the same field: one length for every side, or a map of x
---- (left and right), y (top and bottom), rest, and the sides themselves,
---- the more particular key winning. Sides as inches; nil when the document
---- asked for none. A length word cannot read is warned about and left out.
-local function asked_margins(value)
-  if value == nil then return nil end
-  local sides = {}
-  local function set(names, raw)
-    local inches = length_in_inches(raw)
-    if inches == nil then
-      quarto.log.warning("margin: " .. pandoc.utils.stringify(raw) ..
-        " is not a length .docx can use (in, cm, mm or pt), so it was left out.")
-      return
-    end
-    for _, side in ipairs(names) do sides[side] = inches end
-  end
-  local kind = pandoc.utils.type(value)
-  if kind == "Inlines" or kind == "string" then
-    set({ "top", "right", "bottom", "left" }, value)
-  elseif type(value) == "table" then
-    if value.rest then set({ "top", "right", "bottom", "left" }, value.rest) end
-    if value.x then set({ "left", "right" }, value.x) end
-    if value.y then set({ "top", "bottom" }, value.y) end
-    for _, side in ipairs({ "top", "right", "bottom", "left" }) do
-      if value[side] then set({ side }, value[side]) end
-    end
-  end
-  if next(sides) == nil then return nil end
-  return sides
-end
-
 --- The margins, which live in the same section properties as the page size
 --- and which pandoc takes from the reference document just as it does the
 --- size. documentmode: thesis asks for the ones the Graduate School's
@@ -643,15 +599,9 @@ function Pandoc(doc)
   --- document's in every mode but thesis.
   local margins = nil
   if thesis then
-    margins = {}
-    for side, inches in pairs(utilsapa.thesis_margins) do
-      margins[side] = inches
-    end
-  end
-  local asked = asked_margins(doc.meta.margin)
-  if asked then
-    margins = margins or {}
-    for side, inches in pairs(asked) do margins[side] = inches end
+    margins = utilsapa.thesis_body_margins(doc.meta, true)
+  else
+    margins = utilsapa.margin_sides(doc.meta.margin, true)
   end
   --- The body of a dissertation begins again at 1, in arabic; the front
   --- matter before it is in lower-case roman, which the title page's own

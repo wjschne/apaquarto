@@ -8,7 +8,6 @@ author:
     affiliations:
       - name: Test University
 documentmode: jou
-geometry: margin=2in
 margin:
   x: 2in
 format:
@@ -20,10 +19,9 @@ format:
 Journal mode sets its own page: three quarters of an inch at the sides and
 the top, an inch at the foot, with the running head inside the top margin.
 In the .pdf that page used to be written over whatever the document asked
-for, so geometry did nothing in this mode. Now the document's geometry comes
-after it and wins, and the head and foot settings it does not mention stay.
-typst always let the document's margin win; this checks it is still handed
-over.
+for. Now the document's margin comes after it and wins, and the head and
+foot settings it does not mention stay. typst always let the document's
+margin win; this checks it is still handed over.
 -->
 
 Some text.

@@ -6,10 +6,9 @@
 %
 /documentclass[
   letterpaper,
-  10pt,
-  twoside]{article}
+  12pt]{article}
 /usepackage{xcolor}
-/usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in,includehead,headheight=13pt,headsep=4pt,footskip=18pt,left=2in,right=2in]{geometry}
+/usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -898,16 +897,12 @@
 /renewcommand{/apacontentsname}{Table of Contents}
 /renewcommand{/apalistfigurename}{List of Figures}
 /renewcommand{/apalisttablename}{List of Tables}
-/setapashorttitle{JOURNAL MARGINS}
-/AtBeginDocument{/apalongtableastabular}
-/singlespacing
-/apatwocolumn
-/apajournalhead
-/apajoucolumnsep
-/apajoufloats
-/apajouhangindent
-/apajouheadings
-/setapaauthorline{Author}
+/setapashorttitle{TITLE MARGINS}
+/apathesisquote
+/apathesisnotes
+/apathesispenalties
+/AtBeginDocument{/apathesisreferences}
+/definecolor{apathesistoc}{HTML}{000000}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -929,41 +924,114 @@
 /begin{document}
 
 
-/begin{lrbox}{/apamastheadbox}%
+/apathesishead/pagenumbering{roman}
 
-/begin{minipage}{/textwidth}
+/newgeometry{left=1.75in,right=1.75in,top=1.00in,bottom=1.00in}
 
-/apajoutitle{
+/thispagestyle{empty}
 
-Margins in a Journal Article
+/vspace*{70.0pt}
+
+/singlespacing
+
+{/centering
+/bfseries A TITLE PAGE ON MARGINS OF ITS OWN/par}
+
+/vspace*{21.0pt}
+
+{/centering/noindent/rule{5.00in}{0.5pt}/par}
+
+/vspace*{21.0pt}
+
+{/centering
+A Thesis//
+Submitted to//
+the Temple University Graduate Board/par}
+
+/vspace*{21.0pt}
+
+{/centering/noindent/rule{5.00in}{0.5pt}/par}
+
+/vspace*{21.0pt}
+
+{/centering
+In Partial Fulfillment//
+of the Requirements for the Degree//
+Master of Arts/par}
+
+/vspace*{21.0pt}
+
+{/centering/noindent/rule{5.00in}{0.5pt}/par}
+
+/vspace*{21.0pt}
+
+{/centering
+by//
+Test Author//
+May 2027/par}
+
+/clearpage
+
+/newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}
+
+/vspace*{289.0pt}
+
+/doublespacing
+
+{/centering
+© Copyright 2027 by Test Author//
+All Rights Reserved/par}
+
+/clearpage
+
+/label{apathesis-abstract}
+
+/singlespacing
+
+{/centering
+/bfseries ABSTRACT/par}
+
+/vspace*{27.6pt}
+
+/doublespacing
+
+{/setlength{/parindent}{0pt}
+
+An abstract.
 
 }
 
-/begin{apajoubyline}
+/clearpage
 
-Test Author
+/singlespacing
 
-/apajouaffiliationsize
+{/centering
+/bfseries TABLE OF CONTENTS/par}
 
-Test University
+/vspace*{27.6pt}
 
-/end{apajoubyline}
+{/raggedleft
+Page/par}
 
-/end{minipage}/end{lrbox}
+/doublespacing
 
-/twocolumn[/apamastheadlift/usebox{/apamastheadbox}]
+{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
 
-/thispagestyle{apajoufirstpage}
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-abstract]{/textcolor{apathesistoc}{ABSTRACT}}/apadotfill/hyperref[apathesis-abstract]{/textcolor{apathesistoc}{/pageref{apathesis-abstract}}}/par}
 
-/apajournalindent
+{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
 
-/begin{apajounote}
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{/textcolor{apathesistoc}{INTRODUCTION}}/apadotfill/hyperref[introduction]{/textcolor{apathesistoc}{/pageref{introduction}}}/par}
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
+}
 
-/end{apajounote}
+/clearpage
+
+/restoregeometry/doublespacing/pagenumbering{arabic}
+
+/section*{CHAPTER 1}
+
+/section{INTRODUCTION}/label{introduction}
 
 Some text.
 

@@ -35,13 +35,13 @@ engine: knitr
 - In typst journal mode a note written under a plain div, a markdown image or a code-chunk table is no longer indented.
 - The table of contents and the lists of figures and tables take their headings from the document's language, and an Illustration is listed with the figures in .docx and typst as it is in .pdf.
 - In .pdf journal mode the ORCID lines of the author note are set flush left and unjustified, as they are in typst.
-- A document's `geometry` sets the .pdf's margins in every mode, journal and dissertation included, on top of the mode's own page.
-- `margin` sets the margins in .docx as it does in typst, with the same keys (`x`, `y`, `left`, `right`, `top`, `bottom`).
+- `margin` sets the margins in every mode of the .pdf, the .docx and typst alike, with typst's keys (`x`, `y`, `left`, `right`, `top`, `bottom`); in the .pdf `geometry` still works and wins where both name a side.
 - The word count's label takes `title-word-count` from the `language` field, as documented; it had always read *Word Count*.
 - apaquarto reads Quarto's `section-title-appendices` (it had spelled it `section-title-appendixes`, which still works), and a dissertation's contents labels its appendices with it.
 - The heading of a dissertation's list of tables is named by `thesis-list-of-tables`, after the `list-of-tables` field, and every word of the front matter is listed on the options page.
 - In typst the space between paragraphs is the line spacing (`leading`), so a manuscript is evenly double spaced and a journal article's paragraphs are no longer set apart by extra space.
 - In journal mode, .pdf and typst alike, level one to three headings are set the way the Journal of Educational Psychology sets them: a point larger than the body, with 26pt from the line above and 18pt to the line below.
+- In a dissertation the document's own margins reach the front matter as well as the body, and `thesis: title-margin` sets the title page's.
 
 # Version 6.0.1
 - 2026-09-26
