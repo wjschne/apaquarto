@@ -198,26 +198,14 @@ end
 local kTabPosition = 9360
 
 local function measure_text_width()
-  local refdoc = PANDOC_WRITER_OPTIONS.reference_doc
-  if not refdoc then return end
-  local f = io.open(refdoc, "rb")
-  if not f then return end
-  local data = f:read("a")
-  f:close()
-  local ok, archive = pcall(pandoc.zip.Archive, data)
-  if not ok then return end
-  for _, entry in ipairs(archive.entries) do
-    if entry.path == "word/document.xml" then
-      local xml = entry:contents()
-      local width = tonumber(xml:match('<w:pgSz[^>]-w:w="(%d+)"'))
-      local left = tonumber(xml:match('<w:pgMar[^>]-w:left="(%d+)"'))
-      local right = tonumber(xml:match('<w:pgMar[^>]-w:right="(%d+)"'))
-      if width and left and right then
-        local measure = width - left - right
-        if measure > 0 then kTabPosition = measure end
-      end
-      return
-    end
+  local xml = require("referencedoc").part("word/document.xml")
+  if not xml then return end
+  local width = tonumber(xml:match('<w:pgSz[^>]-w:w="(%d+)"'))
+  local left = tonumber(xml:match('<w:pgMar[^>]-w:left="(%d+)"'))
+  local right = tonumber(xml:match('<w:pgMar[^>]-w:right="(%d+)"'))
+  if width and left and right then
+    local measure = width - left - right
+    if measure > 0 then kTabPosition = measure end
   end
 end
 

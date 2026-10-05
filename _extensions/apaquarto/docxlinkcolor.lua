@@ -16,33 +16,28 @@
 -- by docxcontents.lua out of word markup of its own, whose runs carry no
 -- style at all, so the colour is written straight into them there.
 --
--- The styles are added to the reference document between markers and the
--- marked block is taken out again at the start of every render, so a document
--- that asks for no colour leaves the file as it shipped.
+-- The styles themselves are written into the reference document by
+-- docxreferencedoc.lua, along with everything else a render changes there,
+-- so that the file is written once; referencedoc.lua has the code for them.
+-- This filter gives each link the style that suits it.
 
 if FORMAT ~= "docx" then
   return
 end
 
 local utilsapa = require("utilsapa")
+local referencedoc = require("referencedoc")
 
 -- Which field a link's target asks for, read the way latex reads it
 local field_for = utilsapa.link_field
 
-local styles = {
-  linkcolor = "ApaLinkColor",
-  urlcolor  = "ApaUrlColor",
-  citecolor = "ApaCiteColor",
-  filecolor = "ApaFileColor",
-}
+local styles = referencedoc.link_styles
 
 -- field -> six hex digits, for the fields this document actually named
 local wanted = {}
 
 function Meta(meta)
-  for field, _ in pairs(styles) do
-    wanted[field] = utilsapa.colour_hex(meta[field])
-  end
+  wanted = referencedoc.link_colours(meta)
 end
 
 function Link(link)
@@ -54,91 +49,7 @@ function Link(link)
   return link
 end
 
--- Writing the styles into the reference document ---------------------------
-
-local marker_open = "<!-- apaquarto-link-styles -->"
-local marker_close = "<!-- /apaquarto-link-styles -->"
-
-local function strip_link_styles(xml)
-  return (xml:gsub("<!%-%- apaquarto%-link%-styles %-%->.-<!%-%- /apaquarto%-link%-styles %-%->", ""))
-end
-
-local function style_xml(id, hex)
-  return table.concat({
-    '<w:style w:type="character" w:customStyle="1" w:styleId="', id, '">',
-    '<w:name w:val="', id, '"/>',
-    '<w:basedOn w:val="Hyperlink"/>',
-    '<w:rPr><w:color w:val="', hex, '"/></w:rPr>',
-    "</w:style>",
-  })
-end
-
-local function patch_styles(xml)
-  local stripped = strip_link_styles(xml)
-  local added = {}
-  for field, id in pairs(styles) do
-    if wanted[field] then added[#added + 1] = style_xml(id, wanted[field]) end
-  end
-  if #added == 0 then return stripped end
-  table.sort(added)
-  -- At the end, where the other styles are. A w:styles element has its
-  -- docDefaults and its latentStyles before any w:style, and word calls a
-  -- file that puts one of them first unreadable.
-  local closing = "</w:styles>"
-  local first = stripped:find(closing, 1, true)
-  if not first then return stripped end
-  return stripped:sub(1, first - 1) .. marker_open .. table.concat(added)
-    .. marker_close .. stripped:sub(first)
-end
-
-local function read_file(path)
-  local f = io.open(path, "rb")
-  if not f then return nil end
-  local data = f:read("a")
-  f:close()
-  return data
-end
-
-function Pandoc(doc)
-  local refdoc = PANDOC_WRITER_OPTIONS.reference_doc
-  if not refdoc then return nil end
-
-  local data = read_file(refdoc)
-  if not data then return nil end
-  local ok, archive = pcall(pandoc.zip.Archive, data)
-  if not ok then return nil end
-
-  local changed = false
-  local entries = {}
-  for _, entry in ipairs(archive.entries) do
-    if entry.path == "word/styles.xml" then
-      local xml = entry:contents()
-      local patched = patch_styles(xml)
-      if patched ~= xml then
-        changed = true
-        entries[#entries + 1] = pandoc.zip.Entry(entry.path, patched, entry.modtime)
-      else
-        entries[#entries + 1] = entry
-      end
-    else
-      entries[#entries + 1] = entry
-    end
-  end
-  if not changed then return nil end
-
-  archive.entries = entries
-  local f = io.open(refdoc, "wb")
-  if not f then
-    quarto.log.warning("Could not write reference document " .. refdoc ..
-      ", so the link colours were not applied.")
-    return nil
-  end
-  f:write(archive:bytestring())
-  f:close()
-  return nil
-end
-
 return {
   { Meta = Meta },
-  { Link = Link, Pandoc = Pandoc },
+  { Link = Link },
 }

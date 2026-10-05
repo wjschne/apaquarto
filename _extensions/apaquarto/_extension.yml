@@ -303,8 +303,9 @@ contributes:
         # Format Latex symbol
         - at: post-render
           path: docxformatlatexsymbol.lua
-        # Set the docx fonts and page size from the mainfont, monofont
-        # and papersize options
+        # Set the docx fonts, page size and link colour styles from the
+        # mainfont, monofont, papersize and *color options. The one filter
+        # that writes the reference document (see referencedoc.lua).
         - at: post-render
           path: docxreferencedoc.lua
         # The lists of figures and tables, and the headings the table of
@@ -315,8 +316,8 @@ contributes:
         - at: post-render
           path: docxcontents.lua
         # The colour linkcolor, urlcolor, citecolor and filecolor ask a
-        # link to take. After docxreferencedoc.lua, whose patched styles it
-        # adds to.
+        # link to take. docxreferencedoc.lua writes the styles; this hands
+        # each link the one that suits it.
         - at: post-render
           path: docxlinkcolor.lua
       knitr: 

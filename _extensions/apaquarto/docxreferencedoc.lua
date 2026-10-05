@@ -35,9 +35,14 @@
 --- the binding in place for Word and gives every other viewer something to
 --- show.
 ---
+--- The link colours are written here too: a character style for each of
+--- linkcolor, urlcolor, citecolor and filecolor, which docxlinkcolor.lua
+--- hands to the links themselves.
+---
 --- Pandoc reads the reference document when it writes the output, which
 --- happens after all filters have run, so patching the reference document
---- here is picked up by the writer.
+--- here is picked up by the writer. This is the one filter that writes it,
+--- once a render, with everything the render asks for; see referencedoc.lua.
 ---
 --- The fonts, page size, line numbering and running-head control the
 --- reference document shipped with are recorded in xml comments the first
@@ -78,6 +83,7 @@ local paper_sizes = {
 }
 
 local utilsapa = require("utilsapa")
+local referencedoc = require("referencedoc")
 local trim = utilsapa.trim
 
 --- mainfont and monofont can be a stack of fonts (the html format sets
@@ -104,22 +110,6 @@ end
 
 local function make_marker(key, value)
   return "<!-- apaquarto-original-" .. key .. ": " .. value .. " -->"
-end
-
-local function read_file(path)
-  local f = io.open(path, "rb")
-  if not f then return nil end
-  local data = f:read("a")
-  f:close()
-  return data
-end
-
-local function write_file(path, data)
-  local f = io.open(path, "wb")
-  if not f then return false end
-  f:write(data)
-  f:close()
-  return true
 end
 
 --- Set the typeface of the <a:latin/> element in majorFont and minorFont
@@ -591,8 +581,7 @@ local function patch_header(header, runninghead)
 end
 
 function Pandoc(doc)
-  local refdoc = PANDOC_WRITER_OPTIONS.reference_doc
-  if not refdoc then return nil end
+  if not PANDOC_WRITER_OPTIONS.reference_doc then return nil end
 
   local mainfont = clean_font(doc.meta.mainfont)
   local monofont = clean_font(doc.meta.monofont)
@@ -623,18 +612,15 @@ function Pandoc(doc)
     runninghead = ""
   end
 
-  local data = read_file(refdoc)
-  if not data then
-    quarto.log.warning("Could not read reference document " .. refdoc ..
-      ", so mainfont, monofont, papersize and numbered-lines were not applied.")
-    return nil
-  end
+  --- The colour each of linkcolor, urlcolor, citecolor and filecolor asks
+  --- for, which become character styles in word/styles.xml.
+  local linkcolours = referencedoc.link_colours(doc.meta)
 
-  local ok, archive = pcall(pandoc.zip.Archive, data)
-  if not ok then
-    quarto.log.warning("Could not read reference document " .. refdoc ..
-      " as a docx file, so mainfont, monofont, papersize and numbered-lines" ..
-      " were not applied.")
+  local archive, refdoc = referencedoc.read()
+  if not archive then
+    quarto.log.warning("Reference document: " .. refdoc ..
+      ", so mainfont, monofont, papersize, numbered-lines and the link" ..
+      " colours were not applied.")
     return nil
   end
 
@@ -669,7 +655,9 @@ function Pandoc(doc)
       patched = patch_styles(xml, monofont, thesis)
       if not patched then
         quarto.log.warning("Reference document " .. refdoc ..
-          " has no styles, monofont was not applied.")
+          " has no styles, monofont and the link colours were not applied.")
+      else
+        patched = referencedoc.patch_link_styles(patched, linkcolours)
       end
     elseif entry.path == document_path then
       xml = entry:contents()
@@ -697,9 +685,10 @@ function Pandoc(doc)
   if not changed then return nil end
 
   archive.entries = newentries
-  if not write_file(refdoc, archive:bytestring()) then
+  if not referencedoc.write(archive) then
     quarto.log.warning("Could not write reference document " .. refdoc ..
-      ", so mainfont, monofont, papersize and numbered-lines were not applied.")
+      ", so mainfont, monofont, papersize, numbered-lines and the link" ..
+      " colours were not applied.")
   end
 
   return nil

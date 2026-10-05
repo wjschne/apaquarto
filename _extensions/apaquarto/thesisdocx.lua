@@ -28,26 +28,14 @@ end
 -- all. The title page still comes out unnumbered: w:titlePg sends the first
 -- page of its section to the "first" footer, which is empty.
 local function reference_footers()
-  local refdoc = PANDOC_WRITER_OPTIONS.reference_doc
-  if not refdoc then return "" end
-  local f = io.open(refdoc, "rb")
-  if not f then return "" end
-  local data = f:read("a")
-  f:close()
-  local ok, archive = pcall(pandoc.zip.Archive, data)
-  if not ok then return "" end
-  for _, entry in ipairs(archive.entries) do
-    if entry.path == "word/document.xml" then
-      local sect = entry:contents():match("<w:sectPr.-</w:sectPr>")
-      if not sect then return "" end
-      local found = {}
-      for element in sect:gmatch("<w:footerReference[^>]*/>") do
-        found[#found + 1] = element
-      end
-      return table.concat(found)
-    end
+  local xml = require("referencedoc").part("word/document.xml")
+  local sect = xml and xml:match("<w:sectPr.-</w:sectPr>")
+  if not sect then return "" end
+  local found = {}
+  for element in sect:gmatch("<w:footerReference[^>]*/>") do
+    found[#found + 1] = element
   end
-  return ""
+  return table.concat(found)
 end
 
 local kInch = 1440

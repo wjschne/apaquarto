@@ -53,6 +53,7 @@ anything else here:
 | `_extensions/apaquarto/thesispages.lua` | Module that builds a dissertation's front-matter pages as a format-neutral list, for `thesisfrontmatter`; not a filter |
 | `_extensions/apaquarto/thesislatex.lua`, `thesistypst.lua`, `thesishtml.lua`, `thesisdocx.lua` | One renderer each for those pages, chosen by `thesisfrontmatter`; not filters |
 | `_extensions/apaquarto/thesistitle.lua`, `thesiscontents.lua` | Modules for the title lines and the contents entries, loaded by `thesispages` and `thesisfrontmatter`; not filters |
+| `_extensions/apaquarto/referencedoc.lua` | Module that reads and writes the Word reference doc, and builds the link-colour styles, for `docxreferencedoc`, `docxlinkcolor`, `docxcontents` and `thesisdocx`; not a filter |
 | `_extensions/apaquarto/floatrecord.lua` | Module that reads a float once (caption, content, note, columns, panels) for `floatlatex` and `formattypst`; not a filter |
 | `_extensions/apaquarto/frontmatterlayout.lua` | Module that reads the front matter's shape for a journal or document layout (the journal split, spacing, list markers, ORCID lines, impact box), for `frontmatter` (latex jou) and `typstfrontmatter`; not a filter |
 | `_extensions/apaquarto/typst/typstfrontmatter.lua` | Module `formattypst` runs first: lays the typst front matter out by mode, writes the list outlines and the link-colour rule; not a filter |
@@ -157,9 +158,9 @@ and still return early; the formats column says where it does real work.
 | `htmlcontents.lua` | html | Fills the `list-of-contents` marker |
 | `htmllinkcolor.lua` | html | Link colours as scoped CSS |
 | `docxformatlatexsymbol.lua` | docx | `\LaTeX` and `\TeX` math as plain text |
-| `docxreferencedoc.lua` | docx | Patches the reference doc: fonts, paper size, margins, line numbers, running head |
+| `docxreferencedoc.lua` | docx | The one writer of the reference doc, once a render: fonts, paper size, margins, line numbers, running head, link-colour styles |
 | `docxcontents.lua` | docx | Table of contents and lists of figures/tables as openxml fields, and the run-in level-4/5 headings (`apa-runin`) with their formatting and bookmarks; after `docxreferencedoc`, whose page size it measures |
-| `docxlinkcolor.lua` | docx | A character style per link kind; patches `styles.xml` |
+| `docxlinkcolor.lua` | docx | Gives each link the character style for its kind (the styles are written by `docxreferencedoc`) |
 
 The yml lists the common filters and each format's own filters separately.
 Within one stage, this file assumes the common ones run first; that has not
@@ -271,8 +272,8 @@ upgrade.
 - Classes `cell`, `quarto-layout-cell`, `quarto-layout-cell-subref`,
   `quarto-layout-panel`, `quarto-embed-nb-cell`, attribute `ref-parent`:
   `apanote`, `embednote`.
-- `PANDOC_WRITER_OPTIONS.reference_doc`: `docxreferencedoc` and
-  `docxlinkcolor` rewrite that file on disk, which is usually the installed
+- `PANDOC_WRITER_OPTIONS.reference_doc`: `docxreferencedoc` rewrites that
+  file on disk (through `referencedoc.lua`), which is usually the installed
   `_extensions/apaquarto/apaquarto.docx`. Never commit it straight after a
   docx render; `make test` checks for this.
 
@@ -286,15 +287,15 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    filter point, and writes a "Figure 1" of its own even for a float whose
    caption has been emptied. It breaks if Quarto changes how it renders a
    caption.
-2. **The reference doc is patched in place, twice.** This is deliberate:
+2. **The reference doc is patched in place.** This is deliberate:
    Pandoc reads `PANDOC_WRITER_OPTIONS.reference_doc` after the filters run,
    so there is nowhere else to put fonts, page size, line numbers and link
    colours. The original values are kept in `apaquarto-original-*` comments
    and the next render restores them, and `check_reference_doc()` in
-   `tests/run-tests.R` stops a mid-patch file from being committed. The debt
-   is that `docxreferencedoc` and `docxlinkcolor` each unzip and rewrite the
-   file separately (and `docxcontents` reads it a third time), and two renders
-   at once can race on it.
+   `tests/run-tests.R` stops a mid-patch file from being committed. Every
+   read and write goes through `referencedoc.lua`, and only
+   `docxreferencedoc` writes, once a render. What is left: two renders at
+   once against the same installed file can still race on it.
 3. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
    each lay out a first page. In thesis mode `frontmatter.lua` now builds
    only the title and the running head (both still needed) and skips the
