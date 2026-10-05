@@ -75,38 +75,10 @@ end
 local kCaptionStyle = "ImageCaption"
 
 local xml_escape = require("utilsapa").xml_escape
-
 -- Inlines as word runs. Only the marking a caption is likely to carry is
 -- understood; anything else is written as its text, which is what pandoc's own
 -- stringify would give.
-local function runs(inlines, bold, italic)
-  local out = {}
-  for _, inline in ipairs(inlines) do
-    if inline.t == "Str" then
-      local properties = {}
-      if bold then properties[#properties + 1] = "<w:b/>" end
-      if italic then properties[#properties + 1] = "<w:i/>" end
-      local rpr = ""
-      if #properties > 0 then
-        rpr = "<w:rPr>" .. table.concat(properties) .. "</w:rPr>"
-      end
-      out[#out + 1] = "<w:r>" .. rpr .. '<w:t xml:space="preserve">'
-        .. xml_escape(inline.text) .. "</w:t></w:r>"
-    elseif inline.t == "Space" or inline.t == "SoftBreak" then
-      out[#out + 1] = '<w:r><w:t xml:space="preserve"> </w:t></w:r>'
-    elseif inline.t == "Strong" then
-      out[#out + 1] = runs(inline.content, true, italic)
-    elseif inline.t == "Emph" then
-      out[#out + 1] = runs(inline.content, bold, true)
-    elseif inline.content then
-      out[#out + 1] = runs(inline.content, bold, italic)
-    else
-      out[#out + 1] = "<w:r>" .. '<w:t xml:space="preserve">'
-        .. xml_escape(pandoc.utils.stringify(inline)) .. "</w:t></w:r>"
-    end
-  end
-  return table.concat(out)
-end
+local runs = require("utilsapa").docx_runs
 
 local function caption_paragraph(inlines)
   return pandoc.RawBlock("openxml",

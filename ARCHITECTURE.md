@@ -78,6 +78,7 @@ writing another copy:
 | `contents_headings(blocks, depth)` | The headings a table of contents lists |
 | `colour_hex(value)`, `toc_depth(meta, fallback)` | A colour as six hex digits; the contents depth |
 | `xml_escape`, `trim`, `upper`, `stringify` | Small string and inline helpers |
+| `docx_runs(inlines, bold, italic, colour)`, `docx_bookmark_name(id)` | Inlines as Word runs for raw openxml; the bookmark name pandoc gives a heading (hashed past 40 characters) |
 
 ## Filters in run order
 
@@ -291,14 +292,18 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    file separately (and `docxcontents` reads it a third time), and two renders
    at once can race on it.
 3. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
-   each have their own author, title, abstract, page-break and contents code,
-   and in thesis mode `frontmatter.lua` builds a title page only for it to be
-   discarded.
+   each lay out a first page. In thesis mode `frontmatter.lua` now builds
+   only the title and the running head (both still needed) and skips the
+   rest of the title page. The open question is where `thesisfrontmatter`'s
+   four renderers (latex, typst, html, docx) belong: its `build_pages` model
+   is already format-neutral, but nothing outside it uses that model.
 4. **The citation `hash` side channel** uses an undocumented Pandoc field.
 
 ## Testing
 
 `make test` renders every fixture in `tests/` against a fresh copy of the
 extension and checks the output against `tests/expectations.yml` and the
-`.tex`/`.typ` snapshots. It needs `Rscript` on the PATH. Run it before and
-after any change to a filter. See `tests/README.md` for adding a fixture.
+`.tex`/`.typ` snapshots. It needs `Rscript` on the PATH. It renders up to
+four fixtures at a time (`--jobs 1` for one at a time), which takes a full
+run from about 13 minutes to about 4. Run it before and after any change to a
+filter. See `tests/README.md` for adding a fixture.

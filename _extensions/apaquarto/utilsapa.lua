@@ -603,6 +603,52 @@ function M.xml_escape(text)
   return (text:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
 end
 
+-- Inlines as Word runs, for raw openxml: words in bold or italic where the
+-- inlines say so, and in a colour (six hex digits) when one is given.
+-- Anything else is written as the text it stringifies to, which is what a
+-- heading, a caption or a line of a contents carries little more than.
+function M.docx_runs(inlines, bold, italic, colour)
+  local out = {}
+  for _, inline in ipairs(inlines) do
+    if inline.t == "Str" then
+      local properties = {}
+      if bold then properties[#properties + 1] = "<w:b/>" end
+      if italic then properties[#properties + 1] = "<w:i/>" end
+      if colour then
+        properties[#properties + 1] = '<w:color w:val="' .. colour .. '"/>'
+      end
+      local rpr = ""
+      if #properties > 0 then
+        rpr = "<w:rPr>" .. table.concat(properties) .. "</w:rPr>"
+      end
+      out[#out + 1] = "<w:r>" .. rpr .. '<w:t xml:space="preserve">'
+        .. M.xml_escape(inline.text) .. "</w:t></w:r>"
+    elseif inline.t == "Space" or inline.t == "SoftBreak" then
+      out[#out + 1] = '<w:r><w:t xml:space="preserve"> </w:t></w:r>'
+    elseif inline.t == "Strong" then
+      out[#out + 1] = M.docx_runs(inline.content, true, italic, colour)
+    elseif inline.t == "Emph" then
+      out[#out + 1] = M.docx_runs(inline.content, bold, true, colour)
+    elseif inline.content then
+      out[#out + 1] = M.docx_runs(inline.content, bold, italic, colour)
+    else
+      out[#out + 1] = "<w:r>" .. '<w:t xml:space="preserve">'
+        .. M.xml_escape(pandoc.utils.stringify(inline)) .. "</w:t></w:r>"
+    end
+  end
+  return table.concat(out)
+end
+
+-- The name pandoc gives a heading's bookmark in .docx, which is not always the
+-- identifier. Word will not take a bookmark name longer than 40 characters, so
+-- pandoc hashes a longer identifier and writes the sha1 with its first
+-- character replaced by an X; a link has to ask for the same name or it points
+-- at nothing.
+function M.docx_bookmark_name(identifier)
+  if #identifier <= 40 then return identifier end
+  return "X" .. pandoc.utils.sha1(identifier):sub(2)
+end
+
 -- A string without the white space at either end.
 function M.trim(s)
   return (s:gsub("^%s*(.-)%s*$", "%1"))

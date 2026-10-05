@@ -15,6 +15,18 @@ A run says how many jobs it has at the start, numbers each one as it
 begins (`[12/122]`), and after each prints a bar with how many are done,
 passed and failed, and roughly how long the rest will take.
 
+Fixtures are rendered several at a time, by worker copies of `run-tests.R`:
+one fewer than the machine has cores, and no more than four. `--jobs 1`
+renders one at a time, and `--jobs N` asks for N. A fixture's own jobs always
+run one after another in the same worker, since they write the same files,
+and so do fixtures that embed the same document. Results are printed in the
+order the jobs finish. A worker's own output is in
+`_results/_workers/worker-N.log`, which is where to look if a job reports
+"no result".
+
+A render that fails only because a sync client such as Dropbox was holding a
+file (`os error 32`) is tried once more before it counts as a failure.
+
 You need Quarto, R, and the packages named in `DESCRIPTION`
 (`pak::pak(".")` or `remotes::install_deps(dependencies = TRUE)` installs
 them). PDF fixtures need a LaTeX installation.

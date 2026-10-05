@@ -943,16 +943,26 @@ return {
         mask = meta["mask"] ~= nil and stringify(meta["mask"]) == "true",
       }
 
+      -- The title is read whatever is asked for, since the head of the body
+      -- repeats it, and the two parts that write into the metadata run as
+      -- well: the running head is read from there.
       local documenttitle = title_block(ctx)
       running_head_authors(ctx)
-      byline(ctx)
-      author_note_heading(ctx)
-      orcid_lines(ctx)
-      status_and_disclosures(ctx)
-      credit_statement(ctx)
-      correspondence(ctx)
-      abstract_and_keywords(ctx)
-      closing_break(ctx)
+
+      -- The rest of the title page is built only when it is going to be set.
+      -- suppress-title-page leaves it out, and a dissertation, whose front
+      -- matter thesisfrontmatter.lua builds in the shape the Graduate School
+      -- asks for, always asks for that.
+      if not meta["suppress-title-page"] then
+        byline(ctx)
+        author_note_heading(ctx)
+        orcid_lines(ctx)
+        status_and_disclosures(ctx)
+        credit_statement(ctx)
+        correspondence(ctx)
+        abstract_and_keywords(ctx)
+        closing_break(ctx)
+      end
       running_head(ctx)
 
       if meta["suppress-title-page"] then

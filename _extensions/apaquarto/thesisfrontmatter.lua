@@ -909,38 +909,7 @@ end
 -- read as ordinary paragraphs a writer can edit in word.
 
 local xml_escape = utilsapa.xml_escape
-
-local function docx_runs(inlines, bold, italic, colour)
-  local out = {}
-  for _, inline in ipairs(inlines) do
-    if inline.t == "Str" then
-      local properties = {}
-      if bold then properties[#properties + 1] = "<w:b/>" end
-      if italic then properties[#properties + 1] = "<w:i/>" end
-      if colour then
-        properties[#properties + 1] = '<w:color w:val="' .. colour .. '"/>'
-      end
-      local rpr = ""
-      if #properties > 0 then
-        rpr = "<w:rPr>" .. table.concat(properties) .. "</w:rPr>"
-      end
-      out[#out + 1] = "<w:r>" .. rpr .. '<w:t xml:space="preserve">'
-        .. xml_escape(inline.text) .. "</w:t></w:r>"
-    elseif inline.t == "Space" or inline.t == "SoftBreak" then
-      out[#out + 1] = '<w:r><w:t xml:space="preserve"> </w:t></w:r>'
-    elseif inline.t == "Strong" then
-      out[#out + 1] = docx_runs(inline.content, true, italic, colour)
-    elseif inline.t == "Emph" then
-      out[#out + 1] = docx_runs(inline.content, bold, true, colour)
-    elseif inline.content then
-      out[#out + 1] = docx_runs(inline.content, bold, italic, colour)
-    else
-      out[#out + 1] = "<w:r>" .. '<w:t xml:space="preserve">'
-        .. xml_escape(pandoc.utils.stringify(inline)) .. "</w:t></w:r>"
-    end
-  end
-  return table.concat(out)
-end
+local docx_runs = utilsapa.docx_runs
 
 -- Word measures a space before a paragraph in twentieths of a point.
 local function twips(points)
@@ -1013,10 +982,7 @@ end
 --
 -- A bookmark name longer than forty characters is not one word will take, so
 -- pandoc hashes it, and a link here has to ask for the same name.
-local function bookmark_name(identifier)
-  if #identifier <= 40 then return identifier end
-  return "X" .. pandoc.utils.sha1(identifier):sub(2)
-end
+local bookmark_name = utilsapa.docx_bookmark_name
 
 local next_bookmark = 8000
 local function bookmark_id(same)
