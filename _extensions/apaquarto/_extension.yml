@@ -269,8 +269,8 @@ contributes:
         - 12pt
       pdf-engine: lualatex
       papersize: letter
-      geometry:
-        - margin=1in
+      # The margins are set by mode in formatlatex.lua, with a document's own
+      # geometry written after them so that it wins.
       indent: true
       colorlinks: true
       linkcolor: apalink

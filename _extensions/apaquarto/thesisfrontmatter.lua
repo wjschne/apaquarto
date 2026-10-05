@@ -31,7 +31,6 @@ local thesispages = require("thesispages")
 
 local language = utilsapa.lang
 local contents_colour = thesispages.contents_colour
-local kMargins = utilsapa.thesis_margins
 
 -- The renderer for each format, which sets the pages thesispages builds.
 local renderers = {
@@ -99,25 +98,17 @@ local function is_thesis(meta)
   return utilsapa.mode(meta) == "thesis"
 end
 
--- The margins the handbook asks for. Quarto's pdf format sets 1" all round
--- for an APA manuscript; a dissertation is bound at the left and wants more
--- there. typst takes its margins from the thesis layout in
--- typst-template.typ, and .docx from its reference document.
+-- The colour the latex contents takes. The margins the handbook asks for are
+-- set with the rest of the page: in formatlatex.lua for the .pdf, by the
+-- thesis layout in typst-template.typ for typst, and by docxreferencedoc.lua
+-- for .docx.
 function Meta(meta)
   if not is_thesis(meta) then return nil end
   if FORMAT == "latex" then
     quarto.doc.include_text("in-header",
       "\\definecolor{apathesistoc}{HTML}{" .. contents_colour(meta) .. "}")
   end
-  if FORMAT == "latex" then
-    meta.geometry = pandoc.MetaList({
-      pandoc.MetaString(string.format("left=%.2fin", kMargins.left)),
-      pandoc.MetaString(string.format("right=%.2fin", kMargins.right)),
-      pandoc.MetaString(string.format("top=%.2fin", kMargins.top)),
-      pandoc.MetaString(string.format("bottom=%.2fin", kMargins.bottom)),
-    })
-  end
-  return meta
+  return nil
 end
 
 function Pandoc(doc)

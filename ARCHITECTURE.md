@@ -152,13 +152,13 @@ and still return early; the formats column says where it does real work.
 | `citeprocr.lua` | all | Runs citeproc itself (the yml sets `citeproc: false`), meta-analysis asterisks, masked references |
 | `apaandcite.lua` | all | "&" to "and" in narrative citations, possessives, strips meta-analysis asterisks |
 | `crossreflink.lua` | latex | The whole "Figure 1" is the link |
-| `formatlatex.lua` | latex | The LaTeX writer: lays out the front matter by mode (the journal masthead and its parts, from `frontmatterlayout`), then wraps the class vocabulary in `apalatex.tex` commands |
+| `formatlatex.lua` | latex | The LaTeX writer: sets the page by mode (`geometry`: the mode's options, then the document's, which win), lays out the front matter by mode (the journal masthead and its parts, from `frontmatterlayout`), then wraps the class vocabulary in `apalatex.tex` commands |
 | `apapdfstandard.lua` | latex | Warns when a PDF standard needs tagging and flextable is in use |
 | `thesisfrontmatter.lua` | thesis | Dissertation front matter for every format; last so nothing downstream rewrites it |
 | `htmlcontents.lua` | html | Fills the `list-of-contents` marker |
 | `htmllinkcolor.lua` | html | Link colours as scoped CSS |
 | `docxformatlatexsymbol.lua` | docx | `\LaTeX` and `\TeX` math as plain text |
-| `docxreferencedoc.lua` | docx | The one writer of the reference doc, once a render: fonts, paper size, margins, line numbers, running head, link-colour styles |
+| `docxreferencedoc.lua` | docx | The one writer of the reference doc, once a render: fonts, paper size, margins (thesis, then the document's `margin`), line numbers, running head, link-colour styles |
 | `docxcontents.lua` | docx | Table of contents and lists of figures/tables as openxml fields, and the run-in level-4/5 headings (`apa-runin`) with their formatting and bookmarks; after `docxreferencedoc`, whose page size it measures |
 | `docxlinkcolor.lua` | docx | Gives each link the character style for its kind (the styles are written by `docxreferencedoc`) |
 

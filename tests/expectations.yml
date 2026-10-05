@@ -1988,3 +1988,70 @@
         - 'Plain narrative, two authors: Schneider and McGrew'
         - 'Ampersand kept: Schneider \& McGrew'
         - 'Both: Schneider \& McGrew''s'
+
+# ----------------------------------------------------------------- margins --
+#
+# A document's own margins, in every format that has pages: geometry for the
+# .pdf, margin for typst and .docx. The mode's page is written first and the
+# document's after it, so the document wins on what it names.
+
+- fixture: margins.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - '\usepackage[margin=1in,margin=2in]{geometry}'
+
+- fixture: margins.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '  margin: (top: 2cm,x: 1.5in,),'
+
+- fixture: margins.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        # x is the left and right, top is 2cm, and the bottom is the
+        # reference document's inch.
+        - '<w:pgMar w:bottom="1440" w:footer="720" w:gutter="0" w:header="720" w:left="2160" w:right="2160" w:top="1134" />'
+
+- fixture: margins-jou.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # The journal page first, then the document's margin, which wins; the
+        # head and foot settings it does not mention stay.
+        - '\usepackage[left=0.75in,right=0.75in,top=0.75in,bottom=1in,includehead,headheight=13pt,headsep=4pt,footskip=18pt,margin=2in]{geometry}'
+
+- fixture: margins-jou.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '  margin: (x: 2in,),'
+
+- fixture: margins-thesis.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - '\usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in,left=2in]{geometry}'
+        # The front matter keeps the Graduate School's margins.
+        - '\newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}'
+
+- fixture: margins-thesis.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        # The body: the document's two inches at the left, the Graduate
+        # School's inch elsewhere.
+        - '<w:pgMar w:bottom="1440" w:footer="720" w:gutter="0" w:header="720" w:left="2880" w:right="1440" w:top="1440" />'
+      count:
+        # The front matter after the title page keeps the Graduate School's
+        # inch and a half.
+        '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2160"': 3

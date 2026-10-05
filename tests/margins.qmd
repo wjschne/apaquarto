@@ -1,0 +1,32 @@
+---
+title: "Margins a Document Asks For"
+shorttitle: "Margins"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+geometry: margin=2in
+margin:
+  x: 1.5in
+  top: 2cm
+format:
+  apaquarto-pdf: default
+  apaquarto-docx: default
+  apaquarto-typst: default
+---
+
+<!--
+A writer sets the margins with the field each format reads: geometry for the
+.pdf, margin for typst and for .docx. The .pdf used to have its margins only
+from apaquarto's own default, the inch written in _extension.yml, which a
+document's geometry replaced; now formatlatex.lua writes the mode's page and
+the document's geometry after it, and geometry takes the last value. .docx
+had no margin option at all, only its reference document.
+
+For .docx, x sets the left and right and top the top; the bottom is not
+named and keeps the reference document's inch.
+-->
+
+Some text.

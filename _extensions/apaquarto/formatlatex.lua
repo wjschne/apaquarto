@@ -165,8 +165,40 @@ local function asked_for_first_page(m)
   return nil
 end
 
+-- The document's own geometry options, as a list of strings: written as one
+-- string ("margin=2in") or as a list of them.
+local function asked_for_geometry(m)
+  local out = pandoc.List({})
+  local value = m.geometry
+  if value == nil then return out end
+  if pandoc.utils.type(value) == "List" then
+    for _, item in ipairs(value) do out:insert(utilsapa.stringify(item)) end
+  else
+    out:insert(utilsapa.stringify(value))
+  end
+  return out
+end
+
 local function meta(m)
   mode = utilsapa.mode(m)
+  -- The page each mode is set on. A document's own geometry is written after
+  -- it, and geometry takes the last value it is given for a key, so a
+  -- writer's margins win in every mode while what they leave unsaid --- the
+  -- head and foot of a journal page, say --- stays as the mode sets it. A
+  -- dissertation's front matter sets its own margins page by page
+  -- (thesislatex.lua), and \restoregeometry hands the body back these.
+  local asked_geometry = asked_for_geometry(m)
+  local mode_geometry = { "margin=1in" }
+  if mode == "thesis" then
+    -- A dissertation is bound at the left and wants more there.
+    local margins = utilsapa.thesis_margins
+    mode_geometry = {
+      string.format("left=%.2fin", margins.left),
+      string.format("right=%.2fin", margins.right),
+      string.format("top=%.2fin", margins.top),
+      string.format("bottom=%.2fin", margins.bottom),
+    }
+  end
   if m.shorttitle then
     shorttitle = utilsapa.stringify(m.shorttitle)
   elseif m.title then
@@ -283,19 +315,20 @@ local function meta(m)
     -- (x: 0.75in, y: 1in) there. Written out side by side rather than as one
     -- margin, which had set the foot at three quarters too and left this
     -- format eighteen points more text on every page than typst had.
-    m.geometry = pandoc.MetaList({
-      pandoc.MetaString("left=0.75in"),
-      pandoc.MetaString("right=0.75in"),
-      pandoc.MetaString("top=0.75in"),
-      pandoc.MetaString("bottom=1in"),
-      pandoc.MetaString("includehead"),
-      pandoc.MetaString("headheight=13pt"),
-      pandoc.MetaString("headsep=4pt"),
+    mode_geometry = {
+      "left=0.75in",
+      "right=0.75in",
+      "top=0.75in",
+      "bottom=1in",
+      "includehead",
+      "headheight=13pt",
+      "headsep=4pt",
       -- The opening page carries its number at the foot. footskip is measured
       -- to the baseline, so this sets the number about eleven points under the
       -- text block, which is where the Journal of Educational Psychology puts
       -- it; latex's own leaves it half an inch down.
-      pandoc.MetaString("footskip=18pt") })
+      "footskip=18pt",
+    }
     quarto.doc.include_text("in-header", "\\singlespacing")
     -- Two columns, asked for at the start of the document. A journal that has
     -- a masthead asks for them differently: the masthead is handed to
@@ -319,6 +352,15 @@ local function meta(m)
           "\\%1") .. "}")
     end
   end
+  local geometry = pandoc.MetaList({})
+  for _, option in ipairs(mode_geometry) do
+    geometry:insert(pandoc.MetaString(option))
+  end
+  for _, option in ipairs(asked_geometry) do
+    geometry:insert(pandoc.MetaString(option))
+  end
+  m.geometry = geometry
+
   -- Numbered lines, which apa7 draws with lineno and so does this. The size,
   -- the right alignment and the distance from the text are lineno's own,
   -- which is what apa7 leaves them at; journal mode moves the number closer

@@ -1,0 +1,35 @@
+---
+title: "Margins in a Dissertation"
+shorttitle: "Thesis Margins"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+abstract: "An abstract."
+documentmode: thesis
+thesis:
+  type: Thesis
+  degree: Master of Arts
+  date: May 2027
+geometry: left=2in
+margin:
+  left: 2in
+format:
+  apaquarto-pdf: default
+  apaquarto-docx: default
+---
+
+<!--
+A dissertation is set on the Graduate School's margins: an inch and a half
+at the left, where it is bound, and an inch elsewhere. Those used to be
+written over whatever the document asked for. Now the body takes a margin the
+document names and keeps the Graduate School's for the sides it does not.
+The front matter keeps the Graduate School's margins whatever is asked:
+those pages are a requirement, set page by page.
+-->
+
+# Introduction
+
+Some text.
