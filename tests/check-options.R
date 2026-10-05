@@ -36,7 +36,9 @@ internal <- c(
   "affiliationsdifferent", "apa-appendix-count", "apa-float-labels",
   "apa-table-notes", "apaabstract", "apaauthor", "apadate", "apasubtitle",
   "apatitle", "apatitledisplay", "by-author", "description",
-  "jou-running-authors", "references", "wordn", "zerocitations"
+  "jou-running-authors", "references", "wordn", "zerocitations",
+  # set by apaquote.lua for docxreferencedoc.lua
+  "apa-quote-attribution"
 )
 
 # Quarto's and Pandoc's own fields, which apaquarto reads but their

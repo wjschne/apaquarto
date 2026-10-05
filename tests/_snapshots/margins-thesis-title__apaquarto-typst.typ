@@ -501,7 +501,6 @@
 //   linenumber-font: [Helvetica, Arial]
 #let linenumberfont = ("DejaVu Sans Mono",)
 
-#let apafirstparshift = -18pt
 
 // Shared APA layout for every document mode. man/jou/doc/stu (defined below the
 // function) are thin presets that override only the parameters that differ —
@@ -532,8 +531,12 @@
   // typst's own default monospace font
   monofont: ("DejaVu Sans Mono",),
   fontsize: 12pt,
-  leading: 18pt,
-  spacing: 18pt,
+  // Double spacing: 24pt from one baseline to the next at 12pt, which is the
+  // .pdf's. Typst counts leading from the bottom of one line to the top of the
+  // next, so 16pt here is the 24pt on the page (measured in
+  // tests/layout-manuscript.qmd). It was 18pt, which set 26pt.
+  leading: 16pt,
+  spacing: 16pt,
   firstlineindent: 0.5in,
   // Indent the paragraph that opens a section too, not just the ones after
   // another paragraph. Journal mode wants every body paragraph indented.
@@ -550,6 +553,9 @@
   // none means headingspace.
   headingabove: none,
   quoteinset: 0.5in,
+  // How far a block quotation stands in from the right margin. none means
+  // quoteinset, the same as from the left.
+  quoteinsetright: none,
   // Block quotations. none follows the body: its size, its line spacing, its
   // space above and below a block, and its rule about whether the paragraph
   // that opens a block is indented. quoteparspace is the exception: none
@@ -757,7 +763,13 @@
   let qindentall = if quoteindentall == none { indentall } else { quoteindentall }
   let fspace = if floatspace == none { spacing } else { floatspace }
 
-  show quote: set pad(x: quoteinset)
+  let qright = if quoteinsetright == none { quoteinset } else { quoteinsetright }
+  // A block quotation is set in a pad of apaquarto's own rather than in the
+  // one typst's quote brings. A set rule on pad reached the left of that one,
+  // but typst kept an inset of its own on the right, so a quotation could not
+  // run to the margin the way a journal's does.
+  show quote.where(block: true): it => block(width: 100%,
+    pad(left: quoteinset, right: qright, it.body))
   show quote: set text(size: qsize)
   // The gap between two paragraphs is par's spacing, not block's: a paragraph
   // is not a block, so a set block rule never reaches it. Setting spacing to
@@ -929,7 +941,10 @@
   headinggrow: 1pt,
   headingabove: 19pt,
   headingspace: 10.5pt,
-  quoteinset: 0.25in,
+  // A journal indents a block quotation on the left only; it runs to the
+  // column edge on the right. apalatex.tex's /apajouquote does the same.
+  quoteinset: 16pt,
+  quoteinsetright: 0pt,
   // apa7 sets a block quotation smaller than the text around it. The
   // paragraph that opens the quotation runs flush left and the ones after it
   // are indented, the way a quoted passage is set, and they are separated by
@@ -1111,5 +1126,5 @@ An abstract.
 <introduction>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
+#context v(-par.spacing)
 Some text.

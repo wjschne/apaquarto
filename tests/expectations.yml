@@ -1998,6 +1998,10 @@
 - fixture: margins.qmd
   to: apaquarto-pdf
   expect:
+    layout:
+      # Where the body text starts on the page: the document's 1.5in and the half-inch first-line indent.
+      - left: Some
+        is: 144
     tex:
       contains:
         # The mode's inch, then the document's margin: x is left and right,
@@ -2007,6 +2011,10 @@
 - fixture: margins-geometry.qmd
   to: apaquarto-pdf
   expect:
+    layout:
+      # Where the body text starts on the page: geometry's 3in, not margin's 2in, and the half-inch indent.
+      - left: Some
+        is: 252
     tex:
       contains:
         # geometry after margin, so it wins where both name a side, and an
@@ -2016,6 +2024,10 @@
 - fixture: margins.qmd
   to: apaquarto-typst
   expect:
+    layout:
+      # Where the body text starts on the page: the document's 1.5in and the half-inch first-line indent.
+      - left: Some
+        is: 144
     typ:
       contains:
         - '  margin: (top: 2cm,x: 1.5in,),'
@@ -2032,6 +2044,10 @@
 - fixture: margins-jou.qmd
   to: apaquarto-pdf
   expect:
+    layout:
+      # Where the body text starts on the page: the document's 2in and a journal's 10pt indent.
+      - left: Some
+        is: 154
     tex:
       contains:
         # The journal page first, then the document's margin, which wins; the
@@ -2041,6 +2057,10 @@
 - fixture: margins-jou.qmd
   to: apaquarto-typst
   expect:
+    layout:
+      # Where the body text starts on the page: the document's 2in and a journal's 10pt indent.
+      - left: Some
+        is: 154
     typ:
       contains:
         - '  margin: (x: 2in,),'
@@ -2048,6 +2068,10 @@
 - fixture: margins-thesis.qmd
   to: apaquarto-pdf
   expect:
+    layout:
+      # Where the body text starts on the page: the document's 2in and the half-inch indent.
+      - left: Some
+        is: 180
     tex:
       contains:
         - '\usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in,left=2in]{geometry}'
@@ -2075,6 +2099,10 @@
 - fixture: margins-thesis.qmd
   to: apaquarto-typst
   expect:
+    layout:
+      # Where the body text starts on the page: the document's 2in and the half-inch indent.
+      - left: Some
+        is: 180
     typ:
       contains:
         # The body: the document's margin, after the thesis layout's.
@@ -2178,3 +2206,193 @@
         # spacing is not set, so it takes the leading.
         - '  spacing: 1em,'
         - '  cols: 1,'
+
+# ------------------------------------------------------- measured layout --
+#
+# Where the lines sit on the page, measured from the rendered .pdf rather
+# than read from the .tex or .typ (see layout_failures() in run-tests.R).
+
+- fixture: layout-journal.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &journal-layout
+      # The space between paragraphs is the line spacing.
+      - gap: [Alphaone, Betaone]
+        is: 12
+      # Headings as the Journal of Educational Psychology sets them.
+      - gap: [Betaone, Headone]
+        is: 26
+      - gap: [Headone, Gammaone]
+        is: 18
+      - gap: [Gammaone, Headtwo]
+        is: 26
+      - gap: [Headtwo, Deltaone]
+        is: 18
+      - gap: [Deltaone, Headthree]
+        is: 26
+      - gap: [Headthree, Epsilonone]
+        is: 18
+      - gap: [Wrapone, wrapend]
+        is: 13
+      # A point larger than the body.
+      - size: Betaone
+        is: 10
+      - size: Headone
+        is: 11
+      - size: Headtwo
+        is: 11
+      - size: Headthree
+        is: 11
+      # The 0.75in margin and every paragraph's 10pt indent.
+      - left: Alphaone
+        is: 64
+
+- fixture: layout-journal.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *journal-layout
+
+- fixture: layout-manuscript.qmd
+  to: apaquarto-pdf
+  expect:
+    layout:
+      # Double spaced from one paragraph to the next.
+      - gap: [Alphaone, Betaone]
+        is: 24
+      - gap: [Gammaone, Deltaone]
+        is: 24
+      # The inch of margin and the half-inch indent.
+      - left: Alphaone
+        is: 108
+      - size: Betaone
+        is: 12
+
+- fixture: layout-manuscript.qmd
+  to: apaquarto-typst
+  expect:
+    layout:
+      # Double spaced throughout, 24pt as in the .pdf: from paragraph to
+      # paragraph, around a heading (the first paragraph after one included)
+      # and around a block quotation.
+      - gap: [Alphaone, Betaone]
+        is: 24
+      - gap: [Betaone, Headone]
+        is: 24
+      - gap: [Headone, Gammaone]
+        is: 24
+      - gap: [Gammaone, Deltaone]
+        is: 24
+      - gap: [Deltaone, Quoteone]
+        is: 24
+      - gap: [quotelast, Epsilonone]
+        is: 24
+      - left: Alphaone
+        is: 108
+      # A block quotation half an inch in.
+      - left: Quoteone
+        is: 108
+      - size: Betaone
+        is: 12
+
+- fixture: layout-journal-quote.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &journal-quote
+      # 16pt in from the column's edge at 54pt, as quote.pdf sets one...
+      - left: Quoteone
+        is: 70
+      # ...and out to the column's right edge, as the justified body is.
+      - right: Quoteone
+        is: 295
+      - right: Bodyone
+        is: 295
+
+- fixture: layout-journal-quote.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *journal-quote
+
+- fixture: layout-document.qmd
+  to: apaquarto-typst
+  expect:
+    layout:
+      # The first paragraph after a heading, a line of 22pt under it.
+      - gap: [Headone, Gammaone]
+        is: 22
+      # A quotation half an inch in on the left and on the right: a full
+      # line of the justified body ends at the margin, 539pt, and one of the
+      # quotation half an inch short of it.
+      - left: Quoteone
+        is: 108
+      - right: Bodyone
+        is: 539
+      - right: Quoteone
+        is: 503
+
+# ------------------------------------------- a quotation's dash attribution --
+
+- fixture: quote-attribution.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      count:
+        # The first and the fourth; not the dash-only quotation, and not the
+        # one inside no-attribution.
+        'class="quote-attribution"': 2
+      contains:
+        - '1814/1990'
+
+- fixture: quote-attribution.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      count:
+        '<w:pStyle w:val="QuoteAttribution" />': 2
+        # The second paragraph of the fourth quotation, as before.
+        '<w:pStyle w:val="NextBlockText" />': 1
+    docx:
+      contains:
+        # The markup and the citation kept.
+        - 'Attributionone, Mansfield Park (1814/1990)'
+    docx-styles:
+      contains:
+        - 'w:styleId="QuoteAttribution" w:type="paragraph"><w:name w:val="QuoteAttribution" /><w:basedOn w:val="BlockText" /><w:pPr><w:jc w:val="right" /><w:ind w:firstLine="0" /></w:pPr></w:style>'
+
+- fixture: quote-attribution.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      count:
+        '\begin{apaquoteattribution}': 2
+    layout:
+      # Against the quotation's right edge, the margin less LaTeX's quote
+      # indent; the quotations that are not attributions stay on the left.
+      - right: Attributionone
+        is: 510
+      - right: Attributiontwo
+        is: 510
+      # The word after the dash and its space, 15pt into a line that starts
+      # at the quotation's left edge.
+      - left: Dashonly
+        is: 115
+      - left: Dialoguetwo
+        is: 115
+
+- fixture: quote-attribution.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      count:
+        '#align(right)[#set par(first-line-indent: 0pt)': 2
+      contains:
+        - '#emph[Mansfield Park] (#link(<ref-austenMansfieldPark1990>)[1814/1990])'
+    layout:
+      # Against the quotation's right edge, the margin less half an inch.
+      - right: Attributionone
+        is: 504
+      - right: Attributiontwo
+        is: 504
+      # The word after the dash and its space, in a line that starts at the
+      # quotation's left edge, 108pt.
+      - left: Dashonly
+        is: 123

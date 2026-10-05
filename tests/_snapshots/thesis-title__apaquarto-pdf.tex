@@ -817,6 +817,21 @@
   /setstretch{1}/selectfont
   /addtolength{/apathesisentrysep}{-/baselineskip}}
 
+% A journal indents a block quotation on the left only, 16pt (measured from
+% quote.pdf, a Group Dynamics article),
+% and runs it to the column edge on the right, which is how the APA journals
+% set one. typst-template.typ's jou layout does the same.
+/newcommand{/apajouquote}{%
+  /renewenvironment{quote}
+    {/list{}{/leftmargin=16pt/rightmargin=0pt}/item/relax}
+    {/endlist}}
+
+% The dash attribution a block quotation can end with (apaquote.lua): set
+% against the right edge of the quotation, with no first-line indent.
+/newenvironment{apaquoteattribution}
+  {/par/raggedleft/noindent/ignorespaces}
+  {/par}
+
 % A block quotation is indented half an inch from both margins, where a LaTeX
 % quote takes the 2.5em of /leftmargini, and is single spaced.
 /newcommand{/apathesisquote}{%

@@ -536,12 +536,13 @@ docx-typst:
       inside `author-note`. The other document modes do not float the author
       note, so they ignore it.
   - name: leading
-    default: '18pt (`man`, `stu`, `thesis`), 14pt (`doc`), 5.5pt (`jou`)'
+    default: '16pt (`man`, `stu`), 18pt (`thesis`), 14pt (`doc`), 5.5pt (`jou`)'
     description: |
       apaquarto-typst only. The space between the lines of a paragraph, and
       between one paragraph and the next, as Typst measures it: from the
       bottom of one line to the top of the next rather than baseline to
-      baseline, so the 18pt manuscript mode sets is double spacing for 12pt
+      baseline, so the 16pt manuscript mode sets is 24pt on the page, double
+      spacing for 12pt
       type. Any Typst length works (`pt`, `em`,
       `in`, `cm`, `mm`), and it replaces the mode's own. Block quotations
       and the space around headings follow it unless the mode sets its own.
@@ -550,7 +551,7 @@ docx-typst:
       leading: 0.65em
       ```
   - name: spacing
-    default: '18pt (`man`, `stu`, `thesis`), 8pt (`doc`), 5pt (`jou`)'
+    default: '16pt (`man`, `stu`), 18pt (`thesis`), 8pt (`doc`), 5pt (`jou`)'
     description: |
       apaquarto-typst only. The space above and below a block: a block
       quotation, a list, a figure or table, a code block. The space between

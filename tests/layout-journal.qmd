@@ -1,0 +1,45 @@
+---
+title: "Journal Layout"
+shorttitle: "Journal Layout"
+documentmode: jou
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: where the lines of a journal page sit, in the .pdf and
+in typst alike. The words are made up so that each is found once.
+
+The headings are set the way the Journal of Educational Psychology sets
+them (JEP.pdf at the repository root): a point larger than the 10pt body,
+26pt from the baseline above to the heading's, 18pt from the heading's to
+the first line under it, and 13pt between the lines of a heading that wraps.
+The two formats were set apart by 2 to 8 points on each of these before
+they were measured against the journal.
+
+The space between two paragraphs is the space between two lines, 12pt.
+typst's was Typst's own 1.2em instead, 7pt more, from Typst 0.12 until
+typst-template.typ set par's spacing; nothing in the .typ showed it.
+-->
+
+Alphaone alphatwo.
+
+Betaone betatwo.
+
+# Headone
+
+Gammaone gammatwo.
+
+## Headtwo
+
+Deltaone deltatwo.
+
+### Headthree
+
+Epsilonone epsilontwo.
+
+## Wrapone heading long enough that it has to turn onto a second line wrapend
+
+Zetaone zetatwo.

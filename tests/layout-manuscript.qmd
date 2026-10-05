@@ -1,0 +1,38 @@
+---
+title: "Manuscript Layout"
+shorttitle: "Manuscript Layout"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: a manuscript is double spaced throughout, 24pt from one
+baseline to the next at 12pt, from line to line, from paragraph to
+paragraph, and around a heading and a block quotation. A paragraph's first
+line starts half an inch in from the inch of margin.
+
+typst set its double spacing at 26pt until its leading came down from 18pt
+to 16pt. Before that, the space between paragraphs was Typst's own 1.2em, from
+Typst 0.12 until typst-template.typ set par's spacing; nothing in the .typ
+showed either. The first paragraph after a heading is preceded by a spacer
+that formattypst.lua takes back by the paragraph spacing, which was a fixed
+18pt and left that paragraph too close in a mode spaced otherwise.
+
+The words are made up so that each is found once.
+-->
+
+Alphaone alphatwo.
+
+Betaone betatwo.
+
+# Headone
+
+Gammaone gammatwo.
+
+Deltaone deltatwo.
+
+> Quoteone words of a quotation long enough that it has to run on to several lines, so that it is a block quotation and not a line of one, quotelast.
+
+Epsilonone epsilontwo.

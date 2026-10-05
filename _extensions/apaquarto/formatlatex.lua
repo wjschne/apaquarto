@@ -350,6 +350,8 @@ local function meta(m)
     quarto.doc.include_text("in-header", "\\apajouhangindent")
     -- Headings the size and spacing of a published APA article's.
     quarto.doc.include_text("in-header", "\\apajouheadings")
+    -- Block quotations indented on the left only.
+    quarto.doc.include_text("in-header", "\\apajouquote")
     local authors = m["jou-running-authors"]
     if authors then
       quarto.doc.include_text("in-header",
@@ -833,6 +835,10 @@ end
 local function div(el)
   if el.classes:includes("FigureNote") then
     return environment("apafloatnote", el.content)
+  end
+  -- The dash attribution under a block quotation (apaquote.lua).
+  if el.classes:includes("quote-attribution") then
+    return environment("apaquoteattribution", el.content)
   end
   -- The reference list is left exactly as it is.
   --

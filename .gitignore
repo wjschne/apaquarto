@@ -96,7 +96,9 @@ tests/*.log
 tests/*.out
 tests/*.fls
 tests/*.fdb_latexmk
+# reference files
 JEP.pdf
+quote.pdf
 pb.pdf
 thesis.pdf
 artifacts/

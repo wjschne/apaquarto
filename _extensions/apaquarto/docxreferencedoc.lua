@@ -668,6 +668,10 @@ function Pandoc(doc)
           " has no styles, monofont and the link colours were not applied.")
       else
         patched = referencedoc.patch_link_styles(patched, linkcolours)
+        --- The style a quotation's dash attribution takes, for a document
+        --- that has one (apaquote.lua).
+        patched = referencedoc.patch_attribution_style(patched,
+          utilsapa.flag(doc.meta, "apa-quote-attribution"))
       end
     elseif entry.path == document_path then
       xml = entry:contents()

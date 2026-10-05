@@ -1,0 +1,52 @@
+---
+title: "Attributions Under Quotations"
+shorttitle: "Attributions"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+bibliography: references.bib
+suppress-title-page: true
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+A block quotation whose last paragraph begins with an em dash ends with an
+attribution (apaquote.lua): set against the quotation's right edge with no
+first-line indent, in every format. The attribution keeps its markup and its
+citation, which citeproc resolves as it does any other.
+
+The second quotation is a dash and nothing above it, so it is a line of its
+own and not an attribution. The third ends with a dash but sits inside a
+no-attribution div, which leaves it as written. The fourth has two
+paragraphs: in .docx the second takes NextBlockText, as it always has, and
+the attribution takes QuoteAttribution rather than that.
+-->
+
+Alphaone alphatwo.
+
+> Quoteone words of a quotation long enough that it has to run on to several lines, so that it is a block quotation and not a line of one, quotelast.
+>
+> --- Attributionone, *Mansfield Park* [-@austenMansfieldPark1990]
+
+Betaone betatwo.
+
+> --- Dashonly words that are a quotation and nothing more.
+
+::: no-attribution
+> Dialogueone words of a passage whose last line is spoken.
+>
+> --- Dialoguetwo says the last speaker.
+:::
+
+> Paraone words of the first paragraph of a quotation.
+>
+> Paratwo words of the second paragraph of a quotation.
+>
+> --- Attributiontwo

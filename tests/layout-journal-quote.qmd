@@ -1,0 +1,26 @@
+---
+title: "A Journal's Block Quotation"
+shorttitle: "Journal Quotation"
+documentmode: jou
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: the APA journals indent a block quotation on the left
+only. It stands 16pt in from the column's left edge, as the Group Dynamics
+article in quote.pdf at the repository root sets one, and its
+full lines run to the column's right edge, the edge the justified body text
+runs to. Both formats indented it on both sides, and by different amounts:
+LaTeX's 2.5em in the .pdf, a quarter of an inch in typst.
+
+The other modes keep the right indent (layout-document.qmd).
+-->
+
+Alphaone alphatwo.
+
+> Quoteone words of a quotation long enough that it has to run on to several lines in a column, so that its full lines can be measured from end to end against the text block, quotelast.
+
+Bodyone words of a body paragraph long enough that it has to run on to several lines in a column, so that its full lines can be measured from end to end against the text block, bodylast.

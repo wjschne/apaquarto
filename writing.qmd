@@ -299,6 +299,28 @@ If your quote has multiple paragraphs, like this passage from @brownHowKilledPlu
 > I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)
 ```
 
+### Attributions
+
+To end a quotation with a dash attribution, as an epigraph often is, make its last paragraph begin with an em dash. Typing three hyphens (`---`) gives one:
+
+``` md
+> We are, to be sure, a miracle every way.
+>
+> --- Jane Austen, *Mansfield Park* [-@austenMansfieldPark1990]
+```
+
+The attribution is set against the right edge of the quotation with no first-line indent, in every format. It keeps its formatting, and a citation in it works as any other does. APA style cites a block quotation in parentheses after its final punctuation, as in the examples above, so an attribution is for when you want the other look.
+
+A quotation whose last paragraph only happens to begin with a dash (the last line of a dialogue, say) is left as it is when you put it inside a `no-attribution` div:
+
+``` md
+::: no-attribution
+> --- Where are you going?
+>
+> --- Out.
+:::
+```
+
 If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:
 
 ``` md

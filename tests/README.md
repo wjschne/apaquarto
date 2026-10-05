@@ -61,8 +61,28 @@ everyone to ignore the suite.
 | `pdf` | the `.pdf` | words, whatever produced it |
 | `tex` | the `.tex` | structure: environments, labels |
 | `typ` | the `.typ` | structure: grids, alignment |
+| `layout` | the `.pdf`, measured | where lines sit: spacing, margins, sizes |
 
-Under each: `contains`, `absent`, `count` (text, and exactly how many times), and `order` (a list of texts that must appear in that order, each after the one before it). All of them are matched literally, never as a regular expression, so keep the strings in single quotes and write a backslash as a backslash.
+Under each but `layout`: `contains`, `absent`, `count` (text, and exactly how many times), and `order` (a list of texts that must appear in that order, each after the one before it). All of them are matched literally, never as a regular expression, so keep the strings in single quotes and write a backslash as a backslash.
+
+### Measuring the page
+
+`layout` measures the rendered `.pdf` from the position of each word, which is what a snapshot of the `.tex` or `.typ` cannot see. The source can stay the same while the page changes under it: Typst 0.12 moved the space between paragraphs from `block` to `par`, and every typst document lost its even spacing without a character of its `.typ` changing. A `layout` check runs for a `.pdf` from either the pdf or the typst format.
+
+```yaml
+- fixture: layout-journal.qmd
+  to: apaquarto-typst
+  expect:
+    layout:
+      - gap: [Betaone, Headone]   # baseline to baseline, in points
+        is: 26
+      - left: Alphaone            # from the paper's left edge, in points
+        is: 64
+      - size: Headone             # the font size, in points
+        is: 11
+```
+
+A word is found by its text (a full stop or comma after it is allowed), at its first appearance; a `gap` looks for its second word on the first word's page. Make the words up for the fixture (Alphaone, Headtwo) so that each appears once. `within` sets how far off a measure may be. It is 1 by default, and 0.2 for a size. pdftools gives a position to the whole point, so a gap that is truly 26pt reads as 25 or 27 now and then, and a change of one point cannot be told from that; one of two points or more can. A YAML anchor (`&journal-layout`, then `*journal-layout`) holds two formats to the same list.
 
 ## Known failures
 

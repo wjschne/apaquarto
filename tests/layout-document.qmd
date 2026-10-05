@@ -1,0 +1,34 @@
+---
+title: "Document Layout"
+shorttitle: "Document Layout"
+documentmode: doc
+suppress-title-page: true
+format:
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read, in typst's document mode, whose 14pt leading sets its
+lines 22pt apart.
+
+The first paragraph after a heading is preceded by a spacer that
+formattypst.lua takes back by the paragraph spacing. That was a fixed 18pt,
+4pt more than this mode's, and set the paragraph 18pt under the heading
+instead of 22pt.
+
+A block quotation keeps its half inch on the right as well as the left in
+every mode but jou, which indents only on the left
+(layout-journal-quote.qmd). The body is justified here, so a full line of
+body text ends at the margin and a full line of the quotation half an inch
+short of it.
+-->
+
+Alphaone alphatwo.
+
+# Headone
+
+Gammaone gammatwo.
+
+> Quoteone words of a quotation long enough that it has to run on to several lines, so that its full lines can be measured from end to end against the text block, quotelast.
+
+Bodyone words of a body paragraph long enough that it has to run on to several lines, so that its full lines can be measured from end to end against the text block, bodylast.

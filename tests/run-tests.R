@@ -155,8 +155,103 @@ readers <- list(
   # Not a file the render leaves beside the fixture but what it said while
   # running, which is where a message meant for whoever asked for the render
   # belongs -- the notice about Word's page numbers is one.
-  log      = list(ext = "log",  how = "plain", squash = TRUE)
+  log      = list(ext = "log",  how = "plain", squash = TRUE),
+  # Where the words of the .pdf sit on the page, rather than what they say:
+  # see layout_failures() below.
+  layout   = list(ext = "pdf",  how = "layout", squash = FALSE)
 )
+
+# Layout checks ---------------------------------------------------------------
+#
+# A layout check measures the rendered .pdf, from the position pdftools gives
+# every word: the space between two lines, how far in a word starts, the size
+# a word is set at. These are what a snapshot of the .tex or .typ cannot see.
+# The source of a document can stay the same while what it sets changes under
+# it -- Typst 0.12 moved the space between paragraphs from block to par, and
+# every typst document lost its even spacing with not a character of its .typ
+# different -- so the page itself is measured.
+#
+# Each check names a word by its text (a full stop or comma after it is
+# allowed) and the first place it appears:
+#
+#   gap: [first, second]   baseline to baseline, in points, from the first
+#                          word to the second, on the first word's page
+#   left: word             how far the word's left edge is from the paper's
+#                          left edge, in points
+#   right: word            how far the right end of the line the word is on
+#                          is from the paper's left edge, in points
+#   size: word             the size of the word's font, in points
+#   is: number             what the measure should be
+#   within: number         how far off it may be: 1 by default for gap and
+#                          left, since pdftools gives positions to the whole
+#                          point, and 0.2 for size
+#
+# A word is best made up for the fixture (Alphaone, Headtwo) so that it
+# appears once and is easy to find.
+layout_words <- function(path) {
+  if (!requireNamespace("pdftools", quietly = TRUE)) {
+    stop("the pdftools package is needed to measure a .pdf")
+  }
+  pages <- pdftools::pdf_data(path, font_info = TRUE)
+  for (p in seq_along(pages)) pages[[p]]$page <- rep(p, nrow(pages[[p]]))
+  words <- do.call(rbind, pages)
+  words$bare <- sub("[.,:;]$", "", words$text)
+  words$baseline <- words$y + words$height
+  words
+}
+
+layout_failures <- function(path, checks) {
+  words <- layout_words(path)
+  find <- function(text, page = NULL) {
+    hit <- words[words$bare == text, ]
+    if (!is.null(page)) hit <- hit[hit$page == page, ]
+    if (nrow(hit) == 0) return(NULL)
+    hit[1, ]
+  }
+  failures <- character()
+  for (check in checks) {
+    if (!is.null(check$gap)) {
+      label <- paste0("gap from ", check$gap[[1]], " to ", check$gap[[2]])
+      first <- find(check$gap[[1]])
+      second <- if (!is.null(first)) find(check$gap[[2]], first$page)
+      actual <- if (!is.null(second)) second$baseline - first$baseline
+      tolerance <- if (is.null(check$within)) 1 else check$within
+    } else if (!is.null(check$left)) {
+      label <- paste0("left edge of ", check$left)
+      word <- find(check$left)
+      actual <- if (!is.null(word)) word$x
+      tolerance <- if (is.null(check$within)) 1 else check$within
+    } else if (!is.null(check$right)) {
+      # The right end of the line the word is on: its last word's right edge.
+      label <- paste0("right end of the line with ", check$right)
+      word <- find(check$right)
+      actual <- if (!is.null(word)) {
+        line <- words[words$page == word$page &
+                        abs(words$baseline - word$baseline) < 1, ]
+        max(line$x + line$width)
+      }
+      tolerance <- if (is.null(check$within)) 1 else check$within
+    } else if (!is.null(check$size)) {
+      label <- paste0("size of ", check$size)
+      word <- find(check$size)
+      actual <- if (!is.null(word)) word$font_size
+      tolerance <- if (is.null(check$within)) 0.2 else check$within
+    } else {
+      failures <- c(failures, paste0("layout check names no measure (gap, ",
+                                     "left, right or size): ",
+                                     paste(names(check), collapse = ", ")))
+      next
+    }
+    if (is.null(actual)) {
+      failures <- c(failures, paste0("layout: could not find the words for ",
+                                     label))
+    } else if (abs(actual - check$is) > tolerance) {
+      failures <- c(failures, sprintf("layout: %s is %gpt, expected %gpt (within %g)",
+                                      label, round(actual, 2), check$is, tolerance))
+    }
+  }
+  failures
+}
 
 # Everything a render might leave behind, for one fixture.
 artifacts_of <- function(stem) {
@@ -490,6 +585,10 @@ run_job <- function(job) {
     path <- if (ext == "log") log_file else artifacts_of(stem)[[ext]]
     if (!file.exists(path)) {
       note_failure(id, paste0("expected a .", ext, " and there is none"))
+      next
+    }
+    if (reader$how == "layout") {
+      for (failure in layout_failures(path, wanted)) note_failure(id, failure)
       next
     }
     text <- text_of(path, reader$how, reader$squash)

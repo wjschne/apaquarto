@@ -41,6 +41,10 @@ engine: knitr
 - The heading of a dissertation's list of tables is named by `thesis-list-of-tables`, after the `list-of-tables` field, and every word of the front matter is listed on the options page.
 - In typst the space between paragraphs is the line spacing (`leading`), so a manuscript is evenly double spaced and a journal article's paragraphs are no longer set apart by extra space.
 - In journal mode, .pdf and typst alike, level one to three headings are set the way the Journal of Educational Psychology sets them: a point larger than the body, with 26pt from the line above and 18pt to the line below.
+- A typst manuscript is double spaced at 24pt, as the .pdf is; it was 26pt.
+- In journal mode a block quotation is indented on the left only, 16pt, as the APA journals set one, in the .pdf and typst alike.
+- In typst the first paragraph after a heading is spaced like any other in every mode; in document mode it had been 4pt too close.
+- A block quotation whose last paragraph begins with an em dash (`---`) ends with an attribution, set against the quotation's right edge in every format.
 - In a dissertation the document's own margins reach the front matter as well as the body, and `thesis: title-margin` sets the title page's.
 
 # Version 6.0.1

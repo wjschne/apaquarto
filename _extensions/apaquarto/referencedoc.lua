@@ -109,4 +109,35 @@ function M.patch_link_styles(xml, wanted)
     .. marker_close .. stripped:sub(first)
 end
 
+-- The dash attribution under a block quotation --------------------------
+--
+-- The QuoteAttribution paragraph style apaquote.lua gives an attribution:
+-- Block Text, so that it keeps the quotation's indents, set against the
+-- right one with no first-line indent. Written between markers, and only for
+-- a document that has an attribution, so the reference document is left as
+-- it shipped otherwise. A reference document with a QuoteAttribution style of
+-- its own keeps that one.
+local attribution_open = "<!-- apaquarto-quote-attribution -->"
+local attribution_close = "<!-- /apaquarto-quote-attribution -->"
+
+local kAttributionStyle = table.concat({
+  '<w:style w:type="paragraph" w:customStyle="1" w:styleId="QuoteAttribution">',
+  '<w:name w:val="QuoteAttribution"/>',
+  '<w:basedOn w:val="BlockText"/>',
+  '<w:pPr><w:jc w:val="right"/><w:ind w:firstLine="0"/></w:pPr>',
+  "</w:style>",
+})
+
+function M.patch_attribution_style(xml, wanted)
+  local stripped = xml:gsub(
+    "<!%-%- apaquarto%-quote%-attribution %-%->.-<!%-%- /apaquarto%-quote%-attribution %-%->", "")
+  if not wanted or stripped:find('w:styleId="QuoteAttribution"', 1, true) then
+    return stripped
+  end
+  local first = stripped:find("</w:styles>", 1, true)
+  if not first then return stripped end
+  return stripped:sub(1, first - 1) .. attribution_open .. kAttributionStyle
+    .. attribution_close .. stripped:sub(first)
+end
+
 return M

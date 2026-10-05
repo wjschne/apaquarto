@@ -63,6 +63,10 @@ anything else here:
 | `_extensions/apaquarto/apa.scss`, `apa.css`, `title-block.html` | html styling; `title-block.html` is deliberately empty |
 | `_extensions/apanote/` | A second extension that only names `apaextractfigure`, `embednote` and `apanote` from its sibling, so a non-apaquarto document can have figure notes |
 | `tests/` | Fixtures, `expectations.yml` and snapshots; see `tests/README.md` |
+| `options.qmd`, `options.yml`, `options-helpers.R` | The options page of the website: `options.yml` holds every documented option and the R helper writes it into the page as definition lists; `tests/check-options.R` holds it to the fields the filters read |
+| `.quartoignore` | What `quarto use template` leaves out of a new project. Quarto reads each line as a glob exactly as written (a comment on the same line breaks the pattern) and already leaves out dotfiles, `README.md`, `LICENSE` and `_extensions`, which it installs on its own |
+| `JEP.pdf` | An article from the Journal of Educational Psychology, the measure journal mode's headings are set to; copyrighted, so kept at the repository root locally and in `.gitignore`, not committed |
+| `quote.pdf` | An article from Group Dynamics, with a block quotation on its page 6: the measure journal mode's block quotations are set to; kept locally the same way |
 
 ## Shared helpers
 
@@ -84,6 +88,9 @@ writing another copy:
 | `colour_hex(value)`, `toc_depth(meta, fallback)` | A colour as six hex digits; the contents depth |
 | `xml_escape`, `trim`, `upper`, `stringify` | Small string and inline helpers |
 | `docx_runs(inlines, bold, italic, colour)`, `docx_bookmark_name(id)` | Inlines as Word runs for raw openxml; the bookmark name pandoc gives a heading (hashed past 40 characters) |
+| `length_in_inches(value)`, `margin_sides(value, warn)` | A length (`in`, `cm`, `mm`, `pt`) as inches; the `margin` field, read the way typst reads it (one length, or `x`, `y`, `rest` and the sides), as inches per side |
+| `geometry_sides(value)`, `asked_margins(meta, warn)` | The sides LaTeX geometry options name; the margins a document asks for in the format being written (`margin`, and in the .pdf `geometry` over it) |
+| `thesis_margins`, `thesis_body_margins(meta)`, `thesis_page_one_margins(meta)`, `thesis_measure(margins)` | A dissertation's margins: the handbook's, the handbook's with the document's laid over them (every page but the title page), the title page's (`thesis: title-margin`), and the measure a set of margins leaves |
 
 ## Filters in run order
 
@@ -120,7 +127,7 @@ and still return early; the formats column says where it does real work.
 | `apastriptitle.lua` | all | Copies title/author/date/abstract to `apa*` keys and builds `apaauthordisplay`; in docx clears the originals |
 | `wordcount.lua` | all | `meta.wordn` for the title page |
 | `frontmatter.lua` | all | Title page, byline, author note, abstract, impact statement, keywords and list markers, as classed blocks for every format, one function per part. For latex and typst wraps the front matter in `Div.apa-frontmatter` for the writer to lay out |
-| `apaquote.lua` | docx | `NextBlockText` for the paragraphs after the first in a block quote |
+| `apaquote.lua` | all | A block quote's last paragraph that begins with an em dash becomes a `quote-attribution` div (unless inside a `no-attribution` div); in docx, `NextBlockText` for the paragraphs after the first |
 | `apafigtblappendix.lua` | html, docx, typst | `@fig-`/`@tbl-`/`@ill-` become "Figure A1" links, from `meta["apa-float-labels"]`, which it then removes |
 
 ### post-quarto
@@ -152,7 +159,7 @@ and still return early; the formats column says where it does real work.
 | `citeprocr.lua` | all | Runs citeproc itself (the yml sets `citeproc: false`), meta-analysis asterisks, masked references |
 | `apaandcite.lua` | all | "&" to "and" in narrative citations, possessives, strips meta-analysis asterisks |
 | `crossreflink.lua` | latex | The whole "Figure 1" is the link |
-| `formatlatex.lua` | latex | The LaTeX writer: sets the page by mode (`geometry`: the mode's options, then the document's, which win), lays out the front matter by mode (the journal masthead and its parts, from `frontmatterlayout`), then wraps the class vocabulary in `apalatex.tex` commands |
+| `formatlatex.lua` | latex | The LaTeX writer: sets the page by mode (`geometry`: the mode's options, then the document's `margin`, then its own `geometry`; see Page layout across formats), lays out the front matter by mode (the journal masthead and its parts, from `frontmatterlayout`), then wraps the class vocabulary in `apalatex.tex` commands |
 | `apapdfstandard.lua` | latex | Warns when a PDF standard needs tagging and flextable is in use |
 | `thesisfrontmatter.lua` | thesis | Dissertation front matter for every format; last so nothing downstream rewrites it |
 | `htmlcontents.lua` | html | Fills the `list-of-contents` marker |
@@ -191,6 +198,7 @@ filter across a stage boundary, breaks a consumer that may be far away.
 | `.list-of-contents`, `.list-of-figures`, `.list-of-tables` Divs | `frontmatter` | `htmlcontents`, `docxcontents`, `formatlatex`, `typstfrontmatter` |
 | `Div.apa-frontmatter` (latex, typst) | `frontmatter` | `formatlatex` and `typstfrontmatter`, which lay it out and remove it |
 | `FigureNote`, `NoIndent` | `utilsapa.make_note` (via `apanote`, `floatwithsubfigure`, `floatlatex`, `formattypst`) | `formatlatex`, css, reference doc, `docxlayout`, `apatwocolumntypst` |
+| `quote-attribution` div (custom-style `QuoteAttribution`), `meta["apa-quote-attribution"]` | `apaquote` | `formatlatex` (`apaquoteattribution` environment), `formattypst` (right-aligned), `apa.css`, `docxreferencedoc` (writes the `QuoteAttribution` style, through `referencedoc.patch_attribution_style`, only when the field is set) |
 | `FigureTitle`, `Caption` | `apacaption` | `docxlayout`, `docxcontents`, css, reference doc |
 | `FigureWithNote`, `FigureWithoutNote` | `apafloat` | `apaafternote`, `docxlayout` |
 | `citations[1].hash` = 1 (possessive), 2 (`&`), 3 (both) | `citeprocr` | `apaandcite` |
@@ -311,14 +319,39 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
 4. **The citation `hash` side channel** uses an undocumented Pandoc field;
    `tests/citation-hash.qmd` fails if it stops surviving citeproc.
 
+## Page layout across formats
+
+The .pdf and typst are meant to set the same page, and .docx the same
+margins. What each format reads, and where:
+
+- **Margins.** One field, `margin` (typst's shape), in every format.
+  - typst reads it itself, after each mode's layout in `typst-template.typ`, so it wins.
+  - `formatlatex.lua` writes the mode's geometry, then `margin` as geometry options, then the document's own `geometry`, which wins where both name a side.
+  - `docxreferencedoc.lua` writes it into the reference doc's section.
+  - `utilsapa.asked_margins` is the one reading of what a document asked for.
+- **Dissertations.** `thesispages.lua` sets every page but the title page on `utilsapa.thesis_body_margins` (the handbook's 1.5in left and 1in elsewhere, with the document's sides over them), and the title page on `thesis_page_one_margins` (1in, or `thesis: title-margin`). The title's line breaks, the committee indent and the rule width (5.5in or the measure, whichever is narrower) follow from the title page's measure, worked out per document in `set_geometry`.
+- **Typst spacing.** In `apa-layout`, `leading` is the space between lines (16pt in manuscript and student mode, which is 24pt baseline to baseline, the .pdf's double spacing) and, since `set par(spacing: leading)`, between paragraphs too; `spacing` is the space around blocks (quotations, lists, figures). Typst 0.12 moved paragraph spacing from `block` to `par`, which is why a `set block` rule alone no longer reaches it.
+- **Journal headings.** Levels 1 to 3 match between the .pdf and typst and follow `JEP.pdf`: a point larger than the body, 26pt baseline to baseline above, 18pt below, lines a point deeper than the body's. The .pdf sets them in `\apajouheadings` (`apalatex.tex`); typst with `headinggrow`, `headingabove` and `headingspace` in the `jou` layout. The two use different numbers for the same page because titlesec adds space to a line while typst measures from the edge of the text: measure the page, not the source.
+- **Block quotations.** Indented on both sides in every mode but `jou`, which indents 16pt on the left only, as the Group Dynamics article in `quote.pdf` sets one. The .pdf sets the journal's in `\apajouquote`; typst with `quoteinset` and `quoteinsetright`. Typst's own `quote` keeps a right inset that a `set pad` rule does not reach, so block quotes are shown in a `pad` of apaquarto's own.
+- **The spacer before a first paragraph.** In every mode but `jou`, `formattypst.lua` puts an invisible paragraph before the first paragraph after a heading or other block, so that it takes its first-line indent, and takes the space it brought back with `v(-par.spacing)`. That was a fixed `-18pt`, wrong in any mode not spaced at 18pt.
+
+`tests/layout-journal.qmd`, `layout-journal-quote.qmd`, `layout-manuscript.qmd`,
+`layout-document.qmd` and the `margins*.qmd` fixtures measure all of this on
+the rendered page. Re-measure after any
+change to these files, and after a Quarto, Typst or LaTeX upgrade.
+
 ## Testing
 
 `make test` renders every fixture in `tests/` against a fresh copy of the
 extension and checks the output against `tests/expectations.yml` and the
 `.tex`/`.typ` snapshots. It needs `Rscript` on the PATH. It renders up to
 four fixtures at a time (`--jobs 1` for one at a time), which takes a full
-run from about 13 minutes to about 4. Run it before and after any change to a
-filter. See `tests/README.md` for adding a fixture.
+run of about 150 jobs about 6 minutes. Run it before and after any change to
+a filter. See `tests/README.md` for adding a fixture.
+
+A snapshot catches a change to the source a format writes; it cannot tell
+whether the page still looks the same. `layout` checks measure the rendered
+.pdf (spacing, margins, sizes, to within a point) for that.
 
 `options.qmd` is written from `options.yml` by `options-helpers.R` when the
 site renders. `tests/check-options.R` (`make check-options`, and first in

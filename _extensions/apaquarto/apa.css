@@ -74,6 +74,9 @@ div.hanging-indent .csl-entry {margin-left: 0; text-indent: -0.5in;}
 
 blockquote p:nth-child(1) {text-indent: 0}
 
+/* The dash attribution under a block quotation (apaquote.lua) */
+.quote-attribution p {text-align: right; text-indent: 0}
+
 table {
     font-variant-numeric: tabular-nums;
 }
