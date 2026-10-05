@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>architecture – APA Style Documents with apaquarto</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e056b69f5ccf79f809a7a6a301a9d6e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="floating quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#apaquarto-architecture" id="toc-apaquarto-architecture" class="nav-link active" data-scroll-target="#apaquarto-architecture">apaquarto architecture</a>
+  <ul class="collapse">
+  <li><a href="#the-shape-of-it" id="toc-the-shape-of-it" class="nav-link" data-scroll-target="#the-shape-of-it">The shape of it</a></li>
+  <li><a href="#files" id="toc-files" class="nav-link" data-scroll-target="#files">Files</a></li>
+  <li><a href="#shared-helpers" id="toc-shared-helpers" class="nav-link" data-scroll-target="#shared-helpers">Shared helpers</a></li>
+  <li><a href="#filters-in-run-order" id="toc-filters-in-run-order" class="nav-link" data-scroll-target="#filters-in-run-order">Filters in run order</a>
+  <ul class="collapse">
+  <li><a href="#pre-ast-before-quarto-touches-the-ast" id="toc-pre-ast-before-quarto-touches-the-ast" class="nav-link" data-scroll-target="#pre-ast-before-quarto-touches-the-ast">pre-ast: before Quarto touches the AST</a></li>
+  <li><a href="#post-ast" id="toc-post-ast" class="nav-link" data-scroll-target="#post-ast">post-ast</a></li>
+  <li><a href="#pre-quarto" id="toc-pre-quarto" class="nav-link" data-scroll-target="#pre-quarto">pre-quarto</a></li>
+  <li><a href="#post-quarto" id="toc-post-quarto" class="nav-link" data-scroll-target="#post-quarto">post-quarto</a></li>
+  <li><a href="#post-render" id="toc-post-render" class="nav-link" data-scroll-target="#post-render">post-render</a></li>
+  </ul></li>
+  <li><a href="#contracts-between-filters" id="toc-contracts-between-filters" class="nav-link" data-scroll-target="#contracts-between-filters">Contracts between filters</a></li>
+  <li><a href="#a-figure-with-an-apa-note-by-format" id="toc-a-figure-with-an-apa-note-by-format" class="nav-link" data-scroll-target="#a-figure-with-an-apa-note-by-format">A figure with an apa-note, by format</a></li>
+  <li><a href="#citations" id="toc-citations" class="nav-link" data-scroll-target="#citations">Citations</a></li>
+  <li><a href="#dependencies-on-quarto-internals" id="toc-dependencies-on-quarto-internals" class="nav-link" data-scroll-target="#dependencies-on-quarto-internals">Dependencies on Quarto internals</a></li>
+  <li><a href="#known-structural-debt" id="toc-known-structural-debt" class="nav-link" data-scroll-target="#known-structural-debt">Known structural debt</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing">Testing</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="apaquarto-architecture" class="level1">
+<h1>apaquarto architecture</h1>
+<p>How apaquarto turns a <code>.qmd</code> into an APA-style document, written so that a maintainer or an AI assistant can find the right filter without reading all of them. The run order below is the one in <code>_extensions/apaquarto/_extension.yml</code>; when the two disagree, the yml is right and this file is stale.</p>
+<section id="the-shape-of-it" class="level2">
+<h2 class="anchored" data-anchor-id="the-shape-of-it">The shape of it</h2>
+<p>apaquarto is a Quarto extension made of Lua filters, three templates and a reference <code>.docx</code>. It has no class or package of its own: every format is ordinary Quarto output, reshaped by filters.</p>
+<pre><code>.qmd ─► knitr/jupyter ─► Pandoc parse
+         ─► [pre-ast]      11 filters   raw markdown AST; floats are plain Div/Table/Figure
+         ─► Quarto normalize            floats become FloatRefTarget custom nodes
+         ─► [post-ast]      1 filter
+         ─► [pre-quarto]    6 filters   title page is built here (frontmatter.lua)
+         ─► Quarto crossref, layout     numbering, subfigure layout
+         ─► [post-quarto]   9 filters   typst writer and docx styler run HERE
+         ─► Quarto renders floats       FloatRefTarget → html Divs / docx table / typst #figure
+         ─► [post-render]  20 filters   notes, captions, citeproc, then the LaTeX writer
+         ─► Pandoc writer + template     typst-*.typ, apalatex.tex, apaquarto.docx, apa.scss</code></pre>
+<p>The formats are not finished at the same point, which matters more than anything else here:</p>
+<ul>
+<li><strong>typst</strong> is written by <code>typst/formattypst.lua</code> at post-quarto. It runs before every common post-render filter, so it never sees what <code>apanote</code>, <code>apacaption</code> or <code>citeprocr</code> add.</li>
+<li><strong>docx</strong> styling starts at post-quarto (<code>docxstyler</code>, <code>docxlisting</code>) and finishes at post-render (<code>docxreferencedoc</code>, <code>docxcontents</code>, <code>docxlinkcolor</code>).</li>
+<li><strong>latex</strong> is written by <code>formatlatex.lua</code> near the end of post-render, so it sees everything.</li>
+<li><strong>html</strong> has no writer filter; <code>apa.css</code>/<code>apa.scss</code> style the classes the filters leave behind.</li>
+<li><strong>thesis</strong> mode (<code>documentmode: thesis</code>) has its own front matter, <code>thesisfrontmatter.lua</code>, which runs last of all. <code>thesispages.lua</code> builds the pages once as a format-neutral list (gaps, rules, paragraphs, anchors, contents lines, prose), and <code>thesislatex</code>, <code>thesistypst</code>, <code>thesishtml</code> or <code>thesisdocx</code> sets that list in its format.</li>
+</ul>
+</section>
+<section id="files" class="level2">
+<h2 class="anchored" data-anchor-id="files">Files</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Path</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>_extensions/apaquarto/_extension.yml</code></td>
+<td>Formats, defaults, and the filter list in run order</td>
+</tr>
+<tr class="even">
+<td><code>_extensions/apaquarto/*.lua</code></td>
+<td>The filters (below)</td>
+</tr>
+<tr class="odd">
+<td><code>_extensions/apaquarto/utilsapa.lua</code></td>
+<td>Shared helpers, loaded with <code>require("utilsapa")</code></td>
+</tr>
+<tr class="even">
+<td><code>_extensions/apaquarto/thesispages.lua</code></td>
+<td>Module that builds a dissertation’s front-matter pages as a format-neutral list, for <code>thesisfrontmatter</code>; not a filter</td>
+</tr>
+<tr class="odd">
+<td><code>_extensions/apaquarto/thesislatex.lua</code>, <code>thesistypst.lua</code>, <code>thesishtml.lua</code>, <code>thesisdocx.lua</code></td>
+<td>One renderer each for those pages, chosen by <code>thesisfrontmatter</code>; not filters</td>
+</tr>
+<tr class="even">
+<td><code>_extensions/apaquarto/thesistitle.lua</code>, <code>thesiscontents.lua</code></td>
+<td>Modules for the title lines and the contents entries, loaded by <code>thesispages</code> and <code>thesisfrontmatter</code>; not filters</td>
+</tr>
+<tr class="odd">
+<td><code>_extensions/apaquarto/referencedoc.lua</code></td>
+<td>Module that reads and writes the Word reference doc, and builds the link-colour styles, for <code>docxreferencedoc</code>, <code>docxlinkcolor</code>, <code>docxcontents</code> and <code>thesisdocx</code>; not a filter</td>
+</tr>
+<tr class="even">
+<td><code>_extensions/apaquarto/floatrecord.lua</code></td>
+<td>Module that reads a float once (caption, content, note, columns, panels) for <code>floatlatex</code> and <code>formattypst</code>; not a filter</td>
+</tr>
+<tr class="odd">
+<td><code>_extensions/apaquarto/frontmatterlayout.lua</code></td>
+<td>Module that reads the front matter’s shape for a journal or document layout (the journal split, spacing, list markers, ORCID lines, impact box), for <code>frontmatter</code> (latex jou) and <code>typstfrontmatter</code>; not a filter</td>
+</tr>
+<tr class="even">
+<td><code>_extensions/apaquarto/typst/typstfrontmatter.lua</code></td>
+<td>Module <code>formattypst</code> runs first: lays the typst front matter out by mode, writes the list outlines and the link-colour rule; not a filter</td>
+</tr>
+<tr class="odd">
+<td><code>_extensions/apaquarto/typst/</code></td>
+<td><code>formattypst.lua</code>, plus the <code>typst-show.typ</code> and <code>typst-template.typ</code> partials</td>
+</tr>
+<tr class="even">
+<td><code>_extensions/apaquarto/apalatex.tex</code></td>
+<td>The LaTeX definitions <code>formatlatex.lua</code> writes against; Quarto’s own pdf template is used unmodified</td>
+</tr>
+<tr class="odd">
+<td><code>_extensions/apaquarto/apaquarto.docx</code></td>
+<td>Reference doc; its styles are the docx half of the class vocabulary</td>
+</tr>
+<tr class="even">
+<td><code>_extensions/apaquarto/apa.scss</code>, <code>apa.css</code>, <code>title-block.html</code></td>
+<td>html styling; <code>title-block.html</code> is deliberately empty</td>
+</tr>
+<tr class="odd">
+<td><code>_extensions/apanote/</code></td>
+<td>A second extension that only names <code>apaextractfigure</code>, <code>embednote</code> and <code>apanote</code> from its sibling, so a non-apaquarto document can have figure notes</td>
+</tr>
+<tr class="even">
+<td><code>tests/</code></td>
+<td>Fixtures, <code>expectations.yml</code> and snapshots; see <code>tests/README.md</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shared-helpers" class="level2">
+<h2 class="anchored" data-anchor-id="shared-helpers">Shared helpers</h2>
+<p><code>utilsapa.lua</code> holds what more than one filter needs. Use these rather than writing another copy:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Helper</th>
+<th>What it gives</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lang(meta, key, fallback)</code></td>
+<td>A word from <code>meta.language</code>; always pass the English fallback, since the <code>apanote</code> extension runs without <code>apalanguage.lua</code></td>
+</tr>
+<tr class="even">
+<td><code>mode(meta)</code></td>
+<td><code>documentmode</code> as its short code, <code>man</code> when unset</td>
+</tr>
+<tr class="odd">
+<td><code>flag(meta, key)</code></td>
+<td>A yes/no field: off when absent or <code>false</code>, on otherwise</td>
+</tr>
+<tr class="even">
+<td><code>attr_true(el, name)</code></td>
+<td>Whether an element’s attribute says true, however it was written</td>
+</tr>
+<tr class="odd">
+<td><code>page_break(weak)</code></td>
+<td>A raw page break for docx, latex or typst; nil for html</td>
+</tr>
+<tr class="even">
+<td><code>float_prefixes(meta)</code>, <code>is_float(id, prefixes)</code></td>
+<td>Every float kind, <code>fig</code>, <code>tbl</code> and the document’s own such as <code>ill</code></td>
+</tr>
+<tr class="odd">
+<td><code>table_notes(meta)</code></td>
+<td>The markdown notes of markdown tables, by identifier</td>
+</tr>
+<tr class="even">
+<td><code>make_note(text, prefix)</code>, <code>note_inlines(text)</code></td>
+<td>A note’s blocks and inlines from its markdown</td>
+</tr>
+<tr class="odd">
+<td><code>link_fields</code>, <code>link_field(target)</code></td>
+<td>The four link colour fields, and which one a link asks for</td>
+</tr>
+<tr class="even">
+<td><code>contents_headings(blocks, depth)</code></td>
+<td>The headings a table of contents lists</td>
+</tr>
+<tr class="odd">
+<td><code>colour_hex(value)</code>, <code>toc_depth(meta, fallback)</code></td>
+<td>A colour as six hex digits; the contents depth</td>
+</tr>
+<tr class="even">
+<td><code>xml_escape</code>, <code>trim</code>, <code>upper</code>, <code>stringify</code></td>
+<td>Small string and inline helpers</td>
+</tr>
+<tr class="odd">
+<td><code>docx_runs(inlines, bold, italic, colour)</code>, <code>docx_bookmark_name(id)</code></td>
+<td>Inlines as Word runs for raw openxml; the bookmark name pandoc gives a heading (hashed past 40 characters)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filters-in-run-order" class="level2">
+<h2 class="anchored" data-anchor-id="filters-in-run-order">Filters in run order</h2>
+<p><code>all</code> means html, docx, latex and typst. A filter can be listed for all formats and still return early; the formats column says where it does real work.</p>
+<section id="pre-ast-before-quarto-touches-the-ast" class="level3">
+<h3 class="anchored" data-anchor-id="pre-ast-before-quarto-touches-the-ast">pre-ast: before Quarto touches the AST</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter</th>
+<th>Formats</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>documentmode.lua</code></td>
+<td>all</td>
+<td>Turns journal/manuscript/document/student/dissertation into <code>jou</code>/<code>man</code>/<code>doc</code>/<code>stu</code>/<code>thesis</code>; thesis turns on <code>suppress-title-page</code></td>
+</tr>
+<tr class="even">
+<td><code>apalanguage.lua</code></td>
+<td>all</td>
+<td>Fills <code>meta.language.*</code> from the document’s <code>language:</code> or top-level key, then <code>crossref.*</code>, then Quarto’s translation for <code>lang</code>, then its own English defaults. It holds the only list of those defaults; <code>_extension.yml</code> deliberately has no <code>language:</code> block, so no apaquarto default can override a Quarto translation</td>
+</tr>
+<tr class="odd">
+<td><code>abstractsection.lua</code></td>
+<td>all</td>
+<td>Moves an <code># Abstract</code> / <code># Impact Statement</code> section into <code>meta.abstract</code> / <code>meta["impact-statement"]</code></td>
+</tr>
+<tr class="even">
+<td><code>introductionheading.lua</code></td>
+<td>all</td>
+<td>Removes a leading level-1 “Introduction” heading (not in thesis mode)</td>
+</tr>
+<tr class="odd">
+<td><code>markdowntable.lua</code></td>
+<td>all</td>
+<td>Parses a markdown table caption’s <code>{#tbl-x ...}</code> into id, classes and attributes, and keeps its <code>apa-note</code> as written in <code>meta["apa-table-notes"]</code>, before Quarto flattens the caption</td>
+</tr>
+<tr class="even">
+<td><code>crossrefprefix.lua</code></td>
+<td>all</td>
+<td>The one appendix detector. Letters appendices and numbers figures, tables and custom floats (<code>ill-</code>) per appendix; writes <code>prefix</code>, <code>fignum</code>/<code>tblnum</code>/<code>floatnum</code>, <code>hassubfigs</code>, <code>appendixtitle</code>; inserts an “Appendix X” heading with class <code>apa-appendix</code>; publishes <code>apa-appendix-count</code> and <code>apa-float-labels</code>; calls a lone appendix “Appendix”</td>
+</tr>
+<tr class="odd">
+<td><code>apafloatstoend.lua</code></td>
+<td>all</td>
+<td>With <code>floatsintext: false</code>, moves floats before the first appendix; page breaks before appendices</td>
+</tr>
+<tr class="even">
+<td><code>apatwocolumntypstcollect.lua</code></td>
+<td>typst jou</td>
+<td>Puts <code>// apaquarto-wide-float:&lt;id&gt;</code> before a block marked <code>apa-twocolumn</code></td>
+</tr>
+<tr class="odd">
+<td><code>apapapersize.lua</code></td>
+<td>latex</td>
+<td>Reduces <code>papersize</code> to the name LaTeX’s class option expects</td>
+</tr>
+<tr class="even">
+<td><code>apaciteappendix.lua</code></td>
+<td>all</td>
+<td><code>@sec-</code>/<code>@apx-</code> references to appendices become “Appendix A” links (every appendix reference, in every format)</td>
+</tr>
+<tr class="odd">
+<td><code>apaomitrefsdiv.lua</code></td>
+<td>all</td>
+<td>Adds a References heading and <code>#refs</code> div if missing; one appendix is “Appendix”, not “Appendix A”</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="post-ast" class="level3">
+<h3 class="anchored" data-anchor-id="post-ast">post-ast</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter</th>
+<th>Formats</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>apamasked.lua</code></td>
+<td>all</td>
+<td>With <code>mask: true</code>, replaces the ids of <code>masked-citations</code> with <code>maskedreference</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pre-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="pre-quarto">pre-quarto</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter</th>
+<th>Formats</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>apaheader.lua</code></td>
+<td>all</td>
+<td>Periods after level-4/5 headings; in docx marks them <code>apa-runin</code> for <code>docxcontents</code> to write</td>
+</tr>
+<tr class="even">
+<td><code>apastriptitle.lua</code></td>
+<td>all</td>
+<td>Copies title/author/date/abstract to <code>apa*</code> keys and builds <code>apaauthordisplay</code>; in docx clears the originals</td>
+</tr>
+<tr class="odd">
+<td><code>wordcount.lua</code></td>
+<td>all</td>
+<td><code>meta.wordn</code> for the title page</td>
+</tr>
+<tr class="even">
+<td><code>frontmatter.lua</code></td>
+<td>all</td>
+<td>Title page, byline, author note, abstract, impact statement, keywords and list markers, as classed blocks for every format, one function per part. For latex and typst wraps the front matter in <code>Div.apa-frontmatter</code> for the writer to lay out</td>
+</tr>
+<tr class="odd">
+<td><code>apaquote.lua</code></td>
+<td>docx</td>
+<td><code>NextBlockText</code> for the paragraphs after the first in a block quote</td>
+</tr>
+<tr class="even">
+<td><code>apafigtblappendix.lua</code></td>
+<td>html, docx, typst</td>
+<td><code>@fig-</code>/<code>@tbl-</code>/<code>@ill-</code> become “Figure A1” links, from <code>meta["apa-float-labels"]</code>, which it then removes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="post-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="post-quarto">post-quarto</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter</th>
+<th>Formats</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>floatwithsubfigure.lua</code></td>
+<td>html, docx, latex</td>
+<td>Laid-out figures: “Panel A” labels, whole-figure note inside the float, explicit layout matrix</td>
+</tr>
+<tr class="even">
+<td><code>floatnote.lua</code></td>
+<td>html, docx</td>
+<td>Every other float’s note inside the float, from <code>floatrecord</code>; each panel’s note inside the panel as <code>SubPanelNote</code>; copies a code cell’s note down to its one float</td>
+</tr>
+<tr class="odd">
+<td><code>thesisfloats.lua</code></td>
+<td>thesis</td>
+<td>Records every float in <code>meta["apathesis-floats"]</code> for the thesis lists</td>
+</tr>
+<tr class="even">
+<td><code>floatlatex.lua</code></td>
+<td>latex</td>
+<td>Each figure and table as a complete APA float in raw LaTeX</td>
+</tr>
+<tr class="odd">
+<td><code>apaoneauthoraffiliation.lua</code></td>
+<td>all</td>
+<td>Stops the render when there are no authors, an author has no affiliation, or no author is corresponding</td>
+</tr>
+<tr class="even">
+<td><code>apatinytablehtml.lua</code></td>
+<td>html</td>
+<td>Aligns tinytable tables by <code>tbl-align</code></td>
+</tr>
+<tr class="odd">
+<td><code>docxstyler.lua</code></td>
+<td>docx</td>
+<td>Copies a Div’s or Span’s first class into <code>custom-style</code> when it is on its list. Of the filters’ own blocks only <code>Author</code>, <code>Abstract</code> and <code>AbstractFirstParagraph</code> reach it; the rest of the list serves divs authors write themselves, such as <code>::: {.NoIndent}</code></td>
+</tr>
+<tr class="even">
+<td><code>docxlisting.lua</code></td>
+<td>docx</td>
+<td>Code listings flush left</td>
+</tr>
+<tr class="odd">
+<td><code>typst/formattypst.lua</code></td>
+<td>typst</td>
+<td>The typst writer: the front matter by mode (through <code>typstfrontmatter</code>), fonts, float notes, panel <code>#grid</code>, <code>NoIndent</code>, hanging references, line numbers</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="post-render" class="level3">
+<h3 class="anchored" data-anchor-id="post-render">post-render</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter</th>
+<th>Formats</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>apaextractfigure.lua</code></td>
+<td>docx</td>
+<td>Unwraps the one-cell table Quarto puts around docx floats</td>
+</tr>
+<tr class="even">
+<td><code>embednote.lua</code></td>
+<td>html, docx, typst</td>
+<td>Recovers the <code>apa-note</code> of an <code>{{&lt; embed &gt;}}</code> float from its notebook</td>
+</tr>
+<tr class="odd">
+<td><code>apanote.lua</code></td>
+<td>all</td>
+<td>Writes the notes no earlier filter could: a figure embedded from a notebook (its note recovered by <code>embednote</code>), a div that is not a float, a cell holding several floats. Skips anything carrying this document’s <code>apa-note-written</code> mark</td>
+</tr>
+<tr class="even">
+<td><code>apafloat.lua</code></td>
+<td>all</td>
+<td><code>FigureWithNote</code> / <code>FigureWithoutNote</code> on top-level floats</td>
+</tr>
+<tr class="odd">
+<td><code>apacaption.lua</code></td>
+<td>html, docx</td>
+<td>Splits Quarto’s <code>Figure 1: caption</code> into <code>FigureTitle</code> and <code>Caption</code></td>
+</tr>
+<tr class="even">
+<td><code>apaafternote.lua</code></td>
+<td>all</td>
+<td><code>AfterWithoutNote</code> on the paragraph after a float with no note</td>
+</tr>
+<tr class="odd">
+<td><code>docxlayout.lua</code></td>
+<td>docx</td>
+<td>Rebuilds multipanel figures as one table, panel captions above</td>
+</tr>
+<tr class="even">
+<td><code>apatwocolumntypst.lua</code></td>
+<td>typst jou</td>
+<td>Wraps the block after a wide-float marker in <code>#place(top, scope: "parent")</code></td>
+</tr>
+<tr class="odd">
+<td><code>citeprocr.lua</code></td>
+<td>all</td>
+<td>Runs citeproc itself (the yml sets <code>citeproc: false</code>), meta-analysis asterisks, masked references</td>
+</tr>
+<tr class="even">
+<td><code>apaandcite.lua</code></td>
+<td>all</td>
+<td>“&amp;” to “and” in narrative citations, possessives, strips meta-analysis asterisks</td>
+</tr>
+<tr class="odd">
+<td><code>crossreflink.lua</code></td>
+<td>latex</td>
+<td>The whole “Figure 1” is the link</td>
+</tr>
+<tr class="even">
+<td><code>formatlatex.lua</code></td>
+<td>latex</td>
+<td>The LaTeX writer: sets the page by mode (<code>geometry</code>: the mode’s options, then the document’s, which win), lays out the front matter by mode (the journal masthead and its parts, from <code>frontmatterlayout</code>), then wraps the class vocabulary in <code>apalatex.tex</code> commands</td>
+</tr>
+<tr class="odd">
+<td><code>apapdfstandard.lua</code></td>
+<td>latex</td>
+<td>Warns when a PDF standard needs tagging and flextable is in use</td>
+</tr>
+<tr class="even">
+<td><code>thesisfrontmatter.lua</code></td>
+<td>thesis</td>
+<td>Dissertation front matter for every format; last so nothing downstream rewrites it</td>
+</tr>
+<tr class="odd">
+<td><code>htmlcontents.lua</code></td>
+<td>html</td>
+<td>Fills the <code>list-of-contents</code> marker</td>
+</tr>
+<tr class="even">
+<td><code>htmllinkcolor.lua</code></td>
+<td>html</td>
+<td>Link colours as scoped CSS</td>
+</tr>
+<tr class="odd">
+<td><code>docxformatlatexsymbol.lua</code></td>
+<td>docx</td>
+<td><code>\LaTeX</code> and <code>\TeX</code> math as plain text</td>
+</tr>
+<tr class="even">
+<td><code>docxreferencedoc.lua</code></td>
+<td>docx</td>
+<td>The one writer of the reference doc, once a render: fonts, paper size, margins (thesis, then the document’s <code>margin</code>), line numbers, running head, link-colour styles</td>
+</tr>
+<tr class="odd">
+<td><code>docxcontents.lua</code></td>
+<td>docx</td>
+<td>Table of contents and lists of figures/tables as openxml fields, and the run-in level-4/5 headings (<code>apa-runin</code>) with their formatting and bookmarks; after <code>docxreferencedoc</code>, whose page size it measures</td>
+</tr>
+<tr class="even">
+<td><code>docxlinkcolor.lua</code></td>
+<td>docx</td>
+<td>Gives each link the character style for its kind (the styles are written by <code>docxreferencedoc</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>The yml lists the common filters and each format’s own filters separately. Within one stage, this file assumes the common ones run first; that has not been checked against Quarto’s source.</p>
+</section>
+</section>
+<section id="contracts-between-filters" class="level2">
+<h2 class="anchored" data-anchor-id="contracts-between-filters">Contracts between filters</h2>
+<p>These names carry state from one filter to another. Renaming one, or moving a filter across a stage boundary, breaks a consumer that may be far away.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Marker</th>
+<th>Written by</th>
+<th>Read by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>documentmode</code> short codes</td>
+<td><code>documentmode.lua</code></td>
+<td>nearly every filter; typst uses the code as a template function name</td>
+</tr>
+<tr class="even">
+<td><code>meta.language.*</code></td>
+<td><code>apalanguage.lua</code></td>
+<td>nearly every filter</td>
+</tr>
+<tr class="odd">
+<td><code>prefix</code>, <code>fignum</code>, <code>tblnum</code>, <code>floatnum</code> attributes</td>
+<td><code>crossrefprefix</code></td>
+<td><code>apafloatstoend</code> (<code>prefix == ""</code> means in the body), <code>floatlatex</code>, <code>thesisfloats</code>, <code>apacaption</code></td>
+</tr>
+<tr class="even">
+<td><code>meta["apa-float-labels"]</code> (id → “A1”)</td>
+<td><code>crossrefprefix</code></td>
+<td><code>apafigtblappendix</code>, which removes it</td>
+</tr>
+<tr class="odd">
+<td><code>apa-appendix</code> class on the heading that opens an appendix</td>
+<td><code>crossrefprefix</code> (its inserted “Appendix X”, and an old-style “# Appendix A”)</td>
+<td><code>apafloatstoend</code>, <code>apaomitrefsdiv</code></td>
+</tr>
+<tr class="even">
+<td><code>meta["apa-appendix-count"]</code></td>
+<td><code>crossrefprefix</code></td>
+<td><code>apaciteappendix</code>, <code>apaomitrefsdiv</code></td>
+</tr>
+<tr class="odd">
+<td><code>appendixtitle</code> attribute</td>
+<td><code>crossrefprefix</code></td>
+<td><code>apaciteappendix</code>, <code>thesiscontents</code></td>
+</tr>
+<tr class="even">
+<td><code>hassubfigs</code> attribute</td>
+<td><code>crossrefprefix</code></td>
+<td><code>floatwithsubfigure</code></td>
+</tr>
+<tr class="odd">
+<td><code>meta["apa-table-notes"]</code></td>
+<td><code>markdowntable</code></td>
+<td><code>apanote</code>, <code>floatlatex</code>, <code>formattypst</code>, through <code>utilsapa.table_notes</code></td>
+</tr>
+<tr class="even">
+<td><code>apa-note-written</code> attribute</td>
+<td><code>floatwithsubfigure</code>, <code>floatnote</code>, <code>apanote</code>, all with <code>utilsapa.note_mark()</code> (a digest of this document’s path)</td>
+<td><code>apanote</code>, <code>floatnote</code>, <code>floatlatex</code></td>
+</tr>
+<tr class="odd">
+<td><code>// apaquarto-wide-float:&lt;id&gt;</code> raw typst</td>
+<td><code>apatwocolumntypstcollect</code></td>
+<td><code>apatwocolumntypst</code> (wraps the next block; the id is not checked)</td>
+</tr>
+<tr class="even">
+<td><code>apatitle</code>, <code>apatitledisplay</code>, <code>apaauthor</code>, <code>apaabstract</code>, <code>by-author[].apaauthordisplay</code></td>
+<td><code>apastriptitle</code></td>
+<td><code>frontmatter</code>, <code>thesisfrontmatter</code>, <code>typst-show.typ</code></td>
+</tr>
+<tr class="odd">
+<td><code>meta.wordn</code></td>
+<td><code>wordcount</code></td>
+<td><code>frontmatter</code></td>
+</tr>
+<tr class="even">
+<td><code>meta.description</code> (running head)</td>
+<td><code>frontmatter</code></td>
+<td><code>docxreferencedoc</code></td>
+</tr>
+<tr class="odd">
+<td><code>jou-running-authors</code></td>
+<td><code>frontmatter</code></td>
+<td><code>typst-show.typ</code>, <code>formatlatex</code></td>
+</tr>
+<tr class="even">
+<td><code>.list-of-contents</code>, <code>.list-of-figures</code>, <code>.list-of-tables</code> Divs</td>
+<td><code>frontmatter</code></td>
+<td><code>htmlcontents</code>, <code>docxcontents</code>, <code>formatlatex</code>, <code>typstfrontmatter</code></td>
+</tr>
+<tr class="odd">
+<td><code>Div.apa-frontmatter</code> (latex, typst)</td>
+<td><code>frontmatter</code></td>
+<td><code>formatlatex</code> and <code>typstfrontmatter</code>, which lay it out and remove it</td>
+</tr>
+<tr class="even">
+<td><code>FigureNote</code>, <code>NoIndent</code></td>
+<td><code>utilsapa.make_note</code> (via <code>apanote</code>, <code>floatwithsubfigure</code>, <code>floatlatex</code>, <code>formattypst</code>)</td>
+<td><code>formatlatex</code>, css, reference doc, <code>docxlayout</code>, <code>apatwocolumntypst</code></td>
+</tr>
+<tr class="odd">
+<td><code>FigureTitle</code>, <code>Caption</code></td>
+<td><code>apacaption</code></td>
+<td><code>docxlayout</code>, <code>docxcontents</code>, css, reference doc</td>
+</tr>
+<tr class="even">
+<td><code>FigureWithNote</code>, <code>FigureWithoutNote</code></td>
+<td><code>apafloat</code></td>
+<td><code>apaafternote</code>, <code>docxlayout</code></td>
+</tr>
+<tr class="odd">
+<td><code>citations[1].hash</code> = 1 (possessive), 2 (<code>&amp;</code>), 3 (both)</td>
+<td><code>citeprocr</code></td>
+<td><code>apaandcite</code></td>
+</tr>
+<tr class="even">
+<td><code>meta["apathesis-floats"]</code></td>
+<td><code>thesisfloats</code></td>
+<td><code>thesisfrontmatter</code></td>
+</tr>
+</tbody>
+</table>
+<p>The class vocabulary each writer understands:</p>
+<ul>
+<li><strong>latex</strong> (<code>formatlatex</code>): Header <code>.title</code> (ids <code>title</code>, <code>firstheader</code>), Header <code>.AuthorNote</code>, Div <code>.Author</code>, <code>.AbstractFirstParagraph</code>, <code>.list-of-*</code>, <code>.FigureNote</code>, and <code>Div.apa-frontmatter</code>, which it sorts itself into <code>.JournalMasthead</code>, <code>.JournalWide</code>, <code>.JournalNarrow</code> and <code>.JournalNote</code> in journal mode.</li>
+<li><strong>typst</strong> (<code>formattypst</code>): Div <code>.Author</code>, <code>.NoIndent</code>, <code>#refs</code>, float attributes <code>apa-note</code> and <code>layout-*</code>, <code>meta["apa-table-notes"]</code>.</li>
+<li><strong>docx</strong>: <code>custom-style</code> values set by the producers themselves (<code>FigureTitle</code>, <code>Caption</code>, <code>FigureNote</code>, <code>SubPanelNote</code>, <code>FigureWithNote</code>, <code>FigureWithoutNote</code>, <code>AfterWithoutNote</code>, <code>NextBlockText</code>, <code>ApaUnlistedHeadingN</code>, <code>Apa*Color</code>), plus whatever <code>docxstyler</code> maps from a first class (<code>Author</code>, <code>Abstract</code>, <code>AbstractFirstParagraph</code>, and author-written divs such as <code>NoIndent</code>). Each must exist as a style in <code>apaquarto.docx</code> or be added by <code>docxreferencedoc</code>.</li>
+<li><strong>html</strong>: the same class names, styled in <code>apa.css</code>.</li>
+</ul>
+</section>
+<section id="a-figure-with-an-apa-note-by-format" class="level2">
+<h2 class="anchored" data-anchor-id="a-figure-with-an-apa-note-by-format">A figure with an apa-note, by format</h2>
+<p>All formats share the pre-ast steps: <code>markdowntable</code> (for markdown tables), <code>crossrefprefix</code>, <code>apafloatstoend</code>, then <code>apafigtblappendix</code> at pre-quarto.</p>
+<ul>
+<li><strong>html</strong>: <code>floatwithsubfigure</code> (laid-out figures) → <code>floatnote</code> writes the note inside the float → Quarto renders → <code>apafloat</code> → <code>apacaption</code> re-parses the rendered caption → <code>apaafternote</code> → css.</li>
+<li><strong>docx</strong>: <code>floatwithsubfigure</code> → <code>floatnote</code> → <code>docxstyler</code> → Quarto renders a one-cell table → <code>apaextractfigure</code> unwraps it → <code>apafloat</code> → <code>apacaption</code> → <code>apaafternote</code> → <code>docxlayout</code> → <code>docxcontents</code> lists it.</li>
+<li><strong>latex</strong>: <code>floatwithsubfigure</code> → <code>floatlatex</code> writes the whole float, note included, as raw LaTeX → the common post-render float filters run but find nothing → <code>formatlatex</code> turns <code>FigureNote</code> into <code>apafloatnote</code>.</li>
+<li><strong>typst</strong>: <code>floatwithsubfigure</code> skips typst → <code>formattypst</code> writes the note and its own panel <code>#grid</code> → Quarto renders <code>#figure</code> → <code>apanote</code> writes any note <code>formattypst</code> left → <code>apatwocolumntypst</code> in journal mode.</li>
+</ul>
+<p>So every format writes a float’s note inside the float at post-quarto, from <code>floatrecord</code>: <code>floatnote</code> (html, docx), <code>floatlatex</code>, <code>formattypst</code>, and <code>floatwithsubfigure</code> for the whole-figure note of a laid-out float. <code>apanote</code> writes only what those cannot see. Panels are laid out three ways (LaTeX minipages, typst <code>#grid</code>, docx table merging), and two filters parse Quarto’s rendered output back apart (<code>apacaption</code>, <code>apaextractfigure</code>).</p>
+</section>
+<section id="citations" class="level2">
+<h2 class="anchored" data-anchor-id="citations">Citations</h2>
+<ol type="1">
+<li><code>citeproc: false</code> in the yml stops Quarto running citeproc after the filters.</li>
+<li><code>apamasked</code> (post-ast) swaps masked ids for <code>maskedreference</code> before anything resolves them.</li>
+<li>Note filters (post-quarto and post-render) parse <code>apa-note</code> text, which can create new <code>Cite</code> elements. This is why citeproc has to run late.</li>
+<li><code>citeprocr</code> (post-render) removes the <code>'s</code> and <code>&amp;</code> suffix tokens, records them in <code>citations[1].hash</code>, adds the references, and calls <code>pandoc.utils.citeproc</code>. In typst it also sets <code>citeproc = true</code> and drops <code>csl</code>.</li>
+<li><code>apaandcite</code> reads <code>hash</code> to write “and” and possessives, strips the meta-analysis asterisk, and in typst unwraps the <code>Cite</code>.</li>
+</ol>
+</section>
+<section id="dependencies-on-quarto-internals" class="level2">
+<h2 class="anchored" data-anchor-id="dependencies-on-quarto-internals">Dependencies on Quarto internals</h2>
+<p>These break silently when Quarto changes. Look here first after a Quarto upgrade. The two that would otherwise go unnoticed have guard fixtures, <code>tests/caption-shape.qmd</code> and <code>tests/citation-hash.qmd</code>, which fail when the shape changes.</p>
+<ul>
+<li><code>quarto._quarto.ast.custom_node_data</code> and <code>__quarto_custom_id</code>: <code>floatrecord.float_behind</code>, the one place that reads them.</li>
+<li>Quarto rebuilding a markdown table’s attributes from its caption, which is why <code>markdowntable</code> keeps the note in the metadata.</li>
+<li>The <code>QUARTO_FILTER_PARAMS</code> environment variable: <code>apalanguage</code>.</li>
+<li>The rendered html and docx caption shape <code>Figure</code>, nbsp, number, <code>:</code> : <code>apacaption</code> (guarded by <code>caption-shape.qmd</code>).</li>
+<li>The citation <code>hash</code> field surviving <code>pandoc.utils.citeproc</code>: <code>citeprocr</code> sets it, <code>apaandcite</code> reads it (guarded by <code>citation-hash.qmd</code>).</li>
+<li>The docx one-cell wrapper table and per-panel tables: <code>apaextractfigure</code>, <code>docxlayout</code>.</li>
+<li>LaTeX <code>Word~\ref{...}</code>: <code>crossreflink</code>.</li>
+<li>Classes <code>cell</code>, <code>quarto-layout-cell</code>, <code>quarto-layout-cell-subref</code>, <code>quarto-layout-panel</code>, <code>quarto-embed-nb-cell</code>, attribute <code>ref-parent</code>: <code>apanote</code>, <code>embednote</code>.</li>
+<li><code>PANDOC_WRITER_OPTIONS.reference_doc</code>: <code>docxreferencedoc</code> rewrites that file on disk (through <code>referencedoc.lua</code>), which is usually the installed <code>_extensions/apaquarto/apaquarto.docx</code>. Never commit it straight after a docx render; <code>make test</code> checks for this.</li>
+</ul>
+</section>
+<section id="known-structural-debt" class="level2">
+<h2 class="anchored" data-anchor-id="known-structural-debt">Known structural debt</h2>
+<p>Recorded so a change does not make it worse. Roughly in order of payoff.</p>
+<ol type="1">
+<li><strong>Captions in html and docx.</strong> <code>apacaption</code> re-parses the caption Quarto has rendered, <code>Figure</code>, nbsp, number, <code>:</code>, into a title and a caption. This cannot move to post-quarto: Quarto writes that caption after the last filter point, and writes a “Figure 1” of its own even for a float whose caption has been emptied. It breaks if Quarto changes how it renders a caption; <code>tests/caption-shape.qmd</code> fails when it does.</li>
+<li><strong>The reference doc is patched in place.</strong> This is deliberate: Pandoc reads <code>PANDOC_WRITER_OPTIONS.reference_doc</code> after the filters run, so there is nowhere else to put fonts, page size, line numbers and link colours. The original values are kept in <code>apaquarto-original-*</code> comments and the next render restores them, and <code>check_reference_doc()</code> in <code>tests/run-tests.R</code> stops a mid-patch file from being committed. Every read and write goes through <code>referencedoc.lua</code>, and only <code>docxreferencedoc</code> writes, once a render. What is left: two renders at once against the same installed file can still race on it.</li>
+<li><strong>Two front-matter systems</strong>: <code>frontmatter.lua</code> and <code>thesisfrontmatter.lua</code> each lay out a first page. In thesis mode <code>frontmatter.lua</code> now builds only the title and the running head (both still needed) and skips the rest of the title page. The thesis pages are kept apart from the format writers on purpose: their markup (page geometry, leader-dot contents lines, Word sections) is used by nothing else, so it lives in the four <code>thesis*</code> renderers rather than in <code>formatlatex</code> or <code>formattypst</code>.</li>
+<li><strong>The citation <code>hash</code> side channel</strong> uses an undocumented Pandoc field; <code>tests/citation-hash.qmd</code> fails if it stops surviving citeproc.</li>
+</ol>
+</section>
+<section id="testing" class="level2">
+<h2 class="anchored" data-anchor-id="testing">Testing</h2>
+<p><code>make test</code> renders every fixture in <code>tests/</code> against a fresh copy of the extension and checks the output against <code>tests/expectations.yml</code> and the <code>.tex</code>/<code>.typ</code> snapshots. It needs <code>Rscript</code> on the PATH. It renders up to four fixtures at a time (<code>--jobs 1</code> for one at a time), which takes a full run from about 13 minutes to about 4. Run it before and after any change to a filter. See <code>tests/README.md</code> for adding a fixture.</p>
+<p><code>options.qmd</code> is written from <code>options.yml</code> by <code>options-helpers.R</code> when the site renders. <code>tests/check-options.R</code> (<code>make check-options</code>, and first in <code>make test</code>) fails when <code>options.yml</code> and the fields the filters read disagree.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

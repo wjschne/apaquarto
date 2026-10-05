@@ -369,12 +369,18 @@ end
 --
 -- The heading is the kind in the plural and in capitals: LIST OF TABLES.
 -- language can name it, for a kind whose plural is not its word and an s.
+--
+-- The language key is thesis- and the field that asks for the list, so the
+-- two read alike: thesis-list-of-tables names the list list-of-tables sets.
+local function list_heading(meta, kind)
+  return language(meta, "thesis-" .. list_field(kind),
+    "LIST OF " .. pandoc.text.upper(kind) .. "S")
+end
+
 local function list_page(meta, kind, entries)
   if #entries == 0 then return nil end
 
-  local key = "thesis-list-of-" .. kind:lower()
-  local heading = language(meta, key,
-    "LIST OF " .. pandoc.text.upper(kind) .. "S")
+  local heading = list_heading(meta, kind)
 
   local items, add = collector()
   add.para("center", { text(heading) }, { bold = true })
@@ -518,16 +524,20 @@ function M.build(meta, blocks)
       items:insert(1, { kind = "anchor", name = anchor })
       lists:insert(items)
       front:insert({ kind = "entry", indent = 0, front = true,
-        text = text(language(meta, "thesis-list-of-" .. kind:lower(),
-          "LIST OF " .. pandoc.text.upper(kind) .. "S")),
+        text = text(list_heading(meta, kind)),
         target = anchor })
     end
   end
 
+  -- The label over the appendices is Quarto's word for them, in capitals,
+  -- unless thesis-appendices says otherwise: APPENDICES in English, and the
+  -- translation in a dissertation written in another language.
+  local appendices_word = pandoc.text.upper(
+    language(meta, "section-title-appendices", "Appendices"))
   local body = thesiscontents.body_entries(blocks,
     thesiscontents.depth(meta), {
       chapter = text(language(meta, "thesis-chapter-column", "CHAPTER")),
-      appendices = text(language(meta, "thesis-appendices", "APPENDICES")),
+      appendices = text(language(meta, "thesis-appendices", appendices_word)),
     })
   local contents = nil
   if wants_list(meta, "list-of-contents") then

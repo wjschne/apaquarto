@@ -1,0 +1,26 @@
+---
+title: "A Tally with a Label of Its Own"
+shorttitle: "Tally Label"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+word-count: true
+language:
+  title-word-count: "Recuento de Palabras"
+format:
+  apaquarto-docx: default
+  apaquarto-typst: default
+---
+
+<!--
+word-count: true puts the word count on the title page, and the language
+field's title-word-count names it. apalanguage.lua declares that key and
+options.qmd documents it, but frontmatter.lua read title-block-word-count,
+which nothing sets, so the label was always "Word Count" whatever the
+document asked for. Found by tests/check-options.R.
+-->
+
+Some words in the body.

@@ -19,11 +19,18 @@ sync-tests:
 	find tests/_extensions/apaquarto -mindepth 1 -type f -delete
 	cp -R _extensions/apaquarto/. tests/_extensions/apaquarto/
 
-# Render the fixtures in tests/ and check what comes out. run-tests.R does its
-# own sync-tests, so this needs nothing done first.
+# Check options.yml against the fields the filters read, then render the
+# fixtures in tests/ and check what comes out. run-tests.R does its own
+# sync-tests, so this needs nothing done first.
 .PHONY: test
-test:
+test: check-options
 	Rscript tests/run-tests.R
+
+# Seconds, and renders nothing: does options.yml (what options.qmd documents)
+# agree with the fields the filters read?
+.PHONY: check-options
+check-options:
+	Rscript tests/check-options.R
 
 # Accept the current .tex and .typ as the snapshots to compare against from now
 # on. Read the diff before running this.

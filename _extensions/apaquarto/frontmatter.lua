@@ -763,12 +763,10 @@ local function abstract_and_keywords(ctx)
   end
 
   if meta["word-count"] then
-    local word_count_word = "Word Count"
-    if meta.language and meta.language["title-block-word-count"] then
-      word_count_word = stringify(meta.language["title-block-word-count"])
-    end
-
-
+    -- title-word-count is the key apalanguage.lua declares and options.qmd
+    -- documents; this once read title-block-word-count, which nothing sets,
+    -- so a translation of the label never reached the page.
+    local word_count_word = utilsapa.lang(meta, "title-word-count", "Word Count")
     local word_count_paragraph = pandoc.Para({ pandoc.Emph(word_count_word), pandoc.Str(": " .. meta.wordn) })
     body:extend({ word_count_paragraph })
   end

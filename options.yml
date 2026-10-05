@@ -1,0 +1,996 @@
+# The options documented on options.qmd, one group per list there.
+#
+# options.qmd shows a group with apa_options("group-name") (see
+# options-helpers.R). Each entry has
+#
+#   name         an option's name, set as code with a link anchor
+#                (options.html#opt-name), or instead
+#   term         what to show for the entry, as markdown, when it is not
+#                one option's name: a link, or several names at once
+#   default      optional; markdown, shown as "Default: ..." first
+#   description  markdown; fenced code blocks, lists and links all work
+#
+# Edit this file as text. Nothing here needs lining up.
+
+# General Options
+general:
+  - name: title
+    description: |
+      Sets the title.
+
+      Titles with no special characters can be raw text.
+
+      ``` yaml
+      title: My title
+      ```
+
+      If your title has a colon in it, it will need to be quoted:
+
+      ``` yaml
+      title: "My Title: My Subtitle"
+      ```
+
+      You can list your title and subtitle separately, and they will be
+      combined with a colon in the document:
+
+      ``` yaml
+      title: My Title
+      subtitle: My Subtitle
+      ```
+  - name: shorttitle
+    description: |
+      A short version of the title that appears in the running header for .pdf
+      and .docx formats. If omitted or null (`~`), the running header will
+      take its value from the `title` field (and will omit the `subtitle`).
+  - name: abstract
+    description: |
+      The abstract paragraph.
+
+      If the abstract is a single paragraph, put it on a single line like most
+      of the other fields:
+
+      ``` yaml
+      abstract: This is a single-paragraph abstract.
+      ```
+
+      If the abstract has multiple paragraphs, separate them like so:
+
+      ``` yaml
+      abstract: |
+        | This is the first paragraph.
+        | This is the second paragraph.
+        | This the third paragraph.
+      ```
+
+      The abstract can be written in the document instead, as a section called
+      Abstract. It is taken out of the body and set on the title page as
+      though it had been written here. Handy for a long abstract, which a yaml
+      field makes awkward to write and to spell check:
+
+      ``` markdown
+      # Abstract
+
+      This is the first paragraph.
+
+      This is the second paragraph.
+      ```
+  - name: keywords
+    description: |
+      A list of topics your paper relates to. Can be single words or short
+      phrases. There are two ways to format key words.
+
+      Comma-separated list with square brackets:
+
+      ``` yaml
+      keywords: [First keyword, Second keyword, Third keyword]
+      ```
+
+      Multiline list with indented hyphens :
+
+      ``` yaml
+      keywords:
+        - First keyword
+        - Second keyword
+        - Third keyword
+      ```
+  - name: floatsintext
+    description: |
+      Specifies where floats (i.e., figures and tables) appear.
+
+      -   If `true`, figures and tables will be intermingled in text.
+      -   If `false`, figures and tables will appear at the end of the
+          document.
+      -   If omitted, defaults to `false`.
+
+      The `floatsintext` field does not apply when a .pdf output is in journal
+      mode.
+  - name: numbered-lines
+    description: |
+      Numbered lines (every format but .html, which has no pages to number
+      lines down) \| Default: `false` \|
+  - name: linenumber-font
+    description: |
+      The font of the numbers `numbered-lines` puts in the margin, in
+      apaquarto-typst.
+
+      Typst bundles one sans face, DejaVu Sans Mono, and warns once for every
+      family it is asked for and cannot find. So the default names only that
+      one, which is silent on every machine. Name another if you know the
+      machine has it:
+
+      ``` yaml
+      linenumber-font: Helvetica
+      ```
+
+      A list is tried in turn:
+
+      ``` yaml
+      linenumber-font: [Helvetica, Arial]
+      ```
+
+      Default: `DejaVu Sans Mono`
+  - name: bibliography
+    description: |
+      File(s) with references.
+
+      If you have a single file, you can list it like so:
+
+      ``` yaml
+      bibliography: mybibliography.bib
+      ```
+
+      If you have multiple files, you can make an array:
+
+      ``` yaml
+      bibliography: [mybibliography.bib, myotherbibliography.bib]
+      ```
+  - name: mask
+    description: |
+      For anonymous peer review, removes identifying information: author
+      names, author affiliations, author notes, correspondence information,
+      and references listed in the `masked-citations` field.
+
+      If `true`, identifying information is removed.
+
+      If `false` or omitted, all information is left as is.
+  - name: masked-citations
+    description: |
+      A list of citation keys that should be masked if the `mask` field is
+      `true`. For example:
+
+      ``` yaml
+      mask: true
+      masked-citations:
+        - mypublication2020
+        - mypublication2024
+      ```
+
+      The citation keys should be as they appear in the bibliography file(s).
+  - name: suppress-title-page
+    description: |
+      Suppress the title page if `true`
+  - name: meta-analysis
+    description: |
+      By default, all studies listed in the `nocite` field will be marked with
+      asterisks in the References section. If this behavior is unwanted, set
+      `meta-analysis` to false.
+  - name: no-ampersand-parenthetical
+    description: |
+      APA style uses ampersands in parenthetical citations (e.g., Schneider &
+      McGrew, 2018) but not in narrative (i.e., in-text) citations: Schneider
+      and McGrew (2018). You can replace ampersands with "and" in
+      parenthetical citations (e.g., Schneider and McGrew, 2018) by setting
+      the `no-ampersand-parenthetical` option to `true`. A different
+      replacement word other than "and" can be set in the
+      `citation-last-author-separator` field in the `language` options.
+  - name: impact-statement
+    description: |
+      A paragraph below the Abstract that describes the theoretical/practical
+      importance of the work. The heading of the impact statement is "Impact
+      Statement" by default but can be overridden using the
+      `title-impact-statement` field in the `language` field.
+
+      Like the abstract, it can be written in the document instead, as a
+      section called Impact Statement:
+
+      ``` markdown
+      # Impact Statement
+
+      This is the statement.
+      ```
+  - name: supplemental-materials
+    description: |
+      A line below the keywords pointing readers to supplemental materials (a
+      repository, an archive, an OSF page). The prefix is "Supplemental
+      materials" by default but can be overridden using the
+      `title-supplemental-materials` field in the `language` field.
+  - name: word-count
+    description: |
+      `word-count: true` puts the document's word count on the title page,
+      after the keywords and the supplemental materials. Every word of the
+      body is counted, along with code, math, notes and one word for each
+      citation. The label is "Word Count" by default and can be changed with
+      `title-word-count` in the `language` field.
+  - name: draft-date
+    description: |
+      A date under the author's name on the title page, for marking a draft.
+      `draft-date: true` gives the date of the render (as in October 4,
+      2026); any other text is used as written:
+
+      ``` yaml
+      draft-date: "Second draft, May 2027"
+      ```
+  - name: mainfont
+    description: |
+      Set font family for headings and body font. Default is Times New Roman
+  - name: monofont
+    description: |
+      Set font family for code output. Default is Consolas.
+  - name: papersize
+    description: |
+      Set the paper size. Default is `us-letter`. Other options include `a3`,
+      `a4`, `a5`, `b5`, `executive`, `legal`, `letter`, `tabloid`
+  - name: geometry
+    description: |
+      The .pdf's margins, as LaTeX's geometry options: `margin=1.25in`, or a
+      list such as `[left=1.5in, right=1in]`. Written after the mode's own
+      page, so what it names wins and what it leaves out keeps the mode's
+      setting. Default: 1in all round (journal mode: 0.75in, with 1in at the
+      foot).
+  - name: margin
+    description: |
+      The margins in typst and .docx: one length, or any of `x`, `y`, `left`,
+      `right`, `top` and `bottom` (`in`, `cm`, `mm` or `pt` in .docx). A side
+      left out keeps the mode's margin. Default: 1in all round (journal mode
+      in typst: 0.75in at the sides).
+
+# Affiliations
+affiliations:
+  - name: id
+    description: |
+      A unique identifier for the affiliation. The `id` can be useful for
+      specifying an affiliation shared by multiple authors:
+
+      ``` yaml
+      author:
+        - name: William Joel Schneider
+          affiliations:
+            - name: Temple University
+              department: College of Education and Human Development
+              address: 1301 Cecil B. Moore Ave.
+              city: Philadelphia
+              region: PA
+              postal-code: 19122-6091
+              id: temple
+        - name: Renée M. Tobin
+          affiliations:
+            - ref: temple
+      ```
+  - name: name
+    description: |
+      The name of the organization.
+
+      ``` yaml
+      author:
+        - name: Fred Jones
+          affiliation:
+            - name: Generic State University
+      ```
+
+      If the author is unaffiliated, list the author's city and region/state
+      instead:
+
+      ``` yaml
+      author:
+        - name: Fred Jones
+          affiliation:
+            - city: San Francisco
+              region: CA
+      ```
+  - name: department
+    description: |
+      A specific division within the organization.
+  - name: group
+    description: |
+      A subdivision within the department
+
+      ``` yaml
+      author:
+        - name: Fred Jones
+          affiliation:
+            - name: Generic State University
+              department: Department of Psychology
+              group: Counseling Psychology
+      ```
+  - name: address
+    description: |
+      The street address
+  - name: city
+    description: |
+      City
+  - name: region
+    description: |
+      The region, state, or province.
+
+      You may specify `state` instead, if you prefer.
+  - name: country
+    description: |
+      Country
+  - name: postal-code
+    description: |
+      Postal code (zip code in the U.S.)
+
+# Author Roles
+author-roles:
+  - term: |
+      [`conceptualization`](https://credit.niso.org/contributor-roles/conceptualization/)
+    description: |
+      Ideas; formulation or evolution of overarching research goals and aims.
+  - term: |
+      [`data curation`](https://credit.niso.org/contributor-roles/data-curation/)
+    description: |
+      Management activities to annotate (produce metadata), scrub data and
+      maintain research data (including software code, where it is necessary
+      for interpreting the data itself) for initial use and later re-use.
+  - term: |
+      [`formal analysis`](https://credit.niso.org/contributor-roles/formal-analysis/)
+    description: |
+      Application of statistical, mathematical, computational, or other formal
+      techniques to analyse or synthesize study data.
+  - term: |
+      [`funding acquisition`](https://credit.niso.org/contributor-roles/funding-acquisition/)
+    description: |
+      Acquisition of the financial support for the project leading to this
+      publication.
+  - term: |
+      [`investigation`](https://credit.niso.org/contributor-roles/investigation/)
+    description: |
+      Conducting a research and investigation process, specifically performing
+      the experiments, or data/evidence collection.
+  - term: |
+      [`methodology`](https://credit.niso.org/contributor-roles/methodology/)
+    description: |
+      Development or design of methodology; creation of models.
+  - term: |
+      [`project administration`](https://credit.niso.org/contributor-roles/project-administration/)
+    description: |
+      Management and coordination responsibility for the research activity
+      planning and execution.
+  - term: |
+      [`resources`](https://credit.niso.org/contributor-roles/resources/)
+    description: |
+      Provision of study materials, reagents, materials, patients, laboratory
+      samples, animals, instrumentation, computing resources, or other
+      analysis tools.
+  - term: |
+      [`software`](https://credit.niso.org/contributor-roles/software/)
+    description: |
+      Programming, software development; designing computer programs;
+      implementation of the computer code and supporting algorithms; testing
+      of existing code components.
+  - term: |
+      [`supervision`](https://credit.niso.org/contributor-roles/supervision/)
+    description: |
+      Oversight and leadership responsibility for the research activity
+      planning and execution, including mentorship external to the core team.
+  - term: |
+      [`validation`](https://credit.niso.org/contributor-roles/validation/)
+    description: |
+      Verification, whether as a part of the activity or separate, of the
+      overall replication/reproducibility of results/experiments and other
+      research outputs.
+  - term: |
+      [`visualization`](https://credit.niso.org/contributor-roles/visualization/)
+    description: |
+      Preparation, creation and/or presentation of the published work,
+      specifically visualization/data presentation.
+  - term: |
+      [`writing`](https://credit.niso.org/contributor-roles/writing-original-draft/)
+    description: |
+      Preparation, creation and/or presentation of the published work,
+      specifically writing the initial draft (including substantive
+      translation).
+  - term: |
+      [`editing`](https://credit.niso.org/contributor-roles/writing-review-editing/)
+    description: |
+      Preparation, creation and/or presentation of the published work by those
+      from the original research group, specifically critical review,
+      commentary or revision -- including pre- or post-publication stages.
+
+# Author Notes
+author-note-status:
+  - name: affiliation-change
+    description: |
+      Describe author affiliation changes.
+
+      Example:
+
+      ``` yaml
+      author-note:
+        status-changes:
+          affiliation-change: Fred Jones is now at Generic State University
+      ```
+  - name: deceased
+    description: |
+      Disclose names of authors who are now deceased.
+
+      Example:
+
+      ``` yaml
+      author-note:
+        status-changes:
+          deceased: Fred Jones is deceased.
+      ```
+
+# Author Notes
+author-note-disclosures:
+  - name: study-registration
+    description: |
+      Describe where the study was registered.
+
+      Example:
+
+      ``` yaml
+      author-note:
+        disclosures:
+          study-registration: "This study was registered at ClinicalTrials.gov (Identifier NTC998877)."
+      ```
+  - name: data-sharing
+    description: |
+      Data/materials that have been shared
+
+      Example:
+
+      ``` yaml
+      author-note:
+        disclosures:
+          data-sharing: "Data from this study can be accessed at https://academicdata.org/jones2024."
+      ```
+  - name: related-report
+    description: |
+      Acknowledge and cite data/materials that were used previously
+
+      Example:
+
+      ``` yaml
+      author-note:
+        disclosures:
+          related-report: "This article is based on the dissertation completed by Graham (2018)"
+      ```
+  - name: conflict-of-interest
+    description: |
+      Disclose author conflicts of interest
+
+      Example:
+
+      ``` yaml
+      author-note:
+        disclosures:
+          conflict-of-interest: "Fred Jones has been a paid consultant for Corporation X, which funded this study."
+      ```
+  - name: financial-support
+    description: |
+      Acknowledge funding sources
+
+      Example:
+
+      ``` yaml
+      author-note:
+        disclosures:
+          financial-support: "This study was supported by Grant 123 from Academic Funders United."
+      ```
+  - name: gratitude
+    description: |
+      Authors can express gratitude.
+
+      Example:
+
+      ``` yaml
+      author-note:
+        disclosures:
+          gratitude: "The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper."
+      ```
+  - name: authorship-agreements
+    description: |
+      Authors can disclose any agreements they entered into regarding the
+      paper.
+
+      Example:
+
+      ``` yaml
+      author-note:
+        disclosures:
+          authorship-agreements: "Because the authors are equal contributors, order of authorship was determined by a fair coin toss."
+      ```
+
+# Options for .docx and typst
+docx-typst:
+  - name: blank-lines-above-title
+    description: |
+      Number of blank lines above the title.
+
+      If omitted, defaults to 2 double-spaced lines.
+
+      APA style requests that you put your title 3 to 4 lines (i.e., 1.5 to 2
+      double-spaced lines) down from the top of the title page.
+  - name: blank-lines-above-author-note
+    description: |
+      Number of double-spaced lines between author affiliations and author
+      note.
+
+      APA style wants the note to start around the middle of the page. You can
+      play with the number. It defaults to 2 if omitted.
+  - name: author-note-columns
+    description: |
+      In typst journal mode, how many columns the author note spans at the
+      foot of the first page. `1` keeps it in one column however long it
+      runs, `2` sets it across both columns however short it is, and `auto`,
+      the default, decides by the length of the note. It can also be written
+      inside `author-note`. The other document modes do not float the author
+      note, so they ignore it.
+
+# Options for .pdf
+pdf:
+  - name: documentmode
+    description: |
+      Alter the overall style of the document. Options include:
+
+      -   `manscript` Manuscript: Similar to .docx format
+      -   `journal` Journal: A polished two-column format similar to many APA
+          journals.
+      -   `document` Document: Similar to default $\LaTeX$ articles.
+      -   `student` Student: Formatted for student papers
+      -   `thesis` Thesis/Dissertation: Formatted according to Temple University's *Dissertation & Thesis Handbook*
+
+      Each mode may also be abbreviated: `jou`, `man`, `doc`,
+      and `stu`.
+  - term: |
+      `course`
+
+      `professor`
+
+      `duedate`
+
+      `note`
+    description: |
+      Fields that are used only for student papers (`stu` mode).
+
+      Example:
+
+      ``` yaml
+      course: Introduction to Statistics (EDUC 5101)
+      professor: W. Joel Schneider
+      duedate: 12/22/2024
+      note: |
+        Student ID: 123456
+      ```
+  - term: |
+      `journal` `volume` `copyrightnotice` `copyrighttext`
+    description: |
+      Fields that are used only for journal articles (`jou` mode).
+
+      Example:
+
+      ``` yaml
+      journal:
+        title: Psychological Review
+      volume: 2024, Vol. 131, No. 2, 10--60
+      copyrightnotice: 2024
+      copyrighttext: All rights reserved
+      ```
+  - name: fontsize
+    description: |
+      Size of font.
+
+      Options include `10pt`, `11pt`, and `12pt`
+  - name: papersize
+    description: |
+      The paper size, `letter` by default. `a4` and the other sizes Quarto
+      knows are accepted, and reach the .docx as well.
+
+      Replaces apa7's `a4paper`, which no longer does anything.
+  - name: first-page
+    description: |
+      The number the first page carries, and the number the pages count on
+      from. Useful for a chapter or an article that begins partway into a
+      volume. Defaults to 1.
+
+# Dissertations and Theses
+thesis:
+  - name: type
+    description: |
+      What the work is: `Dissertation` or `Thesis`. The page reads "A
+      Dissertation".
+  - name: submitted-to
+    description: |
+      Who it is submitted to. Defaults to "the Temple University Graduate
+      Board".
+  - name: degree
+    description: |
+      The degree it answers to, as Student Services Banner names it.
+  - name: date
+    description: |
+      The diploma date, not the date of the defence.
+  - name: copyright
+    description: |
+      The year on the copyright page. Taken from the year in `date` when it is
+      not written. `false` leaves the page out.
+  - name: dedication
+    description: |
+      The dedication, centred on a page of its own with no heading. May also
+      be written as a top-level `dedication`, beside `abstract`.
+  - name: acknowledgments
+    description: |
+      The acknowledgments, under a heading of their own. `acknowledgements` is
+      read too, and either may be written at the top level instead.
+  - name: committee
+    description: |
+      The examining committee, in order. Each entry takes `name`, an optional
+      `role` (`Advisory Chair`, `External Member`) and an optional
+      `affiliation`, and is set as one line with commas between them.
+
+# Dissertations and Theses: the words of the front matter, under language
+language-thesis:
+  - name: thesis-article
+    default: 'A'
+    description: |
+      The article before the kind of work on the title page: *A*
+      Dissertation.
+  - name: thesis-submitted-to
+    default: 'Submitted to'
+    description: |
+      The line between the kind of work and who it is submitted to.
+  - name: thesis-fulfillment
+    default: 'In Partial Fulfillment'
+    description: |
+      The first line above the degree on the title page.
+  - name: thesis-requirements
+    default: 'of the Requirements for the Degree'
+    description: |
+      The second line above the degree on the title page.
+  - name: thesis-by
+    default: 'by'
+    description: |
+      The line above the author's name on the title page.
+  - name: thesis-committee
+    default: 'Examining Committee Members:'
+    description: |
+      The heading over the examining committee at the foot of the title page.
+  - name: thesis-copyright
+    default: 'Copyright'
+    description: |
+      The word after © on the copyright page: © Copyright 2027 by A. Author.
+  - name: thesis-copyright-by
+    default: 'by'
+    description: |
+      The word before the author's name on the copyright page.
+  - name: thesis-rights-reserved
+    default: 'All Rights Reserved'
+    description: |
+      The line under the copyright notice.
+  - name: thesis-abstract
+    default: 'ABSTRACT'
+    description: |
+      The heading of the abstract page, and its entry in the table of
+      contents.
+  - name: thesis-dedication
+    default: 'DEDICATION'
+    description: |
+      The dedication's entry in the table of contents. The page itself
+      carries no heading.
+  - name: thesis-acknowledgments
+    default: 'ACKNOWLEDGMENTS'
+    description: |
+      The heading of the acknowledgments page, and its entry in the table of
+      contents.
+  - name: thesis-contents
+    default: 'TABLE OF CONTENTS'
+    description: |
+      The heading of the table of contents.
+  - name: thesis-page-column
+    default: 'Page'
+    description: |
+      The label over the page numbers in the table of contents and in each
+      list.
+  - name: thesis-chapter-column
+    default: 'CHAPTER'
+    description: |
+      The label over the chapters in the table of contents.
+  - name: thesis-chapter-label
+    default: 'CHAPTER'
+    description: |
+      The word over each chapter's heading in the body, before its number:
+      CHAPTER 1.
+  - name: thesis-appendices
+    default: '`section-title-appendices` in capitals: APPENDICES'
+    description: |
+      The label over the appendices in the table of contents.
+  - term: |
+      `thesis-list-of-tables` `thesis-list-of-figures` `thesis-list-of-illustrations`
+    default: 'LIST OF TABLES, LIST OF FIGURES, ...'
+    description: |
+      The heading of each list of floats, and its entry in the table of
+      contents. The key is `thesis-` and the field that asks for the list:
+      `thesis-list-of-tables` names the list `list-of-tables` sets. A kind
+      declared under `crossref.custom` gets one of its own, as
+      `thesis-list-of-illustrations` does for Illustration; give it here
+      when its plural is not the word and an *s*.
+
+# Tables of contents, figures, and tables
+contents:
+  - name: list-of-contents
+    description: |
+      A table of contents, in every format.
+
+      How many levels of heading it lists is quarto's `toc-depth`, which is
+      three unless a document says otherwise. Nothing read that field before
+      6.0.1: .html and .docx counted three levels, the .pdf three, and typst
+      listed every level there was.
+
+      Each format reaches it differently: typst has an outline of its own, the
+      .pdf has LaTeX's, the .docx is built by hand, and .html has neither
+      pages nor fields, so an entry there is the heading and a link to it.
+
+      `toc: true` also works in typst. In .html it puts Quarto's own contents
+      in the margin, which is where a reader of a web page looks, so this
+      field adds none of its own while that one is there. The .html format
+      sets `toc: true` itself, so a contents in the body of a web page is
+      asked for with both fields:
+
+      ``` yaml
+      format:
+        apaquarto-html:
+          toc: false
+          list-of-contents: true
+      ```
+
+      In .docx `toc: true` is Pandoc's, and writes a contents at the very top
+      of the file, ahead of the title page, where nothing can move it.
+
+      Only the headings that belong in a contents are listed: the title page's
+      headings and anything marked `{.unlisted}` are left out.
+  - name: list-of-figures
+    description: |
+      A list of figures, in .docx, typst and .pdf.
+  - name: list-of-tables
+    description: |
+      A list of tables, in .docx, typst and .pdf.
+
+# The Colour a Link Takes
+link-colours:
+  - name: linkcolor
+    description: |
+      A link inside the document: a cross reference, or a link to a heading.
+      \|
+  - name: urlcolor
+    description: |
+      A link that leaves the document, an email address included.
+  - name: citecolor
+    description: |
+      A citation, which points at the reference list.
+  - name: filecolor
+    description: |
+      A link to a file.
+  - name: toccolor
+    description: |
+      The entries of the lists of contents, figures and tables. Body-text
+      black by default, so that a list reads as a list rather than as a page
+      of links.
+
+# Suppress Elements
+suppress:
+  - name: suppress-title-page
+    description: |
+      Suppress the entire title page
+  - name: suppress-title
+    description: |
+      Suppress the title on the title page
+  - name: suppress-short-title
+    description: |
+      Suppress the short title in the running header
+  - name: suppress-author
+    description: |
+      Suppresses the author names below the title. Does not suppress author
+      names in the author note.
+  - name: suppress-affiliation
+    description: |
+      Suppress affiliations below the author names. Does not suppress the
+      affiliation in the correspondence note.
+  - name: suppress-author-note
+    description: |
+      Suppress the entire author note
+  - name: suppress-orcid
+    description: |
+      Suppress the author ORCID numbers
+  - name: suppress-status-change-paragraph
+    description: |
+      Suppress the paragraph about status changes (affiliation changes and
+      deceased authors)
+  - name: suppress-disclosures-paragraph
+    description: |
+      Suppress the paragraph about disclosures (study registration, data
+      sharing, related reports, conflicts of interest, financial support,
+      statements of gratitude, and authorship agreements)
+  - name: suppress-credit-statement
+    description: |
+      Suppress the credit statement
+  - name: suppress-corresponding-paragraph
+    description: |
+      Suppress the entire correspondence paragraph
+  - name: suppress-corresponding-group
+    description: |
+      Suppress the group in the correspondence address
+  - name: suppress-corresponding-department
+    description: |
+      Suppress the department in the correspondence address
+  - name: suppress-corresponding-affiliation-name
+    description: |
+      Suppress the name of the organization in the correspondence address
+  - name: suppress-corresponding-address
+    description: |
+      Suppress the street address in the correspondence address
+  - name: suppress-corresponding-city
+    description: |
+      Suppress the city in the correspondence address
+  - name: suppress-corresponding-region
+    description: |
+      Suppress the region/state in the correspondence address
+  - name: suppress-corresponding-postal-code
+    description: |
+      Suppress the postal code in the correspondence address
+  - name: suppress-corresponding-country
+    description: |
+      Suppress the country in the correspondence address
+  - name: suppress-corresponding-email
+    description: |
+      Suppress the email address in the correspondence address
+  - name: suppress-abstract
+    description: |
+      Suppress the abstract. In the .pdf document, this will also suppress the
+      keywords.
+  - name: suppress-impact-statement
+    description: |
+      Suppress the impact statement
+  - name: suppress-keywords
+    description: |
+      Suppress the keywords below the abstract
+  - name: suppress-supplemental-materials
+    description: |
+      Suppress the supplemental materials line below the keywords
+  - name: suppress-title-introduction
+    description: |
+      Suppress the title in the introduction
+
+# Language Options
+language-apaquarto:
+  - name: citation-last-author-separator
+    default: '*and*'
+    description: |
+      APA-style in-text citations with multiple authors are separated by
+      commas with the appropriate translation of the word *and* before the
+      last author.
+  - name: citation-masked-author
+    default: '*Masked Author*'
+    description: |
+      The phrase to replace author names in masked citations.
+  - name: citation-masked-date
+    default: '*n.d.*'
+    description: |
+      The abbreviated translation for "no date" in masked citations
+  - name: email
+    default: '*Email*'
+    description: |
+      The translation for "Email" in correspondence note
+  - name: citation-masked-title
+    default: '*Masked Title*'
+    description: |
+      The abbreviated translation for "Masked Title" in masked citations
+  - name: figure-table-note
+    default: '*Note*'
+    description: |
+      The translation for "Note" in table and figure notes. If not set,
+      Quarto's translation of `callout-note-title` for `lang` is used.
+  - name: title-block-author-note
+    default: '*Author Note*'
+    description: |
+      The heading of the author note
+  - name: title-block-correspondence-note
+    default: '*Correspondence concerning this article should be addressed to*'
+    description: |
+      The phrase introducing the correspondence note.
+  - name: title-block-role-introduction
+    default: '*Author roles were classified using the Contributor Role Taxonomy
+(CRediT; https://credit.niso.org/) as follows:*'
+    description: |
+      The phrase introducing the author roles.
+  - name: title-impact-statement
+    default: '*Impact Statement*'
+    description: |
+      The heading for the impact statement
+  - name: title-supplemental-materials
+    default: '*Supplemental materials*'
+    description: |
+      The phrase before the value of `supplemental-materials`
+  - name: title-word-count
+    default: '*Word Count*'
+    description: |
+      The phrase before the word count when `word-count: true`
+  - name: references-meta-analysis
+    default: '*References marked with an asterisk indicate studies included in the
+meta-analysis.*'
+    description: |
+      The sentence explaining that citations marked with an asterisk were
+      studies in the meta-analysis.
+  - name: figure-panel
+    default: '*Panel*'
+    description: |
+      The word before the letter of each panel of a figure with sub-figures:
+      Panel A, Panel B.
+  - name: journal-volume
+    default: '*Vol.*'
+    description: |
+      The abbreviation before the volume number in a journal masthead
+      (journal mode).
+  - name: journal-issue
+    default: '*No.*'
+    description: |
+      The abbreviation before the issue number in a journal masthead
+      (journal mode).
+  - name: section-title-introduction
+    default: '*Introduction*'
+    description: |
+      The heading apaquarto takes out when it opens the body, since APA
+      does not label the introduction. Set it to the word your paper uses
+      so that a heading in another language is recognised too.
+
+# Language Options
+language-quarto:
+  - name: section-title-abstract
+    default: 'Abstract'
+    description: |
+      Abstract title
+  - name: section-title-references
+    default: 'References'
+    description: |
+      References title
+  - name: title-block-keywords
+    default: 'Keywords'
+    description: |
+      Keywords
+  - name: crossref-fig-title
+    default: 'Figure'
+    description: |
+      Figure title prefix
+  - name: crossref-tbl-title
+    default: 'Table'
+    description: |
+      Table title prefix
+  - name: crossref-apx-prefix
+    default: 'Appendix'
+    description: |
+      Appendix title prefix
+  - name: crossref-eq-prefix
+    default: 'Equation'
+    description: |
+      Equation title prefix
+  - name: section-title-appendices
+    default: 'Appendices'
+    description: |
+      The word for the appendices as a group. In a dissertation it is the
+      label over the appendices in the table of contents, in capitals,
+      unless `thesis-appendices` says otherwise. apaquarto once spelled it
+      `section-title-appendixes`, which still works.
+  - name: crossref-lof-title
+    default: 'List of Figures'
+    description: |
+      The heading of the list of figures (`list-of-figures`).
+  - name: crossref-lot-title
+    default: 'List of Tables'
+    description: |
+      The heading of the list of tables (`list-of-tables`).
+  - name: toc-title-document
+    default: 'Table of Contents'
+    description: |
+      The heading of the table of contents (`list-of-contents`). Quarto's
+      English is "Table of contents"; apaquarto sets it in title case unless
+      the document gives its own.

@@ -90,6 +90,22 @@ same document written with Linux paths and whatever fonts that machine found,
 and nothing else. The `.actual` files are in the run's `test-output` artifact,
 or run `make test-update` on Linux and commit the result.
 
+## The options page
+
+`check-options.R` compares `options.yml`, which `options.qmd` is written
+from, with the fields the filters read. It renders nothing and takes a few
+seconds; `make test` runs it first, and so does CI. It fails when an option is
+documented but no longer read, when a filter reads a field `options.yml` does
+not document, and the same for the `language` keys.
+
+A field that is read on purpose but does not belong on the options page ---
+one apaquarto passes between its own filters, or one of Quarto's own --- goes
+on one of the lists at the top of the script, each of which says what it is
+for. `known_gaps` and `known_language_gaps` hold fields that should be
+documented and are not yet; every run prints them, and a name comes off the
+list when its entry is written. The script also fails when a name on any list
+no longer needs to be there, so the lists cannot quietly go stale.
+
 ## Continuous integration
 
 | Workflow | When | What |

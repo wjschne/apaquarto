@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d3bfbaa8847148f808aec794168397b1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-e056b69f5ccf79f809a7a6a301a9d6e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -307,30 +307,26 @@ window.Quarto = {
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="general-options" class="level1">
 <h1>General Options</h1>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 93%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>Field <code>title</code></td>
-<td><p>Explanation Sets the title.</p>
+<div class="option-list">
+<dl>
+<dt><span id="opt-title"><code>title</code></span></dt>
+<dd>
+<p>Sets the title.</p>
 <p>Titles with no special characters can be raw text.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My title</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If your title has a colon in it, it will need to be quoted:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Title: My Subtitle"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can list your title and subtitle separately, and they will be combined with a colon in the document:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My Title</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> My Subtitle</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>shorttitle</code></td>
-<td>A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (<code>~</code>), the running header will take its value from the <code>title</code> field (and will omit the <code>subtitle</code>).</td>
-</tr>
-<tr class="odd">
-<td><code>abstract</code></td>
-<td><p>The abstract paragraph.</p>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> My Subtitle</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-shorttitle"><code>shorttitle</code></span></dt>
+<dd>
+<p>A short version of the title that appears in the running header for .pdf and .docx formats. If omitted or null (<code>~</code>), the running header will take its value from the <code>title</code> field (and will omit the <code>subtitle</code>).</p>
+</dd>
+<dt><span id="opt-abstract"><code>abstract</code></span></dt>
+<dd>
+<p>The abstract paragraph.</p>
 <p>If the abstract is a single paragraph, put it on a single line like most of the other fields:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> This is a single-paragraph abstract.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If the abstract has multiple paragraphs, separate them like so:</p>
@@ -343,103 +339,111 @@ window.Quarto = {
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>This is the first paragraph.</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>This is the second paragraph.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>keywords</code></td>
-<td><p>A list of topics your paper relates to. Can be single words or short phrases. There are two ways to format key words.</p>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>This is the second paragraph.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-keywords"><code>keywords</code></span></dt>
+<dd>
+<p>A list of topics your paper relates to. Can be single words or short phrases. There are two ways to format key words.</p>
 <p>Comma-separated list with square brackets:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">First keyword</span><span class="kw">,</span><span class="at"> Second keyword</span><span class="kw">,</span><span class="at"> Third keyword</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Multiline list with indented hyphens :</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">keywords</span><span class="kw">:</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> First keyword</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Second keyword</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Third keyword</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>floatsintext</code></td>
-<td><p>Specifies where floats (i.e., figures and tables) appear.</p>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> Third keyword</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-floatsintext"><code>floatsintext</code></span></dt>
+<dd>
+<p>Specifies where floats (i.e., figures and tables) appear.</p>
 <ul>
 <li>If <code>true</code>, figures and tables will be intermingled in text.</li>
 <li>If <code>false</code>, figures and tables will appear at the end of the document.</li>
 <li>If omitted, defaults to <code>false</code>.</li>
 </ul>
-<p>The <code>floatsintext</code> field does not apply when a .pdf output is in journal mode.</p></td>
-</tr>
-<tr class="even">
-<td><code>numbered-lines</code></td>
-<td>Numbered lines (every format but .html, which has no pages to number lines down) | Default: <code>false</code> |</td>
-</tr>
-<tr class="odd">
-<td><code>linenumber-font</code></td>
-<td><p>The font of the numbers <code>numbered-lines</code> puts in the margin, in apaquarto-typst.</p>
+<p>The <code>floatsintext</code> field does not apply when a .pdf output is in journal mode.</p>
+</dd>
+<dt><span id="opt-numbered-lines"><code>numbered-lines</code></span></dt>
+<dd>
+<p>Numbered lines (every format but .html, which has no pages to number lines down) | Default: <code>false</code> |</p>
+</dd>
+<dt><span id="opt-linenumber-font"><code>linenumber-font</code></span></dt>
+<dd>
+<p>The font of the numbers <code>numbered-lines</code> puts in the margin, in apaquarto-typst.</p>
 <p>Typst bundles one sans face, DejaVu Sans Mono, and warns once for every family it is asked for and cannot find. So the default names only that one, which is silent on every machine. Name another if you know the machine has it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linenumber-font</span><span class="kw">:</span><span class="at"> Helvetica</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A list is tried in turn:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linenumber-font</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">Helvetica</span><span class="kw">,</span><span class="at"> Arial</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Default: <code>DejaVu Sans Mono</code></p></td>
-</tr>
-<tr class="even">
-<td><code>bibliography</code></td>
-<td><p>File(s) with references.</p>
+<p>Default: <code>DejaVu Sans Mono</code></p>
+</dd>
+<dt><span id="opt-bibliography"><code>bibliography</code></span></dt>
+<dd>
+<p>File(s) with references.</p>
 <p>If you have a single file, you can list it like so:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> mybibliography.bib</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you have multiple files, you can make an array:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">mybibliography.bib</span><span class="kw">,</span><span class="at"> myotherbibliography.bib</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>mask</code></td>
-<td><p>For anonymous peer review, removes identifying information: author names, author affiliations, author notes, correspondence information, and references listed in the <code>masked-citations</code> field.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">mybibliography.bib</span><span class="kw">,</span><span class="at"> myotherbibliography.bib</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-mask"><code>mask</code></span></dt>
+<dd>
+<p>For anonymous peer review, removes identifying information: author names, author affiliations, author notes, correspondence information, and references listed in the <code>masked-citations</code> field.</p>
 <p>If <code>true</code>, identifying information is removed.</p>
-<p>If <code>false</code> or omitted, all information is left as is.</p></td>
-</tr>
-<tr class="even">
-<td><code>masked-citations</code></td>
-<td><p>A list of citation keys that should be masked if the <code>mask</code> field is <code>true</code>. For example:</p>
+<p>If <code>false</code> or omitted, all information is left as is.</p>
+</dd>
+<dt><span id="opt-masked-citations"><code>masked-citations</code></span></dt>
+<dd>
+<p>A list of citation keys that should be masked if the <code>mask</code> field is <code>true</code>. For example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mask</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">masked-citations</span><span class="kw">:</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2020</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> mypublication2024</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The citation keys should be as they appear in the bibliography file(s).</p></td>
-</tr>
-<tr class="odd">
-<td><code>suppress-title-page</code></td>
-<td>Suppress the title page if <code>true</code></td>
-</tr>
-<tr class="even">
-<td><code>meta-analysis</code></td>
-<td>By default, all studies listed in the <code>nocite</code> field will be marked with asterisks in the References section. If this behavior is unwanted, set <code>meta-analysis</code> to false.</td>
-</tr>
-<tr class="odd">
-<td><code>no-ampersand-parenthetical</code></td>
-<td>APA style uses ampersands in parenthetical citations (e.g., Schneider &amp; McGrew, 2018) but not in narrative (i.e., in-text) citations: Schneider and McGrew (2018). You can replace ampersands with “and” in parenthetical citations (e.g., Schneider and McGrew, 2018) by setting the <code>no-ampersand-parenthetical</code> option to <code>true</code>. A different replacement word other than “and” can be set in the <code>citation-last-author-separator</code> field in the <code>language</code> options.</td>
-</tr>
-<tr class="even">
-<td><code>impact-statement</code></td>
-<td><p>A paragraph below the Abstract that describes the theoretical/practical importance of the work. The heading of the impact statement is “Impact Statement” by default but can be overridden using the <code>title-impact-statement</code> field in the <code>language</code> field.</p>
+<p>The citation keys should be as they appear in the bibliography file(s).</p>
+</dd>
+<dt><span id="opt-general-suppress-title-page"><code>suppress-title-page</code></span></dt>
+<dd>
+<p>Suppress the title page if <code>true</code></p>
+</dd>
+<dt><span id="opt-meta-analysis"><code>meta-analysis</code></span></dt>
+<dd>
+<p>By default, all studies listed in the <code>nocite</code> field will be marked with asterisks in the References section. If this behavior is unwanted, set <code>meta-analysis</code> to false.</p>
+</dd>
+<dt><span id="opt-no-ampersand-parenthetical"><code>no-ampersand-parenthetical</code></span></dt>
+<dd>
+<p>APA style uses ampersands in parenthetical citations (e.g., Schneider &amp; McGrew, 2018) but not in narrative (i.e., in-text) citations: Schneider and McGrew (2018). You can replace ampersands with “and” in parenthetical citations (e.g., Schneider and McGrew, 2018) by setting the <code>no-ampersand-parenthetical</code> option to <code>true</code>. A different replacement word other than “and” can be set in the <code>citation-last-author-separator</code> field in the <code>language</code> options.</p>
+</dd>
+<dt><span id="opt-impact-statement"><code>impact-statement</code></span></dt>
+<dd>
+<p>A paragraph below the Abstract that describes the theoretical/practical importance of the work. The heading of the impact statement is “Impact Statement” by default but can be overridden using the <code>title-impact-statement</code> field in the <code>language</code> field.</p>
 <p>Like the abstract, it can be written in the document instead, as a section called Impact Statement:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Impact Statement</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>This is the statement.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>supplemental-materials</code></td>
-<td>A line below the keywords pointing readers to supplemental materials (a repository, an archive, an OSF page). The prefix is “Supplemental materials” by default but can be overridden using the <code>title-supplemental-materials</code> field in the <code>language</code> field.</td>
-</tr>
-<tr class="even">
-<td><code>mainfont</code></td>
-<td>Set font family for headings and body font. Default is Times New Roman</td>
-</tr>
-<tr class="odd">
-<td><code>monofont</code></td>
-<td>Set font family for code output. Default is Consolas.</td>
-</tr>
-<tr class="even">
-<td><code>papersize</code></td>
-<td>Set the paper size. Default is <code>us-letter</code>. Other options include <code>a3</code>, <code>a4</code>, <code>a5</code>, <code>b5</code>, <code>executive</code>, <code>legal</code>, <code>letter</code>, <code>tabloid</code></td>
-</tr>
-</tbody>
-</table>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>This is the statement.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-supplemental-materials"><code>supplemental-materials</code></span></dt>
+<dd>
+<p>A line below the keywords pointing readers to supplemental materials (a repository, an archive, an OSF page). The prefix is “Supplemental materials” by default but can be overridden using the <code>title-supplemental-materials</code> field in the <code>language</code> field.</p>
+</dd>
+<dt><span id="opt-mainfont"><code>mainfont</code></span></dt>
+<dd>
+<p>Set font family for headings and body font. Default is Times New Roman</p>
+</dd>
+<dt><span id="opt-monofont"><code>monofont</code></span></dt>
+<dd>
+<p>Set font family for code output. Default is Consolas.</p>
+</dd>
+<dt><span id="opt-general-papersize"><code>papersize</code></span></dt>
+<dd>
+<p>Set the paper size. Default is <code>us-letter</code>. Other options include <code>a3</code>, <code>a4</code>, <code>a5</code>, <code>b5</code>, <code>executive</code>, <code>legal</code>, <code>letter</code>, <code>tabloid</code></p>
+</dd>
+<dt><span id="opt-geometry"><code>geometry</code></span></dt>
+<dd>
+<p>The .pdf’s margins, as LaTeX’s geometry options: <code>margin=1.25in</code>, or a list such as <code>[left=1.5in, right=1in]</code>. Written after the mode’s own page, so what it names wins and what it leaves out keeps the mode’s setting. Default: 1in all round (journal mode: 0.75in, with 1in at the foot).</p>
+</dd>
+<dt><span id="opt-margin"><code>margin</code></span></dt>
+<dd>
+<p>The margins in typst and .docx: one length, or any of <code>x</code>, <code>y</code>, <code>left</code>, <code>right</code>, <code>top</code> and <code>bottom</code> (<code>in</code>, <code>cm</code>, <code>mm</code> or <code>pt</code> in .docx). A side left out keeps the mode’s margin. Default: 1in all round (journal mode in typst: 0.75in at the sides).</p>
+</dd>
+</dl>
+</div>
 <section id="authors" class="level2">
 <h2 class="anchored" data-anchor-id="authors">Authors</h2>
 <p>The apaquarto uses the <a href="https://quarto.org/docs/authoring/front-matter.html#author">standard Quarto schema for authors</a>. It has a lot of options, some of which are not needed for the apaquarto extension (e.g., <code>fax</code>, <code>phone</code>, <code>degrees</code>, <code>note</code>, <code>acknowledgements</code>).</p>
@@ -486,21 +490,11 @@ window.Quarto = {
 <section id="affiliations" class="level2">
 <h2 class="anchored" data-anchor-id="affiliations">Affiliations</h2>
 <p>The apaquarto extension uses the <a href="https://quarto.org/docs/journals/authors.html#affiliations-schema">standard Quarto schema for affiliations</a>.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 88%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>id</code></td>
-<td><p>A unique identifier for the affiliation. The <code>id</code> can be useful for specifying an affiliation shared by multiple authors:</p>
+<div class="option-list">
+<dl>
+<dt><span id="opt-id"><code>id</code></span></dt>
+<dd>
+<p>A unique identifier for the affiliation. The <code>id</code> can be useful for specifying an affiliation shared by multiple authors:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> William Joel Schneider</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
@@ -513,11 +507,11 @@ window.Quarto = {
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> temple</span></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Renée M. Tobin</span></span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliations</span><span class="kw">:</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>name</code></td>
-<td><p>The name of the organization.</p>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">ref</span><span class="kw">:</span><span class="at"> temple</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-name"><code>name</code></span></dt>
+<dd>
+<p>The name of the organization.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
@@ -527,45 +521,45 @@ window.Quarto = {
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">city</span><span class="kw">:</span><span class="at"> San Francisco</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> CA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>department</code></td>
-<td>A specific division within the organization.</td>
-</tr>
-<tr class="even">
-<td><code>group</code></td>
-<td><p>A subdivision within the department</p>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">region</span><span class="kw">:</span><span class="at"> CA</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-department"><code>department</code></span></dt>
+<dd>
+<p>A specific division within the organization.</p>
+</dd>
+<dt><span id="opt-group"><code>group</code></span></dt>
+<dd>
+<p>A subdivision within the department</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation</span><span class="kw">:</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Generic State University</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">department</span><span class="kw">:</span><span class="at"> Department of Psychology</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Counseling Psychology</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>address</code></td>
-<td>The street address</td>
-</tr>
-<tr class="even">
-<td><code>city</code></td>
-<td>City</td>
-</tr>
-<tr class="odd">
-<td><code>region</code></td>
-<td><p>The region, state, or province.</p>
-<p>You may specify <code>state</code> instead, if you prefer.</p></td>
-</tr>
-<tr class="even">
-<td><code>country</code></td>
-<td>Country</td>
-</tr>
-<tr class="odd">
-<td><code>postal-code</code></td>
-<td>Postal code (zip code in the U.S.)</td>
-</tr>
-</tbody>
-</table>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">group</span><span class="kw">:</span><span class="at"> Counseling Psychology</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-address"><code>address</code></span></dt>
+<dd>
+<p>The street address</p>
+</dd>
+<dt><span id="opt-city"><code>city</code></span></dt>
+<dd>
+<p>City</p>
+</dd>
+<dt><span id="opt-region"><code>region</code></span></dt>
+<dd>
+<p>The region, state, or province.</p>
+<p>You may specify <code>state</code> instead, if you prefer.</p>
+</dd>
+<dt><span id="opt-country"><code>country</code></span></dt>
+<dd>
+<p>Country</p>
+</dd>
+<dt><span id="opt-postal-code"><code>postal-code</code></span></dt>
+<dd>
+<p>Postal code (zip code in the U.S.)</p>
+</dd>
+</dl>
+</div>
 <section id="multiple-affiliations" class="level3">
 <h3 class="anchored" data-anchor-id="multiple-affiliations">Multiple Affiliations</h3>
 <p>If an author has more than one affiliation:</p>
@@ -621,72 +615,66 @@ window.Quarto = {
 <section id="author-roles" class="level2">
 <h2 class="anchored" data-anchor-id="author-roles">Author Roles</h2>
 <p>APA Style encourages but does not require papers with multiple authors to describe author roles using the <a href="https://credit.niso.org/">Contributor Roles Taxonomy</a> (CRediT). There are 14 contributor roles:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Role</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="https://credit.niso.org/contributor-roles/conceptualization/"><code>conceptualization</code></a></td>
-<td>Ideas; formulation or evolution of overarching research goals and aims.</td>
-</tr>
-<tr class="even">
-<td><a href="https://credit.niso.org/contributor-roles/data-curation/"><code>data curation</code></a></td>
-<td>Management activities to annotate (produce metadata), scrub data and maintain research data (including software code, where it is necessary for interpreting the data itself) for initial use and later re-use.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://credit.niso.org/contributor-roles/formal-analysis/"><code>formal analysis</code></a></td>
-<td>Application of statistical, mathematical, computational, or other formal techniques to analyse or synthesize study data.</td>
-</tr>
-<tr class="even">
-<td><a href="https://credit.niso.org/contributor-roles/funding-acquisition/"><code>funding acquisition</code></a></td>
-<td>Acquisition of the financial support for the project leading to this publication.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://credit.niso.org/contributor-roles/investigation/"><code>investigation</code></a></td>
-<td>Conducting a research and investigation process, specifically performing the experiments, or data/evidence collection.</td>
-</tr>
-<tr class="even">
-<td><a href="https://credit.niso.org/contributor-roles/methodology/"><code>methodology</code></a></td>
-<td>Development or design of methodology; creation of models.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://credit.niso.org/contributor-roles/project-administration/"><code>project administration</code></a></td>
-<td>Management and coordination responsibility for the research activity planning and execution.</td>
-</tr>
-<tr class="even">
-<td><a href="https://credit.niso.org/contributor-roles/resources/"><code>resources</code></a></td>
-<td>Provision of study materials, reagents, materials, patients, laboratory samples, animals, instrumentation, computing resources, or other analysis tools.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://credit.niso.org/contributor-roles/software/"><code>software</code></a></td>
-<td>Programming, software development; designing computer programs; implementation of the computer code and supporting algorithms; testing of existing code components.</td>
-</tr>
-<tr class="even">
-<td><a href="https://credit.niso.org/contributor-roles/supervision/"><code>supervision</code></a></td>
-<td>Oversight and leadership responsibility for the research activity planning and execution, including mentorship external to the core team.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://credit.niso.org/contributor-roles/validation/"><code>validation</code></a></td>
-<td>Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs.</td>
-</tr>
-<tr class="even">
-<td><a href="https://credit.niso.org/contributor-roles/visualization/"><code>visualization</code></a></td>
-<td>Preparation, creation and/or presentation of the published work, specifically visualization/data presentation.</td>
-</tr>
-<tr class="odd">
-<td><a href="https://credit.niso.org/contributor-roles/writing-original-draft/"><code>writing</code></a></td>
-<td>Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation).</td>
-</tr>
-<tr class="even">
-<td><a href="https://credit.niso.org/contributor-roles/writing-review-editing/"><code>editing</code></a></td>
-<td>Preparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision – including pre- or post-publication stages.</td>
-</tr>
-</tbody>
-</table>
+<div class="option-list">
+<dl>
+<dt><a href="https://credit.niso.org/contributor-roles/conceptualization/"><code>conceptualization</code></a></dt>
+<dd>
+<p>Ideas; formulation or evolution of overarching research goals and aims.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/data-curation/"><code>data curation</code></a></dt>
+<dd>
+<p>Management activities to annotate (produce metadata), scrub data and maintain research data (including software code, where it is necessary for interpreting the data itself) for initial use and later re-use.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/formal-analysis/"><code>formal analysis</code></a></dt>
+<dd>
+<p>Application of statistical, mathematical, computational, or other formal techniques to analyse or synthesize study data.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/funding-acquisition/"><code>funding acquisition</code></a></dt>
+<dd>
+<p>Acquisition of the financial support for the project leading to this publication.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/investigation/"><code>investigation</code></a></dt>
+<dd>
+<p>Conducting a research and investigation process, specifically performing the experiments, or data/evidence collection.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/methodology/"><code>methodology</code></a></dt>
+<dd>
+<p>Development or design of methodology; creation of models.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/project-administration/"><code>project administration</code></a></dt>
+<dd>
+<p>Management and coordination responsibility for the research activity planning and execution.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/resources/"><code>resources</code></a></dt>
+<dd>
+<p>Provision of study materials, reagents, materials, patients, laboratory samples, animals, instrumentation, computing resources, or other analysis tools.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/software/"><code>software</code></a></dt>
+<dd>
+<p>Programming, software development; designing computer programs; implementation of the computer code and supporting algorithms; testing of existing code components.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/supervision/"><code>supervision</code></a></dt>
+<dd>
+<p>Oversight and leadership responsibility for the research activity planning and execution, including mentorship external to the core team.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/validation/"><code>validation</code></a></dt>
+<dd>
+<p>Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/visualization/"><code>visualization</code></a></dt>
+<dd>
+<p>Preparation, creation and/or presentation of the published work, specifically visualization/data presentation.</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/writing-original-draft/"><code>writing</code></a></dt>
+<dd>
+<p>Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation).</p>
+</dd>
+<dt><a href="https://credit.niso.org/contributor-roles/writing-review-editing/"><code>editing</code></a></dt>
+<dd>
+<p>Preparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision – including pre- or post-publication stages.</p>
+</dd>
+</dl>
+</div>
 <p>It is possible to list the roles for each author:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Fred Jones</span></span>
@@ -721,107 +709,87 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="author-notes">Author Notes</h2>
 <p>The first paragraph of the Author Note will be populated with all the ORCID IDs that have been specified.</p>
 <p>The second paragraph consists of status changes:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 24%">
-<col style="width: 75%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>affiliation-change</code></td>
-<td><p>Describe author affiliation changes.</p>
+<div class="option-list">
+<dl>
+<dt><span id="opt-affiliation-change"><code>affiliation-change</code></span></dt>
+<dd>
+<p>Describe author affiliation changes.</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">status-changes</span><span class="kw">:</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation-change</span><span class="kw">:</span><span class="at"> Fred Jones is now at Generic State University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>deceased</code></td>
-<td><p>Disclose names of authors who are now deceased.</p>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">affiliation-change</span><span class="kw">:</span><span class="at"> Fred Jones is now at Generic State University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-deceased"><code>deceased</code></span></dt>
+<dd>
+<p>Disclose names of authors who are now deceased.</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">status-changes</span><span class="kw">:</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">deceased</span><span class="kw">:</span><span class="at"> Fred Jones is deceased.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-</tbody>
-</table>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">deceased</span><span class="kw">:</span><span class="at"> Fred Jones is deceased.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+</dl>
+</div>
 <p>The third paragraph consists of study details and author disclosures:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 83%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>study-registration</code></td>
-<td><p>Describe where the study was registered.</p>
+<div class="option-list">
+<dl>
+<dt><span id="opt-study-registration"><code>study-registration</code></span></dt>
+<dd>
+<p>Describe where the study was registered.</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">study-registration</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was registered at ClinicalTrials.gov (Identifier NTC998877)."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>data-sharing</code></td>
-<td><p>Data/materials that have been shared</p>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">study-registration</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was registered at ClinicalTrials.gov (Identifier NTC998877)."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-data-sharing"><code>data-sharing</code></span></dt>
+<dd>
+<p>Data/materials that have been shared</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">data-sharing</span><span class="kw">:</span><span class="at"> </span><span class="st">"Data from this study can be accessed at https://academicdata.org/jones2024."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>related-report</code></td>
-<td><p>Acknowledge and cite data/materials that were used previously</p>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">data-sharing</span><span class="kw">:</span><span class="at"> </span><span class="st">"Data from this study can be accessed at https://academicdata.org/jones2024."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-related-report"><code>related-report</code></span></dt>
+<dd>
+<p>Acknowledge and cite data/materials that were used previously</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">related-report</span><span class="kw">:</span><span class="at"> </span><span class="st">"This article is based on the dissertation completed by Graham (2018)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>conflict-of-interest</code></td>
-<td><p>Disclose author conflicts of interest</p>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">related-report</span><span class="kw">:</span><span class="at"> </span><span class="st">"This article is based on the dissertation completed by Graham (2018)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-conflict-of-interest"><code>conflict-of-interest</code></span></dt>
+<dd>
+<p>Disclose author conflicts of interest</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict-of-interest</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fred Jones has been a paid consultant for Corporation X, which funded this study."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>financial-support</code></td>
-<td><p>Acknowledge funding sources</p>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">conflict-of-interest</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fred Jones has been a paid consultant for Corporation X, which funded this study."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-financial-support"><code>financial-support</code></span></dt>
+<dd>
+<p>Acknowledge funding sources</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">financial-support</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was supported by Grant 123 from Academic Funders United."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>gratitude</code></td>
-<td><p>Authors can express gratitude.</p>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">financial-support</span><span class="kw">:</span><span class="at"> </span><span class="st">"This study was supported by Grant 123 from Academic Funders United."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-gratitude"><code>gratitude</code></span></dt>
+<dd>
+<p>Authors can express gratitude.</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gratitude</span><span class="kw">:</span><span class="at"> </span><span class="st">"The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>authorship-agreements</code></td>
-<td><p>Authors can disclose any agreements they entered into regarding the paper.</p>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">gratitude</span><span class="kw">:</span><span class="at"> </span><span class="st">"The authors are grateful to Sidney Fiero for thoughtful comments on an early draft of this paper."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-authorship-agreements"><code>authorship-agreements</code></span></dt>
+<dd>
+<p>Authors can disclose any agreements they entered into regarding the paper.</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">disclosures</span><span class="kw">:</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">authorship-agreements</span><span class="kw">:</span><span class="at"> </span><span class="st">"Because the authors are equal contributors, order of authorship was determined by a fair coin toss."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-</tbody>
-</table>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">authorship-agreements</span><span class="kw">:</span><span class="at"> </span><span class="st">"Because the authors are equal contributors, order of authorship was determined by a fair coin toss."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+</dl>
+</div>
 <p>The fourth paragraph of the Author Note consists of the correspondence information. It will created automatically from the contact information from the author marked as the corresponding author. If you wish to override this paragraph with one entirely of your own, you can set it via the <code>correspondence-note</code> subfield in the <code>author-note</code> field.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">author-note</span><span class="kw">:</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">correspondence-note</span><span class="kw">:</span><span class="at"> This will override the correspondence note that would otherwise be generated.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -829,97 +797,75 @@ window.Quarto = {
 </section>
 <section id="options-for-.docx-and-typst" class="level1">
 <h1>Options for .docx and typst</h1>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 79%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Field</th>
-<th style="text-align: left;">Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>blank-lines-above-title</code></td>
-<td style="text-align: left;"><p>Number of blank lines above the title.</p>
+<div class="option-list">
+<dl>
+<dt><span id="opt-blank-lines-above-title"><code>blank-lines-above-title</code></span></dt>
+<dd>
+<p>Number of blank lines above the title.</p>
 <p>If omitted, defaults to 2 double-spaced lines.</p>
-<p>APA style requests that you put your title 3 to 4 lines (i.e., 1.5 to 2 double-spaced lines) down from the top of the title page.</p></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>blank-lines-above-author-note</code></td>
-<td style="text-align: left;"><p>Number of double-spaced lines between author affiliations and author note.</p>
-<p>APA style wants the note to start around the middle of the page. You can play with the number. It defaults to 2 if omitted.</p></td>
-</tr>
-</tbody>
-</table>
+<p>APA style requests that you put your title 3 to 4 lines (i.e., 1.5 to 2 double-spaced lines) down from the top of the title page.</p>
+</dd>
+<dt><span id="opt-blank-lines-above-author-note"><code>blank-lines-above-author-note</code></span></dt>
+<dd>
+<p>Number of double-spaced lines between author affiliations and author note.</p>
+<p>APA style wants the note to start around the middle of the page. You can play with the number. It defaults to 2 if omitted.</p>
+</dd>
+</dl>
+</div>
 </section>
 <section id="options-for-.pdf" class="level1">
 <h1>Options for .pdf</h1>
 <p>As of 6.0.0 the .pdf is set in plain <span class="math inline">\(\LaTeX\)</span> rather than with the apa7 class, so these are apaquarto’s own options and no longer those of <a href="https://ctan.org/pkg/apa7?lang=en">apa7</a>. Four fields that belonged to that class — <code>donotrepeattitle</code>, <code>draftfirst</code>, <code>draftall</code> and <code>nocorrespondence</code> — no longer do anything; the first has become <code>suppress-title-introduction</code> and the last <code>suppress-corresponding-paragraph</code>, both of which work in every format. A document’s own yaml is otherwise unchanged.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 74%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>documentmode</code></td>
-<td><p>Alter the overall style of the document. Options include:</p>
+<div class="option-list">
+<dl>
+<dt><span id="opt-documentmode"><code>documentmode</code></span></dt>
+<dd>
+<p>Alter the overall style of the document. Options include:</p>
 <ul>
-<li><code>man</code> Manuscript: Similar to .docx format</li>
-<li><code>jou</code> Journal: A polished two-column format similar to many APA journals.</li>
-<li><code>doc</code> Document: Similar to default <span class="math inline">\(\LaTeX\)</span> articles.</li>
-<li><code>stu</code> Student: Formatted for student papers</li>
+<li><code>manscript</code> Manuscript: Similar to .docx format</li>
+<li><code>journal</code> Journal: A polished two-column format similar to many APA journals.</li>
+<li><code>document</code> Document: Similar to default <span class="math inline">\(\LaTeX\)</span> articles.</li>
+<li><code>student</code> Student: Formatted for student papers</li>
+<li><code>thesis</code> Thesis/Dissertation: Formatted according to Temple University’s <em>Dissertation &amp; Thesis Handbook</em></li>
 </ul>
-<p>Each mode may also be spelled out: <code>journal</code>, <code>manuscript</code>, <code>document</code>, and <code>student</code>.</p></td>
-</tr>
-<tr class="even">
-<td><p><code>course</code></p>
-<p><code>professor</code></p>
-<p><code>duedate</code></p>
-<p><code>note</code></p></td>
-<td><p>Fields that are used only for student papers (<code>stu</code> mode).</p>
+<p>Each mode may also be abbreviated: <code>jou</code>, <code>man</code>, <code>doc</code>, and <code>stu</code>.</p>
+</dd>
+<dt><code>course</code> <code>professor</code> <code>duedate</code> <code>note</code></dt>
+<dd>
+<p>Fields that are used only for student papers (<code>stu</code> mode).</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">course</span><span class="kw">:</span><span class="at"> Introduction to Statistics (EDUC 5101)</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">professor</span><span class="kw">:</span><span class="at"> W. Joel Schneider</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">duedate</span><span class="kw">:</span><span class="at"> 12/22/2024</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">note</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  Student ID: 123456</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="odd">
-<td><code>journal</code> <code>volume</code> <code>copyrightnotice</code> <code>copyrighttext</code></td>
-<td><p>Fields that are used only for journal articles (<code>jou</code> mode).</p>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  Student ID: 123456</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><code>journal</code> <code>volume</code> <code>copyrightnotice</code> <code>copyrighttext</code></dt>
+<dd>
+<p>Fields that are used only for journal articles (<code>jou</code> mode).</p>
 <p>Example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">journal</span><span class="kw">:</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> Psychological Review</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">volume</span><span class="kw">:</span><span class="at"> 2024, Vol. 131, No. 2, 10--60</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrightnotice</span><span class="kw">:</span><span class="at"> </span><span class="dv">2024</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> All rights reserved</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></td>
-</tr>
-<tr class="even">
-<td><code>fontsize</code></td>
-<td><p>Size of font.</p>
-<p>Options include <code>10pt</code>, <code>11pt</code>, and <code>12pt</code></p></td>
-</tr>
-<tr class="odd">
-<td><code>papersize</code></td>
-<td><p>The paper size, <code>letter</code> by default. <code>a4</code> and the other sizes Quarto knows are accepted, and reach the .docx as well.</p>
-<p>Replaces apa7’s <code>a4paper</code>, which no longer does anything.</p></td>
-</tr>
-<tr class="even">
-<td><code>first-page</code></td>
-<td>The number the first page carries, and the number the pages count on from. Useful for a chapter or an article that begins partway into a volume. Defaults to 1.</td>
-</tr>
-</tbody>
-</table>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">copyrighttext</span><span class="kw">:</span><span class="at"> All rights reserved</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</dd>
+<dt><span id="opt-fontsize"><code>fontsize</code></span></dt>
+<dd>
+<p>Size of font.</p>
+<p>Options include <code>10pt</code>, <code>11pt</code>, and <code>12pt</code></p>
+</dd>
+<dt><span id="opt-pdf-papersize"><code>papersize</code></span></dt>
+<dd>
+<p>The paper size, <code>letter</code> by default. <code>a4</code> and the other sizes Quarto knows are accepted, and reach the .docx as well.</p>
+<p>Replaces apa7’s <code>a4paper</code>, which no longer does anything.</p>
+</dd>
+<dt><span id="opt-first-page"><code>first-page</code></span></dt>
+<dd>
+<p>The number the first page carries, and the number the pages count on from. Useful for a chapter or an article that begins partway into a volume. Defaults to 1.</p>
+</dd>
+</dl>
+</div>
 </section>
 <section id="document-modes-in-pdf-and-typst" class="level1">
 <h1>Document modes in pdf and typst</h1>
@@ -981,52 +927,42 @@ window.Quarto = {
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Committee Member's Name</span></span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">role</span><span class="kw">:</span><span class="at"> External Member</span></span>
 <span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> Another University</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 24%">
-<col style="width: 75%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>type</code></td>
-<td>What the work is: <code>Dissertation</code> or <code>Thesis</code>. The page reads “A Dissertation”.</td>
-</tr>
-<tr class="even">
-<td><code>submitted-to</code></td>
-<td>Who it is submitted to. Defaults to “the Temple University Graduate Board”.</td>
-</tr>
-<tr class="odd">
-<td><code>degree</code></td>
-<td>The degree it answers to, as Student Services Banner names it.</td>
-</tr>
-<tr class="even">
-<td><code>date</code></td>
-<td>The diploma date, not the date of the defence.</td>
-</tr>
-<tr class="odd">
-<td><code>copyright</code></td>
-<td>The year on the copyright page. Taken from the year in <code>date</code> when it is not written. <code>false</code> leaves the page out.</td>
-</tr>
-<tr class="even">
-<td><code>dedication</code></td>
-<td>The dedication, centred on a page of its own with no heading. May also be written as a top-level <code>dedication</code>, beside <code>abstract</code>.</td>
-</tr>
-<tr class="odd">
-<td><code>acknowledgments</code></td>
-<td>The acknowledgments, under a heading of their own. <code>acknowledgements</code> is read too, and either may be written at the top level instead.</td>
-</tr>
-<tr class="even">
-<td><code>committee</code></td>
-<td>The examining committee, in order. Each entry takes <code>name</code>, an optional <code>role</code> (<code>Advisory Chair</code>, <code>External Member</code>) and an optional <code>affiliation</code>, and is set as one line with commas between them.</td>
-</tr>
-</tbody>
-</table>
+<div class="option-list">
+<dl>
+<dt><span id="opt-type"><code>type</code></span></dt>
+<dd>
+<p>What the work is: <code>Dissertation</code> or <code>Thesis</code>. The page reads “A Dissertation”.</p>
+</dd>
+<dt><span id="opt-submitted-to"><code>submitted-to</code></span></dt>
+<dd>
+<p>Who it is submitted to. Defaults to “the Temple University Graduate Board”.</p>
+</dd>
+<dt><span id="opt-degree"><code>degree</code></span></dt>
+<dd>
+<p>The degree it answers to, as Student Services Banner names it.</p>
+</dd>
+<dt><span id="opt-date"><code>date</code></span></dt>
+<dd>
+<p>The diploma date, not the date of the defence.</p>
+</dd>
+<dt><span id="opt-copyright"><code>copyright</code></span></dt>
+<dd>
+<p>The year on the copyright page. Taken from the year in <code>date</code> when it is not written. <code>false</code> leaves the page out.</p>
+</dd>
+<dt><span id="opt-dedication"><code>dedication</code></span></dt>
+<dd>
+<p>The dedication, centred on a page of its own with no heading. May also be written as a top-level <code>dedication</code>, beside <code>abstract</code>.</p>
+</dd>
+<dt><span id="opt-acknowledgments"><code>acknowledgments</code></span></dt>
+<dd>
+<p>The acknowledgments, under a heading of their own. <code>acknowledgements</code> is read too, and either may be written at the top level instead.</p>
+</dd>
+<dt><span id="opt-committee"><code>committee</code></span></dt>
+<dd>
+<p>The examining committee, in order. Each entry takes <code>name</code>, an optional <code>role</code> (<code>Advisory Chair</code>, <code>External Member</code>) and an optional <code>affiliation</code>, and is set as one line with commas between them.</p>
+</dd>
+</dl>
+</div>
 <p>Every field is optional: a block left out leaves its part of the page out, and the rule that sets it off goes with it.</p>
 <p>The author is the document’s own <code>author</code>, and the title its own <code>title</code>.</p>
 <section id="the-shape-of-the-title" class="level2">
@@ -1112,56 +1048,31 @@ window.Quarto = {
 <section id="tables-of-contents-figures-and-tables" class="level1">
 <h1>Tables of contents, figures, and tables</h1>
 <p>Each of these stands on a page of its own, after the abstract, the impact statement, the keywords and the supplemental materials, and before the body of the paper.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 93%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
-<pre><code>                 |                                                                                                                                                                                                                                                                                                                  |
-                 | How many levels of heading it lists is quarto's `toc-depth`, which                                                                                                                                                                                                                                               |
-                 | is three unless a document says otherwise. Nothing read that field                                                                                                                                                                                                                                               |
-                 | before 6.0.1: .html and .docx counted three levels, the .pdf three,                                                                                                                                                                                                                                              |
-                 | and typst listed every level there was.                                                                                                                                                                                                                                                                          |</code></pre>
-<div class="line-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| Each format reaches it differently: typst has an outline of its own, the .pdf has LaTeX’s, the .docx is built by hand, and .html has neither pages nor fields, so an entry there is the heading and a link to it. |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <code>toc: true</code> also works in typst. In .html it puts Quarto’s own contents in the margin, which is where a reader of a web page looks, so this field adds none of its own while that one is there. The .html format sets <code>toc: true</code> itself, so a contents in the body of a web page is asked for with both fields: |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ``` yaml |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| format: |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| apaquarto-html: |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| toc: false |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| list-of-contents: true |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ``` |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| In .docx <code>toc: true</code> is Pandoc’s, and writes a contents at the very top of the file, ahead of the title page, where nothing can move it. |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| Only the headings that belong in a contents are listed: the title page’s headings and anything marked <code>{.unlisted}</code> are left out. |</div>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 93%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><code>list-of-figures</code></td>
-<td>A list of figures, in .docx, typst and .pdf.</td>
-</tr>
-<tr class="even">
-<td><code>list-of-tables</code></td>
-<td>A list of tables, in .docx, typst and .pdf.</td>
-</tr>
-</tbody>
-</table>
+<div class="option-list">
+<dl>
+<dt><span id="opt-list-of-contents"><code>list-of-contents</code></span></dt>
+<dd>
+<p>A table of contents, in every format.</p>
+<p>How many levels of heading it lists is quarto’s <code>toc-depth</code>, which is three unless a document says otherwise. Nothing read that field before 6.0.1: .html and .docx counted three levels, the .pdf three, and typst listed every level there was.</p>
+<p>Each format reaches it differently: typst has an outline of its own, the .pdf has LaTeX’s, the .docx is built by hand, and .html has neither pages nor fields, so an entry there is the heading and a link to it.</p>
+<p><code>toc: true</code> also works in typst. In .html it puts Quarto’s own contents in the margin, which is where a reader of a web page looks, so this field adds none of its own while that one is there. The .html format sets <code>toc: true</code> itself, so a contents in the body of a web page is asked for with both fields:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">list-of-contents</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In .docx <code>toc: true</code> is Pandoc’s, and writes a contents at the very top of the file, ahead of the title page, where nothing can move it.</p>
+<p>Only the headings that belong in a contents are listed: the title page’s headings and anything marked <code>{.unlisted}</code> are left out.</p>
+</dd>
+<dt><span id="opt-list-of-figures"><code>list-of-figures</code></span></dt>
+<dd>
+<p>A list of figures, in .docx, typst and .pdf.</p>
+</dd>
+<dt><span id="opt-list-of-tables"><code>list-of-tables</code></span></dt>
+<dd>
+<p>A list of tables, in .docx, typst and .pdf.</p>
+</dd>
+</dl>
+</div>
 <p><code>list-of-figures</code> and <code>list-of-tables</code> are for .docx, typst and the .pdf; an entry in either reads <code>Figure 1. The Figure Caption</code>, with a leader out to the page number. Neither is built for .html, which has no pages to find.</p>
 <p>In .docx those page numbers are fields, since nothing before Word lays the pages out knows what they are. They are blank when the file is opened and fill in correctly as soon as anything makes Word paginate: select all and press <kbd>F9</kbd>, or print, or export to pdf. Rendering says as much.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
@@ -1173,40 +1084,30 @@ window.Quarto = {
 <section id="the-colour-a-link-takes" class="level1">
 <h1>The Colour a Link Takes</h1>
 <p>Quarto’s five colour fields are LaTeX’s, and apaquarto answers to all of them in all four formats.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 10%">
-<col style="width: 89%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>The links it colours</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>linkcolor</code></td>
-<td>A link inside the document: a cross reference, or a link to a heading. |</td>
-</tr>
-<tr class="even">
-<td><code>urlcolor</code></td>
-<td>A link that leaves the document, an email address included.</td>
-</tr>
-<tr class="odd">
-<td><code>citecolor</code></td>
-<td>A citation, which points at the reference list.</td>
-</tr>
-<tr class="even">
-<td><code>filecolor</code></td>
-<td>A link to a file.</td>
-</tr>
-<tr class="odd">
-<td><code>toccolor</code></td>
-<td>The entries of the lists of contents, figures and tables. Body-text black by default, so that a list reads as a list rather than as a page of links.</td>
-</tr>
-</tbody>
-</table>
+<div class="option-list">
+<dl>
+<dt><span id="opt-linkcolor"><code>linkcolor</code></span></dt>
+<dd>
+<p>A link inside the document: a cross reference, or a link to a heading. |</p>
+</dd>
+<dt><span id="opt-urlcolor"><code>urlcolor</code></span></dt>
+<dd>
+<p>A link that leaves the document, an email address included.</p>
+</dd>
+<dt><span id="opt-citecolor"><code>citecolor</code></span></dt>
+<dd>
+<p>A citation, which points at the reference list.</p>
+</dd>
+<dt><span id="opt-filecolor"><code>filecolor</code></span></dt>
+<dd>
+<p>A link to a file.</p>
+</dd>
+<dt><span id="opt-toccolor"><code>toccolor</code></span></dt>
+<dd>
+<p>The entries of the lists of contents, figures and tables. Body-text black by default, so that a list reads as a list rather than as a page of links.</p>
+</dd>
+</dl>
+</div>
 <p>A colour is named the way LaTeX names it — one of the colours <code>xcolor</code> defines out of the box, or an HTML code:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linkcolor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#cc0000"</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">urlcolor</span><span class="kw">:</span><span class="at"> green</span></span>
@@ -1238,112 +1139,102 @@ window.Quarto = {
 <section id="suppress-elements" class="level1">
 <h1>Suppress Elements</h1>
 <p>Any of the elements below can be selectively suppressed from the document by setting the field to <code>true</code>.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 17%">
-<col style="width: 82%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>suppress-title-page</code></td>
-<td>Suppress the entire title page</td>
-</tr>
-<tr class="even">
-<td><code>suppress-title</code></td>
-<td>Suppress the title on the title page</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-short-title</code></td>
-<td>Suppress the short title in the running header</td>
-</tr>
-<tr class="even">
-<td><code>suppress-author</code></td>
-<td>Suppresses the author names below the title. Does not suppress author names in the author note.</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-affiliation</code></td>
-<td>Suppress affiliations below the author names. Does not suppress the affiliation in the correspondence note.</td>
-</tr>
-<tr class="even">
-<td><code>suppress-author-note</code></td>
-<td>Suppress the entire author note</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-orcid</code></td>
-<td>Suppress the author ORCID numbers</td>
-</tr>
-<tr class="even">
-<td><code>suppress-status-change-paragraph</code></td>
-<td>Suppress the paragraph about status changes (affiliation changes and deceased authors)</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-disclosures-paragraph</code></td>
-<td>Suppress the paragraph about disclosures (study registration, data sharing, related reports, conflicts of interest, financial support, statements of gratitude, and authorship agreements)</td>
-</tr>
-<tr class="even">
-<td><code>suppress-credit-statement</code></td>
-<td>Suppress the credit statement</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-corresponding-paragraph</code></td>
-<td>Suppress the entire correspondence paragraph</td>
-</tr>
-<tr class="even">
-<td><code>suppress-corresponding-group</code></td>
-<td>Suppress the group in the correspondence address</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-corresponding-department</code></td>
-<td>Suppress the department in the correspondence address</td>
-</tr>
-<tr class="even">
-<td><code>suppress-corresponding-address</code></td>
-<td>Suppress the street address in the correspondence address</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-corresponding-city</code></td>
-<td>Suppress the city in the correspondence address</td>
-</tr>
-<tr class="even">
-<td><code>suppress-corresponding-region</code></td>
-<td>Suppress the region/state in the correspondence address</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-corresponding-postal-code</code></td>
-<td>Suppress the postal code in the correspondence address</td>
-</tr>
-<tr class="even">
-<td><code>suppress-corresponding-email</code></td>
-<td>Suppress the email address in the correspondence address</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-abstract</code></td>
-<td>Suppress the abstract. In the .pdf document, this will also suppress the keywords.</td>
-</tr>
-<tr class="even">
-<td><code>suppress-impact-statement</code></td>
-<td>Suppress the impact statement</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-keywords</code></td>
-<td>Suppress the keywords below the abstract</td>
-</tr>
-<tr class="even">
-<td><code>suppress-supplemental-materials</code></td>
-<td>Suppress the supplemental materials line below the keywords</td>
-</tr>
-<tr class="odd">
-<td><code>suppress-title-introduction</code></td>
-<td>Suppress the title in the introduction</td>
-</tr>
-</tbody>
-</table>
+<div class="option-list">
+<dl>
+<dt><span id="opt-suppress-suppress-title-page"><code>suppress-title-page</code></span></dt>
+<dd>
+<p>Suppress the entire title page</p>
+</dd>
+<dt><span id="opt-suppress-title"><code>suppress-title</code></span></dt>
+<dd>
+<p>Suppress the title on the title page</p>
+</dd>
+<dt><span id="opt-suppress-short-title"><code>suppress-short-title</code></span></dt>
+<dd>
+<p>Suppress the short title in the running header</p>
+</dd>
+<dt><span id="opt-suppress-author"><code>suppress-author</code></span></dt>
+<dd>
+<p>Suppresses the author names below the title. Does not suppress author names in the author note.</p>
+</dd>
+<dt><span id="opt-suppress-affiliation"><code>suppress-affiliation</code></span></dt>
+<dd>
+<p>Suppress affiliations below the author names. Does not suppress the affiliation in the correspondence note.</p>
+</dd>
+<dt><span id="opt-suppress-author-note"><code>suppress-author-note</code></span></dt>
+<dd>
+<p>Suppress the entire author note</p>
+</dd>
+<dt><span id="opt-suppress-orcid"><code>suppress-orcid</code></span></dt>
+<dd>
+<p>Suppress the author ORCID numbers</p>
+</dd>
+<dt><span id="opt-suppress-status-change-paragraph"><code>suppress-status-change-paragraph</code></span></dt>
+<dd>
+<p>Suppress the paragraph about status changes (affiliation changes and deceased authors)</p>
+</dd>
+<dt><span id="opt-suppress-disclosures-paragraph"><code>suppress-disclosures-paragraph</code></span></dt>
+<dd>
+<p>Suppress the paragraph about disclosures (study registration, data sharing, related reports, conflicts of interest, financial support, statements of gratitude, and authorship agreements)</p>
+</dd>
+<dt><span id="opt-suppress-credit-statement"><code>suppress-credit-statement</code></span></dt>
+<dd>
+<p>Suppress the credit statement</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-paragraph"><code>suppress-corresponding-paragraph</code></span></dt>
+<dd>
+<p>Suppress the entire correspondence paragraph</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-group"><code>suppress-corresponding-group</code></span></dt>
+<dd>
+<p>Suppress the group in the correspondence address</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-department"><code>suppress-corresponding-department</code></span></dt>
+<dd>
+<p>Suppress the department in the correspondence address</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-address"><code>suppress-corresponding-address</code></span></dt>
+<dd>
+<p>Suppress the street address in the correspondence address</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-city"><code>suppress-corresponding-city</code></span></dt>
+<dd>
+<p>Suppress the city in the correspondence address</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-region"><code>suppress-corresponding-region</code></span></dt>
+<dd>
+<p>Suppress the region/state in the correspondence address</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-postal-code"><code>suppress-corresponding-postal-code</code></span></dt>
+<dd>
+<p>Suppress the postal code in the correspondence address</p>
+</dd>
+<dt><span id="opt-suppress-corresponding-email"><code>suppress-corresponding-email</code></span></dt>
+<dd>
+<p>Suppress the email address in the correspondence address</p>
+</dd>
+<dt><span id="opt-suppress-abstract"><code>suppress-abstract</code></span></dt>
+<dd>
+<p>Suppress the abstract. In the .pdf document, this will also suppress the keywords.</p>
+</dd>
+<dt><span id="opt-suppress-impact-statement"><code>suppress-impact-statement</code></span></dt>
+<dd>
+<p>Suppress the impact statement</p>
+</dd>
+<dt><span id="opt-suppress-keywords"><code>suppress-keywords</code></span></dt>
+<dd>
+<p>Suppress the keywords below the abstract</p>
+</dd>
+<dt><span id="opt-suppress-supplemental-materials"><code>suppress-supplemental-materials</code></span></dt>
+<dd>
+<p>Suppress the supplemental materials line below the keywords</p>
+</dd>
+<dt><span id="opt-suppress-title-introduction"><code>suppress-title-introduction</code></span></dt>
+<dd>
+<p>Suppress the title in the introduction</p>
+</dd>
+</dl>
+</div>
 </section>
 <section id="language-options" class="level1">
 <h1>Language Options</h1>
@@ -1419,87 +1310,75 @@ window.Quarto = {
 </div>
 </div>
 <p>However, there are a few options that are specific to apaquarto and thus were not anticipated by Quarto.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 49%">
-<col style="width: 38%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Explanation</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>citation-last-author-separator</code></td>
-<td>APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word <em>and</em> before the last author.</td>
-<td><em>and</em></td>
-</tr>
-<tr class="even">
-<td><code>citation-masked-author</code></td>
-<td>The phrase to replace author names in masked citations.</td>
-<td><em>Masked Author</em></td>
-</tr>
-<tr class="odd">
-<td><code>citation-masked-date</code></td>
-<td>The abbreviated translation for “no date” in masked citations</td>
-<td><em>n.d.</em></td>
-</tr>
-<tr class="even">
-<td><code>email</code></td>
-<td>The translation for “Email” in correspondence note</td>
-<td><em>Email</em></td>
-</tr>
-<tr class="odd">
-<td><code>citation-masked-title</code></td>
-<td>The abbreviated translation for “Masked Title” in masked citations</td>
-<td><em>Masked Title</em></td>
-</tr>
-<tr class="even">
-<td><code>figure-table-note</code></td>
-<td>The translation for “Note” in table and figure notes. If not set, Quarto’s translation of <code>callout-note-title</code> for <code>lang</code> is used.</td>
-<td><em>Note</em></td>
-</tr>
-<tr class="odd">
-<td><code>title-block-author-note</code></td>
-<td>The heading of the author note</td>
-<td><em>Author Note</em></td>
-</tr>
-<tr class="even">
-<td><code>title-block-correspondence-note</code></td>
-<td>The phrase introducing the correspondence note.</td>
-<td><em>Correspondence concerning this article should be addressed to</em></td>
-</tr>
-<tr class="odd">
-<td><code>title-block-role-introduction</code></td>
-<td>The phrase introducing the author roles.</td>
-<td><em>Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:</em></td>
-</tr>
-<tr class="even">
-<td><code>title-impact-statement</code></td>
-<td>The heading for the impact statement</td>
-<td><em>Impact Statement</em></td>
-</tr>
-<tr class="odd">
-<td><code>title-supplemental-materials</code></td>
-<td>The phrase before the value of <code>supplemental-materials</code></td>
-<td><em>Supplemental materials</em></td>
-</tr>
-<tr class="even">
-<td><code>title-word-count</code></td>
-<td>The phrase before the word count when <code>word-count: true</code></td>
-<td><em>Word Count</em></td>
-</tr>
-<tr class="odd">
-<td><code>references-meta-analysis</code></td>
-<td>The sentence explaining that citations marked with an asterisk were studies in the meta-analysis.</td>
-<td><em>References marked with an asterisk indicate studies included in the meta-analysis.</em></td>
-</tr>
-</tbody>
-</table>
+<div class="option-list">
+<dl>
+<dt><span id="opt-citation-last-author-separator"><code>citation-last-author-separator</code></span></dt>
+<dd>
+<p>Default: <em>and</em></p>
+<p>APA-style in-text citations with multiple authors are separated by commas with the appropriate translation of the word <em>and</em> before the last author.</p>
+</dd>
+<dt><span id="opt-citation-masked-author"><code>citation-masked-author</code></span></dt>
+<dd>
+<p>Default: <em>Masked Author</em></p>
+<p>The phrase to replace author names in masked citations.</p>
+</dd>
+<dt><span id="opt-citation-masked-date"><code>citation-masked-date</code></span></dt>
+<dd>
+<p>Default: <em>n.d.</em></p>
+<p>The abbreviated translation for “no date” in masked citations</p>
+</dd>
+<dt><span id="opt-email"><code>email</code></span></dt>
+<dd>
+<p>Default: <em>Email</em></p>
+<p>The translation for “Email” in correspondence note</p>
+</dd>
+<dt><span id="opt-citation-masked-title"><code>citation-masked-title</code></span></dt>
+<dd>
+<p>Default: <em>Masked Title</em></p>
+<p>The abbreviated translation for “Masked Title” in masked citations</p>
+</dd>
+<dt><span id="opt-figure-table-note"><code>figure-table-note</code></span></dt>
+<dd>
+<p>Default: <em>Note</em></p>
+<p>The translation for “Note” in table and figure notes. If not set, Quarto’s translation of <code>callout-note-title</code> for <code>lang</code> is used.</p>
+</dd>
+<dt><span id="opt-title-block-author-note"><code>title-block-author-note</code></span></dt>
+<dd>
+<p>Default: <em>Author Note</em></p>
+<p>The heading of the author note</p>
+</dd>
+<dt><span id="opt-title-block-correspondence-note"><code>title-block-correspondence-note</code></span></dt>
+<dd>
+<p>Default: <em>Correspondence concerning this article should be addressed to</em></p>
+<p>The phrase introducing the correspondence note.</p>
+</dd>
+<dt><span id="opt-title-block-role-introduction"><code>title-block-role-introduction</code></span></dt>
+<dd>
+<p>Default: <em>Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:</em></p>
+<p>The phrase introducing the author roles.</p>
+</dd>
+<dt><span id="opt-title-impact-statement"><code>title-impact-statement</code></span></dt>
+<dd>
+<p>Default: <em>Impact Statement</em></p>
+<p>The heading for the impact statement</p>
+</dd>
+<dt><span id="opt-title-supplemental-materials"><code>title-supplemental-materials</code></span></dt>
+<dd>
+<p>Default: <em>Supplemental materials</em></p>
+<p>The phrase before the value of <code>supplemental-materials</code></p>
+</dd>
+<dt><span id="opt-title-word-count"><code>title-word-count</code></span></dt>
+<dd>
+<p>Default: <em>Word Count</em></p>
+<p>The phrase before the word count when <code>word-count: true</code></p>
+</dd>
+<dt><span id="opt-references-meta-analysis"><code>references-meta-analysis</code></span></dt>
+<dd>
+<p>Default: <em>References marked with an asterisk indicate studies included in the meta-analysis.</em></p>
+<p>The sentence explaining that citations marked with an asterisk were studies in the meta-analysis.</p>
+</dd>
+</dl>
+</div>
 <p>All these options must be listed under the <code>language</code> field . For example, if we set the <code>lang</code> field to <code>es</code> (Spanish), the remaining options can also be set:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
@@ -1517,44 +1396,45 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">crossref-fig-title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Plot"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here are the language terms most likely to be used in apaquarto:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Field: English Default</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>section-title-abstract: Abstract</code></td>
-<td>Abstract title</td>
-</tr>
-<tr class="even">
-<td><code>section-title-references: References</code></td>
-<td>References title</td>
-</tr>
-<tr class="odd">
-<td><code>title-block-keywords: Keywords</code></td>
-<td>Keywords</td>
-</tr>
-<tr class="even">
-<td><code>crossref-fig-title: Figure</code></td>
-<td>Figure title prefix</td>
-</tr>
-<tr class="odd">
-<td><code>crossref-tbl-title: Table</code></td>
-<td>Table title prefix</td>
-</tr>
-<tr class="even">
-<td><code>crossref-apx-prefix: Appendix</code></td>
-<td>Appendix title prefix</td>
-</tr>
-<tr class="odd">
-<td><code>crossref-eq-prefix: Equation</code></td>
-<td>Equation title prefix</td>
-</tr>
-</tbody>
-</table>
+<div class="option-list">
+<dl>
+<dt><span id="opt-section-title-abstract"><code>section-title-abstract</code></span></dt>
+<dd>
+<p>Default: Abstract</p>
+<p>Abstract title</p>
+</dd>
+<dt><span id="opt-section-title-references"><code>section-title-references</code></span></dt>
+<dd>
+<p>Default: References</p>
+<p>References title</p>
+</dd>
+<dt><span id="opt-title-block-keywords"><code>title-block-keywords</code></span></dt>
+<dd>
+<p>Default: Keywords</p>
+<p>Keywords</p>
+</dd>
+<dt><span id="opt-crossref-fig-title"><code>crossref-fig-title</code></span></dt>
+<dd>
+<p>Default: Figure</p>
+<p>Figure title prefix</p>
+</dd>
+<dt><span id="opt-crossref-tbl-title"><code>crossref-tbl-title</code></span></dt>
+<dd>
+<p>Default: Table</p>
+<p>Table title prefix</p>
+</dd>
+<dt><span id="opt-crossref-apx-prefix"><code>crossref-apx-prefix</code></span></dt>
+<dd>
+<p>Default: Appendix</p>
+<p>Appendix title prefix</p>
+</dd>
+<dt><span id="opt-crossref-eq-prefix"><code>crossref-eq-prefix</code></span></dt>
+<dd>
+<p>Default: Equation</p>
+<p>Equation title prefix</p>
+</dd>
+</dl>
+</div>
 
 
 </section>

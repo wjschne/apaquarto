@@ -37,6 +37,9 @@ engine: knitr
 - In .pdf journal mode the ORCID lines of the author note are set flush left and unjustified, as they are in typst.
 - A document's `geometry` sets the .pdf's margins in every mode, journal and dissertation included, on top of the mode's own page.
 - `margin` sets the margins in .docx as it does in typst, with the same keys (`x`, `y`, `left`, `right`, `top`, `bottom`).
+- The word count's label takes `title-word-count` from the `language` field, as documented; it had always read *Word Count*.
+- apaquarto reads Quarto's `section-title-appendices` (it had spelled it `section-title-appendixes`, which still works), and a dissertation's contents labels its appendices with it.
+- The heading of a dissertation's list of tables is named by `thesis-list-of-tables`, after the `list-of-tables` field, and every word of the front matter is listed on the options page.
 
 # Version 6.0.1
 - 2026-09-26

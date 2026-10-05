@@ -1,0 +1,34 @@
+---
+title: "Las Palabras de una Tesis"
+shorttitle: "Palabras"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+abstract: "Un resumen."
+documentmode: thesis
+lang: es
+thesis:
+  type: Tesis
+  degree: Maestría
+  date: Mayo 2027
+format:
+  apaquarto-typst: default
+---
+
+<!--
+A dissertation in Spanish. The label over the appendices in the table of
+contents is Quarto's section-title-appendices for the language, in capitals:
+APÉNDICES. apaquarto had declared the key as section-title-appendixes, which
+is not Quarto's, so the label was APPENDICES whatever the language.
+-->
+
+# Introducción
+
+Texto.
+
+# El Primer Apéndice {#apx-one}
+
+Un apéndice.

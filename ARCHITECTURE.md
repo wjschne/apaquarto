@@ -319,3 +319,8 @@ extension and checks the output against `tests/expectations.yml` and the
 four fixtures at a time (`--jobs 1` for one at a time), which takes a full
 run from about 13 minutes to about 4. Run it before and after any change to a
 filter. See `tests/README.md` for adding a fixture.
+
+`options.qmd` is written from `options.yml` by `options-helpers.R` when the
+site renders. `tests/check-options.R` (`make check-options`, and first in
+`make test`) fails when `options.yml` and the fields the filters read
+disagree.

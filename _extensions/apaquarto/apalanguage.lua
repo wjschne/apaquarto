@@ -32,7 +32,6 @@ end
 local fields = {
   { field = "crossref-fig-title",              default = "Figure" },
   { field = "crossref-tbl-title",              default = "Table" },
-  { field = "crossref-apx-title",              default = "Appendix" },
   { field = "citation-last-author-separator",  default = "and" },
   { field = "citation-masked-author",          default = "Masked Author" },
   { field = "citation-masked-title",           default = "Masked Title" },
@@ -43,7 +42,8 @@ local fields = {
   { field = "journal-volume",                  default = "Vol." },
   { field = "journal-issue",                   default = "No." },
   { field = "section-title-abstract",          default = "Abstract" },
-  { field = "section-title-appendixes",        default = "Appendices" },
+  -- Quarto's own key, so that Quarto's translation for lang reaches it.
+  { field = "section-title-appendices",        default = "Appendices" },
   { field = "section-title-introduction",      default = "Introduction" },
   { field = "section-title-references",        default = "References" },
   { field = "title-block-author-note",         default = "Author Note" },
@@ -77,6 +77,15 @@ Meta = function(m)
     if param("callout-note-title") then
       m.language["figure-table-note"] = param("callout-note-title")
     end
+  end
+
+  -- apaquarto once spelled Quarto's section-title-appendices as
+  -- section-title-appendixes, so a document may still say it that way.
+  local appendixes = m.language["section-title-appendixes"]
+    or m["section-title-appendixes"]
+  if appendixes and not m.language["section-title-appendices"]
+      and not m["section-title-appendices"] then
+    m.language["section-title-appendices"] = appendixes
   end
 
   -- Find word for "Appendix"

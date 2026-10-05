@@ -16,3 +16,22 @@ tr:nth-child(even) {
 
 li.nav-item {border-color: red;}
 
+
+/* The option lists of options.qmd, written by options-helpers.R: each option
+   set off from the one before it by a rule, its name a little larger, and
+   its description indented under it. */
+.option-list dt {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #d5dde5;
+}
+.option-list dt:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.option-list dt code {
+  font-size: 1.05em;
+}
+.option-list dd {
+  margin-left: 1.5rem;
+}

@@ -1,0 +1,50 @@
+---
+title: "The Words of a Dissertation"
+shorttitle: "Thesis Words"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+abstract: "An abstract."
+documentmode: thesis
+thesis:
+  type: Thesis
+  degree: Master of Arts
+  date: May 2027
+language:
+  thesis-list-of-tables: "LIST OF CHARTS"
+format:
+  apaquarto-typst: default
+  apaquarto-pdf: default
+---
+
+<!--
+Two of a dissertation's words, in English.
+
+The label over the appendices in the table of contents is APPENDICES, which
+is now Quarto's section-title-appendices in capitals. apaquarto had declared
+that key as section-title-appendixes, which is not Quarto's, so Quarto's
+translation never reached it; the English must come out as it always has.
+
+The heading of the list of tables is named by thesis-list-of-tables, the
+same words as the list-of-tables field that asks for the list. It was
+thesis-list-of-table, singular, which nobody would guess.
+-->
+
+# Introduction
+
+See @tbl-one.
+
+::: {#tbl-one}
+| A | B |
+|---|---|
+| 1 | 2 |
+
+A table
+:::
+
+# The First Appendix {#apx-one}
+
+An appendix.

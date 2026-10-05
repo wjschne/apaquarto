@@ -91,6 +91,11 @@ jobs:
       # They are text quarto writes the same way every time on one platform,
       # but font and path differences across platforms would make them report
       # a difference that means nothing.
+      # Seconds, and renders nothing: options.yml, which options.qmd is
+      # written from, against the fields the filters read.
+      - name: Options documented
+        run: Rscript tests/check-options.R
+
       - name: Fixtures
         run: Rscript tests/run-tests.R
 

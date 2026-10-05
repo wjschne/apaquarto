@@ -2055,3 +2055,53 @@
         # The front matter after the title page keeps the Graduate School's
         # inch and a half.
         '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2160"': 3
+
+# The word count's label, from the language field. check-options.R found
+# frontmatter.lua reading a key nothing sets.
+- fixture: word-count-label.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Recuento de Palabras: '
+      absent:
+        - 'Word Count'
+
+- fixture: word-count-label.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'Recuento de Palabras'
+
+# ------------------------------------------------- a dissertation's words --
+
+- fixture: thesis-words.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'APPENDICES'
+        # The list's heading and its entry in the contents.
+        - 'LIST OF CHARTS'
+      absent:
+        - 'LIST OF TABLES'
+
+- fixture: thesis-words.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - 'APPENDICES'
+        - 'LIST OF CHARTS'
+      absent:
+        - 'LIST OF TABLES'
+
+- fixture: thesis-words-es.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'APÉNDICES'
+      absent:
+        - 'APPENDICES'
