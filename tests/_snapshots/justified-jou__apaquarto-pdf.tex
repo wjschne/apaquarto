@@ -634,6 +634,35 @@
   {/normalfont/bfseries/itshape}{}{0pt}{}
 /titlespacing{/subparagraph}{/parindent}{/baselineskip}{0.5em}
 
+% Journal mode sets levels one to three the way the Journal of Educational
+% Psychology does (measured from its pages; JEP.pdf at the repository root):
+% a point larger than the body and on a line a point deeper, so 11pt on 13pt
+% over the 10pt on 12pt body, with 26pt from the baseline above to the
+% heading's and 18pt from the heading's to the first line under it.
+% titlespacing adds to the heading's own 13pt line above and the body's 12pt
+% line below, so those are 13pt and 6pt here. typst-template.typ sets the
+% same in its jou layout.
+% Both values are expanded before /fontsize sees them: /fontsize keeps its own
+% workings in /@tempdimb, and handed /the/@tempdimb it read back the new size
+% as the line, setting the heading solid.
+/makeatletter
+/newcommand{/apajouheadingfont}{%
+  /@tempdima=/f@size pt/advance/@tempdima by 1pt
+  /@tempdimb=/f@baselineskip/advance/@tempdimb by 1pt
+  /edef/apa@headingfont{/noexpand/fontsize{/the/@tempdima}{/the/@tempdimb}}%
+  /apa@headingfont/selectfont}
+/makeatother
+/newcommand{/apajouheadings}{%
+  /titleformat{/section}[block]
+    {/normalfont/apajouheadingfont/bfseries/centering}{}{0pt}{}%
+  /titlespacing{/section}{0pt}{13pt}{6pt}%
+  /titleformat{/subsection}[block]
+    {/normalfont/apajouheadingfont/bfseries/raggedright}{}{0pt}{}%
+  /titlespacing{/subsection}{0pt}{13pt}{6pt}%
+  /titleformat{/subsubsection}[block]
+    {/normalfont/apajouheadingfont/bfseries/itshape/raggedright}{}{0pt}{}%
+  /titlespacing{/subsubsection}{0pt}{13pt}{6pt}}
+
 % --- Title page -------------------------------------------------------------
 % The title itself, bold and centred, set a third of the way down the page in
 % manuscript mode and at the top of the body otherwise.
@@ -877,6 +906,7 @@
 /apajoucolumnsep
 /apajoufloats
 /apajouhangindent
+/apajouheadings
 /setapaauthorline{Author}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available

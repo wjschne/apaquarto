@@ -1014,103 +1014,41 @@
   columns: 1,
 )
 
-#show: document => man(
-  title: [Multipanel Notes, Image Panels],
+#show: document => jou(
+  title: [A Journal Article in One Column],
   authors: ([Test Author],),
-  runninghead: "IMAGE PANELS",
+  runninghead: "LAYOUT OPTIONS",
   runningauthors: "Author",
   font: (<fonts>),
+  leading: 1em,
+  spacing: 1em,
+  cols: 1,
   numberdepth: 3,
   document,
 )
 
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Multipanel Notes, Image Panels]
-<title>
+#place(top, scope: "parent", float: true, clearance: 1.5em)[
+#block(width: 100%)[
+#show heading.where(level: 1): set text(size: joutitlesize, weight: "regular")
+A Journal Article in One Column
+
 #set align(center)
 #block[
+#set par(..joubylinepar)
+#set block(spacing: 0.55em)
 /
+#set text(size: jouauthorsize)
 Test Author
 
+#set text(size: jouaffiliationsize)
 Test University
 
 ]
 #set align(left)
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Author Note]
-<author-note>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
+]
+]
+#jouauthornote(cols: auto)[
 Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
 
-#pagebreak()
-
-#heading(level: 1, numbering: none)[Multipanel Notes, Image Panels]
-<firstheader>
-= Method
-<method>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-See #link(<fig-images>)[Figure~1].
-
-#figure([
-#grid(columns: 2, gutter: 2em,
-[
-#strong[Panel A]. First panel.
-
-#box(image("sampleimage.png", alt: "First panel."))
-#align(center)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-A note belonging to the left panel.
 ]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-],
-[
-#strong[Panel B]. Second panel.
-
-#box(image("sampleimage.png", alt: "Second panel."))
-#align(center)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-A note belonging to the right panel.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-],
-)
-#align(left)[
-#block[
-#set par(first-line-indent: 0mm)
-#block[
-#emph[Note]. A~note belonging to the whole figure.
-]
-#set par(first-line-indent: apaparindent(firstlineindent))
-]
-]
-], caption: figure.caption(
-position: top,
-[
-Two Image Panels
-]),
-kind: "quarto-float-fig",
-supplement: "Figure",
-)
-<fig-images>
-
-
-= Discussion
-<discussion>
-#[#set par.line(numbering: none)
-#par()[#text(size:0.5em)[#h(0.0em)]]]
-#v(apafirstparshift)
-Text after the float.
+Some text.

@@ -66,10 +66,7 @@ in_prose <- c(
 )
 
 # Read, meant for users, and not documented yet.
-known_gaps <- c(
-  # typst layout settings passed straight through by typst-show.typ
-  "cols", "leading", "spacing"
-)
+known_gaps <- character()
 
 # Language keys that are not documented yet.
 known_language_gaps <- character()

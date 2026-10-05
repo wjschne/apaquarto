@@ -2105,3 +2105,15 @@
         - 'APÉNDICES'
       absent:
         - 'APPENDICES'
+
+# ------------------------------------------- typst leading, spacing, cols --
+
+- fixture: typst-layout-options.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '  leading: 1em,'
+        # spacing is not set, so it takes the leading.
+        - '  spacing: 1em,'
+        - '  cols: 1,'

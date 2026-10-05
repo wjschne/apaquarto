@@ -40,6 +40,8 @@ engine: knitr
 - The word count's label takes `title-word-count` from the `language` field, as documented; it had always read *Word Count*.
 - apaquarto reads Quarto's `section-title-appendices` (it had spelled it `section-title-appendixes`, which still works), and a dissertation's contents labels its appendices with it.
 - The heading of a dissertation's list of tables is named by `thesis-list-of-tables`, after the `list-of-tables` field, and every word of the front matter is listed on the options page.
+- In typst the space between paragraphs is the line spacing (`leading`), so a manuscript is evenly double spaced and a journal article's paragraphs are no longer set apart by extra space.
+- In journal mode, .pdf and typst alike, level one to three headings are set the way the Journal of Educational Psychology sets them: a point larger than the body, with 26pt from the line above and 18pt to the line below.
 
 # Version 6.0.1
 - 2026-09-26

@@ -344,6 +344,8 @@ local function meta(m)
     -- References hang by the paragraph indent rather than by a manuscript's
     -- half inch, which is what the typst format does in this mode.
     quarto.doc.include_text("in-header", "\\apajouhangindent")
+    -- Headings the size and spacing of a published APA article's.
+    quarto.doc.include_text("in-header", "\\apajouheadings")
     local authors = m["jou-running-authors"]
     if authors then
       quarto.doc.include_text("in-header",

@@ -1,0 +1,24 @@
+---
+title: "A Journal Article in One Column"
+shorttitle: "Layout Options"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+documentmode: jou
+leading: 1em
+cols: 1
+format:
+  apaquarto-typst: default
+---
+
+<!--
+leading, spacing and cols are handed to the typst template as written, after
+the mode's own, so a document's value wins. options.qmd says so, and that
+spacing takes the value of leading when only leading is set; this holds both
+to what typst-show.typ writes.
+-->
+
+Some text.

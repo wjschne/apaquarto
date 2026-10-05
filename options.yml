@@ -528,6 +528,34 @@ docx-typst:
       the default, decides by the length of the note. It can also be written
       inside `author-note`. The other document modes do not float the author
       note, so they ignore it.
+  - name: leading
+    default: '18pt (`man`, `stu`, `thesis`), 14pt (`doc`), 5.5pt (`jou`)'
+    description: |
+      apaquarto-typst only. The space between the lines of a paragraph, and
+      between one paragraph and the next, as Typst measures it: from the
+      bottom of one line to the top of the next rather than baseline to
+      baseline, so the 18pt manuscript mode sets is double spacing for 12pt
+      type. Any Typst length works (`pt`, `em`,
+      `in`, `cm`, `mm`), and it replaces the mode's own. Block quotations
+      and the space around headings follow it unless the mode sets its own.
+
+      ``` yaml
+      leading: 0.65em
+      ```
+  - name: spacing
+    default: '18pt (`man`, `stu`, `thesis`), 8pt (`doc`), 5pt (`jou`)'
+    description: |
+      apaquarto-typst only. The space above and below a block: a block
+      quotation, a list, a figure or table, a code block. The space between
+      two paragraphs is `leading`, so that the text is evenly spaced. Any
+      Typst length works. When `leading` is set and `spacing` is not, it takes the
+      value of `leading`.
+  - name: cols
+    default: '1 (2 in `jou`)'
+    description: |
+      apaquarto-typst only. How many columns the body is set in. `cols: 1`
+      sets a journal article in a single column; the masthead and the title
+      block span the page either way.
 
 # Options for .pdf
 pdf:
