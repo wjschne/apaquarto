@@ -38,8 +38,10 @@ anything else here:
 - **html** has no writer filter; `apa.css`/`apa.scss` style the classes the
   filters leave behind.
 - **thesis** mode (`documentmode: thesis`) has its own front matter,
-  `thesisfrontmatter.lua`, which runs last of all and renders for each format
-  itself.
+  `thesisfrontmatter.lua`, which runs last of all. `thesispages.lua` builds
+  the pages once as a format-neutral list (gaps, rules, paragraphs, anchors,
+  contents lines, prose), and `thesislatex`, `thesistypst`, `thesishtml` or
+  `thesisdocx` sets that list in its format.
 
 ## Files
 
@@ -48,7 +50,9 @@ anything else here:
 | `_extensions/apaquarto/_extension.yml` | Formats, defaults, and the filter list in run order |
 | `_extensions/apaquarto/*.lua` | The filters (below) |
 | `_extensions/apaquarto/utilsapa.lua` | Shared helpers, loaded with `require("utilsapa")` |
-| `_extensions/apaquarto/thesistitle.lua`, `thesiscontents.lua` | Modules loaded by `thesisfrontmatter.lua`; not filters |
+| `_extensions/apaquarto/thesispages.lua` | Module that builds a dissertation's front-matter pages as a format-neutral list, for `thesisfrontmatter`; not a filter |
+| `_extensions/apaquarto/thesislatex.lua`, `thesistypst.lua`, `thesishtml.lua`, `thesisdocx.lua` | One renderer each for those pages, chosen by `thesisfrontmatter`; not filters |
+| `_extensions/apaquarto/thesistitle.lua`, `thesiscontents.lua` | Modules for the title lines and the contents entries, loaded by `thesispages` and `thesisfrontmatter`; not filters |
 | `_extensions/apaquarto/floatrecord.lua` | Module that reads a float once (caption, content, note, columns, panels) for `floatlatex` and `formattypst`; not a filter |
 | `_extensions/apaquarto/frontmatterlayout.lua` | Module that reads the front matter's shape for a journal or document layout (the journal split, spacing, list markers, ORCID lines, impact box), for `frontmatter` (latex jou) and `typstfrontmatter`; not a filter |
 | `_extensions/apaquarto/typst/typstfrontmatter.lua` | Module `formattypst` runs first: lays the typst front matter out by mode, writes the list outlines and the link-colour rule; not a filter |
@@ -294,9 +298,10 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
 3. **Two front-matter systems**: `frontmatter.lua` and `thesisfrontmatter.lua`
    each lay out a first page. In thesis mode `frontmatter.lua` now builds
    only the title and the running head (both still needed) and skips the
-   rest of the title page. The open question is where `thesisfrontmatter`'s
-   four renderers (latex, typst, html, docx) belong: its `build_pages` model
-   is already format-neutral, but nothing outside it uses that model.
+   rest of the title page. The thesis pages are kept apart from the format
+   writers on purpose: their markup (page geometry, leader-dot contents
+   lines, Word sections) is used by nothing else, so it lives in the four
+   `thesis*` renderers rather than in `formatlatex` or `formattypst`.
 4. **The citation `hash` side channel** uses an undocumented Pandoc field.
 
 ## Testing
