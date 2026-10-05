@@ -258,14 +258,19 @@ rendered output back apart (`apacaption`, `apaextractfigure`).
 ## Dependencies on Quarto internals
 
 These break silently when Quarto changes. Look here first after a Quarto
-upgrade.
+upgrade. The two that would otherwise go unnoticed have guard fixtures,
+`tests/caption-shape.qmd` and `tests/citation-hash.qmd`, which fail when the
+shape changes.
 
 - `quarto._quarto.ast.custom_node_data` and `__quarto_custom_id`:
   `floatrecord.float_behind`, the one place that reads them.
 - Quarto rebuilding a markdown table's attributes from its caption, which
   is why `markdowntable` keeps the note in the metadata.
 - The `QUARTO_FILTER_PARAMS` environment variable: `apalanguage`.
-- The rendered html caption shape `Figure`, nbsp, number, `:` : `apacaption`.
+- The rendered html and docx caption shape `Figure`, nbsp, number, `:` : `apacaption`
+  (guarded by `caption-shape.qmd`).
+- The citation `hash` field surviving `pandoc.utils.citeproc`: `citeprocr`
+  sets it, `apaandcite` reads it (guarded by `citation-hash.qmd`).
 - The docx one-cell wrapper table and per-panel tables: `apaextractfigure`,
   `docxlayout`.
 - LaTeX `Word~\ref{...}`: `crossreflink`.
@@ -286,7 +291,7 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    This cannot move to post-quarto: Quarto writes that caption after the last
    filter point, and writes a "Figure 1" of its own even for a float whose
    caption has been emptied. It breaks if Quarto changes how it renders a
-   caption.
+   caption; `tests/caption-shape.qmd` fails when it does.
 2. **The reference doc is patched in place.** This is deliberate:
    Pandoc reads `PANDOC_WRITER_OPTIONS.reference_doc` after the filters run,
    so there is nowhere else to put fonts, page size, line numbers and link
@@ -303,7 +308,8 @@ Recorded so a change does not make it worse. Roughly in order of payoff.
    writers on purpose: their markup (page geometry, leader-dot contents
    lines, Word sections) is used by nothing else, so it lives in the four
    `thesis*` renderers rather than in `formatlatex` or `formattypst`.
-4. **The citation `hash` side channel** uses an undocumented Pandoc field.
+4. **The citation `hash` side channel** uses an undocumented Pandoc field;
+   `tests/citation-hash.qmd` fails if it stops surviving citeproc.
 
 ## Testing
 

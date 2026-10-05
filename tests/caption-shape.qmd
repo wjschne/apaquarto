@@ -1,0 +1,51 @@
+---
+title: "The Shape of a Caption"
+shorttitle: "Caption Shape"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+<!--
+A guard on something apaquarto borrows from quarto rather than a bug that
+was fixed. In html and docx, quarto writes a float's caption itself, after
+the last point a filter can run, as the word, a non-breaking space, the
+number, a colon and the caption: "Figure 1: The caption". apacaption.lua
+takes that apart into an APA title, "Figure 1" in bold on a line of its own,
+and the caption in italics under it. It recognises the caption by that exact
+shape. If quarto changes the shape, nothing fails: the caption is left as
+quarto wrote it, run together on one line. The expectations below are for
+the split, and "Figure 1:" in the output means the shape has changed --- see
+"Dependencies on Quarto internals" in ARCHITECTURE.md.
+
+One of each kind of float: quarto's two, and the Illustration apaquarto
+declares under crossref.custom.
+-->
+
+::: {#fig-shape}
+A figure's content.
+
+The figure caption
+:::
+
+::: {#tbl-shape}
+| A | B |
+|---|---|
+| 1 | 2 |
+
+The table caption
+:::
+
+::: {#ill-shape}
+An illustration's content.
+
+The illustration caption
+:::
+
+See @fig-shape, @tbl-shape and @ill-shape.

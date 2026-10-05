@@ -1901,3 +1901,90 @@
         - '\centering'
         - '\endgroup\addvspace{\baselineskip}'
         - 'This paragraph comes after the table'
+
+# ------------------------------------- what apaquarto borrows from quarto --
+#
+# Not bugs that were fixed but shapes apaquarto relies on and does not own.
+# Each fails here, loudly, if a quarto or pandoc upgrade changes the shape,
+# where otherwise the output would quietly come out wrong. See "Dependencies
+# on Quarto internals" in ARCHITECTURE.md.
+
+- fixture: caption-shape.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - '<p>Figure 1</p>'
+        - '<p>Table 1</p>'
+        - '<p>Illustration 1</p>'
+        - '<p>The figure caption</p>'
+      count:
+        # A title and a caption for each of the three floats.
+        '<div class="FigureTitle" data-custom-style="FigureTitle">': 3
+        '<div class="Caption" data-custom-style="Caption">': 3
+      absent:
+        # Quarto's own caption, run together on one line: what is left when
+        # apacaption.lua no longer recognises it.
+        - ': The figure caption'
+        - ': The table caption'
+        - ': The illustration caption'
+
+- fixture: caption-shape.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        - '<w:pStyle w:val="FigureTitle" /></w:pPr><w:r><w:t xml:space="preserve">Figure'
+        - '<w:pStyle w:val="FigureTitle" /></w:pPr><w:r><w:t xml:space="preserve">Table'
+        - '<w:pStyle w:val="FigureTitle" /></w:pPr><w:r><w:t xml:space="preserve">Illustration'
+        - '<w:pStyle w:val="Caption" /></w:pPr><w:r><w:t xml:space="preserve">The figure caption</w:t>'
+        - '<w:pStyle w:val="Caption" /></w:pPr><w:r><w:t xml:space="preserve">The table caption</w:t>'
+        - '<w:pStyle w:val="Caption" /></w:pPr><w:r><w:t xml:space="preserve">The illustration caption</w:t>'
+    docx:
+      absent:
+        - ': The figure caption'
+        - ': The table caption'
+        - ': The illustration caption'
+
+# The 's and & suffixes travel from citeprocr.lua to apaandcite.lua in the
+# citation's hash field, which pandoc does not document. If it stops
+# surviving citeproc, every one of these comes out as a plain citation.
+- fixture: citation-hash.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'Austen’s ('
+        - 'Schneider and McGrew ('
+        - 'Schneider &amp; McGrew ('
+        - 'Schneider &amp; McGrew’s ('
+
+- fixture: citation-hash.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Possessive: Austen’s (1814/1990) novel.'
+        - 'Plain narrative, two authors: Schneider and McGrew (2018) said so.'
+        - 'Ampersand kept: Schneider &amp; McGrew (2018) said so.'
+        - 'Both: Schneider &amp; McGrew’s (2018) account.'
+
+- fixture: citation-hash.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'Possessive: Austen''s ('
+        - 'Plain narrative, two authors: Schneider and McGrew ('
+        - 'Ampersand kept: Schneider & McGrew ('
+        - 'Both: Schneider & McGrew''s ('
+
+- fixture: citation-hash.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - 'Possessive: Austen''s ('
+        - 'Plain narrative, two authors: Schneider and McGrew'
+        - 'Ampersand kept: Schneider \& McGrew'
+        - 'Both: Schneider \& McGrew''s'

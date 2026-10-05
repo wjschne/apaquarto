@@ -1,0 +1,35 @@
+---
+title: "Possessive and Ampersand Citations"
+shorttitle: "Citation Suffixes"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+bibliography: references.bib
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+A guard on something apaquarto borrows from pandoc rather than a bug that
+was fixed. citeprocr.lua takes the 's and & suffixes off a narrative
+citation and records which it saw in the citation's hash field, an
+undocumented field of pandoc's Citation; apaandcite.lua reads it back after
+citeproc has run to write the possessive and to leave the ampersand alone.
+If a pandoc or quarto upgrade stops hash surviving citeproc, nothing fails:
+every citation below simply comes out plain, "Austen (1814/1990)" and
+"Schneider and McGrew (2018)". The expectations say what each should be.
+-->
+
+Possessive: @austenMansfieldPark1990 ['s] novel.
+
+Plain narrative, two authors: @schneiderCattellHornCarrollTheoryCognitive2018 said so.
+
+Ampersand kept: @schneiderCattellHornCarrollTheoryCognitive2018 [&] said so.
+
+Both: @schneiderCattellHornCarrollTheoryCognitive2018 ['s, &] account.
