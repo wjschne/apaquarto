@@ -2356,7 +2356,7 @@
       # A figure at the foot of a page: its note on the same page. A gap is
       # measured on the first word's page, so it fails if the note went over.
       - gap: [Breakcap, Breaknote]
-        is: 182
+        is: 144
 
 - fixture: layout-table-keep.qmd
   to: apaquarto-pdf
