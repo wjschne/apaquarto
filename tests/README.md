@@ -19,7 +19,11 @@ Fixtures are rendered several at a time, by worker copies of `run-tests.R`:
 one fewer than the machine has cores, and no more than four. `--jobs 1`
 renders one at a time, and `--jobs N` asks for N. A fixture's own jobs always
 run one after another in the same worker, since they write the same files,
-and so do fixtures that embed the same document. Results are printed in the
+and so do fixtures that embed the same document. Docx renders take turns
+across all the workers (a `docx.lock` directory in `_results/_workers/`),
+because each rewrites the shared reference document in place and two at once
+could read each other's half-written file; every other format still runs
+alongside them. Results are printed in the
 order the jobs finish. A worker's own output is in
 `_results/_workers/worker-N.log`, which is where to look if a job reports
 "no result".

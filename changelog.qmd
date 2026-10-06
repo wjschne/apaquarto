@@ -47,9 +47,12 @@ engine: knitr
 - In typst the first paragraph after a heading is spaced like any other in every mode; in document mode it had been 4pt too close.
 - A block quotation whose last paragraph begins with an em dash (`---`) ends with an attribution, set against the quotation's right edge a line below it in every format.
 - In a dissertation the document's own margins reach the front matter as well as the body, and `thesis: title-margin` sets the title page's.
+- In typst a dissertation is double spaced at 24pt, and its block quotations and reference entries single spaced at 14pt, as in the .pdf; they were 26pt and 16pt.
+- In a dissertation a block quotation stands a double space from the body above and below it in the .pdf, and is no longer indented on the right in the .docx.
 - [#170](https://github.com/wjschne/apaquarto/issues/170) In .pdf a table's title and caption are no longer left alone at the foot of a page with the table on the next.
 - [#168](https://github.com/wjschne/apaquarto/issues/168) In .docx a captioned markdown table keeps the APA rules of the reference document's Table style; it had been set with none.
 - [#169](https://github.com/wjschne/apaquarto/issues/169) In .pdf the `apa-note` of a figure drawn by a code chunk is written inside the figure, so a page break or a floating figure no longer parts the two.
+- In typst a figure's `apa-note` given on its image or on a code chunk is written inside the figure, so a page break no longer parts the two.
 
 # Version 6.0.1
 - 2026-09-26

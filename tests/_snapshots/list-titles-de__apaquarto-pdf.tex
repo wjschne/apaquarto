@@ -861,12 +861,23 @@
   {/par/raggedleft/setlength{/parindent}{0pt}}
   {/par}
 
-% A dissertation indents half an inch and single spaces.
+% A dissertation indents half an inch and single spaces, and stands a double
+% space (24pt, baseline to baseline) between the quotation and the body on
+% either side, as typst does. The list's /topsep stood on top of that: above,
+% it was added to the quotation's single spacing, and below to the body's
+% double spacing, which set the quotation 28pt under the line above and the
+% next line 37pt under it (tests/layout-thesis.qmd). Single spacing is set
+% before the list adds its space, so /topsep is the difference between double
+% and single (/apathesisentrysep), and nothing is added below, where the
+% body's own spacing is a double space already.
+/makeatletter
 /newcommand{/apathesisquote}{%
   /renewenvironment{quote}
-    {/list{}{/leftmargin=0.5in/rightmargin=0pt/parsep=0pt}%
-     /item/relax/apathesissingle}
-    {/endlist}}
+    {/list{}{/leftmargin=0.5in/rightmargin=0pt/parsep=0pt/partopsep=0pt
+       /apathesissingle/topsep=/apathesisentrysep}%
+     /item/relax}
+    {/@topsepadd=/z@/endlist}}
+/makeatother
 
 % Quarto writes the reference list as pandoc's CSLReferences list, whose
 % entries are the items of a LaTeX list. The spacing is appended to what that

@@ -13,8 +13,8 @@ local raw = pandoc.RawBlock
 -- block quotation, a note and the entries of the reference list are single
 -- spaced, and a double space stands between one entry and the next: a line of
 -- space under an entry puts the line after it twice as far down as the one
--- before. The half inch a quotation is indented from both margins is in
--- apa.css already.
+-- before. The half inch a quotation is indented on the left is in apa.css
+-- already.
 --
 -- A note's first line is not indented here. In the three paged formats the
 -- half inch the handbook asks for is where the note's number goes; in .html

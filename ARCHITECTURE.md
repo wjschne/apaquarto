@@ -246,8 +246,12 @@ at pre-quarto.
   between `\apatablekeep` and `\apatablekeepend`, which ends the page first
   unless the box and three lines more fit (`tests/layout-table-keep.qmd`).
 - **typst**: `floatwithsubfigure` skips typst → `formattypst` writes the note
-  and its own panel `#grid` → Quarto renders `#figure` → `apanote` writes
-  any note `formattypst` left → `apatwocolumntypst` in journal mode.
+  inside the float, whether it was given on the float, its image or a chunk's
+  cell (a cell holding one float hands its note down and is marked written),
+  and its own panel `#grid` → Quarto renders `#figure`, whose show rule is an
+  unbreakable block that keeps the note with it → `apanote` writes any note
+  `formattypst` left (a cell drawing several figures) → `apatwocolumntypst`
+  in journal mode.
 
 So every format writes a float's note inside the float at post-quarto, from
 `floatrecord`: `floatnote` (html, docx), `floatlatex`, `formattypst`, and
@@ -340,7 +344,7 @@ margins. What each format reads, and where:
 - **Dissertations.** `thesispages.lua` sets every page but the title page on `utilsapa.thesis_body_margins` (the handbook's 1.5in left and 1in elsewhere, with the document's sides over them), and the title page on `thesis_page_one_margins` (1in, or `thesis: title-margin`). The title's line breaks, the committee indent and the rule width (5.5in or the measure, whichever is narrower) follow from the title page's measure, worked out per document in `set_geometry`.
 - **Typst spacing.** In `apa-layout`, `leading` is the space between lines (16pt in manuscript and student mode, which is 24pt baseline to baseline, the .pdf's double spacing) and, since `set par(spacing: leading)`, between paragraphs too; `spacing` is the space around blocks (quotations, lists, figures). Typst 0.12 moved paragraph spacing from `block` to `par`, which is why a `set block` rule alone no longer reaches it.
 - **Journal headings.** Levels 1 to 3 match between the .pdf and typst and follow `JEP.pdf`: a point larger than the body, 26pt baseline to baseline above, 18pt below, lines a point deeper than the body's. The .pdf sets them in `\apajouheadings` (`apalatex.tex`); typst with `headinggrow`, `headingabove` and `headingspace` in the `jou` layout. The two use different numbers for the same page because titlesec adds space to a line while typst measures from the edge of the text: measure the page, not the source.
-- **Block quotations.** Indented on the left only, in every format and mode: 0.5in, and 16pt in `jou`, as the Group Dynamics article in `quote.pdf` sets one. The .pdf sets them in `\apaquote`, `\apajouquote` and `\apathesisquote`, each with `\parsep` at 0 so that a quotation's paragraphs and its attribution are spaced like its lines; typst with `quoteinset` and `quoteinsetright` (0 by default); .docx in the reference doc's Block Text and `QuoteAttribution` styles; .html in `apa.css`. Typst's own `quote` keeps a right inset that a `set pad` rule does not reach, so block quotes are shown in a `pad` of apaquarto's own. In typst, `apaparindent` says `all` outright from Typst 0.13: a bare length set inside something set `all: true` keeps that `all: true`, which had indented the first paragraph of a journal's quotation.
+- **Block quotations.** Indented on the left only, in every format and mode: 0.5in, and 16pt in `jou`, as the Group Dynamics article in `quote.pdf` sets one. The .pdf sets them in `\apaquote`, `\apajouquote` and `\apathesisquote`, each with `\parsep` at 0 so that a quotation's paragraphs and its attribution are spaced like its lines; typst with `quoteinset` and `quoteinsetright` (0 by default); .docx in the reference doc's Block Text and `QuoteAttribution` styles; .html in `apa.css`. Typst's own `quote` keeps a right inset that a `set pad` rule does not reach, so block quotes are shown in a `pad` of apaquarto's own. A dissertation's quotation (`pathesisquote`, typst's `thesisleading` and `thesissingleleading`) is single spaced at 14pt and stands a double space (24pt) from the body on either side in both, measured in `tests/layout-thesis.qmd`. In typst, `apaparindent` says `all` outright from Typst 0.13: a bare length set inside something set `all: true` keeps that `all: true`, which had indented the first paragraph of a journal's quotation.
 - **The spacer before a first paragraph.** In every mode but `jou`, `formattypst.lua` puts an invisible paragraph before the first paragraph after a heading or other block, so that it takes its first-line indent, and takes the space it brought back with `v(-par.spacing)`. That was a fixed `-18pt`, wrong in any mode not spaced at 18pt.
 
 `tests/layout-journal.qmd`, `layout-journal-quote.qmd`, `layout-manuscript.qmd`,
@@ -354,7 +358,8 @@ change to these files, and after a Quarto, Typst or LaTeX upgrade.
 extension and checks the output against `tests/expectations.yml` and the
 `.tex`/`.typ` snapshots. It needs `Rscript` on the PATH. It renders up to
 four fixtures at a time (`--jobs 1` for one at a time), which takes a full
-run of about 150 jobs about 6 minutes. Run it before and after any change to
+run of about 165 jobs about 6 minutes. Docx renders take turns, since each
+rewrites the shared `apaquarto.docx` in place. Run it before and after any change to
 a filter. See `tests/README.md` for adding a fixture.
 
 A snapshot catches a change to the source a format writes; it cannot tell

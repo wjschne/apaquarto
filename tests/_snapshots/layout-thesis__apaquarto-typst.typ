@@ -1040,10 +1040,10 @@
 )
 
 #show: document => thesis(
-  title: [A Title Page on Margins of Its Own],
-  authors: ([Test Author],),
-  runninghead: "TITLE MARGINS",
-  runningauthors: "Author",
+  title: [A Dissertation's Line Spacing],
+  authors: ([A B],),
+  runninghead: "THESIS SPACING",
+  runningauthors: "B",
   font: (<fonts>),
   numberdepth: 3,
   suppresstitlepage: true,
@@ -1070,29 +1070,29 @@
     ]
   ]
 }
-#page(margin: (left: 1.75in, right: 1.75in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
+#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
 #[
 #set par(first-line-indent: 0pt, justify: false)
 #set block(spacing: 0pt)
 #v(70.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[#strong[A TITLE PAGE ON MARGINS OF ITS OWN]]]
+#align(center)[#par(leading: 0.65em)[#strong[A DISSERTATION'S LINE SPACING]]]
 #v(21.0pt, weak: false)
-#align(center)[#line(length: 5.00in, stroke: 0.5pt)]
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
 #v(21.0pt, weak: false)
 #align(center)[#par(leading: 0.65em)[A Thesis /
 Submitted to /
 the Temple University Graduate Board]]
 #v(21.0pt, weak: false)
-#align(center)[#line(length: 5.00in, stroke: 0.5pt)]
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
 #v(21.0pt, weak: false)
 #align(center)[#par(leading: 0.65em)[In Partial Fulfillment /
 of the Requirements for the Degree /
 Master of Arts]]
 #v(21.0pt, weak: false)
-#align(center)[#line(length: 5.00in, stroke: 0.5pt)]
+#align(center)[#line(length: 5.50in, stroke: 0.5pt)]
 #v(21.0pt, weak: false)
 #align(center)[#par(leading: 0.65em)[by /
-Test Author /
+A B /
 May 2027]]
 ]
 ]
@@ -1101,19 +1101,8 @@ May 2027]]
 #set par(first-line-indent: 0pt, justify: false)
 #set block(spacing: 0pt)
 #v(289.0pt, weak: false)
-#align(center)[© Copyright 2027 by Test Author /
+#align(center)[© Copyright 2027 by A B /
 All Rights Reserved]
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-abstract>
-#align(center)[#par(leading: 0.65em)[#strong[ABSTRACT]]]
-#v(27.6pt, weak: false)
-An abstract.
-
 ]
 ]
 #page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
@@ -1123,18 +1112,56 @@ An abstract.
 #align(center)[#par(leading: 0.65em)[#strong[TABLE OF CONTENTS]]]
 #v(27.6pt, weak: false)
 #align(right)[#par(leading: 0.65em)[Page]]
-#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)
 #apatocline(0.00in, none, [CHAPTER], none, false, false)
-#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)
+#apatocline(0.00in, [1.], [SPACING], <spacing>, false, true)
+#apatocline(0.00in, none, [REFERENCES], <references>, false, true)
 ]
 ]
 
 #set page(numbering: "1")
 #counter(page).update(1)
 #heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]
-= INTRODUCTION
-<introduction>
+= SPACING
+<spacing>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
-Some text.
+Lineone of a paragraph whose line is ended by hand. / Linetwo of the same paragraph.
+
+Paraone is a paragraph of its own.
+
+Paratwo follows it.
+
+#quote(block: true)[
+Quoteone of a quotation whose line is ended by hand. / Quotetwo of the same quotation.
+]
+
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#context v(-par.spacing)
+Afterquote is the body again.
+
+#pagebreak(weak: true)
+= REFERENCES
+<references>
+References marked with an asterisk indicate studies included in the meta-analysis.
+
+#thesisreferences[#set par(first-line-indent: 0in, hanging-indent: 0.5in)
+#block[
+#block[
+Austen, J. (1990). #emph[Mansfield Park]. Oxford University Press. (Original work published 1814)
+
+] <ref-austenMansfieldPark1990>
+#block[
+Masked Author. (n.d.). #emph[Masked Title].
+
+] <ref-maskedreference>
+#block[
+Schneider, W. J., & McGrew, K. S. (2018). The cattell-horn-carroll theory of cognitive abilities. In D. P. Flanagan & E. M. McDonough (Eds.), #emph[Contemporary intellectual assessment: Theories, tests, and issues] (4th ed., pp. 73--130). Guilford Press. #link("https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030")
+
+] <ref-schneiderCattellHornCarrollTheoryCognitive2018>
+] <refs>
+]
+
+
+

@@ -1039,102 +1039,125 @@
   columns: 1,
 )
 
-#show: document => thesis(
-  title: [A Title Page on Margins of Its Own],
-  authors: ([Test Author],),
-  runninghead: "TITLE MARGINS",
-  runningauthors: "Author",
+#show: document => man(
+  title: [A Chunk Figure's Note],
+  runninghead: "CHUNK NOTE",
   font: (<fonts>),
   numberdepth: 3,
   suppresstitlepage: true,
   document,
 )
 
-#let apatocline(indent, number, body, target, roman, dots) = context {
-  let found = if target == none { () } else { query(target) }
-  let dest = if found.len() > 0 { found.first().location() } else { none }
-  let pg = if dest == none { none } else {
-    let n = counter(page).at(dest).first()
-    if roman { numbering("i", n) } else { numbering("1", n) }
-  }
-  block(above: 19.4pt, below: 0pt, inset: (left: indent), width: 100%)[
-    #set text(fill: rgb("#000000"))
-    // A show rule as well as the set: typst-template.typ sets its own blue
-    // over every link, and a set does not reach inside a link that rule has
-    // already coloured. This one stands nearer and wins.
-    #show link: set text(fill: rgb("#000000"))
-    #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { 0.25in })[
-      #if number != none [#box(width: 0.25in)[#number]]
-      #if dest == none { body } else { link(dest)[#body] }
-      #if dots [#box(width: 1fr, repeat[.]) #pg]
-    ]
-  ]
-}
-#page(margin: (left: 1.75in, right: 1.75in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#v(70.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[#strong[A TITLE PAGE ON MARGINS OF ITS OWN]]]
-#v(21.0pt, weak: false)
-#align(center)[#line(length: 5.00in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[A Thesis /
-Submitted to /
-the Temple University Graduate Board]]
-#v(21.0pt, weak: false)
-#align(center)[#line(length: 5.00in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[In Partial Fulfillment /
-of the Requirements for the Degree /
-Master of Arts]]
-#v(21.0pt, weak: false)
-#align(center)[#line(length: 5.00in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[by /
-Test Author /
-May 2027]]
+#figure([
+#box(image("sampleimage.png", width: 4.48in))
+#align(left)[
+#block[
+#set par(first-line-indent: 0mm)
+#block[
+#emph[Note]. Chunknote~words.
+]
+#set par(first-line-indent: apaparindent(firstlineindent))
 ]
 ]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#v(289.0pt, weak: false)
-#align(center)[© Copyright 2027 by Test Author /
-All Rights Reserved]
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#metadata(none) <apathesis-abstract>
-#align(center)[#par(leading: 0.65em)[#strong[ABSTRACT]]]
-#v(27.6pt, weak: false)
-An abstract.
+], caption: figure.caption(
+position: top,
+[
+Chunkcap caption
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-chunkone>
 
-]
-]
-#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
-#[
-#set par(first-line-indent: 0pt, justify: false)
-#set block(spacing: 0pt)
-#align(center)[#par(leading: 0.65em)[#strong[TABLE OF CONTENTS]]]
-#v(27.6pt, weak: false)
-#align(right)[#par(leading: 0.65em)[Page]]
-#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)
-#apatocline(0.00in, none, [CHAPTER], none, false, false)
-#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)
-]
-]
 
-#set page(numbering: "1")
-#counter(page).update(1)
-#heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]
-= INTRODUCTION
-<introduction>
+#figure([
+#box(image("sampleimage.png", width: 4.48in))
+#align(left)[
+#block[
+#set par(first-line-indent: 0mm)
+#block[
+#emph[Note]. Mdnote~words.
+]
+#set par(first-line-indent: apaparindent(firstlineindent))
+]
+]
+], caption: figure.caption(
+position: top,
+[
+Mdcap caption
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-mdone>
+
+
+#pagebreak()
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
-Some text.
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Lastline line of filler.
+
+#figure([
+#box(image("sampleimage.png", width: 2in))
+#align(left)[
+#block[
+#set par(first-line-indent: 0mm)
+#block[
+#emph[Note]. Breaknote~words.
+]
+#set par(first-line-indent: apaparindent(firstlineindent))
+]
+]
+], caption: figure.caption(
+position: top,
+[
+Breakcap caption
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-chunktwo>
+
+
+
+
+

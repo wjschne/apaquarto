@@ -189,7 +189,7 @@ end
 --- sets the body double spaced, which is what Normal carries, but a block
 --- quotation, a note and the entries of the reference list single spaced, with
 --- a double space between one entry and the next and the whole of a quotation
---- half an inch in from both margins. A line of twelve point Times is 13.8
+--- half an inch in on the left. A line of twelve point Times is 13.8
 --- points deep in word, so the 276 twips under a paragraph are the second line
 --- that makes the gap between two of them a double space.
 ---
@@ -206,7 +206,7 @@ end
 --- kept in a marker, and every other mode puts it back.
 local single_spaced = '<w:spacing w:after="276" w:line="240" w:lineRule="auto"/>'
 local thesis_properties = {
-  BlockText = single_spaced .. '<w:ind w:left="720" w:right="720" w:firstLine="0"/>',
+  BlockText = single_spaced .. '<w:ind w:left="720" w:firstLine="0"/>',
   NextBlockText = single_spaced .. '<w:ind w:firstLine="720"/>',
   Bibliography = single_spaced .. '<w:ind w:left="720" w:hanging="720"/>',
   --- A numbered note, whose first line the handbook asks to be indented half

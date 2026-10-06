@@ -23,7 +23,7 @@ format:
 <!--
 The Graduate School sets the line spacing of a dissertation part by part. The
 body is double spaced; a block quotation is single spaced and indented half an
-inch from both margins; the entries of the reference list are single spaced
+inch on the left, as in every mode; the entries of the reference list are single spaced
 within an entry and double spaced between one entry and the next.
 -->
 
@@ -34,8 +34,8 @@ spacing can be measured against the quotation and the references below it
 without any guessing about which line belongs to what.
 
 > A block quotation is single spaced and indented half an inch from the left
-> margin and half an inch from the right, which is narrower than the body and
-> is what marks it out as quoted rather than written.
+> margin, running to the right margin as the body does; the indent and the
+> single spacing are what mark it out as quoted rather than written.
 
 Some text after the quotation [@schneiderCattellHornCarrollTheoryCognitive2018;
 @austenMansfieldPark1990], so that the list below has two entries and the

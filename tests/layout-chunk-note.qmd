@@ -4,6 +4,7 @@ shorttitle: "Chunk Note"
 suppress-title-page: true
 format:
   apaquarto-pdf: default
+  apaquarto-typst: default
 ---
 
 <!--
@@ -15,6 +16,12 @@ The note was written after \end{figure}. In a manuscript the figure is set
 it: the figure after 20 lines below ended its page and its note began the
 next. A figure that floats, in a journal or with floatsintext: false, left
 the note behind in the text altogether.
+
+typst parted them the same way after 20 lines, and for a figure written in
+markdown as well: apanote.lua wrote a note given on the image or on the
+chunk's cell after the figure, outside the unbreakable block the template
+sets a figure in. formattypst.lua now writes those notes inside the figure,
+as it already wrote one given on the float itself.
 
 The first page sets the same picture twice, from a chunk and from markdown,
 so its note must sit the same distance under the caption in both. Every

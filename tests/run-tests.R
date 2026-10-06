@@ -531,7 +531,28 @@ run_job <- function(job) {
     return(invisible())
   }
 
+  # docxreferencedoc.lua rewrites _extensions/apaquarto/apaquarto.docx in
+  # place, and every worker renders against the same copy, so two docx renders
+  # at once could each read the other's half-written zip. Pandoc then stopped
+  # with "error, called at ... Data.Binary.Get", one docx job in every few
+  # runs. Each docx render begins by putting the reference document into the
+  # state its own document needs, so docx renders are safe one at a time and
+  # are taken in turn; every other format still runs alongside them. The turn
+  # is a directory, which only one process can create, as a claim is.
+  docx_lock <- if (!is.null(opt_worker) && grepl("docx", job$to, fixed = TRUE)) {
+    file.path(opt_worker, "docx.lock")
+  }
+  take_docx_turn <- function() {
+    if (is.null(docx_lock)) return(invisible())
+    while (!dir.create(docx_lock, showWarnings = FALSE)) Sys.sleep(0.1)
+  }
+  end_docx_turn <- function() {
+    if (!is.null(docx_lock)) unlink(docx_lock, recursive = TRUE)
+  }
+
   render <- function() {
+    take_docx_turn()
+    on.exit(end_docx_turn(), add = TRUE)
     system2(
       quarto_bin(),
       # Not quoted: system2 passes each element as one argument, and a shell

@@ -237,11 +237,14 @@
 #let docfirstlineindent = 0.25in
 
 // A dissertation sets its body double spaced, but a block quotation and the
-// entries of its reference list single spaced. thesissingleleading is typst's
-// own leading, which is what single spacing is here the way thesisleading is
-// what double spacing is.
-#let thesissingleleading = 0.65em
-#let thesisleading = 18pt
+// entries of its reference list single spaced, all as the .pdf does. Typst
+// counts leading from the bottom of one line to the top of the next, so a
+// line stands its leading plus about 8pt (the height of a capital at 12pt)
+// below the one above: 16pt sets the .pdf's 24pt double spacing, and 0.5em
+// its 14pt single spacing (measured in tests/layout-thesis.qmd). They were
+// 18pt and typst's own 0.65em, which set 26pt and 16pt.
+#let thesissingleleading = 0.5em
+#let thesisleading = 16pt
 
 // The entries of a dissertation's reference list: single spaced within an
 // entry, with a double space between one entry and the next, which is the
@@ -1003,13 +1006,13 @@
   headerstyle: "none",
   pagenumbering: "i",
   leading: thesisleading,
-  // A block quotation is single spaced and indented half an inch from both
-  // margins, which quoteinset already is.
+  // A block quotation is single spaced and indented half an inch on the left,
+  // as in every mode, which quoteinset already is.
   quoteleading: thesissingleleading,
   // A note's first line begins half an inch in, its turned lines running to
   // the margin, and a double space stands between one note and the next. A
   // note is set smaller than the body, so what reads as a double space there
-  // is not the body's 18pt: typst measures a gap from the depth of one entry
+  // is not the body's leading: typst measures a gap from the depth of one entry
   // to the cap height of the next, and 17.25pt is what leaves the first line
   // of a note two of its own lines below the last line of the one above it.
   noteindent: 0.5in,
@@ -1127,7 +1130,7 @@ LINE OF THE TABLE OF CONTENTS], <an-introduction-whose-title-is-long-enough-to-t
 The body is double spaced, and runs on for long enough here that its line spacing can be measured against the quotation and the references below it without any guessing about which line belongs to what.
 
 #quote(block: true)[
-A block quotation is single spaced and indented half an inch from the left margin and half an inch from the right, which is narrower than the body and is what marks it out as quoted rather than written.
+A block quotation is single spaced and indented half an inch from the left margin, running to the right margin as the body does; the indent and the single spacing are what mark it out as quoted rather than written.
 ]
 
 #[#set par.line(numbering: none)

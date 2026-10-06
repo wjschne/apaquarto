@@ -1,0 +1,56 @@
+---
+title: "A Dissertation's Line Spacing"
+shorttitle: "Thesis Spacing"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+documentmode: thesis
+bibliography: references.bib
+nocite: |
+  @*
+thesis:
+  type: Thesis
+  degree: Master of Arts
+  date: May 2027
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: a dissertation is double spaced at 24pt, as a
+manuscript is, in .pdf and typst alike, from one line of a paragraph to the
+next and from one paragraph to the next. A block quotation and a reference
+entry are single spaced, and a reference list stands a double space between
+one entry and the next.
+
+typst set the body's lines 26pt apart: dissertation mode kept the 18pt
+leading the manuscript gave up when it moved to 24pt, and took the
+manuscript's 16pt paragraph spacing with it, so its paragraphs stood 24pt
+apart while the lines inside them stood 26pt.
+
+Each line measured begins with a word made up for it, and a line is ended by
+hand (a backslash) where two lines of one paragraph are wanted.
+-->
+
+# Spacing
+
+Lineone of a paragraph whose line is ended by hand.\
+Linetwo of the same paragraph.
+
+Paraone is a paragraph of its own.
+
+Paratwo follows it.
+
+> Quoteone of a quotation whose line is ended by hand.\
+> Quotetwo of the same quotation.
+
+Afterquote is the body again.
+
+# References
+
+::: {#refs}
+:::

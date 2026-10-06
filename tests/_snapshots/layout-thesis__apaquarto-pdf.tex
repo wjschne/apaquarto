@@ -8,7 +8,7 @@
   letterpaper,
   12pt]{article}
 /usepackage{xcolor}
-/usepackage[margin=1in]{geometry}
+/usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -1004,8 +1004,12 @@
 /renewcommand{/apacontentsname}{Table of Contents}
 /renewcommand{/apalistfigurename}{List of Figures}
 /renewcommand{/apalisttablename}{List of Tables}
-/setapashorttitle{CITATION SUFFIXES}
-/apaquote
+/setapashorttitle{THESIS SPACING}
+/apathesisquote
+/apathesisnotes
+/apathesispenalties
+/AtBeginDocument{/apathesisreferences}
+/definecolor{apathesistoc}{HTML}{000000}
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -1022,77 +1026,130 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{Test Author}
+/author{A B}
 /date{}
 /begin{document}
 
 
-/hfill/break
+/apathesishead/pagenumbering{roman}
 
-/hfill/break
+/newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}
 
-/vspace*{3/baselineskip}
+/thispagestyle{empty}
 
-/apatitle{
+/vspace*{70.0pt}
 
-Possessive and Ampersand Citations
+/singlespacing
 
-}
+{/centering
+/bfseries A DISSERTATION'S LINE SPACING/par}
 
-/begin{apaauthor}
+/vspace*{21.0pt}
 
-/hfill/break
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-Test Author
+/vspace*{21.0pt}
 
-Test University
+{/centering
+A Thesis//
+Submitted to//
+the Temple University Graduate Board/par}
 
-/end{apaauthor}
+/vspace*{21.0pt}
 
-/hfill/break
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-/hfill/break
+/vspace*{21.0pt}
 
-/apatitlepageheading{
+{/centering
+In Partial Fulfillment//
+of the Requirements for the Degree//
+Master of Arts/par}
 
-Author Note
+/vspace*{21.0pt}
 
-}
+{/centering/noindent/rule{5.50in}{0.5pt}/par}
 
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
+/vspace*{21.0pt}
+
+{/centering
+by//
+A B//
+May 2027/par}
 
 /clearpage
 
-/apatitle{
+/newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}
 
-Possessive and Ampersand Citations
+/vspace*{289.0pt}
+
+/doublespacing
+
+{/centering
+© Copyright 2027 by A B//
+All Rights Reserved/par}
+
+/clearpage
+
+/singlespacing
+
+{/centering
+/bfseries TABLE OF CONTENTS/par}
+
+/vspace*{27.6pt}
+
+{/raggedleft
+Page/par}
+
+/doublespacing
+
+{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
+
+{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
+
+{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[spacing]{/textcolor{apathesistoc}{SPACING}}/apadotfill/hyperref[spacing]{/textcolor{apathesistoc}{/pageref{spacing}}}/par}
+
+{/parindent=0pt/leftskip=0.00in/noindent/hyperref[references]{/textcolor{apathesistoc}{REFERENCES}}/apadotfill/hyperref[references]{/textcolor{apathesistoc}{/pageref{references}}}/par}
 
 }
 
-Possessive: Austen's (/citeproc{ref-austenMansfieldPark1990}{1814/1990})
-novel.
+/clearpage
 
-Plain narrative, two authors: Schneider and McGrew
-(/citeproc{ref-schneiderCattellHornCarrollTheoryCognitive2018}{2018})
-said so.
+/restoregeometry/doublespacing/pagenumbering{arabic}
 
-Ampersand kept: Schneider /& McGrew
-(/citeproc{ref-schneiderCattellHornCarrollTheoryCognitive2018}{2018})
-said so.
+/section*{CHAPTER 1}
 
-Both: Schneider /& McGrew's
-(/citeproc{ref-schneiderCattellHornCarrollTheoryCognitive2018}{2018})
-account.
+/section{SPACING}/label{spacing}
 
-/section{References}
+Lineone of a paragraph whose line is ended by hand.//
+Linetwo of the same paragraph.
+
+Paraone is a paragraph of its own.
+
+Paratwo follows it.
+
+/begin{quote}
+Quoteone of a quotation whose line is ended by hand.//
+Quotetwo of the same quotation.
+/end{quote}
+
+Afterquote is the body again.
+
+/clearpage
+
+/section{REFERENCES}/label{references}
+
+References marked with an asterisk indicate studies included in the
+meta-analysis.
 
 /protect/phantomsection/label{refs}
 /begin{CSLReferences}{1}{0}
 /bibitem[/citeproctext]{ref-austenMansfieldPark1990}
 Austen, J. (1990). /emph{Mansfield {P}ark}. Oxford University Press.
 (Original work published 1814)
+
+/bibitem[/citeproctext]{ref-maskedreference}
+Masked Author. (n.d.). /emph{Masked Title}.
 
 /bibitem[/citeproctext]{ref-schneiderCattellHornCarrollTheoryCognitive2018}
 Schneider, W. J., /& McGrew, K. S. (2018). The cattell-horn-carroll

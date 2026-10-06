@@ -1377,7 +1377,7 @@
         - 'LIST OF ILLUSTRATIONS'
 
 # The line spacing the Graduate School asks for: a block quotation single
-# spaced and half an inch in from both margins, the entries of the reference
+# spaced and half an inch in on the left, the entries of the reference
 # list and of the table of contents single spaced within an entry and a double
 # space apart, and widows and orphans avoided. The measurements are in the
 # snapshots; what is checked here is that each format is asked for them.
@@ -1426,6 +1426,10 @@
         - '<w:spacing w:after="276" w:line="240" w:lineRule="auto"'
         # A note's first line is indented half an inch.
         - '<w:ind w:firstLine="720" />'
+        # A block quotation half an inch in on the left and not at all on the
+        # right, as in every mode. This mode's Block Text kept a right indent
+        # of 720 after every other had lost it.
+        - '<w:ind w:firstLine="0" w:left="720" />'
     docx-xml:
       contains:
         # And the contents entries, which are written out rather than styled.
@@ -2342,6 +2346,37 @@
   expect:
     layout: *journal-quote
 
+- fixture: layout-thesis.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &thesis-spacing
+      # The body double spaced at 24pt, within a paragraph and between two.
+      # typst set 26pt.
+      - gap: [Lineone, Linetwo]
+        is: 24
+      - gap: [Paraone, Paratwo]
+        is: 24
+      # A quotation single spaced, at 14pt; typst set 16pt...
+      - gap: [Quoteone, Quotetwo]
+        is: 14
+      # ...a double space from the body on either side. The .pdf set 28pt
+      # above and 37pt below, the list's \topsep on top of the line spacing.
+      - gap: [Paratwo, Quoteone]
+        is: 24
+      - gap: [Quotetwo, Afterquote]
+        is: 24
+      # A reference entry single spaced within itself, and a double space to
+      # the next: two lines of Austen's entry, then a double space.
+      - gap: [Schneider, abilities]
+        is: 14
+      - gap: [Austen, Masked]
+        is: 38
+
+- fixture: layout-thesis.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *thesis-spacing
+
 - fixture: layout-chunk-note.qmd
   to: apaquarto-pdf
   expect:
@@ -2357,6 +2392,25 @@
       # measured on the first word's page, so it fails if the note went over.
       - gap: [Breakcap, Breaknote]
         is: 144
+
+- fixture: layout-chunk-note.qmd
+  to: apaquarto-typst
+  expect:
+    layout:
+      # As in the .pdf: the chunk's note and the markdown figure's the same
+      # distance under their captions...
+      - gap: [Chunkcap, Chunknote]
+        is: 271
+      - gap: [Mdcap, Mdnote]
+        is: 271
+      # ...and a figure at the foot of a page keeps its note on that page.
+      - gap: [Breakcap, Breaknote]
+        is: 143
+    typ:
+      count:
+        # Each note written once, inside its figure.
+        'Chunknote': 1
+        'Mdnote': 1
 
 - fixture: layout-table-keep.qmd
   to: apaquarto-pdf
