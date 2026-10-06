@@ -230,6 +230,24 @@ local function merge_adjacent_tables(blocks)
   return out
 end
 
+-- Whether a table is the grid quarto lays panels out in, rather than a table
+-- of data. A grid holds pictures, or the tables of a table set out in panels.
+--
+-- apafloat.lua marks tables as well as figures FigureWithNote or
+-- FigureWithoutNote, so a captioned markdown table arrives here too. Given
+-- FigureLayout, it lost the reference document's Table style and every rule
+-- APA draws in a table, and word set it bare (wjschne/apaquarto#168). A walk
+-- of a table sees what is inside it and never the table itself.
+local function is_layout_table(block)
+  local found = false
+  block:walk {
+    Image = function() found = true end,
+    Figure = function() found = true end,
+    Table = function() found = true end,
+  }
+  return found
+end
+
 local function rebuild(float)
   local titles = pandoc.List({})
   local body = pandoc.List({})
@@ -248,7 +266,7 @@ local function rebuild(float)
           note.attributes["custom-style"] = kNoteStyle
           notes:insert(note)
         end
-      elseif block.t == "Table" then
+      elseif block.t == "Table" and is_layout_table(block) then
         laid_out = true
         local table_block = captions_above(style_panel_notes(block))
         table_block.attr = table_block.attr or pandoc.Attr()

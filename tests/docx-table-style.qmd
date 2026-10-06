@@ -1,0 +1,55 @@
+---
+title: "A Table's Style in Word"
+shorttitle: "Table Style"
+suppress-title-page: true
+format:
+  apaquarto-docx: default
+---
+
+<!--
+wjschne/apaquarto#168. A data table takes the reference document's Table
+style, which draws the rules of an APA table; only the grid quarto lays
+panels out in takes FigureLayout, which draws none.
+
+docxlayout.lua gave every table in a captioned float FigureLayout, and
+apafloat.lua marks tables as floats as well as figures, so a captioned
+markdown table, with a note or without, was set in Word with no rules at
+all. A table written by a code chunk escaped, being one div further down.
+The tables of a table laid out in panels are data tables too; the grid
+holding them is not.
+-->
+
+| Plainhead | B |
+|-----------|---|
+| 1         | 2 |
+
+: A plain table {#tbl-plain}
+
+| Notedhead | B |
+|-----------|---|
+| 1         | 2 |
+
+: A table with a note {#tbl-noted apa-note="A note on the table."}
+
+```{r}
+#| label: tbl-chunk
+#| tbl-cap: "A table from a chunk"
+#| apa-note: "A note on the chunk's table."
+knitr::kable(data.frame(Chunkhead = 1, B = 2))
+```
+
+::: {#tbl-panels layout-ncol=2}
+| Lefthead | B |
+|----------|---|
+| 1        | 2 |
+
+: Left panel {#tbl-left}
+
+| Righthead | B |
+|-----------|---|
+| 3         | 4 |
+
+: Right panel {#tbl-right}
+
+Tables in panels
+:::

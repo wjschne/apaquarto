@@ -154,7 +154,7 @@ and still return early; the formats column says where it does real work.
 | `apafloat.lua` | all | `FigureWithNote` / `FigureWithoutNote` on top-level floats |
 | `apacaption.lua` | html, docx | Splits Quarto's `Figure 1: caption` into `FigureTitle` and `Caption` |
 | `apaafternote.lua` | all | `AfterWithoutNote` on the paragraph after a float with no note |
-| `docxlayout.lua` | docx | Rebuilds multipanel figures as one table, panel captions above |
+| `docxlayout.lua` | docx | Rebuilds multipanel figures as one table, panel captions above; only a layout grid (one holding images or tables) takes `FigureLayout`, and data tables keep the reference doc's `Table` rules |
 | `apatwocolumntypst.lua` | typst jou | Wraps the block after a wide-float marker in `#place(top, scope: "parent")` |
 | `citeprocr.lua` | all | Runs citeproc itself (the yml sets `citeproc: false`), meta-analysis asterisks, masked references |
 | `apaandcite.lua` | all | "&" to "and" in narrative citations, possessives, strips meta-analysis asterisks |

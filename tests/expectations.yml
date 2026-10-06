@@ -56,10 +56,14 @@
         - 'A note belonging to the second panel.'
         - 'A note belonging to the table.'
     docx-xml:
-      absent:
-        # The reference document's table style draws a rule under every row,
-        # which belongs to APA tables and to no figure.
-        - 'w:tblStyle w:val="Table"'
+      count:
+        # The reference document's table style draws the rules of an APA
+        # table, which belong to the data table and to no figure: the layout
+        # table holding the panels takes FigureLayout. This said Table must
+        # be absent altogether, which kept the data table bare as well
+        # (wjschne/apaquarto#168).
+        'w:tblStyle w:val="Table"': 1
+        'w:tblStyle w:val="FigureLayout"': 1
 
 - fixture: multipanel-notes.qmd
   to: apaquarto-docx
@@ -76,6 +80,25 @@
         # sets each table under the one before it. Two tables alone would
         # still count right with the panels stacked in two rows.
         '<w:tr>': 4
+
+- fixture: docx-table-style.qmd
+  to: apaquarto-docx
+  expect:
+    docx:
+      contains:
+        - 'Plainhead'
+        - 'Notedhead'
+        - 'Chunkhead'
+        - 'Lefthead'
+        - 'Righthead'
+    docx-xml:
+      count:
+        # Five data tables with the APA rules: the plain one, the one with a
+        # note, the chunk's, and the two in panels. The plain and noted
+        # tables were FigureLayout, with no rules.
+        'w:tblStyle w:val="Table"': 5
+        # The one grid holding the panels.
+        'w:tblStyle w:val="FigureLayout"': 1
 
 # The same figure with panels that carry no labels of their own, which takes a
 # different path here and through quarto.

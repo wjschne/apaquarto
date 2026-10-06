@@ -300,7 +300,7 @@ window.Quarto = {
 <section id="version-7.0.0" class="level1">
 <h1>Version 7.0.0</h1>
 <ul>
-<li>2026-09-28</li>
+<li>2026-10-06</li>
 <li><code>documentmode: thesis</code> sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication, the acknowledgments, the table of contents, a list for every kind of float the document holds, and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.</li>
 <li>A float a document declares for itself under <code>crossref.custom</code> — an Illustration is the one apaquarto ships — is set the way a figure is, with its number on a line of its own and its caption under it, in all four formats.</li>
 <li>The <code>apa-note</code> of such a float is written and styled the way a figure’s is.</li>
@@ -322,14 +322,21 @@ window.Quarto = {
 <li>In typst journal mode a note written under a plain div, a markdown image or a code-chunk table is no longer indented.</li>
 <li>The table of contents and the lists of figures and tables take their headings from the document’s language, and an Illustration is listed with the figures in .docx and typst as it is in .pdf.</li>
 <li>In .pdf journal mode the ORCID lines of the author note are set flush left and unjustified, as they are in typst.</li>
-<li>A document’s <code>geometry</code> sets the .pdf’s margins in every mode, journal and dissertation included, on top of the mode’s own page.</li>
-<li><code>margin</code> sets the margins in .docx as it does in typst, with the same keys (<code>x</code>, <code>y</code>, <code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code>).</li>
+<li><code>margin</code> sets the margins in every mode of the .pdf, the .docx and typst alike, with typst’s keys (<code>x</code>, <code>y</code>, <code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code>); in the .pdf <code>geometry</code> still works and wins where both name a side.</li>
 <li>The word count’s label takes <code>title-word-count</code> from the <code>language</code> field, as documented; it had always read <em>Word Count</em>.</li>
 <li>apaquarto reads Quarto’s <code>section-title-appendices</code> (it had spelled it <code>section-title-appendixes</code>, which still works), and a dissertation’s contents labels its appendices with it.</li>
 <li>The heading of a dissertation’s list of tables is named by <code>thesis-list-of-tables</code>, after the <code>list-of-tables</code> field, and every word of the front matter is listed on the options page.</li>
 <li>In typst the space between paragraphs is the line spacing (<code>leading</code>), so a manuscript is evenly double spaced and a journal article’s paragraphs are no longer set apart by extra space.</li>
 <li>In journal mode, .pdf and typst alike, level one to three headings are set the way the Journal of Educational Psychology sets them: a point larger than the body, with 26pt from the line above and 18pt to the line below.</li>
+<li>A typst manuscript is double spaced at 24pt, as the .pdf is; it was 26pt.</li>
+<li>A block quotation is indented on the left only, in every format and mode: half an inch, and 16pt in journal mode as the APA journals set one.</li>
+<li>In typst journal mode the first paragraph of a block quotation with a second paragraph or an attribution is no longer indented.</li>
+<li>In typst the first paragraph after a heading is spaced like any other in every mode; in document mode it had been 4pt too close.</li>
+<li>A block quotation whose last paragraph begins with an em dash (<code>---</code>) ends with an attribution, set against the quotation’s right edge a line below it in every format.</li>
 <li>In a dissertation the document’s own margins reach the front matter as well as the body, and <code>thesis: title-margin</code> sets the title page’s.</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/170">#170</a> In .pdf a table’s title and caption are no longer left alone at the foot of a page with the table on the next.</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/168">#168</a> In .docx a captioned markdown table keeps the APA rules of the reference document’s Table style; it had been set with none.</li>
+<li><a href="https://github.com/wjschne/apaquarto/issues/169">#169</a> In .pdf the <code>apa-note</code> of a figure drawn by a code chunk is written inside the figure, so a page break or a floating figure no longer parts the two.</li>
 </ul>
 </section>
 <section id="version-6.0.1" class="level1">
