@@ -433,10 +433,17 @@ return {
 
       -- The dash attribution under a block quotation (apaquote.lua): against
       -- the quotation's right edge, with no first-line indent. Both are set
-      -- inside the align's own block, so nothing has to be put back after.
+      -- inside a content block of their own, so nothing has to be put back
+      -- after, and the div's paragraphs go in it bare rather than in the
+      -- block pandoc writes a div as: a block (and an align is one) is set
+      -- off by the quotation's space around blocks, which put more air above
+      -- the attribution than between the lines of the quotation.
       if div.classes:includes("quote-attribution") then
-        return {pandoc.RawBlock("typst", "#align(right)[#set par(first-line-indent: 0pt)"),
-          div, pandoc.RawBlock("typst", "]")}
+        local out = pandoc.List({ pandoc.RawBlock("typst",
+          "#[#set align(right)\n#set par(first-line-indent: 0pt)") })
+        out:extend(div.content)
+        out:insert(pandoc.RawBlock("typst", "]"))
+        return out
       end
     end
   } ,

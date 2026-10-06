@@ -276,9 +276,15 @@ local function meta(m)
     quarto.doc.include_text("in-header", "\\apastudenthead")
   end
 
+  -- A block quotation half an inch in on the left and not at all on the
+  -- right. Journal mode and a dissertation set their own below.
+  if mode ~= "jou" and mode ~= "thesis" then
+    quarto.doc.include_text("in-header", "\\apaquote")
+  end
+
   -- A dissertation sets a block quotation, a note and the entries of its
-  -- reference list single spaced, indents a quotation half an inch from both
-  -- margins and a note's first line half an inch, and keeps a page from
+  -- reference list single spaced, indents a quotation half an inch on the
+  -- left and a note's first line half an inch, and keeps a page from
   -- breaking after the first line of a paragraph or before its last. The reference list is patched at the start of the document
   -- rather than in the preamble: the environment quarto writes it in is one
   -- of pandoc's own, and where an include lands among those is a detail of

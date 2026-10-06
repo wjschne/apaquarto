@@ -2306,11 +2306,53 @@
         is: 295
       - right: Bodyone
         is: 295
+      # A quotation with an attribution: its first paragraph is not indented
+      # either. typst indented it, 10pt.
+      - left: Attrtwo
+        is: 70
+      # Its attribution a line of the quotation's spacing under its last line.
+      - gap: [attrlast, —Aeschylus]
+        is: 12
 
 - fixture: layout-journal-quote.qmd
   to: apaquarto-typst
   expect:
     layout: *journal-quote
+
+- fixture: layout-chunk-note.qmd
+  to: apaquarto-pdf
+  expect:
+    layout:
+      # The same picture from a chunk and from markdown: each note the same
+      # distance under its caption, inside the float. Outside it, after
+      # \end{figure}, the chunk's note was 14pt further down.
+      - gap: [Chunkcap, Chunknote]
+        is: 271
+      - gap: [Mdcap, Mdnote]
+        is: 271
+      # A figure at the foot of a page: its note on the same page. A gap is
+      # measured on the first word's page, so it fails if the note went over.
+      - gap: [Breakcap, Breaknote]
+        is: 182
+
+- fixture: layout-table-keep.qmd
+  to: apaquarto-pdf
+  expect:
+    layout:
+      # A gap is measured on the first word's page, so each fails if the
+      # second word went over to the next page.
+      #
+      # The tables longtable stranded the titles of: each caption on the
+      # page its table's first row is on.
+      - gap: [Keepone, Rowone]
+        is: 65
+      - gap: [Keepthree, Rowthree]
+        is: 86
+      # The tables there was room for: each on the page of the line before it.
+      - gap: [Lasttwo, Keeptwo]
+        is: 73
+      - gap: [Lastfour, Keepfour]
+        is: 73
 
 - fixture: layout-document.qmd
   to: apaquarto-typst
@@ -2319,15 +2361,14 @@
       # The first paragraph after a heading, a line of 22pt under it.
       - gap: [Headone, Gammaone]
         is: 22
-      # A quotation half an inch in on the left and on the right: a full
-      # line of the justified body ends at the margin, 539pt, and one of the
-      # quotation half an inch short of it.
+      # A quotation half an inch in on the left and not at all on the right:
+      # a full line of it ends at the margin, as the justified body does.
       - left: Quoteone
         is: 108
       - right: Bodyone
         is: 539
       - right: Quoteone
-        is: 503
+        is: 539
 
 # ------------------------------------------- a quotation's dash attribution --
 
@@ -2356,7 +2397,11 @@
         - 'Attributionone, Mansfield Park (1814/1990)'
     docx-styles:
       contains:
-        - 'w:styleId="QuoteAttribution" w:type="paragraph"><w:name w:val="QuoteAttribution" /><w:basedOn w:val="BlockText" /><w:pPr><w:jc w:val="right" /><w:ind w:firstLine="0" /></w:pPr></w:style>'
+        # Right-aligned and based on Block Text, whether the reference
+        # document ships the style (apaquarto.docx now does) or
+        # docxreferencedoc.lua writes it in for one that does not.
+        - 'w:styleId="QuoteAttribution"'
+        - '<w:name w:val="QuoteAttribution" /><w:basedOn w:val="BlockText" /><w:pPr><w:jc w:val="right" />'
 
 - fixture: quote-attribution.qmd
   to: apaquarto-pdf
@@ -2365,33 +2410,46 @@
       count:
         '\begin{apaquoteattribution}': 2
     layout:
-      # Against the quotation's right edge, the margin less LaTeX's quote
-      # indent; the quotations that are not attributions stay on the left.
+      # A quotation half an inch in on the left and not at all on the right.
+      - left: Quoteone
+        is: 108
+      # The attribution against the right margin, the quotation's right
+      # edge; the quotations that are not attributions stay on the left.
       - right: Attributionone
-        is: 510
+        is: 540
       - right: Attributiontwo
-        is: 510
-      # The word after the dash and its space, 15pt into a line that starts
-      # at the quotation's left edge.
+        is: 540
+      # The word after the dash and its space, in a line that starts at the
+      # quotation's left edge.
       - left: Dashonly
-        is: 115
-      - left: Dialoguetwo
-        is: 115
+        is: 121
+      # A line of the double spacing between the quotation's last line and
+      # its attribution: not a blank line and \parsep more, as it had been.
+      - gap: [quotelast, Attributionone]
+        is: 24
 
 - fixture: quote-attribution.qmd
   to: apaquarto-typst
   expect:
     typ:
       count:
-        '#align(right)[#set par(first-line-indent: 0pt)': 2
+        # In a content block of its own, not an align: an align is a block,
+        # and set the attribution off by the quotation's space around blocks.
+        '#[#set align(right)': 2
       contains:
         - '#emph[Mansfield Park] (#link(<ref-austenMansfieldPark1990>)[1814/1990])'
     layout:
-      # Against the quotation's right edge, the margin less half an inch.
+      - left: Quoteone
+        is: 108
+      # Against the right margin, the quotation's right edge.
       - right: Attributionone
-        is: 504
+        is: 539
       - right: Attributiontwo
-        is: 504
+        is: 539
+      # A line of the double spacing above the attribution, not the
+      # quotation's space around blocks as well.
+      - gap: [quotelast, Attributionone]
+        is: 24
       # The word after the dash and its space, in a line that starts at the
       # quotation's left edge, 108pt.
       - left: Dashonly

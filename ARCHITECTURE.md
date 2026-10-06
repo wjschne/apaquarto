@@ -237,6 +237,14 @@ at pre-quarto.
 - **latex**: `floatwithsubfigure` → `floatlatex` writes the whole float,
   note included, as raw LaTeX → the common post-render float filters run but
   find nothing → `formatlatex` turns `FigureNote` into `apafloatnote`.
+  A code chunk's `apa-note` (and `apa-twocolumn`) sits on the cell Div, not
+  the float; `floatlatex` copies it down to the cell's one float first, then
+  clears it from the cell once written (`tests/layout-chunk-note.qmd`).
+  A table outside journal mode is set in the text flow, not a float, and
+  longtable breaks the page ahead of itself when its head and first row do
+  not fit; so its label, title, caption and list-of-tables line are boxed
+  between `\apatablekeep` and `\apatablekeepend`, which ends the page first
+  unless the box and three lines more fit (`tests/layout-table-keep.qmd`).
 - **typst**: `floatwithsubfigure` skips typst → `formattypst` writes the note
   and its own panel `#grid` → Quarto renders `#figure` → `apanote` writes
   any note `formattypst` left → `apatwocolumntypst` in journal mode.
@@ -332,7 +340,7 @@ margins. What each format reads, and where:
 - **Dissertations.** `thesispages.lua` sets every page but the title page on `utilsapa.thesis_body_margins` (the handbook's 1.5in left and 1in elsewhere, with the document's sides over them), and the title page on `thesis_page_one_margins` (1in, or `thesis: title-margin`). The title's line breaks, the committee indent and the rule width (5.5in or the measure, whichever is narrower) follow from the title page's measure, worked out per document in `set_geometry`.
 - **Typst spacing.** In `apa-layout`, `leading` is the space between lines (16pt in manuscript and student mode, which is 24pt baseline to baseline, the .pdf's double spacing) and, since `set par(spacing: leading)`, between paragraphs too; `spacing` is the space around blocks (quotations, lists, figures). Typst 0.12 moved paragraph spacing from `block` to `par`, which is why a `set block` rule alone no longer reaches it.
 - **Journal headings.** Levels 1 to 3 match between the .pdf and typst and follow `JEP.pdf`: a point larger than the body, 26pt baseline to baseline above, 18pt below, lines a point deeper than the body's. The .pdf sets them in `\apajouheadings` (`apalatex.tex`); typst with `headinggrow`, `headingabove` and `headingspace` in the `jou` layout. The two use different numbers for the same page because titlesec adds space to a line while typst measures from the edge of the text: measure the page, not the source.
-- **Block quotations.** Indented on both sides in every mode but `jou`, which indents 16pt on the left only, as the Group Dynamics article in `quote.pdf` sets one. The .pdf sets the journal's in `\apajouquote`; typst with `quoteinset` and `quoteinsetright`. Typst's own `quote` keeps a right inset that a `set pad` rule does not reach, so block quotes are shown in a `pad` of apaquarto's own.
+- **Block quotations.** Indented on the left only, in every format and mode: 0.5in, and 16pt in `jou`, as the Group Dynamics article in `quote.pdf` sets one. The .pdf sets them in `\apaquote`, `\apajouquote` and `\apathesisquote`, each with `\parsep` at 0 so that a quotation's paragraphs and its attribution are spaced like its lines; typst with `quoteinset` and `quoteinsetright` (0 by default); .docx in the reference doc's Block Text and `QuoteAttribution` styles; .html in `apa.css`. Typst's own `quote` keeps a right inset that a `set pad` rule does not reach, so block quotes are shown in a `pad` of apaquarto's own. In typst, `apaparindent` says `all` outright from Typst 0.13: a bare length set inside something set `all: true` keeps that `all: true`, which had indented the first paragraph of a journal's quotation.
 - **The spacer before a first paragraph.** In every mode but `jou`, `formattypst.lua` puts an invisible paragraph before the first paragraph after a heading or other block, so that it takes its first-line indent, and takes the space it brought back with `v(-par.spacing)`. That was a fixed `-18pt`, wrong in any mode not spaced at 18pt.
 
 `tests/layout-journal.qmd`, `layout-journal-quote.qmd`, `layout-manuscript.qmd`,

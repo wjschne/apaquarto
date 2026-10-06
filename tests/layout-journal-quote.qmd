@@ -16,7 +16,16 @@ full lines run to the column's right edge, the edge the justified body text
 runs to. Both formats indented it on both sides, and by different amounts:
 LaTeX's 2.5em in the .pdf, a quarter of an inch in typst.
 
-The other modes keep the right indent (layout-document.qmd).
+Every mode now runs a quotation to the right margin; a journal's stands in
+less on the left.
+
+The second quotation ends with an attribution. Its first paragraph is not
+indented, as the first paragraph of a quotation never is: typst indented it
+whenever the quotation had a second paragraph, the attribution included,
+because apaparindent handed it a plain length that kept the journal body's
+all: true. In the .pdf the attribution followed the quotation's last line by
+a blank line and more until \parsep and an empty paragraph were taken out;
+it follows by the line spacing.
 -->
 
 Alphaone alphatwo.
@@ -24,3 +33,7 @@ Alphaone alphatwo.
 > Quoteone words of a quotation long enough that it has to run on to several lines in a column, so that its full lines can be measured from end to end against the text block, quotelast.
 
 Bodyone words of a body paragraph long enough that it has to run on to several lines in a column, so that its full lines can be measured from end to end against the text block, bodylast.
+
+> Attrtwo words of a second quotation, this one with an attribution under it, long enough to run on to a second line, attrlast.
+>
+> ---Aeschylus

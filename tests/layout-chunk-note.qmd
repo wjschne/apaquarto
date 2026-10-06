@@ -1,0 +1,81 @@
+---
+title: "A Chunk Figure's Note"
+shorttitle: "Chunk Note"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+---
+
+<!--
+Measured, not read: a figure drawn by a code chunk keeps its apa-note inside
+the float, as a figure written in markdown does.
+
+The note was written after \end{figure}. In a manuscript the figure is set
+[H], in place, but a page could still break between it and a note outside
+it: the figure after 18 lines below ended its page and its note began the
+next. A figure that floats, in a journal or with floatsintext: false, left
+the note behind in the text altogether.
+
+The first page sets the same picture twice, from a chunk and from markdown,
+so its note must sit the same distance under the caption in both (knitr
+sets the picture 4.48in wide, and the markdown one is given that width). The
+markdown figure follows the chunk directly: a filter in Data-Wise/apa-layout
+that moved \end{figure} past whatever note came next took the markdown
+figure, note and all, for the chunk's note and nested one float in the other.
+-->
+
+```{r}
+#| label: fig-chunkone
+#| fig-cap: "Chunkcap caption"
+#| apa-note: "Chunknote words."
+knitr::include_graphics("sampleimage.png")
+```
+
+![Mdcap caption](sampleimage.png){#fig-mdone apa-note="Mdnote words." width="4.48in"}
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Lastline line of filler.
+
+```{r}
+#| label: fig-chunktwo
+#| fig-cap: "Breakcap caption"
+#| apa-note: "Breaknote words."
+#| fig-height: 2
+par(mar = c(2, 2, 0, 0))
+plot(1:3)
+```

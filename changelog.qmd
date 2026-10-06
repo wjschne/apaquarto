@@ -42,10 +42,13 @@ engine: knitr
 - In typst the space between paragraphs is the line spacing (`leading`), so a manuscript is evenly double spaced and a journal article's paragraphs are no longer set apart by extra space.
 - In journal mode, .pdf and typst alike, level one to three headings are set the way the Journal of Educational Psychology sets them: a point larger than the body, with 26pt from the line above and 18pt to the line below.
 - A typst manuscript is double spaced at 24pt, as the .pdf is; it was 26pt.
-- In journal mode a block quotation is indented on the left only, 16pt, as the APA journals set one, in the .pdf and typst alike.
+- A block quotation is indented on the left only, in every format and mode: half an inch, and 16pt in journal mode as the APA journals set one.
+- In typst journal mode the first paragraph of a block quotation with a second paragraph or an attribution is no longer indented.
 - In typst the first paragraph after a heading is spaced like any other in every mode; in document mode it had been 4pt too close.
-- A block quotation whose last paragraph begins with an em dash (`---`) ends with an attribution, set against the quotation's right edge in every format.
+- A block quotation whose last paragraph begins with an em dash (`---`) ends with an attribution, set against the quotation's right edge a line below it in every format.
 - In a dissertation the document's own margins reach the front matter as well as the body, and `thesis: title-margin` sets the title page's.
+- [#170](https://github.com/wjschne/apaquarto/issues/170) In .pdf a table's title and caption are no longer left alone at the foot of a page with the table on the next.
+- [#169](https://github.com/wjschne/apaquarto/issues/169) In .pdf the `apa-note` of a figure drawn by a code chunk is written inside the figure, so a page break or a floating figure no longer parts the two.
 
 # Version 6.0.1
 - 2026-09-26

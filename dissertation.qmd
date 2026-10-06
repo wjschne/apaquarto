@@ -3,44 +3,30 @@ title: "An Inquiry into Vexing Problems at the Intersection of Digital Typograph
 shorttitle: "Typography, Tasseomancy, and Badminton"
 author:
   - name: W. Joel Schneider
-    corresponding: true
-    orcid: 0000-0002-8393-5316
-    email: schneider@temple.edu
-    affiliations:
-      - name: Temple University
-        department: College of Education and Human Development
-        address: 358 Ritter Hall
-        city: Philadelphia
-        region: PA
-        postal-code: 19122-6091
 abstract: "This is my abstract."
-keywords: [keyword1, keyword2]
-author-note:
-  disclosures:
-    conflict of interest: The author has no conflict of interest to declare.
 bibliography: tests/references.bib
 dedication: |
   For everyone who wondered whether this would ever be finished.
 acknowledgments: |
   Thanks to my committee, my family, and the miracle of coffee.
 documentmode: thesis
-margin: 
-  left: 1in
 thesis:
   type: Dissertation
-  submitted-to: the Generic University Graduate Board
-  degree: Doctor of Sophilography
+  submitted-to: the Temple University Graduate Board
+  degree: Doctor of Philosophy
   date: May 2027
   committee:
-    - name: N. J. Goings, Ph.D.
+    - name: Nedra J. Goings, Ph.D.
       role: Advisory Chair
       affiliation: Department of Cosmic Discernment
-    - name: L. Eccles, Ph.D.
+    - name: Leslie Eccles, Ph.D.
       affiliation: Department of Aesthetic Abundance
       role: Examining Chair
-    - name: K. Moh, Ph.D.
-      affiliation: Department of Harmonic Self-Actualization
+    - name: Kristin Moh, Ph.D.
+      affiliation: Department of Musical Self-Actualization
       role: External Member
+margin:
+  left: 1in
 format:
   apaquarto-typst: default
   apaquarto-pdf: default
@@ -65,9 +51,9 @@ Block quotes are on their own line starting with the \> character. For example, 
 
 # Literature Review
 
-What others have found [@schneiderCattellHornCarrollTheoryCognitive2018].
+What others have found [@schneiderCattellHornCarrollTheoryCognitive2018]. See @ill-mediation.
 
-![APA Shiny](img/apa7maker.png){#ill-apashiny}
+![B Mediates the Relationship Between A and C](sampleimage.png){#ill-mediation}
 
 # Methods
 
@@ -105,15 +91,11 @@ A figure caption that says what the figure shows.
 A table caption that says what the table shows.
 :::
 
-::: {#ill-example apa-note="The backtick is sometimes called the grave accent symbol."}
-![](img/keyboardwithbacktick.jpeg)
+::: {#ill-example}
+![](tests/sampleimage.png)
 
-The location of the backtick key on a standard keyboard.
+An illustration caption that says what the illustration shows.
 :::
-
-## Conclusion
-
-This is the answer.
 
 # References
 

@@ -306,8 +306,14 @@
 // dictionary from 0.13 on, where all: true indents the paragraph that opens a
 // section as well as the ones that follow. Everything that sets the indent
 // goes through here so the two forms stay in one place.
-#let apaparindent(amount, all: false) = if all and sys.version >= version(0, 13, 0) {
-  (amount: amount, all: true)
+//
+// From 0.13 on, all: false is said in so many words rather than left to a
+// plain length. A plain length set inside something whose surroundings say
+// all: true changes only the amount and keeps that all: true, so a journal's
+// block quotation, whose body indents every paragraph, had its first
+// paragraph indented whenever it had a second one, an attribution included.
+#let apaparindent(amount, all: false) = if sys.version >= version(0, 13, 0) {
+  (amount: amount, all: all)
 } else {
   amount
 }
@@ -601,9 +607,10 @@
   // none means headingspace.
   headingabove: none,
   quoteinset: 0.5in,
-  // How far a block quotation stands in from the right margin. none means
-  // quoteinset, the same as from the left.
-  quoteinsetright: none,
+  // How far a block quotation stands in from the right margin: not at all,
+  // in every mode, as in the .pdf, .docx and .html. none means quoteinset,
+  // the same as from the left.
+  quoteinsetright: 0pt,
   // Block quotations. none follows the body: its size, its line spacing, its
   // space above and below a block, and its rule about whether the paragraph
   // that opens a block is indented. quoteparspace is the exception: none

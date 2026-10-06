@@ -156,15 +156,14 @@ list-of-contents: false
 list-of-figures: false
 list-of-tables: false
 format:
-  apaquarto-html: 
-    toc: true
+  apaquarto-html: default
   apaquarto-docx: default
   apaquarto-typst: 
     # Options: manuscript (default), journal, student, document
     documentmode: journal
   apaquarto-pdf:
     # Options: manuscript (default), journal, student, document
-    documentmode: journal
+    documentmode: manuscript
 ---
 
 ```{r}
@@ -238,6 +237,14 @@ Sometimes you want to give a longer quote that needs to go in its own paragraph.
 
 > If any one faculty of our nature may be called more wonderful than the rest, I do think it is memory. There seems something more speakingly incomprehensible in the powers, the failures, the inequalities of memory, than in any other of our intelligences. The memory is sometimes so retentive, so serviceable, so obedient; at others, so bewildered and so weak; and at others again, so tyrannic, so beyond control! We are, to be sure, a miracle every way; but our powers of recollecting and of forgetting do seem peculiarly past finding out. (p. 163)
 
+
+## Epigraphs and Quotations with Dash Attributions
+
+Sometimes you want to give an epigraph or a quotation attributed to a specific individual. The last line of the block should have a blank line above it and should start with three hyphens, which is rendered as an em dash.
+
+> It is an easy thing for one whose foot is on the outside of calamity to give advice and to rebuke the sufferer.
+>
+> ---Aeschylus
 
 ## Math and Equations
 

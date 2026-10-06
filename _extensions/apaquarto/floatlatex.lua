@@ -329,27 +329,53 @@ end
 -- left behind on the div would sit in the column under a figure that had gone
 -- elsewhere. Inside the float it travels with the figure, which is where the
 -- note of a table already is.
+--
+-- Every chunk's note comes down too, not only a spanning one's. Left on the
+-- cell, apanote.lua wrote it after \end{figure}: outside the float, so a
+-- figure that floats left it behind in the text, and one set [H] in place
+-- could still be parted from it by a page break, the figure ending one page
+-- and its note beginning the next (tests/layout-chunk-note.qmd). It is copied
+-- only into a cell holding one float, so that a chunk drawing several figures
+-- keeps its one note under them all, and only to that float, not to the
+-- panels inside it, which have notes of their own.
+local function cell_floats(blocks)
+  local found = {}
+  local function look(list)
+    for _, block in ipairs(list) do
+      local float = floatrecord.float_behind(block)
+      if float then
+        found[#found + 1] = float
+      elseif block.t == "Div" then
+        look(block.content)
+      end
+    end
+  end
+  look(blocks)
+  return found
+end
+
 local function push_cell_attributes(div)
   local a = div.attributes
   if not a then return nil end
   local span = a["apa-twocolumn"]
-  if not span or span == "" then return nil end
+  if span == "" then span = nil end
+  local note = a["apa-note"]
+  if not span and not note then return nil end
 
-  local moved = false
-  div.content:walk {
-    Div = function(child)
-      local float = floatrecord.float_behind(child)
-      if not float or not float.attributes then return nil end
-      if not float.attributes["apa-twocolumn"] then
-        float.attributes["apa-twocolumn"] = span
-        moved = true
-      end
-      if a["apa-note"] and not float.attributes["apa-note"] then
-        float.attributes["apa-note"] = a["apa-note"]
-      end
+  local floats = cell_floats(div.content)
+  local changed = false
+  for _, float in ipairs(floats) do
+    float.attributes = float.attributes or {}
+    if span and not float.attributes["apa-twocolumn"] then
+      float.attributes["apa-twocolumn"] = span
+      changed = true
     end
-  }
-  if moved then return div end
+    if note and #floats == 1 and not float.attributes["apa-note"] then
+      float.attributes["apa-note"] = note
+      changed = true
+    end
+  end
+  if changed then return div end
 end
 
 -- The identifier quarto leaves on a markdown table.
@@ -432,6 +458,9 @@ local function processfloat(float)
     -- its tabular is never ended: the bare \centering kableExtra writes set
     -- every paragraph after the table centred.
     blocks:insert(raw("\\par\\addvspace{\\baselineskip}\\begingroup"))
+    -- The title and caption, kept with the start of the table: see
+    -- \apatablekeep in apalatex.tex.
+    blocks:insert(raw("\\apatablekeep"))
   end
 
   blocks:extend(label_blocks(float))
@@ -464,6 +493,9 @@ local function processfloat(float)
   addline:extend(entry)
   addline:insert(pandoc.RawInline("latex", "}"))
   blocks:insert(pandoc.Plain(addline))
+  if not floated then
+    blocks:insert(raw("\\apatablekeepend"))
+  end
 
   local panelnotes = nil
   if record.columns then

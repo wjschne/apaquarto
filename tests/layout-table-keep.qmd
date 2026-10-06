@@ -1,0 +1,233 @@
+---
+title: "A Table Kept With Its Title"
+shorttitle: "Table Kept"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+---
+
+<!--
+Measured, not read: a table set in the text flow begins on the page its
+title and caption are on.
+
+longtable breaks the page itself, ahead of the table, when its head and first
+row do not fit on what is left of the page; the title and caption had already
+been set, and were left alone at the page's foot with the table over the
+page. \nopagebreak after the caption could not stop it. Now the title and
+caption go over with the table, and only when they must: \apatablekeep asks
+for their own height and three lines more, not the fourteen lines of a guess,
+which in double spacing would send any table in the lower half of a page to
+the next.
+
+Each table starts a page of its own after a counted run of lines, so where it
+falls does not depend on the others. With a caption of one line, 21 lines
+leave room for the title, caption, head and first row, and 22 do not; with a
+caption of two lines, 20 and 21. The tables after 22 and 21 lines were the
+ones stranded. The tables after 21 and 20 lines must stay where they are:
+a measure asking for more room than a table's start takes would send them
+over too.
+-->
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Lastone line of filler.
+
+| A | B | C |
+|---|---|---|
+| Rowone | 1 | 1 |
+| r2 | 2 | 2 |
+| r3 | 3 | 3 |
+: Keepone a caption of one line {#tbl-rowone}
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Lasttwo line of filler.
+
+| A | B | C |
+|---|---|---|
+| Rowtwo | 1 | 1 |
+| r2 | 2 | 2 |
+| r3 | 3 | 3 |
+: Keeptwo a caption of one line {#tbl-rowtwo}
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Lastthree line of filler.
+
+| A | B | C |
+|---|---|---|
+| Rowthree | 1 | 1 |
+| r2 | 2 | 2 |
+| r3 | 3 | 3 |
+: Keepthree a caption long enough that it has to run on to a second line of the page, so the box holds two lines {#tbl-rowthree}
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Lastfour line of filler.
+
+| A | B | C |
+|---|---|---|
+| Rowfour | 1 | 1 |
+| r2 | 2 | 2 |
+| r3 | 3 | 3 |
+: Keepfour a caption long enough that it has to run on to a second line of the page, so the box holds two lines {#tbl-rowfour}
