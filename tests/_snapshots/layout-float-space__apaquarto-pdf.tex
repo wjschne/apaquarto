@@ -1065,6 +1065,10 @@ Beforetwo line of the body.
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1079,7 +1083,7 @@ Beforetwo line of the body.
 
 /addcontentsline{lot}{table}{Table 1. Tabcap caption}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}ll@{}}
@@ -1089,9 +1093,13 @@ Tabhead & B //
 /endhead
 /bottomrule/noalign{}
 /endlastfoot
-1 & 2 //
+Tabrow & 2 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apafigurekeepend
 
 /apatablenoteskip
 

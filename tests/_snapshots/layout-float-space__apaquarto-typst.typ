@@ -1125,7 +1125,7 @@ Beforetwo line of the body.
   align: (auto,auto,),
   table.header([Tabhead], [B],),
   table.hline(),
-  [1], [2],
+  [Tabrow], [2],
 )
 ]
 #align(left)[

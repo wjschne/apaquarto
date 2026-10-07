@@ -1176,6 +1176,10 @@ Right.
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1190,7 +1194,7 @@ Right.
 
 /addcontentsline{lot}{table}{Table 1. The first table.}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lr@{}}
@@ -1203,6 +1207,10 @@ A & B //
 1 & 2 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apakeepend{0pt}
 
 /par/endgroup/addvspace{/baselineskip}
 
@@ -1240,6 +1248,10 @@ A & B //
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1254,7 +1266,7 @@ A & B //
 
 /addcontentsline{lot}{table}{Table A1. The appendix table.}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lr@{}}
@@ -1267,6 +1279,10 @@ C & D //
 3 & 4 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apakeepend{0pt}
 
 /par/endgroup/addvspace{/baselineskip}
 

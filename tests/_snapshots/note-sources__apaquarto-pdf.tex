@@ -1106,6 +1106,10 @@ Zqafterchunkfig.
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1120,7 +1124,7 @@ Zqafterchunkfig.
 
 /addcontentsline{lot}{table}{Table 1. Zqcapchunktbl.}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}rr@{}}
@@ -1134,6 +1138,10 @@ a & b //
 2 & 4 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apafigurekeepend
 
 /apatablenoteskip
 
@@ -1221,6 +1229,10 @@ Zqafterdivfig.
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{1}
@@ -1235,7 +1247,7 @@ Zqafterdivfig.
 
 /addcontentsline{lot}{table}{Table 2. Zqcapmdtbl.}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}ll@{}}
@@ -1248,6 +1260,10 @@ A & B //
 1 & 2 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apafigurekeepend
 
 /apatablenoteskip
 

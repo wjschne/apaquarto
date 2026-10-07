@@ -399,6 +399,42 @@ local function strip_table_identifier(blocks)
   }
 end
 
+-- Whether a table in the text flow is short enough to be kept whole.
+--
+-- A longtable may break after any row, and a short one was broken where it
+-- happened to fall: the four-row table in example.qmd set its title, head and
+-- first row at the foot of one page and the other three under a repeated head
+-- on the next. A short table is set as a tabular instead, one box, and moved
+-- whole to the next page with its title when it does not fit
+-- (tests/layout-table-whole.qmd).
+--
+-- Only a table pandoc writes is counted, a markdown or knitr::kable one,
+-- since its rows are there to count; a table a package writes in latex of
+-- its own (flextable, kableExtra) is left as it was. Fifteen rows, double
+-- spaced, with the title, caption and head, come to about three quarters of
+-- a page; a table longer than that is better broken over pages than pushed
+-- whole to the next one.
+local short_table_rows = 15
+
+local function short_table(content)
+  local tables, rows, raw_table = 0, 0, false
+  pandoc.Blocks(floatrecord.as_blocks(content)):walk {
+    Table = function(tbl)
+      tables = tables + 1
+      rows = rows + #tbl.head.rows + #tbl.foot.rows
+      for _, body in ipairs(tbl.bodies) do
+        rows = rows + #body.head + #body.body
+      end
+    end,
+    RawBlock = function(block)
+      if block.format:match("latex") or block.format:match("tex") then
+        raw_table = true
+      end
+    end,
+  }
+  return tables == 1 and not raw_table and rows <= short_table_rows
+end
+
 local function processfloat(float)
   -- A panel of a laid-out figure. It is left as it is so that the figure it
   -- belongs to can take it apart and put it in the grid; written out here it
@@ -458,6 +494,8 @@ local function processfloat(float)
   -- its note inside it, since the two move together.
   local floated = mode == "jou" or (not istable and not floatsintext)
   local inflow_figure = (not floated) and (not istable)
+  -- A short table is kept whole: see short_table above.
+  local short = (not floated) and istable and short_table(record.content)
 
   local blocks = pandoc.List({})
   if floated then
@@ -474,6 +512,27 @@ local function processfloat(float)
     -- the table or figure" (APA). typst sets the same (floatspace in
     -- typst-template.typ; tests/layout-float-space.qmd).
     blocks:insert(raw("\\par\\addvspace{\\baselineskip}\\begingroup"))
+    if istable then
+      -- A table is set flush left, as APA sets one and as .docx and .html
+      -- do; longtable centres one by default, between \LTleft and \LTright
+      -- of \fill. A table package that asks for its own placement, as
+      -- flextable's [c] does, still gets it. And no \LTpost, the 12pt
+      -- longtable leaves under a table: the note under it is spaced by
+      -- \apatablenoteskip alone, and the space after the whole float by the
+      -- \addvspace below. With both, a note stood a line and a half under
+      -- the table's last row (tests/layout-float-space.qmd).
+      --
+      -- Nor the half em of \apatablenotegap, which a journal's table needs
+      -- and this one does not: a tabular leaves the note's first line a
+      -- point under its rule, where a longtable leaves the line spacing.
+      -- The note is the next line under the table, as in typst.
+      blocks:insert(raw("\\setlength{\\LTleft}{0pt}\\setlength{\\LTright}{\\fill}\\setlength{\\LTpost}{0pt}\\setlength{\\apatablenotegap}{0pt}"))
+      -- A short table is set as a tabular, one box that cannot break, with
+      -- no indent before it, as journal mode sets every table.
+      if short then
+        blocks:insert(raw("\\apalongtableastabular\\setlength{\\parindent}{0pt}"))
+      end
+    end
     if inflow_figure then
       -- A float sets its contents without a paragraph indent, and a figure's
       -- picture is a paragraph of its own; in the flow it would be indented.
@@ -518,8 +577,15 @@ local function processfloat(float)
   addline:extend(entry)
   addline:insert(pandoc.RawInline("latex", "}"))
   blocks:insert(pandoc.Plain(addline))
-  if not floated and istable then
+  -- A short table's box holds the table as well, and ends after it.
+  if not floated and istable and not short then
     blocks:insert(raw("\\apatablekeepend"))
+  end
+
+  -- The space longtable leaves above a table, \LTpre, which a tabular does
+  -- not: a short table stands under its caption as a long one does.
+  if short then
+    blocks:insert(raw("\\par\\vspace{\\LTpre}"))
   end
 
   local panelnotes = nil
@@ -532,10 +598,18 @@ local function processfloat(float)
   end
 
   local note = note_blocks(record)
-  if inflow_figure then
-    -- The box ends with the picture. With a note to follow, it asks for room
-    -- for the note's first two lines as well, and no break is allowed between
-    -- the picture and the note.
+  if short then
+    -- A tabular is one box on a line of its own, hanging below that line
+    -- by most of its height, and the line under it is spaced from that
+    -- depth: the note came within a point or two of the rule. Measured from
+    -- the rule instead, as it is under a longtable, the note is the next
+    -- line under the table.
+    blocks:insert(raw("\\par\\prevdepth=0pt"))
+  end
+  if inflow_figure or short then
+    -- The box ends with the picture, or with a short table. With a note to
+    -- follow, it asks for room for the note's first two lines as well, and
+    -- no break is allowed between the picture or table and the note.
     if note or panelnotes then
       blocks:insert(raw("\\apafigurekeepend"))
     else

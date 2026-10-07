@@ -5,6 +5,7 @@ suppress-title-page: true
 format:
   apaquarto-pdf: default
   apaquarto-typst: default
+  apaquarto-docx: default
 ---
 
 <!--
@@ -21,6 +22,15 @@ from the text to the number, and one from the note to the text below. Both
 now set 48pt from the last line of text to the number and from the note to
 the next line of text.
 
+The table is set flush left, as APA sets one, and its note on the next line
+under its rule. The .pdf centred a markdown table, as longtable does by
+default, and stood its note a line and a half under the last row, with
+longtable's own \LTpost and half an em on top of the line spacing.
+
+In .docx the blank lines are the reference document's: space before a
+FigureTitle, and space after a note or a picture without one (FigureNote,
+FigureWithoutNote), which holds a heading off as well as a paragraph.
+
 The number is set in bold, which pdftools boxes a point or two taller than
 the roman around it, so the space above is measured to the caption, a line
 below the number: 72pt.
@@ -36,7 +46,7 @@ Beforetwo line of the body.
 
 | Tabhead | B |
 |---------|---|
-| 1       | 2 |
+| Tabrow  | 2 |
 
 : Tabcap caption {#tbl-space apa-note="Tabnote words."}
 

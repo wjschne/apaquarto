@@ -8,7 +8,7 @@
   letterpaper,
   12pt]{article}
 /usepackage{xcolor}
-/usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in]{geometry}
+/usepackage[margin=1in]{geometry}
 /usepackage{amsmath,amssymb}
 /setcounter{secnumdepth}{-/maxdimen} % remove section numbering
 /usepackage{iftex}
@@ -85,39 +85,6 @@
 /makeatother
 
 
-% definitions for citeproc citations
-/NewDocumentCommand/citeproctext{}{}
-/NewDocumentCommand/citeproc{mm}{%
-  /begingroup/def/citeproctext{#2}/cite{#1}/endgroup}
-/makeatletter
- % allow citations to break across lines
- /let/@cite@ofmt/@firstofone
- % avoid brackets around text for /cite:
- /def/@biblabel#1{}
- /def/@cite#1#2{{#1/if@tempswa , #2/fi}}
-/makeatother
-/newlength{/cslhangindent}
-/setlength{/cslhangindent}{1.5em}
-/newlength{/csllabelwidth}
-/setlength{/csllabelwidth}{3em}
-/newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
- {/begin{list}{}{%
-  /setlength{/itemindent}{0pt}
-  /setlength{/leftmargin}{0pt}
-  /setlength{/parsep}{0pt}
-  % turn on hanging indent if param 1 is 1
-  /ifodd #1
-   /setlength{/leftmargin}{/cslhangindent}
-   /setlength{/itemindent}{-1/cslhangindent}
-  /fi
-  % set entry spacing
-  /setlength{/itemsep}{#2/baselineskip}}}
- {/end{list}}
-/usepackage{calc}
-/newcommand{/CSLBlock}[1]{/hfill/break/parbox[t]{/linewidth}{/strut/ignorespaces#1/strut}}
-/newcommand{/CSLLeftMargin}[1]{/parbox[t]{/csllabelwidth}{/strut#1/strut}}
-/newcommand{/CSLRightInline}[1]{/parbox[t]{/linewidth - /csllabelwidth}{/strut#1/strut}}
-/newcommand{/CSLIndent}[1]{/hspace{/cslhangindent}#1}
 
 
 
@@ -1025,12 +992,8 @@
 /renewcommand{/apacontentsname}{Table of Contents}
 /renewcommand{/apalistfigurename}{List of Figures}
 /renewcommand{/apalisttablename}{List of Tables}
-/setapashorttitle{THESIS TITLE}
-/apathesisquote
-/apathesisnotes
-/apathesispenalties
-/AtBeginDocument{/apathesisreferences}
-/definecolor{apathesistoc}{HTML}{000000}
+/setapashorttitle{TABLE WHOLE}
+/apaquote
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
 /urlstyle{same}
@@ -1047,296 +1010,62 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{Iwishiwere A. Graduate}
+/author{}
 /date{}
 /begin{document}
 
 
-/apathesishead/pagenumbering{roman}
-
-/newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}
-
-/thispagestyle{empty}
-
-/vspace*{70.0pt}
-
-/singlespacing
-
-{/centering
-/bfseries A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN//
-THEY ARE STUDYING SOMETHING AT CONSIDERABLE//
-AND NOTABLE LENGTH/par}
-
-/vspace*{21.0pt}
-
-{/centering/noindent/rule{5.50in}{0.5pt}/par}
-
-/vspace*{21.0pt}
-
-{/centering
-A Dissertation//
-Submitted to//
-the Temple University Graduate Board/par}
-
-/vspace*{21.0pt}
-
-{/centering/noindent/rule{5.50in}{0.5pt}/par}
-
-/vspace*{21.0pt}
-
-{/centering
-In Partial Fulfillment//
-of the Requirements for the Degree//
-Doctor of Philosophy/par}
-
-/vspace*{21.0pt}
-
-{/centering/noindent/rule{5.50in}{0.5pt}/par}
-
-/vspace*{21.0pt}
-
-{/centering
-by//
-Iwishiwere A. Graduate//
-May 2027/par}
-
-/vspace*{70.0pt}
-
-{/raggedright/noindent/leftskip=0.50in/relax
-Examining Committee Members:/par}
-
-/vspace*{13.8pt}
-
-{/raggedright/noindent/leftskip=0.50in/relax
-Mentor Name, Advisory Chair, TU Department//
-Member Name, TU Department//
-Outside Name, External Member, Another University/par}
-
 /clearpage
 
-/newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}
+/apatitle{
 
-/vspace*{289.0pt}
-
-/doublespacing
-
-{/centering
-© Copyright 2027 by Iwishiwere A. Graduate//
-All Rights Reserved/par}
-
-/clearpage
-
-/label{apathesis-abstract}
-
-/singlespacing
-
-{/centering
-/bfseries ABSTRACT/par}
-
-/vspace*{27.6pt}
-
-/doublespacing
-
-{/setlength{/parindent}{0pt}
-
-An abstract that says what the work found, flush at the margin and
-double spaced, as the handbook asks.
+A Short Table Kept Whole
 
 }
 
-/clearpage
+/newpage{}
 
-/label{apathesis-dedication}
+A line of filler.
 
-/vspace*{164.0pt}
+A line of filler.
 
-{/centering
-For the committee, who read it all./par}
+A line of filler.
 
-/clearpage
+A line of filler.
 
-/label{apathesis-acknowledgments}
+A line of filler.
 
-/singlespacing
+A line of filler.
 
-{/centering
-/bfseries ACKNOWLEDGMENTS/par}
+A line of filler.
 
-/vspace*{27.6pt}
+A line of filler.
 
-/doublespacing
+A line of filler.
 
-{/setlength{/parindent}{0pt}
+A line of filler.
 
-Thanks to everyone who read a draft.
+A line of filler.
 
-}
+A line of filler.
 
-/clearpage
+A line of filler.
 
-/singlespacing
+A line of filler.
 
-{/centering
-/bfseries TABLE OF CONTENTS/par}
+A line of filler.
 
-/vspace*{27.6pt}
+A line of filler.
 
-{/raggedleft
-Page/par}
+A line of filler.
 
-/doublespacing
+A line of filler.
 
-{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
+A line of filler.
 
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-abstract]{/textcolor{apathesistoc}{ABSTRACT}}/apadotfill/hyperref[apathesis-abstract]{/textcolor{apathesistoc}{/pageref{apathesis-abstract}}}/par}
+A line of filler.
 
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-dedication]{/textcolor{apathesistoc}{DEDICATION}}/apadotfill/hyperref[apathesis-dedication]{/textcolor{apathesistoc}{/pageref{apathesis-dedication}}}/par}
-
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-acknowledgments]{/textcolor{apathesistoc}{ACKNOWLEDGMENTS}}/apadotfill/hyperref[apathesis-acknowledgments]{/textcolor{apathesistoc}{/pageref{apathesis-acknowledgments}}}/par}
-
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-list-of-table]{/textcolor{apathesistoc}{LIST OF TABLES}}/apadotfill/hyperref[apathesis-list-of-table]{/textcolor{apathesistoc}{/pageref{apathesis-list-of-table}}}/par}
-
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-list-of-figure]{/textcolor{apathesistoc}{LIST OF FIGURES}}/apadotfill/hyperref[apathesis-list-of-figure]{/textcolor{apathesistoc}{/pageref{apathesis-list-of-figure}}}/par}
-
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[apathesis-list-of-illustration]{/textcolor{apathesistoc}{LIST OF ILLUSTRATIONS}}/apadotfill/hyperref[apathesis-list-of-illustration]{/textcolor{apathesistoc}{/pageref{apathesis-list-of-illustration}}}/par}
-
-{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
-
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[introduction]{/textcolor{apathesistoc}{INTRODUCTION}}/apadotfill/hyperref[introduction]{/textcolor{apathesistoc}{/pageref{introduction}}}/par}
-
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{2.}/hyperref[method]{/textcolor{apathesistoc}{METHOD}}/apadotfill/hyperref[method]{/textcolor{apathesistoc}{/pageref{method}}}/par}
-
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[references]{/textcolor{apathesistoc}{REFERENCES}}/apadotfill/hyperref[references]{/textcolor{apathesistoc}{/pageref{references}}}/par}
-
-{/parindent=0pt/leftskip=0.00in/noindent APPENDICES/par}
-
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{A.}/hyperref[apx-measures]{/textcolor{apathesistoc}{MEASURES USED}}/apadotfill/hyperref[apx-measures]{/textcolor{apathesistoc}{/pageref{apx-measures}}}/par}
-
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{B.}/hyperref[apx-consent]{/textcolor{apathesistoc}{CONSENT FORMS}}/apadotfill/hyperref[apx-consent]{/textcolor{apathesistoc}{/pageref{apx-consent}}}/par}
-
-}
-
-/clearpage
-
-/label{apathesis-list-of-table}
-
-/singlespacing
-
-{/centering
-/bfseries LIST OF TABLES/par}
-
-/vspace*{27.6pt}
-
-{/parindent=0pt/noindent Table/hfill Page/par}
-
-/doublespacing
-
-{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
-
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{B1.}/hyperref[tbl-scales]{/textcolor{apathesistoc}{A table of two columns.}}/apadotfill/hyperref[tbl-scales]{/textcolor{apathesistoc}{/pageref{tbl-scales}}}/par}
-
-}
-
-/clearpage
-
-/label{apathesis-list-of-figure}
-
-/singlespacing
-
-{/centering
-/bfseries LIST OF FIGURES/par}
-
-/vspace*{27.6pt}
-
-{/parindent=0pt/noindent Figure/hfill Page/par}
-
-/doublespacing
-
-{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
-
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{B1.}/hyperref[fig-diagram]{/textcolor{apathesistoc}{A figure of some kind}}/apadotfill/hyperref[fig-diagram]{/textcolor{apathesistoc}{/pageref{fig-diagram}}}/par}
-
-}
-
-/clearpage
-
-/label{apathesis-list-of-illustration}
-
-/singlespacing
-
-{/centering
-/bfseries LIST OF ILLUSTRATIONS/par}
-
-/vspace*{27.6pt}
-
-{/parindent=0pt/noindent Illustration/hfill Page/par}
-
-/doublespacing
-
-{/apathesissingle/setlength{/parskip}{/apathesisentrysep}
-
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{B1.}/hyperref[ill-sketch]{/textcolor{apathesistoc}{A sketch of the apparatus.}}/apadotfill/hyperref[ill-sketch]{/textcolor{apathesistoc}{/pageref{ill-sketch}}}/par}
-
-}
-
-/clearpage
-
-/restoregeometry/doublespacing/pagenumbering{arabic}
-
-/renewcommand{/apatocdepth}{1}
-
-/section*{CHAPTER 1}
-
-/section{INTRODUCTION}/label{introduction}
-
-The body begins here.
-
-/subsection{Background}/label{background}
-
-Not listed: the contents lists chapters and no deeper unless asked.
-
-/clearpage
-
-/section*{CHAPTER 2}
-
-/section{METHOD}/label{method}
-
-What was done
-(/citeproc{ref-schneiderCattellHornCarrollTheoryCognitive2018}{Schneider
-/& McGrew, 2018}).
-
-/clearpage
-
-/section{REFERENCES}/label{references}
-
-/protect/phantomsection/label{refs}
-/begin{CSLReferences}{1}{0}
-/bibitem[/citeproctext]{ref-schneiderCattellHornCarrollTheoryCognitive2018}
-Schneider, W. J., /& McGrew, K. S. (2018). The cattell-horn-carroll
-theory of cognitive abilities. In D. P. Flanagan /& E. M. McDonough
-(Eds.), /emph{Contemporary intellectual assessment: Theories, tests, and
-issues} (4th ed., pp. 73--130). Guilford Press.
-/url{https://www.guilford.com/books/Contemporary-Intellectual-Assessment/Flanagan-McDonough/9781462552030}
-
-/end{CSLReferences}
-
-/clearpage
-
-/section{APPENDIX A}
-
-/section{MEASURES USED}/label{apx-measures}
-
-The measures.
-
-/clearpage
-
-/section{APPENDIX B}
-
-/section{CONSENT FORMS}/label{apx-consent}
-
-The forms.
-
-/subsection{Floats}/label{floats}
+Overline of filler.
 
 /par/addvspace{/baselineskip}/begingroup
 
@@ -1349,89 +1078,217 @@ The forms.
 /setcounter{table}{0}
 
 /refstepcounter{table}%
-/makeatletter/def/@currentlabel{B1}/makeatother%
-/label{tbl-scales}
+/makeatletter/def/@currentlabel{1}/makeatother%
+/label{tbl-over}
 
-/apafloattitle{Table B1}
+/apafloattitle{Table 1}
 
-/apafloatcaption{A table of two columns.}
+/apafloatcaption{Overcap caption}
 
-/addcontentsline{lot}{table}{Table B1. A table of two columns.}
+/addcontentsline{lot}{table}{Table 1. Overcap caption}
 
 /par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}ll@{}}
 /toprule/noalign{}
-A & B //
+Overhead & B //
 /midrule/noalign{}
 /endhead
 /bottomrule/noalign{}
 /endlastfoot
-1 & 2 //
+Overfirst & 1 //
+r2 & 2 //
+r3 & 3 //
+Overlast & 4 //
 /end{longtable}
 }
 
 /par/prevdepth=0pt
 
-/apakeepend{0pt}
+/apafigurekeepend
+
+/apatablenoteskip
+
+/begin{apafloatnote}
+
+/emph{Note}. Overnote~words.
+
+/end{apafloatnote}
 
 /par/endgroup/addvspace{/baselineskip}
 
+/newpage{}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Fitline of filler.
+
 /par/addvspace{/baselineskip}/begingroup
 
-/setlength{/parindent}{0pt}
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
 
-/captionsetup{type=figure}
+/apalongtableastabular/setlength{/parindent}{0pt}
 
 /apatablekeep
 
-/setcounter{figure}{0}
+/setcounter{table}{1}
 
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{B1}/makeatother%
-/label{fig-diagram}
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{2}/makeatother%
+/label{tbl-fit}
 
-/apafloattitle{Figure B1}
+/apafloattitle{Table 2}
 
-/apafloatcaption{A figure of some kind}
+/apafloatcaption{Fitcap caption}
 
-/apafigureskip
+/addcontentsline{lot}{table}{Table 2. Fitcap caption}
 
-/addcontentsline{lof}{figure}{Figure B1. A figure of some kind}
+/par/vspace{/LTpre}
 
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}ll@{}}
+/toprule/noalign{}
+Fithead & B //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+Fitfirst & 1 //
+r2 & 2 //
+r3 & 3 //
+Fitlast & 4 //
+/end{longtable}
+}
 
-/apakeepend{0pt}
+/par/prevdepth=0pt
+
+/apafigurekeepend
+
+/apatablenoteskip
+
+/begin{apafloatnote}
+
+/emph{Note}. Fitnote~words.
+
+/end{apafloatnote}
 
 /par/endgroup/addvspace{/baselineskip}
 
+/newpage{}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Longline of filler.
+
 /par/addvspace{/baselineskip}/begingroup
 
-/setlength{/parindent}{0pt}
-
-/captionsetup{type=figure}
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
 
 /apatablekeep
 
-/setcounter{illustration}{0}
+/setcounter{table}{2}
 
-/refstepcounter{illustration}%
-/makeatletter/def/@currentlabel{B1}/makeatother%
-/label{ill-sketch}
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{3}/makeatother%
+/label{tbl-long}
 
-/apafloattitle{Illustration B1}
+/apafloattitle{Table 3}
 
-/apafloatcaption{A sketch of the apparatus.}
+/apafloatcaption{Longcap caption}
 
-/apafigureskip
+/addcontentsline{lot}{table}{Table 3. Longcap caption}
 
-/addcontentsline{lof}{figure}{Illustration B1. A sketch of the
-apparatus.}
+/apatablekeepend
 
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/apakeepend{0pt}
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}ll@{}}
+/toprule/noalign{}
+Longhead & B //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+Longfirst & 1 //
+r2 & 2 //
+r3 & 3 //
+r4 & 4 //
+r5 & 5 //
+r6 & 6 //
+r7 & 7 //
+r8 & 8 //
+r9 & 9 //
+r10 & 10 //
+r11 & 11 //
+r12 & 12 //
+r13 & 13 //
+r14 & 14 //
+r15 & 15 //
+r16 & 16 //
+r17 & 17 //
+r18 & 18 //
+r19 & 19 //
+Longlast & 20 //
+/end{longtable}
+}
 
 /par/endgroup/addvspace{/baselineskip}
 

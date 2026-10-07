@@ -1060,6 +1060,10 @@ writes}/label{a-markdown-table-which-pandoc-writes}
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1076,7 +1080,7 @@ noalign}
 /addcontentsline{lot}{table}{Table 1. Written by pandoc, so every rule
 is followed by a noalign}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lr@{}}
@@ -1091,12 +1095,18 @@ x & 2.0 //
 /end{longtable}
 }
 
+/par/prevdepth=0pt
+
+/apakeepend{0pt}
+
 /par/endgroup/addvspace{/baselineskip}
 
 /section{2. A latex table with booktabs
 rules}/label{a-latex-table-with-booktabs-rules}
 
 /par/addvspace{/baselineskip}/begingroup
+
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
 
 /apatablekeep
 
@@ -1129,6 +1139,8 @@ x & 2.0//
 longtable}/label{a-latex-table-with-booktabs-rules-in-a-longtable}
 
 /par/addvspace{/baselineskip}/begingroup
+
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
 
 /apatablekeep
 

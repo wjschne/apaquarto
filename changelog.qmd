@@ -14,7 +14,10 @@ engine: knitr
 
 # Version 7.0.1
 - 2026-10-07
-- Outside journal mode a figure or table stands a double-spaced blank line clear of the text above and below it, in .pdf and typst alike, as APA asks; typst had set no blank line, and the .pdf none above a figure.
+- Outside journal mode a figure or table stands a double-spaced blank line clear of the text above and below it, in .pdf, typst, .docx and .html alike, as APA asks.
+- In .pdf a table is set flush left, as in the other formats, rather than centred.
+- In .pdf a table's note is set on the line under the table, not a line and a half below it.
+- In .pdf a short markdown or kable table is no longer broken across two pages; it moves to the next page whole with its title.
 - [#171](https://github.com/wjschne/apaquarto/issues/171) A figure whose note is too long for the rest of its page no longer has the end of the note cut off at the foot of the page in .pdf and typst; the note runs on to the next page.
 
 # Version 7.0.0

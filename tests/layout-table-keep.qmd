@@ -19,7 +19,9 @@ for their own height and three lines more, not the fourteen lines of a guess,
 which in double spacing would send any table in the lower half of a page to
 the next.
 
-Each table starts a page of its own after a counted run of lines, so where it
+Each table has eighteen rows, so that it is set as a longtable; a short one
+is kept whole instead (tests/layout-table-whole.qmd), which is a different
+matter. Each table starts a page of its own after a counted run of lines, so where it
 falls does not depend on the others. With a caption of one line, 21 lines
 leave room for the title, caption, head and first row, and 22 do not; with a
 caption of two lines, 20 and 21. The tables after 22 and 21 lines were the
@@ -79,6 +81,21 @@ Lastone line of filler.
 | Rowone | 1 | 1 |
 | r2 | 2 | 2 |
 | r3 | 3 | 3 |
+| r4 | 4 | 4 |
+| r5 | 5 | 5 |
+| r6 | 6 | 6 |
+| r7 | 7 | 7 |
+| r8 | 8 | 8 |
+| r9 | 9 | 9 |
+| r10 | 10 | 10 |
+| r11 | 11 | 11 |
+| r12 | 12 | 12 |
+| r13 | 13 | 13 |
+| r14 | 14 | 14 |
+| r15 | 15 | 15 |
+| r16 | 16 | 16 |
+| r17 | 17 | 17 |
+| r18 | 18 | 18 |
 : Keepone a caption of one line {#tbl-rowone}
 
 {{< pagebreak >}}
@@ -130,6 +147,21 @@ Lasttwo line of filler.
 | Rowtwo | 1 | 1 |
 | r2 | 2 | 2 |
 | r3 | 3 | 3 |
+| r4 | 4 | 4 |
+| r5 | 5 | 5 |
+| r6 | 6 | 6 |
+| r7 | 7 | 7 |
+| r8 | 8 | 8 |
+| r9 | 9 | 9 |
+| r10 | 10 | 10 |
+| r11 | 11 | 11 |
+| r12 | 12 | 12 |
+| r13 | 13 | 13 |
+| r14 | 14 | 14 |
+| r15 | 15 | 15 |
+| r16 | 16 | 16 |
+| r17 | 17 | 17 |
+| r18 | 18 | 18 |
 : Keeptwo a caption of one line {#tbl-rowtwo}
 
 {{< pagebreak >}}
@@ -181,6 +213,21 @@ Lastthree line of filler.
 | Rowthree | 1 | 1 |
 | r2 | 2 | 2 |
 | r3 | 3 | 3 |
+| r4 | 4 | 4 |
+| r5 | 5 | 5 |
+| r6 | 6 | 6 |
+| r7 | 7 | 7 |
+| r8 | 8 | 8 |
+| r9 | 9 | 9 |
+| r10 | 10 | 10 |
+| r11 | 11 | 11 |
+| r12 | 12 | 12 |
+| r13 | 13 | 13 |
+| r14 | 14 | 14 |
+| r15 | 15 | 15 |
+| r16 | 16 | 16 |
+| r17 | 17 | 17 |
+| r18 | 18 | 18 |
 : Keepthree a caption long enough that it has to run on to a second line of the page, so the box holds two lines {#tbl-rowthree}
 
 {{< pagebreak >}}
@@ -230,4 +277,19 @@ Lastfour line of filler.
 | Rowfour | 1 | 1 |
 | r2 | 2 | 2 |
 | r3 | 3 | 3 |
+| r4 | 4 | 4 |
+| r5 | 5 | 5 |
+| r6 | 6 | 6 |
+| r7 | 7 | 7 |
+| r8 | 8 | 8 |
+| r9 | 9 | 9 |
+| r10 | 10 | 10 |
+| r11 | 11 | 11 |
+| r12 | 12 | 12 |
+| r13 | 13 | 13 |
+| r14 | 14 | 14 |
+| r15 | 15 | 15 |
+| r16 | 16 | 16 |
+| r17 | 17 | 17 |
+| r18 | 18 | 18 |
 : Keepfour a caption long enough that it has to run on to a second line of the page, so the box holds two lines {#tbl-rowfour}

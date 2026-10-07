@@ -159,11 +159,11 @@ format:
   apaquarto-html: default
   apaquarto-docx: default
   apaquarto-typst: 
-    # Options: manuscript (default), journal, student, document
+    # Options: manuscript (default), journal, student, document, thesis
     documentmode: journal
   apaquarto-pdf:
-    # Options: manuscript (default), journal, student, document
-    documentmode: manuscript
+    # Options: manuscript (default), journal, student, document, thesis
+    documentmode: journal
 ---
 
 ```{r}

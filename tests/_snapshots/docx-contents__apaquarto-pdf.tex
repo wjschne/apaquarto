@@ -1102,6 +1102,10 @@ See /hyperref[fig-one]{Figure~/ref*{fig-one}} and
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1116,7 +1120,7 @@ See /hyperref[fig-one]{Figure~/ref*{fig-one}} and
 
 /addcontentsline{lot}{table}{Table 1. A first table.}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lr@{}}
@@ -1129,6 +1133,10 @@ A & B //
 1 & 2 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apakeepend{0pt}
 
 /par/endgroup/addvspace{/baselineskip}
 

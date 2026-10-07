@@ -1486,12 +1486,14 @@
     docx-xml:
       contains:
         # An illustration is styled as a figure is: the note held on the page
-        # with it, and the paragraph after a float with no note given the
-        # spacing that goes with that.
+        # with it, and a float with no note ending in the FigureWithoutNote
+        # picture, which carries the blank line under it itself. The paragraph
+        # after took that space (AfterWithoutNote) until a heading after the
+        # float was found to get none; that style is now a table's alone
+        # (tests/layout-float-space.qmd).
         - '<w:pStyle w:val="FigureNote" />'
         - '<w:pStyle w:val="FigureWithNote" />'
         - '<w:pStyle w:val="FigureWithoutNote" />'
-        - '<w:pStyle w:val="AfterWithoutNote" />'
 
 # ------------------------------------------------------------- translation --
 
@@ -2416,7 +2418,7 @@
 - fixture: layout-float-space.qmd
   to: apaquarto-pdf
   expect:
-    layout: &float-space
+    layout:
       # A blank line between the text and the figure: to its caption, a line
       # under its number...
       - gap: [Beforeone, Figcap]
@@ -2429,11 +2431,51 @@
         is: 72
       - gap: [Tabnote, Aftertwo]
         is: 48
+      # Flush left, at the inch of margin; longtable centred it.
+      - left: Tabhead
+        is: 72
+      # The note on the line under the rule: the last row's baseline, the
+      # rule, and a line. It stood 53pt under, longtable's \LTpost and half
+      # an em more.
+      - gap: [Tabrow, Tabnote]
+        is: 35
 
 - fixture: layout-float-space.qmd
   to: apaquarto-typst
   expect:
-    layout: *float-space
+    layout:
+      - gap: [Beforeone, Figcap]
+        is: 72
+      - gap: [Fignote, Afterone]
+        is: 48
+      - gap: [Beforetwo, Tabcap]
+        is: 72
+      - gap: [Tabnote, Aftertwo]
+        is: 48
+      # Flush left too, the first cell's 5pt inset in from the margin. Its
+      # rows are single spaced, so its note is nearer the last row.
+      - left: Tabhead
+        is: 77
+      - gap: [Tabrow, Tabnote]
+        is: 29
+
+- fixture: layout-float-space.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # A blank line, one of Word's 27.6pt double-spaced lines (552 twips),
+        # before a figure's or table's title...
+        - '<w:spacing w:before="552" w:line="480" w:lineRule="auto" />'
+        # ...and after its note, or its picture when it has none, so that a
+        # heading after it is held off as well as a paragraph. The note's
+        # paragraphs are not spaced apart from one another
+        # (contextualSpacing).
+        - '<w:spacing w:after="552" w:before="60" /><w:ind w:firstLine="0" /><w:contextualSpacing />'
+        - '<w:spacing w:after="552" />'
+        # Before the paragraph after a table without a note, which ends in a
+        # table that can carry no space after itself.
+        - '<w:spacing w:before="552" />'
 
 - fixture: layout-figure-note-break.qmd
   to: apaquarto-pdf
@@ -2456,6 +2498,24 @@
   to: apaquarto-typst
   expect:
     layout: *figure-note-break
+
+- fixture: layout-table-whole.qmd
+  to: apaquarto-pdf
+  expect:
+    layout:
+      # A gap is measured on the first word's page. The short table where
+      # only its start would fit: caption, last row and note on one page. As
+      # a longtable it was broken after its first row.
+      - gap: [Overcap, Overlast]
+        is: 137
+      - gap: [Overlast, Overnote]
+        is: 34
+      # The short table where it fits stays under the line before it.
+      - gap: [Fitline, Fitcap]
+        is: 72
+      # The long table stays a longtable and begins where it stands.
+      - gap: [Longline, Longcap]
+        is: 73
 
 - fixture: layout-table-keep.qmd
   to: apaquarto-pdf

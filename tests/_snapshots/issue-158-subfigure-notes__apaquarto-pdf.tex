@@ -1302,6 +1302,10 @@ The table branch of the filter is unchanged; confirm it still works
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1316,7 +1320,7 @@ The table branch of the filter is unchanged; confirm it still works
 
 /addcontentsline{lot}{table}{Table 1. A small table.}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}ll@{}}
@@ -1330,6 +1334,10 @@ A & 1 //
 B & 2 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apafigurekeepend
 
 /apatablenoteskip
 

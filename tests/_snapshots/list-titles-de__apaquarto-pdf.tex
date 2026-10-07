@@ -1145,6 +1145,10 @@ Verzeichnisse
 
 /par/addvspace{/baselineskip}/begingroup
 
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
 /apatablekeep
 
 /setcounter{table}{0}
@@ -1159,7 +1163,7 @@ Verzeichnisse
 
 /addcontentsline{lot}{table}{Tabelle 1. Zqtable.}
 
-/apatablekeepend
+/par/vspace{/LTpre}
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}ll@{}}
@@ -1172,6 +1176,10 @@ A & B //
 1 & 2 //
 /end{longtable}
 }
+
+/par/prevdepth=0pt
+
+/apakeepend{0pt}
 
 /par/endgroup/addvspace{/baselineskip}
 

@@ -1,0 +1,176 @@
+---
+title: "A Short Table Kept Whole"
+shorttitle: "Table Whole"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+---
+
+<!--
+Measured, not read: in the .pdf a short table in the text flow is not broken
+over two pages. A longtable may break after any row, and the four-row table
+in example.qmd was broken after its first: its title, head and first row at
+the foot of one page, the rest under a repeated head on the next. A table of
+fifteen rows or fewer that pandoc writes is set as one tabular, kept with its
+title, caption and the start of its note, and moves to the next page whole
+when it does not fit.
+
+Each table starts a page of its own after a counted run of lines. After 21,
+the title, head and first row of a table fit and the rest do not; the short
+table there goes over whole. After 12 it fits and stays. The long table after
+21 lines is still a longtable: it begins where it stands and breaks.
+-->
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Overline of filler.
+
+| Overhead | B |
+|---|---|
+| Overfirst | 1 |
+| r2 | 2 |
+| r3 | 3 |
+| Overlast | 4 |
+: Overcap caption {#tbl-over apa-note="Overnote words."}
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Fitline of filler.
+
+| Fithead | B |
+|---|---|
+| Fitfirst | 1 |
+| r2 | 2 |
+| r3 | 3 |
+| Fitlast | 4 |
+: Fitcap caption {#tbl-fit apa-note="Fitnote words."}
+
+{{< pagebreak >}}
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+Longline of filler.
+
+| Longhead | B |
+|---|---|
+| Longfirst | 1 |
+| r2 | 2 |
+| r3 | 3 |
+| r4 | 4 |
+| r5 | 5 |
+| r6 | 6 |
+| r7 | 7 |
+| r8 | 8 |
+| r9 | 9 |
+| r10 | 10 |
+| r11 | 11 |
+| r12 | 12 |
+| r13 | 13 |
+| r14 | 14 |
+| r15 | 15 |
+| r16 | 16 |
+| r17 | 17 |
+| r18 | 18 |
+| r19 | 19 |
+| Longlast | 20 |
+: Longcap caption {#tbl-long}
