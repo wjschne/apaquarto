@@ -447,7 +447,17 @@ local function processfloat(float)
   -- Journal mode keeps the float. A longtable cannot run in two columns at
   -- all, so a table there is set as a tabular, which is one box again; and a
   -- table asking to span both columns needs a float to span with.
-  local floated = (not istable) or mode == "jou"
+  --
+  -- A figure asked to stay where it was written (floatsintext, the [H] it
+  -- would otherwise get) is set in the flow as well. An [H] float is one box
+  -- that cannot break, and its note is inside it since #169: a figure and note
+  -- together taller than the page had the end of the note set past the foot
+  -- of the page and cut off (#171). In the flow the title, caption and
+  -- picture are kept together and with the start of the note, and a long note
+  -- runs on to the next page. A figure left to float keeps its float, and
+  -- its note inside it, since the two move together.
+  local floated = mode == "jou" or (not istable and not floatsintext)
+  local inflow_figure = (not floated) and (not istable)
 
   local blocks = pandoc.List({})
   if floated then
@@ -457,9 +467,25 @@ local function processfloat(float)
     -- would have been. Without it whatever a table package declares ahead of
     -- its tabular is never ended: the bare \centering kableExtra writes set
     -- every paragraph after the table centred.
-    blocks:insert(raw("\\par\\addvspace{\\baselineskip}\\begingroup"))
-    -- The title and caption, kept with the start of the table: see
-    -- \apatablekeep in apalatex.tex.
+    --
+    -- A figure takes no space of its own around it, but stands in the line
+    -- spacing of the text, as typst sets one: a line from the text above to
+    -- its number, and from its note to the text below. The [H] float it was
+    -- before stood \intextsep clear below and not above.
+    if inflow_figure then
+      blocks:insert(raw("\\par\\begingroup"))
+      -- A float sets its contents without a paragraph indent, and a figure's
+      -- picture is a paragraph of its own; in the flow it would be indented.
+      blocks:insert(raw("\\setlength{\\parindent}{0pt}"))
+      -- The panels of a figure with sub-figures are labelled with
+      -- \subcaption, by quarto when the figure has no layout, which stops
+      -- the render outside a float. This says the group is a figure.
+      blocks:insert(raw("\\captionsetup{type=figure}"))
+    else
+      blocks:insert(raw("\\par\\addvspace{\\baselineskip}\\begingroup"))
+    end
+    -- The title and caption, kept with the start of the table, or with the
+    -- picture and the start of the note: see \apatablekeep in apalatex.tex.
     blocks:insert(raw("\\apatablekeep"))
   end
 
@@ -493,7 +519,7 @@ local function processfloat(float)
   addline:extend(entry)
   addline:insert(pandoc.RawInline("latex", "}"))
   blocks:insert(pandoc.Plain(addline))
-  if not floated then
+  if not floated and istable then
     blocks:insert(raw("\\apatablekeepend"))
   end
 
@@ -507,6 +533,16 @@ local function processfloat(float)
   end
 
   local note = note_blocks(record)
+  if inflow_figure then
+    -- The box ends with the picture. With a note to follow, it asks for room
+    -- for the note's first two lines as well, and no break is allowed between
+    -- the picture and the note.
+    if note or panelnotes then
+      blocks:insert(raw("\\apafigurekeepend"))
+    else
+      blocks:insert(raw("\\apakeepend{0pt}"))
+    end
+  end
   local out = pandoc.Div({})
   if note then
     out.attributes[kWrittenNote] = record.note
@@ -528,6 +564,8 @@ local function processfloat(float)
 
   if floated then
     blocks:insert(raw("\\end{" .. environment .. "}"))
+  elseif inflow_figure then
+    blocks:insert(raw("\\par\\endgroup"))
   else
     blocks:insert(raw("\\par\\endgroup\\addvspace{\\baselineskip}"))
   end

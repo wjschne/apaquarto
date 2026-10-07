@@ -284,20 +284,36 @@ local function panel_cell(panel, index)
   return blocks
 end
 
+-- The body of a float, the picture, table or grid of panels, in a block that
+-- cannot break. The template lets the float itself break, so that a note too
+-- long for the rest of the page runs on to the next one rather than off the
+-- foot of it (#171); what may not be parted is held together here instead.
+-- Followed by a note, the block stays on the page with the note's first line.
+local function keep_body(blocks, before_note)
+  local out = pandoc.Blocks({
+    pandoc.RawBlock("typst", "#block(breakable: false"
+      .. (before_note and ", ..apasticky" or "") .. ")[")
+  })
+  out:extend(floatrecord.as_blocks(blocks))
+  out:insert(pandoc.RawBlock("typst", "]"))
+  return out
+end
+
 -- The whole figure: the grid of panels, then the note under it at full width.
 -- The panels are already plain blocks by the time this runs, each one having
 -- been through panel_cell below.
 local function laid_out_float(record)
   local float = record.float
-  local content = pandoc.Blocks({
+  local grid = pandoc.Blocks({
     pandoc.RawBlock("typst", "#grid(columns: " .. record.columns .. ", gutter: 2em,")
   })
   for index, panel in ipairs(record.panels) do
-    content:insert(pandoc.RawBlock("typst", "["))
-    content:extend(panel_cell(panel, index))
-    content:insert(pandoc.RawBlock("typst", "],"))
+    grid:insert(pandoc.RawBlock("typst", "["))
+    grid:extend(panel_cell(panel, index))
+    grid:insert(pandoc.RawBlock("typst", "],"))
   end
-  content:insert(pandoc.RawBlock("typst", ")"))
+  grid:insert(pandoc.RawBlock("typst", ")"))
+  local content = keep_body(grid, record.note ~= nil)
 
   if record.note then
     content:insert(pandoc.RawBlock("typst", "#align(left)["))
@@ -439,12 +455,12 @@ return {
       end
 
       local note = floatnote(record)
-      if not note then return nil end
-      local content = pandoc.Blocks({})
-      content:extend(record.content)
-      content:insert(pandoc.RawBlock("typst", "#align(left)["))
-      content:insert(note)
-      content:insert(pandoc.RawBlock("typst", "]"))
+      local content = keep_body(record.content, note ~= nil)
+      if note then
+        content:insert(pandoc.RawBlock("typst", "#align(left)["))
+        content:insert(note)
+        content:insert(pandoc.RawBlock("typst", "]"))
+      end
       float.content = content
       return float
     end

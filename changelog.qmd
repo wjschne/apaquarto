@@ -12,6 +12,10 @@ engine: knitr
 - Implement missing .docx features
     * Right-align equation numbers
 
+# Version 7.0.1
+- 2026-10-07
+- [#171](https://github.com/wjschne/apaquarto/issues/171) A figure whose note is too long for the rest of its page no longer has the end of the note cut off at the foot of the page in .pdf and typst; the note runs on to the next page.
+
 # Version 7.0.0
 - 2026-10-06
 - `documentmode: thesis` sets a Temple University dissertation or thesis, so far the title page, the copyright page, the abstract, the dedication, the acknowledgments, the table of contents, a list for every kind of float the document holds, and the page numbering: the title in capitals in an inverted pyramid apaquarto works out for you, the front matter in lower-case roman with the title page counted but unnumbered, the body beginning again at 1, and the margins the Graduate School asks for, in all four formats.
@@ -49,10 +53,12 @@ engine: knitr
 - In a dissertation the document's own margins reach the front matter as well as the body, and `thesis: title-margin` sets the title page's.
 - In typst a dissertation is double spaced at 24pt, and its block quotations and reference entries single spaced at 14pt, as in the .pdf; they were 26pt and 16pt.
 - In a dissertation a block quotation stands a double space from the body above and below it in the .pdf, and is no longer indented on the right in the .docx.
+- In .pdf a heading no longer has a blank line above it; like typst, and as APA asks, it takes one line in the spacing of the text around it.
 - [#170](https://github.com/wjschne/apaquarto/issues/170) In .pdf a table's title and caption are no longer left alone at the foot of a page with the table on the next.
 - [#168](https://github.com/wjschne/apaquarto/issues/168) In .docx a captioned markdown table keeps the APA rules of the reference document's Table style; it had been set with none.
 - [#169](https://github.com/wjschne/apaquarto/issues/169) In .pdf the `apa-note` of a figure drawn by a code chunk is written inside the figure, so a page break or a floating figure no longer parts the two.
 - In typst a figure's `apa-note` given on its image or on a code chunk is written inside the figure, so a page break no longer parts the two.
+
 
 # Version 6.0.1
 - 2026-09-26

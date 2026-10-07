@@ -640,19 +640,25 @@
 % The five APA levels. One to three are their own paragraphs; four and five run
 % into the text that follows them, which is why they are set as runin.
 % Numbering is off: APA headings are never numbered.
+%
+% No space is added above or below a heading: APA sets one on a line of its
+% own in the line spacing of the text around it, as typst does. The space
+% above was /baselineskip, which titlesec adds on top of the line spacing,
+% so every heading stood a blank line below the text before it, 49pt from it
+% in a manuscript where the lines are 24pt apart (tests/layout-manuscript.qmd).
 /setcounter{secnumdepth}{-1}
 
 /titleformat{/section}[block]
   {/normalfont/bfseries/centering}{}{0pt}{}
-/titlespacing{/section}{0pt}{/baselineskip}{0pt}
+/titlespacing{/section}{0pt}{0pt}{0pt}
 
 /titleformat{/subsection}[block]
   {/normalfont/bfseries/raggedright}{}{0pt}{}
-/titlespacing{/subsection}{0pt}{/baselineskip}{0pt}
+/titlespacing{/subsection}{0pt}{0pt}{0pt}
 
 /titleformat{/subsubsection}[block]
   {/normalfont/bfseries/itshape/raggedright}{}{0pt}{}
-/titlespacing{/subsubsection}{0pt}{/baselineskip}{0pt}
+/titlespacing{/subsubsection}{0pt}{0pt}{0pt}
 
 % No [.] suffix: apaheader.lua has already put a full stop at the end of a
 % level four or five heading, and only when the heading did not end in one
@@ -660,11 +666,11 @@
 % heading ending in a question mark into "...?.".
 /titleformat{/paragraph}[runin]
   {/normalfont/bfseries}{}{0pt}{}
-/titlespacing{/paragraph}{/parindent}{/baselineskip}{0.5em}
+/titlespacing{/paragraph}{/parindent}{0pt}{0.5em}
 
 /titleformat{/subparagraph}[runin]
   {/normalfont/bfseries/itshape}{}{0pt}{}
-/titlespacing{/subparagraph}{/parindent}{/baselineskip}{0.5em}
+/titlespacing{/subparagraph}{/parindent}{0pt}{0.5em}
 
 % Journal mode sets levels one to three the way the Journal of Educational
 % Psychology does (measured from its pages; JEP.pdf at the repository root):
@@ -746,22 +752,37 @@
 % The box begins from the depth of the line above it, so that the title is set
 % the same distance under that line as it would have been without the box, and
 % the line after the box is spaced from the caption's last line the same way.
+%
+% A figure set in the text flow, as a manuscript's is, is kept together the
+% same way: its title, caption and picture are boxed and measured, and the
+% page is ended ahead of them unless there is room for them and the first two
+% lines of the note, which follows the picture with no break allowed between.
+% The rest of the note may run on to the next page. In an [H] float the note
+% could not: a figure and note taller than the page had the end of the note
+% set past the foot of the page and cut off (wjschne/apaquarto#171,
+% tests/layout-figure-note-break.qmd).
+%
+% /apakeepend takes the room to ask for beyond the box: three lines for a
+% table, two for a figure with a note, none for a figure without one.
 /newsavebox{/apatablekeepbox}
 /newlength{/apatablekeepdepth}
 /newcommand{/apatablekeep}{%
   /par/setlength{/apatablekeepdepth}{/prevdepth}%
   /setbox/apatablekeepbox/vbox/bgroup/prevdepth/apatablekeepdepth}
-/newcommand{/apatablekeepend}{%
+/newcommand{/apakeepend}[1]{%
   /par/global/apatablekeepdepth/prevdepth/egroup
   % A penalty no page may break at, which hands what is waiting to the page
   % so that /pagetotal counts it.
   /penalty10000
-  /ifdim/dimexpr/ht/apatablekeepbox+/dp/apatablekeepbox+3/baselineskip/relax
+  /ifdim/dimexpr/ht/apatablekeepbox+/dp/apatablekeepbox+#1/relax
       >/dimexpr/pagegoal-/pagetotal/relax
     /vfil/penalty-10000
   /fi
   /unvbox/apatablekeepbox
   /prevdepth/apatablekeepdepth}
+/newcommand{/apatablekeepend}{/apakeepend{3/baselineskip}}
+% A figure's: the note's first two lines, held to the picture.
+/newcommand{/apafigurekeepend}{/apakeepend{2/baselineskip}/nopagebreak}
 
 % The blank line APA leaves between a figure's title and the figure itself.
 %
@@ -1349,7 +1370,13 @@ A & B //
 
 /par/endgroup/addvspace{/baselineskip}
 
-/begin{figure}[H]
+/par/begingroup
+
+/setlength{/parindent}{0pt}
+
+/captionsetup{type=figure}
+
+/apatablekeep
 
 /setcounter{figure}{0}
 
@@ -1367,9 +1394,17 @@ A & B //
 
 /pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
 
-/end{figure}
+/apakeepend{0pt}
 
-/begin{figure}[H]
+/par/endgroup
+
+/par/begingroup
+
+/setlength{/parindent}{0pt}
+
+/captionsetup{type=figure}
+
+/apatablekeep
 
 /setcounter{illustration}{0}
 
@@ -1388,7 +1423,9 @@ apparatus.}
 
 /pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
 
-/end{figure}
+/apakeepend{0pt}
+
+/par/endgroup
 
 
 

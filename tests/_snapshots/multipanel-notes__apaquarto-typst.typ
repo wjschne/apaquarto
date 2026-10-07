@@ -267,6 +267,12 @@
 // all: true changes only the amount and keeps that all: true, so a journal's
 // block quotation, whose body indents every paragraph, had its first
 // paragraph indented whenever it had a second one, an attribution included.
+// A block that stays on the page with the start of the block after it, as a
+// heading does: a figure's number and caption with its picture, and the
+// picture with the first line of its note. sticky is Typst 0.12's; before
+// that the block simply has nothing to hold it.
+#let apasticky = if sys.version >= version(0, 12, 0) { (sticky: true) } else { (:) }
+
 #let apaparindent(amount, all: false) = if sys.version >= version(0, 13, 0) {
   (amount: amount, all: all)
 } else {
@@ -824,20 +830,38 @@
     }
   }
 
+  // The float may break across pages; what may not be parted is held
+  // together inside it. The number and caption are one block that stays with
+  // the start of the body. formattypst.lua sets the body's picture or table in
+  // a block that cannot break, and, when a note follows, stays with the
+  // note's first line, while the note itself may run on to the next page. A
+  // float that could not break at all had a note too long for the rest of a
+  // page set past the foot of it and cut off (wjschne/apaquarto#171,
+  // tests/layout-figure-note-break.qmd).
+  //
+  // A figure is laid out inside a block of its own, around whatever the rule
+  // below returns, and that block cannot break unless it is told it can: with
+  // the inner block breakable and nothing else changed, the note still went
+  // over to the next page whole.
+  show figure: set block(breakable: true)
   show figure: it => {
     if (type(it.numbering) == function or type(it.kind) != str or
         not it.kind.starts-with("quarto-float-")) {
       it
     } else if it.kind == "quarto-float-tbl" {
-      block(width: 100%, breakable: false, above: fspace)[#align(left)[
-        #apafloatlabel(it)
-        #par(first-line-indent: 0pt)[#emph[#it.caption.body]]
+      block(width: 100%, breakable: true, above: fspace)[#align(left)[
+        #block(breakable: false, ..apasticky)[
+          #apafloatlabel(it)
+          #par(first-line-indent: 0pt)[#emph[#it.caption.body]]
+        ]
         #block[#it.body]
       ]]
     } else {
-      block(width: 100%, breakable: false, above: fspace)[
-        #apafloatlabel(it)
-        #align(left)[#par(first-line-indent: 0pt)[#emph[#it.caption.body]]]
+      block(width: 100%, breakable: true, above: fspace)[
+        #block(breakable: false, ..apasticky)[
+          #apafloatlabel(it)
+          #align(left)[#par(first-line-indent: 0pt)[#emph[#it.caption.body]]]
+        ]
         #align(center)[#it.body]
       ]
     }
@@ -1104,6 +1128,7 @@ subcapnumbering:
 "(a)"
 ,
 [
+#block(breakable: false, ..apasticky)[
 #grid(columns: 2, gutter: 2em,
 [
 #strong[Panel A]. First panel.
@@ -1136,6 +1161,7 @@ A note belonging to the second panel.
 ]
 ],
 )
+]
 #align(left)[
 #block[
 #set par(first-line-indent: 0mm)
@@ -1148,6 +1174,7 @@ A note belonging to the second panel.
 ]
 )
 #figure([
+#block(breakable: false, ..apasticky)[
 #table(
   columns: 3,
   align: (auto,right,right,),
@@ -1156,6 +1183,7 @@ A note belonging to the second panel.
   [A], [10.2], [1.1],
   [B], [12.4], [1.3],
 )
+]
 #align(left)[
 #block[
 #set par(first-line-indent: 0mm)

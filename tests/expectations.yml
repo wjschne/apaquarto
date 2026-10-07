@@ -167,14 +167,13 @@
       contains:
         - 'begin{apapanel}'
       count:
-        # Two panels side by side in one figure environment. A panel left as a
-        # float of its own would make a figure within a figure, which latex
-        # sets one under the other whatever the layout asked for.
+        # Two panels side by side in one figure. A panel left as a float of its
+        # own would make a figure within a figure, which latex sets one under
+        # the other whatever the layout asked for. The figure is set in the
+        # text flow, as a manuscript's are (#171), and says it is a figure with
+        # \captionsetup, once.
         'begin{apapanel}': 2
-        # Named with its placement, so that the figure environments inside the
-        # author note's own definition in the preamble are not counted as a
-        # second figure in the body.
-        '\begin{figure}[H]': 1
+        '\captionsetup{type=figure}': 1
 
 # The same figure again with panels written as plain markdown images, which is
 # neither a float nor a cell and keeps its note on the image itself.
@@ -235,10 +234,7 @@
     tex:
       count:
         'begin{apapanel}': 2
-        # Named with its placement, so that the figure environments inside the
-        # author note's own definition in the preamble are not counted as a
-        # second figure in the body.
-        '\begin{figure}[H]': 1
+        '\captionsetup{type=figure}': 1
 
 # ------------------------------------------- abstract written in the document --
 
@@ -2288,6 +2284,11 @@
         is: 24
       - gap: [Gammaone, Deltaone]
         is: 24
+      # A heading takes one double-spaced line and no more: two lines from
+      # the body line above it to the body line below. A blank line above
+      # every heading made this 72pt.
+      - gap: [Betaone, Gammaone]
+        is: 48
       # The inch of margin and the half-inch indent.
       - left: Alphaone
         is: 108
@@ -2411,6 +2412,26 @@
         # Each note written once, inside its figure.
         'Chunknote': 1
         'Mdnote': 1
+
+- fixture: layout-figure-note-break.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &figure-note-break
+      # A gap is measured on the first word's page. A note cut off at the foot
+      # of the page has no last word to measure from; one set into the bottom
+      # margin had the next paragraph on the page after it.
+      - gap: [Chunkend, Afterone]
+        is: 24
+      - gap: [Mdend, Aftertwo]
+        is: 24
+      # A short note at the foot of a page stays with its figure.
+      - gap: [Keepcap, Keepnote]
+        is: 143
+
+- fixture: layout-figure-note-break.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *figure-note-break
 
 - fixture: layout-table-keep.qmd
   to: apaquarto-pdf

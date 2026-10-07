@@ -20,6 +20,12 @@ showed either. The first paragraph after a heading is preceded by a spacer
 that formattypst.lua takes back by the paragraph spacing, which was a fixed
 18pt and left that paragraph too close in a mode spaced otherwise.
 
+The .pdf set a blank line above every heading, 49pt from the line before
+it, because titlespacing added a \baselineskip of its own on top of the line
+spacing; APA adds no space around a heading. Measured from body line to body
+line across the heading, since the bold of a heading is boxed taller than
+the roman of the body and reads a point or two out from a word beside it.
+
 The words are made up so that each is found once.
 -->
 

@@ -1058,49 +1058,151 @@
 
 #set page(
   paper: "us-letter",
-  margin: (top: 2cm,x: 1.5in,),
+  margin: (x: 1.25in, y: 1.25in),
   numbering: "1",
   columns: 1,
 )
 
 #show: document => man(
-  title: [Margins a Document Asks For],
-  authors: ([Test Author],),
-  runninghead: "MARGINS",
-  runningauthors: "Author",
-  margin: (top: 2cm,x: 1.5in,),
+  title: [A Figure Note That Runs On],
+  runninghead: "NOTE RUNS ON",
   font: (<fonts>),
   numberdepth: 3,
+  suppresstitlepage: true,
   document,
 )
 
-/
-/
-Margins a Document Asks For
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#context v(-par.spacing)
+Beforeone line of the body.
 
-#set align(center)
-#block[
-/
-Test Author
-
-Test University
-
+#figure([
+#block(breakable: false, ..apasticky)[
+#box(image("layout-figure-note-break_files/figure-typst/fig-chunktall-1.svg"))
 ]
-#set align(left)
-/
-/
-Author Note
+#align(left)[
+#block[
+#set par(first-line-indent: 0mm)
+#block[
+#emph[Note]. Chunk~sentence 1 of a note too long to finish on the page its figure begins on. Chunk sentence 2 of a note too long to finish on the page its figure begins on. Chunk sentence 3 of a note too long to finish on the page its figure begins on. Chunk sentence 4 of a note too long to finish on the page its figure begins on. Chunk sentence 5 of a note too long to finish on the page its figure begins on. Chunk sentence 6 of a note too long to finish on the page its figure begins on. Chunk sentence 7 of a note too long to finish on the page its figure begins on. Chunk sentence 8 of a note too long to finish on the page its figure begins on. Chunk sentence 9 of a note too long to finish on the page its figure begins on. Chunk sentence 10 of a note too long to finish on the page its figure begins on. Chunk sentence 11 of a note too long to finish on the page its figure begins on. Chunkend words.
+]
+#set par(first-line-indent: apaparindent(firstlineindent))
+]
+]
+], caption: figure.caption(
+position: top,
+[
+Chunkcap caption
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-chunktall>
+
 
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
-Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
+Afterone line of the body.
 
 #pagebreak()
+#figure([
+#block(breakable: false, ..apasticky)[
+#box(image("tallimage.png", height: 7in))
+]
+#align(left)[
+#block[
+#set par(first-line-indent: 0mm)
+#block[
+#emph[Note]. Markdown~sentence 1 of a note too long to finish on the page its figure begins on. Markdown sentence 2 of a note too long to finish on the page its figure begins on. Markdown sentence 3 of a note too long to finish on the page its figure begins on. Markdown sentence 4 of a note too long to finish on the page its figure begins on. Markdown sentence 5 of a note too long to finish on the page its figure begins on. Markdown sentence 6 of a note too long to finish on the page its figure begins on. Markdown sentence 7 of a note too long to finish on the page its figure begins on. Markdown sentence 8 of a note too long to finish on the page its figure begins on. Markdown sentence 9 of a note too long to finish on the page its figure begins on. Markdown sentence 10 of a note too long to finish on the page its figure begins on. Markdown sentence 11 of a note too long to finish on the page its figure begins on. Mdend words.
+]
+#set par(first-line-indent: apaparindent(firstlineindent))
+]
+]
+], caption: figure.caption(
+position: top,
+[
+Mdcap caption
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-mdtall>
 
-Margins a Document Asks For
 
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
-Some text.
+Aftertwo line of the body.
+
+#pagebreak()
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#context v(-par.spacing)
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+A line of filler.
+
+#figure([
+#block(breakable: false, ..apasticky)[
+#box(image("sampleimage.png", width: 2in))
+]
+#align(left)[
+#block[
+#set par(first-line-indent: 0mm)
+#block[
+#emph[Note]. Keepnote~words.
+]
+#set par(first-line-indent: apaparindent(firstlineindent))
+]
+]
+], caption: figure.caption(
+position: top,
+[
+Keepcap caption
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-keep>
+
+
+#[#set par.line(numbering: none)
+#par()[#text(size:0.5em)[#h(0.0em)]]]
+#context v(-par.spacing)
+Afterthree line of the body.
