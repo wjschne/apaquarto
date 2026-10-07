@@ -2476,6 +2476,11 @@
         # Before the paragraph after a table without a note, which ends in a
         # table that can carry no space after itself.
         - '<w:spacing w:before="552" />'
+    docx-xml:
+      count:
+        # And when what follows such a table is a heading, a spacer a point
+        # high whose space before is the blank line. The heading had none.
+        'w:before="552" w:after="0" w:line="20" w:lineRule="exact"': 1
 
 - fixture: layout-figure-note-break.qmd
   to: apaquarto-pdf

@@ -29,7 +29,10 @@ longtable's own \LTpost and half an em on top of the line spacing.
 
 In .docx the blank lines are the reference document's: space before a
 FigureTitle, and space after a note or a picture without one (FigureNote,
-FigureWithoutNote), which holds a heading off as well as a paragraph.
+FigureWithoutNote), which holds a heading off as well as a paragraph. A
+table without a note ends in the table, which can carry no space after it:
+the paragraph after it takes the space before, and a heading after it is
+preceded by a spacer a point high that carries it, the last table below.
 
 The number is set in bold, which pdftools boxes a point or two taller than
 the roman around it, so the space above is measured to the caption, a line
@@ -51,3 +54,12 @@ Beforetwo line of the body.
 : Tabcap caption {#tbl-space apa-note="Tabnote words."}
 
 Aftertwo line of the body.
+
+| Nonotehead | B |
+|------------|---|
+| Nonoterow  | 2 |
+
+: Nonotecap caption {#tbl-nonote}
+
+# Afterhead
+

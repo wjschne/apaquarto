@@ -1082,6 +1082,8 @@
   document,
 )
 
+#heading(level: 1, numbering: none)[Space Around a Figure and a Table]
+<firstheader>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
@@ -1152,3 +1154,30 @@ supplement: "Table",
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
 Aftertwo line of the body.
+
+#figure([
+#block(breakable: false)[
+#table(
+  columns: 2,
+  align: (auto,auto,),
+  table.header([Nonotehead], [B],),
+  table.hline(),
+  [Nonoterow], [2],
+)
+]
+], caption: figure.caption(
+position: top,
+[
+Nonotecap caption
+]),
+kind: "quarto-float-tbl",
+supplement: "Table",
+)
+<tbl-nonote>
+
+
+= Afterhead
+<afterhead>
+
+
+

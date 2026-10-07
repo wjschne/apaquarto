@@ -9,6 +9,26 @@ local function makeafternote(p)
   return div
 end
 
+-- In .docx, the blank line under a table without a note when what follows is
+-- not a paragraph to carry it: a heading, a list. An empty paragraph a point
+-- high, kept with the block after it, whose space before is the blank line,
+-- one of Word's double-spaced lines (552 twips) like AfterWithoutNote's. A
+-- heading after such a table had no space above it at all
+-- (tests/layout-float-space.qmd). Space before rather than a blank line of
+-- its own, because Word drops space before at the top of a page: if the
+-- heading goes over to the next page, the spacer goes with it and leaves no
+-- gap there.
+local docx_spacer = pandoc.RawBlock("openxml",
+  '<w:p><w:pPr><w:keepNext/><w:spacing w:before="552" w:after="0" '
+  .. 'w:line="20" w:lineRule="exact"/><w:rPr><w:sz w:val="2"/></w:rPr>'
+  .. '</w:pPr></w:p>')
+
+-- A figure or table: its title has the blank line above it already.
+local function is_float(block)
+  return block.t == "Div" and (block.classes:includes("FigureWithNote")
+    or block.classes:includes("FigureWithoutNote"))
+end
+
 
 function Pandoc(doc)
   local hblocks = {}
@@ -16,6 +36,15 @@ function Pandoc(doc)
 
   -- Loop through all blocks in reverse
   for i = #doc.blocks - 1, 1, -1 do
+    -- A table without a note followed by something other than a paragraph,
+    -- in .docx: the spacer above. The blocks after i are done already, so
+    -- inserting one there moves nothing still to come.
+    if FORMAT == "docx" and doc.blocks[i].t == "Div"
+        and doc.blocks[i + 1].t ~= "Para" and not is_float(doc.blocks[i + 1])
+        and doc.blocks[i].identifier:find("^tbl%-")
+        and doc.blocks[i].attributes["custom-style"] ~= "FigureWithNote" then
+      doc.blocks:insert(i + 1, docx_spacer)
+    end
     -- Look for a div followed by a paragraph
     if doc.blocks[i + 1].t == "Para" and doc.blocks[i].t == "Div" then
       -- If the div is a figure or table without a note,
