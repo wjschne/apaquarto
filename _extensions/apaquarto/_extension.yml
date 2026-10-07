@@ -1,6 +1,6 @@
 title: My Document in APA Style, Seventh Edition
 author: W. Joel Schneider
-version: 7.0.1
+version: 7.0.2
 quarto-required: ">=1.9.0"
 contributes:
   formats:
@@ -201,6 +201,8 @@ contributes:
         # toccolor ask a link to take
         - at: post-render
           path: htmllinkcolor.lua
+        - at: post-render
+          path: htmltablespacing.lua
       toc: true
       toc-location: left
       anchor-sections: false

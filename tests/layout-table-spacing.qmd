@@ -1,0 +1,34 @@
+---
+title: "A Table's Row Spacing"
+shorttitle: "Table Spacing"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+<!--
+Measured, not read: a table's rows are double spaced by default, the body's
+spacing, in every format, and a cell that wraps is spaced as its rows are
+(but in .docx, whose wrapped lines stay single). APA lets a table body be
+single, one-and-a-half or double spaced; table-spacing asks for the others
+(tests/layout-table-spacing-single.qmd), and journal and doc modes take
+single (tests/layout-table-spacing-journal.qmd).
+
+The formats had each spaced rows their own way: the .pdf at the body's
+double spacing, 24pt; typst with Typst's five points of padding, 18pt, while
+a cell that wrapped took the body's 24; .docx 23pt; .html 37pt. Now the rows
+stand 24pt apart in the .pdf and typst, Word's 27.6pt in .docx, and 2 lines
+in .html.
+-->
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Rowone   | 1                             |
+| Rowtwo   | 2                             |
+| Rowthree | Wrapone a cell long enough that it has to run on to a second line inside its column of the table wraptwo |
+| Rowfour  | 4                             |
+
+: Rowcap caption {#tbl-rows apa-note="Rownote words."}

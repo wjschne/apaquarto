@@ -12,6 +12,16 @@ engine: knitr
 - Implement missing .docx features
     * Right-align equation numbers
 
+# Version 7.0.2
+- 2026-10-07
+- In .docx a table laid out in panels sets its panels side by side in one grid; every panel after the first was set under the grid.
+- In .docx a figure or table followed directly by another stands one blank line from it, not two.
+- A table's top rule stands the same distance under its caption in .pdf, typst and .docx; .docx had six points more, and the .pdf's distance stretched with the page.
+- A table's rows are spaced alike in every format, double by default (single in journal and doc modes), and the new `table-spacing` option sets them single, one-and-a-half or double spaced.
+- In typst a table's rules stand as far from its text as booktabs sets them in .pdf, where they had stood as close as the next row, and a table without a header row no longer has a rule over its second row.
+- A table's or figure's note stands the same distance under it in .pdf, typst and .docx; .docx had 10 points less, and in .pdf it varied by a point or two with the table's columns and the caption's letters.
+- In .docx and typst a table's header cells sit at the foot of their row and its body cells at the top of theirs, as in .pdf; .docx had centred every cell in its row, and typst had set the header cells at the top.
+
 # Version 7.0.1
 - 2026-10-07
 - Outside journal mode a figure or table stands a double-spaced blank line clear of the text above and below it, in .pdf, typst, .docx and .html alike, as APA asks.

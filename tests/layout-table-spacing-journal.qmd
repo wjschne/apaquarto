@@ -1,0 +1,23 @@
+---
+title: "A Journal's Table"
+shorttitle: "Table Spacing"
+documentmode: jou
+format:
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: a journal's body is single spaced, so its tables are
+single spaced by default too, where a manuscript's are double
+(tests/layout-table-spacing.qmd). The .pdf's journal sets a table in a float
+of its own, at the body's spacing, and is not measured here.
+-->
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Rowone   | 1                             |
+| Rowtwo   | 2                             |
+| Rowthree | Wrapone a cell long enough that it has to run on to a second line inside its column wraptwo |
+| Rowfour  | 4                             |
+
+: Rowcap caption {#tbl-rows apa-note="Rownote words."}

@@ -181,6 +181,10 @@ readers <- list(
 #   right: word            how far the right end of the line the word is on
 #                          is from the paper's left edge, in points
 #   size: word             the size of the word's font, in points
+#   rule-above: word       from the nearest rule above the word to the top of
+#                          its ink, in points
+#   rule-below: word       from the foot of the word's ink to the nearest rule
+#                          below it, in points
 #   is: number             what the measure should be
 #   within: number         how far off it may be: 1 by default for gap and
 #                          left, since pdftools gives positions to the whole
@@ -188,6 +192,53 @@ readers <- list(
 #
 # A word is best made up for the fixture (Alphaone, Headtwo) so that it
 # appears once and is easy to find.
+#
+# The rule checks read the page as rendered, since pdftools gives no rules and
+# a word's box is its font's, which reaches further above and below the
+# letters in latex's fonts than in typst's, by as much as 6pt. A rule is a row
+# of pixels dark the whole width of the word, and the word's ink is the rest
+# that is dark inside its box, so a word for these is best one without
+# descenders (Headword, Rowone): the foot of its ink is then its baseline.
+layout_dpi <- 288
+
+# The pages of one .pdf as rendered, each rendered once when first asked for.
+# Made afresh for every .pdf measured, since a worker renders the .pdf and
+# typst output of a fixture to the same path one after the other.
+layout_pages <- function(path) {
+  cache <- list()
+  function(page) {
+    key <- as.character(page)
+    if (is.null(cache[[key]])) {
+      bitmap <- pdftools::pdf_render_page(path, page = page, dpi = layout_dpi,
+                                          numeric = TRUE)
+      cache[[key]] <<- if (length(dim(bitmap)) == 3) bitmap[, , 1] else bitmap
+    }
+    cache[[key]]
+  }
+}
+
+# From the word's ink to the nearest rule above or below it, in points.
+rule_clearance <- function(pages, word, side) {
+  k <- 72 / layout_dpi
+  page <- pages(word$page)
+  xs <- floor(word$x / k):floor((word$x + word$width) / k)
+  dark <- rowMeans(page[, xs, drop = FALSE] < 0.5)
+  rule <- dark > 0.95
+  box <- floor((word$y - 4) / k):ceiling((word$y + word$height + 4) / k)
+  box <- box[box >= 1 & box <= nrow(page)]
+  ink <- box[dark[box] > 0 & !rule[box]]
+  if (length(ink) == 0) return(NULL)
+  if (side == "above") {
+    above <- which(rule[seq_len(min(ink) - 1)])
+    if (length(above) == 0) return(NULL)
+    (min(ink) - 1 - max(above)) * k
+  } else {
+    below <- which(rule[(max(ink) + 1):nrow(page)])
+    if (length(below) == 0) return(NULL)
+    (min(below) - 1) * k
+  }
+}
+
 layout_words <- function(path) {
   if (!requireNamespace("pdftools", quietly = TRUE)) {
     stop("the pdftools package is needed to measure a .pdf")
@@ -202,6 +253,7 @@ layout_words <- function(path) {
 
 layout_failures <- function(path, checks) {
   words <- layout_words(path)
+  pages <- layout_pages(path)
   find <- function(text, page = NULL) {
     hit <- words[words$bare == text, ]
     if (!is.null(page)) hit <- hit[hit$page == page, ]
@@ -236,9 +288,17 @@ layout_failures <- function(path, checks) {
       word <- find(check$size)
       actual <- if (!is.null(word)) word$font_size
       tolerance <- if (is.null(check$within)) 0.2 else check$within
+    } else if (!is.null(check[["rule-above"]]) || !is.null(check[["rule-below"]])) {
+      side <- if (!is.null(check[["rule-above"]])) "above" else "below"
+      text <- check[[paste0("rule-", side)]]
+      label <- paste0("rule ", side, " ", text)
+      word <- find(text)
+      actual <- if (!is.null(word)) rule_clearance(pages, word, side)
+      tolerance <- if (is.null(check$within)) 1 else check$within
     } else {
       failures <- c(failures, paste0("layout check names no measure (gap, ",
-                                     "left, right or size): ",
+                                     "left, right, size, rule-above or ",
+                                     "rule-below): ",
                                      paste(names(check), collapse = ", ")))
       next
     }

@@ -104,6 +104,28 @@ general:
 
       The `floatsintext` field does not apply when a .pdf output is in journal
       mode.
+  - name: table-spacing
+    default: "`double`, or `single` in journal and doc modes"
+    description: |
+      The line spacing of a table's rows: `single`, `onehalf` or `double`
+      (or `1`, `1.5` or `2`). APA lets a table body be single,
+      one-and-a-half or double spaced. By default a table's rows take the
+      body's double spacing, except in journal and doc modes, whose body
+      and tables are single spaced.
+
+      In .pdf and typst the rows of a single-spaced table stand 14.5pt
+      apart and of a double-spaced one 24pt, the body's double spacing; in
+      .docx they stand one of Word's lines apart, 13.8pt single and 27.6pt
+      double, and the lines of a cell that wraps stay single spaced; in
+      .html they are 1.2, 1.5 or 2 lines high.
+
+      It applies to the tables pandoc writes, markdown tables and
+      `knitr::kable` tables among them. A table a package such as flextable
+      or gt writes keeps the spacing that package gives it.
+
+      ```yaml
+      table-spacing: single
+      ```
   - name: numbered-lines
     description: |
       Numbered lines (every format but .html, which has no pages to number

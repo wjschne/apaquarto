@@ -57,6 +57,13 @@
         - 'A note belonging to the table.'
     docx-xml:
       count:
+        # The figure is followed by the table, whose title has the blank line
+        # above it, and the table by a heading, which a spacer holds off. The
+        # empty paragraph quarto wrote between figure and table took the space
+        # before as well and was a blank line itself: the two stood 111pt
+        # apart, where a blank line is 55.
+        '<w:pStyle w:val="AfterWithoutNote" />': 0
+        'w:before="552" w:after="0" w:line="20" w:lineRule="exact"': 1
         # The reference document's table style draws the rules of an APA
         # table, which belong to the data table and to no figure: the layout
         # table holding the panels takes FigureLayout. This said Table must
@@ -99,6 +106,16 @@
         'w:tblStyle w:val="Table"': 5
         # The one grid holding the panels.
         'w:tblStyle w:val="FigureLayout"': 1
+      order:
+        # Both panels inside that grid, side by side: after the right panel's
+        # head come two closing tags, its own table's and the grid's. quarto
+        # wrote the right panel after the grid, which had closed already, and
+        # word set it under the left one rather than beside it. The panels are
+        # the last thing in the document, so nothing else closes after them.
+        - 'Lefthead'
+        - 'Righthead'
+        - '</w:tbl>'
+        - '</w:tbl>'
 
 # The same figure with panels that carry no labels of their own, which takes a
 # different path here and through quarto.
@@ -1963,7 +1980,9 @@
         - '<w:pStyle w:val="FigureTitle" /></w:pPr><w:r><w:t xml:space="preserve">Table'
         - '<w:pStyle w:val="FigureTitle" /></w:pPr><w:r><w:t xml:space="preserve">Illustration'
         - '<w:pStyle w:val="Caption" /></w:pPr><w:r><w:t xml:space="preserve">The figure caption</w:t>'
-        - '<w:pStyle w:val="Caption" /></w:pPr><w:r><w:t xml:space="preserve">The table caption</w:t>'
+        # A table's caption in Table Caption, which has no space after, so
+        # that its top rule stands as far under it as in the .pdf and typst.
+        - '<w:pStyle w:val="TableCaption" /></w:pPr><w:r><w:t xml:space="preserve">The table caption</w:t>'
         - '<w:pStyle w:val="Caption" /></w:pPr><w:r><w:t xml:space="preserve">The illustration caption</w:t>'
     docx:
       absent:
@@ -2438,7 +2457,13 @@
       # rule, and a line. It stood 53pt under, longtable's \LTpost and half
       # an em more.
       - gap: [Tabrow, Tabnote]
-        is: 35
+        is: 34
+      # The caption 15.75pt clear of the table's top rule, as in typst (a
+      # fixed \LTpre; longtable's own was 12pt that stretched with the page).
+      # To the head row, a double-spaced row under the rule, with booktabs'
+      # space below it.
+      - gap: [Tabcap, Tabhead]
+        is: 37
 
 - fixture: layout-float-space.qmd
   to: apaquarto-typst
@@ -2452,12 +2477,16 @@
         is: 72
       - gap: [Tabnote, Aftertwo]
         is: 48
-      # Flush left too, the first cell's 5pt inset in from the margin. Its
-      # rows are single spaced, so its note is nearer the last row.
+      # Flush left too, the first cell's 5pt inset in from the margin.
       - left: Tabhead
         is: 77
       - gap: [Tabrow, Tabnote]
-        is: 29
+        is: 33
+      # The caption 15.75pt clear of the top rule, as in the .pdf, and its
+      # head row double spaced under it, as there, with booktabs' space
+      # below the rule (apatablecells in the template).
+      - gap: [Tabcap, Tabhead]
+        is: 37
 
 - fixture: layout-float-space.qmd
   to: apaquarto-docx
@@ -2467,18 +2496,26 @@
         # A blank line, one of Word's 27.6pt double-spaced lines (552 twips),
         # before a figure's or table's title...
         - '<w:spacing w:before="552" w:line="480" w:lineRule="auto" />'
-        # ...and after its note, or its picture when it has none, so that a
-        # heading after it is held off as well as a paragraph. The note's
-        # paragraphs are not spaced apart from one another
-        # (contextualSpacing).
-        - '<w:spacing w:after="552" w:before="60" /><w:ind w:firstLine="0" /><w:contextualSpacing />'
-        - '<w:spacing w:after="552" />'
-        # Before the paragraph after a table without a note, which ends in a
-        # table that can carry no space after itself.
+        # ...and before what follows a float, rather than after its note or
+        # picture: Word adds a paragraph's space after to the next one's
+        # space before, so a float followed by another stood two blank lines
+        # from it (111pt in tests/multipanel-notes.qmd, where one is 55).
         - '<w:spacing w:before="552" />'
+        # 13pt above a note, which sets it as far under its table or picture
+        # as the .pdf and typst do (tests/layout-table-rules.qmd).
+        - '<w:spacing w:before="260" /><w:ind w:firstLine="0" />'
+        - '<w:name w:val="Table Caption" /><w:basedOn w:val="Caption" /><w:pPr><w:spacing w:after="0" /></w:pPr>'
     docx-xml:
       count:
-        # And when what follows such a table is a heading, a spacer a point
+        # A table's caption in Table Caption, with no space after, so that
+        # the top rule stands 15pt under it as in the .pdf and typst. Caption
+        # has six points after, and stood it 20.5pt under; a figure's caption
+        # keeps Caption.
+        '<w:pStyle w:val="TableCaption" />': 2
+        # The paragraph after the figure and the one after the first table
+        # take the space before (AfterWithoutNote)...
+        '<w:pStyle w:val="AfterWithoutNote" />': 2
+        # ...and the heading after the table without a note a spacer a point
         # high whose space before is the blank line. The heading had none.
         'w:before="552" w:after="0" w:line="20" w:lineRule="exact"': 1
 
@@ -2504,6 +2541,182 @@
   expect:
     layout: *figure-note-break
 
+- fixture: layout-table-spacing.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &table-double
+      # A table double spaced by default, the body's 24pt: row to row, and
+      # the two lines of a cell that wraps. typst had set them 18pt apart
+      # with Typst's own padding, its wrapped lines at 24.
+      - gap: [Rowone, Rowtwo]
+        is: 24
+      - gap: [Wrapone, wraptwo]
+        is: 24
+      - gap: [wraptwo, Rowfour]
+        is: 24
+
+- fixture: layout-table-spacing.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *table-double
+
+- fixture: layout-table-spacing.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # Seven points above and below every cell's text, half what Word's
+        # double spacing adds to a single line, and the head row's own, as
+        # far off its rules as booktabs sets it (tests/layout-table-rules.qmd).
+        # It had six points of paragraph space and three of margin, 23pt a
+        # row.
+        - '<w:tblCellMar><w:top w:type="dxa" w:w="138" /><w:left w:type="dxa" w:w="58" /><w:bottom w:type="dxa" w:w="138" /><w:right w:type="dxa" w:w="58" /></w:tblCellMar>'
+        - '<w:tcMar><w:top w:type="dxa" w:w="186" /><w:bottom w:type="dxa" w:w="138" /></w:tcMar>'
+
+- fixture: layout-table-spacing.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      absent:
+        # Double spacing is apa.css's own; nothing is added for it.
+        - 'body .table>:not(caption)>*>* { line-height'
+
+- fixture: layout-table-spacing-single.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &table-single
+      # table-spacing: single, 14.5pt.
+      - gap: [Rowone, Rowtwo]
+        is: 14
+      - gap: [Wrapone, wraptwo]
+        is: 14
+      - gap: [wraptwo, Rowfour]
+        is: 14
+
+- fixture: layout-table-spacing-single.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *table-single
+
+- fixture: layout-table-spacing-single.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # No margin above or below a cell's text, so that the rows stand one
+        # of Word's single lines apart, and the head row's own, as far off
+        # its rules as booktabs sets it at single spacing.
+        - '<w:tblCellMar><w:top w:type="dxa" w:w="0" /><w:left w:type="dxa" w:w="58" /><w:bottom w:type="dxa" w:w="0" /><w:right w:type="dxa" w:w="58" /></w:tblCellMar>'
+        - '<w:tcMar><w:top w:type="dxa" w:w="50" /><w:bottom w:type="dxa" w:w="92" /></w:tcMar>'
+
+- fixture: layout-table-spacing-single.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'body .table>:not(caption)>*>* { line-height: 1.2; }'
+
+- fixture: layout-table-spacing-journal.qmd
+  to: apaquarto-typst
+  expect:
+    layout:
+      # Single spaced at the journal's 10pt.
+      - gap: [Rowone, Rowtwo]
+        is: 12
+
+- fixture: layout-table-rules.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &table-rules
+      # Measured in the ink, from a rule to the capitals under it or from a
+      # baseline to the rule under it. The caption 15.75pt over the top
+      # rule and the note's capitals 15.5pt under the bottom one: the .pdf
+      # had 17.8 and 17, measured from the foot of latex's text box, which
+      # reaches 2pt under the baseline.
+      - rule-below: Titleone
+        is: 15.8
+      - rule-above: Noteone
+        is: 15.5
+      # booktabs at double spacing: 12.2pt from a rule to the capitals under
+      # it, 9.5pt from a baseline to the rule under it. typst had 7 or 8 on
+      # each side, the space between two rows.
+      - rule-above: Headone
+        is: 12.2
+      - rule-below: Headone
+        is: 9.5
+      - rule-above: Rowone
+        is: 12.2
+      - rule-below: Rowlast
+        is: 9.5
+      # A long table, set as a longtable rather than a tabular, alike.
+      - rule-below: Titletwo
+        is: 15.8
+      - rule-above: Headtwo
+        is: 12.2
+      - rule-above: Firsttwo
+        is: 12.2
+      - rule-below: Lasttwo
+        is: 9.5
+      - rule-above: Notetwo
+        is: 15.5
+      # A table without a head: a rule over it and under it, and none over
+      # its second row, which typst had drawn there.
+      - rule-below: Titlethree
+        is: 15.8
+      - rule-above: Firstthree
+        is: 12.2
+      - rule-above: Secondthree
+        is: 36.2
+      - rule-below: Lastthree
+        is: 9.5
+
+- fixture: layout-table-rules.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *table-rules
+
+- fixture: layout-table-rules.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # The head row's text as far off its rules as in the .pdf, at double
+        # spacing; it had seven points and a half each side.
+        - '<w:tcMar><w:top w:type="dxa" w:w="186" /><w:bottom w:type="dxa" w:w="138" /></w:tcMar>'
+        # A note 15.5pt under a table's bottom rule and 20pt under a
+        # picture, as in the .pdf and typst; it had 6 and 10.
+        - '<w:spacing w:before="260" />'
+
+- fixture: layout-table-valign.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &table-valign
+      # A short heading level with the last line of the one beside it that
+      # wraps, and a numeric heading too. typst set them level with its
+      # first line, a row higher.
+      - gap: [Headshort, headend]
+        is: 0
+      - gap: [Num, headend]
+        is: 0
+      # A short body cell level with the first line of the one beside it.
+      - gap: [Bodyshort, Bodystart]
+        is: 0
+
+- fixture: layout-table-valign.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *table-valign
+
+- fixture: layout-table-valign.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # Every cell at the top of its row, the head row's at the foot. Every
+        # cell had been set in the middle of its row.
+        - '<w:tcPr><w:vAlign w:val="top" /></w:tcPr>'
+        - '</w:tcMar><w:vAlign w:val="bottom" /></w:tcPr>'
+
 - fixture: layout-table-whole.qmd
   to: apaquarto-pdf
   expect:
@@ -2512,7 +2725,7 @@
       # only its start would fit: caption, last row and note on one page. As
       # a longtable it was broken after its first row.
       - gap: [Overcap, Overlast]
-        is: 137
+        is: 139
       - gap: [Overlast, Overnote]
         is: 34
       # The short table where it fits stays under the line before it.
@@ -2521,6 +2734,13 @@
       # The long table stays a longtable and begins where it stands.
       - gap: [Longline, Longcap]
         is: 73
+      # Short and long, a table stands as far under its caption: the
+      # tabular is given longtable's \LTpre, less the \lineskip TeX puts
+      # above a box as tall as it.
+      - gap: [Overcap, Overhead]
+        is: 36
+      - gap: [Longcap, Longhead]
+        is: 36
 
 - fixture: layout-table-keep.qmd
   to: apaquarto-pdf
@@ -2532,9 +2752,9 @@
       # The tables longtable stranded the titles of: each caption on the
       # page its table's first row is on.
       - gap: [Keepone, Rowone]
-        is: 65
+        is: 66
       - gap: [Keepthree, Rowthree]
-        is: 86
+        is: 90
       # The tables there was room for: each on the page of the line before it.
       - gap: [Lasttwo, Keeptwo]
         is: 73

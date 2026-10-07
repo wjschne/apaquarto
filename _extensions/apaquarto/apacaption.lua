@@ -39,6 +39,14 @@ local function gettablefig(m)
 end
 
 
+-- The Word style of the caption in hand. A table's is TableCaption, which the
+-- reference document gives no space after: Caption's six points stood a
+-- table's top rule 20.5pt under the foot of its caption, where the .pdf,
+-- typst and .html stand it 12 to 15 (tests/layout-float-space.qmd). A
+-- figure's caption keeps Caption. The class stays Caption either way, which
+-- is what the other filters and apa.css look for.
+local captionstyle = "Caption"
+
 -- Format caption
 local caption_formatter = function(p)
   -- If the paragraph content's first element is the figureword or tableword
@@ -75,7 +83,7 @@ local caption_formatter = function(p)
         -- enclose figure/table caption in a div with custom style
         local figurecaptiondiv = pandoc.Div(figurecaption)
         figurecaptiondiv.classes:insert("Caption")
-        figurecaptiondiv.attributes["custom-style"] = "Caption"
+        figurecaptiondiv.attributes["custom-style"] = captionstyle
         return { figuretitlediv, figurecaptiondiv }
       end
     end
@@ -112,6 +120,8 @@ local divcaption = function(div)
       div.content = div.content:walk { Plain = caption_formatter }
     end
     if FORMAT == "docx" then
+      -- By its name, which is how pandoc finds a style: Table Caption.
+      captionstyle = div.identifier:find("^tbl%-") and "Table Caption" or "Caption"
       -- Remove raw openxml from div
       div.content = div.content:walk { RawInline = function(ri) return {} end }
       div.content = div.content:walk { Para = caption_formatter }

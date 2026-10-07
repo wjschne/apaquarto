@@ -27,12 +27,12 @@ under its rule. The .pdf centred a markdown table, as longtable does by
 default, and stood its note a line and a half under the last row, with
 longtable's own \LTpost and half an em on top of the line spacing.
 
-In .docx the blank lines are the reference document's: space before a
-FigureTitle, and space after a note or a picture without one (FigureNote,
-FigureWithoutNote), which holds a heading off as well as a paragraph. A
-table without a note ends in the table, which can carry no space after it:
-the paragraph after it takes the space before, and a heading after it is
-preceded by a spacer a point high that carries it, the last table below.
+In .docx the blank lines are space before: before a FigureTitle, and
+before whatever follows a float. A paragraph after one takes it in its own
+style (AfterWithoutNote); a heading or list after one is preceded by a spacer
+a point high that carries it, as after the last table below; another float
+needs none, its title having the space already. Not space after the float's
+note or picture, which Word would add to the next float's space before.
 
 The number is set in bold, which pdftools boxes a point or two taller than
 the roman around it, so the space above is measured to the caption, a line

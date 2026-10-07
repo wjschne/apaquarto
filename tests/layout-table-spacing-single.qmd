@@ -1,0 +1,27 @@
+---
+title: "A Single-Spaced Table"
+shorttitle: "Table Spacing"
+table-spacing: single
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+<!--
+Measured, not read: table-spacing: single sets a table's rows 14.5pt apart
+in the .pdf and typst, one of Word's 13.8pt lines in .docx, and 1.2 lines in
+.html. This is the other end of tests/layout-table-spacing.qmd, whose rows
+are double spaced by default.
+-->
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Rowone   | 1                             |
+| Rowtwo   | 2                             |
+| Rowthree | Wrapone a cell long enough that it has to run on to a second line inside its column of the table wraptwo |
+| Rowfour  | 4                             |
+
+: Rowcap caption {#tbl-rows apa-note="Rownote words."}

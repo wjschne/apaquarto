@@ -276,6 +276,15 @@ local function meta(m)
     quarto.doc.include_text("in-header", "\\apastudenthead")
   end
 
+  -- The line spacing of a table's rows: double unless table-spacing, or a
+  -- journal or doc mode, asks for single or one-and-a-half
+  -- (\apatablestretch in apalatex.tex).
+  local tablespacing = utilsapa.table_spacing(m)
+  if tablespacing ~= "double" then
+    quarto.doc.include_text("in-header", "\\renewcommand{\\apatablestretch}{"
+      .. utilsapa.table_stretch[tablespacing] .. "}")
+  end
+
   -- A block quotation half an inch in on the left and not at all on the
   -- right. Journal mode and a dissertation set their own below.
   if mode ~= "jou" and mode ~= "thesis" then

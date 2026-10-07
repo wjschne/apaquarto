@@ -1,0 +1,65 @@
+---
+title: "A Table's Rules"
+shorttitle: "Table Rules"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+---
+
+<!--
+Measured, not read: the space between a table's rules and the text beside
+them, the same in the .pdf and typst, measured in the ink of both. The .pdf
+sets it with booktabs; typst with the padding and rules formattypst.lua
+gives each table (apatablecells in the template). A table without a head
+has a rule over it and under it only.
+
+Every word measured here has no descender, so that the foot of its ink is
+its baseline.
+-->
+
+Some text above the first table.
+
+| Headone | Column |
+|:--------|:-------|
+| Rowone  | 1      |
+| Rowmid  | 2      |
+| Rowlast | 3      |
+
+: Titleone Words {#tbl-one apa-note="Noteone words."}
+
+Some text between the tables.
+
+| Headtwo   | Column |
+|:----------|:-------|
+| Firsttwo  | 1      |
+| Row       | 2      |
+| Row       | 3      |
+| Row       | 4      |
+| Row       | 5      |
+| Row       | 6      |
+| Row       | 7      |
+| Row       | 8      |
+| Row       | 9      |
+| Row       | 10     |
+| Row       | 11     |
+| Row       | 12     |
+| Row       | 13     |
+| Row       | 14     |
+| Row       | 15     |
+| Row       | 16     |
+| Row       | 17     |
+| Lasttwo   | 18     |
+
+: Titletwo Words {#tbl-two apa-note="Notetwo words."}
+
+Some text between the tables.
+
+|             |   |
+|-------------|---|
+| Firstthree  | 1 |
+| Secondthree | 2 |
+| Lastthree   | 3 |
+
+: Titlethree Words {#tbl-three}

@@ -416,7 +416,8 @@ end
 -- whole to the next one.
 local short_table_rows = 15
 
-local function short_table(content)
+-- Whether a float holds one table pandoc writes, and how many rows it has.
+local function native_table(content)
   local tables, rows, raw_table = 0, 0, false
   pandoc.Blocks(floatrecord.as_blocks(content)):walk {
     Table = function(tbl)
@@ -432,7 +433,12 @@ local function short_table(content)
       end
     end,
   }
-  return tables == 1 and not raw_table and rows <= short_table_rows
+  return tables == 1 and not raw_table, rows
+end
+
+local function short_table(content)
+  local native, rows = native_table(content)
+  return native and rows <= short_table_rows
 end
 
 local function processfloat(float)
@@ -496,6 +502,8 @@ local function processfloat(float)
   local inflow_figure = (not floated) and (not istable)
   -- A short table is kept whole: see short_table above.
   local short = (not floated) and istable and short_table(record.content)
+  -- A table pandoc writes, in the flow, takes the table spacing.
+  local spaced = (not floated) and istable and native_table(record.content)
 
   local blocks = pandoc.List({})
   if floated then
@@ -523,10 +531,17 @@ local function processfloat(float)
       -- the table's last row (tests/layout-float-space.qmd).
       --
       -- Nor the half em of \apatablenotegap, which a journal's table needs
-      -- and this one does not: a tabular leaves the note's first line a
-      -- point under its rule, where a longtable leaves the line spacing.
-      -- The note is the next line under the table, as in typst.
-      blocks:insert(raw("\\setlength{\\LTleft}{0pt}\\setlength{\\LTright}{\\fill}\\setlength{\\LTpost}{0pt}\\setlength{\\apatablenotegap}{0pt}"))
+      -- and this one does not: the note is the next line under the table,
+      -- its capitals 15.5pt under the rule, as in typst. Its baseline stands
+      -- a line under the rule, which leaves half a point more, taken back
+      -- here (tests/layout-table-rules.qmd).
+      blocks:insert(raw("\\setlength{\\LTleft}{0pt}\\setlength{\\LTright}{\\fill}\\setlength{\\LTpost}{0pt}\\setlength{\\apatablenotegap}{-0.5pt}"))
+      -- The space between the caption and the table's top rule, as typst
+      -- leaves it: 15.75pt from the caption's baseline to the rule, measured
+      -- in the ink of both (tests/layout-table-rules.qmd). longtable's own
+      -- is \bigskipamount, 12pt that could stretch or shrink by 4 with the
+      -- page.
+      blocks:insert(raw("\\setlength{\\LTpre}{16pt}"))
       -- A short table is set as a tabular, one box that cannot break, with
       -- no indent before it, as journal mode sets every table.
       if short then
@@ -582,10 +597,20 @@ local function processfloat(float)
     blocks:insert(raw("\\apatablekeepend"))
   end
 
+  -- The table spaced from the caption's baseline, not from the foot of its
+  -- last line: TeX puts a table under the depth of the line above it, so a
+  -- caption whose last line had a p or a g in it stood 2pt further off the
+  -- table than one that had none (tests/layout-table-rules.qmd).
+  if not floated and istable then
+    blocks:insert(raw("\\par\\ifdim\\prevdepth>0pt\\vskip-\\prevdepth\\prevdepth=0pt\\fi"))
+  end
+
   -- The space longtable leaves above a table, \LTpre, which a tabular does
-  -- not: a short table stands under its caption as a long one does.
+  -- not: a short table stands under its caption as a long one does. Less
+  -- \lineskip, the point TeX puts between a line and a box as tall as a
+  -- tabular, which a longtable's first row, a rule, is not given.
   if short then
-    blocks:insert(raw("\\par\\vspace{\\LTpre}"))
+    blocks:insert(raw("\\par\\vspace{\\dimexpr\\LTpre-\\lineskip\\relax}"))
   end
 
   local panelnotes = nil
@@ -594,7 +619,12 @@ local function processfloat(float)
     blocks:extend(grid)
     panelnotes = notes
   else
+    -- Its rows at the table spacing, double unless table-spacing asks for
+    -- less, in a group of their own so that the note under the table keeps
+    -- the body's (\apatablespacing in apalatex.tex).
+    if spaced then blocks:insert(raw("\\begingroup\\apatablespacing")) end
     blocks:extend(strip_table_identifier(record.content))
+    if spaced then blocks:insert(raw("\\par\\endgroup")) end
   end
 
   local note = note_blocks(record)

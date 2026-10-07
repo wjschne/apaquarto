@@ -101,6 +101,22 @@ table {
   border-bottom: none;
 }
 
+/* A table's rows double spaced, as in the .pdf, typst and .docx: the text at
+   2 lines with no padding above or below, and two points above and below
+   the head row to keep it off its rules. table-spacing asks for 1.2 or 1.5
+   instead (htmltablespacing.lua). The rows had Bootstrap's half rem of
+   padding as well, 37pt apart. */
+.table>:not(caption)>*>* {
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 2;
+}
+.table>thead>*>* {
+  padding-top: 2pt;
+  padding-bottom: 2pt;
+}
+.table p {line-height: inherit}
+
 .tabwid {padding: 0}
 
 .AbstractFirstParagraph p {text-indent: 0}

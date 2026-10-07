@@ -152,6 +152,7 @@ journal:
   issn: 0024-7662
   copyrightnotice: 2025
   copyrighttext: "The Author(s)"
+table-spacing: 2
 list-of-contents: false
 list-of-figures: false
 list-of-tables: false
@@ -160,7 +161,8 @@ format:
   apaquarto-docx: default
   apaquarto-typst: 
     # Options: manuscript (default), journal, student, document, thesis
-    documentmode: journal
+    documentmode: manuscript
+    output-file: example-typst.pdf
   apaquarto-pdf:
     # Options: manuscript (default), journal, student, document, thesis
     documentmode: journal

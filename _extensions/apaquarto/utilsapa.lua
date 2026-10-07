@@ -695,6 +695,39 @@ function M.flag(meta, key)
   return pandoc.utils.stringify(value) ~= "false"
 end
 
+-- The line spacing of a table's rows, from table-spacing: "single",
+-- "onehalf" or "double", or 1, 1.5 or 2 meaning the same. APA lets a table
+-- body be single, one-and-a-half or double spaced. Left unset it is double,
+-- the body's spacing, except in journal and doc modes, whose body is not
+-- double spaced and whose tables are single. Each format sets the spacing by
+-- its own measure of a line: in the .pdf and typst the rows of a
+-- single-spaced table stand 14.5pt apart and of a double-spaced one 24pt, the
+-- body's double spacing; Word's lines are a little deeper. Anything else
+-- falls back to the default with a warning.
+local table_spacings = {
+  ["single"] = "single", ["1"] = "single",
+  ["onehalf"] = "onehalf", ["one-and-a-half"] = "onehalf", ["1.5"] = "onehalf",
+  ["double"] = "double", ["2"] = "double",
+}
+function M.table_spacing(meta)
+  local mode = M.mode(meta)
+  local default = (mode == "jou" or mode == "doc") and "single" or "double"
+  local value = meta and meta["table-spacing"]
+  if value == nil then return default end
+  local key = pandoc.utils.stringify(value):lower():gsub("%s", "")
+  local spacing = table_spacings[key]
+  if not spacing then
+    quarto.log.warning("table-spacing should be single, onehalf or double; got \""
+      .. key .. "\", so tables are " .. default .. " spaced.")
+    return default
+  end
+  return spacing
+end
+
+-- setspace's stretch for each spacing at a 12pt body: 1 is single spacing,
+-- 1.25 setspace's one-and-a-half, 1.667 its double.
+M.table_stretch = { single = "1", onehalf = "1.25", double = "1.667" }
+
 -- Whether an element's attribute says true. Written in markdown it is the
 -- string "true"; set from a chunk option it may arrive as a boolean, or as a
 -- string with quotes or brackets left on it.

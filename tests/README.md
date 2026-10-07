@@ -84,7 +84,13 @@ Under each but `layout`: `contains`, `absent`, `count` (text, and exactly how ma
         is: 64
       - size: Headone             # the font size, in points
         is: 11
+      - rule-above: Headone       # from a rule to the ink of the word under it
+        is: 12.2
+      - rule-below: Headone       # from the foot of the word's ink to a rule
+        is: 9.5
 ```
+
+`rule-above` and `rule-below` read the page as rendered rather than the word's box, which in latex's fonts reaches 2pt further below the baseline than in typst's. A rule is a row of pixels dark the whole width of the word. Give these words no descenders (Headone, Rowone, not Caption), so that the foot of the ink is the baseline.
 
 A word is found by its text (a full stop or comma after it is allowed), at its first appearance; a `gap` looks for its second word on the first word's page. Make the words up for the fixture (Alphaone, Headtwo) so that each appears once. `within` sets how far off a measure may be. It is 1 by default, and 0.2 for a size. pdftools gives a position to the whole point, so a gap that is truly 26pt reads as 25 or 27 now and then, and a change of one point cannot be told from that; one of two points or more can. A YAML anchor (`&journal-layout`, then `*journal-layout`) holds two formats to the same list.
 

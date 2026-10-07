@@ -39,6 +39,9 @@ $endif$
 $if(fontsize)$
   fontsize: $fontsize$,
 $endif$
+$if(apa-table-spacing)$
+  tablespacing: "$apa-table-spacing$",
+$endif$
 $if(leading)$
   leading: $leading$,
 $endif$

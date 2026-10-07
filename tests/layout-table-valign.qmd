@@ -1,0 +1,27 @@
+---
+title: "Where a Cell's Text Sits"
+shorttitle: "Table Alignment"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+---
+
+<!--
+Measured, not read: a table's head cells sit at the foot of their row and
+its body cells at the top of theirs, in every format, as the .pdf's booktabs
+tables set them and APA's own do. Beside a heading that wraps, a short one
+is level with its last line, on the rule; beside a body cell that wraps, a
+short one is level with its first.
+
+typst had set every cell at the top, and Word every cell in the middle of
+its row.
+-->
+
+| Headshort | A heading long enough that it has to wrap onto a second line here, and then words headend | Num |
+|:----------|:---------------------------------------------------------------------|----:|
+| Bodyshort | Bodystart a body cell long enough that it has to wrap onto a second line inside its column | 12.5 |
+| Rowtwo    | 2                                                                    | 3.0  |
+
+: Alignment caption {#tbl-valign}

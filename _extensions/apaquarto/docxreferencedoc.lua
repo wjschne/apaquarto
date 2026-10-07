@@ -294,6 +294,63 @@ local function patch_styles(styles, monofont, thesis)
   return newstyles:sub(1, last) .. markers .. newstyles:sub(last + 1)
 end
 
+--- The line spacing of a table's rows, from table-spacing, double unless it
+--- or a journal or doc mode asks otherwise. The spacing is a margin above
+--- and below every cell, with no paragraph space: pandoc gives every
+--- paragraph in a cell the Compact style, which also styles a tight list, so
+--- the spacing cannot be the paragraph's, and a cell's wrapped lines stay
+--- single spaced. The reference document's Table style sets the rows double
+--- spaced, seven points above and below a cell's text, half of what Word's
+--- 27.6pt adds to its 13.8pt single line. One-and-a-half spacing is half of
+--- what 20.7pt adds, and single spacing no margin at all.
+---
+--- The head row has margins of its own, which stand its text off the rules
+--- above and below it as far as booktabs does in the .pdf and typst: 9.3pt
+--- from the top rule to its capitals and 6.9pt from its baseline to the rule
+--- under it at double spacing (186 and 138 twips in the reference document),
+--- 5.25pt each at one-and-a-half, and 2.5 and 4.6pt at single, measured
+--- against the .pdf (tests/layout-table-rules.qmd). A body row's margins
+--- cannot do the same at the rules, since Word's table style can tell the
+--- head row and the last row from the others but pandoc marks no table as
+--- having a last row.
+---
+--- The Table style as the reference document had it is kept in a marker, and
+--- a double-spaced render puts it back (tests/layout-table-spacing-single.qmd).
+local table_margins = {
+  single = { cell = 0, head_top = 50, head_bottom = 92 },
+  onehalf = { cell = 69, head_top = 105, head_bottom = 105 },
+}
+
+local function set_margins(xml, element, top, bottom)
+  return (xml:gsub("(<w:" .. element .. ">.-</w:" .. element .. ">)", function(margins)
+    margins = margins:gsub("<w:top[%s/][^>]*>", '<w:top w:w="' .. top .. '" w:type="dxa"/>')
+    margins = margins:gsub("<w:bottom[%s/][^>]*>", '<w:bottom w:w="' .. bottom .. '" w:type="dxa"/>')
+    return margins
+  end))
+end
+
+local function patch_table_spacing(styles, spacing)
+  local original = get_marker(styles, "tablestyle")
+  styles = strip_marker(styles, "tablestyle")
+  local first, last = styles:find('<w:style [^>]-w:styleId="Table"[^>]*>.-</w:style>')
+  if not first then return styles end
+  local current = styles:sub(first, last)
+  original = original or current
+  local wanted = original
+  local margins = table_margins[spacing]
+  if margins then
+    wanted = set_margins(wanted, "tblCellMar", margins.cell, margins.cell)
+    wanted = set_margins(wanted, "tcMar", margins.head_top, margins.head_bottom)
+  end
+  styles = styles:sub(1, first - 1) .. wanted .. styles:sub(last + 1)
+  if wanted ~= original then
+    local _, open = styles:find("<w:styles%s[^>]*>")
+    styles = styles:sub(1, open) .. make_marker("tablestyle", original) ..
+      styles:sub(open + 1)
+  end
+  return styles
+end
+
 --- papersize is written in several ways: a4, A4, a4paper, letter, us-letter
 local function paper_key(papersize)
   local name = papersize:lower():gsub("[^%a%d]", "")
@@ -672,6 +729,7 @@ function Pandoc(doc)
         --- that has one (apaquote.lua).
         patched = referencedoc.patch_attribution_style(patched,
           utilsapa.flag(doc.meta, "apa-quote-attribution"))
+        patched = patch_table_spacing(patched, utilsapa.table_spacing(doc.meta))
       end
     elseif entry.path == document_path then
       xml = entry:contents()

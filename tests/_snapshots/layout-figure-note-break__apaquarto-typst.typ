@@ -257,6 +257,49 @@
   body
 }
 
+// A block that stays on the page with the start of the block after it, as a
+// heading does: a figure's number and caption with its picture, and the
+// picture with the first line of its note. sticky is Typst 0.12's; before
+// that the block simply has nothing to hold it.
+#let apasticky = if sys.version >= version(0, 12, 0) { (sticky: true) } else { (:) }
+
+// The leading inside a table for each table-spacing, so that its rows stand
+// 14.5pt, 18pt or 24pt apart at 12pt, as the .pdf sets them with setspace: a
+// line stands its leading plus a capital's height, 0.66em, below the one
+// before.
+#let apatableleadings = (single: 0.54em, onehalf: 0.84em, double: 1.35em)
+
+// The padding and rules of a table pandoc writes, which formattypst.lua hands
+// each table as its inset and stroke with the table's rows and head rows
+// counted, since a cell is told only its own column and row. As the .pdf
+// sets them with booktabs: a cell's text sits where latex's strut puts it,
+// 0.7 of the row above the baseline and 0.3 below, rather than centred; a
+// rule has 0.65ex more below it and 0.4ex more above, booktabs' own
+// /belowrulesep and /aboverulesep (0.29em and 0.18em in Times); and rules go
+// over the table, under its head, and under its last row. The rules and the
+// space by them had been laid down by row number alone, so a table without a
+// head had a rule over its second row, and a rule stood as close to the text
+// as the next row, 2.5pt from a capital at single spacing
+// (tests/layout-table-rules.qmd).
+#let apatablecells(spacing, rows, head) = {
+  let leading = apatableleadings.at(spacing, default: apatableleadings.double)
+  let above = 0.7 * leading - 0.198em
+  let below = 0.3 * leading + 0.198em
+  let underrule(y) = y == 0 or (head > 0 and y == head)
+  let overrule(y) = (head > 0 and y == head - 1) or y == rows - 1
+  (
+    inset: (x, y) => (
+      x: 5pt,
+      top: above + if underrule(y) { 0.29em } else { 0pt },
+      bottom: below + if overrule(y) { 0.18em } else { 0pt },
+    ),
+    stroke: (x, y) => (
+      top: if underrule(y) { 0.5pt } else { none },
+      bottom: if y == rows - 1 { 0.5pt } else { none },
+    ),
+  )
+}
+
 // first-line-indent takes a plain length before typst 0.13 and accepts a
 // dictionary from 0.13 on, where all: true indents the paragraph that opens a
 // section as well as the ones that follow. Everything that sets the indent
@@ -267,12 +310,6 @@
 // all: true changes only the amount and keeps that all: true, so a journal's
 // block quotation, whose body indents every paragraph, had its first
 // paragraph indented whenever it had a second one, an attribution included.
-// A block that stays on the page with the start of the block after it, as a
-// heading does: a figure's number and caption with its picture, and the
-// picture with the first line of its note. sticky is Typst 0.12's; before
-// that the block simply has nothing to hold it.
-#let apasticky = if sys.version >= version(0, 12, 0) { (sticky: true) } else { (:) }
-
 #let apaparindent(amount, all: false) = if sys.version >= version(0, 13, 0) {
   (amount: amount, all: all)
 } else {
@@ -594,6 +631,9 @@
   // this and whatever the element above asks for below itself, so a float
   // after a section heading keeps the heading's space.
   floatspace: none,
+  // The line spacing of a table's rows: "single", "onehalf" or "double",
+  // from table-spacing. See the table rules below.
+  tablespacing: "double",
   toc: false,
   lang: "en",
   cols: 1,
@@ -718,12 +758,24 @@
 
 
 
+  // A table's rows stand as far apart as lines at the table spacing
+  // (apatableleadings; tests/layout-table-spacing.qmd), and a cell that wraps
+  // is spaced as its rows are. A table pandoc writes is given its padding and
+  // rules by formattypst.lua (apatablecells); these are for one a package
+  // writes in typst of its own: the cell padded above and below by half the
+  // leading, which spaces a row of one line the same as two lines of one
+  // cell. The rows had Typst's own five points of padding, 18pt apart, while
+  // a cell that wrapped took the body's double spacing.
+  let tableleading = apatableleadings.at(tablespacing,
+    default: apatableleadings.double)
   set table(
     stroke: (x, y) => (
         top: if y <= 1 { 0.5pt } else { 0pt },
         bottom: .5pt,
-      )
+      ),
+    inset: (x: 5pt, y: tableleading / 2),
   )
+  show table: set par(leading: tableleading, spacing: tableleading)
 
   // The space between two paragraphs is the space between two lines, so
   // that a double-spaced manuscript is double spaced throughout and a journal
@@ -1077,6 +1129,7 @@
   title: [A Figure Note That Runs On],
   runninghead: "NOTE RUNS ON",
   font: (<fonts>),
+  tablespacing: "double",
   numberdepth: 3,
   suppresstitlepage: true,
   document,

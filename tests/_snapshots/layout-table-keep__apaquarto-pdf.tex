@@ -596,6 +596,12 @@
   }{%
     /the/apa@lt@foot
     /end{tabular}%
+    % The space after /end{longtable} ignored, as after a list or a
+    % quotation. It sat on the tabular's line, and when the table ran the
+    % full width of the page, as one with a column of text does, it went on
+    % to a second, empty line, which set the note a point lower than under a
+    % narrower table (tests/layout-table-rules.qmd).
+    /global/@ignoretrue
   }}
 /makeatother
 
@@ -775,6 +781,15 @@
 %
 % The gap is written by floatlatex.lua, which knows a table from a figure. A
 % figure's note follows the picture, which needs no rule cleared.
+% The line spacing of a table's rows, double by default, the body's, which APA
+% allows beside one-and-a-half and single. table-spacing, or a journal or doc
+% mode, asks for one of the others, which formatlatex.lua writes here as
+% setspace's stretch for it: 1 or 1.25. floatlatex.lua sets a table pandoc writes in a group that takes this
+% spacing, and the title, caption and note around it keep the body's. A table
+% a package writes in latex of its own keeps its own spacing.
+/newcommand{/apatablestretch}{1.667}
+/newcommand{/apatablespacing}{/setstretch{/apatablestretch}/selectfont}
+
 /newlength{/apatablenotegap}
 /setlength{/apatablenotegap}{0.5em}
 /newcommand{/apatablenoteskip}{/par/vspace{/apatablenotegap}}
@@ -1071,7 +1086,9 @@ Lastone line of filler.
 
 /par/addvspace{/baselineskip}/begingroup
 
-/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{-0.5pt}
+
+/setlength{/LTpre}{16pt}
 
 /apatablekeep
 
@@ -1088,6 +1105,10 @@ Lastone line of filler.
 /addcontentsline{lot}{table}{Table 1. Keepone a caption of one line}
 
 /apatablekeepend
+
+/par/ifdim/prevdepth>0pt/vskip-/prevdepth/prevdepth=0pt/fi
+
+/begingroup/apatablespacing
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lll@{}}
@@ -1117,6 +1138,8 @@ r17 & 17 & 17 //
 r18 & 18 & 18 //
 /end{longtable}
 }
+
+/par/endgroup
 
 /par/endgroup/addvspace{/baselineskip}
 
@@ -1166,7 +1189,9 @@ Lasttwo line of filler.
 
 /par/addvspace{/baselineskip}/begingroup
 
-/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{-0.5pt}
+
+/setlength{/LTpre}{16pt}
 
 /apatablekeep
 
@@ -1183,6 +1208,10 @@ Lasttwo line of filler.
 /addcontentsline{lot}{table}{Table 2. Keeptwo a caption of one line}
 
 /apatablekeepend
+
+/par/ifdim/prevdepth>0pt/vskip-/prevdepth/prevdepth=0pt/fi
+
+/begingroup/apatablespacing
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lll@{}}
@@ -1212,6 +1241,8 @@ r17 & 17 & 17 //
 r18 & 18 & 18 //
 /end{longtable}
 }
+
+/par/endgroup
 
 /par/endgroup/addvspace{/baselineskip}
 
@@ -1261,7 +1292,9 @@ Lastthree line of filler.
 
 /par/addvspace{/baselineskip}/begingroup
 
-/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{-0.5pt}
+
+/setlength{/LTpre}{16pt}
 
 /apatablekeep
 
@@ -1281,6 +1314,10 @@ that it has to run on to a second line of the page, so the box holds two
 lines}
 
 /apatablekeepend
+
+/par/ifdim/prevdepth>0pt/vskip-/prevdepth/prevdepth=0pt/fi
+
+/begingroup/apatablespacing
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lll@{}}
@@ -1310,6 +1347,8 @@ r17 & 17 & 17 //
 r18 & 18 & 18 //
 /end{longtable}
 }
+
+/par/endgroup
 
 /par/endgroup/addvspace{/baselineskip}
 
@@ -1357,7 +1396,9 @@ Lastfour line of filler.
 
 /par/addvspace{/baselineskip}/begingroup
 
-/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{0pt}
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{-0.5pt}
+
+/setlength{/LTpre}{16pt}
 
 /apatablekeep
 
@@ -1377,6 +1418,10 @@ that it has to run on to a second line of the page, so the box holds two
 lines}
 
 /apatablekeepend
+
+/par/ifdim/prevdepth>0pt/vskip-/prevdepth/prevdepth=0pt/fi
+
+/begingroup/apatablespacing
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}lll@{}}
@@ -1406,6 +1451,8 @@ r17 & 17 & 17 //
 r18 & 18 & 18 //
 /end{longtable}
 }
+
+/par/endgroup
 
 /par/endgroup/addvspace{/baselineskip}
 

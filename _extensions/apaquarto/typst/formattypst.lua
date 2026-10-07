@@ -158,6 +158,64 @@ end
 local noteword = "Note"
 local tablenotes = {}
 
+-- table-spacing as the word for it, read in the Meta pass below
+local tablespacing = "double"
+
+-- typst's word for a cell's horizontal alignment, its own or its column's.
+local typst_align = {
+  AlignLeft = "left", AlignRight = "right", AlignCenter = "center",
+}
+
+-- The cells of a table's head set at the foot of their row, as the .pdf
+-- sets them and as APA's tables do: a heading that wraps to a second line
+-- has its neighbours level with that line, on the rule, rather than with its
+-- first. The body's cells stay at the top of theirs. pandoc gives the table
+-- an align of its own, which a second could not join, so each head cell's
+-- content is aligned instead, keeping its column's horizontal alignment.
+local function bottom_align_head(tbl)
+  for _, row in ipairs(tbl.head.rows) do
+    local column = 1
+    for _, cell in ipairs(row.cells) do
+      local alignment = cell.alignment
+      if alignment == "AlignDefault" and tbl.colspecs[column] then
+        alignment = tbl.colspecs[column][1]
+      end
+      local horizontal = typst_align[alignment] or "start"
+      local contents = pandoc.Blocks({
+        pandoc.RawBlock("typst", "#align(bottom + " .. horizontal .. ")[")
+      })
+      contents:extend(cell.contents)
+      contents:insert(pandoc.RawBlock("typst", "]"))
+      cell.contents = contents
+      column = column + cell.col_span
+    end
+  end
+end
+
+-- A table pandoc writes, given its padding and rules (apatablecells in the
+-- template) by its count of rows and of head rows: typst tells a cell only
+-- its own column and row, and the rules go under the head, wherever that
+-- ends, and under the last row. A table that asks for its own inset or
+-- stroke keeps it.
+local function rule_table(tbl)
+  bottom_align_head(tbl)
+  local head = #tbl.head.rows
+  local rows = head + #tbl.foot.rows
+  for _, body in ipairs(tbl.bodies) do
+    rows = rows + #body.head + #body.body
+  end
+  local cells = string.format('apatablecells("%s", %d, %d)', tablespacing,
+    rows, head)
+  local attributes = tbl.attr.attributes
+  if attributes["typst:inset"] == nil then
+    attributes["typst:inset"] = cells .. ".inset"
+  end
+  if attributes["typst:stroke"] == nil then
+    attributes["typst:stroke"] = cells .. ".stroke"
+  end
+  return tbl
+end
+
 -- Table floats whose note a surrounding div already carries. apanote.lua
 -- makes the note for those divs later, so making it here as well would print
 -- it twice. A table from a code chunk with apa-twocolumn is the usual case.
@@ -421,6 +479,10 @@ return {
       noteword = utilsapa.lang(meta, "figure-table-note", noteword)
       panelword = utilsapa.lang(meta, "figure-panel", panelword)
       set_body_indent(meta)
+      -- table-spacing, read once and handed to the template as the word for
+      -- it: single, onehalf or double.
+      tablespacing = utilsapa.table_spacing(meta)
+      meta["apa-table-spacing"] = tablespacing
       if meta["apa-table-notes"] then
         tablenotes = utilsapa.table_notes(meta)
       end
@@ -430,6 +492,7 @@ return {
   -- The front matter, laid out for the document's mode, before the passes
   -- below read it as the blocks typst is given.
   { Pandoc = typstfrontmatter.lay_out },
+  { Table = rule_table },
   {
     -- A note on a div around a float: brought down into the float when the div
     -- holds just the one, and otherwise left to apanote.lua, with the floats

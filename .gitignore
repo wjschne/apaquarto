@@ -21,6 +21,7 @@ example.tex
 example.typ
 example.out
 example-pdf-*
+example-typst.pdf
 example-typst-*
 example-docx.docx
 example_files/
