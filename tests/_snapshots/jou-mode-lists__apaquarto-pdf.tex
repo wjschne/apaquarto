@@ -145,9 +145,17 @@
 % /RaggedRight sets /parindent to /RaggedRightParindent, so the indent has to
 % be told to it before it is switched on. Setting /parindent afterwards instead
 % leaves every paragraph flush left.
+%
+% ragged2e's /RaggedRight lets a line fall short of the measure by at most
+% 2em, so where the next word does not fit TeX breaks it at a hyphen instead.
+% APA asks for no hyphenation at the ends of lines. An infinite stretch, which
+% is what LaTeX's own /raggedright has, leaves a short line rather than a
+% broken word. The length is read when /RaggedRight is switched on, so it is
+% set before.
 /setlength{/parindent}{0.5in}
 /setlength{/parskip}{0pt}
 /setlength{/RaggedRightParindent}{0.5in}
+/setlength{/RaggedRightRightskip}{0pt plus 1fil}
 /RaggedRight
 
 % setspace's own double spacing, which is what apa7 uses and which comes to
