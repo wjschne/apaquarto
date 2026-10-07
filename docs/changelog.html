@@ -307,6 +307,10 @@ window.Quarto = {
 <li>In .pdf a table’s note is set on the line under the table, not a line and a half below it.</li>
 <li>In .pdf a short markdown or kable table is no longer broken across two pages; it moves to the next page whole with its title.</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/171">#171</a> A figure whose note is too long for the rest of its page no longer has the end of the note cut off at the foot of the page in .pdf and typst; the note runs on to the next page.</li>
+<li>In typst a figure’s <code>apa-note</code> given on its image or on a code chunk is written inside the figure, so a page break no longer parts the two.</li>
+<li>In .pdf a heading no longer has a blank line above it; like typst, and as APA asks, it takes one line in the spacing of the text around it.</li>
+<li>In typst a dissertation is double spaced at 24pt, and its block quotations and reference entries single spaced at 14pt, as in the .pdf; they were 26pt and 16pt.</li>
+<li>In a dissertation a block quotation stands a double space from the body above and below it in the .pdf, and is no longer indented on the right in the .docx.</li>
 </ul>
 </section>
 <section id="version-7.0.0" class="level1">
@@ -346,13 +350,9 @@ window.Quarto = {
 <li>In typst the first paragraph after a heading is spaced like any other in every mode; in document mode it had been 4pt too close.</li>
 <li>A block quotation whose last paragraph begins with an em dash (<code>---</code>) ends with an attribution, set against the quotation’s right edge a line below it in every format.</li>
 <li>In a dissertation the document’s own margins reach the front matter as well as the body, and <code>thesis: title-margin</code> sets the title page’s.</li>
-<li>In typst a dissertation is double spaced at 24pt, and its block quotations and reference entries single spaced at 14pt, as in the .pdf; they were 26pt and 16pt.</li>
-<li>In a dissertation a block quotation stands a double space from the body above and below it in the .pdf, and is no longer indented on the right in the .docx.</li>
-<li>In .pdf a heading no longer has a blank line above it; like typst, and as APA asks, it takes one line in the spacing of the text around it.</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/170">#170</a> In .pdf a table’s title and caption are no longer left alone at the foot of a page with the table on the next.</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/168">#168</a> In .docx a captioned markdown table keeps the APA rules of the reference document’s Table style; it had been set with none.</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/169">#169</a> In .pdf the <code>apa-note</code> of a figure drawn by a code chunk is written inside the figure, so a page break or a floating figure no longer parts the two.</li>
-<li>In typst a figure’s <code>apa-note</code> given on its image or on a code chunk is written inside the figure, so a page break no longer parts the two.</li>
 </ul>
 </section>
 <section id="version-6.0.1" class="level1">
