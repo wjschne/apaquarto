@@ -468,12 +468,13 @@ local function processfloat(float)
     -- its tabular is never ended: the bare \centering kableExtra writes set
     -- every paragraph after the table centred.
     --
-    -- A figure takes no space of its own around it, but stands in the line
-    -- spacing of the text, as typst sets one: a line from the text above to
-    -- its number, and from its note to the text below. The [H] float it was
-    -- before stood \intextsep clear below and not above.
+    -- The space is a blank line of the text's own spacing, above and below,
+    -- for a figure as for a table: "If text appears on the same page as a
+    -- table or figure, add a double-spaced blank line between the text and
+    -- the table or figure" (APA). typst sets the same (floatspace in
+    -- typst-template.typ; tests/layout-float-space.qmd).
+    blocks:insert(raw("\\par\\addvspace{\\baselineskip}\\begingroup"))
     if inflow_figure then
-      blocks:insert(raw("\\par\\begingroup"))
       -- A float sets its contents without a paragraph indent, and a figure's
       -- picture is a paragraph of its own; in the flow it would be indented.
       blocks:insert(raw("\\setlength{\\parindent}{0pt}"))
@@ -481,8 +482,6 @@ local function processfloat(float)
       -- \subcaption, by quarto when the figure has no layout, which stops
       -- the render outside a float. This says the group is a figure.
       blocks:insert(raw("\\captionsetup{type=figure}"))
-    else
-      blocks:insert(raw("\\par\\addvspace{\\baselineskip}\\begingroup"))
     end
     -- The title and caption, kept with the start of the table, or with the
     -- picture and the start of the note: see \apatablekeep in apalatex.tex.
@@ -564,8 +563,6 @@ local function processfloat(float)
 
   if floated then
     blocks:insert(raw("\\end{" .. environment .. "}"))
-  elseif inflow_figure then
-    blocks:insert(raw("\\par\\endgroup"))
   else
     blocks:insert(raw("\\par\\endgroup\\addvspace{\\baselineskip}"))
   end

@@ -1072,7 +1072,7 @@ Contents in Word
 See /hyperref[fig-one]{Figure~/ref*{fig-one}} and
 /hyperref[tbl-one]{Table~/ref*{tbl-one}}.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1098,7 +1098,7 @@ See /hyperref[fig-one]{Figure~/ref*{fig-one}} and
 
 /apakeepend{0pt}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /par/addvspace{/baselineskip}/begingroup
 

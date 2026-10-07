@@ -1075,7 +1075,7 @@ Lists in Document Mode
 
 See /hyperref[fig-one]{Figure~/ref*{fig-one}}.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1101,7 +1101,7 @@ See /hyperref[fig-one]{Figure~/ref*{fig-one}}.
 
 /apakeepend{0pt}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /subsection{Procedure}/label{procedure}
 

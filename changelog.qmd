@@ -14,6 +14,7 @@ engine: knitr
 
 # Version 7.0.1
 - 2026-10-07
+- Outside journal mode a figure or table stands a double-spaced blank line clear of the text above and below it, in .pdf and typst alike, as APA asks; typst had set no blank line, and the .pdf none above a figure.
 - [#171](https://github.com/wjschne/apaquarto/issues/171) A figure whose note is too long for the rest of its page no longer has the end of the note cut off at the foot of the page in .pdf and typst; the note runs on to the next page.
 
 # Version 7.0.0

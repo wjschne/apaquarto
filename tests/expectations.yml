@@ -2413,17 +2413,41 @@
         'Chunknote': 1
         'Mdnote': 1
 
+- fixture: layout-float-space.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &float-space
+      # A blank line between the text and the figure: to its caption, a line
+      # under its number...
+      - gap: [Beforeone, Figcap]
+        is: 72
+      # ...and from its note to the text below.
+      - gap: [Fignote, Afterone]
+        is: 48
+      # The same for a table.
+      - gap: [Beforetwo, Tabcap]
+        is: 72
+      - gap: [Tabnote, Aftertwo]
+        is: 48
+
+- fixture: layout-float-space.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *float-space
+
 - fixture: layout-figure-note-break.qmd
   to: apaquarto-pdf
   expect:
     layout: &figure-note-break
       # A gap is measured on the first word's page. A note cut off at the foot
       # of the page has no last word to measure from; one set into the bottom
-      # margin had the next paragraph on the page after it.
+      # margin had the next paragraph on the page after it. The paragraph
+      # stands the blank line under the note that it stands under any figure
+      # (tests/layout-float-space.qmd).
       - gap: [Chunkend, Afterone]
-        is: 24
+        is: 48
       - gap: [Mdend, Aftertwo]
-        is: 24
+        is: 48
       # A short note at the foot of a page stays with its figure.
       - gap: [Keepcap, Keepnote]
         is: 143

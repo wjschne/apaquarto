@@ -992,7 +992,7 @@
 /renewcommand{/apacontentsname}{Table of Contents}
 /renewcommand{/apalistfigurename}{List of Figures}
 /renewcommand{/apalisttablename}{List of Tables}
-/setapashorttitle{NOTE SOURCES}
+/setapashorttitle{FLOAT SPACE}
 /apaquote
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
@@ -1010,63 +1010,20 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{Test Author}
+/author{}
 /date{}
 /begin{document}
 
-
-/hfill/break
-
-/hfill/break
-
-/vspace*{3/baselineskip}
-
-/apatitle{
-
-Every Way a Note Can Be Attached
-
-}
-
-/begin{apaauthor}
-
-/hfill/break
-
-Test Author
-
-Test University
-
-/end{apaauthor}
-
-/hfill/break
-
-/hfill/break
-
-/apatitlepageheading{
-
-Author Note
-
-}
-
-Correspondence concerning this article should be addressed to Test
-Author, Test University, Email:
-/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
 
 /clearpage
 
 /apatitle{
 
-Every Way a Note Can Be Attached
+Space Around a Figure and a Table
 
 }
 
-/section{Method}/label{method}
-
-The figures and tables are
-/hyperref[fig-chunk]{Figure~/ref*{fig-chunk}},
-/hyperref[tbl-chunk]{Table~/ref*{tbl-chunk}},
-/hyperref[fig-md]{Figure~/ref*{fig-md}},
-/hyperref[fig-div]{Figure~/ref*{fig-div}} and
-/hyperref[tbl-md]{Table~/ref*{tbl-md}}.
+Beforeone line of the body.
 
 /par/addvspace{/baselineskip}/begingroup
 
@@ -1080,29 +1037,31 @@ The figures and tables are
 
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
-/label{fig-chunk}
+/label{fig-space}
 
 /apafloattitle{Figure 1}
 
-/apafloatcaption{Zqcapchunkfig.}
+/apafloatcaption{Figcap caption}
 
 /apafigureskip
 
-/addcontentsline{lof}{figure}{Figure 1. Zqcapchunkfig.}
+/addcontentsline{lof}{figure}{Figure 1. Figcap caption}
 
-/pandocbounded{/includegraphics[keepaspectratio]{note-sources_files/figure-pdf/fig-chunk-1.png}}
+/includegraphics[width=2in,height=/textheight,keepaspectratio]{sampleimage.png}
 
 /apafigurekeepend
 
 /begin{apafloatnote}
 
-/emph{Note}. Zqnotechunkfig.
+/emph{Note}. Fignote~words.
 
 /end{apafloatnote}
 
 /par/endgroup/addvspace{/baselineskip}
 
-Zqafterchunkfig.
+Afterone line of the body.
+
+Beforetwo line of the body.
 
 /par/addvspace{/baselineskip}/begingroup
 
@@ -1112,135 +1071,20 @@ Zqafterchunkfig.
 
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
-/label{tbl-chunk}
+/label{tbl-space}
 
 /apafloattitle{Table 1}
 
-/apafloatcaption{Zqcapchunktbl.}
+/apafloatcaption{Tabcap caption}
 
-/addcontentsline{lot}{table}{Table 1. Zqcapchunktbl.}
-
-/apatablekeepend
-
-{/def/LTcaptype{none} % do not increment counter
-/begin{longtable}[]{@{}rr@{}}
-/toprule/noalign{}
-a & b //
-/midrule/noalign{}
-/endhead
-/bottomrule/noalign{}
-/endlastfoot
-1 & 3 //
-2 & 4 //
-/end{longtable}
-}
-
-/apatablenoteskip
-
-/begin{apafloatnote}
-
-/emph{Note}. Zqnotechunktbl.
-
-/end{apafloatnote}
-
-/par/endgroup/addvspace{/baselineskip}
-
-Zqafterchunktbl.
-
-/par/addvspace{/baselineskip}/begingroup
-
-/setlength{/parindent}{0pt}
-
-/captionsetup{type=figure}
-
-/apatablekeep
-
-/setcounter{figure}{1}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{2}/makeatother%
-/label{fig-md}
-
-/apafloattitle{Figure 2}
-
-/apafloatcaption{Zqcapmdfig.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 2. Zqcapmdfig.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/apafigurekeepend
-
-/begin{apafloatnote}
-
-/emph{Note}. Zqnotemdfig.
-
-/end{apafloatnote}
-
-/par/endgroup/addvspace{/baselineskip}
-
-Zqaftermdfig.
-
-/par/addvspace{/baselineskip}/begingroup
-
-/setlength{/parindent}{0pt}
-
-/captionsetup{type=figure}
-
-/apatablekeep
-
-/setcounter{figure}{2}
-
-/refstepcounter{figure}%
-/makeatletter/def/@currentlabel{3}/makeatother%
-/label{fig-div}
-
-/apafloattitle{Figure 3}
-
-/apafloatcaption{Zqcapdivfig.}
-
-/apafigureskip
-
-/addcontentsline{lof}{figure}{Figure 3. Zqcapdivfig.}
-
-/pandocbounded{/includegraphics[keepaspectratio]{sampleimage.png}}
-
-/apafigurekeepend
-
-/begin{apafloatnote}
-
-/emph{Note}. Zqnotedivfig.
-
-/end{apafloatnote}
-
-/par/endgroup/addvspace{/baselineskip}
-
-Zqafterdivfig.
-
-/par/addvspace{/baselineskip}/begingroup
-
-/apatablekeep
-
-/setcounter{table}{1}
-
-/refstepcounter{table}%
-/makeatletter/def/@currentlabel{2}/makeatother%
-/label{tbl-md}
-
-/apafloattitle{Table 2}
-
-/apafloatcaption{Zqcapmdtbl.}
-
-/addcontentsline{lot}{table}{Table 2. Zqcapmdtbl.}
+/addcontentsline{lot}{table}{Table 1. Tabcap caption}
 
 /apatablekeepend
 
 {/def/LTcaptype{none} % do not increment counter
 /begin{longtable}[]{@{}ll@{}}
 /toprule/noalign{}
-A & B //
+Tabhead & B //
 /midrule/noalign{}
 /endhead
 /bottomrule/noalign{}
@@ -1253,23 +1097,13 @@ A & B //
 
 /begin{apafloatnote}
 
-/emph{Note}. Zqnotemdtbl.
+/emph{Note}. Tabnote~words.
 
 /end{apafloatnote}
 
 /par/endgroup/addvspace{/baselineskip}
 
-Zqaftermdtbl.
-
-Zqplaindivtext.
-
-/begin{apafloatnote}
-
-/emph{Note}. Zqnoteplaindiv.
-
-/end{apafloatnote}
-
-Zqafterplaindiv.
+Aftertwo line of the body.
 
 
 

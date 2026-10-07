@@ -636,8 +636,9 @@
   // running to the margin; notegap is the space between one note and the next.
   noteindent: none,
   notegap: none,
-  // Space above a figure or table, ahead of its "Figure 1" / "Table 1" title.
-  // none follows the body's space between blocks. Typst takes the larger of
+  // Space above and below a figure or table, ahead of its "Figure 1" /
+  // "Table 1" title and after its note. none is a blank line of the body's
+  // spacing, as APA asks of a manuscript. Typst takes the larger of
   // this and whatever the element above asks for below itself, so a float
   // after a section heading keeps the heading's space.
   floatspace: none,
@@ -825,7 +826,16 @@
   let qleading = if quoteleading == none { leading } else { quoteleading }
   let qspace = if quotespace == none { spacing } else { quotespace }
   let qindentall = if quoteindentall == none { indentall } else { quoteindentall }
-  let fspace = if floatspace == none { spacing } else { floatspace }
+  // A blank line between a figure or table and the text above and below it,
+  // as APA asks of a manuscript: "If text appears on the same page as a table
+  // or figure, add a double-spaced blank line between the text and the table
+  // or figure." That is the space between two paragraphs and a line more.
+  // Typst sets a line its leading plus the height of a capital (about 0.66em
+  // in Times) below the one before, so in a manuscript this is 40pt, which
+  // stands the float 48pt from the text, as the .pdf's /addvspace does
+  // (tests/layout-float-space.qmd). It had been the paragraph spacing alone,
+  // a line and no blank line. Journal mode gives its own.
+  let fspace = if floatspace == none { spacing + leading + 0.66em } else { floatspace }
 
   let qright = if quoteinsetright == none { quoteinset } else { quoteinsetright }
   // A block quotation is set in a pad of apaquarto's own rather than in the
@@ -897,7 +907,7 @@
         not it.kind.starts-with("quarto-float-")) {
       it
     } else if it.kind == "quarto-float-tbl" {
-      block(width: 100%, breakable: true, above: fspace)[#align(left)[
+      block(width: 100%, breakable: true, above: fspace, below: fspace)[#align(left)[
         #block(breakable: false, ..apasticky)[
           #apafloatlabel(it)
           #par(first-line-indent: 0pt)[#emph[#it.caption.body]]
@@ -905,7 +915,7 @@
         #block[#it.body]
       ]]
     } else {
-      block(width: 100%, breakable: true, above: fspace)[
+      block(width: 100%, breakable: true, above: fspace, below: fspace)[
         #block(breakable: false, ..apasticky)[
           #apafloatlabel(it)
           #align(left)[#par(first-line-indent: 0pt)[#emph[#it.caption.body]]]

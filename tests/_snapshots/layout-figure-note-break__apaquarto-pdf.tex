@@ -1025,7 +1025,7 @@ A Figure Note That Runs On
 
 Beforeone line of the body.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1069,13 +1069,13 @@ finish on the page its figure begins on. Chunkend words.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 Afterone line of the body.
 
 /newpage{}
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1120,7 +1120,7 @@ begins on. Mdend words.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 Aftertwo line of the body.
 
@@ -1164,7 +1164,7 @@ A line of filler.
 
 A line of filler.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1196,7 +1196,7 @@ A line of filler.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 Afterthree line of the body.
 

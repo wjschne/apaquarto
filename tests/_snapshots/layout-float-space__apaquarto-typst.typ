@@ -1074,72 +1074,81 @@
 )
 
 #show: document => man(
-  title: [Abstract Written in the Document],
-  authors: ([Test Author],),
-  keywords: ("one","two",),
-  runninghead: "ABSTRACT SECTION",
-  runningauthors: "Author",
+  title: [Space Around a Figure and a Table],
+  runninghead: "FLOAT SPACE",
   font: (<fonts>),
   numberdepth: 3,
+  suppresstitlepage: true,
   document,
 )
 
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Abstract Written in the Document]
-<title>
-#set align(center)
-#block[
-/
-Test Author
-
-Test University
-
-]
-#set align(left)
-/
-/
-#heading(level: 1, outlined: false, numbering: none)[Author Note]
-<author-note>
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
-Correspondence concerning this article should be addressed to Test Author, Test University, Email: #link("mailto:test@example.com")[test/@example.com]
+Beforeone line of the body.
 
-#pagebreak()
-
-#heading(level: 1, outlined: false, numbering: none)[Abstract]
-<abstract>
-#block[
+#figure([
+#block(breakable: false, ..apasticky)[
+#box(image("sampleimage.png", width: 2in))
 ]
+#align(left)[
 #block[
-The first paragraph of an abstract that was written in the document.
-
-The second paragraph, which is here to show that both of them arrive.
-
-]
-#heading(level: 1, outlined: false, numbering: none)[Impact Statement]
-<impact>
+#set par(first-line-indent: 0mm)
 #block[
-A statement of the impact, written in the document beside the abstract.
-
+#emph[Note]. Fignote~words.
 ]
+#set par(first-line-indent: apaparindent(firstlineindent))
+]
+]
+], caption: figure.caption(
+position: top,
+[
+Figcap caption
+]),
+kind: "quarto-float-fig",
+supplement: "Figure",
+)
+<fig-space>
+
+
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
-#emph[Keywords]: one, two
+Afterone line of the body.
 
-#pagebreak()
+Beforetwo line of the body.
 
-#heading(level: 1, numbering: none)[Abstract Written in the Document]
-<firstheader>
+#figure([
+#block(breakable: false, ..apasticky)[
+#table(
+  columns: 2,
+  align: (auto,auto,),
+  table.header([Tabhead], [B],),
+  table.hline(),
+  [1], [2],
+)
+]
+#align(left)[
+#block[
+#set par(first-line-indent: 0mm)
+#block[
+#emph[Note]. Tabnote~words.
+]
+#set par(first-line-indent: apaparindent(firstlineindent))
+]
+]
+], caption: figure.caption(
+position: top,
+[
+Tabcap caption
+]),
+kind: "quarto-float-tbl",
+supplement: "Table",
+)
+<tbl-space>
+
+
 #[#set par.line(numbering: none)
 #par()[#text(size:0.5em)[#h(0.0em)]]]
 #context v(-par.spacing)
-The body of the article starts here, after both sections have been taken out of it.
-
-#set par(first-line-indent: 0in, hanging-indent: 0.5in)
-#set par(first-line-indent: apaparindent(firstlineindent), hanging-indent: 0in)
-
-
-
+Aftertwo line of the body.

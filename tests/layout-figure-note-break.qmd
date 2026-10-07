@@ -10,8 +10,8 @@ format:
 <!--
 wjschne/apaquarto#171. Measured, not read: a figure and its note too tall
 together for one page do not lose the end of the note. The note begins on
-the page with its figure and runs on to the next, its last line one line
-above the paragraph that follows it, as any paragraph's would be.
+the page with its figure and runs on to the next, its last line a blank
+line above the paragraph that follows it, as under any figure.
 
 The figure was one box that could not break -- an [H] float in the .pdf,
 an unbreakable block in typst -- and its note inside it, so the end of the

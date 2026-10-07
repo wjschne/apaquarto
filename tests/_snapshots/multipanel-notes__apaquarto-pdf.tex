@@ -1098,7 +1098,7 @@ See /hyperref[fig-panels]{Figure~/ref*{fig-panels}},
 /hyperref[fig-second]{Figure~/ref*{fig-second}} and
 /hyperref[tbl-values]{Table~/ref*{tbl-values}}.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1163,7 +1163,7 @@ A note belonging to the second panel.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /par/addvspace{/baselineskip}/begingroup
 

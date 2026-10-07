@@ -1,0 +1,43 @@
+---
+title: "Space Around a Figure and a Table"
+shorttitle: "Float Space"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: a figure or table on the same page as text stands a
+double-spaced blank line clear of it, above and below. "If text appears on
+the same page as a table or figure, add a double-spaced blank line between
+the text and the table or figure so that the separation between the text and
+table or figure is easier to see" (APA, on the manuscript and the student
+paper).
+
+The .pdf gave a table that blank line, and a figure in an [H] float about
+half of one below and none above. typst gave neither a blank line: one line
+from the text to the number, and one from the note to the text below. Both
+now set 48pt from the last line of text to the number and from the note to
+the next line of text.
+
+The number is set in bold, which pdftools boxes a point or two taller than
+the roman around it, so the space above is measured to the caption, a line
+below the number: 72pt.
+-->
+
+Beforeone line of the body.
+
+![Figcap caption](sampleimage.png){#fig-space apa-note="Fignote words." width="2in"}
+
+Afterone line of the body.
+
+Beforetwo line of the body.
+
+| Tabhead | B |
+|---------|---|
+| 1       | 2 |
+
+: Tabcap caption {#tbl-space apa-note="Tabnote words."}
+
+Aftertwo line of the body.

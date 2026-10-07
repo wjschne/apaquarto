@@ -1063,7 +1063,7 @@ Multipanel Notes, Image Panels
 
 See /hyperref[fig-images]{Figure~/ref*{fig-images}}.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1122,7 +1122,7 @@ A note belonging to the right panel.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /section{Discussion}/label{discussion}
 

@@ -1065,7 +1065,7 @@ Subfigure Figure-Note Reproducer
 A lone figure with /texttt{apa-note} already worked; it must keep
 working (/hyperref[fig-single]{Figure~/ref*{fig-single}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1097,7 +1097,7 @@ working (/hyperref[fig-single]{Figure~/ref*{fig-single}}).
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /section{2. Subfigures, each with a note -- exactly as reported (the
 bug)}/label{subfigures-each-with-a-note-exactly-as-reported-the-bug}
@@ -1107,7 +1107,7 @@ layout with no overall caption, where each panel carries its own
 /texttt{apa-note}. Before the fix it crashed the PDF render
 (/hyperref[fig-bug]{Figure~/ref*{fig-bug}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1162,7 +1162,7 @@ layout with no overall caption, where each panel carries its own
 
 /apafigurekeepend
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /section{3. Subfigures with a note and an overall
 caption}/label{subfigures-with-a-note-and-an-overall-caption}
@@ -1170,7 +1170,7 @@ caption}/label{subfigures-with-a-note-and-an-overall-caption}
 The same situation but with an overall figure caption
 (/hyperref[fig-capnotes]{Figure~/ref*{fig-capnotes}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1230,7 +1230,7 @@ figure.}
 
 /apafigurekeepend
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /section{4. Subfigures where only one panel has a note
 (mixed)}/label{subfigures-where-only-one-panel-has-a-note-mixed}
@@ -1238,7 +1238,7 @@ figure.}
 Only the second panel has a note; the first must render without one
 (/hyperref[fig-mixed]{Figure~/ref*{fig-mixed}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1292,7 +1292,7 @@ figure.}
 
 /apafigurekeepend
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 /section{5. A table with a note (untouched Table
 path)}/label{a-table-with-a-note-untouched-table-path}

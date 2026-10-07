@@ -1059,7 +1059,7 @@ Subfigure Layout Grid
 
 A: captioned layout, no notes (/hyperref[fig-a]{Figure~/ref*{fig-a}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1106,7 +1106,7 @@ A: captioned layout, no notes (/hyperref[fig-a]{Figure~/ref*{fig-a}}).
 
 /apafigurekeepend
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 B: caption-less layout, no notes
 (/hyperref[fig-b]{Figure~/ref*{fig-b}}). Quarto writes no
@@ -1114,7 +1114,7 @@ B: caption-less layout, no notes
 empty, and the /texttt{/textbackslash{}label} goes with it, so this one
 used to render unnumbered with a dangling reference.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1157,12 +1157,12 @@ used to render unnumbered with a dangling reference.
 
 /apafigurekeepend
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 C: captioned layout, both panels noted
 (/hyperref[fig-c]{Figure~/ref*{fig-c}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1221,13 +1221,13 @@ C: captioned layout, both panels noted
 
 /apafigurekeepend
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 D: caption-less layout, both panels noted
 (/hyperref[fig-d]{Figure~/ref*{fig-d}}). The case from issue /#158, and
 the one that has to keep both the grid and its number.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1282,13 +1282,13 @@ the one that has to keep both the grid and its number.
 
 /apafigurekeepend
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 E: layout with a note on the whole figure rather than on the panels
 (/hyperref[fig-e]{Figure~/ref*{fig-e}}). The note belongs to the figure,
 so it is printed once, below the grid, and not copied onto each panel.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1341,12 +1341,12 @@ so it is printed once, below the grid, and not copied onto each panel.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 H: layout with a whole-figure note and no layout attribute at all
 (/hyperref[fig-h]{Figure~/ref*{fig-h}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1392,12 +1392,12 @@ H: layout with a whole-figure note and no layout attribute at all
 
 /apakeepend{0pt}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 I: three panels over two columns, with a whole-figure note
 (/hyperref[fig-i]{Figure~/ref*{fig-i}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1463,12 +1463,12 @@ full width of it.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 J: explicit layout matrix with a whole-figure note
 (/hyperref[fig-j]{Figure~/ref*{fig-j}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1521,13 +1521,13 @@ J: explicit layout matrix with a whole-figure note
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 F: plain single figure with a note
 (/hyperref[fig-f]{Figure~/ref*{fig-f}}). Not a layout; it still takes
 the hand-built wrapper.
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1559,12 +1559,12 @@ the hand-built wrapper.
 
 /end{apafloatnote}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 G: plain single figure, no note, no caption text
 (/hyperref[fig-g]{Figure~/ref*{fig-g}}).
 
-/par/begingroup
+/par/addvspace{/baselineskip}/begingroup
 
 /setlength{/parindent}{0pt}
 
@@ -1586,7 +1586,7 @@ G: plain single figure, no note, no caption text
 
 /apakeepend{0pt}
 
-/par/endgroup
+/par/endgroup/addvspace{/baselineskip}
 
 End of document.
 
