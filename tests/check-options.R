@@ -46,7 +46,7 @@ internal <- c(
 # Quarto's and Pandoc's own fields, which apaquarto reads but their
 # documentation covers.
 quarto <- c(
-  "author", "citeproc", "classoption", "crossref", "csl", "lang",
+  "author", "citeproc", "classoption", "crossref", "csl", "css", "lang",
   "link-citations", "nocite", "number-depth", "numbersections",
   "ref-hyperlink", "subtitle", "toc", "toc-depth"
 )
