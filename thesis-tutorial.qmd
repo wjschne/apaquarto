@@ -1,0 +1,834 @@
+---
+title: "Thesis and Dissertation Tutorial"
+format: html
+editor: source
+engine: knitr
+lightbox: true
+toc-depth: 2
+---
+
+This tutorial is for graduate students who want to write a thesis or dissertation with apaquarto's **thesis mode**. You do not need to be a programmer, and you do not need to have used tools like Quarto or RStudio before. If you can use a word processor and install a program, you can do this.
+
+A few promises before we start:
+
+- **You will not break anything.** Every step can be repeated. If something goes sideways, you can almost always close the program, reopen it, and try again.
+- **It is normal to feel lost at first.** Setup is the hardest part. Once it is done, writing is much like writing in any other program.
+- **Ask for help early.** Your advisor, a labmate, or a campus technology help desk can often sort out an installation problem in minutes. The [apaquarto issue tracker](https://github.com/wjschne/apaquarto/issues) is also friendly to beginners' questions.
+
+:::{.callout-important}
+## Check your program's requirements
+
+Thesis mode follows Temple University's *Dissertation and Thesis Handbook* (see the [options page](options.qmd#dissertations-and-theses) for the edition it follows). Formatting rules change from year to year, and your department or committee may ask for something different. Before you submit, confirm the current requirements with the Graduate School and your committee. Treat apaquarto's output as a very good first draft of the format, not as an official approval.
+:::
+
+# The Steps at a Glance
+
+| Step | What you do |
+|:----:|:------------|
+| [1](#step-1) | Install R (a free program that RStudio relies on) | 
+| [2](#step-2) | Install RStudio (the program you will write in) |
+| [3](#step-3) | Install a few R packages that apaquarto needs | 
+| [4](#step-4) | Check that Quarto, Typst, and (optionally) TinyTeX are ready |
+| [5](#step-5) | Make a project folder (on your computer, OneDrive, or both) and turn it into an RStudio project |
+| [6](#step-6) | Install apaquarto in the project folder |
+| [7](#step-7) | Create your thesis file |
+| [8](#step-8) | Fill in the front matter with apa7maker |
+| [9](#step-9) | Render your file to .docx, .pdf, or .html |
+| [10](#step-10) | Learn the handful of Markdown tricks you need |
+| [11](#step-11) | Set up Zotero for citations and references |
+| [12](#step-12) | Cite your sources in the text |
+| [13](#step-13) | Change options later |
+
+You do these steps **once**. After that, your writing routine is just: open the project, write, click **Render**.
+
+:::{.callout-note collapse=true}
+## What are all these programs, and why so many?
+
+Think of building a house. You need tools (R, Quarto), a workshop to use them in (RStudio), and a few specialty parts (packages and extensions).
+
+| Piece | What it is | Everyday analogy |
+|:------|:-----------|:-----------------|
+| **Quarto** | The engine that turns a plain-text file into a finished document | The printing press |
+| **apaquarto** | An add-on for Quarto that knows APA style and Temple's thesis layout | The house style the press is set up to follow |
+| **R** | A programming language | A utility that RStudio plugs into |
+| **RStudio** | A free writing environment with Quarto built in | Your desk |
+| **Zotero** | A free reference manager | Your index-card box |
+
+You will write in a **.qmd file** (a "Quarto document"). It is a plain-text file with a little markup for things like italics and headings. You never format by hand: you tell Quarto what each piece of text *is* (a heading, a quotation, a citation) and apaquarto decides how it should look.
+:::
+
+# Before You Begin: Finding Your Way Around Your Computer {#before}
+
+Many students keep their files mostly online in OneDrive and only open them through a browser. That works well for Word, but the programs in this tutorial need to find your files **on your computer**. This short section gives you the vocabulary you will need.
+
+:::{.callout-tip}
+## Key idea
+
+A **folder on your computer** and a **folder in OneDrive** can be the *same folder*. OneDrive keeps a copy of a folder on your computer and copies it up to the cloud whenever it changes. You can look at it either way. Step 5 shows how to set this up.
+:::
+
+## Where are my files?
+
+::: {.panel-tabset group="os"}
+
+### Windows
+
+Open **File Explorer** (the yellow folder icon on your taskbar, or press {{< kbd Win+E >}}). On the left you will see **Documents**, **Desktop**, and, if OneDrive is installed and signed in, an entry such as **OneDrive -- Temple University**. That is your OneDrive folder, and it lives on your computer.
+
+To see a folder's full location, click once in the address bar at the top of File Explorer. It will look something like `C:\Users\yourname\Documents\Thesis`.
+
+### Mac
+
+Open **Finder** (the smiley-face icon in the Dock). In the sidebar you will see **Documents**, **Desktop**, and, if the OneDrive app is installed and signed in, **OneDrive**. To see a folder's full location, open it in Finder and choose *View → Show Path Bar*. The path appears at the bottom of the window.
+
+### Linux
+
+Open your file manager (called *Files* on many systems). Your personal files live in your **home folder**, for example `/home/yourname/Documents`. Microsoft does not offer an official OneDrive app for Linux, so see the Linux note in [Step 5](#step-5).
+
+:::
+
+## What is the terminal?
+
+A **terminal** is a window where you type a command instead of clicking a button. You will use one a few times. You never need to understand it deeply: you type (or paste) the exact text shown on this page, press {{< kbd Enter >}}, and read what comes back. RStudio has a terminal built in (a tab next to the Console), so you do not need to hunt for a separate program.
+
+# Step 1: Install R {#step-1}
+
+R is a free programming language used for statistics. **You do not have to use R for anything.** apaquarto works perfectly well for a thesis that contains no analyses at all. We install R only because RStudio, the friendliest place to use Quarto, expects it to be there. If you *do* analyze data, you will already have R ready.
+
+::: {.panel-tabset group="os"}
+
+### Windows
+
+1. Go to the [R download page for Windows](https://cran.r-project.org/bin/windows/base/).
+2. Click **Download R** (the exact version number will differ from what you see here).
+3. Open the downloaded file and click through the installer. The default choices are fine.
+
+### Mac
+
+1. Go to the [R download page for macOS](https://cran.r-project.org/bin/macosx/).
+2. Choose the installer that matches your Mac. If you are not sure which you have, click the Apple menu and choose *About This Mac*. If it says **Apple M1**, **M2**, **M3** (or similar), pick the *Apple silicon* version. If it says **Intel**, pick the Intel version.
+3. Open the downloaded .pkg file and click through the installer.
+
+### Linux
+
+Instructions depend on your distribution. Start at the [R download page for Linux](https://cran.r-project.org/bin/linux/) and choose Debian, Fedora, Red Hat, SUSE, or Ubuntu. Those pages give the exact commands to paste into a terminal. The version of R in your system's default software store is often old, so it is worth following the CRAN instructions.
+
+:::
+
+You will not see a new program to open. That is fine. R works quietly in the background once RStudio is installed.
+
+# Step 2: Install RStudio {#step-2}
+
+RStudio is the program you will write in. It is free.
+
+1. Go to the [RStudio Desktop download page](https://posit.co/download/rstudio-desktop/).
+2. Choose the installer for your system (Windows, macOS, or your Linux distribution) and install it as you would any other program.
+3. Open RStudio. The first time, it should find R on its own.
+
+:::{.callout-tip collapse=true}
+## What if I already use another program, such as Positron or VS Code?
+
+RStudio is only one of several places to use Quarto. If you already like another one, use it. [Positron](https://positron.posit.co/) is a newer program from the same company that makes RStudio and Quarto, and it works with many languages. [VS Code](https://code.visualstudio.com/) is another popular option. The steps in this tutorial are written for RStudio, because it is the gentlest place to begin, but the ideas carry over. See the [installation page](installation.qmd) for more options.
+:::
+
+## A quick tour of RStudio
+
+When RStudio opens, you will see several panes (windows within the window). Their exact arrangement may differ on your screen, but you will mostly care about these:
+
+- **Source** (top left, once you open a file): where you write.
+- **Console** and **Terminal** (bottom left, as tabs): where you type commands.
+- **Files**, **Packages**, and **Viewer** (right side, as tabs): where you see your folder, installed add-ons, and a preview of your document.
+
+If you cannot find the Terminal tab, choose *Tools → Terminal → New Terminal* from the menu at the top (Mac users: the menu bar at the top of the screen).
+
+# Step 3: Install the Packages apaquarto Needs {#step-3}
+
+A **package** is a small add-on for R. apaquarto uses a couple of them to make clean, sharp figures. You install each package once.
+
+1. In RStudio, click in the **Console** (the pane with a `>` symbol).
+2. Paste the following line and press {{< kbd Enter >}}:
+
+```{r}
+#| eval: false
+#| filename: "Console"
+install.packages(c("ragg", "svglite", "quarto"))
+```
+
+3. Wait. Text will scroll by for a minute or two. When the `>` symbol returns, it is finished.
+
+If a message asks whether you would like to install packages from source or use a personal library, answer **Yes**.
+
+:::{.callout-note collapse=true}
+## What do these packages do?
+
+- **ragg** draws high-quality images of plots.
+- **svglite** draws sharp, scalable plots.
+- **quarto** lets R talk to Quarto (it is a helper, not Quarto itself).
+
+You may also be asked to install a few others (such as **knitr** or **rmarkdown**). Say yes.
+:::
+
+::: {.panel-tabset group="os"}
+
+### Windows
+
+Nothing more to do. If a message mentions *Rtools*, you can ignore it. These packages install ready-made.
+
+### Mac
+
+Nothing more to do in most cases. If a pop-up asks to install "command line developer tools," you can click **Install**, but you do not need it for these packages.
+
+### Linux
+
+On Linux, R packages are sometimes built on your machine and need a few system libraries. If the installation stops with an error that names a missing library, install the libraries and try again. On Ubuntu or Debian, this usually does it:
+
+```{bash}
+#| eval: false
+#| filename: "Terminal"
+sudo apt install libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
+  libfontconfig1-dev libharfbuzz-dev libfribidi-dev
+```
+
+On other distributions, the names are similar but slightly different. Searching for the library names in the error message will lead you to the right ones.
+
+:::
+
+# Step 4: Check Quarto, Typst, and TinyTeX {#step-4}
+
+apaquarto needs **Quarto 1.9 or newer**. RStudio comes with its own copy of Quarto, but the copy may be older than that, so we check.
+
+## Check what you have
+
+1. Click the **Terminal** tab in RStudio.
+2. Type this and press {{< kbd Enter >}}:
+
+```{bash}
+#| eval: false
+#| filename: "Terminal"
+quarto check
+```
+
+You will see a list of checks. Look for these lines:
+
+- **Quarto version.** Does it say `1.9` or higher? If not, install the newest Quarto from the [Quarto download page](https://quarto.org/docs/get-started/), then **close and reopen RStudio** and run `quarto check` again.
+- **Typst.** Quarto ships with Typst built in, so there is nothing separate to install. Typst is a modern document-typesetting tool that makes .pdf files quickly and without any extra software.
+- **TinyTeX** (under *Checking LaTeX installation*). This is only needed for one of the .pdf options (see the next box).
+
+:::{.callout-tip}
+## Do I need TinyTeX?
+
+apaquarto can make a .pdf in two ways:
+
+| Format name | How it makes a .pdf | Needs TinyTeX? |
+|:------------|:--------------------|:--------------:|
+| `apaquarto-typst` | Typst | No |
+| `apaquarto-pdf` | LaTeX | Yes (unless you already have a LaTeX setup) |
+
+If you only want .docx, .html, and a .pdf from Typst, **you can skip TinyTeX entirely.** If you want the LaTeX .pdf, install it as shown below.
+
+**Already use LaTeX?** If you have TeX Live, MacTeX, or MiKTeX installed, Quarto will find it. You can skip TinyTeX.
+:::
+
+## Install or update TinyTeX (optional)
+
+In the Console:
+
+```{r}
+#| eval: false
+#| filename: "Console"
+
+# Install tinytex package
+install.packages("tinytex")
+# Install TinyTeX program
+tinytex::install_tinytex()
+# Verify the installation
+tinytex::is_tinytex()
+```
+
+
+This downloads a few hundred megabytes, so it may take several minutes. To update TinyTeX later:
+
+```{r}
+#| eval: false
+#| filename: "Console"
+tinytex::tlmgr_update()
+```
+
+:::{.callout-note collapse=true}
+## If a pop-up or message asks permission
+
+Quarto may ask whether you want to continue or whether to add TinyTeX to your system path. The defaults are fine. If your computer is managed by your university and an installation is blocked, contact your IT help desk. Please do not try to work around the block yourself.
+:::
+
+When you are done, run `quarto check` once more in the terminal. Everything you plan to use should report as OK.
+
+# Step 5: Create an RStudio Project in Your Thesis Folder {#step-5}
+
+An **RStudio project** is a folder that RStudio treats as home base for one piece of work. When you open the project, everything is right where you left it, and apaquarto, your references, and your figures can all find each other. **Do this for your thesis.**
+
+Your thesis folder will hold your thesis file, your references, your images, and the finished documents.
+
+:::{.callout-important}
+## Folder names
+
+Give the folder a short name with **no spaces or special characters**, such as `Dissertation` or `thesis-2027`. Spaces are not forbidden, but they cause trouble more often than you would expect.
+:::
+
+Pick the path that matches your situation:
+
+::: {.panel-tabset}
+
+### A. I want the folder only on my computer
+
+1. In File Explorer or Finder, go to a place you will remember (for example, **Documents**).
+2. Make a new folder: right-click in an empty spot, then choose *New → Folder* (Windows) or *New Folder* (Mac). Name it `Dissertation`.
+3. In RStudio, choose *File → New Project…*
+4. Choose **Existing Directory**.
+5. Click **Browse…**, select your new folder, click **Choose** (or **Open**), then click **Create Project**.
+
+RStudio reopens inside your project. You should see your folder's contents in the **Files** pane.
+
+### B. I already have a folder in OneDrive that is on my computer
+
+This is the same as the previous path. Just choose the folder from your OneDrive location when you click **Browse…** In File Explorer or Finder, it is under **OneDrive**.
+
+### C. I have a OneDrive folder that is not on my computer yet
+
+This is a common situation. Your folder exists in OneDrive online, but you have never put a copy on your computer. The solution is to *sync* it. Syncing tells OneDrive, "keep a copy of this folder on my computer, and keep both copies up to date."
+
+**First, make sure the OneDrive app is installed and signed in** with your Temple account.
+
+::: {.panel-tabset group="os"}
+
+#### Windows
+
+OneDrive is built into Windows 10 and 11. Look for a **cloud icon** in the notification area at the bottom right of your screen (you may need to click the small up-arrow). If you do not see it, search the Start menu for **OneDrive** and sign in with your Temple email address.
+
+#### Mac
+
+1. Download and install the [OneDrive app](https://www.microsoft.com/en-us/microsoft-365/onedrive/download) (or get it from the App Store).
+2. Open it and sign in with your Temple email address.
+3. If macOS asks for permission for OneDrive to access files, allow it. If your Mac asks you to change a setting in *System Settings → Privacy & Security*, follow the prompt.
+
+#### Linux
+
+Microsoft does not offer an official OneDrive app for Linux. Your best options are to keep the project in a normal local folder (use path A) and upload copies to OneDrive in your browser when you want a backup, or to use a community-made OneDrive client. If you choose the latter, ask your IT contact whether it is permitted on your machine.
+
+:::
+
+**Then, sync the folder:**
+
+1. In a web browser, go to OneDrive (through your Temple Microsoft 365 sign-in) and open the folder that contains your thesis folder.
+2. Select the thesis folder and click **Sync** in the toolbar (it may be under the **…** menu). If your browser asks to open OneDrive, click **Open**.
+3. Wait a moment. The folder now appears in File Explorer or Finder under **OneDrive**.
+
+If your thesis folder does not exist at all yet, make it right in OneDrive's online view (click **New → Folder**) and then sync it as above. Or make it inside the OneDrive folder on your computer (see path B) and it will appear online automatically.
+
+Now make it a project, exactly as in path A: *File → New Project… → Existing Directory → Browse…* and choose the folder that now sits under **OneDrive**.
+
+:::{.callout-warning}
+## Two things to know about OneDrive
+
+- **"Files On-Demand."** To save space, OneDrive may keep some files only online and download them when you open them. Programs that look inside the folder can be confused by this. Right-click your thesis folder and choose **Always keep on this device**, so that every file is really there.
+- **Syncing while you render.** OneDrive sometimes tries to copy a file at the very moment RStudio is writing it, which can cause a brief error. If you see an error about a file being "in use" or "locked," wait a few seconds and render again. Do not keep two copies of the same project open on two computers at once.
+
+If you notice repeated trouble, the safest arrangement is to keep the project in a plain local folder and copy it to OneDrive when you reach a stopping point. Either way, **back up your work regularly**, and consider keeping a dated copy of your .qmd file at important milestones.
+:::
+
+:::
+
+:::{.callout-note collapse=true}
+## How will I know it worked?
+
+The top right corner of RStudio now shows your folder name, and a file ending in `.Rproj` appears in the Files pane. Next time, you can open your thesis by double-clicking that `.Rproj` file, or by using *File → Recent Projects*.
+:::
+
+# Step 6: Install apaquarto in the Project Folder {#step-6}
+
+An **extension** is a small package of formatting rules that you add to a project. You install apaquarto into your thesis folder so that Quarto knows how to format it.
+
+1. Open your project in RStudio (if it is not open already).
+2. Click the **Terminal** tab. It starts inside your project folder.
+3. Type or paste this, then press {{< kbd Enter >}}:
+
+```{bash}
+#| eval: false
+#| filename: "Terminal"
+quarto add wjschne/apaquarto
+```
+
+4. Quarto asks whether you trust the author of the extension. If you do, type `Y` and press {{< kbd Enter >}}. You are agreeing that the extension may run its formatting code on your computer.
+5. If it asks whether to proceed with installation, answer `Y`.
+
+A new folder called `_extensions` appears in your Files pane. **Do not edit or delete it.** That is where apaquarto lives.
+
+:::{.callout-tip collapse=true}
+## Prefer typing in the R Console?
+
+This does the same thing:
+
+```{r}
+#| eval: false
+#| filename: "Console"
+quarto::quarto_add_extension("wjschne/apaquarto", no_prompt = TRUE)
+```
+:::
+
+Installing the extension happens per project. If you start a different project (for a paper, say), repeat this step there.
+
+# Step 7: Create Your Thesis File {#step-7}
+
+1. In RStudio, choose *File → New File → Quarto Document…*
+2. In the window that appears, leave everything as it is and click **Create Empty Document** (or **Create**).
+3. Choose *File → Save*. Name the file `dissertation.qmd` (or `thesis.qmd`), and save it in your project folder. Be sure the name ends in `.qmd`.
+
+You now have a file open in the **Source** pane. Its first few lines might look like this:
+
+```yaml
+---
+title: "Untitled"
+---
+```
+
+The part between the two lines of three dashes is called the **YAML** (said "YAM-ul"). It holds your document's *settings*: title, author, and so on. Everything after it is your writing. In the next step, we will fill the settings in for you.
+
+:::{.callout-note collapse=true}
+## Source mode and Visual mode
+
+RStudio has two ways of looking at a Quarto file. **Source** shows you the plain text, with its markup. **Visual** looks more like a word processor, with buttons for bold and italics. The two are interchangeable, and you can switch with the **Source / Visual** buttons at the top of the editor. This tutorial describes Source mode, because it shows you exactly what is happening. Visual mode is a fine choice for ordinary writing, but it can sometimes rewrite unusual bits of markup, so keep an eye on the YAML at the top if you try it.
+:::
+
+# Step 8: Draft Your Front Matter with apa7maker {#step-8}
+
+Your thesis starts with a title page, copyright page, abstract, dedication, acknowledgments, and tables of contents. apaquarto builds all of these for you from the settings in your YAML. **apa7maker** is a free web page that writes those settings for you, so you do not have to remember them.
+
+1. Open [apa7maker](https://wjschne.github.io/apa7maker/). Be patient: it can take a little while to load.
+2. Set the **document mode** to **thesis**.
+3. Fill in the form: title, your name, the degree, your committee, and so on. Fields you do not need can be left blank.
+4. When you are ready, click **Make Document** in the side menu, then click **Update**.
+5. **Copy** the text that appears.
+6. Back in RStudio, in your `dissertation.qmd` file, **select everything** ({{< kbd Ctrl+A >}}, or {{< kbd Cmd+A >}} on a Mac), and **paste** over it ({{< kbd Ctrl+V >}} or {{< kbd Cmd+V >}}). Save the file.
+
+:::{.callout-important}
+## Privacy
+
+apa7maker runs in your browser. Still, as with any website, avoid typing anything into it that you would not want others to see. Your name, your title, and your committee members' names are all it needs.
+:::
+
+If you would like to see what the finished settings can look like, here is a trimmed example:
+
+```yaml
+---
+title: "An Inquiry into Vexing Problems at the Intersection of Digital Typography, Tasseomancy, and Badminton"
+shorttitle: "Typography, Tasseomancy, and Badminton"
+author:
+  - name: Your Name
+abstract: "This is my abstract."
+dedication: |
+  For everyone who wondered whether this would ever be finished.
+acknowledgments: |
+  Thanks to my committee, my family, and the miracle of coffee.
+bibliography: references.yaml
+documentmode: thesis
+thesis:
+  type: Dissertation
+  submitted-to: the Temple University Graduate Board
+  degree: Doctor of Philosophy
+  date: May 2027
+  committee:
+    - name: Advisor's Name, Ph.D.
+      role: Advisory Chair
+      affiliation: Department of Your Field
+    - name: Committee Member's Name, Ph.D.
+      affiliation: Department of Another Field
+    - name: Outside Member's Name, Ph.D.
+      role: External Member
+      affiliation: Another University
+format:
+  apaquarto-docx: default
+  apaquarto-html: default
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+```
+
+Below the YAML goes your writing. A very small starting body looks like this:
+
+````markdown
+# Introduction
+
+The body of the dissertation begins here.
+
+# References
+
+::: {#refs}
+:::
+````
+
+Each first-level heading (a line starting with a single `#`) becomes a **chapter** in thesis mode. The `# References` heading with the `{#refs}` block tells apaquarto where to put your reference list.
+
+:::{.callout-note collapse=true}
+## What the `format` lines mean
+
+The four lines under `format:` list the kinds of document you can make. `apaquarto-docx` is a Word file. `apaquarto-html` is a web page that is quick to produce and good for drafting. `apaquarto-typst` makes a .pdf through Typst, and `apaquarto-pdf` makes a .pdf through LaTeX. You can keep all of them or delete the ones you do not want. The next step shows how to choose among them.
+:::
+
+# Step 9: Render Your Document {#step-9}
+
+**Rendering** means turning your .qmd file into a finished document, the way "printing" turns a file into paper.
+
+1. Click the **Render** button at the top of the editor (or press {{< kbd Ctrl+Shift+K >}}; on a Mac, {{< kbd Cmd+Shift+K >}}).
+2. If you listed more than one format, click the small arrow beside **Render** to choose which one to make.
+3. A preview appears in the **Viewer** pane or in a browser tab, and the finished file appears in your project folder.
+
+:::{.callout-tip}
+## Which format should I render?
+
+| Format | Good for |
+|:-------|:---------|
+| `apaquarto-html` | Quick drafting. It renders fastest, so you can see the effect of your edits. |
+| `apaquarto-docx` | Sharing with an advisor who wants to comment in Word. |
+| `apaquarto-typst` | A polished and quickly rendered .pdf with no extra software. |
+| `apaquarto-pdf` | A .pdf made through LaTeX (needs TinyTeX or another LaTeX installation). It renders slowly compared to the other formats, but LaTeX is famous for rendering text that has a certain subtle beauty for the discerning eye. |
+
+My suggestion: draft with HTML, check the layout occasionally with the Typst .pdf, and render all formats before you send a version to anyone. Check with your Graduate School on which format it will accept for the final submission.
+:::
+
+:::{.callout-warning collapse=true}
+## Something went wrong. What now?
+
+- **Read the message in the *Background Jobs* tab.** It often names the line number and the problem. Common causes are a missing quotation mark or a stray space in the YAML.
+- **YAML is picky about spaces.** The indentation in the example above is deliberate. Indent with spaces, never tabs.
+- **A file is open in Word.** If you rendered a .docx and have it open in Word, close it before rendering again.
+- **Quarto is too old.** Run `quarto check` again (Step 4).
+- If you are stuck, copy the error message and ask for help in the [apaquarto issue tracker](https://github.com/wjschne/apaquarto/issues).
+:::
+
+# Step 10: Writing with Markdown {#step-10}
+
+**Markdown** is a way of writing formatted text using ordinary keyboard characters. It looks odd for about ten minutes, then becomes second nature. You can always look back at this page. For anything not covered here, see the [writing page](writing.qmd) and the [Quarto Markdown guide](https://quarto.org/docs/authoring/markdown-basics.html).
+
+## Formatting text
+
+| You type | You get |
+|:---------|:--------|
+| `*italics*` | *italics* |
+| `**bold**` | **bold** |
+| `***bold italics***` | ***bold italics*** |
+| `H~2~O` | H~2~O (subscript) |
+| `x^2^` | x^2^ (superscript) |
+
+APA style rarely uses bold in the body of your writing, but you might need it for a term or two. Use italics for emphasis, for statistical symbols such as *p*, and for the titles of books.
+
+## Separating paragraphs
+
+Leave **one blank line** between paragraphs:
+
+```markdown
+This is my first paragraph. It can run on for as many lines as I like,
+and the line breaks in the file do not matter.
+
+This is my second paragraph. The blank line above is what separates them.
+```
+
+apaquarto indents the first line of each paragraph automatically. Do not use the Tab key or spaces to indent.
+
+## Headings
+
+Start a line with one to five `#` symbols, followed by a space. More `#` means a smaller heading:
+
+```markdown
+# Chapter Title
+
+## Level 2 Heading
+
+### Level 3 Heading
+
+#### Level 4 Heading
+
+##### Level 5 Heading
+```
+
+In thesis mode, a level-1 heading starts a new chapter in all caps. Write headings in title case (capitalize the major words); apaquarto handles the rest of the formatting. See the [writing page](writing.qmd#headings-in-apa-style) for how APA headings differ from level to level.
+
+## Making tables
+
+The simplest table is drawn with vertical bars and dashes. Give it a label that begins with `tbl-` and a title after a colon:
+
+```markdown
+| Scale    | Description                    |
+|:---------|:-------------------------------|
+| Nominal  | Categories without an order    |
+| Ordinal  | Ordered categories             |
+| Interval | Quantities without a true zero |
+| Ratio    | Quantities with a true zero    |
+
+: Classic Scale Types {#tbl-scales apa-note="Adapted from Stevens's classification."}
+```
+
+- `#tbl-scales` is the table's **label**. In your text, `@tbl-scales` becomes "Table 1" (and the number updates itself if you add a table earlier!).
+- `apa-note` is optional and puts a note below the table.
+- The colons in the second row control alignment: `:---` left, `:---:` center, `---:` right.
+
+Typing a table by hand is fiddly. If you switch to **Visual** mode (Step 7), RStudio offers *Insert → Table* with a friendly grid. You can also build a table in a spreadsheet and copy the layout. 
+
+For more advanced users, you can create beautiful and/or complex tables with various packages in R or Python. I wrote the [apa7 package](https://wjschne.github.io/apa7/), which is designed specifically for creating APA-Style tables. I wrote a 24-part series of blog posts starting [here](https://wjschne.github.io/posts/apatables/apa701.html) in which I recreated all of the example tables from the *APA Manual*.
+
+## Inserting images
+
+Put the image file in your project folder (for example, in a subfolder named `img`). Then:
+
+```markdown
+![A Simple Mediation Model](img/mediation.png){#fig-mediation width="5in"
+fig-alt="A path diagram in which A causes B, and B causes C."
+apa-note="Variable A indirectly causes Variable C."}
+```
+
+- The text in `[ ]` is the figure's **title**.
+- `#fig-mediation` is the label: write `@fig-mediation` in your text to refer to "Figure 1".
+- `fig-alt` is a description of the image for readers who use a screen reader. **Please always include one**. It is good practice and makes your work accessible.
+- `width` and `apa-note` are optional.
+
+:::{.callout-tip collapse=true}
+## What is the difference between a figure and an illustration?
+
+A *figure* is a chart or graph. An *illustration* is other artwork, such as a photograph or a map. If you label an image with `#ill-` instead of `#fig-`, apaquarto numbers it separately, as in "Illustration 1." (Check with your committee whether it prefers one scheme.)
+:::
+
+## Block quotes
+
+A quotation of 40 words or more goes in its own indented block. Start each line with `>`:
+
+```markdown
+Austen [-@austen1990] had this to say about memory:
+
+> If any one faculty of our nature may be called more wonderful than the rest,
+> I do think it is memory. There seems something more speakingly
+> incomprehensible in the powers, the failures, the inequalities of memory,
+> than in any other of our intelligences. (p. 163)
+```
+
+For a quotation that ends in an attribution, as an epigraph often does, put a final line that starts with three hyphens (`---`), which turn into an em dash:
+
+```markdown
+> We are, to be sure, a miracle every way.
+>
+> --- Jane Austen, *Mansfield Park* [-@austen1990]
+```
+
+If a paragraph continues after the block quote (it is the *same* paragraph, not a new one), wrap the continuation so it is not indented:
+
+```markdown
+:::{.NoIndent}
+And that is why memory matters.
+:::
+```
+
+## Appendices
+
+Appendices come **after** the references. Each one is a level-1 heading with a label that starts with `apx-`:
+
+````markdown
+# References
+
+::: {#refs}
+:::
+
+# Interview Questions {#apx-interview}
+
+The questions asked of each participant are in this appendix.
+
+# Survey Instrument {#apx-survey}
+
+The full survey is reproduced here.
+````
+
+- You do **not** need to write the word "Appendix." apaquarto adds it, plus the letters: *Appendix A*, *Appendix B*, and so on. In thesis mode, appendices are also gathered in the table of contents.
+- In your text, `@apx-interview` becomes "Appendix A" (or whichever letter it was given).
+- Tables and figures inside appendices are numbered automatically: Table A1, Figure B1, and so forth.
+
+# Step 11: Set Up Zotero for Citations {#step-11}
+
+**Zotero** is a free reference manager. You collect your sources in it (articles, books, chapters), and it remembers every detail of each source. apaquarto then reads Zotero's list so that citations in your text and your reference list are built automatically, in APA style. You never type a reference by hand, and you never have to fix one by hand either.
+
+## 11a. Install Zotero
+
+Download Zotero from [zotero.org/download](https://www.zotero.org/download/) and install it. It is available for Windows, Mac, and Linux. (Linux users get an archive to unpack; Zotero's download page links to instructions.)
+
+You will also want the **Zotero Connector**, a browser add-on from the same page. When you are looking at an article on a website, one click on the connector adds it to your Zotero library.
+
+## 11b. Install Better BibTeX
+
+**Better BibTeX** is a Zotero add-on. It does two things you need: it gives each source a short, stable **citation key** (like `austen1990`), and it can export your library to a file that stays up to date.
+
+1. Go to the [Better BibTeX installation page](https://retorque.re/zotero-better-bibtex/installation/) and download the latest `.xpi` file. (On some browsers you need to right-click the download link and choose *Save Link As…* so the browser does not try to open it.)
+2. In Zotero, choose *Tools → Plugins* (on some versions and systems, *Tools → Add-ons*).
+3. Click the **gear icon** near the top right and choose **Install Plugin From File…** (or *Install Add-on From File…*).
+4. Select the `.xpi` file you downloaded.
+5. Restart Zotero if asked.
+
+## 11c. Add your sources
+
+The quickest way to add a source is with its **DOI** (for articles and many chapters) or **ISBN** (for books):
+
+1. In Zotero, click the **magic wand** icon in the toolbar, called **Add Item(s) by Identifier**.
+2. Type or paste a DOI (such as `10.1037/amp0000700`) or an ISBN, and press {{< kbd Enter >}}.
+3. Zotero looks up all the details and adds the source to your library.
+
+:::{.callout-tip}
+## Always glance at the result
+
+Automatic lookups are good, but not perfect. Click each new source and check that the authors, year, title, and journal look right. Mistakes in Zotero turn into mistakes in your reference list. Pay particular attention to capitalization of titles and to organization names listed as authors.
+:::
+
+For sources without a DOI or ISBN (reports, web pages, unpublished work), use the **Zotero Connector** while you are on the webpage, or click the **New Item** button (the green plus) and fill in the fields by hand.
+
+## 11d. Find your citation key
+
+Click any source. In the right-hand pane, you will see a **Citation Key** field. That is the short name you will use to cite the source. A key might look like `austenMansfieldPark1990`. You can leave the keys as they are. Just copy them as you need them.
+
+:::{.callout-note collapse=true}
+## Is there an easier way to copy a key?
+
+Yes. In Zotero, right-click a source and choose **Better BibTeX → Copy Citation Key** (the menu wording can differ slightly across versions). Then paste it into your document.
+:::
+
+## 11e. Export your library to your project folder {#export}
+
+Now you will make a **file** that holds your library, in your project folder, so that Quarto can read it. You do this once, and the file keeps itself up to date.
+
+1. In Zotero, right-click your library (**My Library**) or the collection of sources for your thesis in the left-hand pane.
+2. Choose **Export Library…** (or *Export Collection…*).
+3. Set **Format** to **Better CSL YAML**.
+4. **Check the box that says "Keep updated."**
+5. Click **OK**, and in the file dialog, go to **your thesis project folder** (the one from Step 5). Name the file `references.yaml` and click **Save**.
+
+You will now see `references.yaml` in the RStudio **Files** pane. From now on, whenever you add or change a source in Zotero, the file updates itself, as long as Zotero is open.
+
+:::{.callout-warning collapse=true}
+## If you work in a OneDrive folder
+
+Save the file *inside the synced folder* (see Step 5) so that it travels with the project. If you see a message about the file being in use, wait a few seconds and let OneDrive finish syncing.
+:::
+
+## 11f. Tell your document where the references are
+
+In your .qmd file's YAML (the part at the top), make sure there is a `bibliography` line that names the file:
+
+```yaml
+bibliography: references.yaml
+```
+
+If you used apa7maker in Step 8, it may have a place to enter this. If not, add the line yourself, and make sure it is *aligned with the other top-level lines*, with no leading spaces. You do not need to supply a citation style: apaquarto already includes APA style.
+
+# Step 12: Cite Sources in the Text {#step-12}
+
+You cite a source by writing `@` followed by its **citation key**. When you render, apaquarto turns it into the right citation and adds the source to your reference list. Only sources you actually cite appear in the references.
+
+I will use `@smith2020` and `@jones2019` as stand-ins for your own keys.
+
+## Parenthetical citations
+
+Put the citation in **square brackets**. This is the form you use at the end of a sentence:
+
+| You type | You get |
+|:---------|:--------|
+| `[@smith2020]` | (Smith, 2020) |
+| `[@smith2020; @jones2019]` | (Jones, 2019; Smith, 2020) |
+| `[@smith2020, pp. 35--41]` | (Smith, 2020, 35-41) |
+| `[e.g., @smith2020]` | (e.g., Smith, 2020) |
+| `[see @smith2020, p. 12]` | (see Smith, 2020, 12) |
+
+A few details:
+
+- **Several sources:** separate them with a semicolon. They are alphabetized for you.
+- **Several authors:** apaquarto handles the ampersand and "et al." according to APA rules. You do nothing.
+- **Page numbers:** type a single page or a page range with a hyphen between the first and last page number. There is not need to add `p.` or `pp.`, because apaquarto will add that for you. Also, the hyphen automatically will be converted to an en dash (--), as specified by APA style.
+- **A prefix** such as *e.g.* or *see* goes just before the `@`. If you have a prefix for a group of sources, attach it to the citation that comes first alphabetically.
+
+Example in a sentence:
+
+```markdown
+Self-efficacy predicts persistence [e.g., @jones2019, @smith2020, 35-41].
+```
+
+## Narrative citations
+
+A **narrative citation** puts the author's name in your sentence. Write the key with **no brackets**:
+
+| You type | You get |
+|:---------|:--------|
+| `@smith2020 found a result.` | Smith (2020) found a result. |
+| `@smith2020 [101--103] found a result.` | Smith (2020, pp. 101--103) found a result. |
+| `@smith2020 ['s] theory` | Smith's (2020) theory |
+| `@smith2020 ['s, 35] theory` | Smith's (2020, p. 35) theory |
+
+Notes:
+
+- For **page numbers**, put them in square brackets *after* the key. You do not need to type "p." or "pp." here; apaquarto adds it, and a hyphen between two numbers becomes an en dash.
+- The `['s]` trick is an apaquarto feature for **possessives**. It puts the possessive on the author's name and moves the year outside, as APA prescribes.
+
+:::{.callout-tip}
+## Tip: Make a citation easier to spot
+
+If a citation does not turn into a name and year, but shows up as `@smith2020` in your output, the key is not in your references file. Check the spelling, and check that Zotero has the source and has exported it (Step 11e). Capitalization matters!
+:::
+
+For more patterns (suppressing ampersands, masked citations, meta-analysis references), see the [citations section of the writing page](writing.qmd#citations).
+
+# Step 13: Changing Options Later {#step-13}
+
+You can change how your thesis looks at any time by changing its YAML settings. There are two ways:
+
+## Change the YAML directly
+
+Open your .qmd file and edit the settings at the top. For example, to change the committee or the date:
+
+```yaml
+thesis:
+  date: December 2027
+```
+
+or to change the left margin:
+
+```yaml
+margin:
+  left: 1.25in
+```
+
+The [options page](options.qmd) lists everything you can change, including the [thesis options](options.qmd#dissertations-and-theses). Each entry includes an example you can copy.
+
+## Or use apa7maker again
+
+Go back to [apa7maker](https://wjschne.github.io/apa7maker/), import your document, change what you like, click **Make Document** and **Update**, and copy the YAML. Then replace *only the YAML* at the top of your file (the part between the two lines of three dashes), leaving your writing below untouched.
+
+:::{.callout-important}
+## Be careful about the margins and layout
+
+Thesis mode sets margins, spacing, fonts, and page numbering to follow the Graduate School's handbook. Changing them can make your thesis stop conforming. If you change them, confirm with the Graduate School before submitting.
+:::
+
+# Troubleshooting Quick List
+
+| Problem | Try this |
+|:--------|:---------|
+| RStudio cannot find R | Reinstall R (Step 1), then restart RStudio. |
+| `quarto` is "not recognized" in the Terminal | Close and reopen RStudio. If that fails, reinstall Quarto ([quarto.org](https://quarto.org/docs/get-started/)). |
+| The extension did not install | Make sure the Terminal is inside your project folder, then repeat Step 6. |
+| The .pdf (LaTeX) will not render | Run `quarto check`, then `quarto install tinytex` (Step 4). Or use `apaquarto-typst`. |
+| A citation shows as `@something` | The key is missing from `references.yaml` or is misspelled (Step 12). |
+| A figure does not appear | Check the file name, its extension, and that the image sits where you said it does. |
+| An error about a file in use | Close the output file, wait for OneDrive to finish syncing, and render again. |
+
+# Where to Go from Here
+
+- The [writing page](writing.qmd) covers tables, figures, notes, and citations in more detail.
+- The [options page](options.qmd) lists every setting.
+- The [Quarto documentation](https://quarto.org/docs/guide/) explains everything beneath apaquarto.
+- Found something confusing on this page? Please [tell us](https://github.com/wjschne/apaquarto/issues). If you are stuck, someone else probably is too, and the page can be made better.
+
+You can do this. Good luck with your thesis!
+
+<br>
+
+*Drafted with AI assistance (Claude Sonnet 5.5, Anthropic). Reviewed and edited by W. Joel Schneider, CEHD, Temple University.*

@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Thesis and Dissertation Tutorial – apaquarto</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e056b69f5ccf79f809a7a6a301a9d6e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/kbd/kbd.js"></script>
+<link href="site_libs/quarto-contrib/kbd/kbd.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">apaquarto</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Intro</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./installation.html"> 
+<span class="menu-text">Install</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./apashiny.html"> 
+<span class="menu-text">App</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./options.html"> 
+<span class="menu-text">Options</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./writing.html"> 
+<span class="menu-text">APA Markdown</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./thesis-tutorial.html" aria-current="page"> 
+<span class="menu-text">Thesis Tutorial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resources.html"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./changelog.html"> 
+<span class="menu-text">Changelog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/wjschne/apaquarto"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Source</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-steps-at-a-glance" id="toc-the-steps-at-a-glance" class="nav-link active" data-scroll-target="#the-steps-at-a-glance">The Steps at a Glance</a></li>
+  <li><a href="#before" id="toc-before" class="nav-link" data-scroll-target="#before">Before You Begin: Finding Your Way Around Your Computer</a>
+  <ul class="collapse">
+  <li><a href="#where-are-my-files" id="toc-where-are-my-files" class="nav-link" data-scroll-target="#where-are-my-files">Where are my files?</a></li>
+  <li><a href="#what-is-the-terminal" id="toc-what-is-the-terminal" class="nav-link" data-scroll-target="#what-is-the-terminal">What is the terminal?</a></li>
+  </ul></li>
+  <li><a href="#step-1" id="toc-step-1" class="nav-link" data-scroll-target="#step-1">Step 1: Install R</a></li>
+  <li><a href="#step-2" id="toc-step-2" class="nav-link" data-scroll-target="#step-2">Step 2: Install RStudio</a>
+  <ul class="collapse">
+  <li><a href="#a-quick-tour-of-rstudio" id="toc-a-quick-tour-of-rstudio" class="nav-link" data-scroll-target="#a-quick-tour-of-rstudio">A quick tour of RStudio</a></li>
+  </ul></li>
+  <li><a href="#step-3" id="toc-step-3" class="nav-link" data-scroll-target="#step-3">Step 3: Install the Packages apaquarto Needs</a></li>
+  <li><a href="#step-4" id="toc-step-4" class="nav-link" data-scroll-target="#step-4">Step 4: Check Quarto, Typst, and TinyTeX</a>
+  <ul class="collapse">
+  <li><a href="#check-what-you-have" id="toc-check-what-you-have" class="nav-link" data-scroll-target="#check-what-you-have">Check what you have</a></li>
+  <li><a href="#install-or-update-tinytex-optional" id="toc-install-or-update-tinytex-optional" class="nav-link" data-scroll-target="#install-or-update-tinytex-optional">Install or update TinyTeX (optional)</a></li>
+  </ul></li>
+  <li><a href="#step-5" id="toc-step-5" class="nav-link" data-scroll-target="#step-5">Step 5: Create an RStudio Project in Your Thesis Folder</a></li>
+  <li><a href="#step-6" id="toc-step-6" class="nav-link" data-scroll-target="#step-6">Step 6: Install apaquarto in the Project Folder</a></li>
+  <li><a href="#step-7" id="toc-step-7" class="nav-link" data-scroll-target="#step-7">Step 7: Create Your Thesis File</a></li>
+  <li><a href="#step-8" id="toc-step-8" class="nav-link" data-scroll-target="#step-8">Step 8: Draft Your Front Matter with apa7maker</a></li>
+  <li><a href="#step-9" id="toc-step-9" class="nav-link" data-scroll-target="#step-9">Step 9: Render Your Document</a></li>
+  <li><a href="#step-10" id="toc-step-10" class="nav-link" data-scroll-target="#step-10">Step 10: Writing with Markdown</a>
+  <ul class="collapse">
+  <li><a href="#formatting-text" id="toc-formatting-text" class="nav-link" data-scroll-target="#formatting-text">Formatting text</a></li>
+  <li><a href="#separating-paragraphs" id="toc-separating-paragraphs" class="nav-link" data-scroll-target="#separating-paragraphs">Separating paragraphs</a></li>
+  <li><a href="#headings" id="toc-headings" class="nav-link" data-scroll-target="#headings">Headings</a></li>
+  <li><a href="#making-tables" id="toc-making-tables" class="nav-link" data-scroll-target="#making-tables">Making tables</a></li>
+  <li><a href="#inserting-images" id="toc-inserting-images" class="nav-link" data-scroll-target="#inserting-images">Inserting images</a></li>
+  <li><a href="#block-quotes" id="toc-block-quotes" class="nav-link" data-scroll-target="#block-quotes">Block quotes</a></li>
+  <li><a href="#appendices" id="toc-appendices" class="nav-link" data-scroll-target="#appendices">Appendices</a></li>
+  </ul></li>
+  <li><a href="#step-11" id="toc-step-11" class="nav-link" data-scroll-target="#step-11">Step 11: Set Up Zotero for Citations</a>
+  <ul class="collapse">
+  <li><a href="#a.-install-zotero" id="toc-a.-install-zotero" class="nav-link" data-scroll-target="#a.-install-zotero">11a. Install Zotero</a></li>
+  <li><a href="#b.-install-better-bibtex" id="toc-b.-install-better-bibtex" class="nav-link" data-scroll-target="#b.-install-better-bibtex">11b. Install Better BibTeX</a></li>
+  <li><a href="#c.-add-your-sources" id="toc-c.-add-your-sources" class="nav-link" data-scroll-target="#c.-add-your-sources">11c. Add your sources</a></li>
+  <li><a href="#d.-find-your-citation-key" id="toc-d.-find-your-citation-key" class="nav-link" data-scroll-target="#d.-find-your-citation-key">11d. Find your citation key</a></li>
+  <li><a href="#export" id="toc-export" class="nav-link" data-scroll-target="#export">11e. Export your library to your project folder</a></li>
+  <li><a href="#f.-tell-your-document-where-the-references-are" id="toc-f.-tell-your-document-where-the-references-are" class="nav-link" data-scroll-target="#f.-tell-your-document-where-the-references-are">11f. Tell your document where the references are</a></li>
+  </ul></li>
+  <li><a href="#step-12" id="toc-step-12" class="nav-link" data-scroll-target="#step-12">Step 12: Cite Sources in the Text</a>
+  <ul class="collapse">
+  <li><a href="#parenthetical-citations" id="toc-parenthetical-citations" class="nav-link" data-scroll-target="#parenthetical-citations">Parenthetical citations</a></li>
+  <li><a href="#narrative-citations" id="toc-narrative-citations" class="nav-link" data-scroll-target="#narrative-citations">Narrative citations</a></li>
+  </ul></li>
+  <li><a href="#step-13" id="toc-step-13" class="nav-link" data-scroll-target="#step-13">Step 13: Changing Options Later</a>
+  <ul class="collapse">
+  <li><a href="#change-the-yaml-directly" id="toc-change-the-yaml-directly" class="nav-link" data-scroll-target="#change-the-yaml-directly">Change the YAML directly</a></li>
+  <li><a href="#or-use-apa7maker-again" id="toc-or-use-apa7maker-again" class="nav-link" data-scroll-target="#or-use-apa7maker-again">Or use apa7maker again</a></li>
+  </ul></li>
+  <li><a href="#troubleshooting-quick-list" id="toc-troubleshooting-quick-list" class="nav-link" data-scroll-target="#troubleshooting-quick-list">Troubleshooting Quick List</a></li>
+  <li><a href="#where-to-go-from-here" id="toc-where-to-go-from-here" class="nav-link" data-scroll-target="#where-to-go-from-here">Where to Go from Here</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Thesis and Dissertation Tutorial</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This tutorial is for graduate students who want to write a thesis or dissertation with apaquarto’s <strong>thesis mode</strong>. You do not need to be a programmer, and you do not need to have used tools like Quarto or RStudio before. If you can use a word processor and install a program, you can do this.</p>
+<p>A few promises before we start:</p>
+<ul>
+<li><strong>You will not break anything.</strong> Every step can be repeated. If something goes sideways, you can almost always close the program, reopen it, and try again.</li>
+<li><strong>It is normal to feel lost at first.</strong> Setup is the hardest part. Once it is done, writing is much like writing in any other program.</li>
+<li><strong>Ask for help early.</strong> Your advisor, a labmate, or a campus technology help desk can often sort out an installation problem in minutes. The <a href="https://github.com/wjschne/apaquarto/issues">apaquarto issue tracker</a> is also friendly to beginners’ questions.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Check your program’s requirements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Thesis mode follows Temple University’s <em>Dissertation and Thesis Handbook</em> (see the <a href="./options.html#dissertations-and-theses">options page</a> for the edition it follows). Formatting rules change from year to year, and your department or committee may ask for something different. Before you submit, confirm the current requirements with the Graduate School and your committee. Treat apaquarto’s output as a very good first draft of the format, not as an official approval.</p>
+</div>
+</div>
+<section id="the-steps-at-a-glance" class="level1">
+<h1>The Steps at a Glance</h1>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Step</th>
+<th style="text-align: left;">What you do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><a href="#step-1">1</a></td>
+<td style="text-align: left;">Install R (a free program that RStudio relies on)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#step-2">2</a></td>
+<td style="text-align: left;">Install RStudio (the program you will write in)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#step-3">3</a></td>
+<td style="text-align: left;">Install a few R packages that apaquarto needs</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#step-4">4</a></td>
+<td style="text-align: left;">Check that Quarto, Typst, and (optionally) TinyTeX are ready</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#step-5">5</a></td>
+<td style="text-align: left;">Make a project folder (on your computer, OneDrive, or both) and turn it into an RStudio project</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#step-6">6</a></td>
+<td style="text-align: left;">Install apaquarto in the project folder</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#step-7">7</a></td>
+<td style="text-align: left;">Create your thesis file</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#step-8">8</a></td>
+<td style="text-align: left;">Fill in the front matter with apa7maker</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#step-9">9</a></td>
+<td style="text-align: left;">Render your file to .docx, .pdf, or .html</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#step-10">10</a></td>
+<td style="text-align: left;">Learn the handful of Markdown tricks you need</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#step-11">11</a></td>
+<td style="text-align: left;">Set up Zotero for citations and references</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#step-12">12</a></td>
+<td style="text-align: left;">Cite your sources in the text</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#step-13">13</a></td>
+<td style="text-align: left;">Change options later</td>
+</tr>
+</tbody>
+</table>
+<p>You do these steps <strong>once</strong>. After that, your writing routine is just: open the project, write, click <strong>Render</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What are all these programs, and why so many?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Think of building a house. You need tools (R, Quarto), a workshop to use them in (RStudio), and a few specialty parts (packages and extensions).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 32%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Piece</th>
+<th style="text-align: left;">What it is</th>
+<th style="text-align: left;">Everyday analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Quarto</strong></td>
+<td style="text-align: left;">The engine that turns a plain-text file into a finished document</td>
+<td style="text-align: left;">The printing press</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>apaquarto</strong></td>
+<td style="text-align: left;">An add-on for Quarto that knows APA style and Temple’s thesis layout</td>
+<td style="text-align: left;">The house style the press is set up to follow</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>R</strong></td>
+<td style="text-align: left;">A programming language</td>
+<td style="text-align: left;">A utility that RStudio plugs into</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>RStudio</strong></td>
+<td style="text-align: left;">A free writing environment with Quarto built in</td>
+<td style="text-align: left;">Your desk</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Zotero</strong></td>
+<td style="text-align: left;">A free reference manager</td>
+<td style="text-align: left;">Your index-card box</td>
+</tr>
+</tbody>
+</table>
+<p>You will write in a <strong>.qmd file</strong> (a “Quarto document”). It is a plain-text file with a little markup for things like italics and headings. You never format by hand: you tell Quarto what each piece of text <em>is</em> (a heading, a quotation, a citation) and apaquarto decides how it should look.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="before" class="level1">
+<h1>Before You Begin: Finding Your Way Around Your Computer</h1>
+<p>Many students keep their files mostly online in OneDrive and only open them through a browser. That works well for Word, but the programs in this tutorial need to find your files <strong>on your computer</strong>. This short section gives you the vocabulary you will need.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key idea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>folder on your computer</strong> and a <strong>folder in OneDrive</strong> can be the <em>same folder</em>. OneDrive keeps a copy of a folder on your computer and copies it up to the cloud whenever it changes. You can look at it either way. Step 5 shows how to set this up.</p>
+</div>
+</div>
+<section id="where-are-my-files" class="level2">
+<h2 class="anchored" data-anchor-id="where-are-my-files">Where are my files?</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Linux</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Open <strong>File Explorer</strong> (the yellow folder icon on your taskbar, or press <kbd title="Win+E" aria-hidden="true">Win+E</kbd><span class="visually-hidden">Win+E</span>). On the left you will see <strong>Documents</strong>, <strong>Desktop</strong>, and, if OneDrive is installed and signed in, an entry such as <strong>OneDrive – Temple University</strong>. That is your OneDrive folder, and it lives on your computer.</p>
+<p>To see a folder’s full location, click once in the address bar at the top of File Explorer. It will look something like <code>C:\Users\yourname\Documents\Thesis</code>.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Open <strong>Finder</strong> (the smiley-face icon in the Dock). In the sidebar you will see <strong>Documents</strong>, <strong>Desktop</strong>, and, if the OneDrive app is installed and signed in, <strong>OneDrive</strong>. To see a folder’s full location, open it in Finder and choose <em>View → Show Path Bar</em>. The path appears at the bottom of the window.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Open your file manager (called <em>Files</em> on many systems). Your personal files live in your <strong>home folder</strong>, for example <code>/home/yourname/Documents</code>. Microsoft does not offer an official OneDrive app for Linux, so see the Linux note in <a href="#step-5">Step 5</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-is-the-terminal" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-terminal">What is the terminal?</h2>
+<p>A <strong>terminal</strong> is a window where you type a command instead of clicking a button. You will use one a few times. You never need to understand it deeply: you type (or paste) the exact text shown on this page, press <kbd title="Enter" aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>, and read what comes back. RStudio has a terminal built in (a tab next to the Console), so you do not need to hunt for a separate program.</p>
+</section>
+</section>
+<section id="step-1" class="level1">
+<h1>Step 1: Install R</h1>
+<p>R is a free programming language used for statistics. <strong>You do not have to use R for anything.</strong> apaquarto works perfectly well for a thesis that contains no analyses at all. We install R only because RStudio, the friendliest place to use Quarto, expects it to be there. If you <em>do</em> analyze data, you will already have R ready.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Linux</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<ol type="1">
+<li>Go to the <a href="https://cran.r-project.org/bin/windows/base/">R download page for Windows</a>.</li>
+<li>Click <strong>Download R</strong> (the exact version number will differ from what you see here).</li>
+<li>Open the downloaded file and click through the installer. The default choices are fine.</li>
+</ol>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<ol type="1">
+<li>Go to the <a href="https://cran.r-project.org/bin/macosx/">R download page for macOS</a>.</li>
+<li>Choose the installer that matches your Mac. If you are not sure which you have, click the Apple menu and choose <em>About This Mac</em>. If it says <strong>Apple M1</strong>, <strong>M2</strong>, <strong>M3</strong> (or similar), pick the <em>Apple silicon</em> version. If it says <strong>Intel</strong>, pick the Intel version.</li>
+<li>Open the downloaded .pkg file and click through the installer.</li>
+</ol>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>Instructions depend on your distribution. Start at the <a href="https://cran.r-project.org/bin/linux/">R download page for Linux</a> and choose Debian, Fedora, Red Hat, SUSE, or Ubuntu. Those pages give the exact commands to paste into a terminal. The version of R in your system’s default software store is often old, so it is worth following the CRAN instructions.</p>
+</div>
+</div>
+</div>
+<p>You will not see a new program to open. That is fine. R works quietly in the background once RStudio is installed.</p>
+</section>
+<section id="step-2" class="level1">
+<h1>Step 2: Install RStudio</h1>
+<p>RStudio is the program you will write in. It is free.</p>
+<ol type="1">
+<li>Go to the <a href="https://posit.co/download/rstudio-desktop/">RStudio Desktop download page</a>.</li>
+<li>Choose the installer for your system (Windows, macOS, or your Linux distribution) and install it as you would any other program.</li>
+<li>Open RStudio. The first time, it should find R on its own.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What if I already use another program, such as Positron or VS Code?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>RStudio is only one of several places to use Quarto. If you already like another one, use it. <a href="https://positron.posit.co/">Positron</a> is a newer program from the same company that makes RStudio and Quarto, and it works with many languages. <a href="https://code.visualstudio.com/">VS Code</a> is another popular option. The steps in this tutorial are written for RStudio, because it is the gentlest place to begin, but the ideas carry over. See the <a href="./installation.html">installation page</a> for more options.</p>
+</div>
+</div>
+</div>
+<section id="a-quick-tour-of-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="a-quick-tour-of-rstudio">A quick tour of RStudio</h2>
+<p>When RStudio opens, you will see several panes (windows within the window). Their exact arrangement may differ on your screen, but you will mostly care about these:</p>
+<ul>
+<li><strong>Source</strong> (top left, once you open a file): where you write.</li>
+<li><strong>Console</strong> and <strong>Terminal</strong> (bottom left, as tabs): where you type commands.</li>
+<li><strong>Files</strong>, <strong>Packages</strong>, and <strong>Viewer</strong> (right side, as tabs): where you see your folder, installed add-ons, and a preview of your document.</li>
+</ul>
+<p>If you cannot find the Terminal tab, choose <em>Tools → Terminal → New Terminal</em> from the menu at the top (Mac users: the menu bar at the top of the screen).</p>
+</section>
+</section>
+<section id="step-3" class="level1">
+<h1>Step 3: Install the Packages apaquarto Needs</h1>
+<p>A <strong>package</strong> is a small add-on for R. apaquarto uses a couple of them to make clean, sharp figures. You install each package once.</p>
+<ol type="1">
+<li>In RStudio, click in the <strong>Console</strong> (the pane with a <code>&gt;</code> symbol).</li>
+<li>Paste the following line and press <kbd title="Enter" aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>:</li>
+</ol>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Console</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"ragg"</span>, <span class="st">"svglite"</span>, <span class="st">"quarto"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Wait. Text will scroll by for a minute or two. When the <code>&gt;</code> symbol returns, it is finished.</li>
+</ol>
+<p>If a message asks whether you would like to install packages from source or use a personal library, answer <strong>Yes</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What do these packages do?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>ragg</strong> draws high-quality images of plots.</li>
+<li><strong>svglite</strong> draws sharp, scalable plots.</li>
+<li><strong>quarto</strong> lets R talk to Quarto (it is a helper, not Quarto itself).</li>
+</ul>
+<p>You may also be asked to install a few others (such as <strong>knitr</strong> or <strong>rmarkdown</strong>). Say yes.</p>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Linux</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>Nothing more to do. If a message mentions <em>Rtools</em>, you can ignore it. These packages install ready-made.</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p>Nothing more to do in most cases. If a pop-up asks to install “command line developer tools,” you can click <strong>Install</strong>, but you do not need it for these packages.</p>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<p>On Linux, R packages are sometimes built on your machine and need a few system libraries. If the installation stops with an error that names a missing library, install the libraries and try again. On Ubuntu or Debian, this usually does it:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  libfontconfig1-dev libharfbuzz-dev libfribidi-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>On other distributions, the names are similar but slightly different. Searching for the library names in the error message will lead you to the right ones.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4" class="level1">
+<h1>Step 4: Check Quarto, Typst, and TinyTeX</h1>
+<p>apaquarto needs <strong>Quarto 1.9 or newer</strong>. RStudio comes with its own copy of Quarto, but the copy may be older than that, so we check.</p>
+<section id="check-what-you-have" class="level2">
+<h2 class="anchored" data-anchor-id="check-what-you-have">Check what you have</h2>
+<ol type="1">
+<li>Click the <strong>Terminal</strong> tab in RStudio.</li>
+<li>Type this and press <kbd title="Enter" aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>:</li>
+</ol>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> check</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>You will see a list of checks. Look for these lines:</p>
+<ul>
+<li><strong>Quarto version.</strong> Does it say <code>1.9</code> or higher? If not, install the newest Quarto from the <a href="https://quarto.org/docs/get-started/">Quarto download page</a>, then <strong>close and reopen RStudio</strong> and run <code>quarto check</code> again.</li>
+<li><strong>Typst.</strong> Quarto ships with Typst built in, so there is nothing separate to install. Typst is a modern document-typesetting tool that makes .pdf files quickly and without any extra software.</li>
+<li><strong>TinyTeX</strong> (under <em>Checking LaTeX installation</em>). This is only needed for one of the .pdf options (see the next box).</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Do I need TinyTeX?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>apaquarto can make a .pdf in two ways:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 42%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Format name</th>
+<th style="text-align: left;">How it makes a .pdf</th>
+<th style="text-align: center;">Needs TinyTeX?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>apaquarto-typst</code></td>
+<td style="text-align: left;">Typst</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>apaquarto-pdf</code></td>
+<td style="text-align: left;">LaTeX</td>
+<td style="text-align: center;">Yes (unless you already have a LaTeX setup)</td>
+</tr>
+</tbody>
+</table>
+<p>If you only want .docx, .html, and a .pdf from Typst, <strong>you can skip TinyTeX entirely.</strong> If you want the LaTeX .pdf, install it as shown below.</p>
+<p><strong>Already use LaTeX?</strong> If you have TeX Live, MacTeX, or MiKTeX installed, Quarto will find it. You can skip TinyTeX.</p>
+</div>
+</div>
+</section>
+<section id="install-or-update-tinytex-optional" class="level2">
+<h2 class="anchored" data-anchor-id="install-or-update-tinytex-optional">Install or update TinyTeX (optional)</h2>
+<p>In the Console:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Console</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install tinytex package</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Install TinyTeX program</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify the installation</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">is_tinytex</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>This downloads a few hundred megabytes, so it may take several minutes. To update TinyTeX later:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Console</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">tlmgr_update</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>If a pop-up or message asks permission
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Quarto may ask whether you want to continue or whether to add TinyTeX to your system path. The defaults are fine. If your computer is managed by your university and an installation is blocked, contact your IT help desk. Please do not try to work around the block yourself.</p>
+</div>
+</div>
+</div>
+<p>When you are done, run <code>quarto check</code> once more in the terminal. Everything you plan to use should report as OK.</p>
+</section>
+</section>
+<section id="step-5" class="level1">
+<h1>Step 5: Create an RStudio Project in Your Thesis Folder</h1>
+<p>An <strong>RStudio project</strong> is a folder that RStudio treats as home base for one piece of work. When you open the project, everything is right where you left it, and apaquarto, your references, and your figures can all find each other. <strong>Do this for your thesis.</strong></p>
+<p>Your thesis folder will hold your thesis file, your references, your images, and the finished documents.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Folder names
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Give the folder a short name with <strong>no spaces or special characters</strong>, such as <code>Dissertation</code> or <code>thesis-2027</code>. Spaces are not forbidden, but they cause trouble more often than you would expect.</p>
+</div>
+</div>
+<p>Pick the path that matches your situation:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">A. I want the folder only on my computer</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">B. I already have a folder in OneDrive that is on my computer</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">C. I have a OneDrive folder that is not on my computer yet</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<ol type="1">
+<li>In File Explorer or Finder, go to a place you will remember (for example, <strong>Documents</strong>).</li>
+<li>Make a new folder: right-click in an empty spot, then choose <em>New → Folder</em> (Windows) or <em>New Folder</em> (Mac). Name it <code>Dissertation</code>.</li>
+<li>In RStudio, choose <em>File → New Project…</em></li>
+<li>Choose <strong>Existing Directory</strong>.</li>
+<li>Click <strong>Browse…</strong>, select your new folder, click <strong>Choose</strong> (or <strong>Open</strong>), then click <strong>Create Project</strong>.</li>
+</ol>
+<p>RStudio reopens inside your project. You should see your folder’s contents in the <strong>Files</strong> pane.</p>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<p>This is the same as the previous path. Just choose the folder from your OneDrive location when you click <strong>Browse…</strong> In File Explorer or Finder, it is under <strong>OneDrive</strong>.</p>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<p>This is a common situation. Your folder exists in OneDrive online, but you have never put a copy on your computer. The solution is to <em>sync</em> it. Syncing tells OneDrive, “keep a copy of this folder on my computer, and keep both copies up to date.”</p>
+<p><strong>First, make sure the OneDrive app is installed and signed in</strong> with your Temple account.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Linux</a></li></ul>
+<div class="tab-content" data-group="os">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<p>OneDrive is built into Windows 10 and 11. Look for a <strong>cloud icon</strong> in the notification area at the bottom right of your screen (you may need to click the small up-arrow). If you do not see it, search the Start menu for <strong>OneDrive</strong> and sign in with your Temple email address.</p>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<ol type="1">
+<li>Download and install the <a href="https://www.microsoft.com/en-us/microsoft-365/onedrive/download">OneDrive app</a> (or get it from the App Store).</li>
+<li>Open it and sign in with your Temple email address.</li>
+<li>If macOS asks for permission for OneDrive to access files, allow it. If your Mac asks you to change a setting in <em>System Settings → Privacy &amp; Security</em>, follow the prompt.</li>
+</ol>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<p>Microsoft does not offer an official OneDrive app for Linux. Your best options are to keep the project in a normal local folder (use path A) and upload copies to OneDrive in your browser when you want a backup, or to use a community-made OneDrive client. If you choose the latter, ask your IT contact whether it is permitted on your machine.</p>
+</div>
+</div>
+</div>
+<p><strong>Then, sync the folder:</strong></p>
+<ol type="1">
+<li>In a web browser, go to OneDrive (through your Temple Microsoft 365 sign-in) and open the folder that contains your thesis folder.</li>
+<li>Select the thesis folder and click <strong>Sync</strong> in the toolbar (it may be under the <strong>…</strong> menu). If your browser asks to open OneDrive, click <strong>Open</strong>.</li>
+<li>Wait a moment. The folder now appears in File Explorer or Finder under <strong>OneDrive</strong>.</li>
+</ol>
+<p>If your thesis folder does not exist at all yet, make it right in OneDrive’s online view (click <strong>New → Folder</strong>) and then sync it as above. Or make it inside the OneDrive folder on your computer (see path B) and it will appear online automatically.</p>
+<p>Now make it a project, exactly as in path A: <em>File → New Project… → Existing Directory → Browse…</em> and choose the folder that now sits under <strong>OneDrive</strong>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Two things to know about OneDrive
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>“Files On-Demand.”</strong> To save space, OneDrive may keep some files only online and download them when you open them. Programs that look inside the folder can be confused by this. Right-click your thesis folder and choose <strong>Always keep on this device</strong>, so that every file is really there.</li>
+<li><strong>Syncing while you render.</strong> OneDrive sometimes tries to copy a file at the very moment RStudio is writing it, which can cause a brief error. If you see an error about a file being “in use” or “locked,” wait a few seconds and render again. Do not keep two copies of the same project open on two computers at once.</li>
+</ul>
+<p>If you notice repeated trouble, the safest arrangement is to keep the project in a plain local folder and copy it to OneDrive when you reach a stopping point. Either way, <strong>back up your work regularly</strong>, and consider keeping a dated copy of your .qmd file at important milestones.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How will I know it worked?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The top right corner of RStudio now shows your folder name, and a file ending in <code>.Rproj</code> appears in the Files pane. Next time, you can open your thesis by double-clicking that <code>.Rproj</code> file, or by using <em>File → Recent Projects</em>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-6" class="level1">
+<h1>Step 6: Install apaquarto in the Project Folder</h1>
+<p>An <strong>extension</strong> is a small package of formatting rules that you add to a project. You install apaquarto into your thesis folder so that Quarto knows how to format it.</p>
+<ol type="1">
+<li>Open your project in RStudio (if it is not open already).</li>
+<li>Click the <strong>Terminal</strong> tab. It starts inside your project folder.</li>
+<li>Type or paste this, then press <kbd title="Enter" aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>:</li>
+</ol>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add wjschne/apaquarto</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Quarto asks whether you trust the author of the extension. If you do, type <code>Y</code> and press <kbd title="Enter" aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>. You are agreeing that the extension may run its formatting code on your computer.</li>
+<li>If it asks whether to proceed with installation, answer <code>Y</code>.</li>
+</ol>
+<p>A new folder called <code>_extensions</code> appears in your Files pane. <strong>Do not edit or delete it.</strong> That is where apaquarto lives.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Prefer typing in the R Console?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This does the same thing:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Console</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>quarto<span class="sc">::</span><span class="fu">quarto_add_extension</span>(<span class="st">"wjschne/apaquarto"</span>, <span class="at">no_prompt =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Installing the extension happens per project. If you start a different project (for a paper, say), repeat this step there.</p>
+</section>
+<section id="step-7" class="level1">
+<h1>Step 7: Create Your Thesis File</h1>
+<ol type="1">
+<li>In RStudio, choose <em>File → New File → Quarto Document…</em></li>
+<li>In the window that appears, leave everything as it is and click <strong>Create Empty Document</strong> (or <strong>Create</strong>).</li>
+<li>Choose <em>File → Save</em>. Name the file <code>dissertation.qmd</code> (or <code>thesis.qmd</code>), and save it in your project folder. Be sure the name ends in <code>.qmd</code>.</li>
+</ol>
+<p>You now have a file open in the <strong>Source</strong> pane. Its first few lines might look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Untitled"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The part between the two lines of three dashes is called the <strong>YAML</strong> (said “YAM-ul”). It holds your document’s <em>settings</em>: title, author, and so on. Everything after it is your writing. In the next step, we will fill the settings in for you.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Source mode and Visual mode
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>RStudio has two ways of looking at a Quarto file. <strong>Source</strong> shows you the plain text, with its markup. <strong>Visual</strong> looks more like a word processor, with buttons for bold and italics. The two are interchangeable, and you can switch with the <strong>Source / Visual</strong> buttons at the top of the editor. This tutorial describes Source mode, because it shows you exactly what is happening. Visual mode is a fine choice for ordinary writing, but it can sometimes rewrite unusual bits of markup, so keep an eye on the YAML at the top if you try it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-8" class="level1">
+<h1>Step 8: Draft Your Front Matter with apa7maker</h1>
+<p>Your thesis starts with a title page, copyright page, abstract, dedication, acknowledgments, and tables of contents. apaquarto builds all of these for you from the settings in your YAML. <strong>apa7maker</strong> is a free web page that writes those settings for you, so you do not have to remember them.</p>
+<ol type="1">
+<li>Open <a href="https://wjschne.github.io/apa7maker/">apa7maker</a>. Be patient: it can take a little while to load.</li>
+<li>Set the <strong>document mode</strong> to <strong>thesis</strong>.</li>
+<li>Fill in the form: title, your name, the degree, your committee, and so on. Fields you do not need can be left blank.</li>
+<li>When you are ready, click <strong>Make Document</strong> in the side menu, then click <strong>Update</strong>.</li>
+<li><strong>Copy</strong> the text that appears.</li>
+<li>Back in RStudio, in your <code>dissertation.qmd</code> file, <strong>select everything</strong> (<kbd title="Ctrl+A" aria-hidden="true">Ctrl+A</kbd><span class="visually-hidden">Ctrl+A</span>, or <kbd title="Cmd+A" aria-hidden="true">Cmd+A</kbd><span class="visually-hidden">Cmd+A</span> on a Mac), and <strong>paste</strong> over it (<kbd title="Ctrl+V" aria-hidden="true">Ctrl+V</kbd><span class="visually-hidden">Ctrl+V</span> or <kbd title="Cmd+V" aria-hidden="true">Cmd+V</kbd><span class="visually-hidden">Cmd+V</span>). Save the file.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Privacy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>apa7maker runs in your browser. Still, as with any website, avoid typing anything into it that you would not want others to see. Your name, your title, and your committee members’ names are all it needs.</p>
+</div>
+</div>
+<p>If you would like to see what the finished settings can look like, here is a trimmed example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"An Inquiry into Vexing Problems at the Intersection of Digital Typography, Tasseomancy, and Badminton"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shorttitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"Typography, Tasseomancy, and Badminton"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Your Name</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abstract</span><span class="kw">:</span><span class="at"> </span><span class="st">"This is my abstract."</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dedication</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  For everyone who wondered whether this would ever be finished.</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">acknowledgments</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  Thanks to my committee, my family, and the miracle of coffee.</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> references.yaml</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">documentmode</span><span class="kw">:</span><span class="at"> thesis</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">thesis</span><span class="kw">:</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> Dissertation</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">submitted-to</span><span class="kw">:</span><span class="at"> the Temple University Graduate Board</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">degree</span><span class="kw">:</span><span class="at"> Doctor of Philosophy</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">date</span><span class="kw">:</span><span class="at"> May 2027</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">committee</span><span class="kw">:</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Advisor's Name, Ph.D.</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">role</span><span class="kw">:</span><span class="at"> Advisory Chair</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> Department of Your Field</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Committee Member's Name, Ph.D.</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> Department of Another Field</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Outside Member's Name, Ph.D.</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">role</span><span class="kw">:</span><span class="at"> External Member</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">affiliation</span><span class="kw">:</span><span class="at"> Another University</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-docx</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-html</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-pdf</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">apaquarto-typst</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Below the YAML goes your writing. A very small starting body looks like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>The body of the dissertation begins here.</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Each first-level heading (a line starting with a single <code>#</code>) becomes a <strong>chapter</strong> in thesis mode. The <code># References</code> heading with the <code>{#refs}</code> block tells apaquarto where to put your reference list.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What the <code>format</code> lines mean
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The four lines under <code>format:</code> list the kinds of document you can make. <code>apaquarto-docx</code> is a Word file. <code>apaquarto-html</code> is a web page that is quick to produce and good for drafting. <code>apaquarto-typst</code> makes a .pdf through Typst, and <code>apaquarto-pdf</code> makes a .pdf through LaTeX. You can keep all of them or delete the ones you do not want. The next step shows how to choose among them.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-9" class="level1">
+<h1>Step 9: Render Your Document</h1>
+<p><strong>Rendering</strong> means turning your .qmd file into a finished document, the way “printing” turns a file into paper.</p>
+<ol type="1">
+<li>Click the <strong>Render</strong> button at the top of the editor (or press <kbd title="Ctrl+Shift+K" aria-hidden="true">Ctrl+Shift+K</kbd><span class="visually-hidden">Ctrl+Shift+K</span>; on a Mac, <kbd title="Cmd+Shift+K" aria-hidden="true">Cmd+Shift+K</kbd><span class="visually-hidden">Cmd+Shift+K</span>).</li>
+<li>If you listed more than one format, click the small arrow beside <strong>Render</strong> to choose which one to make.</li>
+<li>A preview appears in the <strong>Viewer</strong> pane or in a browser tab, and the finished file appears in your project folder.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Which format should I render?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Format</th>
+<th style="text-align: left;">Good for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>apaquarto-html</code></td>
+<td style="text-align: left;">Quick drafting. It renders fastest, so you can see the effect of your edits.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>apaquarto-docx</code></td>
+<td style="text-align: left;">Sharing with an advisor who wants to comment in Word.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>apaquarto-typst</code></td>
+<td style="text-align: left;">A polished and quickly rendered .pdf with no extra software.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>apaquarto-pdf</code></td>
+<td style="text-align: left;">A .pdf made through LaTeX (needs TinyTeX or another LaTeX installation). It renders slowly compared to the other formats, but LaTeX is famous for rendering text that has a certain subtle beauty for the discerning eye.</td>
+</tr>
+</tbody>
+</table>
+<p>My suggestion: draft with HTML, check the layout occasionally with the Typst .pdf, and render all formats before you send a version to anyone. Check with your Graduate School on which format it will accept for the final submission.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Something went wrong. What now?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Read the message in the <em>Background Jobs</em> tab.</strong> It often names the line number and the problem. Common causes are a missing quotation mark or a stray space in the YAML.</li>
+<li><strong>YAML is picky about spaces.</strong> The indentation in the example above is deliberate. Indent with spaces, never tabs.</li>
+<li><strong>A file is open in Word.</strong> If you rendered a .docx and have it open in Word, close it before rendering again.</li>
+<li><strong>Quarto is too old.</strong> Run <code>quarto check</code> again (Step 4).</li>
+<li>If you are stuck, copy the error message and ask for help in the <a href="https://github.com/wjschne/apaquarto/issues">apaquarto issue tracker</a>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="step-10" class="level1">
+<h1>Step 10: Writing with Markdown</h1>
+<p><strong>Markdown</strong> is a way of writing formatted text using ordinary keyboard characters. It looks odd for about ten minutes, then becomes second nature. You can always look back at this page. For anything not covered here, see the <a href="./writing.html">writing page</a> and the <a href="https://quarto.org/docs/authoring/markdown-basics.html">Quarto Markdown guide</a>.</p>
+<section id="formatting-text" class="level2">
+<h2 class="anchored" data-anchor-id="formatting-text">Formatting text</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">You type</th>
+<th style="text-align: left;">You get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>*italics*</code></td>
+<td style="text-align: left;"><em>italics</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>**bold**</code></td>
+<td style="text-align: left;"><strong>bold</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>***bold italics***</code></td>
+<td style="text-align: left;"><strong><em>bold italics</em></strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>H~2~O</code></td>
+<td style="text-align: left;">H<sub>2</sub>O (subscript)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>x^2^</code></td>
+<td style="text-align: left;">x<sup>2</sup> (superscript)</td>
+</tr>
+</tbody>
+</table>
+<p>APA style rarely uses bold in the body of your writing, but you might need it for a term or two. Use italics for emphasis, for statistical symbols such as <em>p</em>, and for the titles of books.</p>
+</section>
+<section id="separating-paragraphs" class="level2">
+<h2 class="anchored" data-anchor-id="separating-paragraphs">Separating paragraphs</h2>
+<p>Leave <strong>one blank line</strong> between paragraphs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>This is my first paragraph. It can run on for as many lines as I like,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>and the line breaks in the file do not matter.</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>This is my second paragraph. The blank line above is what separates them.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>apaquarto indents the first line of each paragraph automatically. Do not use the Tab key or spaces to indent.</p>
+</section>
+<section id="headings" class="level2">
+<h2 class="anchored" data-anchor-id="headings">Headings</h2>
+<p>Start a line with one to five <code>#</code> symbols, followed by a space. More <code>#</code> means a smaller heading:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Chapter Title</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Level 2 Heading</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">### Level 3 Heading</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Level 4 Heading</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Level 5 Heading</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In thesis mode, a level-1 heading starts a new chapter in all caps. Write headings in title case (capitalize the major words); apaquarto handles the rest of the formatting. See the <a href="./writing.html#headings-in-apa-style">writing page</a> for how APA headings differ from level to level.</p>
+</section>
+<section id="making-tables" class="level2">
+<h2 class="anchored" data-anchor-id="making-tables">Making tables</h2>
+<p>The simplest table is drawn with vertical bars and dashes. Give it a label that begins with <code>tbl-</code> and a title after a colon:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Scale    <span class="pp">|</span> Description                    <span class="pp">|</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---------|:-------------------------------|</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Nominal  <span class="pp">|</span> Categories without an order    <span class="pp">|</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ordinal  <span class="pp">|</span> Ordered categories             <span class="pp">|</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Interval <span class="pp">|</span> Quantities without a true zero <span class="pp">|</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ratio    <span class="pp">|</span> Quantities with a true zero    <span class="pp">|</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>: Classic Scale Types {#tbl-scales apa-note="Adapted from Stevens's classification."}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>#tbl-scales</code> is the table’s <strong>label</strong>. In your text, <code>@tbl-scales</code> becomes “Table 1” (and the number updates itself if you add a table earlier!).</li>
+<li><code>apa-note</code> is optional and puts a note below the table.</li>
+<li>The colons in the second row control alignment: <code>:---</code> left, <code>:---:</code> center, <code>---:</code> right.</li>
+</ul>
+<p>Typing a table by hand is fiddly. If you switch to <strong>Visual</strong> mode (Step 7), RStudio offers <em>Insert → Table</em> with a friendly grid. You can also build a table in a spreadsheet and copy the layout.</p>
+<p>For more advanced users, you can create beautiful and/or complex tables with various packages in R or Python. I wrote the <a href="https://wjschne.github.io/apa7/">apa7 package</a>, which is designed specifically for creating APA-Style tables. I wrote a 24-part series of blog posts starting <a href="https://wjschne.github.io/posts/apatables/apa701.html">here</a> in which I recreated all of the example tables from the <em>APA Manual</em>.</p>
+</section>
+<section id="inserting-images" class="level2">
+<h2 class="anchored" data-anchor-id="inserting-images">Inserting images</h2>
+<p>Put the image file in your project folder (for example, in a subfolder named <code>img</code>). Then:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="al">![A Simple Mediation Model](img/mediation.png)</span>{#fig-mediation width="5in"</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fig-alt="A path diagram in which A causes B, and B causes C."</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>apa-note="Variable A indirectly causes Variable C."}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The text in <code>[ ]</code> is the figure’s <strong>title</strong>.</li>
+<li><code>#fig-mediation</code> is the label: write <code>@fig-mediation</code> in your text to refer to “Figure 1”.</li>
+<li><code>fig-alt</code> is a description of the image for readers who use a screen reader. <strong>Please always include one</strong>. It is good practice and makes your work accessible.</li>
+<li><code>width</code> and <code>apa-note</code> are optional.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>What is the difference between a figure and an illustration?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A <em>figure</em> is a chart or graph. An <em>illustration</em> is other artwork, such as a photograph or a map. If you label an image with <code>#ill-</code> instead of <code>#fig-</code>, apaquarto numbers it separately, as in “Illustration 1.” (Check with your committee whether it prefers one scheme.)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="block-quotes" class="level2">
+<h2 class="anchored" data-anchor-id="block-quotes">Block quotes</h2>
+<p>A quotation of 40 words or more goes in its own indented block. Start each line with <code>&gt;</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Austen <span class="co">[</span><span class="ot">-@austen1990</span><span class="co">]</span> had this to say about memory:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; If any one faculty of our nature may be called more wonderful than the rest,</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; I do think it is memory. There seems something more speakingly</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; incomprehensible in the powers, the failures, the inequalities of memory,</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; than in any other of our intelligences. (p. 163)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For a quotation that ends in an attribution, as an epigraph often does, put a final line that starts with three hyphens (<code>---</code>), which turn into an em dash:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; We are, to be sure, a miracle every way.</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; --- Jane Austen, *Mansfield Park* </span><span class="co">[</span><span class="ot">-@austen1990</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If a paragraph continues after the block quote (it is the <em>same</em> paragraph, not a new one), wrap the continuation so it is not indented:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>:::{.NoIndent}</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>And that is why memory matters.</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="appendices" class="level2">
+<h2 class="anchored" data-anchor-id="appendices">Appendices</h2>
+<p>Appendices come <strong>after</strong> the references. Each one is a level-1 heading with a label that starts with <code>apx-</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># References</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Interview Questions {#apx-interview}</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>The questions asked of each participant are in this appendix.</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Survey Instrument {#apx-survey}</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>The full survey is reproduced here.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>You do <strong>not</strong> need to write the word “Appendix.” apaquarto adds it, plus the letters: <em>Appendix A</em>, <em>Appendix B</em>, and so on. In thesis mode, appendices are also gathered in the table of contents.</li>
+<li>In your text, <code>@apx-interview</code> becomes “Appendix A” (or whichever letter it was given).</li>
+<li>Tables and figures inside appendices are numbered automatically: Table A1, Figure B1, and so forth.</li>
+</ul>
+</section>
+</section>
+<section id="step-11" class="level1">
+<h1>Step 11: Set Up Zotero for Citations</h1>
+<p><strong>Zotero</strong> is a free reference manager. You collect your sources in it (articles, books, chapters), and it remembers every detail of each source. apaquarto then reads Zotero’s list so that citations in your text and your reference list are built automatically, in APA style. You never type a reference by hand, and you never have to fix one by hand either.</p>
+<section id="a.-install-zotero" class="level2">
+<h2 class="anchored" data-anchor-id="a.-install-zotero">11a. Install Zotero</h2>
+<p>Download Zotero from <a href="https://www.zotero.org/download/">zotero.org/download</a> and install it. It is available for Windows, Mac, and Linux. (Linux users get an archive to unpack; Zotero’s download page links to instructions.)</p>
+<p>You will also want the <strong>Zotero Connector</strong>, a browser add-on from the same page. When you are looking at an article on a website, one click on the connector adds it to your Zotero library.</p>
+</section>
+<section id="b.-install-better-bibtex" class="level2">
+<h2 class="anchored" data-anchor-id="b.-install-better-bibtex">11b. Install Better BibTeX</h2>
+<p><strong>Better BibTeX</strong> is a Zotero add-on. It does two things you need: it gives each source a short, stable <strong>citation key</strong> (like <code>austen1990</code>), and it can export your library to a file that stays up to date.</p>
+<ol type="1">
+<li>Go to the <a href="https://retorque.re/zotero-better-bibtex/installation/">Better BibTeX installation page</a> and download the latest <code>.xpi</code> file. (On some browsers you need to right-click the download link and choose <em>Save Link As…</em> so the browser does not try to open it.)</li>
+<li>In Zotero, choose <em>Tools → Plugins</em> (on some versions and systems, <em>Tools → Add-ons</em>).</li>
+<li>Click the <strong>gear icon</strong> near the top right and choose <strong>Install Plugin From File…</strong> (or <em>Install Add-on From File…</em>).</li>
+<li>Select the <code>.xpi</code> file you downloaded.</li>
+<li>Restart Zotero if asked.</li>
+</ol>
+</section>
+<section id="c.-add-your-sources" class="level2">
+<h2 class="anchored" data-anchor-id="c.-add-your-sources">11c. Add your sources</h2>
+<p>The quickest way to add a source is with its <strong>DOI</strong> (for articles and many chapters) or <strong>ISBN</strong> (for books):</p>
+<ol type="1">
+<li>In Zotero, click the <strong>magic wand</strong> icon in the toolbar, called <strong>Add Item(s) by Identifier</strong>.</li>
+<li>Type or paste a DOI (such as <code>10.1037/amp0000700</code>) or an ISBN, and press <kbd title="Enter" aria-hidden="true">Enter</kbd><span class="visually-hidden">Enter</span>.</li>
+<li>Zotero looks up all the details and adds the source to your library.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Always glance at the result
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Automatic lookups are good, but not perfect. Click each new source and check that the authors, year, title, and journal look right. Mistakes in Zotero turn into mistakes in your reference list. Pay particular attention to capitalization of titles and to organization names listed as authors.</p>
+</div>
+</div>
+<p>For sources without a DOI or ISBN (reports, web pages, unpublished work), use the <strong>Zotero Connector</strong> while you are on the webpage, or click the <strong>New Item</strong> button (the green plus) and fill in the fields by hand.</p>
+</section>
+<section id="d.-find-your-citation-key" class="level2">
+<h2 class="anchored" data-anchor-id="d.-find-your-citation-key">11d. Find your citation key</h2>
+<p>Click any source. In the right-hand pane, you will see a <strong>Citation Key</strong> field. That is the short name you will use to cite the source. A key might look like <code>austenMansfieldPark1990</code>. You can leave the keys as they are. Just copy them as you need them.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Is there an easier way to copy a key?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Yes. In Zotero, right-click a source and choose <strong>Better BibTeX → Copy Citation Key</strong> (the menu wording can differ slightly across versions). Then paste it into your document.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="export" class="level2">
+<h2 class="anchored" data-anchor-id="export">11e. Export your library to your project folder</h2>
+<p>Now you will make a <strong>file</strong> that holds your library, in your project folder, so that Quarto can read it. You do this once, and the file keeps itself up to date.</p>
+<ol type="1">
+<li>In Zotero, right-click your library (<strong>My Library</strong>) or the collection of sources for your thesis in the left-hand pane.</li>
+<li>Choose <strong>Export Library…</strong> (or <em>Export Collection…</em>).</li>
+<li>Set <strong>Format</strong> to <strong>Better CSL YAML</strong>.</li>
+<li><strong>Check the box that says “Keep updated.”</strong></li>
+<li>Click <strong>OK</strong>, and in the file dialog, go to <strong>your thesis project folder</strong> (the one from Step 5). Name the file <code>references.yaml</code> and click <strong>Save</strong>.</li>
+</ol>
+<p>You will now see <code>references.yaml</code> in the RStudio <strong>Files</strong> pane. From now on, whenever you add or change a source in Zotero, the file updates itself, as long as Zotero is open.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>If you work in a OneDrive folder
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Save the file <em>inside the synced folder</em> (see Step 5) so that it travels with the project. If you see a message about the file being in use, wait a few seconds and let OneDrive finish syncing.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="f.-tell-your-document-where-the-references-are" class="level2">
+<h2 class="anchored" data-anchor-id="f.-tell-your-document-where-the-references-are">11f. Tell your document where the references are</h2>
+<p>In your .qmd file’s YAML (the part at the top), make sure there is a <code>bibliography</code> line that names the file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> references.yaml</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you used apa7maker in Step 8, it may have a place to enter this. If not, add the line yourself, and make sure it is <em>aligned with the other top-level lines</em>, with no leading spaces. You do not need to supply a citation style: apaquarto already includes APA style.</p>
+</section>
+</section>
+<section id="step-12" class="level1">
+<h1>Step 12: Cite Sources in the Text</h1>
+<p>You cite a source by writing <code>@</code> followed by its <strong>citation key</strong>. When you render, apaquarto turns it into the right citation and adds the source to your reference list. Only sources you actually cite appear in the references.</p>
+<p>I will use <code>@smith2020</code> and <code>@jones2019</code> as stand-ins for your own keys.</p>
+<section id="parenthetical-citations" class="level2">
+<h2 class="anchored" data-anchor-id="parenthetical-citations">Parenthetical citations</h2>
+<p>Put the citation in <strong>square brackets</strong>. This is the form you use at the end of a sentence:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">You type</th>
+<th style="text-align: left;">You get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>[@smith2020]</code></td>
+<td style="text-align: left;">(Smith, 2020)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>[@smith2020; @jones2019]</code></td>
+<td style="text-align: left;">(Jones, 2019; Smith, 2020)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>[@smith2020, pp. 35--41]</code></td>
+<td style="text-align: left;">(Smith, 2020, 35-41)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>[e.g., @smith2020]</code></td>
+<td style="text-align: left;">(e.g., Smith, 2020)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>[see @smith2020, p. 12]</code></td>
+<td style="text-align: left;">(see Smith, 2020, 12)</td>
+</tr>
+</tbody>
+</table>
+<p>A few details:</p>
+<ul>
+<li><strong>Several sources:</strong> separate them with a semicolon. They are alphabetized for you.</li>
+<li><strong>Several authors:</strong> apaquarto handles the ampersand and “et al.” according to APA rules. You do nothing.</li>
+<li><strong>Page numbers:</strong> type a single page or a page range with a hyphen between the first and last page number. There is not need to add <code>p.</code> or <code>pp.</code>, because apaquarto will add that for you. Also, the hyphen automatically will be converted to an en dash (–), as specified by APA style.</li>
+<li><strong>A prefix</strong> such as <em>e.g.</em> or <em>see</em> goes just before the <code>@</code>. If you have a prefix for a group of sources, attach it to the citation that comes first alphabetically.</li>
+</ul>
+<p>Example in a sentence:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Self-efficacy predicts persistence <span class="co">[</span><span class="ot">e.g., @jones2019, @smith2020, 35-41</span><span class="co">]</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="narrative-citations" class="level2">
+<h2 class="anchored" data-anchor-id="narrative-citations">Narrative citations</h2>
+<p>A <strong>narrative citation</strong> puts the author’s name in your sentence. Write the key with <strong>no brackets</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">You type</th>
+<th style="text-align: left;">You get</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>@smith2020 found a result.</code></td>
+<td style="text-align: left;">Smith (2020) found a result.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>@smith2020 [101--103] found a result.</code></td>
+<td style="text-align: left;">Smith (2020, pp.&nbsp;101–103) found a result.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>@smith2020 ['s] theory</code></td>
+<td style="text-align: left;">Smith’s (2020) theory</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>@smith2020 ['s, 35] theory</code></td>
+<td style="text-align: left;">Smith’s (2020, p.&nbsp;35) theory</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ul>
+<li>For <strong>page numbers</strong>, put them in square brackets <em>after</em> the key. You do not need to type “p.” or “pp.” here; apaquarto adds it, and a hyphen between two numbers becomes an en dash.</li>
+<li>The <code>['s]</code> trick is an apaquarto feature for <strong>possessives</strong>. It puts the possessive on the author’s name and moves the year outside, as APA prescribes.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tip: Make a citation easier to spot
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If a citation does not turn into a name and year, but shows up as <code>@smith2020</code> in your output, the key is not in your references file. Check the spelling, and check that Zotero has the source and has exported it (Step 11e). Capitalization matters!</p>
+</div>
+</div>
+<p>For more patterns (suppressing ampersands, masked citations, meta-analysis references), see the <a href="./writing.html#citations">citations section of the writing page</a>.</p>
+</section>
+</section>
+<section id="step-13" class="level1">
+<h1>Step 13: Changing Options Later</h1>
+<p>You can change how your thesis looks at any time by changing its YAML settings. There are two ways:</p>
+<section id="change-the-yaml-directly" class="level2">
+<h2 class="anchored" data-anchor-id="change-the-yaml-directly">Change the YAML directly</h2>
+<p>Open your .qmd file and edit the settings at the top. For example, to change the committee or the date:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">thesis</span><span class="kw">:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">date</span><span class="kw">:</span><span class="at"> December 2027</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>or to change the left margin:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">margin</span><span class="kw">:</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">left</span><span class="kw">:</span><span class="at"> 1.25in</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <a href="./options.html">options page</a> lists everything you can change, including the <a href="./options.html#dissertations-and-theses">thesis options</a>. Each entry includes an example you can copy.</p>
+</section>
+<section id="or-use-apa7maker-again" class="level2">
+<h2 class="anchored" data-anchor-id="or-use-apa7maker-again">Or use apa7maker again</h2>
+<p>Go back to <a href="https://wjschne.github.io/apa7maker/">apa7maker</a>, import your document, change what you like, click <strong>Make Document</strong> and <strong>Update</strong>, and copy the YAML. Then replace <em>only the YAML</em> at the top of your file (the part between the two lines of three dashes), leaving your writing below untouched.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Be careful about the margins and layout
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Thesis mode sets margins, spacing, fonts, and page numbering to follow the Graduate School’s handbook. Changing them can make your thesis stop conforming. If you change them, confirm with the Graduate School before submitting.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="troubleshooting-quick-list" class="level1">
+<h1>Troubleshooting Quick List</h1>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Problem</th>
+<th style="text-align: left;">Try this</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RStudio cannot find R</td>
+<td style="text-align: left;">Reinstall R (Step 1), then restart RStudio.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>quarto</code> is “not recognized” in the Terminal</td>
+<td style="text-align: left;">Close and reopen RStudio. If that fails, reinstall Quarto (<a href="https://quarto.org/docs/get-started/">quarto.org</a>).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">The extension did not install</td>
+<td style="text-align: left;">Make sure the Terminal is inside your project folder, then repeat Step 6.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">The .pdf (LaTeX) will not render</td>
+<td style="text-align: left;">Run <code>quarto check</code>, then <code>quarto install tinytex</code> (Step 4). Or use <code>apaquarto-typst</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A citation shows as <code>@something</code></td>
+<td style="text-align: left;">The key is missing from <code>references.yaml</code> or is misspelled (Step 12).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A figure does not appear</td>
+<td style="text-align: left;">Check the file name, its extension, and that the image sits where you said it does.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">An error about a file in use</td>
+<td style="text-align: left;">Close the output file, wait for OneDrive to finish syncing, and render again.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="where-to-go-from-here" class="level1">
+<h1>Where to Go from Here</h1>
+<ul>
+<li>The <a href="./writing.html">writing page</a> covers tables, figures, notes, and citations in more detail.</li>
+<li>The <a href="./options.html">options page</a> lists every setting.</li>
+<li>The <a href="https://quarto.org/docs/guide/">Quarto documentation</a> explains everything beneath apaquarto.</li>
+<li>Found something confusing on this page? Please <a href="https://github.com/wjschne/apaquarto/issues">tell us</a>. If you are stuck, someone else probably is too, and the page can be made better.</li>
+</ul>
+<p>You can do this. Good luck with your thesis!</p>
+<p><br></p>
+<p><em>Drafted with AI assistance (Claude Sonnet 5.5, Anthropic). Reviewed and edited by W. Joel Schneider, CEHD, Temple University.</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -7,19 +7,26 @@ project:
     - apashiny.qmd
     - options.qmd
     - writing.qmd
+    - thesis-tutorial.qmd
     - resources.qmd
     - changelog.qmd
 
 website:
-  title: "APA Style Documents with apaquarto"
+  title: "apaquarto"
   navbar:
     left:
-      - text: Introduction
+      - text: Intro
         href: index.qmd
-      - installation.qmd
-      - apashiny.qmd
-      - options.qmd
-      - writing.qmd       
+      - text: Install
+        href: installation.qmd
+      - text: App
+        href: apashiny.qmd
+      - text: Options
+        href: options.qmd
+      - text: APA Markdown
+        href: writing.qmd       
+      - text: Thesis Tutorial
+        href: thesis-tutorial.qmd
       - resources.qmd
       - changelog.qmd
     right: 

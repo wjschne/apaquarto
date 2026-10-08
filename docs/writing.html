@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>APA Style via Markdown – APA Style Documents with apaquarto</title>
+<title>APA Style via Markdown – apaquarto</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -148,7 +148,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">APA Style Documents with apaquarto</span>
+    <span class="navbar-title">apaquarto</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -159,23 +159,27 @@ div.csl-indent {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Introduction</span></a>
+<span class="menu-text">Intro</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./installation.html"> 
-<span class="menu-text">Installation</span></a>
+<span class="menu-text">Install</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./apashiny.html"> 
-<span class="menu-text">Web App</span></a>
+<span class="menu-text">App</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./options.html"> 
-<span class="menu-text">Template Options</span></a>
+<span class="menu-text">Options</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./writing.html" aria-current="page"> 
-<span class="menu-text">APA Style via Markdown</span></a>
+<span class="menu-text">APA Markdown</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./thesis-tutorial.html"> 
+<span class="menu-text">Thesis Tutorial</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./resources.html"> 
@@ -357,7 +361,7 @@ margin-block-end: 0px;
 <section id="create-a-quarto-document" class="level1">
 <h1>Create a Quarto Document</h1>
 <p>To create a Quarto document in RStudio, in the menu (See <a href="#fig-newquarto" class="quarto-xref" aria-expanded="false">Figure&nbsp;1</a>), click <em>File → New File → Quarto Document</em>.</p>
-<div id="fig-newquarto" class="quarto-float quarto-figure quarto-figure-center FigureWithoutNote" data-fignum="1" prefix="" data-custom-style="FigureWithoutNote">
+<div id="fig-newquarto" class="quarto-float quarto-figure quarto-figure-center FigureWithoutNote" prefix="" data-fignum="1" data-custom-style="FigureWithoutNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-newquarto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -590,28 +594,28 @@ Tip
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; In the entire field of astronomy, there is no word other than planet that has a precise, lawyerly definition, in which certain criteria are specifically enumerated. Why does planet have such a definition but star, galaxy, and giant molecular cloud do not? Because in astronomy, as in most sciences, scientists work by concepts rather than by definitions. The concept of a star is clear; a star is a collection of gas with fusion reactions in the interior giving off energy. A galaxy is a large, bound collection of stars. A giant molecular cloud is a giant cloud of molecules. The concept of a planet—in the eight-planet solar system—is equally simple to state. A planet is a one of a small number of bodies that dominate a planetary system. That is a concept, not a definition. How would you write that down in a precise definition?</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Initial paragraph</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Block quote paragraph</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>:::{.NoIndent}</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>Because this sentence continues the initial paragraph, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>the indentation is suppresed.</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="attributions" class="level3">
 <h3 data-anchor-id="attributions">Attributions</h3>
 <p>To end a quotation with a dash attribution, as an epigraph often is, make its last paragraph begin with an em dash. Typing three hyphens (<code>---</code>) gives one:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; We are, to be sure, a miracle every way.</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; --- Jane Austen, *Mansfield Park* </span><span class="co">[</span><span class="ot">-@austenMansfieldPark1990</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; We are, to be sure, a miracle every way.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; --- Jane Austen, *Mansfield Park* </span><span class="co">[</span><span class="ot">-@austenMansfieldPark1990</span><span class="co">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The attribution is set against the right edge of the quotation with no first-line indent, in every format. It keeps its formatting, and a citation in it works as any other does. APA style cites a block quotation in parentheses after its final punctuation, as in the examples above, so an attribution is for when you want the other look.</p>
 <p>A quotation whose last paragraph only happens to begin with a dash (the last line of a dialogue, say) is left as it is when you put it inside a <code>no-attribution</code> div:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>::: no-attribution</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; --- Where are you going?</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; --- Out.</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Initial paragraph</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Block quote paragraph</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>:::{.NoIndent}</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Because this sentence continues the initial paragraph, </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>the indentation is suppresed.</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>::: no-attribution</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; --- Where are you going?</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; --- Out.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="figures" class="level1 page-columns page-full">
@@ -627,7 +631,7 @@ Tip
 
 <div class="no-row-height column-margin column-container"><div class="FigureWithoutNote" data-custom-style="FigureWithoutNote">
 <p>Those are not single quotes (<code>'</code>) that fence in the code chunk. Those are backticks (<code>`</code>), which are usually above the Tab key on most keyboards in the US.</p>
-<div id="fig-key" class="quarto-float quarto-figure quarto-figure-center" data-fignum="2" prefix="">
+<div id="fig-key" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="2">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-key-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -655,7 +659,7 @@ Tip
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="fig-myplot" class="quarto-float quarto-figure quarto-figure-center" data-fignum="3" prefix="">
+<div id="fig-myplot" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="3">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -740,7 +744,7 @@ Tip
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="fig-myplot2" class="quarto-float quarto-figure quarto-figure-center" data-fignum="4" prefix="">
+<div id="fig-myplot2" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="4">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -842,7 +846,7 @@ Tip
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="fig-myplot4" class="quarto-float quarto-figure quarto-figure-center" data-fignum="5" prefix="">
+<div id="fig-myplot4" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="5">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -892,7 +896,7 @@ Tip
 <span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">border.top =</span> flextable<span class="sc">::</span><span class="fu">fp_border_default</span>()) <span class="sc">%&gt;%</span> </span>
 <span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_header_labels</span>(<span class="at">variable =</span> <span class="st">"Variable"</span>, <span class="at">stat =</span> <span class="st">"Descriptive"</span>)</span>
 <span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="tbl-penguins" class="cell quarto-float quarto-figure quarto-figure-center" data-tblnum="1" prefix="" data-apa-note="[&quot;First paragraph.&quot;,&quot;Second paragraph.&quot;]" data-apa-note-written="50ebc1ce">
+<div id="tbl-penguins" class="cell quarto-float quarto-figure quarto-figure-center" prefix="" data-tblnum="1" data-apa-note="[&quot;First paragraph.&quot;,&quot;Second paragraph.&quot;]" data-apa-note-written="50ebc1ce">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-penguins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -940,7 +944,7 @@ Second paragraph.
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  fig-alt="A mediation model in which A causes B, and B causes C." </span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  apa-note="Variable A indirectly causes Variable C."</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="fig-myimportedimage" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" prefix="" alt="A path diagram in which A causes B, and B causes C." data-fignum="6" data-apa-note="Variable A indirectly causes Variable C." data-apa-note-written="50ebc1ce" data-custom-style="FigureWithNote">
+<div id="fig-myimportedimage" class="quarto-float quarto-figure quarto-figure-center FigureWithNote" prefix="" alt="A path diagram in which A causes B, and B causes C." data-apa-note="Variable A indirectly causes Variable C." data-fignum="6" data-apa-note-written="50ebc1ce" data-custom-style="FigureWithNote">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myimportedimage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -1080,7 +1084,7 @@ Second paragraph.
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> .<span class="dv">5</span>)</span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="fig-myplot3" class="quarto-float quarto-figure quarto-figure-center" data-fignum="7" prefix="">
+<div id="fig-myplot3" class="quarto-float quarto-figure quarto-figure-center" prefix="" data-fignum="7">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-myplot3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -1121,7 +1125,7 @@ Second paragraph.
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">flextable</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_apa</span>() </span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="tbl-disabledprocessing2" class="cell quarto-float quarto-figure quarto-figure-center" data-ft.align="left" prefix="" data-tblnum="3" data-disable-apaquarto-processing="true">
+<div id="tbl-disabledprocessing2" class="cell quarto-float quarto-figure quarto-figure-center" data-ft.align="left" data-tblnum="3" data-disable-apaquarto-processing="true" prefix="">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-disabledprocessing2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="FigureTitle" data-custom-style="FigureTitle">
@@ -1157,7 +1161,7 @@ Second paragraph.
 </section>
 <section id="with-page-numbers" class="level3">
 <h3 data-anchor-id="with-page-numbers">With Page Numbers</h3>
-<p>Page references (or any other suffixes) are placed after the reference. If you want a comma, you’ll need to insert it yourself: <code>[@CameronTrivedi2013, pp. 35--41]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013, pp. 35–41</a>)</span>.</p>
+<p>Page references (or any other suffixes) are placed after the reference. If you want a comma, you’ll need to insert it yourself: <code>[@CameronTrivedi2013,  35-41]</code> becomes <span class="citation" data-cites="CameronTrivedi2013">(<a href="#ref-CameronTrivedi2013" role="doc-biblioref">Cameron &amp; Trivedi, 2013, pp. 35–41</a>)</span>.</p>
 </section>
 <section id="with-prefixes" class="level3">
 <h3 data-anchor-id="with-prefixes">With Prefixes</h3>

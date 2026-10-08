@@ -299,6 +299,19 @@ If your quote has multiple paragraphs, like this passage from @brownHowKilledPlu
 > I wouldn’t. Once you write down a definition with lawyerly precision, you get the lawyers involved in deciding whether or not your objects are planets. Astronomers work in concepts. We rarely call in the attorneys for adjudication. (p. 242)
 ```
 
+If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:
+
+``` md
+Initial paragraph
+
+> Block quote paragraph
+
+:::{.NoIndent}
+Because this sentence continues the initial paragraph, 
+the indentation is suppresed.
+:::
+```
+
 ### Attributions
 
 To end a quotation with a dash attribution, as an epigraph often is, make its last paragraph begin with an em dash. Typing three hyphens (`---`) gives one:
@@ -321,18 +334,7 @@ A quotation whose last paragraph only happens to begin with a dash (the last lin
 :::
 ```
 
-If the text after a quote is a new paragraph, you can create it in the usual fashion (i.e., plain text with an empty line between the block text and the new paragraph). However, if the text after a quote is part of the same paragraph, you can suppress the indentation by creating a div with the .NoIndent class. As an example:
 
-``` md
-Initial paragraph
-
-> Block quote paragraph
-
-:::{.NoIndent}
-Because this sentence continues the initial paragraph, 
-the indentation is suppresed.
-:::
-```
 
 # Figures
 
@@ -687,7 +689,7 @@ A sentence that needs a citation [@CameronTrivedi2013].
 
 ### With Page Numbers
 
-Page references (or any other suffixes) are placed after the reference. If you want a comma, you'll need to insert it yourself: `[@CameronTrivedi2013, pp. 35--41]` becomes [@CameronTrivedi2013, pp. 35--41].
+Page references (or any other suffixes) are placed after the reference. If you want a comma, you'll need to insert it yourself: `[@CameronTrivedi2013,  35-41]` becomes [@CameronTrivedi2013, 35-41].
 
 ### With Prefixes
 
