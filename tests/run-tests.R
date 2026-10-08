@@ -185,6 +185,12 @@ readers <- list(
 #                          its ink, in points
 #   rule-below: word       from the foot of the word's ink to the nearest rule
 #                          below it, in points
+#   rule-weight-above: word, rule-weight-below: word
+#                          how thick the nearest rule above or below the word
+#                          is, in points (within 0.1 by default)
+#   space-below: word      from the foot of the word's ink to the next thing
+#                          set below it anywhere across the page, such as a
+#                          picture, in points
 #   is: number             what the measure should be
 #   within: number         how far off it may be: 1 by default for gap and
 #                          left, since pdftools gives positions to the whole
@@ -206,10 +212,10 @@ layout_dpi <- 288
 # typst output of a fixture to the same path one after the other.
 layout_pages <- function(path) {
   cache <- list()
-  function(page) {
-    key <- as.character(page)
+  function(page, dpi = layout_dpi) {
+    key <- paste(page, dpi)
     if (is.null(cache[[key]])) {
-      bitmap <- pdftools::pdf_render_page(path, page = page, dpi = layout_dpi,
+      bitmap <- pdftools::pdf_render_page(path, page = page, dpi = dpi,
                                           numeric = TRUE)
       cache[[key]] <<- if (length(dim(bitmap)) == 3) bitmap[, , 1] else bitmap
     }
@@ -237,6 +243,59 @@ rule_clearance <- function(pages, word, side) {
     if (length(below) == 0) return(NULL)
     (min(below) - 1) * k
   }
+}
+
+# How thick the nearest rule above or below the word is, in points: the
+# rule's rows of pixels summed by how dark each is across the word's width,
+# so that the grey rows at its edges count for the part of them it covers.
+# Read at 600dpi: at the 288 the other measures use, a rule of 0.6pt came
+# out at 0.5.
+rule_weight_dpi <- 600
+rule_weight <- function(pages, word, side) {
+  k <- 72 / rule_weight_dpi
+  page <- pages(word$page, rule_weight_dpi)
+  xs <- floor(word$x / k):floor((word$x + word$width) / k)
+  darkness <- rowMeans(1 - page[, xs, drop = FALSE])
+  rule <- rowMeans(page[, xs, drop = FALSE] < 0.5) > 0.95
+  box <- floor((word$y - 4) / k):ceiling((word$y + word$height + 4) / k)
+  box <- box[box >= 1 & box <= nrow(page)]
+  ink <- box[darkness[box] > 0.01 & !rule[box]]
+  if (length(ink) == 0) return(NULL)
+  if (side == "above") {
+    rows <- which(rule[seq_len(min(ink) - 1)])
+    if (length(rows) == 0) return(NULL)
+    last <- max(rows)
+    first <- last
+    while (first > 1 && rule[first - 1]) first <- first - 1
+  } else {
+    rows <- which(rule[(max(ink) + 1):nrow(page)])
+    if (length(rows) == 0) return(NULL)
+    first <- max(ink) + min(rows)
+    last <- first
+    while (last < nrow(page) && rule[last + 1]) last <- last + 1
+  }
+  edges <- max(1, first - 2):min(nrow(page), last + 2)
+  sum(darkness[edges]) * k
+}
+
+# From the foot of the word's ink to whatever is set next below it, across
+# the whole width of the page: the picture under a caption, which typst
+# centres and so need not lie under the word. The 4pt under the foot of the
+# word, where the descenders of its line reach, are passed over, and so is
+# anything fainter than a picture's pale background.
+space_below <- function(pages, word) {
+  k <- 72 / layout_dpi
+  page <- pages(word$page)
+  xs <- floor(word$x / k):floor((word$x + word$width) / k)
+  box <- floor((word$y - 4) / k):ceiling((word$y + word$height + 4) / k)
+  box <- box[box >= 1 & box <= nrow(page)]
+  ink <- box[rowMeans(page[box, xs, drop = FALSE] < 0.5) > 0]
+  if (length(ink) == 0) return(NULL)
+  from <- max(ink) + ceiling(4 / k)
+  if (from > nrow(page)) return(NULL)
+  marked <- which(rowSums(page[from:nrow(page), , drop = FALSE] < 0.995) > 0)
+  if (length(marked) == 0) return(NULL)
+  (from + min(marked) - 2 - max(ink)) * k
 }
 
 layout_words <- function(path) {
@@ -295,10 +354,24 @@ layout_failures <- function(path, checks) {
       word <- find(text)
       actual <- if (!is.null(word)) rule_clearance(pages, word, side)
       tolerance <- if (is.null(check$within)) 1 else check$within
+    } else if (!is.null(check[["rule-weight-above"]]) ||
+               !is.null(check[["rule-weight-below"]])) {
+      side <- if (!is.null(check[["rule-weight-above"]])) "above" else "below"
+      text <- check[[paste0("rule-weight-", side)]]
+      label <- paste0("weight of the rule ", side, " ", text)
+      word <- find(text)
+      actual <- if (!is.null(word)) rule_weight(pages, word, side)
+      tolerance <- if (is.null(check$within)) 0.1 else check$within
+    } else if (!is.null(check[["space-below"]])) {
+      label <- paste0("space below ", check[["space-below"]])
+      word <- find(check[["space-below"]])
+      actual <- if (!is.null(word)) space_below(pages, word)
+      tolerance <- if (is.null(check$within)) 1 else check$within
     } else {
       failures <- c(failures, paste0("layout check names no measure (gap, ",
-                                     "left, right, size, rule-above or ",
-                                     "rule-below): ",
+                                     "left, right, size, rule-above, ",
+                                     "rule-below, rule-weight-above, ",
+                                     "rule-weight-below or space-below): ",
                                      paste(names(check), collapse = ", ")))
       next
     }

@@ -329,6 +329,12 @@
 // head had a rule over its second row, and a rule stood as close to the text
 // as the next row, 2.5pt from a capital at single spacing
 // (tests/layout-table-rules.qmd).
+//
+// The rules are booktabs' weights: 0.08em over and under the table
+// (/heavyrulewidth, about a point at 12pt) and 0.05em under the head
+// (/lightrulewidth). Every rule had been half a point.
+#let apatableheavyrule = 0.08em
+#let apatablelightrule = 0.05em
 #let apatablecells(spacing, rows, head) = {
   let leading = apatableleadings.at(spacing, default: apatableleadings.double)
   let above = 0.7 * leading - 0.198em
@@ -342,8 +348,10 @@
       bottom: below + if overrule(y) { 0.18em } else { 0pt },
     ),
     stroke: (x, y) => (
-      top: if underrule(y) { 0.5pt } else { none },
-      bottom: if y == rows - 1 { 0.5pt } else { none },
+      top: if y == 0 { apatableheavyrule }
+        else if head > 0 and y == head { apatablelightrule }
+        else { none },
+      bottom: if y == rows - 1 { apatableheavyrule } else { none },
     ),
   )
 }

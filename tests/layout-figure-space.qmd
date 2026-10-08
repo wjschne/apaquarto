@@ -1,0 +1,30 @@
+---
+title: "A Figure Under Its Caption"
+shorttitle: "Figure Space"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+---
+
+<!--
+Measured, not read: a figure's picture stands 20pt under its caption's
+baseline in the .pdf and typst, whatever letters the caption's last line
+has. The .pdf put a picture under a caption with a p or a g in its last
+line 2pt lower, TeX spacing it from the depth of that line; .docx had 6pt
+more after its caption, 26pt, and is checked by its style.
+
+Titleone and Titletwo have no descenders, so the foot of their ink is the
+caption's baseline; the second caption's line ends in some.
+-->
+
+Some text above the first figure.
+
+![Titleone Words](sampleimage.png){#fig-one apa-note="Noteone words." width=2in}
+
+Some text between the figures.
+
+![Titletwo gap gp](sampleimage.png){#fig-two apa-note="Notetwo words." width=2in}
+
+Some text below.

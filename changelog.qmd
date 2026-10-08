@@ -20,8 +20,11 @@ engine: knitr
 - A table's top rule stands the same distance under its caption in .pdf, typst and .docx; .docx had six points more, and the .pdf's distance stretched with the page.
 - A table's rows are spaced alike in every format, double by default (single in journal and doc modes), and the new `table-spacing` option sets them single, one-and-a-half or double spaced.
 - In typst a table's rules stand as far from its text as booktabs sets them in .pdf, where they had stood as close as the next row, and a table without a header row no longer has a rule over its second row.
+- In typst a table's rules are as heavy as in .pdf, about a point above and below the table and 0.6 points under its header, where all three had been half a point.
 - A table's or figure's note stands the same distance under it in .pdf, typst and .docx; .docx had 10 points less, and in .pdf it varied by a point or two with the table's columns and the caption's letters.
 - In .docx and typst a table's header cells sit at the foot of their row and its body cells at the top of theirs, as in .pdf; .docx had centred every cell in its row, and typst had set the header cells at the top.
+- A figure's picture stands the same distance under its caption in .pdf, typst and .docx; .docx had six points more, and in .pdf a caption ending in a line with a descender stood two points further off.
+- In .docx a table column too narrow for its longest word is widened, so that Word no longer breaks a short heading such as "Num" across two lines.
 
 # Version 7.0.1
 - 2026-10-07

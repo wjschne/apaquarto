@@ -666,7 +666,14 @@
 %
 % Figures only. A table follows its title immediately, and apa7 in fact leaves
 % a little less room there than this format already does.
-\newcommand{\apafigureskip}{\vspace{1.2em}}
+%
+% Measured from the caption's baseline: TeX puts the picture under the depth
+% of the line above it, so a caption whose last line had a p or a g in it
+% stood 2pt further off its picture than one that had none. 20pt from the
+% baseline to the picture, as in typst (tests/layout-figure-space.qmd).
+\newcommand{\apafigureskip}{%
+  \par\ifdim\prevdepth>0pt\vskip-\prevdepth\prevdepth=0pt\fi
+  \vspace{1.2em}}
 \newenvironment{apafloatnote}
   {\par\setlength{\parindent}{0pt}\noindent}
   {\par}

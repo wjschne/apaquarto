@@ -1,0 +1,34 @@
+---
+title: "Column Widths"
+shorttitle: "Column Widths"
+suppress-title-page: true
+format:
+  apaquarto-docx: default
+---
+
+<!--
+Read, not measured: a table with a cell too long for one line of the source
+gets its columns' widths from the dashes under its head, and pandoc writes
+them to Word as a fixed layout. The short Num column got too few to hold its
+heading once Word took its cell margins out, and Word set it as "Nu" over
+"m" (docxcolumnwidths.lua). It is widened to hold the word, and the wide
+column gives up the room.
+
+The second table's columns already hold their words, and its widths are
+left as pandoc wrote them. Its first row holds a non-breaking space, which
+the filter once cut in two, failing the render, where a system's %s takes
+its second byte for a space.
+-->
+
+| Headshort | A heading long enough that it has to wrap onto a second line here, and then words headend | Num |
+|:----------|:---------------------------------------------------------------------|----:|
+| Bodyshort | Bodystart a body cell long enough that it has to wrap onto a second line inside its column | 12.5 |
+| Rowtwo    | 2                                                                    | 3.0  |
+
+: Narrow caption {#tbl-narrow}
+
+| Item       | A column with a cell long enough to make pandoc give the table widths of its own here | Value     |
+|:-----------|:--------------------------------------------------------|----------:|
+| Row\ 1     | short                                                  | 1.00      |
+
+: Roomy caption {#tbl-roomy}

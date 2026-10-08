@@ -88,6 +88,21 @@
         # still count right with the panels stacked in two rows.
         '<w:tr>': 4
 
+- fixture: docx-column-widths.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        # The Num column widened to hold its heading, 34pt on letter paper,
+        # with the wide column giving up the room; and the second table's
+        # widths as pandoc wrote them, since every word fits.
+        - '<w:gridCol w:w="1096" /><w:gridCol w:w="6242" /><w:gridCol w:w="581" />'
+        - '<w:gridCol w:w="1188" /><w:gridCol w:w="5643" /><w:gridCol w:w="1089" />'
+      absent:
+        # As pandoc wrote it: 27pt for Num, 22pt within the cell's margins,
+        # where the word takes 24pt and Word broke it.
+        - '<w:gridCol w:w="460" />'
+
 - fixture: docx-table-style.qmd
   to: apaquarto-docx
   expect:
@@ -2407,13 +2422,13 @@
       # distance under its caption, inside the float. Outside it, after
       # \end{figure}, the chunk's note was 14pt further down.
       - gap: [Chunkcap, Chunknote]
-        is: 271
+        is: 269
       - gap: [Mdcap, Mdnote]
-        is: 271
+        is: 268
       # A figure at the foot of a page: its note on the same page. A gap is
       # measured on the first word's page, so it fails if the note went over.
       - gap: [Breakcap, Breaknote]
-        is: 144
+        is: 141
 
 - fixture: layout-chunk-note.qmd
   to: apaquarto-typst
@@ -2519,6 +2534,32 @@
         # high whose space before is the blank line. The heading had none.
         'w:before="552" w:after="0" w:line="20" w:lineRule="exact"': 1
 
+- fixture: layout-figure-space.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &figure-space
+      # The picture 20pt under the caption's baseline. Under the second,
+      # whose line ends in descenders, the .pdf had 22pt.
+      - space-below: Titleone
+        is: 20
+      - space-below: Titletwo
+        is: 20
+
+- fixture: layout-figure-space.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *figure-space
+
+- fixture: layout-figure-space.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        # Nothing after a figure's caption, so that its picture stands 20pt
+        # under the caption's baseline as in the .pdf and typst; Word's own
+        # 6pt more had it at 26pt.
+        - '<w:keepNext /><w:keepLines /><w:spacing w:after="0" /></w:pPr><w:rPr><w:i /></w:rPr>'
+
 - fixture: layout-figure-note-break.qmd
   to: apaquarto-pdf
   expect:
@@ -2532,9 +2573,14 @@
         is: 48
       - gap: [Mdend, Aftertwo]
         is: 48
-      # A short note at the foot of a page stays with its figure.
+      # A short note at the foot of a page stays with its figure. 141pt in
+      # the .pdf and 143 in typst: a gap reads the words' boxes, and from
+      # an italic caption to a roman note latex's and typst's differ by
+      # two points where the page does not (tests/layout-figure-space.qmd
+      # measures the ink).
       - gap: [Keepcap, Keepnote]
-        is: 143
+        is: 142
+        within: 2
 
 - fixture: layout-figure-note-break.qmd
   to: apaquarto-typst
@@ -2648,6 +2694,14 @@
         is: 12.2
       - rule-below: Rowlast
         is: 9.5
+      # booktabs' weights: 0.08em over and under the table, 0.05em under
+      # its head. typst's had all been half a point.
+      - rule-weight-above: Headone
+        is: 0.96
+      - rule-weight-below: Headone
+        is: 0.6
+      - rule-weight-below: Rowlast
+        is: 0.96
       # A long table, set as a longtable rather than a tabular, alike.
       - rule-below: Titletwo
         is: 15.8

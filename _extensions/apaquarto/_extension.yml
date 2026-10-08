@@ -310,6 +310,10 @@ contributes:
         # that writes the reference document (see referencedoc.lua).
         - at: post-render
           path: docxreferencedoc.lua
+        # Widen a table's column too narrow for its longest word, which
+        # Word would otherwise break.
+        - at: post-render
+          path: docxcolumnwidths.lua
         # The lists of figures and tables, and the headings the table of
         # contents should pass over. After apacaption.lua, which is what
         # gives a figure its number and its title, and after
