@@ -14,6 +14,7 @@ engine: knitr
 
 # Version 7.0.2
 - 2026-10-07
+- [#173](https://github.com/wjschne/apaquarto/issues/173) In .html, a note written by the `apanote` filter in a document outside the apaquarto formats is followed by a blank line, as in .docx and .pdf.
 - In .docx a table laid out in panels sets its panels side by side in one grid; every panel after the first was set under the grid.
 - In .docx a figure or table followed directly by another stands one blank line from it, not two.
 - A table's top rule stands the same distance under its caption in .pdf, typst and .docx; .docx had six points more, and the .pdf's distance stretched with the page.

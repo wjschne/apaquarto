@@ -8,7 +8,17 @@ local beginapanote = "Note"
 -- The notes of markdown tables as they were written, by identifier
 local tablenotes = {}
 
+-- Whether apaquarto's own stylesheet is in use, which spaces a float and its
+-- note itself, and whether a note was written in this run.
+local ownstyle = false
+local wrote = false
+
 local function getnote(m)
+  if m.css then
+    for _, c in ipairs(m.css) do
+      if pandoc.utils.stringify(c):match("apa%.css$") then ownstyle = true end
+    end
+  end
   beginapanote = utilsapa.lang(m, "figure-table-note", beginapanote)
   tablenotes = utilsapa.table_notes(m)
 end
@@ -122,6 +132,7 @@ local function apanote(elem)
         })
       end
       elem.attributes[kWritten] = mark()
+      wrote = true
       local at = note_position(elem)
       if at then
         elem.content:insert(at, apanotedivs)
@@ -133,7 +144,20 @@ local function apanote(elem)
 end
 
 
+-- In a document that does not use apaquarto's stylesheet, a note in .html is
+-- a bare div and the paragraph after it runs on from it. A blank line below
+-- the note, as in .docx and .pdf, is added here, and only when a note was
+-- written.
+local function notespacing(doc)
+  if wrote and not ownstyle and quarto.doc.is_format("html") then
+    quarto.doc.include_text("in-header",
+      "<style>.FigureNote { margin-block-end: 1em; }</style>")
+  end
+  return nil
+end
+
 return {
   { Meta = getnote },
-  { Div = apanote }
+  { Div = apanote },
+  { Pandoc = notespacing }
 }
