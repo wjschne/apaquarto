@@ -40,7 +40,10 @@ internal <- c(
   # set by apaquote.lua for docxreferencedoc.lua
   "apa-quote-attribution",
   # table-spacing as formattypst.lua reads it, handed to the typst template
-  "apa-table-spacing"
+  "apa-table-spacing",
+  # the pdf's title and author fields, which formatlatex.lua sets for pandoc's
+  # latex template before it takes the title and authors away
+  "title-meta", "author-meta"
 )
 
 # Quarto's and Pandoc's own fields, which apaquarto reads but their
