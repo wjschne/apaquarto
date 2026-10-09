@@ -310,15 +310,11 @@ journal:
 
 which is set as
 
-+----------------------------------+------------------------------------+
-|                                  |                                    |
-+:=================================+===================================:+
-| *logo*                           | Journal of Educational Psychology  |
-+----------------------------------+------------------------------------+
-| © 2025 The Author(s)             | 2026, Vol. 118, No. 6, 869--888    |
-+----------------------------------+------------------------------------+
-| ISSN: 0022-0663                  | https://doi.org/10.1037/edu0000976 |
-+----------------------------------+------------------------------------+
+|                      |                                    |
+|:---------------------|-----------------------------------:|
+| *logo*               |  Journal of Educational Psychology |
+| © 2025 The Author(s) |    2026, Vol. 118, No. 6, 869--888 |
+| ISSN: 0022-0663      | https://doi.org/10.1037/edu0000976 |
 
 `logo` is a path to an image file, read the same way a path in the document is. Writing `logo: default` instead of a path uses the apaquarto logo, which the extension ships with, so that a masthead can be seen without one having to be found first.
 
@@ -326,17 +322,9 @@ Every field is optional, and anything left out is simply left out: a `journal` w
 
 # Dissertations and Theses
 
-`documentmode: thesis` sets a dissertation or thesis for the Temple
-University Graduate School, following its
-[Dissertation and Thesis Handbook](https://grad.temple.edu/sites/grad/files/media/document/Dissertation%20and%20Thesis%20Handbook%202024-2025%20(1).pdf).
-It is manuscript mode with a front matter of its own, and it works in all
-four formats. `dissertation` is accepted as an alias.
+`documentmode: thesis` sets a dissertation or thesis for the Temple University Graduate School, following its [Dissertation and Thesis Handbook](https://grad.temple.edu/sites/grad/files/media/document/Dissertation%20and%20Thesis%20Handbook%202024-2025%20(1).pdf). It is manuscript mode with a front matter of its own, and it works in all four formats. `dissertation` is accepted as an alias.
 
-The front matter is built for you, in the order the handbook sets it: title,
-copyright, abstract, dedication, acknowledgments, table of contents, and a
-list for each kind of float the document holds. Each page is left out when
-the document gives it nothing to set, and the numbering runs on over whatever
-is there.
+The front matter is built for you, in the order the handbook sets it: title, copyright, abstract, dedication, acknowledgments, table of contents, and a list for each kind of float the document holds. Each page is left out when the document gives it nothing to set, and the numbering runs on over whatever is there.
 
 The page takes its fields from a `thesis` block:
 
@@ -364,28 +352,17 @@ thesis:
 apa_options("thesis")
 ```
 
-Every field is optional: a block left out leaves its part of the page out,
-and the rule that sets it off goes with it.
+Every field is optional: a block left out leaves its part of the page out, and the rule that sets it off goes with it.
 
 The author is the document's own `author`, and the title its own `title`.
 
 ## The shape of the title
 
-The Graduate School asks for the title in capitals, and for an inverted
-pyramid when it runs to more than one line: the first line longest, each line
-after it shorter. apaquarto works the lines out for you. It measures the
-words and tries every arrangement from two lines up to eight, aiming each
-line at a straight taper --- for a title of four lines, the full measure,
-three quarters of it, half, a quarter --- and takes the arrangement that sits
-nearest. That settles how many lines the title wants without anyone having to
-say.
+The Graduate School asks for the title in capitals, and for an inverted pyramid when it runs to more than one line: the first line longest, each line after it shorter. apaquarto works the lines out for you. It measures the words and tries every arrangement from two lines up to eight, aiming each line at a straight taper --- for a title of four lines, the full measure, three quarters of it, half, a quarter --- and takes the arrangement that sits nearest. That settles how many lines the title wants without anyone having to say.
 
-The lines are worked out once, in Lua, and handed to all four formats, so the
-title page has the same shape in the .pdf, the .docx, the typst and the
-.html.
+The lines are worked out once, in Lua, and handed to all four formats, so the title page has the same shape in the .pdf, the .docx, the typst and the .html.
 
-To break the title yourself instead, write it as a block and end each line
-with a backslash:
+To break the title yourself instead, write it as a block and end each line with a backslash:
 
 ``` yaml
 title: |
@@ -397,44 +374,26 @@ Those are then the lines, and nothing is worked out.
 
 ## Margins
 
-The handbook asks for 1.5" at the left, where the work is bound, and 1"
-elsewhere, and says the margins are "the same for the entire manuscript,
-including front matter". `documentmode: thesis` sets them in the .pdf, the
-typst and the .docx.
+The handbook asks for 1.5" at the left, where the work is bound, and 1" elsewhere, and says the margins are "the same for the entire manuscript, including front matter". `documentmode: thesis` sets them in the .pdf, the typst and the .docx.
 
-A margin the document names with `margin` replaces the handbook's on every
-page but the title page, the front matter as well as the body, so the whole
-work moves together, in all three formats. A side left out keeps the
-handbook's.
+A margin the document names with `margin` replaces the handbook's on every page but the title page, the front matter as well as the body, so the whole work moves together, in all three formats. A side left out keeps the handbook's.
 
 ``` yaml
 margin:
   left: 1.25in
 ```
 
-The title page is the exception: it is set on 1" all round, so that the block
-of it stands at the centre of the paper rather than at the centre of a text
-block pushed right by the binding margin. That is what the dissertations
-Temple publishes do, and what the Graduate School's own template draws. The
-title is broken against the measure that page has, not the body's.
-`title-margin` under `thesis` gives it margins of its own.
+The title page is the exception: it is set on 1" all round, so that the block of it stands at the centre of the paper rather than at the centre of a text block pushed right by the binding margin. That is what the dissertations Temple publishes do, and what the Graduate School's own template draws. The title is broken against the measure that page has, not the body's. `title-margin` under `thesis` gives it margins of its own.
 
-Confirm with the Graduate School before submitting on margins other than the
-handbook's.
+Confirm with the Graduate School before submitting on margins other than the handbook's.
 
 ## The abstract, the dedication and the acknowledgments
 
-The abstract is the document's own `abstract`, and the acknowledgments are
-`acknowledgments` (or `acknowledgements`). Each is set under a heading of its
-own, in capitals and centred, with the prose flush at the margin, no first
-line indented, and double spaced, as the handbook asks. Either runs as long
-as it runs and takes a second page if it needs one.
+The abstract is the document's own `abstract`, and the acknowledgments are `acknowledgments` (or `acknowledgements`). Each is set under a heading of its own, in capitals and centred, with the prose flush at the margin, no first line indented, and double spaced, as the handbook asks. Either runs as long as it runs and takes a second page if it needs one.
 
-The dedication is `dedication`. It carries no heading and is centred, double
-spaced, well down its own page.
+The dedication is `dedication`. It carries no heading and is centred, double spaced, well down its own page.
 
-All three may be written at the top level, beside `abstract`, or inside the
-`thesis` block.
+All three may be written at the top level, beside `abstract`, or inside the `thesis` block.
 
 ``` yaml
 abstract: "What the work found."
@@ -444,104 +403,51 @@ acknowledgments: |
   Thanks to my committee, and to everyone who read a draft.
 ```
 
-The Graduate School's own template sets its abstract and its acknowledgments
-differently from one another --- one begins at the margin and the other is
-indented, and the air under the heading is not the same on both. apaquarto
-sets them alike.
+The Graduate School's own template sets its abstract and its acknowledgments differently from one another --- one begins at the margin and the other is indented, and the air under the heading is not the same on both. apaquarto sets them alike.
 
 ## The table of contents
 
-The contents lists the front matter in capitals --- the abstract, the
-dedication, the acknowledgments --- then the chapters under a column label
-reading `CHAPTER`, each with its arabic number and its title in capitals, and
-then the back matter: the references, and the appendices, lettered in the
-order they are mentioned. `Page` stands at the right margin under the
-heading, and leader dots run out to the page numbers.
+The contents lists the front matter in capitals --- the abstract, the dedication, the acknowledgments --- then the chapters under a column label reading `CHAPTER`, each with its arabic number and its title in capitals, and then the back matter: the references, and the appendices, lettered in the order they are mentioned. `Page` stands at the right margin under the heading, and leader dots run out to the page numbers.
 
-Neither the copyright page nor the contents itself is listed, which is what
-the handbook asks. `CHAPTER` and `APPENDICES` are column labels rather than
-entries: they carry no leader and no page, and the chapters and appendices
-under them carry both.
+Neither the copyright page nor the contents itself is listed, which is what the handbook asks. `CHAPTER` and `APPENDICES` are column labels rather than entries: they carry no leader and no page, and the chapters and appendices under them carry both.
 
-The entries are black. They are links, and a link would otherwise take
-`linkcolor` and leave the contents reading as a page of cross references
-rather than as a list; `toccolor` says what they take instead, in the lists
-of tables and figures as well.
+The entries are black. They are links, and a link would otherwise take `linkcolor` and leave the contents reading as a page of cross references rather than as a list; `toccolor` says what they take instead, in the lists of tables and figures as well.
 
-How deep it goes is quarto's own `toc-depth`, counting levels of heading:
-`1` lists the chapters and nothing under them, `4` adds the three levels of
-subheading the handbook allows, and anything deeper is cut back to four.
-Quarto's default is `3`.
+How deep it goes is quarto's own `toc-depth`, counting levels of heading: `1` lists the chapters and nothing under them, `4` adds the three levels of subheading the handbook allows, and anything deeper is cut back to four. Quarto's default is `3`.
 
 ``` yaml
 toc-depth: 1
 ```
 
-The handbook asks that a level listed for one chapter be listed for every
-chapter that has it, which is worth a look before you go deeper than the
-chapters.
+The handbook asks that a level listed for one chapter be listed for every chapter that has it, which is worth a look before you go deeper than the chapters.
 
 ## Chapters
 
-A chapter is a level-one heading in the body. In thesis mode a heading
-reading *Introduction* at the head of the body is kept rather than taken out
---- a dissertation's chapters are named, and that heading is the first
-chapter's name.
+A chapter is a level-one heading in the body. In thesis mode a heading reading *Introduction* at the head of the body is kept rather than taken out --- a dissertation's chapters are named, and that heading is the first chapter's name.
 
-Every level-one heading is set in capitals, and over each chapter stands the
-word `CHAPTER` and its number, on a line of its own and set like the heading
-under it.
+Every level-one heading is set in capitals, and over each chapter stands the word `CHAPTER` and its number, on a line of its own and set like the heading under it.
 
-Every major division begins a page of its own, which is what the handbook
-asks: each chapter, the references, and each appendix.
+Every major division begins a page of its own, which is what the handbook asks: each chapter, the references, and each appendix.
 
-A level-one heading with a part of its own to play --- the references, an
-appendix, the label over an appendix --- is not a chapter. It is set in
-capitals like the rest but carries no `CHAPTER` line and is not counted in
-the numbering.
+A level-one heading with a part of its own to play --- the references, an appendix, the label over an appendix --- is not a chapter. It is set in capitals like the rest but carries no `CHAPTER` line and is not counted in the numbering.
 
-The `CHAPTER` lines are not listed in the table of contents, which names a
-chapter by its own heading. The word can be changed with
-`thesis-chapter-label` in the `language` field.
+The `CHAPTER` lines are not listed in the table of contents, which names a chapter by its own heading. The word can be changed with `thesis-chapter-label` in the `language` field.
 
-In the .pdf and in typst the page numbers are worked out as the document is
-set. In .docx they are fields, as the lists of figures and tables are, and
-they are blank until something makes Word paginate: select all and press
-<kbd>F9</kbd>, or print, or export to PDF. .html has no pages, so an entry
-there is the words and a link to them.
+In the .pdf and in typst the page numbers are worked out as the document is set. In .docx they are fields, as the lists of figures and tables are, and they are blank until something makes Word paginate: select all and press <kbd>F9</kbd>, or print, or export to PDF. .html has no pages, so an entry there is the words and a link to them.
 
 ## The lists of tables, figures and illustrations
 
-A dissertation carries a table of contents and a list for each kind of float
-unless it says otherwise, which is the other way round from apaquarto's other
-modes: `list-of-contents`, `list-of-tables`, `list-of-figures` and
-`list-of-illustrations` are all true here, and the field says what to leave
-out rather than what to put in.
+A dissertation carries a table of contents and a list for each kind of float unless it says otherwise, which is the other way round from apaquarto's other modes: `list-of-contents`, `list-of-tables`, `list-of-figures` and `list-of-illustrations` are all true here, and the field says what to leave out rather than what to put in.
 
 ``` yaml
 list-of-illustrations: false
 ```
 
-A list with nothing in it is left out whatever the field says, and the
-contents does not name it: a heading reading `LIST OF TABLES` over an empty
-page helps nobody, and the Graduate School's own template says as much ---
-"if no tables, delete this page".
+A list with nothing in it is left out whatever the field says, and the contents does not name it: a heading reading `LIST OF TABLES` over an empty page helps nobody, and the Graduate School's own template says as much --- "if no tables, delete this page".
 
-A list is built for every kind of float the document holds --- tables first,
-then figures, then anything the document declared for itself under
-`crossref.custom`. Each stands under a heading of its own, `LIST OF TABLES`
-and the rest, with two column labels over the entries: what the list is of at
-the left margin and `Page` at the right. An entry is the float's number, its
-caption, leader dots and the page.
+A list is built for every kind of float the document holds --- tables first, then figures, then anything the document declared for itself under `crossref.custom`. Each stands under a heading of its own, `LIST OF TABLES` and the rest, with two column labels over the entries: what the list is of at the left margin and `Page` at the right. An entry is the float's number, its caption, leader dots and the page.
 
-An illustration is a figure with a word and a count of its own, so it is
-numbered from one rather than continuing after the figures, and its caption
-is set the way a figure's is: the number on a line of its own with the
-caption under it. `apa-note` works on it as it does on a figure, written
-either on the image or on the div that holds it, and in .docx it is given the
-same styles a figure has, which hold the note on the page with the
-illustration it belongs to. The same goes for any other kind of float a
-document declares.
+An illustration is a figure with a word and a count of its own, so it is numbered from one rather than continuing after the figures, and its caption is set the way a figure's is: the number on a line of its own with the caption under it. `apa-note` works on it as it does on a figure, written either on the image or on the div that holds it, and in .docx it is given the same styles a figure has, which hold the note on the page with the illustration it belongs to. The same goes for any other kind of float a document declares.
 
 ``` yaml
 format:
@@ -554,63 +460,37 @@ format:
           latex-env: illustration
 ```
 
-Declare a custom float **in each format block** rather than once for all of
-them. Quarto drops `latex-env` on the way through an extension's shared
-options, and its own LaTeX code then stops on the missing field.
+Declare a custom float **in each format block** rather than once for all of them. Quarto drops `latex-env` on the way through an extension's shared options, and its own LaTeX code then stops on the missing field.
 
-The lists are listed in the table of contents, as the handbook asks, and are
-numbered in the same lower-case roman as the rest of the front matter.
+The lists are listed in the table of contents, as the handbook asks, and are numbered in the same lower-case roman as the rest of the front matter.
 
 ## Line spacing
 
-The handbook sets the line spacing part by part, and `documentmode: thesis`
-follows it in all four formats.
+The handbook sets the line spacing part by part, and `documentmode: thesis` follows it in all four formats.
 
-The body is double spaced, and so are the abstract, the dedication, the
-acknowledgments and the preface.
+The body is double spaced, and so are the abstract, the dedication, the acknowledgments and the preface.
 
-A block quotation is single spaced and indented half an inch from the left
-margin *and* half an inch from the right, which is what marks it out as
-quoted.
+A block quotation is single spaced and indented half an inch from the left margin *and* half an inch from the right, which is what marks it out as quoted.
 
-The entries of the reference list are single spaced within an entry, with a
-double space between one entry and the next, hanging half an inch. The table
-of contents and the lists of tables, figures and illustrations are set the
-same way: a title of two or more lines is single spaced and turns over under
-its own first word, and a double space stands between one entry and the next.
+The entries of the reference list are single spaced within an entry, with a double space between one entry and the next, hanging half an inch. The table of contents and the lists of tables, figures and illustrations are set the same way: a title of two or more lines is single spaced and turns over under its own first word, and a double space stands between one entry and the next.
 
-Notes are single spaced within a note, with a double space between one note
-and the next and the first line indented half an inch, which is where the
-note's number sits. In .html the number belongs to the list the browser draws
-and is left where it is; the line spacing is the same.
+Notes are single spaced within a note, with a double space between one note and the next and the first line indented half an inch, which is where the note's number sits. In .html the number belongs to the list the browser draws and is left where it is; the line spacing is the same.
 
-Widows and orphans are avoided, so no page breaks after the first line of a
-paragraph or before its last. The .pdf is the one that has to be told; .docx
-and typst avoid them already, and .html has no pages to break.
+Widows and orphans are avoided, so no page breaks after the first line of a paragraph or before its last. The .pdf is the one that has to be told; .docx and typst avoid them already, and .html has no pages to break.
 
-Each format takes its own single spacing --- what Word, LaTeX and typst each
-call a single-spaced line differs by a point or so --- and its own double,
-which is what every other `documentmode` does too.
+Each format takes its own single spacing --- what Word, LaTeX and typst each call a single-spaced line differs by a point or so --- and its own double, which is what every other `documentmode` does too.
 
 ## Page numbering
 
-The handbook asks for lower-case roman numerals through the front matter and
-arabic numerals from the first page of the body, and says that "the Title
-Page is page i, but does not show a page number". That is what
-`documentmode: thesis` sets: the title page is counted and carries nothing,
-the copyright page is ii, and the body begins again at 1.
+The handbook asks for lower-case roman numerals through the front matter and arabic numerals from the first page of the body, and says that "the Title Page is page i, but does not show a page number". That is what `documentmode: thesis` sets: the title page is counted and carries nothing, the copyright page is ii, and the body begins again at 1.
 
-There is no running head. The number sits at the centre of the foot, which is
-where the dissertations Temple publishes put it.
+There is no running head. The number sits at the centre of the foot, which is where the dissertations Temple publishes put it.
 
-Confirm the current requirements with the Graduate School before submitting:
-apaquarto follows the 2024--2025 handbook, and a handbook is revised.
+Confirm the current requirements with the Graduate School before submitting: apaquarto follows the 2024--2025 handbook, and a handbook is revised.
 
 ## The words of the front matter
 
-Every word the front matter sets can be changed under `language`, for a
-dissertation written in another language or a degree that words things
-differently. A word left out keeps its English default.
+Every word the front matter sets can be changed under `language`, for a dissertation written in another language or a degree that words things differently. A word left out keeps its English default.
 
 ``` yaml
 language:
