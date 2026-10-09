@@ -32,7 +32,7 @@ To my knowledge, there is no working quarto extension other than apaquarto that 
 
 ### APA style with knitr and $\LaTeX$
 
-The ability to automate APA style via $\LaTeX$ has been around for some time---first via [apa](https://ctan.org/pkg/apa) (APA Style, 5th Edition), then via [apa6](https://ctan.org/pkg/apa6) (APA Style, 6th Edition), and now via [apa7](https://ctan.org/pkg/apa7) (APA Style, 7th Edition). The apaquarto package uses [apa7](https://ctan.org/pkg/apa7) to create .pdf documents. To intermingle R code and $\LaTeX$ code in the same document, R-users could write in an .Rnw file using [sweave or knitr](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr). I still do so when I need the full flexibility of $\LaTeX$.
+The ability to automate APA style via $\LaTeX$ has been around for some time---first via [apa](https://ctan.org/pkg/apa) (APA Style, 5th Edition), then via [apa6](https://ctan.org/pkg/apa6) (APA Style, 6th Edition), and now via [apa7](https://ctan.org/pkg/apa7) (APA Style, 7th Edition). To intermingle R code and $\LaTeX$ code in the same document, R-users could write in an .Rnw file using [sweave or knitr](https://support.posit.co/hc/en-us/articles/200552056-Using-Sweave-and-knitr). I still do so when I need the full flexibility of $\LaTeX$.
 
 ### APA style with Rmarkdown and papaja
 

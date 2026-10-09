@@ -12,8 +12,10 @@ project:
     - changelog.qmd
 
 website:
-  title: "apaquarto"
+  title: "APAQUARTO: Writing Reproducible Documents in APA Style"
   navbar:
+    logo: img/small-logo.svg
+    logo-alt: "APAQUARTO logo"
     left:
       - text: Intro
         href: index.qmd
@@ -50,3 +52,5 @@ format:
 
 execute:
   freeze: auto
+  
+brand: brand/_brand.yml

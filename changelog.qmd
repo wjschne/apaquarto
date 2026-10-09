@@ -14,6 +14,8 @@ engine: knitr
 
 # Version 7.0.2
 - 2026-10-07
+- [#157](https://github.com/wjschne/apaquarto/issues/157) In .pdf the title and authors are written into the file's metadata, so `pdf-standard: ua-2` no longer fails for a missing `dc:title`.
+- [#157](https://github.com/wjschne/apaquarto/issues/157) In .pdf a character missing from the text face, such as a check mark, is taken from Latin Modern Math or DejaVu Sans, so the file holds no `.notdef` glyph for `pdf-standard: ua-2` to refuse.
 - [#173](https://github.com/wjschne/apaquarto/issues/173) In .html, a note written by the `apanote` filter in a document outside the apaquarto formats is followed by a blank line, as in .docx and .pdf.
 - In .docx a table laid out in panels sets its panels side by side in one grid; every panel after the first was set under the grid.
 - In .docx a figure or table followed directly by another stands one blank line from it, not two.

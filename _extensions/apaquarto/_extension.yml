@@ -265,6 +265,14 @@ contributes:
       # this would match the math to the text, at the cost of a font package
       # (tex-gyre-math) that is not installed by default.
       mainfont: "TeX Gyre Termes"
+      # A character the face lacks, a check mark for one, is taken from the
+      # fallback list, which pandoc's template wires to mainfont. Latin Modern
+      # Math covers arrows, relations and most mathematical symbols, and DejaVu
+      # Sans the dingbats. Both ship with TeX Live. Without a fallback the pdf
+      # holds a .notdef glyph, which pdf-standard: ua-2 refuses.
+      mainfontfallback:
+        - "LatinModernMath-Regular:mode=base;"
+        - "DejaVuSans:mode=node;"
 
       documentclass: article
       classoption:

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Thesis and Dissertation Tutorial – apaquarto</title>
+<title>Thesis and Dissertation Tutorial – APAQUARTO: Writing Reproducible Documents in APA Style</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,16 +71,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./brand/img/small-logo.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e056b69f5ccf79f809a7a6a301a9d6e8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-e3a3313dfaba70a1cab914cd7371330e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e3a3313dfaba70a1cab914cd7371330e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-e3a3313dfaba70a1cab914cd7371330e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/kbd/kbd.js"></script>
 <link href="site_libs/quarto-contrib/kbd/kbd.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -121,8 +126,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./img/small-logo.svg" alt="APAQUARTO logo" class="navbar-logo light-content">
+    <img src="./img/small-logo.svg" alt="APAQUARTO logo" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">apaquarto</span>
+    <span class="navbar-title">APAQUARTO: Writing Reproducible Documents in APA Style</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -185,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#the-steps-at-a-glance" id="toc-the-steps-at-a-glance" class="nav-link active" data-scroll-target="#the-steps-at-a-glance">The Steps at a Glance</a></li>
+  <li><a href="#setup-steps-at-a-glance" id="toc-setup-steps-at-a-glance" class="nav-link active" data-scroll-target="#setup-steps-at-a-glance">Setup Steps at a Glance</a></li>
   <li><a href="#before" id="toc-before" class="nav-link" data-scroll-target="#before">Before You Begin: Finding Your Way Around Your Computer</a>
   <ul class="collapse">
   <li><a href="#where-are-my-files" id="toc-where-are-my-files" class="nav-link" data-scroll-target="#where-are-my-files">Where are my files?</a></li>
@@ -284,11 +293,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>It is possible to write a thesis or dissertation in a wide variety of styles. As seen in its name, <strong>apa</strong>quarto formats theses and dissertations according to APA style. If you want APA headings, but need a different citation style, apaquarto can be adapted to do so.</p>
 <p>Thesis mode follows Temple University’s <em>Dissertation and Thesis Handbook</em> (see the <a href="./options.html#dissertations-and-theses">options page</a> for the edition it follows). Formatting rules change from year to year, and your department or committee may ask for something different. Before you submit, confirm the current requirements with the Graduate School and your committee. Treat apaquarto’s output as a very good first draft of the format, not as an official approval.</p>
 </div>
 </div>
-<section id="the-steps-at-a-glance" class="level1">
-<h1>The Steps at a Glance</h1>
+<section id="setup-steps-at-a-glance" class="level1">
+<h1>Setup Steps at a Glance</h1>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -413,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="before" class="level1">
 <h1>Before You Begin: Finding Your Way Around Your Computer</h1>
-<p>Many students keep their files mostly online in OneDrive and only open them through a browser. That works well for Word, but the programs in this tutorial need to find your files <strong>on your computer</strong>. This short section gives you the vocabulary you will need.</p>
+<p>Many students keep their files mostly online in OneDrive or Google Drive and only open them through a browser. That works well for Microsoft 365 or Google Docs, but the programs in this tutorial need to find your files <strong>on your computer</strong>. This short section gives you the vocabulary you will need.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -873,17 +883,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Copy</strong> the text that appears.</li>
 <li>Back in RStudio, in your <code>dissertation.qmd</code> file, <strong>select everything</strong> (<kbd title="Ctrl+A" aria-hidden="true">Ctrl+A</kbd><span class="visually-hidden">Ctrl+A</span>, or <kbd title="Cmd+A" aria-hidden="true">Cmd+A</kbd><span class="visually-hidden">Cmd+A</span> on a Mac), and <strong>paste</strong> over it (<kbd title="Ctrl+V" aria-hidden="true">Ctrl+V</kbd><span class="visually-hidden">Ctrl+V</span> or <kbd title="Cmd+V" aria-hidden="true">Cmd+V</kbd><span class="visually-hidden">Cmd+V</span>). Save the file.</li>
 </ol>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Privacy
+<span class="screen-reader-only">Note</span>Privacy
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>apa7maker runs in your browser. Still, as with any website, avoid typing anything into it that you would not want others to see. Your name, your title, and your committee members’ names are all it needs.</p>
+<p>The apa7maker app keeps your information confidential because it runs in your browser in a private sandbox. That is, once it finishes downloading and starts running, it computes everything locally. It never sends information back to the server. Thus, there is no way for anyone—not even the developer—to see what is entered into apa7maker.</p>
 </div>
 </div>
 <p>If you would like to see what the finished settings can look like, here is a trimmed example:</p>

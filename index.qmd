@@ -3,6 +3,8 @@ title: "Introduction to apaquarto"
 engine: knitr
 ---
 
+<a href="https://wjschne.github.io/apaquarto/"><img src="img/logo.svg" align="right" height="120" /></a>
+
 Style guides facilitate scientific communication. Because scholars often write about inherently difficult topics, preventing any *avoidable* barriers to communication is all the more necessary. Style guides make information easier to absorb because it is presented in a predictable sequence and a familiar format. Still, in removing unnecessary barriers to communication on the reader's end, style guides themselves often place unnecessary roadblocks before the writer.
 
 [APA style](https://apastyle.apa.org/) is fussier than most discipline-specific guides. Because it was introduced in the pre-computer age [@bentley1929instructions], its quirks and charms resist easy automation. Even after decades of experience, I still need to look things up. Constantly. The basics of APA style are easy enough to learn, but there are a lot of particulars to keep in mind. Not only are there rules and exceptions to rules to remember, there are exceptions to the exceptions that must not be forgotten.

@@ -18,10 +18,13 @@ A few promises before we start:
 :::{.callout-important}
 ## Check your program's requirements
 
+It is possible to write a thesis or dissertation in a wide variety of styles. As seen in its name, **apa**quarto formats theses and dissertations according to APA style. If you want APA headings, but need a different citation style, apaquarto can be adapted to do so. 
+
+
 Thesis mode follows Temple University's *Dissertation and Thesis Handbook* (see the [options page](options.qmd#dissertations-and-theses) for the edition it follows). Formatting rules change from year to year, and your department or committee may ask for something different. Before you submit, confirm the current requirements with the Graduate School and your committee. Treat apaquarto's output as a very good first draft of the format, not as an official approval.
 :::
 
-# The Steps at a Glance
+# Setup Steps at a Glance
 
 | Step | What you do |
 |:----:|:------------|
@@ -59,7 +62,7 @@ You will write in a **.qmd file** (a "Quarto document"). It is a plain-text file
 
 # Before You Begin: Finding Your Way Around Your Computer {#before}
 
-Many students keep their files mostly online in OneDrive and only open them through a browser. That works well for Word, but the programs in this tutorial need to find your files **on your computer**. This short section gives you the vocabulary you will need.
+Many students keep their files mostly online in OneDrive or Google Drive and only open them through a browser. That works well for Microsoft 365 or Google Docs, but the programs in this tutorial need to find your files **on your computer**. This short section gives you the vocabulary you will need.
 
 :::{.callout-tip}
 ## Key idea
@@ -409,10 +412,10 @@ Your thesis starts with a title page, copyright page, abstract, dedication, ackn
 5. **Copy** the text that appears.
 6. Back in RStudio, in your `dissertation.qmd` file, **select everything** ({{< kbd Ctrl+A >}}, or {{< kbd Cmd+A >}} on a Mac), and **paste** over it ({{< kbd Ctrl+V >}} or {{< kbd Cmd+V >}}). Save the file.
 
-:::{.callout-important}
+:::{.callout-note}
 ## Privacy
 
-apa7maker runs in your browser. Still, as with any website, avoid typing anything into it that you would not want others to see. Your name, your title, and your committee members' names are all it needs.
+The apa7maker app keeps your information confidential because it runs in your browser in a private sandbox. That is, once it finishes downloading and starts running, it computes everything locally. It never sends information back to the server. Thus, there is no way for anyone---not even the developer---to see what is entered into apa7maker.
 :::
 
 If you would like to see what the finished settings can look like, here is a trimmed example:

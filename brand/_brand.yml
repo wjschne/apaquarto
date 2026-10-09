@@ -1,0 +1,21 @@
+color:
+  background: "#ffffff"
+  foreground: "#333333"
+
+logo: 
+  medium: img/logo.svg
+  large: img/logo.svg
+  small: img/small-logo.svg
+
+typography:
+  fonts: 
+    - family: Roboto Condensed
+      source: google
+    - family: Roboto
+      source: google
+    - family: Literata 
+      source: google
+  base: Literata 
+  headings:
+    family: Roboto
+    weight: 600

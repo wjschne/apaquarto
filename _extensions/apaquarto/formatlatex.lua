@@ -240,6 +240,29 @@ local function meta(m)
   -- them a second time. Leaving them would print the title, the authors and
   -- the abstract twice over, and would call \maketitle, which puts the first
   -- page into the plain page style and loses the running head from it.
+  --
+  -- The pdf's title and author fields come from title-meta and author-meta,
+  -- which pandoc fills in from the title and author, so they are given here
+  -- while those are still known. A pdf standard such as ua-2 fails without a
+  -- dc:title in the metadata.
+  if m.title and not m["title-meta"] then
+    m["title-meta"] = pandoc.utils.stringify(m.title)
+  end
+  if m["by-author"] and not m["author-meta"] then
+    local names = {}
+    for _, a in ipairs(m["by-author"]) do
+      local name = a.name
+      if type(name) == "table" and name.literal then
+        name = name.literal
+      end
+      if name then
+        names[#names + 1] = pandoc.utils.stringify(name)
+      end
+    end
+    if #names > 0 then
+      m["author-meta"] = table.concat(names, ", ")
+    end
+  end
   m.title = nil
   m.subtitle = nil
   m.author = nil
