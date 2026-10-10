@@ -2915,3 +2915,16 @@
       # quotation's left edge, 108pt.
       - left: Dashonly
         is: 123
+
+- fixture: ragged-no-hyphenation.qmd
+  to: apaquarto-pdf
+  expect: &ragged-no-hyphenation
+    pdf:
+      absent:
+        # A word broken at a line end reads as its first half, a hyphen, and
+        # (once the line break is run together into a space) its second half.
+        - '- '
+
+- fixture: ragged-no-hyphenation.qmd
+  to: apaquarto-typst
+  expect: *ragged-no-hyphenation

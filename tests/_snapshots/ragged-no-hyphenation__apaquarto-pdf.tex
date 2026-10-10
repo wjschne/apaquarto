@@ -604,12 +604,6 @@
   }{%
     /the/apa@lt@foot
     /end{tabular}%
-    % The space after /end{longtable} ignored, as after a list or a
-    % quotation. It sat on the tabular's line, and when the table ran the
-    % full width of the page, as one with a column of text does, it went on
-    % to a second, empty line, which set the note a point lower than under a
-    % narrower table (tests/layout-table-rules.qmd).
-    /global/@ignoretrue
   }}
 /makeatother
 
@@ -774,14 +768,7 @@
 %
 % Figures only. A table follows its title immediately, and apa7 in fact leaves
 % a little less room there than this format already does.
-%
-% Measured from the caption's baseline: TeX puts the picture under the depth
-% of the line above it, so a caption whose last line had a p or a g in it
-% stood 2pt further off its picture than one that had none. 20pt from the
-% baseline to the picture, as in typst (tests/layout-figure-space.qmd).
-/newcommand{/apafigureskip}{%
-  /par/ifdim/prevdepth>0pt/vskip-/prevdepth/prevdepth=0pt/fi
-  /vspace{1.2em}}
+/newcommand{/apafigureskip}{/vspace{1.2em}}
 /newenvironment{apafloatnote}
   {/par/setlength{/parindent}{0pt}/noindent}
   {/par}
@@ -796,15 +783,6 @@
 %
 % The gap is written by floatlatex.lua, which knows a table from a figure. A
 % figure's note follows the picture, which needs no rule cleared.
-% The line spacing of a table's rows, double by default, the body's, which APA
-% allows beside one-and-a-half and single. table-spacing, or a journal or doc
-% mode, asks for one of the others, which formatlatex.lua writes here as
-% setspace's stretch for it: 1 or 1.25. floatlatex.lua sets a table pandoc writes in a group that takes this
-% spacing, and the title, caption and note around it keep the body's. A table
-% a package writes in latex of its own keeps its own spacing.
-/newcommand{/apatablestretch}{1.667}
-/newcommand{/apatablespacing}{/setstretch{/apatablestretch}/selectfont}
-
 /newlength{/apatablenotegap}
 /setlength{/apatablenotegap}{0.5em}
 /newcommand{/apatablenoteskip}{/par/vspace{/apatablenotegap}}
@@ -1022,7 +1000,7 @@
 /renewcommand{/apacontentsname}{Table of Contents}
 /renewcommand{/apalistfigurename}{List of Figures}
 /renewcommand{/apalisttablename}{List of Tables}
-/setapashorttitle{TABLE NOTE}
+/setapashorttitle{HYPHENATION}
 /apaquote
 /usepackage{bookmark}
 /IfFileExists{xurl.sty}{/usepackage{xurl}}{} % add URL line breaks if available
@@ -1040,7 +1018,7 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-/author{A B}
+/author{Test Author}
 /date{}
 /begin{document}
 
@@ -1053,7 +1031,7 @@
 
 /apatitle{
 
-A Table Note With Markdown
+No Hyphenation in a Ragged Right Edge
 
 }
 
@@ -1061,9 +1039,9 @@ A Table Note With Markdown
 
 /hfill/break
 
-A B
+Test Author
 
-X
+Test University
 
 /end{apaauthor}
 
@@ -1077,77 +1055,50 @@ Author Note
 
 }
 
-Correspondence concerning this article should be addressed to A
-B, X, Email: /href{mailto:a@b.edu}{/nolinkurl{a@b.edu}}
+Correspondence concerning this article should be addressed to Test
+Author, Test University, Email:
+/href{mailto:test@example.com}{/nolinkurl{test@example.com}}
 
 /clearpage
 
 /apatitle{
 
-A Table Note With Markdown
+No Hyphenation in a Ragged Right Edge
 
 }
 
-/section{Body}/label{body}
+/section{Method}/label{method}
 
-/par/addvspace{/baselineskip}/begingroup
+Institutional expectations surrounding examination performance
+considerably constrain instructional experimentation, particularly where
+administrators interpret standardised achievement indicators as
+comprehensive representations of educational effectiveness.
+Consequently, practitioners occasionally postpone collaborative
+investigations, prioritising systematic rehearsal of procedural
+competencies that assessments conventionally reward.
 
-/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{-0.5pt}
+Longitudinal comparisons nevertheless demonstrate substantial
+heterogeneity between neighbouring establishments, suggesting that
+organisational circumstances, accountability arrangements, and
+professional communities jointly determine whether pedagogical
+innovations become institutionalised. Correspondingly, interpretations
+emphasising individual dispositions underestimate contextual
+contingencies.
 
-/setlength{/LTpre}{16pt}
+Methodological considerations complicate straightforward generalisation.
+Questionnaire instruments measuring philosophical commitments presuppose
+considerable introspective accessibility, whereas observational
+methodologies require extraordinarily intensive investments.
+Triangulating complementary perspectives therefore remains indispensable
+for understanding characteristically multidimensional phenomena.
 
-/apalongtableastabular/setlength{/parindent}{0pt}
-
-/apatablekeep
-
-/setcounter{table}{0}
-
-/refstepcounter{table}%
-/makeatletter/def/@currentlabel{1}/makeatother%
-/label{tbl-fmt}
-
-/apafloattitle{Table 1}
-
-/apafloatcaption{A table.}
-
-/addcontentsline{lot}{table}{Table 1. A table.}
-
-/par/ifdim/prevdepth>0pt/vskip-/prevdepth/prevdepth=0pt/fi
-
-/par/vspace{/dimexpr/LTpre-/lineskip/relax}
-
-/begingroup/apatablespacing
-
-{/def/LTcaptype{none} % do not increment counter
-/begin{longtable}[]{@{}ll@{}}
-/toprule/noalign{}
-A & B //
-/midrule/noalign{}
-/endhead
-/bottomrule/noalign{}
-/endlastfoot
-1 & 2 //
-/end{longtable}
-}
-
-/par/endgroup
-
-/par/prevdepth=0pt
-
-/apafigurekeepend
-
-/apatablenoteskip
-
-/begin{apafloatnote}
-
-/emph{Note}. Zqnote~with /emph{zqemph}, /textbf{zqbold} and
-/texttt{zqcode}.
-
-/end{apafloatnote}
-
-/par/endgroup/addvspace{/baselineskip}
-
-See /hyperref[tbl-fmt]{Table~/ref*{tbl-fmt}}.
+Comprehensive understanding additionally requires acknowledging
+intergenerational transmission of educational advantages through
+residential segregation, extracurricular participation, and
+differentiated parental involvement. Policymakers contemplating
+redistributive interventions must accordingly anticipate
+counterproductive responses from comparatively privileged
+constituencies.
 
 
 
