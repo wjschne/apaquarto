@@ -3,6 +3,8 @@ title: "An Inquiry into Vexing Problems at the Intersection of Digital Typograph
 shorttitle: "Typography, Tasseomancy, and Badminton"
 author:
   - name: W. Joel Schneider
+    affiliations: Temple University
+    corresponding: true
 abstract: "This is my abstract."
 bibliography: tests/references.bib
 dedication: |

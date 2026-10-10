@@ -3,9 +3,9 @@ color:
   foreground: "#333333"
 
 logo: 
-  medium: img/logo.svg
-  large: img/logo.svg
-  small: img/small-logo.svg
+  medium: ../img/logo.svg
+  large: ../img/logo.svg
+  small: ../img/small-logo.svg
 
 typography:
   fonts: 

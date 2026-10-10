@@ -85,23 +85,27 @@ end
 local function docx_contents_line(entry, measure, colour)
   local indent = twips(entry.indent * kSubheadingStep * 72)
   local hanging = entry.number and twips(kNumberColumn * 72) or 0
-  local tab = twips(measure * 72) - indent
+  -- A tab stop is measured from the margin, not from the indent, so the
+  -- right tab sits at the full measure however deep the entry is indented
+  local tab = twips(measure * 72)
 
-  local properties = string.format(
-    --- A title of two or more lines is single spaced, and the 276 twips
-    --- ahead of an entry are the second line that leaves a double space
-    --- between it and whatever it follows --- the entry before it, or the
-    --- column heading the list opens under.
-    '<w:spacing w:before="276" w:after="0" w:line="240" w:lineRule="auto"/>'
-    .. '<w:ind w:left="%d" w:hanging="%d"/>', indent + hanging, hanging)
+  -- tabs come before spacing and ind in a paragraph's properties
+  local properties = ""
   if entry.kind ~= "label" then
-    properties = properties .. "<w:tabs>"
+    properties = "<w:tabs>"
       .. (entry.number and string.format(
         '<w:tab w:val="left" w:pos="%d"/>', indent + hanging) or "")
       .. string.format(
         '<w:tab w:val="right" w:leader="dot" w:pos="%d"/>', tab)
       .. "</w:tabs>"
   end
+  properties = properties .. string.format(
+    --- A title of two or more lines is single spaced, and the 276 twips
+    --- ahead of an entry are the second line that leaves a double space
+    --- between it and whatever it follows --- the entry before it, or the
+    --- column heading the list opens under.
+    '<w:spacing w:before="276" w:after="0" w:line="240" w:lineRule="auto"/>'
+    .. '<w:ind w:left="%d" w:hanging="%d"/>', indent + hanging, hanging)
 
   local body = docx_runs(entry.text, false, false, colour)
   if entry.number then

@@ -156,6 +156,8 @@ table-spacing: 2
 list-of-contents: false
 list-of-figures: false
 list-of-tables: false
+csl: chicago-author-date.csl
+brand: false
 format:
   apaquarto-html: default
   apaquarto-docx: default
