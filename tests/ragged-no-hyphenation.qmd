@@ -1,0 +1,35 @@
+---
+title: "No Hyphenation in a Ragged Right Edge"
+shorttitle: "Hyphenation"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+APA sets a manuscript flush left with a ragged right edge and does not break
+words at the ends of lines. apaquarto-pdf switched the ragged edge on with
+ragged2e's \RaggedRight, which lets a line fall at most 2em short of the
+measure, so where the next word did not fit TeX hyphenated it instead.
+
+The paragraphs below are written in long words, which is where a short
+stretch runs out first. None of them should be broken at a line end, so the
+text of the page should have no hyphen followed by a space. The paragraphs
+themselves have no hyphenated compounds, which would make a false match.
+-->
+
+# Method
+
+Institutional expectations surrounding examination performance considerably constrain instructional experimentation, particularly where administrators interpret standardised achievement indicators as comprehensive representations of educational effectiveness. Consequently, practitioners occasionally postpone collaborative investigations, prioritising systematic rehearsal of procedural competencies that assessments conventionally reward.
+
+Longitudinal comparisons nevertheless demonstrate substantial heterogeneity between neighbouring establishments, suggesting that organisational circumstances, accountability arrangements, and professional communities jointly determine whether pedagogical innovations become institutionalised. Correspondingly, interpretations emphasising individual dispositions underestimate contextual contingencies.
+
+Methodological considerations complicate straightforward generalisation. Questionnaire instruments measuring philosophical commitments presuppose considerable introspective accessibility, whereas observational methodologies require extraordinarily intensive investments. Triangulating complementary perspectives therefore remains indispensable for understanding characteristically multidimensional phenomena.
+
+Comprehensive understanding additionally requires acknowledging intergenerational transmission of educational advantages through residential segregation, extracurricular participation, and differentiated parental involvement. Policymakers contemplating redistributive interventions must accordingly anticipate counterproductive responses from comparatively privileged constituencies.
