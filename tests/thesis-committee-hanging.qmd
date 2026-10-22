@@ -1,0 +1,41 @@
+---
+title: "A Study of Committee Lines"
+shorttitle: "Committee Lines"
+author:
+  - name: Iwishiwere A. Graduate
+    corresponding: true
+    email: graduate@example.edu
+    affiliations:
+      - name: Temple University
+abstract: "An abstract."
+bibliography: references.bib
+documentmode: thesis
+thesis:
+  type: Dissertation
+  degree: Doctor of Philosophy
+  date: May 2027
+  committee:
+    - name: Mentor Name, Ph.D.
+      role: Advisory Chair
+      affiliation: Department of Educational Psychology, College of Education and Human Development
+    - name: Member Name, Ph.D.
+      affiliation: TU Department
+    - name: Outside Name, Ph.D.
+      role: External Member
+      affiliation: Department of Something Quite Long, Another University of Considerable Name
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+<!--
+The examining committee on the title page is one paragraph a member, and a
+member whose line runs past the measure turns under itself by half an inch,
+in all four formats; they had been one block of lines with no hanging indent.
+-->
+
+# Introduction
+
+Some text.

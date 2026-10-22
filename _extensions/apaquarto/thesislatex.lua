@@ -104,8 +104,17 @@ local function render_latex(pages, meta)
           or "\\raggedright\\noindent"
         local indent = item.indent
           and string.format("\\leftskip=%.2fin\\relax", item.indent) or ""
-        out:insert(raw("latex",
-          "{" .. align .. indent .. "\n" .. body .. "\\par}"))
+        if item.hanging then
+          -- A paragraph a line, each turning under itself.
+          for _, line in ipairs(lines) do
+            out:insert(raw("latex", string.format(
+              "{%s\\parskip=0pt%s\\hangindent=%.2fin\\hangafter=1\n%s\\par}",
+              align, indent, item.hanging, line)))
+          end
+        else
+          out:insert(raw("latex",
+            "{" .. align .. indent .. "\n" .. body .. "\\par}"))
+        end
       elseif item.kind == "anchor" then
         out:insert(raw("latex", "\\label{" .. item.name .. "}"))
       elseif item.kind == "columns" then

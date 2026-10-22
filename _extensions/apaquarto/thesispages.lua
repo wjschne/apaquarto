@@ -13,7 +13,7 @@
 --
 --   gap       { points }                       space down the page
 --   rule      {}                               a centred rule
---   para      { align, lines, bold, double, indent }
+--   para      { align, lines, bold, double, indent, hanging }
 --   anchor    { name }                         a mark a contents points at
 --   columns   { left, right }                  the two labels over a list
 --   contents  { entries }                      lines of a contents or list
@@ -61,6 +61,9 @@ local kDedicationDrop = 164  -- points from the top margin to a dedication
 -- than out at the margin: the rules are narrower than the measure and are
 -- centred in it, so this is the half-inch that leaves on either side.
 local kCommitteeIndent = (kMeasureInches - kRuleWidth) / 2
+-- A committee member's line that runs past the measure turns under itself by
+-- this many inches, so that each member reads as one entry.
+local kCommitteeHang = 0.5
 
 -- The margins and the measures they leave, for this document. Every value
 -- above that hangs on the margins is set again here, before a page is built.
@@ -215,7 +218,7 @@ local function collector()
       if #kept > 0 then
         items:insert({ kind = "para", align = align, lines = kept,
           bold = options.bold, double = options.double,
-          indent = options.indent })
+          indent = options.indent, hanging = options.hanging })
       end
       return #kept > 0
     end,
@@ -309,7 +312,8 @@ local function title_page(meta)
     add.para("left", { text(language(meta, "thesis-committee",
       "Examining Committee Members:")) }, { indent = kCommitteeIndent })
     add.gap(kLineSpace)
-    add.para("left", lines, { indent = kCommitteeIndent })
+    add.para("left", lines,
+      { indent = kCommitteeIndent, hanging = kCommitteeHang })
   end
 
   return items

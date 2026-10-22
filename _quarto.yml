@@ -48,6 +48,9 @@ format:
     tbl-cap-location: top
     toc: true
     toc-location: left
+    include-in-header:
+      - text: |
+         <link rel="icon" type="image/png" href="/img/small-logo.svg">
 
 
 execute:

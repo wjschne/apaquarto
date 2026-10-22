@@ -1,0 +1,37 @@
+---
+title: "A Study of Logos"
+shorttitle: "Logos"
+author:
+  - name: Iwishiwere A. Graduate
+    corresponding: true
+    email: graduate@example.edu
+    affiliations:
+      - name: Temple University
+abstract: "An abstract."
+bibliography: references.bib
+brand:
+  logo:
+    small: sampleimage.png
+    medium: sampleimage.png
+    large: sampleimage.png
+documentmode: thesis
+thesis:
+  type: Dissertation
+  degree: Doctor of Philosophy
+  date: May 2027
+format:
+  apaquarto-typst: default
+  apaquarto-html: default
+  apaquarto-pdf: default
+  apaquarto-docx: default
+---
+
+<!--
+A brand with a logo, as a project's _brand.yml gives one, drew the logo behind
+every page of a dissertation in typst. A dissertation carries no logo, whatever
+brand the project has.
+-->
+
+# Introduction
+
+Some text.

@@ -1091,7 +1091,7 @@
         - 'Iwishiwere A. Graduate\\'
         # The committee, flush left at the foot.
         - 'Examining Committee Members:\par}'
-        - 'Mentor Name, Advisory Chair, TU Department\\'
+        - 'Mentor Name, Advisory Chair, TU Department\par}'
         - 'Outside Name, External Member, Another University\par}'
       absent:
         # thesis mode has a front matter of its own, so the APA title page is
@@ -2928,3 +2928,43 @@
 - fixture: ragged-no-hyphenation.qmd
   to: apaquarto-typst
   expect: *ragged-no-hyphenation
+
+# The examining committee is a paragraph a member, and a member whose line runs
+# past the measure turns under itself by half an inch, in all four formats.
+- fixture: thesis-committee-hanging.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        - '\hangindent=0.50in\hangafter=1'
+        - 'Member Name, Ph.D., TU Department\par}'
+
+- fixture: thesis-committee-hanging.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'hanging-indent: 0.50in'
+
+- fixture: thesis-committee-hanging.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      contains:
+        - '<w:ind w:left="1440" w:hanging="720"/>'
+
+- fixture: thesis-no-logo.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - '#show: document => thesis('
+      absent:
+        - 'set page(background'
+
+- fixture: thesis-committee-hanging.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'margin-left:1.00in;text-indent:-0.50in'

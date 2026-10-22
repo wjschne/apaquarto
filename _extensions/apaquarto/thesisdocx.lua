@@ -165,21 +165,34 @@ local function render_docx(pages, meta)
         out:insert(raw("openxml",
           "<w:p>" .. properties(extra) .. anchors() .. "</w:p>"))
       elseif item.kind == "para" then
-        local runs = pandoc.List({})
-        for i, line in ipairs(item.lines) do
-          if i > 1 then runs:insert("<w:r><w:br/></w:r>") end
-          runs:insert(docx_runs(line, item.bold, false))
-        end
-        local extra = string.format('<w:jc w:val="%s"/>',
+        local jc = string.format('<w:jc w:val="%s"/>',
           item.align == "center" and "center"
             or item.align == "right" and "right" or "left")
-        if item.indent then
-          extra = extra .. string.format('<w:ind w:left="%d"/>',
-            twips(item.indent * 72))
+        if item.hanging then
+          -- A paragraph a line, each turning under itself.
+          local hang = twips(item.hanging * 72)
+          local extra = jc .. string.format('<w:ind w:left="%d" w:hanging="%d"/>',
+            twips((item.indent or 0) * 72) + hang, hang)
+          for _, line in ipairs(item.lines) do
+            out:insert(raw("openxml",
+              "<w:p>" .. properties(extra, item.double) .. anchors()
+              .. docx_runs(line, item.bold, false) .. "</w:p>"))
+          end
+        else
+          local runs = pandoc.List({})
+          for i, line in ipairs(item.lines) do
+            if i > 1 then runs:insert("<w:r><w:br/></w:r>") end
+            runs:insert(docx_runs(line, item.bold, false))
+          end
+          local extra = jc
+          if item.indent then
+            extra = extra .. string.format('<w:ind w:left="%d"/>',
+              twips(item.indent * 72))
+          end
+          out:insert(raw("openxml",
+            "<w:p>" .. properties(extra, item.double) .. anchors()
+            .. table.concat(runs) .. "</w:p>"))
         end
-        out:insert(raw("openxml",
-          "<w:p>" .. properties(extra, item.double) .. anchors()
-          .. table.concat(runs) .. "</w:p>"))
       elseif item.kind == "anchor" then
         -- Held back rather than set in a paragraph of its own: an empty
         -- paragraph is a blank line, and the heading under it came out a

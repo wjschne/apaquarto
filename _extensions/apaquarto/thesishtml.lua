@@ -56,9 +56,20 @@ local function render_html(pages, meta)
         if item.bold then body = "<strong>" .. body .. "</strong>" end
         local indent = item.indent
           and string.format(";margin-left:%.2fin", item.indent) or ""
-        out:insert(raw("html", '<p style="text-align:' .. item.align ..
-          ";margin:0" .. indent .. ";text-indent:0;line-height:" ..
-          (item.double and "2" or "1.15") .. '">' .. body .. "</p>"))
+        if item.hanging then
+          -- A paragraph a line, each turning under itself.
+          for _, line in ipairs(lines) do
+            out:insert(raw("html", string.format(
+              '<p style="text-align:%s;margin:0;margin-left:%.2fin;'
+              .. 'text-indent:-%.2fin;line-height:%s">%s</p>',
+              item.align, (item.indent or 0) + item.hanging, item.hanging,
+              item.double and "2" or "1.15", line)))
+          end
+        else
+          out:insert(raw("html", '<p style="text-align:' .. item.align ..
+            ";margin:0" .. indent .. ";text-indent:0;line-height:" ..
+            (item.double and "2" or "1.15") .. '">' .. body .. "</p>"))
+        end
       elseif item.kind == "anchor" then
         out:insert(raw("html", '<span id="' .. item.name .. '"></span>'))
       elseif item.kind == "columns" then

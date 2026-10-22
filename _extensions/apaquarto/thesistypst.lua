@@ -98,10 +98,19 @@ local function render_typst(pages, meta)
           lines:insert(written(line, "typst"))
         end
         local body = table.concat(lines, " \\\n")
+        if item.hanging then
+          -- A paragraph a line, each turning under itself. Said in a set
+          -- rule, since a paragraph element may not hold a paragraph break.
+          body = string.format(
+            "#[#set par(first-line-indent: 0pt, hanging-indent: %.2fin, "
+            .. "spacing: 0.65em%s)\n%s\n]", item.hanging,
+            item.double and "" or ", leading: 0.65em",
+            table.concat(lines, "\n\n"))
+        end
         if item.bold then body = "#strong[" .. body .. "]" end
         -- A single-spaced paragraph says so; a double-spaced one keeps the
         -- leading the document is set in, which in this mode is double.
-        if not item.double then
+        if not item.double and not item.hanging then
           body = "#par(leading: 0.65em)[" .. body .. "]"
         end
         body = "#align(" .. item.align .. ")[" .. body .. "]"

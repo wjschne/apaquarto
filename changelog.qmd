@@ -14,6 +14,8 @@ engine: knitr
 
 # Version 7.0.2
 - 2026-10-07
+- In thesis mode no logo is drawn, so a `_brand.yml` logo no longer appears behind every page in typst.
+- In thesis mode each member of the examining committee on the title page is a paragraph with a hanging indent, so a long entry turns under itself, in .pdf, typst, .docx and .html.
 - [#157](https://github.com/wjschne/apaquarto/issues/157) In .pdf the title and authors are written into the file's metadata, so `pdf-standard: ua-2` no longer fails for a missing `dc:title`.
 - [#157](https://github.com/wjschne/apaquarto/issues/157) In .pdf a character missing from the text face, such as a check mark, is taken from Latin Modern Math or DejaVu Sans, so the file holds no `.notdef` glyph for `pdf-standard: ua-2` to refuse.
 - [#173](https://github.com/wjschne/apaquarto/issues/173) In .html, a note written by the `apanote` filter in a document outside the apaquarto formats is followed by a blank line, as in .docx and .pdf.

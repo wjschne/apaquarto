@@ -53,15 +53,12 @@ Block quotes are on their own line starting with the \> character. For example, 
 
 # Literature Review
 
-What others have found [@schneiderCattellHornCarrollTheoryCognitive2018]. See @ill-mediation.
+Some researchers have argued that theory X has merit [@schneiderCattellHornCarrollTheoryCognitive2018]. As seen in @fig-example, theory X asserts *A* causes *B* and that *B* causes *C*.
 
-![B Mediates the Relationship Between A and C](sampleimage.png){#ill-mediation}
+Before measuring constructs *A*, *B*, and *C*, we need to consider their scales of measurement. The classic levels of measurement in @stevensTheoryScalesMeasurement1946 are listed in @tbl-noir. 
 
-# Methods
 
-Something about the method.
-
-# Results
+:::{#tbl-noir apa-note="@stevensTheoryScalesMeasurement1946"}
 
 | Scale    | Description                    |
 |:---------|:-------------------------------|
@@ -70,16 +67,16 @@ Something about the method.
 | Interval | Quantities without a true zero |
 | Ratio    | Quantities with a true zero    |
 
-: Classic Scale Types. {#tbl-noir apa-note="My note"}
+Classic Scale Types
+:::
 
+# Methods
 
-![Path Diagram](sampleimage.png){#fig-appendfig apa-note="A *note* below the figure" fig-alt="A path diagram in which A causes B, and B causes C."}
+Something about the method.
 
-# Discussion
+# Results
 
-## Figures and Illustrations
-
-::: {#fig-example}
+::: {#fig-example apa-note="Optional note below the figure"}
 ![](tests/sampleimage.png)
 
 A figure caption that says what the figure shows.
@@ -93,11 +90,16 @@ A figure caption that says what the figure shows.
 A table caption that says what the table shows.
 :::
 
+# Discussion
+
 ::: {#ill-example}
 ![](tests/sampleimage.png)
 
 An illustration caption that says what the illustration shows.
 :::
+
+
+
 
 # References
 

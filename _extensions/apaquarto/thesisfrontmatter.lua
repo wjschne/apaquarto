@@ -108,7 +108,12 @@ function Meta(meta)
     quarto.doc.include_text("in-header",
       "\\definecolor{apathesistoc}{HTML}{" .. contents_colour(meta) .. "}")
   end
-  return nil
+  -- A dissertation carries no logo. Quarto fills `logo` from the project's
+  -- _brand.yml, and typst's page setup draws it behind every page; the
+  -- Graduate School's pages have none. It is dropped here, last, because
+  -- Quarto puts it back after the filters that run before this one.
+  meta.logo = nil
+  return meta
 end
 
 function Pandoc(doc)

@@ -1,7 +1,16 @@
 /*-- scss:defaults --*/
-
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 
 /*-- scss:rules --*/
+body {
+  font-family: Literata, serif;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Condensed', sans-serif;
+}
 
 pre>code.sourceCode {white-space: pre-wrap;}
 

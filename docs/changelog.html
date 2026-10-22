@@ -36,21 +36,16 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./img/small-logo.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e3a3313dfaba70a1cab914cd7371330e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-e3a3313dfaba70a1cab914cd7371330e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-e3a3313dfaba70a1cab914cd7371330e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-cd7887e84e52f55155f4c8c25769eed1.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,6 +73,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link rel="icon" type="image/png" href="./img/small-logo.svg">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -316,6 +312,8 @@ window.Quarto = {
 <h1>Version 7.0.2</h1>
 <ul>
 <li>2026-10-07</li>
+<li>In thesis mode no logo is drawn, so a <code>_brand.yml</code> logo no longer appears behind every page in typst.</li>
+<li>In thesis mode each member of the examining committee on the title page is a paragraph with a hanging indent, so a long entry turns under itself, in .pdf, typst, .docx and .html.</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/157">#157</a> In .pdf the title and authors are written into the file’s metadata, so <code>pdf-standard: ua-2</code> no longer fails for a missing <code>dc:title</code>.</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/157">#157</a> In .pdf a character missing from the text face, such as a check mark, is taken from Latin Modern Math or DejaVu Sans, so the file holds no <code>.notdef</code> glyph for <code>pdf-standard: ua-2</code> to refuse.</li>
 <li><a href="https://github.com/wjschne/apaquarto/issues/173">#173</a> In .html, a note written by the <code>apanote</code> filter in a document outside the apaquarto formats is followed by a blank line, as in .docx and .pdf.</li>
