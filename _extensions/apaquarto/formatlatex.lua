@@ -889,8 +889,24 @@ local function div(el)
   -- asks for is set on cslhangindent in apalatex.tex instead.
 end
 
+-- A table outside a float that asks for its own table-spacing
+-- (tablespacing.lua), set at it in a group of its own. A float's table has
+-- been set at it already, by floatlatex.lua, which took the request off.
+local function own_table_spacing(tbl)
+  local own = utilsapa.table_own_spacing(tbl)
+  if not own then return nil end
+  tbl.attr.attributes["table-spacing"] = nil
+  return {
+    pandoc.RawBlock("latex", "\\begingroup\\setstretch{"
+      .. utilsapa.table_stretch[own] .. "}\\selectfont"),
+    tbl,
+    pandoc.RawBlock("latex", "\\par\\endgroup"),
+  }
+end
+
 return {
   { Meta = meta },
-  { Div = div, RawBlock = guard_longtable, Link = file_link },
+  { Div = div, RawBlock = guard_longtable, Link = file_link,
+    Table = own_table_spacing },
   { Pandoc = function(doc) return pandoc.Pandoc(blocks(doc), doc.meta) end },
 }

@@ -709,19 +709,46 @@ local table_spacings = {
   ["onehalf"] = "onehalf", ["one-and-a-half"] = "onehalf", ["1.5"] = "onehalf",
   ["double"] = "double", ["2"] = "double",
 }
+local function read_table_spacing(value)
+  local key = pandoc.utils.stringify(value):lower():gsub("%s", ""):gsub("^[\"']", ""):gsub("[\"']$", "")
+  return table_spacings[key], key
+end
+
 function M.table_spacing(meta)
   local mode = M.mode(meta)
   local default = (mode == "jou" or mode == "doc") and "single" or "double"
   local value = meta and meta["table-spacing"]
   if value == nil then return default end
-  local key = pandoc.utils.stringify(value):lower():gsub("%s", "")
-  local spacing = table_spacings[key]
+  local spacing, key = read_table_spacing(value)
   if not spacing then
     quarto.log.warning("table-spacing should be single, onehalf or double; got \""
       .. key .. "\", so tables are " .. default .. " spaced.")
     return default
   end
   return spacing
+end
+
+-- A table's own spacing, from table-spacing written on the table, its chunk
+-- or its caption (tablespacing.lua carries it onto the table): "single",
+-- "onehalf" or "double", or nil for a table that takes the document's.
+-- Anything else is the document's, with a warning, given once for each
+-- value, since quarto shows a chunk's options on its cell and on its float.
+local warned_spacings = {}
+function M.own_table_spacing(value)
+  if value == nil then return nil end
+  local spacing, key = read_table_spacing(value)
+  if not spacing and not warned_spacings[key] then
+    warned_spacings[key] = true
+    quarto.log.warning("A table's table-spacing should be single, onehalf or"
+      .. " double; got \"" .. key .. "\", so it takes the document's.")
+  end
+  return spacing
+end
+
+-- The spacing a table pandoc writes asks for itself, read off the table
+-- after tablespacing.lua, or nil.
+function M.table_own_spacing(tbl)
+  return tbl.attr and tbl.attr.attributes["table-spacing"] or nil
 end
 
 -- setspace's stretch for each spacing at a 12pt body: 1 is single spacing,

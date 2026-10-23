@@ -197,6 +197,10 @@ end
 -- its own column and row, and the rules go under the head, wherever that
 -- ends, and under the last row. A table that asks for its own inset or
 -- stroke keeps it.
+--
+-- A table that asks for its own table-spacing (tablespacing.lua) is padded
+-- at it, and its wrapped lines set at its leading in a scope of their own,
+-- since the template's leading for every table is the document's.
 local function rule_table(tbl)
   bottom_align_head(tbl)
   local head = #tbl.head.rows
@@ -204,8 +208,10 @@ local function rule_table(tbl)
   for _, body in ipairs(tbl.bodies) do
     rows = rows + #body.head + #body.body
   end
-  local cells = string.format('apatablecells("%s", %d, %d)', tablespacing,
-    rows, head)
+  local own = utilsapa.table_own_spacing(tbl)
+  tbl.attr.attributes["table-spacing"] = nil
+  local cells = string.format('apatablecells("%s", %d, %d)',
+    own or tablespacing, rows, head)
   local attributes = tbl.attr.attributes
   if attributes["typst:inset"] == nil then
     attributes["typst:inset"] = cells .. ".inset"
@@ -213,7 +219,14 @@ local function rule_table(tbl)
   if attributes["typst:stroke"] == nil then
     attributes["typst:stroke"] = cells .. ".stroke"
   end
-  return tbl
+  if not own or own == tablespacing then return tbl end
+  local leading = "apatableleadings." .. own
+  return {
+    pandoc.RawBlock("typst", "#[\n#show table: set par(leading: " .. leading
+      .. ", spacing: " .. leading .. ")"),
+    tbl,
+    pandoc.RawBlock("typst", "]"),
+  }
 end
 
 -- Table floats whose note a surrounding div already carries. apanote.lua

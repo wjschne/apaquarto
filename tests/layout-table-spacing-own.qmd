@@ -1,0 +1,42 @@
+---
+title: "A Table Spaced on Its Own"
+shorttitle: "Table Spacing"
+suppress-title-page: true
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+<!--
+Measured, not read: table-spacing written on one table sets that table's
+rows and leaves the others at the document's, double here. The first table
+asks for single spacing on its caption; the second, a table without a
+caption, asks for one-and-a-half on the cell around it, which is where a
+chunk option lands (#| table-spacing: onehalf); the third asks for nothing.
+-->
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Sinone   | 1                             |
+| Sintwo   | 2                             |
+| Sinthree | Sinwrap a cell long enough that it has to run on to a second line inside its column of the table sinlater |
+
+: Single caption {#tbl-single table-spacing="single"}
+
+::: {.cell table-spacing="onehalf"}
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Halfone  | 1                             |
+| Halftwo  | 2                             |
+
+:::
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Dubone   | 1                             |
+| Dubtwo   | 2                             |
+
+: Double caption {#tbl-double}

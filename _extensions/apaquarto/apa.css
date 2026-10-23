@@ -116,6 +116,10 @@ table {
   padding-bottom: 2pt;
 }
 .table p {line-height: inherit}
+/* A table's own table-spacing (htmltablespacing.lua), over the document's. */
+body .table.apa-table-single>:not(caption)>*>* {line-height: 1.2}
+body .table.apa-table-onehalf>:not(caption)>*>* {line-height: 1.5}
+body .table.apa-table-double>:not(caption)>*>* {line-height: 2}
 
 .tabwid {padding: 0}
 

@@ -117,6 +117,10 @@ contributes:
         # Inserts appendix prefixes to tables and figures
         - at: pre-quarto
           path: apafigtblappendix.lua
+        # A table's own table-spacing, from its chunk or caption, carried
+        # onto the table itself for each format to read
+        - at: post-quarto
+          path: tablespacing.lua
         - at: post-quarto
           path: floatwithsubfigure.lua
         # Write the note of every other float inside the float (html, docx),

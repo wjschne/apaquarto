@@ -2662,6 +2662,57 @@
       contains:
         - 'body .table>:not(caption)>*>* { line-height: 1.2; }'
 
+- fixture: layout-table-spacing-own.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &table-own
+      # table-spacing on one table: single on the first, its wrapped lines
+      # too, one-and-a-half on the second, from the cell a chunk option
+      # lands on, and the third at the document's double.
+      - gap: [Sinone, Sintwo]
+        is: 14
+      - gap: [Sinwrap, sinlater]
+        is: 14
+      - gap: [Halfone, Halftwo]
+        is: 18
+      - gap: [Dubone, Dubtwo]
+        is: 24
+
+- fixture: layout-table-spacing-own.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *table-own
+
+- fixture: layout-table-spacing-own.qmd
+  to: apaquarto-docx
+  expect:
+    docx-xml:
+      count:
+        # Each table spaced on its own takes a Table style at its spacing;
+        # the third keeps the Table style, at the document's.
+        '<w:tblStyle w:val="TableSingle" />': 1
+        '<w:tblStyle w:val="TableOnehalf" />': 1
+        '<w:tblStyle w:val="Table" />': 1
+    docx-styles:
+      contains:
+        # The styles, with the Table style's margins at single and at
+        # one-and-a-half, as tests/layout-table-spacing-single.qmd has them
+        # for a whole document.
+        - 'w:styleId="TableSingle"'
+        - '<w:tblCellMar><w:top w:type="dxa" w:w="0" /><w:left w:type="dxa" w:w="58" /><w:bottom w:type="dxa" w:w="0" /><w:right w:type="dxa" w:w="58" /></w:tblCellMar>'
+        - '<w:tcMar><w:top w:type="dxa" w:w="50" /><w:bottom w:type="dxa" w:w="92" /></w:tcMar>'
+        - 'w:styleId="TableOnehalf"'
+        - '<w:tblCellMar><w:top w:type="dxa" w:w="69" /><w:left w:type="dxa" w:w="58" /><w:bottom w:type="dxa" w:w="69" /><w:right w:type="dxa" w:w="58" /></w:tblCellMar>'
+        - '<w:tcMar><w:top w:type="dxa" w:w="105" /><w:bottom w:type="dxa" w:w="105" /></w:tcMar>'
+
+- fixture: layout-table-spacing-own.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'class="caption-top apa-table-single table"'
+        - 'apa-table-onehalf'
+
 - fixture: layout-table-spacing-journal.qmd
   to: apaquarto-typst
   expect:

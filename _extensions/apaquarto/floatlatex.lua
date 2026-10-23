@@ -388,11 +388,16 @@ end
 -- caption line above the rules, and the second \label makes the identifier
 -- multiply defined, so a reference to it could resolve to either. The one on
 -- the table is taken off and the float's own is left.
+--
+-- So is a table's own table-spacing, which the float has set the table at,
+-- so that formatlatex.lua, which spaces a table outside a float, leaves it.
 local function strip_table_identifier(blocks)
   return blocks:walk {
     Table = function(tb)
-      if tb.identifier and tb.identifier ~= "" then
+      if (tb.identifier and tb.identifier ~= "")
+        or tb.attr.attributes["table-spacing"] then
         tb.identifier = ""
+        tb.attr.attributes["table-spacing"] = nil
         return tb
       end
     end
@@ -434,6 +439,17 @@ local function native_table(content)
     end,
   }
   return tables == 1 and not raw_table, rows
+end
+
+-- The spacing a float's one table asks for itself (tablespacing.lua).
+local function own_spacing(content)
+  local spacing = nil
+  pandoc.Blocks(floatrecord.as_blocks(content)):walk {
+    Table = function(tbl)
+      spacing = utilsapa.table_own_spacing(tbl)
+    end,
+  }
+  return spacing
 end
 
 local function short_table(content)
@@ -502,8 +518,18 @@ local function processfloat(float)
   local inflow_figure = (not floated) and (not istable)
   -- A short table is kept whole: see short_table above.
   local short = (not floated) and istable and short_table(record.content)
-  -- A table pandoc writes, in the flow, takes the table spacing.
+  -- A table pandoc writes, in the flow, takes the table spacing, and one
+  -- that asks for its own (tablespacing.lua) takes that, floated or not.
   local spaced = (not floated) and istable and native_table(record.content)
+  local own = istable and native_table(record.content)
+    and own_spacing(record.content) or nil
+  local spacing = nil
+  if own then
+    spacing = "\\begingroup\\setstretch{" .. utilsapa.table_stretch[own]
+      .. "}\\selectfont"
+  elseif spaced then
+    spacing = "\\begingroup\\apatablespacing"
+  end
 
   local blocks = pandoc.List({})
   if floated then
@@ -622,9 +648,9 @@ local function processfloat(float)
     -- Its rows at the table spacing, double unless table-spacing asks for
     -- less, in a group of their own so that the note under the table keeps
     -- the body's (\apatablespacing in apalatex.tex).
-    if spaced then blocks:insert(raw("\\begingroup\\apatablespacing")) end
+    if spacing then blocks:insert(raw(spacing)) end
     blocks:extend(strip_table_identifier(record.content))
-    if spaced then blocks:insert(raw("\\par\\endgroup")) end
+    if spacing then blocks:insert(raw("\\par\\endgroup")) end
   end
 
   local note = note_blocks(record)

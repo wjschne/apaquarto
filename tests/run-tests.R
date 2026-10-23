@@ -546,11 +546,12 @@ check_reference_doc <- function() {
   # Two parts of the reference document are written into by a render and put
   # back by the next one: the section properties, which carry the page size,
   # the margins and the line numbering, and the stylesheet, which carries the
-  # link colours. Each leaves a marker behind while it is patched, and a
-  # marker in the committed file means a render's leavings were committed
-  # with it.
+  # link colours and the styles of tables spaced on their own. Each leaves a
+  # marker behind while it is patched, and a marker in the committed file
+  # means a render's leavings were committed with it.
   parts <- c("word/document.xml", "word/styles.xml")
-  markers <- c("apaquarto-original-", "apaquarto-link-styles")
+  markers <- c("apaquarto-original-", "apaquarto-link-styles",
+               "apaquarto-table-spacings")
   for (part in parts) {
     xml <- tryCatch(
       readLines(unzip(refdoc, part, exdir = tmp), warn = FALSE),

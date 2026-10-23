@@ -329,24 +329,58 @@ local function set_margins(xml, element, top, bottom)
   end))
 end
 
-local function patch_table_spacing(styles, spacing)
+--- The Table style as the reference document had it, set at a spacing.
+local function spaced_table_style(original, spacing)
+  local margins = table_margins[spacing]
+  if not margins then return original end
+  local style = set_margins(original, "tblCellMar", margins.cell, margins.cell)
+  return set_margins(style, "tcMar", margins.head_top, margins.head_bottom)
+end
+
+--- The style a table that asks for its own table-spacing takes in .docx
+--- (tablespacing.lua): TableSingle, TableOnehalf or TableDouble.
+local function own_table_style(spacing)
+  return "Table" .. spacing:sub(1, 1):upper() .. spacing:sub(2)
+end
+
+local table_styles_open = "<!-- apaquarto-table-spacings -->"
+local table_styles_close = "<!-- /apaquarto-table-spacings -->"
+
+--- A table that asks for a spacing of its own takes a style of its own, the
+--- Table style at that spacing under another name, written between markers
+--- for the spacings the document's tables ask for and taken out again by the
+--- next render, so the reference document is left as it shipped otherwise.
+local function patch_table_spacing(styles, spacing, own)
   local original = get_marker(styles, "tablestyle")
   styles = strip_marker(styles, "tablestyle")
+  styles = styles:gsub(
+    "<!%-%- apaquarto%-table%-spacings %-%->.-<!%-%- /apaquarto%-table%-spacings %-%->", "")
   local first, last = styles:find('<w:style [^>]-w:styleId="Table"[^>]*>.-</w:style>')
   if not first then return styles end
   local current = styles:sub(first, last)
   original = original or current
-  local wanted = original
-  local margins = table_margins[spacing]
-  if margins then
-    wanted = set_margins(wanted, "tblCellMar", margins.cell, margins.cell)
-    wanted = set_margins(wanted, "tcMar", margins.head_top, margins.head_bottom)
-  end
+  local wanted = spaced_table_style(original, spacing)
   styles = styles:sub(1, first - 1) .. wanted .. styles:sub(last + 1)
   if wanted ~= original then
     local _, open = styles:find("<w:styles%s[^>]*>")
     styles = styles:sub(1, open) .. make_marker("tablestyle", original) ..
       styles:sub(open + 1)
+  end
+  if #own > 0 then
+    local added = {}
+    for _, each in ipairs(own) do
+      local name = own_table_style(each)
+      local style = spaced_table_style(original, each)
+        :gsub('w:styleId="Table"', 'w:styleId="' .. name .. '"', 1)
+        :gsub('<w:name w:val="Table"/>', '<w:name w:val="' .. name .. '"/>', 1)
+        :gsub(' w:default="1"', "", 1)
+      added[#added + 1] = style
+    end
+    local closing = styles:find("</w:styles>", 1, true)
+    if closing then
+      styles = styles:sub(1, closing - 1) .. table_styles_open ..
+        table.concat(added) .. table_styles_close .. styles:sub(closing)
+    end
   end
   return styles
 end
@@ -683,6 +717,28 @@ function Pandoc(doc)
   --- for, which become character styles in word/styles.xml.
   local linkcolours = referencedoc.link_colours(doc.meta)
 
+  --- The document's table-spacing, which the Table style is set at, and the
+  --- spacings tables ask for of their own (tablespacing.lua) that differ
+  --- from it, each a style of its own that the table is given by name.
+  local tablespacing = utilsapa.table_spacing(doc.meta)
+  local asked = {}
+  doc = doc:walk({
+    Table = function(tbl)
+      local own = utilsapa.table_own_spacing(tbl)
+      if not own then return nil end
+      tbl.attr.attributes["table-spacing"] = nil
+      if own ~= tablespacing then
+        asked[own] = true
+        tbl.attr.attributes["custom-style"] = own_table_style(own)
+      end
+      return tbl
+    end,
+  })
+  local ownspacings = {}
+  for _, each in ipairs({ "single", "onehalf", "double" }) do
+    if asked[each] then ownspacings[#ownspacings + 1] = each end
+  end
+
   local archive, refdoc = referencedoc.read()
   if not archive then
     quarto.log.warning("Reference document: " .. refdoc ..
@@ -729,7 +785,7 @@ function Pandoc(doc)
         --- that has one (apaquote.lua).
         patched = referencedoc.patch_attribution_style(patched,
           utilsapa.flag(doc.meta, "apa-quote-attribution"))
-        patched = patch_table_spacing(patched, utilsapa.table_spacing(doc.meta))
+        patched = patch_table_spacing(patched, tablespacing, ownspacings)
       end
     elseif entry.path == document_path then
       xml = entry:contents()
@@ -754,14 +810,17 @@ function Pandoc(doc)
       newentries[#newentries + 1] = entry
     end
   end
-  if not changed then return nil end
+  --- The tables given a style of their own are handed back only once the
+  --- reference document has the styles.
+  if not changed then return doc end
 
   archive.entries = newentries
   if not referencedoc.write(archive) then
     quarto.log.warning("Could not write reference document " .. refdoc ..
-      ", so mainfont, monofont, papersize, numbered-lines and the link" ..
-      " colours were not applied.")
+      ", so mainfont, monofont, papersize, numbered-lines, the link" ..
+      " colours and a table's own table-spacing were not applied.")
+    return nil
   end
 
-  return nil
+  return doc
 end

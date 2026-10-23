@@ -22,3 +22,14 @@ function Meta(meta)
     "<style>\nbody .table>:not(caption)>*>* { line-height: " .. height .. "; }\n</style>")
   return nil
 end
+
+-- A table that asks for its own table-spacing (tablespacing.lua) is given a
+-- class for it, apa-table-single, -onehalf or -double, whose line height
+-- apa.css sets over the document's.
+function Table(tbl)
+  local own = utilsapa.table_own_spacing(tbl)
+  if not own then return nil end
+  tbl.attr.attributes["table-spacing"] = nil
+  tbl.attr.classes:insert("apa-table-" .. own)
+  return tbl
+end
