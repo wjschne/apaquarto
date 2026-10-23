@@ -2662,6 +2662,18 @@
       contains:
         - 'body .table>:not(caption)>*>* { line-height: 1.2; }'
 
+- fixture: layout-table-package.qmd
+  to: apaquarto-typst
+  expect:
+    layout:
+      # A package's table: its wrapped lines single spaced, 14.4pt, though
+      # the document's tables are double. They had been 24pt.
+      - gap: [Packwrap, packlater]
+        is: 14
+      # A table pandoc writes: its wrapped lines double, as its rows are.
+      - gap: [Pandwrap, pandlater]
+        is: 24
+
 - fixture: layout-table-spacing-own.qmd
   to: apaquarto-pdf
   expect:
@@ -2825,7 +2837,7 @@
 - fixture: layout-table-whole.qmd
   to: apaquarto-pdf
   expect:
-    layout:
+    layout: &table-whole
       # A gap is measured on the first word's page. The short table where
       # only its start would fit: caption, last row and note on one page. As
       # a longtable it was broken after its first row.
@@ -2846,6 +2858,17 @@
         is: 36
       - gap: [Longcap, Longhead]
         is: 36
+
+- fixture: layout-table-whole.qmd
+  to: apaquarto-typst
+  expect:
+    # The same in typst, where every table had been held whole: the long
+    # table went to the next page and left its title on this one.
+    layout: *table-whole
+    typ:
+      contains:
+        # A row is not split over pages.
+        - 'set table.cell(breakable: false)'
 
 - fixture: layout-table-keep.qmd
   to: apaquarto-pdf

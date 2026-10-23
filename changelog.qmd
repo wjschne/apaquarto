@@ -23,7 +23,9 @@ engine: knitr
 - In .docx a figure or table followed directly by another stands one blank line from it, not two.
 - A table's top rule stands the same distance under its caption in .pdf, typst and .docx; .docx had six points more, and the .pdf's distance stretched with the page.
 - A table's rows are spaced alike in every format, double by default (single in journal and doc modes), and the new `table-spacing` option sets them single, one-and-a-half or double spaced.
-- `table-spacing` can be given to one table, as a chunk option or on a markdown table's caption, to space it apart from the document's other tables.
+- `table-spacing` can be given to one table, as a chunk option or on a markdown table's caption, to space it apart from the document's other tables; given to a flextable or other package's table, which sets its own spacing, it warns that it has no effect.
+- In typst a cell that wraps in a flextable or other package's table is single spaced, as in .docx and .html, where it had taken the document's table spacing.
+- In typst a long table breaks over pages, between its rows, as in .pdf; every table had been held whole, so a long one went to the next page without its title, and one taller than a page ran off its foot.
 - In typst a table's rules stand as far from its text as booktabs sets them in .pdf, where they had stood as close as the next row, and a table without a header row no longer has a rule over its second row.
 - In typst a table's rules are as heavy as in .pdf, about a point above and below the table and 0.6 points under its header, where all three had been half a point.
 - A table's or figure's note stands the same distance under it in .pdf, typst and .docx; .docx had 10 points less, and in .pdf it varied by a point or two with the table's columns and the caption's letters.

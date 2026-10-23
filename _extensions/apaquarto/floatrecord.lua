@@ -184,6 +184,13 @@ function M.panel(block)
   return p
 end
 
+-- The most rows a table pandoc writes may have and still be kept whole on
+-- one page, in the .pdf (floatlatex.lua) and typst (formattypst.lua):
+-- fifteen double-spaced rows, with the title, caption and head, come to
+-- about three quarters of a page, and a longer table is better broken over
+-- pages than pushed whole to the next one.
+M.short_table_rows = 15
+
 -- Everything above, for one float.
 --
 -- options.tablenotes: the notes of markdown tables, from utilsapa.table_notes.

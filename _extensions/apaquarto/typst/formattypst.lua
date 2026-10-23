@@ -198,9 +198,10 @@ end
 -- ends, and under the last row. A table that asks for its own inset or
 -- stroke keeps it.
 --
--- A table that asks for its own table-spacing (tablespacing.lua) is padded
--- at it, and its wrapped lines set at its leading in a scope of their own,
--- since the template's leading for every table is the document's.
+-- A cell that wraps is spaced as its rows are, at the document's
+-- table-spacing or the table's own (tablespacing.lua), in a scope of its
+-- own: the template sets the lines of every other table single spaced,
+-- since a table a package writes in typst keeps its own spacing.
 local function rule_table(tbl)
   bottom_align_head(tbl)
   local head = #tbl.head.rows
@@ -219,8 +220,9 @@ local function rule_table(tbl)
   if attributes["typst:stroke"] == nil then
     attributes["typst:stroke"] = cells .. ".stroke"
   end
-  if not own or own == tablespacing then return tbl end
-  local leading = "apatableleadings." .. own
+  local spacing = own or tablespacing
+  if spacing == "single" then return tbl end
+  local leading = "apatableleadings." .. spacing
   return {
     pandoc.RawBlock("typst", "#[\n#show table: set par(leading: " .. leading
       .. ", spacing: " .. leading .. ")"),
@@ -360,14 +362,43 @@ end
 -- long for the rest of the page runs on to the next one rather than off the
 -- foot of it (#171); what may not be parted is held together here instead.
 -- Followed by a note, the block stays on the page with the note's first line.
-local function keep_body(blocks, before_note)
+--
+-- A long table is the exception, and may break over pages: held whole, it
+-- went to the next page and left its title behind, and one taller than a
+-- page ran off the foot of it. As in the .pdf (floatlatex.lua), a table
+-- pandoc writes is kept whole up to floatrecord.short_table_rows rows, and a
+-- table a package writes in typst of its own, whose rows are not there to
+-- count, may break.
+local function keep_body(blocks, before_note, breakable)
   local out = pandoc.Blocks({
-    pandoc.RawBlock("typst", "#block(breakable: false"
+    pandoc.RawBlock("typst", "#block(breakable: " .. tostring(breakable == true)
       .. (before_note and ", ..apasticky" or "") .. ")[")
   })
   out:extend(floatrecord.as_blocks(blocks))
   out:insert(pandoc.RawBlock("typst", "]"))
   return out
+end
+
+-- Whether a table float's body may break over pages: it holds a table a
+-- package wrote in typst, or a table pandoc wrote with more rows than a
+-- short one (see keep_body).
+local function long_table(record)
+  if record.kind ~= "Table" then return false end
+  local rows, package = 0, false
+  record.content:walk {
+    Table = function(tbl)
+      rows = rows + #tbl.head.rows + #tbl.foot.rows
+      for _, body in ipairs(tbl.bodies) do
+        rows = rows + #body.head + #body.body
+      end
+    end,
+    RawBlock = function(raw)
+      if raw.format == "typst" and raw.text:find("table(", 1, true) then
+        package = true
+      end
+    end,
+  }
+  return package or rows > floatrecord.short_table_rows
 end
 
 -- The whole figure: the grid of panels, then the note under it at full width.
@@ -531,7 +562,8 @@ return {
       end
 
       local note = floatnote(record)
-      local content = keep_body(record.content, note ~= nil)
+      local content = keep_body(record.content, note ~= nil,
+        long_table(record))
       if note then
         content:insert(pandoc.RawBlock("typst", "#align(left)["))
         content:insert(note)

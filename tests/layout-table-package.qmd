@@ -1,0 +1,31 @@
+---
+title: "A Table a Package Writes"
+shorttitle: "Package Table"
+suppress-title-page: true
+format:
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: in typst a cell that wraps in a table a package writes
+is single spaced, as the package sets it in .docx and .html, while one in a
+table pandoc writes is spaced as its rows are, double here. The raw typst
+stands in for apa7::apa_flextable(line_spacing = 2), which pads each cell
+8pt above and below and writes no leading. Its wrapped lines had taken the
+document's table spacing, double whatever line_spacing asked.
+-->
+
+```{=typst}
+#table(
+  columns: (1.5in, 4in),
+  stroke: none,
+  table.cell(inset: (left: 3pt, right: 3pt, top: 8pt, bottom: 8pt))[#text(size: 12pt)[Packone]],
+  table.cell(inset: (left: 3pt, right: 3pt, top: 8pt, bottom: 8pt))[#text(size: 12pt)[Packwrap a cell long enough that it has to run on to a second line inside its column packlater]],
+)
+```
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Rowone   | Pandwrap a cell long enough that it has to run on to a second line inside its column of the table pandlater |
+
+: Pandoc caption {#tbl-pandoc}

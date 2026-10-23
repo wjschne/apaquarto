@@ -415,11 +415,9 @@ end
 --
 -- Only a table pandoc writes is counted, a markdown or knitr::kable one,
 -- since its rows are there to count; a table a package writes in latex of
--- its own (flextable, kableExtra) is left as it was. Fifteen rows, double
--- spaced, with the title, caption and head, come to about three quarters of
--- a page; a table longer than that is better broken over pages than pushed
--- whole to the next one.
-local short_table_rows = 15
+-- its own (flextable, kableExtra) is left as it was. How many rows count as
+-- short is floatrecord.short_table_rows, which typst shares.
+local short_table_rows = floatrecord.short_table_rows
 
 -- Whether a float holds one table pandoc writes, and how many rows it has.
 local function native_table(content)

@@ -815,13 +815,17 @@
 
 
   // A table's rows stand as far apart as lines at the table spacing
-  // (apatableleadings; tests/layout-table-spacing.qmd), and a cell that wraps
-  // is spaced as its rows are. A table pandoc writes is given its padding and
-  // rules by formattypst.lua (apatablecells); these are for one a package
-  // writes in typst of its own: the cell padded above and below by half the
-  // leading, which spaces a row of one line the same as two lines of one
-  // cell. The rows had Typst's own five points of padding, 18pt apart, while
-  // a cell that wrapped took the body's double spacing.
+  // (apatableleadings; tests/layout-table-spacing.qmd). A table pandoc writes
+  // is given its padding and rules by formattypst.lua (apatablecells), and
+  // the leading of a cell that wraps there too, so that it is spaced as its
+  // rows are; these are for one a package writes in typst of its own: the
+  // cell padded above and below by half the leading, unless the package pads
+  // it itself, and a cell that wraps single spaced, as in the .docx and
+  // .html the package writes, since the package writes no leading of its
+  // own. The rows had Typst's own five points of padding, 18pt apart, and a
+  // cell that wrapped took the body's double spacing, and then the table
+  // spacing, whatever apa_flextable(line_spacing = 1) asked
+  // (tests/layout-table-package.qmd).
   let tableleading = apatableleadings.at(tablespacing,
     default: apatableleadings.double)
   set table(
@@ -831,7 +835,8 @@
       ),
     inset: (x: 5pt, y: tableleading / 2),
   )
-  show table: set par(leading: tableleading, spacing: tableleading)
+  show table: set par(leading: apatableleadings.single,
+    spacing: apatableleadings.single)
 
   // The space between two paragraphs is the space between two lines, so
   // that a double-spaced manuscript is double spaced throughout and a journal
@@ -853,6 +858,11 @@
   // and a column the writer had asked to be left aligned came out with its
   // gaps stretched to the column edge. APA sets no table that way.
   show table: set par(justify: false)
+
+  // A table that breaks over pages breaks between its rows, as a longtable
+  // does in the .pdf: typst split a row whose cells wrapped, and set the
+  // rest of its lines under the repeated head on the next page.
+  set table.cell(breakable: false)
 
   // The space above and below a block: a quotation, a list, a figure, code.
   // Not the space between paragraphs, which is par's (above).
@@ -1222,6 +1232,8 @@ Correspondence concerning this article should be addressed to A B, X, Email: #li
 <body>
 #figure([
 #block(breakable: false, ..apasticky)[
+#[
+#show table: set par(leading: apatableleadings.double, spacing: apatableleadings.double)
 #table(
   columns: 2,
   align: (auto,auto,),
@@ -1234,6 +1246,7 @@ Correspondence concerning this article should be addressed to A B, X, Email: #li
   table.hline(),
   [1], [2],
 )
+]
 ]
 #align(left)[
 #block[

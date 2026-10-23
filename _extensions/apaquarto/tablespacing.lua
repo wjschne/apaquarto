@@ -14,21 +14,41 @@
 
 local utilsapa = require("utilsapa")
 
+-- The package tables a request found in place of a table pandoc writes,
+-- warned of once each, since quarto shows a chunk's options on its cell and
+-- on its float.
+local warned = {}
+
 -- The spacing onto every table inside, leaving one that asks for its own.
+-- A request with no such table inside, on a flextable or other package's
+-- table, does nothing, and says so: the package spaces its own table.
 local function carry(el, content)
   local value = el.attributes["table-spacing"]
   if value == nil then return nil end
   el.attributes["table-spacing"] = nil
   local spacing = utilsapa.own_table_spacing(value)
   if not spacing then return el end
-  return el, content:walk({
+  local found, package = 0, nil
+  content = content:walk({
     Table = function(tbl)
+      found = found + 1
       if tbl.attr.attributes["table-spacing"] == nil then
         tbl.attr.attributes["table-spacing"] = spacing
         return tbl
       end
     end,
+    RawBlock = function(raw)
+      package = package or raw.text:sub(1, 400)
+    end,
   })
+  local place = el.identifier ~= "" and el.identifier or "a chunk"
+  if found == 0 and package and not warned[package] then
+    warned[package] = true
+    quarto.log.warning("table-spacing on " .. place .. " has no effect: its"
+      .. " table is written by a package, such as flextable, which sets its"
+      .. " own spacing (for apa7::apa_flextable, its line_spacing argument).")
+  end
+  return el, content
 end
 
 return {
