@@ -24,7 +24,13 @@
 /usepackage{lmodern}
 /ifPDFTeX/else
   % xetex/luatex font selection
-  /setmainfont[]{TeX Gyre Termes}
+  /ifLuaTeX
+    /usepackage{luaotfload}
+    /directlua{luaotfload.add_fallback("mainfontfallback",{
+      "LatinModernMath-Regular:mode=base;","DejaVuSans:mode=node;"
+    })}
+  /fi
+  /setmainfont[,RawFeature={fallback=mainfontfallback}]{TeX Gyre Termes}
 /fi
 % Use upquote if available, for straight quotes in verbatim environments
 /IfFileExists{upquote.sty}{/usepackage{upquote}}{}
@@ -901,8 +907,9 @@
   /setstretch{1}/selectfont
   /addtolength{/apathesisentrysep}{-/baselineskip}}
 
-% Block quotations. Every mode indents one on the left only and runs it to
-% the margin on the right, as the .docx, the .html and typst do. LaTeX's own
+% Block quotations. Every mode but a dissertation indents one on the left
+% only and runs it to the margin on the right, as the .docx, the .html and
+% typst do. LaTeX's own
 % quote takes the 2.5em of /leftmargini on both sides. /parsep is the space a
 % list puts between its paragraphs, a few points more than the line spacing,
 % which set the paragraphs of a quotation, and the attribution under it,
@@ -932,7 +939,8 @@
   {/par/raggedleft/setlength{/parindent}{0pt}}
   {/par}
 
-% A dissertation indents half an inch and single spaces, and stands a double
+% A dissertation indents half an inch on both sides, which the Graduate
+% School asks for though APA does not, and single spaces, and stands a double
 % space (24pt, baseline to baseline) between the quotation and the body on
 % either side, as typst does. The list's /topsep stood on top of that: above,
 % it was added to the quotation's single spacing, and below to the body's
@@ -944,7 +952,7 @@
 /makeatletter
 /newcommand{/apathesisquote}{%
   /renewenvironment{quote}
-    {/list{}{/leftmargin=0.5in/rightmargin=0pt/parsep=0pt/partopsep=0pt
+    {/list{}{/leftmargin=0.5in/rightmargin=0.5in/parsep=0pt/partopsep=0pt
        /apathesissingle/topsep=/apathesisentrysep}%
      /item/relax}
     {/@topsepadd=/z@/endlist}}
@@ -1069,11 +1077,13 @@
 /@ifundefined{xmpquote}{/newcommand{/xmpquote}[1]{#1}}{}
 /makeatother
 /hypersetup{
+  pdftitle={The Typography a Dissertation Asks For},
+  pdfauthor={A B},
   colorlinks=true,
-  linkcolor={apalink},
-  filecolor={apalink},
-  citecolor={apalink},
-  urlcolor={apalink},
+  linkcolor={black},
+  filecolor={black},
+  citecolor={black},
+  urlcolor={black},
   pdfcreator={LaTeX via pandoc}}
 
 
@@ -1084,7 +1094,7 @@
 
 /apathesishead/pagenumbering{roman}
 
-/newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}
+/newgeometry{left=1.50in,right=1.50in,top=1.00in,bottom=1.50in}
 
 /thispagestyle{empty}
 
@@ -1132,17 +1142,21 @@ May 2027/par}
 
 /newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}
 
-/vspace*{289.0pt}
+/singlespacing
 
-/doublespacing
-
-{/centering
-© Copyright 2027 by A B//
-All Rights Reserved/par}
+/vspace*{/fill}
+{/centering/setlength{/arrayrulewidth}{0.5pt}/renewcommand{/arraystretch}{1}
+/begin{tabular}{@{}c@{}}
+©//
+Copyright//
+2027///noalign{/vskip 0.5/normalbaselineskip}
+by//
+A B///noalign{/vskip 1.8pt}/hline/noalign{/vskip 4.2pt}
+All Rights Reserved
+/end{tabular}/par}
+/vspace*{/fill}
 
 /clearpage
-
-/singlespacing
 
 {/centering
 /bfseries TABLE OF CONTENTS/par}
@@ -1156,12 +1170,12 @@ Page/par}
 
 {/apathesissingle/setlength{/parskip}{/apathesisentrysep}
 
-{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
+/vspace{9pt}{/parindent=0pt/leftskip=0.00in/noindent CHAPTER/par}
 
-{/parindent=0pt/leftskip=0.25in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents]{/textcolor{apathesistoc}{AN INTRODUCTION WHOSE TITLE IS LONG ENOUGH TO TURN OVER ONTO A SECOND
-LINE OF THE TABLE OF CONTENTS}}/apadotfill/hyperref[an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents]{/textcolor{apathesistoc}{/pageref{an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents}}}/par}
+{/parindent=0pt/leftskip=0.25in/rightskip=0.50in plus 1fil/parfillskip=-0.50in/noindent/hspace*{-0.25in}/makebox[0.25in][l]{1.}/hyperref[an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents]{/textcolor{apathesistoc}{AN INTRODUCTION WHOSE TITLE IS LONG ENOUGH TO TURN OVER ONTO A SECOND
+LINE OF THE TABLE OF CONTENTS}}/setbox0/hbox{/hyperref[an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents]{/textcolor{apathesistoc}{/pageref{an-introduction-whose-title-is-long-enough-to-turn-over-onto-a-second-line-of-the-table-of-contents}}}}/leavevmode/cleaders/hbox to .3em{/hss./hss}/hskip/dimexpr 0.50in-/wd0/relax plus 1fill/kern0pt/box0/par}
 
-{/parindent=0pt/leftskip=0.00in/noindent/hyperref[references]{/textcolor{apathesistoc}{REFERENCES}}/apadotfill/hyperref[references]{/textcolor{apathesistoc}{/pageref{references}}}/par}
+{/parindent=0pt/leftskip=0.00in/rightskip=0.50in plus 1fil/parfillskip=-0.50in/noindent/hyperref[references]{/textcolor{apathesistoc}{REFERENCES}}/setbox0/hbox{/hyperref[references]{/textcolor{apathesistoc}{/pageref{references}}}}/leavevmode/cleaders/hbox to .3em{/hss./hss}/hskip/dimexpr 0.50in-/wd0/relax plus 1fill/kern0pt/box0/par}
 
 }
 

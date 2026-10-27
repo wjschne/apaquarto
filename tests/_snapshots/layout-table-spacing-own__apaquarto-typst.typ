@@ -1229,6 +1229,33 @@ supplement: "Table",
 <tbl-double>
 
 
+#figure([
+#block(breakable: false)[
+#table(
+  columns: 2,
+  align: (left,left,),
+  inset: apatablecells("single", 3, 1).inset , stroke: apatablecells("single", 3, 1).stroke,
+  table.header([#align(bottom + left)[
+    Headword
+    ]], [#align(bottom + left)[
+    Column B
+    ]],),
+  table.hline(),
+  [Divone], [1],
+  [Divtwo], [2],
+)
+]
+], caption: figure.caption(
+position: top,
+[
+Div caption
+]),
+kind: "quarto-float-tbl",
+supplement: "Table",
+)
+<tbl-div>
+
+
 
 
 

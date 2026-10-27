@@ -1,0 +1,43 @@
+---
+title: "A Dissertation's Links"
+shorttitle: "Thesis Links"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+documentmode: thesis
+bibliography: references.bib
+linkcolor: teal
+thesis:
+  type: Thesis
+  degree: Master of Arts
+  date: May 2027
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+  apaquarto-docx: default
+  apaquarto-html: default
+---
+
+<!--
+A dissertation's links are black unless it names a colour for them: urls,
+citations and files here, since it names none of urlcolor, citecolor or
+filecolor. It names linkcolor, so a link inside the document takes that.
+-->
+
+# Links
+
+A cross reference to @sec-more, a url to [the web](https://example.org), a
+citation [@schneiderCattellHornCarrollTheoryCognitive2018], and a
+[file](sampleimage.png).
+
+# More {#sec-more}
+
+The section the cross reference points to.
+
+# References
+
+::: {#refs}
+:::

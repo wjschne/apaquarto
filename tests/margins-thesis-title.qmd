@@ -27,7 +27,8 @@ margin. Here they are an inch and three quarters at either side, which
 leaves a 5in measure: narrower than the 5.5in rules the Graduate School's
 template draws, so the rules shrink to the measure rather than running into
 the margins, and the examining committee, which begins where the rules do,
-begins at the margin. The other pages keep the Graduate School's margins.
+begins at the margin. The foot, which it does not name, keeps the title
+page's default 1.5in. The other pages keep the Graduate School's margins.
 -->
 
 # Introduction

@@ -1004,10 +1004,12 @@
       contains:
         # The title in capitals, broken into an inverted pyramid: the first
         # line longest, each line after it shorter. The lines are worked out
-        # in lua, so these are the same three in all four formats.
-        - '\bfseries A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN\\'
-        - 'THEY ARE STUDYING SOMETHING AT CONSIDERABLE\\'
-        - 'AND NOTABLE LENGTH\par}'
+        # in lua, so these are the same four in all four formats, broken
+        # against the 5.5in the title page's 1.5in sides leave.
+        - '\bfseries A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY\\'
+        - 'WHEN THEY ARE STUDYING SOMETHING AT\\'
+        - 'CONSIDERABLE AND NOTABLE\\'
+        - 'LENGTH\par}'
         # A rule under each of the three blocks below the title.
         - '\rule{5.50in}{0.5pt}'
         # Page i carries no number, and there is no running head at all.
@@ -1016,18 +1018,25 @@
         # The front matter is in lower-case roman and the body begins again
         # at 1 in arabic.
         - '\restoregeometry\doublespacing\pagenumbering{arabic}'
-        # The title page is set on 1" all round, so that its block stands at
-        # the centre of the paper; every page after it takes the handbook's
-        # 1.5" binding margin. A change of geometry puts the line spacing
-        # back to the document's, so the single spacing is asked for again
-        # after each one.
-        - '\newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}'
+        # The title page is set on 1.5" at the sides and foot and 1" at the
+        # head, its sides alike so that its block stands at the centre of the
+        # paper; every page after it takes the handbook's 1.5" binding margin
+        # and 1" elsewhere. A change of geometry puts the line spacing back to
+        # the document's, so the single spacing is asked for again after each
+        # one.
+        - '\newgeometry{left=1.50in,right=1.50in,top=1.00in,bottom=1.50in}'
         - '\newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}'
-        # The copyright page, whose year is the year of the diploma date.
-        - '© Copyright 2027 by Iwishiwere A. Graduate'
-        # The examining committee begins where the rules above it begin
-        # rather than out at the margin.
-        - '\raggedright\noindent\leftskip=0.50in\relax'
+        # The copyright page, whose year is the year of the diploma date: the
+        # symbol, the word and the year on lines of their own, half a line of
+        # space, by and the author, and the rights under a rule as wide as
+        # the widest line, which a tabular is. A fill above and below centres
+        # it. The space is half of \normalbaselineskip, since a tabular sets
+        # \baselineskip to nothing inside itself.
+        - "\\vspace*{\\fill}\n{\\centering\\setlength{\\arrayrulewidth}{0.5pt}\\renewcommand{\\arraystretch}{1}\n\\begin{tabular}{@{}c@{}}\n©\\\\\nCopyright\\\\\n2027\\\\\\noalign{\\vskip 0.5\\normalbaselineskip}\nby\\\\\nIwishiwere A. Graduate\\\\\\noalign{\\vskip 1.8pt}\\hline\\noalign{\\vskip 4.2pt}\nAll Rights Reserved\n\\end{tabular}\\par}\n\\vspace*{\\fill}"
+        # The examining committee begins where the rules above it begin,
+        # which on this page, whose measure is the rules' 5.5in, is the
+        # margin.
+        - '\raggedright\noindent\leftskip=0.00in\relax'
         # The abstract, under a heading of its own and flush at the margin,
         # and the dedication, centred with no heading at all.
         - '\bfseries ABSTRACT\par}'
@@ -1043,7 +1052,9 @@
         # order they are mentioned. The copyright page is not listed and
         # neither is the contents itself.
         - '\bfseries TABLE OF CONTENTS\par}'
-        - '\hyperref[apathesis-abstract]{\textcolor{apathesistoc}{ABSTRACT}}\apadotfill'
+        # The words stop half an inch short of the margin on every line, and
+        # the last line has that half inch back for the dots and the number.
+        - '\rightskip=0.50in plus 1fil\parfillskip=-0.50in\noindent\hyperref[apathesis-abstract]{\textcolor{apathesistoc}{ABSTRACT}}\setbox0\hbox{'
         - '\makebox[0.25in][l]{1.}\hyperref[introduction]{\textcolor{apathesistoc}{INTRODUCTION}}'
         - '\makebox[0.25in][l]{2.}\hyperref[method]{\textcolor{apathesistoc}{METHOD}}'
         - '\hyperref[references]{\textcolor{apathesistoc}{REFERENCES}}'
@@ -1102,35 +1113,77 @@
         - '\apatitlepageheading{'
         # A subheading is listed only where contents-depth asks for one, and
         # the copyright page is never listed in the contents.
-        - 'Background}\apadotfill'
-        - 'Copyright}\apadotfill'
+        - 'Background}}\setbox0'
+        - 'Copyright}}\setbox0'
         # Only the chapters carry a CHAPTER line, and the contents lists a
         # chapter by its own name rather than by the line above it.
         - '\section*{CHAPTER 3}'
-        - 'CHAPTER 1}\apadotfill'
+        - 'CHAPTER 1}}\setbox0'
       count:
         # Six pages of front matter: the title page, the copyright page, the
         # abstract, the dedication, the acknowledgments and the contents.
         - text: '\clearpage'
           times: 6
+    layout:
+      # The copyright page's lines single spaced, half a line of space
+      # before by, and a 0.5pt rule between the author and the rights with
+      # 3pt more on either side of it, the block centred down the page: its
+      # first line as far above the page number as that puts it. Measured
+      # from Copyright, since by and the author are on the title page too.
+      - gap: [©, Copyright]
+        is: 15
+      - gap: [Copyright, by]
+        is: 36
+      - gap: [Copyright, Reserved]
+        is: 71
+      - rule-weight-below: Copyright
+        is: 0.5
+      - gap: [©, ii]
+        is: 388
+      # The labels in the contents, CHAPTER and APPENDICES, stand 9pt
+      # further below the entry above them than one entry stands below
+      # another: from the column heading, six entries at 24pt and the 9pt;
+      # from CHAPTER, three entries and APPENDICES at 24pt and the 9pt. The
+      # entry under a label is the usual 24pt below it. Measured from words
+      # of their own, since the dots meet the last word of an entry.
+      - gap: [Page, CHAPTER]
+        is: 176
+      - gap: [CHAPTER, INTRODUCTION]
+        is: 24
+      - gap: [CHAPTER, APPENDICES]
+        is: 105
+      # The title page. typst and the .docx are set to the .pdf's spacing,
+      # so these hold in typst as well: the title above the first block,
+      # the blocks between the rules, and the committee's last line on the
+      # 1.5in bottom margin (tests/thesis-committee-six.qmd, with six
+      # members, puts its last line there too).
+      - gap: [WHEN, Dissertation]
+        is: 98.5
+      - gap: [Dissertation, Philosophy]
+        is: 128
+      - gap: [Philosophy, May]
+        is: 99
+      - gap: [Dissertation, Outside]
+        is: 386.5
 
 - fixture: thesis-title.qmd
   to: apaquarto-typst
   expect:
     typ:
       contains:
-        - '#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN \'
+        - '#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY \'
         - '#line(length: 5.50in, stroke: 0.5pt)'
         - 'Examining Committee Members:'
-        # The title page on 1" all round and carrying nothing at the foot,
-        # the copyright page on the handbook's margins and numbered, and the
-        # body beginning again at 1.
-        - '#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)'
+        # The title page on 1.5" at the sides and foot and 1" at the head and
+        # carrying nothing at the foot, the copyright page on the handbook's
+        # margins and numbered, and the body beginning again at 1.
+        - '#page(margin: (left: 1.50in, right: 1.50in, top: 1.00in, bottom: 1.50in), header: none, footer: none, numbering: none)'
         - '#page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))'
         - '#counter(page).update(1)'
-        # The committee sits under the rules, and the abstract and the
-        # dedication are pages of their own.
-        - '#pad(left: 0.50in)'
+        # The committee begins where the rules begin, which on this page is
+        # the margin, and the abstract and the dedication are pages of their
+        # own.
+        - '#pad(left: 0.00in)[#align(left)[#par(leading: 6.8pt)[Examining Committee Members:]]]'
         - '#strong[ABSTRACT]'
         - 'For the committee, who read it all.'
         - '#strong[ACKNOWLEDGMENTS]'
@@ -1138,7 +1191,7 @@
         # place each label stands: roman for the front matter, arabic for the
         # body, since the counter restarts between them.
         - '#strong[TABLE OF CONTENTS]'
-        - '#apatocline(0.00in, none, [CHAPTER], none, false, false)'
+        - '#apatocline(0.00in, none, [CHAPTER], none, false, false, lead: 9pt)'
         - '#apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)'
         - '#apatocline(0.00in, [A.], [MEASURES USED], <apx-measures>, false, true)'
         - '#apatocline(0.00in, none, [ABSTRACT], <apathesis-abstract>, true, true)'
@@ -1147,6 +1200,40 @@
         - '#heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]'
         - '= INTRODUCTION'
         - '#apatocline(0.00in, [B1.], [A sketch of the apparatus.], <ill-sketch>, false, true)'
+        # The copyright page's block, as wide as its widest line, which is
+        # measured where it is set, and the rule across it.
+        - '  let width = calc.max(..(first + second + below).map(line => measure(line).width))'
+        - '      line(length: 100%, stroke: 0.5pt)'
+    layout:
+      # As in the .pdf, at typst's single spacing.
+      - gap: [©, Copyright]
+        is: 15
+      - gap: [Copyright, by]
+        is: 40
+      - gap: [Copyright, Reserved]
+        is: 78
+      - rule-weight-below: Copyright
+        is: 0.5
+      - gap: [©, ii]
+        is: 385
+      # The labels' 9pt, over typst's 27pt between entries.
+      - gap: [Page, CHAPTER]
+        is: 200
+      - gap: [CHAPTER, INTRODUCTION]
+        is: 27
+      - gap: [CHAPTER, APPENDICES]
+        is: 118
+      # The title page at the .pdf's spacing. typst had set the title 35pt
+      # higher, 12pt less over each rule and 6pt less under it, and its
+      # lines 15.5pt apart.
+      - gap: [WHEN, Dissertation]
+        is: 98.5
+      - gap: [Dissertation, Philosophy]
+        is: 128
+      - gap: [Philosophy, May]
+        is: 99
+      - gap: [Dissertation, Outside]
+        is: 386.5
     pdf:
       contains:
         - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
@@ -1169,28 +1256,56 @@
         # The rule is a paragraph with a border under it, which is how word
         # draws one.
         - '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:pBdr>'
+        # Its one line is next to nothing high, so the border stands where
+        # the space above it ends and the words between two rules are
+        # centred between them; on a line of its own height the border
+        # stood a line lower.
+        - 'w:after="0" w:line="20" w:lineRule="exact"/><w:pBdr>'
+        # The committee is a frame on the bottom margin, as wide as the
+        # measure, so its last line stands on the margin however many
+        # members it names.
+        # It begins where the rules begin, which on this page, whose measure
+        # is the rules' 5.5in, is the margin.
+        - '<w:framePr w:w="7920" w:wrap="around" w:vAnchor="margin" w:hAnchor="margin" w:x="0" w:yAlign="bottom"/><w:spacing w:before="0" w:after="0" w:line="252" w:lineRule="auto"/><w:jc w:val="left"/><w:ind w:left="0"/></w:pPr><w:r><w:t xml:space="preserve">Examining Committee Members:</w:t>'
         # The title page is a section of its own, which is how it gets
-        # margins that are not the rest of the document's: 1" all round,
-        # against the 1.5" binding margin every page after it takes. It names
-        # no header, so no running head, and w:titlePg sends its one page to
-        # the empty "first" footer, so no number either.
-        - '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/><w:pgNumType w:fmt="lowerRoman" w:start="1"/><w:cols w:space="720"/><w:titlePg/>'
+        # margins that are not the rest of the document's: 1.5" at the sides
+        # and foot and 1" at the head, against the 1.5" binding margin and 1"
+        # elsewhere every page after it takes. It names no header, so no
+        # running head, and w:titlePg sends its one page to the empty "first"
+        # footer, so no number either.
+        - '<w:pgMar w:top="1440" w:right="2160" w:bottom="2160" w:left="2160" w:header="720" w:footer="720" w:gutter="0"/><w:pgNumType w:fmt="lowerRoman" w:start="1"/><w:cols w:space="720"/><w:titlePg/>'
         # The copyright page continues the roman numbering and does carry it.
         - '<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="2160" w:header="720" w:footer="720" w:gutter="0"/><w:pgNumType w:fmt="lowerRoman"/>'
-        # The committee begins where the rules begin, and the abstract takes
-        # the style apaquarto gives the first paragraph of an APA abstract,
-        # which is the one with no first line indented.
-        - '<w:ind w:left="720"/>'
+        # The abstract takes the style apaquarto gives the first paragraph of
+        # an APA abstract, which is the one with no first line indented.
         - '<w:pStyle w:val="AbstractFirstParagraph" />'
         # A contents entry is a link to a bookmark and a PAGEREF field for
         # the page it is on, with a right tab and dot leaders between them.
         # Nothing else in a .docx knows where word will break the pages.
         - '<w:tab w:val="right" w:leader="dot" w:pos="8640"/>'
+        # The words of an entry stop half an inch short of that tab, at the
+        # right indent, so a long title turns over before the page numbers;
+        # the tab stands past the indent and the dots and number reach it.
+        - '<w:ind w:left="0" w:right="720" w:hanging="0"/>'
+        - '<w:ind w:left="360" w:right="720" w:hanging="360"/>'
+        # A label, CHAPTER or APPENDICES, has 9pt (180 twips) above it over
+        # the 276 every entry has.
+        - '<w:spacing w:before="456" w:after="0" w:line="240" w:lineRule="auto"/><w:ind w:left="0" w:right="720" w:hanging="0"/></w:pPr><w:r><w:rPr><w:color w:val="000000"/></w:rPr><w:t xml:space="preserve">CHAPTER</w:t>'
         - '<w:hyperlink w:anchor="apathesis-abstract">'
         - ' PAGEREF apathesis-abstract \h '
         - ' PAGEREF apx-consent \h '
         # And the front matter pages carry the bookmarks those point at.
         - '<w:bookmarkStart w:id="8001" w:name="apathesis-abstract"/>'
+        # The copyright page is a table that fits itself to its lines, with
+        # a 1pt border under the row that ends with the author as the rule,
+        # and its section is centred down the page.
+        - '<w:tblW w:w="0" w:type="auto"/><w:jc w:val="center"/>'
+        - '<w:tcBorders><w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/></w:tcBorders><w:tcMar><w:bottom w:w="60" w:type="dxa"/></w:tcMar>'
+        - '<w:tcMar><w:top w:w="60" w:type="dxa"/></w:tcMar>'
+        - 'Graduate</w:t></w:r></w:p></w:tc></w:tr>'
+        # Half a line of space before by: half of a single line's 276 twips.
+        - '<w:spacing w:before="138" w:after="0" w:line="240" w:lineRule="auto"/>'
+        - '<w:cols w:space="720"/><w:vAlign w:val="center"/>'
     docx:
       contains:
         - 'Examining Committee Members:'
@@ -1212,8 +1327,19 @@
     html:
       contains:
         - 'thesis-front-matter-page'
-        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN'
+        # A label in the contents with 9pt above it.
+        - 'margin-left:0.00in;margin-top:9pt">CHAPTER</p>'
+        # A block quotation half an inch in from the right as well as the
+        # left, in a dissertation alone.
+        - 'blockquote, .blockquote { margin-right: 0.5in; }'
+        - 'A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY<br>'
         - 'Examining Committee Members:'
+        # The copyright page's block as wide as its widest line, with the
+        # rule a border under the lines that end with the author.
+        - 'width:fit-content;margin:0 auto;text-align:center'
+        - '<div style="padding-bottom:3pt;border-bottom:0.5pt solid currentColor"><p style="margin:0;text-indent:0">©<br>'
+        - 'margin-top:0.575em">by<br>'
+        - '<p style="margin:0;text-indent:0;padding-top:3pt">All Rights Reserved</p>'
         # There are no pages here, so a contents entry is the words and a
         # link to them and nothing more.
         - 'TABLE OF CONTENTS'
@@ -1392,6 +1518,22 @@
         # the document has an illustration --- and the contents does not name
         # it either.
         - 'LIST OF ILLUSTRATIONS'
+    layout:
+      # An entry that turns over: its title begins a quarter inch past the
+      # number, at 1.5in + 0.25in, and the line it turns onto begins there
+      # too. typst set the first line a space further in, at 129pt.
+      - left: Figwrap
+        is: 126
+      - left: figures
+        is: 126
+      # The words stop half an inch short of the margin, at 504pt, so the
+      # first line turns over before it, and the page number is at the
+      # margin on the line it turns onto. typst had run the title on until
+      # the number fell to the start of a line of its own.
+      - right: Figwrap
+        is: 497
+      - right: figures
+        is: 539
 
 - fixture: thesis-lists.qmd
   to: apaquarto-pdf
@@ -1403,6 +1545,16 @@
       absent:
         - 'LIST OF TABLES'
         - 'LIST OF ILLUSTRATIONS'
+    layout:
+      # As in typst. The .pdf had let a title run on to its page number.
+      - left: Figwrap
+        is: 126
+      - left: figures
+        is: 126
+      - right: Figwrap
+        is: 496
+      - right: figures
+        is: 539
 
 # The line spacing the Graduate School asks for: a block quotation single
 # spaced and half an inch in on the left, the entries of the reference
@@ -1454,10 +1606,11 @@
         - '<w:spacing w:after="276" w:line="240" w:lineRule="auto"'
         # A note's first line is indented half an inch.
         - '<w:ind w:firstLine="720" />'
-        # A block quotation half an inch in on the left and not at all on the
-        # right, as in every mode. This mode's Block Text kept a right indent
-        # of 720 after every other had lost it.
-        - '<w:ind w:firstLine="0" w:left="720" />'
+        # A block quotation half an inch in on the left and on the right,
+        # which the Graduate School asks for though APA does not. Every other
+        # mode indents on the left only. (This mode's Block Text once kept a
+        # right indent by mistake; it is meant now.)
+        - '<w:ind w:firstLine="0" w:left="720" w:right="720" />'
     docx-xml:
       contains:
         # And the contents entries, which are written out rather than styled.
@@ -2135,11 +2288,14 @@
       contains:
         - '\usepackage[left=1.50in,right=1.00in,top=1.00in,bottom=1.00in,left=2in]{geometry}'
         # The front matter after the title page takes the document's margin
-        # too, and the title page keeps its inch all round.
+        # too, and the title page keeps its own: 1.5in at the sides and foot
+        # and 1in at the head.
         - '\newgeometry{left=2.00in,right=1.00in,top=1.00in,bottom=1.00in}'
-        - '\newgeometry{left=1.00in,right=1.00in,top=1.00in,bottom=1.00in}'
+        - '\newgeometry{left=1.50in,right=1.50in,top=1.00in,bottom=1.50in}'
       absent:
-        - '\newgeometry{left=1.50in'
+        # No page takes the handbook's margins, which the document's 2in
+        # replaces.
+        - '\newgeometry{left=1.50in,right=1.00in'
 
 - fixture: margins-thesis.qmd
   to: apaquarto-docx
@@ -2166,8 +2322,8 @@
       contains:
         # The body: the document's margin, after the thesis layout's.
         - '  margin: (left: 2in,),'
-        # The title page keeps its inch all round.
-        - '#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none'
+        # The title page keeps its own margins.
+        - '#page(margin: (left: 1.50in, right: 1.50in, top: 1.00in, bottom: 1.50in), header: none'
       count:
         # The front matter after the title page: the document's two inches.
         '#page(margin: (left: 2.00in, right: 1.00in, top: 1.00in, bottom: 1.00in))[': 3
@@ -2179,7 +2335,8 @@
   expect:
     tex:
       contains:
-        - '\newgeometry{left=1.75in,right=1.75in,top=1.00in,bottom=1.00in}'
+        # The sides it names; the foot it does not keeps the default 1.5in.
+        - '\newgeometry{left=1.75in,right=1.75in,top=1.00in,bottom=1.50in}'
         - '\newgeometry{left=1.50in,right=1.00in,top=1.00in,bottom=1.00in}'
       count:
         '\rule{5.00in}{0.5pt}': 3
@@ -2191,7 +2348,7 @@
   expect:
     docx-xml:
       contains:
-        - '<w:pgMar w:top="1440" w:right="2520" w:bottom="1440" w:left="2520"'
+        - '<w:pgMar w:top="1440" w:right="2520" w:bottom="2160" w:left="2520"'
         # The rules span the whole measure, so they are inset by nothing.
         - '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/></w:pBdr><w:ind w:left="0" w:right="0"/>'
 
@@ -2200,7 +2357,7 @@
   expect:
     typ:
       contains:
-        - '#page(margin: (left: 1.75in, right: 1.75in, top: 1.00in, bottom: 1.00in), header: none'
+        - '#page(margin: (left: 1.75in, right: 1.75in, top: 1.00in, bottom: 1.50in), header: none'
       count:
         '#line(length: 5.00in, stroke: 0.5pt)': 3
 
@@ -2408,6 +2565,13 @@
         is: 14
       - gap: [Austen, Masked]
         is: 38
+      # A quotation half an inch in from both margins: 1.5in and 1in, the
+      # handbook's, so 144pt from the paper's left edge and 504pt to the end
+      # of its attribution's line, which is set against its right edge.
+      - left: Rightquote
+        is: 144
+      - right: Rightsource
+        is: 504
 
 - fixture: layout-thesis.qmd
   to: apaquarto-typst
@@ -2680,7 +2844,8 @@
     layout: &table-own
       # table-spacing on one table: single on the first, its wrapped lines
       # too, one-and-a-half on the second, from the cell a chunk option
-      # lands on, and the third at the document's double.
+      # lands on, the third at the document's double, and the fourth single,
+      # from a div float whose content is the table itself.
       - gap: [Sinone, Sintwo]
         is: 14
       - gap: [Sinwrap, sinlater]
@@ -2689,6 +2854,8 @@
         is: 18
       - gap: [Dubone, Dubtwo]
         is: 24
+      - gap: [Divone, Divtwo]
+        is: 14
 
 - fixture: layout-table-spacing-own.qmd
   to: apaquarto-typst
@@ -2702,7 +2869,7 @@
       count:
         # Each table spaced on its own takes a Table style at its spacing;
         # the third keeps the Table style, at the document's.
-        '<w:tblStyle w:val="TableSingle" />': 1
+        '<w:tblStyle w:val="TableSingle" />': 2
         '<w:tblStyle w:val="TableOnehalf" />': 1
         '<w:tblStyle w:val="Table" />': 1
     docx-styles:
@@ -2724,6 +2891,9 @@
       contains:
         - 'class="caption-top apa-table-single table"'
         - 'apa-table-onehalf'
+      count:
+        # The first table and the fourth, in its div float.
+        'apa-table-single': 2
 
 - fixture: layout-table-spacing-journal.qmd
   to: apaquarto-typst
@@ -3025,7 +3195,9 @@
   expect:
     docx-xml:
       contains:
-        - '<w:ind w:left="1440" w:hanging="720"/>'
+        # Turned under itself by half an inch, from the margin, where the
+        # committee begins on a title page whose measure is the rules' 5.5in.
+        - '<w:ind w:left="720" w:hanging="720"/>'
 
 - fixture: thesis-no-logo.qmd
   to: apaquarto-typst
@@ -3041,4 +3213,92 @@
   expect:
     html:
       contains:
-        - 'margin-left:1.00in;text-indent:-0.50in'
+        - 'margin-left:0.50in;text-indent:-0.50in'
+
+- fixture: thesis-link-colours.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      contains:
+        # A dissertation's links black unless it names a colour: it names
+        # linkcolor and no other. The pdf format's apalink in each field is
+        # taken as naming none.
+        - 'linkcolor={teal},'
+        - 'filecolor={black},'
+        - 'citecolor={black},'
+        - 'urlcolor={black},'
+
+- fixture: thesis-link-colours.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        - 'if d.starts-with("mailto:") or d.contains("://") { rgb("#000000") }'
+        - 'else { rgb("#000000") }'
+        - '    rgb("#000000")'
+        - '} else { rgb("#008080") }'
+
+- fixture: thesis-link-colours.qmd
+  to: apaquarto-docx
+  expect:
+    docx-styles:
+      contains:
+        - 'w:styleId="ApaLinkColor" w:type="character"><w:name w:val="ApaLinkColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="008080" /></w:rPr></w:style>'
+        - 'w:styleId="ApaUrlColor" w:type="character"><w:name w:val="ApaUrlColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="000000" /></w:rPr></w:style>'
+        - 'w:styleId="ApaCiteColor" w:type="character"><w:name w:val="ApaCiteColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="000000" /></w:rPr></w:style>'
+        - 'w:styleId="ApaFileColor" w:type="character"><w:name w:val="ApaFileColor" /><w:basedOn w:val="Hyperlink" /><w:rPr><w:color w:val="000000" /></w:rPr></w:style>'
+
+- fixture: thesis-link-colours.qmd
+  to: apaquarto-html
+  expect:
+    html:
+      contains:
+        - 'main a[href^="#"] { color: #008080; }'
+        - 'main a[href*="//"], main a[href^="mailto:"] { color: #000000; }'
+        - 'main .citation a { color: #000000; }'
+
+- fixture: typst-link-colour-one.qmd
+  to: apaquarto-typst
+  expect:
+    typ:
+      contains:
+        # linkcolor alone: a link inside the document takes it, and a url, a
+        # file and a citation keep typst's blue, as in the other formats.
+        - 'if d.starts-with("mailto:") or d.contains("://") { blue }'
+        - 'else { blue }'
+        - '} else { rgb("#008080") }'
+
+- fixture: thesis-contents-long.qmd
+  to: apaquarto-typst
+  expect:
+    layout:
+      # The line the heading ends on reaches the margin: its page number is
+      # there with the others. typst had set the number and some dots alone
+      # at the start of a line, which ended at 144pt.
+      - right: header
+        is: 539
+
+- fixture: thesis-contents-long.qmd
+  to: apaquarto-pdf
+  expect:
+    layout:
+      # The heading fits on one line here, with its dots and number. The
+      # dots meet the last word, which pdftools then reads as one word with
+      # them, so the line is found by its first.
+      - right: Background
+        is: 539
+
+- fixture: thesis-committee-six.qmd
+  to: apaquarto-pdf
+  expect:
+    layout: &thesis-committee-six
+      # Six members, one turning over, and the last line as far below the
+      # first block as thesis-title.qmd's three put theirs: on the bottom
+      # margin.
+      - gap: [Dissertation, Sixth]
+        is: 386.5
+
+- fixture: thesis-committee-six.qmd
+  to: apaquarto-typst
+  expect:
+    layout: *thesis-committee-six

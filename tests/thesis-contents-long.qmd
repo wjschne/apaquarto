@@ -1,0 +1,35 @@
+---
+title: "A Long Heading in the Contents"
+shorttitle: "Long Contents Entry"
+author:
+  - name: A B
+    corresponding: true
+    email: a@b.edu
+    affiliations:
+      - name: X
+documentmode: thesis
+margin:
+  left: 1in
+thesis:
+  type: Thesis
+  degree: Master of Arts
+  date: May 2027
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: a heading whose words come out within a word of filling
+the line, short of the column of page numbers, has its page number at the
+margin with the others. typst ran the words and the first of the dots to the
+end of the line and set the number, with the rest of its dots, at the start
+of a line of its own. The heading is the one dissertation.qmd showed it
+with, on the same 1in margin.
+-->
+
+# Introduction
+
+## Background with a long long long long long long long long long long long header
+
+The section.

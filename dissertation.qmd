@@ -18,17 +18,16 @@ thesis:
   degree: Doctor of Philosophy
   date: May 2027
   committee:
-    - name: Nedra J. Goings, Ph.D.
+    - name: Nedra J. Goings, PhD
       role: Advisory Chair
-      affiliation: Department of Cosmic Discernment
-    - name: Leslie Eccles, Ph.D.
-      affiliation: Department of Aesthetic Abundance
+      affiliation: Department of Cosmic Discernment, Temple University
+    - name: Leslie Eccles, PhD
+      affiliation: Department of Aesthetic Abundance, Temple University
       role: Examining Chair
-    - name: Kristin Moh, Ph.D.
-      affiliation: Department of Musical Self-Actualization
+    - name: Kristin Moh, PhD
+      affiliation: Department of Musical Transcendence, Temple University
       role: External Member
-margin:
-  left: 1in
+linkcolor: black
 format:
   apaquarto-typst: default
   apaquarto-pdf: default
@@ -39,7 +38,7 @@ format:
 
 The body of the dissertation begins here, on a page of its own.
 
-## Background
+## Background with a long long long long long long long long long long long long long header
 
 Some background.
 
@@ -82,12 +81,12 @@ Something about the method.
 A figure caption that says what the figure shows.
 :::
 
-::: {#tbl-example}
+::: {#tbl-example table-spacing="double"}
 | A | B |
 |---|---|
 | 1 | 2 |
 
-A table caption that says what the table shows.
+A table caption that says what the table shows. This is a long caption that requires more than a single line of text.
 :::
 
 # Discussion
@@ -97,6 +96,8 @@ A table caption that says what the table shows.
 
 An illustration caption that says what the illustration shows.
 :::
+
+
 
 
 

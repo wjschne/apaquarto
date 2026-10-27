@@ -27,8 +27,9 @@ at the left, where it is bound, and an inch elsewhere. A side the document
 names replaces the Graduate School's on every page but the title page --- the
 front matter as well as the body, since the handbook asks for the margins to
 be "the same for the entire manuscript, including front matter" --- and the
-sides it does not name keep theirs. The title page keeps its inch all round
-unless thesis: title-margin says otherwise (margins-thesis-title.qmd).
+sides it does not name keep theirs. The title page keeps its own, 1.5in at
+the sides and foot and 1in at the head, unless thesis: title-margin says
+otherwise (margins-thesis-title.qmd).
 
 The front matter used to keep the Graduate School's margins whatever was
 asked, so a document that moved its binding margin had its first pages and

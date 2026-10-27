@@ -1,0 +1,23 @@
+---
+title: "One Link Colour"
+shorttitle: "One Link Colour"
+author:
+  - name: Test Author
+    corresponding: true
+    email: test@example.com
+    affiliations:
+      - name: Test University
+linkcolor: teal
+format:
+  apaquarto-typst: default
+---
+
+<!--
+A document that names linkcolor alone: a link inside the document takes it,
+and a url, a citation and a file keep typst's blue, as they do in the .pdf,
+.docx and .html. They had fallen back to linkcolor in typst alone.
+-->
+
+# Links
+
+A link to [the heading](#links) and a url to [the web](https://example.org).

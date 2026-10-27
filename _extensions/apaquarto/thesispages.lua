@@ -12,8 +12,18 @@
 -- and each item one of
 --
 --   gap       { points }                       space down the page
+--   fill      { points }                       all the space the page has
+--                                              left, and at least points:
+--                                              what follows stands at the
+--                                              foot of the page
 --   rule      {}                               a centred rule
 --   para      { align, lines, bold, double, indent, hanging }
+--   notice    { lines, space_after, rule_after }
+--                                              single-spaced lines centred
+--                                              down the page, half a line of
+--                                              space under one and a rule as
+--                                              wide as the widest under
+--                                              another
 --   anchor    { name }                         a mark a contents points at
 --   columns   { left, right }                  the two labels over a list
 --   contents  { entries }                      lines of a contents or list
@@ -34,11 +44,11 @@ local M = {}
 -- The margins every page but the first takes: the handbook's, with any side
 -- the document names laid over them (utilsapa.thesis_body_margins).
 local kMargins = utilsapa.thesis_margins
--- The title page is set on 1" all round, which is what the dissertations
--- Temple publishes do and what the Graduate School's template draws: the
--- block of the page stands at the centre of the paper rather than at the
--- centre of a text block pushed right by the binding margin. So the title is
--- broken against the measure the title page has, not the one the body has.
+-- The title page is set on margins of its own, 1.5in at the sides and foot
+-- and 1in at the head (utilsapa.thesis_title_margins): its sides are alike,
+-- so the block of the page stands at the centre of the paper rather than at
+-- the centre of a text block pushed right by the binding margin. So the title
+-- is broken against the measure the title page has, not the one the body has.
 -- thesis: title-margin changes it.
 local kTitleMargins = utilsapa.thesis_title_margins
 local kMeasureInches = utilsapa.thesis_title_measure()
@@ -54,7 +64,11 @@ local kTemplateRuleWidth = 5.5
 local kRuleWidth = kTemplateRuleWidth
 local kRuleSpace = 21        -- points above and below each rule
 local kTitleDrop = 70        -- points from the top margin down to the title
-local kCommitteeDrop = 70    -- points from the last block down to the committee
+-- Points at least from the last block to the committee, which stands at the
+-- foot of the page: a double-spaced line. It was 70, which with a long
+-- committee and a deep bottom margin left too little room for the committee
+-- below it, and the last member went over onto the next page.
+local kCommitteeDrop = 27.6
 local kLineSpace = 13.8      -- a single-spaced line of 12pt Times
 local kDedicationDrop = 164  -- points from the top margin to a dedication
 -- The examining committee begins where the rules above it begin, rather
@@ -80,14 +94,20 @@ local kDoubleSpace = 27.6    -- and a double-spaced one
 -- From the abstract heading down to the first line of the abstract, which
 -- is a blank double-spaced line between them.
 local kAbstractGap = 27.6
--- Where the copyright notice sits: far enough down the page to read as a
--- page of its own rather than as a heading, which is where the Graduate
--- School's template puts it.
-local kCopyrightDrop = 289
 -- The column of page numbers is at the right margin and the leader dots run
 -- out to meet it, so a line of the contents is as wide as the measure.
 local kNumberColumn = 0.25   -- inches from a chapter number to its title
 local kSubheadingStep = 0.5  -- inches a level of subheading is indented
+-- The words of an entry stop this many inches short of the right margin, on
+-- every line, so that a title too long for one line turns over before it
+-- reaches the column of page numbers. Only the leader dots and the page
+-- number run on into it. Without it a long title ran up against its number,
+-- or pushed the number onto a line of its own.
+local kPageColumn = 0.5
+-- Points of space above a label in the contents, CHAPTER and APPENDICES, over
+-- the space between one entry and the next, so that each reads as the head
+-- of the entries under it rather than as one of the entries above.
+local kLabelLead = 9
 -- A line of the contents is a block of its own, and typst measures such a
 -- block by the glyphs in it rather than by the line it sits on --- about 8
 -- points at 12pt Times --- so the space above it is what settles how far
@@ -97,6 +117,8 @@ local kContentsLead = kDoubleSpace - 8.2
 -- The measures the renderers need as well, to set what is built here.
 M.number_column = kNumberColumn
 M.subheading_step = kSubheadingStep
+M.page_column = kPageColumn
+M.label_lead = kLabelLead
 M.contents_lead = kContentsLead
 
 -- Whether a document asks for one of the four lists.
@@ -205,6 +227,11 @@ local function collector()
     gap = function(points)
       items:insert({ kind = "gap", points = points })
     end,
+    -- What follows it on the page stands at the foot of the page, however
+    -- much there is above, with at least points between the two.
+    fill = function(points)
+      items:insert({ kind = "fill", points = points })
+    end,
     -- At the width this document's title page leaves room for.
     rule = function()
       items:insert({ kind = "rule", width = kRuleWidth })
@@ -221,6 +248,15 @@ local function collector()
           indent = options.indent, hanging = options.hanging })
       end
       return #kept > 0
+    end,
+    -- Lines set as one block in the middle of the page, single spaced and
+    -- centred, with half a line of space after line space_after and a rule
+    -- after line rule_after as wide as the widest of them, 3pt clear of the
+    -- lines on either side. How wide that is only the format knows, so each
+    -- sets the rule its own way.
+    notice = function(lines, space_after, rule_after)
+      items:insert({ kind = "notice", lines = lines,
+        space_after = space_after, rule_after = rule_after })
     end,
     -- The lines of a table of contents, each with its leader dots and the
     -- page it points at. What the entries are is thesiscontents.lua's; how
@@ -301,14 +337,17 @@ local function title_page(meta)
     })
   end
 
-  -- The examining committee, flush left at the foot of the page.
+  -- The examining committee, flush left at the foot of the page: its last
+  -- line on the bottom margin however many members it names. It had
+  -- followed the blocks above at a fixed distance and so ended higher or
+  -- lower with the length of the committee.
   local committee = thesis and thesis.committee
   if committee and #committee > 0 then
     local lines = pandoc.List({})
     for _, member in ipairs(committee) do
       lines:insert(committee_line(member))
     end
-    add.gap(kCommitteeDrop)
+    add.fill(kCommitteeDrop)
     add.para("left", { text(language(meta, "thesis-committee",
       "Examining Committee Members:")) }, { indent = kCommitteeIndent })
     add.gap(kLineSpace)
@@ -340,20 +379,18 @@ local function copyright_page(meta)
   local author = author_inlines(meta)
   if year == nil or author == nil then return nil end
 
+  -- The symbol, the word and the year on three lines, half a line of space,
+  -- by and the author on two more, and under a rule the reservation of
+  -- rights.
   local items, add = collector()
-  local notice = pandoc.Inlines({
-    pandoc.Str("\u{00A9}"), pandoc.Space(),
-    pandoc.Str(language(meta, "thesis-copyright", "Copyright")), pandoc.Space(),
-    pandoc.Str(year), pandoc.Space(),
-    pandoc.Str(language(meta, "thesis-copyright-by", "by")), pandoc.Space(),
-  })
-  notice:extend(author)
-
-  add.gap(kCopyrightDrop)
-  add.para("center", {
-    notice,
+  add.notice({
+    text("\u{00A9}"),
+    text(language(meta, "thesis-copyright", "Copyright")),
+    text(year),
+    text(language(meta, "thesis-copyright-by", "by")),
+    author,
     text(language(meta, "thesis-rights-reserved", "All Rights Reserved")),
-  }, { double = true })
+  }, 3, 5)
   return items
 end
 

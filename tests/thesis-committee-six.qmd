@@ -1,0 +1,48 @@
+---
+title: "A Study of Whatever It Is That Graduate Students Study When They Are Studying Something at Considerable and Notable Length"
+shorttitle: "Six Members"
+author:
+  - name: Iwishiwere A. Graduate
+    corresponding: true
+    email: graduate@example.edu
+    affiliations:
+      - name: Temple University
+documentmode: thesis
+thesis:
+  type: Dissertation
+  submitted-to: the Temple University Graduate Board
+  degree: Doctor of Philosophy
+  date: May 2027
+  committee:
+    - name: Mentor Name
+      role: Advisory Chair
+      affiliation: TU Department
+    - name: Member Name
+      affiliation: TU Department
+    - name: Outside Name
+      role: External Member
+      affiliation: Another University
+    - name: Fourth Name
+      affiliation: TU Department
+    - name: Fifth Name
+      role: Reader
+      affiliation: A Department Whose Name Is Long Enough That The Line Turns Over
+    - name: Sixth Name
+      affiliation: TU Department
+format:
+  apaquarto-pdf: default
+  apaquarto-typst: default
+---
+
+<!--
+Measured, not read: the examining committee stands at the foot of the title
+page however many members it names, its last line on the bottom margin. This
+is tests/thesis-title.qmd's title page with six members, one of whose lines
+turns over, against that fixture's three: the last line is the same distance
+below the blocks above in both. It had followed the blocks at a fixed
+distance, so a longer committee ended lower and a shorter one higher.
+-->
+
+# Introduction
+
+The body.

@@ -702,11 +702,11 @@ thesis:
       `role` (`Advisory Chair`, `External Member`) and an optional
       `affiliation`, and is set as one line with commas between them.
   - name: title-margin
-    default: '1in all round'
+    default: '1.5in at the sides and bottom, 1in at the top'
     description: |
       The title page's margins, in the same shape as `margin`: one length,
       or any of `x`, `y`, `left`, `right`, `top` and `bottom`. A side left
-      out keeps its inch. The title is broken into its inverted pyramid
+      out keeps its default. The title is broken into its inverted pyramid
       against the measure these leave, and the rules under its blocks are
       5.5in or the whole measure, whichever is narrower. The other pages
       take the document's own margins (see Margins, above).

@@ -14,7 +14,9 @@ Measured, not read: table-spacing written on one table sets that table's
 rows and leaves the others at the document's, double here. The first table
 asks for single spacing on its caption; the second, a table without a
 caption, asks for one-and-a-half on the cell around it, which is where a
-chunk option lands (#| table-spacing: onehalf); the third asks for nothing.
+chunk option lands (#| table-spacing: onehalf); the third asks for nothing;
+the fourth asks for single spacing on a div float around it, whose content
+is the table itself.
 -->
 
 | Headword | Column B                      |
@@ -40,3 +42,13 @@ chunk option lands (#| table-spacing: onehalf); the third asks for nothing.
 | Dubtwo   | 2                             |
 
 : Double caption {#tbl-double}
+
+::: {#tbl-div table-spacing="single"}
+
+| Headword | Column B                      |
+|:---------|:------------------------------|
+| Divone   | 1                             |
+| Divtwo   | 2                             |
+
+Div caption
+:::

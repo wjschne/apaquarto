@@ -54,6 +54,11 @@ The page carries no number and no running head. After it come the copyright
 page, the abstract and the dedication, numbered in lower-case roman, and then
 the body, which begins again at 1 in arabic.
 
+The copyright page is six single-spaced lines centred down the page: the
+symbol, Copyright and the year on three, half a line of space, by and the
+author on two more, and All Rights Reserved under a 0.5pt rule as wide as the
+widest of them, with 3pt more space on either side of the rule.
+
 The examining committee begins where the rules above it begin rather than out
 at the margin, and the abstract begins at the margin with no first line
 indented.

@@ -5,6 +5,8 @@ local thesispages = require("thesispages")
 
 local kNumberColumn = thesispages.number_column
 local kSubheadingStep = thesispages.subheading_step
+local kPageColumn = thesispages.page_column
+local kLabelLead = thesispages.label_lead
 local written = thesispages.written
 local raw = pandoc.RawBlock
 
@@ -25,9 +27,10 @@ local raw = pandoc.RawBlock
 local function latex_contents_line(entry)
   local indent = entry.indent * kSubheadingStep
   if entry.kind == "label" then
+    -- Its lead over the \parskip that stands between every two entries.
     return string.format(
-      "{\\parindent=0pt\\leftskip=%.2fin\\noindent %s\\par}",
-      indent, written(entry.text, "latex"))
+      "\\vspace{%dpt}{\\parindent=0pt\\leftskip=%.2fin\\noindent %s\\par}",
+      kLabelLead, indent, written(entry.text, "latex"))
   end
 
   local number, back = "", ""
@@ -48,12 +51,23 @@ local function latex_contents_line(entry)
     -- defined in the preamble from toccolor, black unless asked otherwise.
     body = "\\hyperref[" .. entry.target .. "]{\\textcolor{apathesistoc}{"
       .. body .. "}}"
-    page = "\\apadotfill\\hyperref[" .. entry.target
-      .. "]{\\textcolor{apathesistoc}{\\pageref{" .. entry.target .. "}}}"
+    -- The words stop the page column short of the margin on every line:
+    -- \rightskip, ragged as the other formats are. The last line has the
+    -- column back (\parfillskip takes the skip off again) for the dots and
+    -- the number, and the dots are never shorter than the column less the
+    -- number, so the words on it stop where they stop on the others. One run
+    -- of \apadotfill's dots, so there is no seam in them.
+    page = string.format("\\setbox0\\hbox{\\hyperref[%s]{\\textcolor"
+      .. "{apathesistoc}{\\pageref{%s}}}}\\leavevmode\\cleaders\\hbox to .3em"
+      .. "{\\hss.\\hss}\\hskip\\dimexpr %.2fin-\\wd0\\relax plus 1fill"
+      .. "\\kern0pt\\box0", entry.target, entry.target, kPageColumn)
   end
+  local fill = page ~= ""
+    and string.format("\\parfillskip=-%.2fin", kPageColumn) or ""
   return string.format(
-    "{\\parindent=0pt\\leftskip=%.2fin\\noindent%s%s%s%s\\par}",
-    indent, back, number, body, page)
+    "{\\parindent=0pt\\leftskip=%.2fin\\rightskip=%.2fin plus 1fil"
+    .. "%s\\noindent%s%s%s%s\\par}",
+    indent, kPageColumn, fill, back, number, body, page)
 end
 
 local function render_latex(pages, meta)
@@ -88,6 +102,9 @@ local function render_latex(pages, meta)
       if item.kind == "gap" then
         out:insert(raw("latex",
           string.format("\\vspace*{%.1fpt}", item.points)))
+      elseif item.kind == "fill" then
+        out:insert(raw("latex",
+          string.format("\\vspace*{%.1fpt plus 1fill}", item.points)))
       elseif item.kind == "rule" then
         out:insert(raw("latex", string.format(
           "{\\centering\\noindent\\rule{%.2fin}{0.5pt}\\par}", item.width)))
@@ -115,6 +132,33 @@ local function render_latex(pages, meta)
           out:insert(raw("latex",
             "{" .. align .. indent .. "\n" .. body .. "\\par}"))
         end
+      elseif item.kind == "notice" then
+        -- A tabular is as wide as its widest line, so a \hline in it is the
+        -- rule, and a fill above and below stands the block in the middle of
+        -- the page. Its rows are \baselineskip apart, single here.
+        set_spacing(false)
+        local rows = pandoc.List({})
+        for i, line in ipairs(item.lines) do
+          local row = written(line, "latex")
+          if i == item.space_after then
+            -- Half of \normalbaselineskip, the single spacing: a tabular sets
+            -- \baselineskip to nothing inside itself.
+            row = row .. "\\\\\\noalign{\\vskip 0.5\\normalbaselineskip}"
+          elseif i == item.rule_after then
+            -- 3pt each side of the rule, but a row's strut leaves more room
+            -- under its line than over the next, so the 6pt is shared out
+            -- to leave the rule as clear of the one as of the other.
+            row = row .. "\\\\\\noalign{\\vskip 1.8pt}\\hline\\noalign{\\vskip 4.2pt}"
+          elseif i < #item.lines then
+            row = row .. "\\\\"
+          end
+          rows:insert(row)
+        end
+        out:insert(raw("latex", "\\vspace*{\\fill}\n{\\centering"
+          .. "\\setlength{\\arrayrulewidth}{0.5pt}"
+          .. "\\renewcommand{\\arraystretch}{1}\n"
+          .. "\\begin{tabular}{@{}c@{}}\n" .. table.concat(rows, "\n")
+          .. "\n\\end{tabular}\\par}\n\\vspace*{\\fill}"))
       elseif item.kind == "anchor" then
         out:insert(raw("latex", "\\label{" .. item.name .. "}"))
       elseif item.kind == "columns" then

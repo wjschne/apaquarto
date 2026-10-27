@@ -8,7 +8,8 @@
 -- anything so far: a dissertation has a front matter of its own, built by
 -- thesisfrontmatter.lua, so the APA title page is turned off and the title is
 -- not repeated at the head of the body. Set here rather than there because
--- frontmatter.lua reads both fields long before that filter runs.
+-- frontmatter.lua reads both fields long before that filter runs. Its links
+-- are black unless it names a colour for them.
 local aliases = {
   journal      = "jou",
   manuscript   = "man",
@@ -22,6 +23,17 @@ local implied = {
   thesis = {
     ["suppress-title-page"] = true,
     ["suppress-title-introduction"] = true,
+  },
+}
+
+-- The colour of every kind of link in a dissertation --- a cross reference,
+-- a url, a citation, a file --- unless the document names one: black, so that
+-- the body does not read as a page of links. The pdf format names apalink in
+-- each of the four for every document, so that is taken as naming none.
+local implied_colours = {
+  thesis = {
+    linkcolor = "black", urlcolor = "black",
+    citecolor = "black", filecolor = "black",
   },
 }
 
@@ -42,6 +54,11 @@ function Meta(m)
     for key, value in pairs(implied[mode] or {}) do
       if m[key] == nil or pandoc.utils.stringify(m[key]) == "false" then
         m[key] = value
+      end
+    end
+    for key, value in pairs(implied_colours[mode] or {}) do
+      if m[key] == nil or pandoc.utils.stringify(m[key]) == "apalink" then
+        m[key] = pandoc.MetaString(value)
       end
     end
   end

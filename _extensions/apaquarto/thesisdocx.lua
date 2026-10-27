@@ -6,6 +6,8 @@ local utilsapa = require("utilsapa")
 
 local kNumberColumn = thesispages.number_column
 local kSubheadingStep = thesispages.subheading_step
+local kPageColumn = thesispages.page_column
+local kLabelLead = thesispages.label_lead
 local contents_colour = thesispages.contents_colour
 local raw = pandoc.RawBlock
 
@@ -44,12 +46,20 @@ local kInch = 1440
 -- paragraph both ends the page and carries them.
 --
 -- The order of the properties is the schema's: the footer references, then
--- pgSz, pgMar, pgNumType, cols, titlePg.
-local function docx_section(page, footers, start)
+-- pgSz, pgMar, pgNumType, cols, vAlign, titlePg.
+--
+-- A page whose block stands in the middle of it is a section centred down
+-- the page. Word centres the empty paragraph that carries the properties
+-- along with the rest, so that paragraph is given next to no height, or the
+-- block would stand half a line above the middle.
+local function docx_section(page, footers, start, centred)
   local numbering = '<w:pgNumType w:fmt="lowerRoman"'
     .. (start and ' w:start="1"' or "") .. "/>"
   return table.concat({
-    "<w:p><w:pPr><w:sectPr>",
+    "<w:p><w:pPr>",
+    centred and '<w:spacing w:before="0" w:after="0" w:line="20"'
+      .. ' w:lineRule="exact"/>' or "",
+    "<w:sectPr>",
     footers,
     '<w:pgSz w:w="12240" w:h="15840" w:code="1"/>',
     string.format(
@@ -59,6 +69,7 @@ local function docx_section(page, footers, start)
       page.margins.bottom * kInch, page.margins.left * kInch),
     numbering,
     '<w:cols w:space="720"/>',
+    centred and '<w:vAlign w:val="center"/>' or "",
     page.numbered and "" or "<w:titlePg/>",
     "</w:sectPr></w:pPr></w:p>",
   })
@@ -86,8 +97,12 @@ local function docx_contents_line(entry, measure, colour)
   local indent = twips(entry.indent * kSubheadingStep * 72)
   local hanging = entry.number and twips(kNumberColumn * 72) or 0
   -- A tab stop is measured from the margin, not from the indent, so the
-  -- right tab sits at the full measure however deep the entry is indented
+  -- right tab sits at the full measure however deep the entry is indented.
+  -- The words stop the page column short of it, at the right indent, and
+  -- word lets a tab stop stand past that indent, so the dots and the number
+  -- still run out to the margin.
   local tab = twips(measure * 72)
+  local right = twips(kPageColumn * 72)
 
   -- tabs come before spacing and ind in a paragraph's properties
   local properties = ""
@@ -103,9 +118,11 @@ local function docx_contents_line(entry, measure, colour)
     --- A title of two or more lines is single spaced, and the 276 twips
     --- ahead of an entry are the second line that leaves a double space
     --- between it and whatever it follows --- the entry before it, or the
-    --- column heading the list opens under.
-    '<w:spacing w:before="276" w:after="0" w:line="240" w:lineRule="auto"/>'
-    .. '<w:ind w:left="%d" w:hanging="%d"/>', indent + hanging, hanging)
+    --- column heading the list opens under. A label has its lead on top.
+    '<w:spacing w:before="%d" w:after="0" w:line="240" w:lineRule="auto"/>'
+    .. '<w:ind w:left="%d" w:right="%d" w:hanging="%d"/>',
+    276 + (entry.kind == "label" and twips(kLabelLead) or 0),
+    indent + hanging, right, hanging)
 
   local body = docx_runs(entry.text, false, false, colour)
   if entry.number then
@@ -131,6 +148,104 @@ local function docx_contents_line(entry, measure, colour)
   })
 end
 
+-- Lines centred down the page with a rule under one of them as wide as the
+-- widest. A paragraph's border runs from indent to indent whatever is in it,
+-- and nothing here can measure the lines, so they are a table of two rows
+-- that fits itself to what it holds: the lines over the rule in one, those
+-- under it in the other, and the rule the border between, 0.5pt (w:sz is in
+-- eighths of a point). The cells have no margins at the sides, so the lines
+-- are set as the paragraphs around them would be, and 3pt at the rule, which
+-- keeps it clear of the lines. The half line of space is the space before
+-- the paragraph after it: half of the 276 twips a single line of 12pt Times
+-- takes in word.
+local function docx_notice(item)
+  local cell_margins = '<w:tblCellMar><w:top w:w="0" w:type="dxa"/>'
+    .. '<w:left w:w="0" w:type="dxa"/><w:bottom w:w="0" w:type="dxa"/>'
+    .. '<w:right w:w="0" w:type="dxa"/></w:tblCellMar>'
+  local function paragraph(lines, before)
+    local runs = pandoc.List({})
+    for i, line in ipairs(lines) do
+      if i > 1 then runs:insert("<w:r><w:br/></w:r>") end
+      runs:insert(docx_runs(line, false, false))
+    end
+    return table.concat({
+      "<w:p><w:pPr>",
+      string.format('<w:spacing w:before="%d" w:after="0" w:line="240"'
+        .. ' w:lineRule="auto"/>', before),
+      '<w:ind w:left="0" w:right="0" w:firstLine="0"/><w:jc w:val="center"/>',
+      "</w:pPr>", table.concat(runs), "</w:p>",
+    })
+  end
+  -- A cell of one or two paragraphs, with 3pt between it and the rule on
+  -- the side the rule is.
+  local function cell(groups, rule)
+    local paragraphs = pandoc.List({})
+    for i, lines in ipairs(groups) do
+      if #lines > 0 then
+        paragraphs:insert(paragraph(lines, i > 1 and 138 or 0))
+      end
+    end
+    return table.concat({
+      '<w:tr><w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/>',
+      rule == "below" and '<w:tcBorders><w:bottom w:val="single" w:sz="4"'
+        .. ' w:space="0" w:color="auto"/></w:tcBorders>' or "",
+      rule == "below" and '<w:tcMar><w:bottom w:w="60" w:type="dxa"/></w:tcMar>'
+        or rule == "above" and '<w:tcMar><w:top w:w="60" w:type="dxa"/></w:tcMar>'
+        or "",
+      "</w:tcPr>", table.concat(paragraphs), "</w:tc></w:tr>",
+    })
+  end
+  local first, second, below = pandoc.List({}), pandoc.List({}),
+    pandoc.List({})
+  for i, line in ipairs(item.lines) do
+    local into = i <= item.space_after and first
+      or i <= item.rule_after and second or below
+    into:insert(line)
+  end
+  return table.concat({
+    "<w:tbl><w:tblPr>",
+    '<w:tblW w:w="0" w:type="auto"/><w:jc w:val="center"/>',
+    -- No borders of its own, whatever table style the reference document
+    -- makes the default, so that the rule is the only line drawn.
+    '<w:tblBorders><w:top w:val="nil"/><w:left w:val="nil"/>',
+    '<w:bottom w:val="nil"/><w:right w:val="nil"/>',
+    '<w:insideH w:val="nil"/><w:insideV w:val="nil"/></w:tblBorders>',
+    '<w:tblLayout w:type="autofit"/>', cell_margins,
+    "</w:tblPr><w:tblGrid><w:gridCol/></w:tblGrid>",
+    cell({ first, second }, #below > 0 and "below" or nil),
+    #below > 0 and cell({ below }, "above") or "",
+    "</w:tbl>",
+  })
+end
+
+-- The title page as the .pdf sets it. latex adds the line spacing to a gap
+-- written between two lines; word puts a gap above a paragraph and the top
+-- of its line, and the baseline lies the line's ascent below that. What each
+-- gap needs on top, by what stands before and after it, measured off both.
+-- Only the title page is set this way; the pages after it were matched to
+-- the .pdf on their own terms.
+local kTitleSpace = {
+  ["top>para"] = 31,
+  ["para>rule"] = 8.5,
+  ["rule>para"] = 3,
+  ["para>para"] = 0.7,
+}
+-- And its single spacing the .pdf's 14.5pt: 252 is 1.05 of word's 13.8pt.
+local kTitleLine = 252
+
+local function title_space(before, after)
+  return kTitleSpace[before .. ">" .. after] or 0
+end
+
+-- A frame as wide as the page's measure, on its bottom margin. Paragraphs
+-- one after another with the same frame are one frame, so the lines after a
+-- fill stand together with the last of them on the margin.
+local function docx_frame(page)
+  return string.format('<w:framePr w:w="%d" w:wrap="around"'
+    .. ' w:vAnchor="margin" w:hAnchor="margin" w:x="0" w:yAlign="bottom"/>',
+    twips(page.measure * 72))
+end
+
 local function render_docx(pages, meta)
   local out = pandoc.List({})
   local footers = reference_footers()
@@ -138,32 +253,62 @@ local function render_docx(pages, meta)
 
   for index, page in ipairs(pages) do
     local pending = 0
+    local centred = false
+    -- After a fill, the paragraphs that follow are a frame on the foot of
+    -- the page (docx_frame).
+    local framed = false
+    -- The title page's single spacing is the .pdf's 14.5pt (kTitleSpace).
+    local single = page.first and kTitleLine or 240
     -- A bookmark waiting for the next paragraph to mark.
     local function anchors()
       local held = pending_anchor
       pending_anchor = ""
       return held
     end
-    local function properties(extra, double)
+    -- exact, when given, is the height of each line in twips, whatever is in
+    -- it. The frame, when there is one, comes first: the schema puts it
+    -- ahead of the spacing.
+    local function properties(extra, double, exact)
+      local line = exact
+        and string.format('w:line="%d" w:lineRule="exact"', exact)
+        or string.format('w:line="%d" w:lineRule="auto"',
+          double and 480 or single)
       local spacing = string.format(
-        '<w:spacing w:before="%d" w:after="0" w:line="%d" w:lineRule="auto"/>',
-        twips(pending), double and 480 or 240)
+        '<w:spacing w:before="%d" w:after="0" %s/>', twips(pending), line)
       pending = 0
-      return "<w:pPr>" .. spacing .. (extra or "") .. "</w:pPr>"
+      return "<w:pPr>" .. (framed and docx_frame(page) or "") .. spacing
+        .. (extra or "") .. "</w:pPr>"
     end
 
-    for _, item in ipairs(page.items) do
+    for i, item in ipairs(page.items) do
       if item.kind == "gap" then
-        pending = pending + item.points
+        local points = item.points
+        if page.first then
+          local before = page.items[i - 1]
+          local after = page.items[i + 1]
+          points = points + title_space(before and before.kind or "top",
+            after and after.kind or "end")
+        end
+        pending = pending + points
+      elseif item.kind == "fill" then
+        -- word has no space that grows to fill a page, so what follows is
+        -- set in a frame on the bottom margin instead, and the frame keeps
+        -- none of the space above it.
+        framed = true
+        pending = 0
       elseif item.kind == "rule" then
         -- A rule is a paragraph with a border under it, which is how word
         -- draws one. The indents narrow the paragraph to the rule's width.
+        -- Its one line is next to nothing high, so that the border stands
+        -- where the space above it ends: on a line of its own height it
+        -- stood a line lower, and the words between two rules sat nearer the
+        -- upper one than the lower.
         local inset = twips((page.measure - item.width) / 2 * 72)
         local extra = '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="0"'
           .. ' w:color="auto"/></w:pBdr>'
           .. string.format('<w:ind w:left="%d" w:right="%d"/>', inset, inset)
         out:insert(raw("openxml",
-          "<w:p>" .. properties(extra) .. anchors() .. "</w:p>"))
+          "<w:p>" .. properties(extra, false, 20) .. anchors() .. "</w:p>"))
       elseif item.kind == "para" then
         local jc = string.format('<w:jc w:val="%s"/>',
           item.align == "center" and "center"
@@ -193,6 +338,9 @@ local function render_docx(pages, meta)
             "<w:p>" .. properties(extra, item.double) .. anchors()
             .. table.concat(runs) .. "</w:p>"))
         end
+      elseif item.kind == "notice" then
+        out:insert(raw("openxml", docx_notice(item)))
+        centred = true
       elseif item.kind == "anchor" then
         -- Held back rather than set in a paragraph of its own: an empty
         -- paragraph is a blank line, and the heading under it came out a
@@ -236,7 +384,8 @@ local function render_docx(pages, meta)
           pandoc.Attr("", {}, { ["custom-style"] = "AbstractFirstParagraph" })))
       end
     end
-    out:insert(raw("openxml", docx_section(page, footers, index == 1)))
+    out:insert(raw("openxml",
+      docx_section(page, footers, index == 1, centred)))
   end
   return out
 end

@@ -316,7 +316,7 @@ local function meta(m)
 
   -- A dissertation sets a block quotation, a note and the entries of its
   -- reference list single spaced, indents a quotation half an inch on the
-  -- left and a note's first line half an inch, and keeps a page from
+  -- left and the right and a note's first line half an inch, and keeps a page from
   -- breaking after the first line of a paragraph or before its last. The reference list is patched at the start of the document
   -- rather than in the preamble: the environment quarto writes it in is one
   -- of pandoc's own, and where an include lands among those is a detail of

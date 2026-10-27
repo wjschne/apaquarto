@@ -32,6 +32,11 @@ leading the manuscript gave up when it moved to 24pt, and took the
 manuscript's 16pt paragraph spacing with it, so its paragraphs stood 24pt
 apart while the lines inside them stood 26pt.
 
+A block quotation stands half an inch in from the right margin as well as
+the left, which the Graduate School asks for though APA does not. The dash
+attribution under the second is set against the quotation's right edge, so
+the end of its line is where that edge is.
+
 Each line measured begins with a word made up for it, and a line is ended by
 hand (a backslash) where two lines of one paragraph are wanted.
 -->
@@ -49,6 +54,10 @@ Paratwo follows it.
 > Quotetwo of the same quotation.
 
 Afterquote is the body again.
+
+> Rightquote stands half an inch in from both margins.
+>
+> --- Rightsource
 
 # References
 

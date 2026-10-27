@@ -29,13 +29,21 @@ heading over an empty page helps nobody, and the Graduate School's own
 template says "if no tables, delete this page". And there is an illustration
 but list-of-illustrations is false, so that list is left out and the contents
 does not name it either.
+
+The figure's caption is long enough to turn over in the list of figures, and
+the line it turns onto begins under the first word of the caption, not under
+the number. typst set the first line a space further in than the second.
+The words stop half an inch short of the right margin on every line, so the
+title turns over before it reaches the column of page numbers, and the
+number stands at the margin on the line it turns onto.
 -->
+
 
 # Introduction
 
 See @fig-one.
 
-![A figure of some kind](sampleimage.png){#fig-one}
+![Figwrap is a figure whose caption runs long enough that its entry in the list of figures turns over onto a second line](sampleimage.png){#fig-one}
 
 ::: {#ill-one}
 ![](sampleimage.png)

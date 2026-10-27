@@ -29,6 +29,10 @@ local function carry(el, content)
   local spacing = utilsapa.own_table_spacing(value)
   if not spacing then return el end
   local found, package = 0, nil
+  -- A float's content may be the table itself, which a walk, starting
+  -- below what it walks, would not visit (::: {#tbl-x} around a table).
+  local single = pandoc.utils.type(content) == "Block"
+  if single then content = pandoc.Blocks({ content }) end
   content = content:walk({
     Table = function(tbl)
       found = found + 1
@@ -41,6 +45,7 @@ local function carry(el, content)
       package = package or raw.text:sub(1, 400)
     end,
   })
+  if single then content = content[1] end
   local place = el.identifier ~= "" and el.identifier or "a chunk"
   if found == 0 and package and not warned[package] then
     warned[package] = true

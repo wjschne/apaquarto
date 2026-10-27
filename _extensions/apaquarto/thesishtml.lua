@@ -4,6 +4,7 @@
 local thesispages = require("thesispages")
 
 local kSubheadingStep = thesispages.subheading_step
+local kLabelLead = thesispages.label_lead
 local contents_colour = thesispages.contents_colour
 local written = thesispages.written
 local raw = pandoc.RawBlock
@@ -14,7 +15,8 @@ local raw = pandoc.RawBlock
 -- spaced, and a double space stands between one entry and the next: a line of
 -- space under an entry puts the line after it twice as far down as the one
 -- before. The half inch a quotation is indented on the left is in apa.css
--- already.
+-- already; the half inch on the right is a dissertation's alone, which the
+-- Graduate School asks for though APA does not.
 --
 -- A note's first line is not indented here. In the three paged formats the
 -- half inch the handbook asks for is where the note's number goes; in .html
@@ -22,6 +24,7 @@ local raw = pandoc.RawBlock
 --
 -- 1em is single and 2em is double throughout that stylesheet.
 local kHtmlThesisStyle = table.concat({
+  "blockquote, .blockquote { margin-right: 0.5in; }",
   "blockquote p, .blockquote p { line-height: 1em; }",
   ".csl-bib-body .csl-entry { line-height: 1em; margin-bottom: 1em; }",
   ".footnotes li p { line-height: 1em; }",
@@ -40,7 +43,8 @@ local function render_html(pages, meta)
   for _, page in ipairs(pages) do
     out:insert(raw("html", '<div class="thesis-front-matter-page">'))
     for _, item in ipairs(page.items) do
-      if item.kind == "gap" then
+      -- A fill is its least: there is no foot of a page here to reach.
+      if item.kind == "gap" or item.kind == "fill" then
         out:insert(raw("html", string.format(
           '<div style="height:%.1fpt"></div>', item.points)))
       elseif item.kind == "rule" then
@@ -70,6 +74,37 @@ local function render_html(pages, meta)
             ";margin:0" .. indent .. ";text-indent:0;line-height:" ..
             (item.double and "2" or "1.15") .. '">' .. body .. "</p>"))
         end
+      elseif item.kind == "notice" then
+        -- A block as wide as its widest line, so a border on the lines over
+        -- the rule is as wide as they are, padded 3pt clear of them. The
+        -- half line of space is half of the 1.15 lines are set at. There is
+        -- no page to centre it on.
+        local first, second, below = pandoc.List({}), pandoc.List({}),
+          pandoc.List({})
+        for i, line in ipairs(item.lines) do
+          local into = i <= item.space_after and first
+            or i <= item.rule_after and second or below
+          into:insert(written(line, "html"))
+        end
+        local p = '<p style="margin:0;text-indent:0%s">%s</p>'
+        local function paragraph(lines, style)
+          if #lines == 0 then return "" end
+          return string.format(p, style, table.concat(lines, "<br>\n"))
+        end
+        local ruled = #below > 0
+          and ";padding-bottom:3pt;border-bottom:0.5pt solid currentColor"
+          or ""
+        out:insert(raw("html", table.concat({
+          '<div style="width:fit-content;margin:0 auto;text-align:center;'
+            .. 'line-height:1.15">',
+          -- The border goes under the whole of what is over the rule.
+          '<div style="' .. ruled:sub(2) .. '">',
+          paragraph(first, ""),
+          paragraph(second, #first > 0 and ";margin-top:0.575em" or ""),
+          "</div>",
+          paragraph(below, ";padding-top:3pt"),
+          "</div>",
+        })))
       elseif item.kind == "anchor" then
         out:insert(raw("html", '<span id="' .. item.name .. '"></span>'))
       elseif item.kind == "columns" then
@@ -87,9 +122,12 @@ local function render_html(pages, meta)
           if entry.target then
             body = '<a href="#' .. entry.target .. '">' .. body .. "</a>"
           end
+          -- A label, CHAPTER or APPENDICES, has its lead above it.
+          local lead = entry.kind == "label"
+            and string.format(";margin-top:%dpt", kLabelLead) or ""
           out:insert(raw("html", string.format(
-            '<p style="margin:0;text-indent:0;margin-left:%.2fin">%s</p>',
-            entry.indent * kSubheadingStep, body)))
+            '<p style="margin:0;text-indent:0;margin-left:%.2fin%s">%s</p>',
+            entry.indent * kSubheadingStep, lead, body)))
         end
       elseif item.kind == "blocks" then
         out:extend(item.blocks)

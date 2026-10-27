@@ -1183,6 +1183,55 @@ Dubtwo & 2 //
 
 /par/endgroup/addvspace{/baselineskip}
 
+/par/addvspace{/baselineskip}/begingroup
+
+/setlength{/LTleft}{0pt}/setlength{/LTright}{/fill}/setlength{/LTpost}{0pt}/setlength{/apatablenotegap}{-0.5pt}
+
+/setlength{/LTpre}{16pt}
+
+/apalongtableastabular/setlength{/parindent}{0pt}
+
+/apatablekeep
+
+/setcounter{table}{2}
+
+/refstepcounter{table}%
+/makeatletter/def/@currentlabel{3}/makeatother%
+/label{tbl-div}
+
+/apafloattitle{Table 3}
+
+/apafloatcaption{Div caption}
+
+/addcontentsline{lot}{table}{Table 3. Div caption}
+
+/par/ifdim/prevdepth>0pt/vskip-/prevdepth/prevdepth=0pt/fi
+
+/par/vspace{/dimexpr/LTpre-/lineskip/relax}
+
+/begingroup/setstretch{1}/selectfont
+
+{/def/LTcaptype{none} % do not increment counter
+/begin{longtable}[]{@{}ll@{}}
+/toprule/noalign{}
+Headword & Column B //
+/midrule/noalign{}
+/endhead
+/bottomrule/noalign{}
+/endlastfoot
+Divone & 1 //
+Divtwo & 2 //
+/end{longtable}
+}
+
+/par/endgroup
+
+/par/prevdepth=0pt
+
+/apakeepend{0pt}
+
+/par/endgroup/addvspace{/baselineskip}
+
 
 
 

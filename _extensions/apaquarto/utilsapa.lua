@@ -443,12 +443,12 @@ end
 M.thesis_margins = { left = 1.5, right = 1.0, top = 1.0, bottom = 1.0 }
 M.thesis_paper_width = 8.5
 
--- The title page is the exception. The dissertations Temple publishes set
--- theirs on 1" all round, so that the block of it stands at the centre of the
--- page rather than at the centre of a text block pushed right by the binding
--- margin, and that is the page the Graduate School's own template draws. It
--- is one page and it is set on its own, so it takes margins of its own.
-M.thesis_title_margins = { left = 1.0, right = 1.0, top = 1.0, bottom = 1.0 }
+-- The title page is the exception: 1.5in at the sides and the foot and 1in
+-- at the head. The sides are alike, so the block of it stands at the centre
+-- of the paper rather than at the centre of a text block pushed right by the
+-- binding margin. It is one page and it is set on its own, so it takes
+-- margins of its own. It had been 1in all round.
+M.thesis_title_margins = { left = 1.5, right = 1.5, top = 1.0, bottom = 1.5 }
 
 -- The width of the text block a page's margins leave, in inches.
 function M.thesis_measure(margins)
@@ -578,7 +578,8 @@ function M.thesis_body_margins(meta, warn)
   return overlay(M.thesis_margins, M.asked_margins(meta, warn))
 end
 
--- The title page's: 1" all round unless thesis: title-margin says otherwise,
+-- The title page's: 1.5in at the sides and foot and 1in at the head unless
+-- thesis: title-margin says otherwise,
 -- in the same shape as margin.
 function M.thesis_page_one_margins(meta)
   local thesis = meta and meta.thesis

@@ -72,7 +72,10 @@ end
 -- typst-template.typ sets its own blue, which is #0074D9, and a show rule
 -- written after that one wins. This is only written when a document names one
 -- of the four, so that one naming none is written exactly as it was before,
--- blue and all.
+-- blue and all. A field left unnamed keeps that blue, as it does in the .pdf,
+-- .docx and .html: urlcolor, citecolor and filecolor had fallen back to
+-- linkcolor, so a document naming only linkcolor had its urls and citations
+-- in that colour too, in typst alone.
 --
 -- It goes at the head of the document, so that the front matter takes it
 -- too: the corresponding author's email is a link, and so is anything written
@@ -85,7 +88,6 @@ local function link_rule(meta)
   end
   if not names_a_colour then return nil end
 
-  local link = typst_colour(meta, "linkcolor", "blue")
   return raw(table.concat({
     '#show link: it => {',
     '  let d = it.dest',
@@ -96,11 +98,11 @@ local function link_rule(meta)
     '  if type(d) == location { return it }',
     '  let c = if type(d) == str {',
     '    if d.starts-with("mailto:") or d.contains("://") { '
-      .. typst_colour(meta, "urlcolor", link) .. ' }',
-    '    else { ' .. typst_colour(meta, "filecolor", link) .. ' }',
+      .. typst_colour(meta, "urlcolor", "blue") .. ' }',
+    '    else { ' .. typst_colour(meta, "filecolor", "blue") .. ' }',
     '  } else if type(d) == label and str(d).starts-with("ref-") {',
-    '    ' .. typst_colour(meta, "citecolor", link),
-    '  } else { ' .. link .. ' }',
+    '    ' .. typst_colour(meta, "citecolor", "blue"),
+    '  } else { ' .. typst_colour(meta, "linkcolor", "blue") .. ' }',
     '  text(fill: c, it)',
     '}',
     '', '',

@@ -614,8 +614,8 @@
   headingabove: none,
   quoteinset: 0.5in,
   // How far a block quotation stands in from the right margin: not at all,
-  // in every mode, as in the .pdf, .docx and .html. none means quoteinset,
-  // the same as from the left.
+  // in every mode but a dissertation, as in the .pdf, .docx and .html. none
+  // means quoteinset, the same as from the left.
   quoteinsetright: 0pt,
   // Block quotations. none follows the body: its size, its line spacing, its
   // space above and below a block, and its rule about whether the paragraph
@@ -767,13 +767,17 @@
 
 
   // A table's rows stand as far apart as lines at the table spacing
-  // (apatableleadings; tests/layout-table-spacing.qmd), and a cell that wraps
-  // is spaced as its rows are. A table pandoc writes is given its padding and
-  // rules by formattypst.lua (apatablecells); these are for one a package
-  // writes in typst of its own: the cell padded above and below by half the
-  // leading, which spaces a row of one line the same as two lines of one
-  // cell. The rows had Typst's own five points of padding, 18pt apart, while
-  // a cell that wrapped took the body's double spacing.
+  // (apatableleadings; tests/layout-table-spacing.qmd). A table pandoc writes
+  // is given its padding and rules by formattypst.lua (apatablecells), and
+  // the leading of a cell that wraps there too, so that it is spaced as its
+  // rows are; these are for one a package writes in typst of its own: the
+  // cell padded above and below by half the leading, unless the package pads
+  // it itself, and a cell that wraps single spaced, as in the .docx and
+  // .html the package writes, since the package writes no leading of its
+  // own. The rows had Typst's own five points of padding, 18pt apart, and a
+  // cell that wrapped took the body's double spacing, and then the table
+  // spacing, whatever apa_flextable(line_spacing = 1) asked
+  // (tests/layout-table-package.qmd).
   let tableleading = apatableleadings.at(tablespacing,
     default: apatableleadings.double)
   set table(
@@ -783,7 +787,8 @@
       ),
     inset: (x: 5pt, y: tableleading / 2),
   )
-  show table: set par(leading: tableleading, spacing: tableleading)
+  show table: set par(leading: apatableleadings.single,
+    spacing: apatableleadings.single)
 
   // The space between two paragraphs is the space between two lines, so
   // that a double-spaced manuscript is double spaced throughout and a journal
@@ -805,6 +810,11 @@
   // and a column the writer had asked to be left aligned came out with its
   // gaps stretched to the column edge. APA sets no table that way.
   show table: set par(justify: false)
+
+  // A table that breaks over pages breaks between its rows, as a longtable
+  // does in the .pdf: typst split a row whose cells wrapped, and set the
+  // rest of its lines under the repeated head on the next page.
+  set table.cell(breakable: false)
 
   // The space above and below a block: a quotation, a list, a figure, code.
   // Not the space between paragraphs, which is par's (above).
@@ -1101,8 +1111,10 @@
   pagenumbering: "i",
   leading: thesisleading,
   // A block quotation is single spaced and indented half an inch on the left,
-  // as in every mode, which quoteinset already is.
+  // as in every mode, which quoteinset already is, and on the right as well,
+  // which the Graduate School asks for though APA does not.
   quoteleading: thesissingleleading,
+  quoteinsetright: none,
   // A note's first line begins half an inch in, its turned lines running to
   // the margin, and a double space stands between one note and the next. A
   // note is set smaller than the body, so what reads as a double space there
@@ -1145,67 +1157,103 @@
   document,
 )
 
-#let apatocline(indent, number, body, target, roman, dots) = context {
+#let apatocline(indent, number, body, target, roman, dots, lead: 0pt) = context {
   let found = if target == none { () } else { query(target) }
   let dest = if found.len() > 0 { found.first().location() } else { none }
   let pg = if dest == none { none } else {
     let n = counter(page).at(dest).first()
     if roman { numbering("i", n) } else { numbering("1", n) }
   }
-  block(above: 19.4pt, below: 0pt, inset: (left: indent), width: 100%)[
+  // The words stop 0.50in short of the margin on every line, which the
+  // inset on the right does, and the dots run to where they stop. The rest of
+  // the dots and the number are placed out across the inset to the margin,
+  // from inside the box of dots: set after it as a box of their own, they
+  // were a place the line could break, and a title that filled its line
+  // sent its number to the start of the next.
+  // lead is a label's space over the space between two entries.
+  block(above: 19.4pt + lead, below: 0pt, inset: (left: indent, right: 0.50in), width: 100%)[
     #set text(fill: rgb("#000000"))
     // A show rule as well as the set: typst-template.typ sets its own blue
     // over every link, and a set does not reach inside a link that rule has
     // already coloured. This one stands nearer and wins.
     #show link: set text(fill: rgb("#000000"))
+    // The number's box and the title are on one line with nothing between
+    // them: a line break there is a space, which put the first line of the
+    // title that much further in than the lines it turns over onto.
     #par(leading: 0.65em, hanging-indent: if number == none { 0pt } else { 0.25in })[
-      #if number != none [#box(width: 0.25in)[#number]]
-      #if dest == none { body } else { link(dest)[#body] }
-      #if dots [#box(width: 1fr, repeat[.]) #pg]
+      #if number != none [#box(width: 0.25in)[#number]]#if dest == none { body } else { link(dest)[#body] }
+      #if dots [#box(width: 1fr)[#repeat[.]#place(top + right, dx: 0.50in, box(width: 0.50in)[#box(width: 1fr, repeat[.])#pg])]]
     ]
   ]
 }
-#page(margin: (left: 1.00in, right: 1.00in, top: 1.00in, bottom: 1.00in), header: none, footer: none, numbering: none)[
+#page(margin: (left: 1.50in, right: 1.50in, top: 1.00in, bottom: 1.50in), header: none, footer: none, numbering: none)[
 #[
 #set par(first-line-indent: 0pt, justify: false)
 #set block(spacing: 0pt)
-#v(70.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY WHEN /
-THEY ARE STUDYING SOMETHING AT CONSIDERABLE /
-AND NOTABLE LENGTH]]]
-#v(21.0pt, weak: false)
+#v(105.0pt, weak: false)
+#align(center)[#par(leading: 6.8pt)[#strong[A STUDY OF WHATEVER IT IS THAT GRADUATE STUDENTS STUDY /
+WHEN THEY ARE STUDYING SOMETHING AT /
+CONSIDERABLE AND NOTABLE /
+LENGTH]]]
+#v(33.5pt, weak: false)
 #align(center)[#line(length: 5.50in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[A Dissertation /
+#v(27.5pt, weak: false)
+#align(center)[#par(leading: 6.8pt)[A Dissertation /
 Submitted to /
 the Temple University Graduate Board]]
-#v(21.0pt, weak: false)
+#v(33.5pt, weak: false)
 #align(center)[#line(length: 5.50in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[In Partial Fulfillment /
+#v(27.5pt, weak: false)
+#align(center)[#par(leading: 6.8pt)[In Partial Fulfillment /
 of the Requirements for the Degree /
 Doctor of Philosophy]]
-#v(21.0pt, weak: false)
+#v(33.5pt, weak: false)
 #align(center)[#line(length: 5.50in, stroke: 0.5pt)]
-#v(21.0pt, weak: false)
-#align(center)[#par(leading: 0.65em)[by /
+#v(27.5pt, weak: false)
+#align(center)[#par(leading: 6.8pt)[by /
 Iwishiwere A. Graduate /
 May 2027]]
-#v(70.0pt, weak: false)
-#pad(left: 0.50in)[#align(left)[#par(leading: 0.65em)[Examining Committee Members:]]]
-#v(13.8pt, weak: false)
-#pad(left: 0.50in)[#align(left)[#par(leading: 0.65em)[Mentor Name, Advisory Chair, TU Department /
-Member Name, TU Department /
-Outside Name, External Member, Another University]]]
+#v(27.6pt, weak: false)
+#v(1fr)
+#pad(left: 0.00in)[#align(left)[#par(leading: 6.8pt)[Examining Committee Members:]]]
+#v(20.3pt, weak: false)
+#pad(left: 0.00in)[#align(left)[#[#set par(first-line-indent: 0pt, hanging-indent: 0.50in, spacing: 6.8pt, leading: 6.8pt)
+Mentor Name, Advisory Chair, TU Department
+
+Member Name, TU Department
+
+Outside Name, External Member, Another University
+]]]
 ]
 ]
 #page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
 #[
 #set par(first-line-indent: 0pt, justify: false)
 #set block(spacing: 0pt)
-#v(289.0pt, weak: false)
-#align(center)[© Copyright 2027 by Iwishiwere A. Graduate /
-All Rights Reserved]
+#v(1fr, weak: false)
+#context {
+  let first = ([©], [Copyright], [2027],)
+  let second = ([by], [Iwishiwere A. Graduate],)
+  let below = ([All Rights Reserved],)
+  let width = calc.max(..(first + second + below).map(line => measure(line).width))
+  set par(leading: 0.65em, spacing: 0pt)
+  let pitch = 0.65em.to-absolute() + measure([X]).height
+  align(center, block(width: width, {
+    set align(center)
+    par(first.join(linebreak()))
+    if second.len() > 0 {
+      v(0.65em + pitch / 2)
+      par(second.join(linebreak()))
+    }
+    if below.len() > 0 {
+      v(7pt)
+      line(length: 100%, stroke: 0.5pt)
+      v(7pt)
+      par(below.join(linebreak()))
+    }
+  }))
+}
+#v(1fr, weak: false)
 ]
 ]
 #page(margin: (left: 1.50in, right: 1.00in, top: 1.00in, bottom: 1.00in))[
@@ -1252,11 +1300,11 @@ Thanks to everyone who read a draft.
 #apatocline(0.00in, none, [LIST OF TABLES], <apathesis-list-of-table>, true, true)
 #apatocline(0.00in, none, [LIST OF FIGURES], <apathesis-list-of-figure>, true, true)
 #apatocline(0.00in, none, [LIST OF ILLUSTRATIONS], <apathesis-list-of-illustration>, true, true)
-#apatocline(0.00in, none, [CHAPTER], none, false, false)
+#apatocline(0.00in, none, [CHAPTER], none, false, false, lead: 9pt)
 #apatocline(0.00in, [1.], [INTRODUCTION], <introduction>, false, true)
 #apatocline(0.00in, [2.], [METHOD], <method>, false, true)
 #apatocline(0.00in, none, [REFERENCES], <references>, false, true)
-#apatocline(0.00in, none, [APPENDICES], none, false, false)
+#apatocline(0.00in, none, [APPENDICES], none, false, false, lead: 9pt)
 #apatocline(0.00in, [A.], [MEASURES USED], <apx-measures>, false, true)
 #apatocline(0.00in, [B.], [CONSENT FORMS], <apx-consent>, false, true)
 ]
@@ -1297,6 +1345,18 @@ Thanks to everyone who read a draft.
 
 #set page(numbering: "1")
 #counter(page).update(1)
+#show link: it => {
+  let d = it.dest
+  if type(d) == location { return it }
+  let c = if type(d) == str {
+    if d.starts-with("mailto:") or d.contains("://") { rgb("#000000") }
+    else { rgb("#000000") }
+  } else if type(d) == label and str(d).starts-with("ref-") {
+    rgb("#000000")
+  } else { rgb("#000000") }
+  text(fill: c, it)
+}
+
 #heading(level: 1, outlined: false, numbering: none)[CHAPTER 1]
 = INTRODUCTION
 <introduction>
@@ -1360,6 +1420,8 @@ The forms.
 <floats>
 #figure([
 #block(breakable: false)[
+#[
+#show table: set par(leading: apatableleadings.double, spacing: apatableleadings.double)
 #table(
   columns: 2,
   align: (auto,auto,),
@@ -1372,6 +1434,7 @@ The forms.
   table.hline(),
   [1], [2],
 )
+]
 ]
 ], caption: figure.caption(
 position: top,
