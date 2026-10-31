@@ -3302,3 +3302,15 @@
   to: apaquarto-typst
   expect:
     layout: *thesis-committee-six
+
+- fixture: appendix-link-anchors.qmd
+  to: apaquarto-pdf
+  expect:
+    tex:
+      count:
+        # The anchor an appendix float is given carries the appendix letter,
+        # so table.A2 rather than table.2, which Table 2 in the body has too.
+        '\def\theHtable{A\arabic{table}}': 2
+        '\def\theHfigure{A\arabic{figure}}': 1
+        '\def\theHtable{\arabic{table}}': 2
+        '\def\theHfigure{\arabic{figure}}': 1

@@ -1208,6 +1208,7 @@ See /hyperref[fig-one]{Figure~/ref*{fig-one}}.
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-one}
@@ -1239,6 +1240,7 @@ over onto a second line}
 
 /setcounter{illustration}{0}
 
+/def/theHillustration{/arabic{illustration}}%
 /refstepcounter{illustration}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{ill-one}

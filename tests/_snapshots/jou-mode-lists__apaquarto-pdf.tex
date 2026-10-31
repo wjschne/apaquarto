@@ -1109,6 +1109,7 @@ See /hyperref[fig-one]{Figure~/ref*{fig-one}}.
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-one}
@@ -1129,6 +1130,7 @@ See /hyperref[fig-one]{Figure~/ref*{fig-one}}.
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-one}

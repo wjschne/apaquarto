@@ -1057,6 +1057,7 @@ Some text above the first figure.
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-one}
@@ -1093,6 +1094,7 @@ Some text between the figures.
 
 /setcounter{figure}{1}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{fig-two}

@@ -1099,6 +1099,7 @@ A: captioned layout, no notes (/hyperref[fig-a]{Figure~/ref*{fig-a}}).
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-a}
@@ -1154,6 +1155,7 @@ used to render unnumbered with a dangling reference.
 
 /setcounter{figure}{1}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{fig-b}
@@ -1202,6 +1204,7 @@ C: captioned layout, both panels noted
 
 /setcounter{figure}{2}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{3}/makeatother%
 /label{fig-c}
@@ -1267,6 +1270,7 @@ the one that has to keep both the grid and its number.
 
 /setcounter{figure}{3}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{4}/makeatother%
 /label{fig-d}
@@ -1328,6 +1332,7 @@ so it is printed once, below the grid, and not copied onto each panel.
 
 /setcounter{figure}{4}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{5}/makeatother%
 /label{fig-e}
@@ -1386,6 +1391,7 @@ H: layout with a whole-figure note and no layout attribute at all
 
 /setcounter{figure}{5}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{6}/makeatother%
 /label{fig-h}
@@ -1437,6 +1443,7 @@ I: three panels over two columns, with a whole-figure note
 
 /setcounter{figure}{6}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{7}/makeatother%
 /label{fig-i}
@@ -1508,6 +1515,7 @@ J: explicit layout matrix with a whole-figure note
 
 /setcounter{figure}{7}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{8}/makeatother%
 /label{fig-j}
@@ -1567,6 +1575,7 @@ the hand-built wrapper.
 
 /setcounter{figure}{8}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{9}/makeatother%
 /label{fig-f}
@@ -1604,6 +1613,7 @@ G: plain single figure, no note, no caption text
 
 /setcounter{figure}{9}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{10}/makeatother%
 /label{fig-g}
