@@ -25,7 +25,13 @@
 /usepackage{lmodern}
 /ifPDFTeX/else
   % xetex/luatex font selection
-  /setmainfont[]{TeX Gyre Termes}
+  /ifLuaTeX
+    /usepackage{luaotfload}
+    /directlua{luaotfload.add_fallback("mainfontfallback",{
+      "LatinModernMath-Regular:mode=base;","DejaVuSans:mode=node;"
+    })}
+  /fi
+  /setmainfont[,RawFeature={fallback=mainfontfallback}]{TeX Gyre Termes}
 /fi
 % Use upquote if available, for straight quotes in verbatim environments
 /IfFileExists{upquote.sty}{/usepackage{upquote}}{}
@@ -869,8 +875,9 @@
   /setstretch{1}/selectfont
   /addtolength{/apathesisentrysep}{-/baselineskip}}
 
-% Block quotations. Every mode indents one on the left only and runs it to
-% the margin on the right, as the .docx, the .html and typst do. LaTeX's own
+% Block quotations. Every mode but a dissertation indents one on the left
+% only and runs it to the margin on the right, as the .docx, the .html and
+% typst do. LaTeX's own
 % quote takes the 2.5em of /leftmargini on both sides. /parsep is the space a
 % list puts between its paragraphs, a few points more than the line spacing,
 % which set the paragraphs of a quotation, and the attribution under it,
@@ -900,7 +907,8 @@
   {/par/raggedleft/setlength{/parindent}{0pt}}
   {/par}
 
-% A dissertation indents half an inch and single spaces, and stands a double
+% A dissertation indents half an inch on both sides, which the Graduate
+% School asks for though APA does not, and single spaces, and stands a double
 % space (24pt, baseline to baseline) between the quotation and the body on
 % either side, as typst does. The list's /topsep stood on top of that: above,
 % it was added to the quotation's single spacing, and below to the body's
@@ -912,7 +920,7 @@
 /makeatletter
 /newcommand{/apathesisquote}{%
   /renewenvironment{quote}
-    {/list{}{/leftmargin=0.5in/rightmargin=0pt/parsep=0pt/partopsep=0pt
+    {/list{}{/leftmargin=0.5in/rightmargin=0.5in/parsep=0pt/partopsep=0pt
        /apathesissingle/topsep=/apathesisentrysep}%
      /item/relax}
     {/@topsepadd=/z@/endlist}}
@@ -1042,6 +1050,8 @@
 /@ifundefined{xmpquote}{/newcommand{/xmpquote}[1]{#1}}{}
 /makeatother
 /hypersetup{
+  pdftitle={A Journal Article},
+  pdfauthor={Ann Author, Ben Author},
   colorlinks=true,
   linkcolor={apalink},
   filecolor={apalink},

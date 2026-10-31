@@ -662,8 +662,8 @@
   headingabove: none,
   quoteinset: 0.5in,
   // How far a block quotation stands in from the right margin: not at all,
-  // in every mode, as in the .pdf, .docx and .html. none means quoteinset,
-  // the same as from the left.
+  // in every mode but a dissertation, as in the .pdf, .docx and .html. none
+  // means quoteinset, the same as from the left.
   quoteinsetright: 0pt,
   // Block quotations. none follows the body: its size, its line spacing, its
   // space above and below a block, and its rule about whether the paragraph
@@ -1159,8 +1159,10 @@
   pagenumbering: "i",
   leading: thesisleading,
   // A block quotation is single spaced and indented half an inch on the left,
-  // as in every mode, which quoteinset already is.
+  // as in every mode, which quoteinset already is, and on the right as well,
+  // which the Graduate School asks for though APA does not.
   quoteleading: thesissingleleading,
+  quoteinsetright: none,
   // A note's first line begins half an inch in, its turned lines running to
   // the margin, and a double space stands between one note and the next. A
   // note is set smaller than the body, so what reads as a double space there

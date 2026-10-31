@@ -50,7 +50,11 @@ internal <- c(
 # documentation covers.
 quarto <- c(
   "author", "citeproc", "classoption", "crossref", "csl", "css", "lang",
-  "link-citations", "nocite", "number-depth", "numbersections",
+  "link-citations",
+  # Quarto fills it from _brand.yml; thesisfrontmatter.lua clears it for a
+  # dissertation. apaquarto's own logo option is journal.logo.
+  "logo",
+  "nocite", "number-depth", "numbersections",
   "ref-hyperlink", "subtitle", "toc", "toc-depth"
 )
 
