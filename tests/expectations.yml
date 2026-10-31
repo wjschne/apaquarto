@@ -1210,8 +1210,11 @@
         is: 15
       - gap: [Copyright, by]
         is: 40
+      # 78pt with Times and 76 on the CI runner, which has no Times and
+      # falls back on a face whose line boxes are a little shorter.
       - gap: [Copyright, Reserved]
-        is: 78
+        is: 77
+        within: 2
       - rule-weight-below: Copyright
         is: 0.5
       - gap: [©, ii]
