@@ -1100,6 +1100,7 @@ A Note Under an Illustration
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-img}
@@ -1134,6 +1135,7 @@ A Note Under an Illustration
 
 /setcounter{figure}{1}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{fig-div}
@@ -1168,6 +1170,7 @@ A Note Under an Illustration
 
 /setcounter{illustration}{0}
 
+/def/theHillustration{/arabic{illustration}}%
 /refstepcounter{illustration}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{ill-img}
@@ -1202,6 +1205,7 @@ A Note Under an Illustration
 
 /setcounter{illustration}{1}
 
+/def/theHillustration{/arabic{illustration}}%
 /refstepcounter{illustration}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{ill-div}
@@ -1238,6 +1242,7 @@ A Note Under an Illustration
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-one}
@@ -1296,6 +1301,7 @@ figure.
 
 /setcounter{figure}{2}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{3}/makeatother%
 /label{fig-bare}
@@ -1326,6 +1332,7 @@ A paragraph after the bare figure.
 
 /setcounter{illustration}{2}
 
+/def/theHillustration{/arabic{illustration}}%
 /refstepcounter{illustration}%
 /makeatletter/def/@currentlabel{3}/makeatother%
 /label{ill-bare}

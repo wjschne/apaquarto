@@ -1138,6 +1138,7 @@ See /hyperref[fig-panels]{Figure~/ref*{fig-panels}},
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-panels}
@@ -1207,6 +1208,7 @@ A note belonging to the second panel.
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-values}

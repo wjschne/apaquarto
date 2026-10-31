@@ -1114,6 +1114,7 @@ See /hyperref[tbl-md]{Table~/ref*{tbl-md}},
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-md}
@@ -1150,6 +1151,7 @@ A & 1 //
 
 /setcounter{table}{1}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{tbl-chunk}
@@ -1229,6 +1231,7 @@ Text in the appendix, which refers to
 
 /setcounter{table}{0}
 
+/def/theHtable{A/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{A1}/makeatother%
 /label{tbl-apx}
@@ -1265,6 +1268,7 @@ B & 2 //
 
 /setcounter{figure}{0}
 
+/def/theHfigure{A/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{A1}/makeatother%
 /label{fig-apx}

@@ -1105,6 +1105,7 @@ working (/hyperref[fig-single]{Figure~/ref*{fig-single}}).
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-single}
@@ -1147,6 +1148,7 @@ layout with no overall caption, where each panel carries its own
 
 /setcounter{figure}{1}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{fig-bug}
@@ -1210,6 +1212,7 @@ The same situation but with an overall figure caption
 
 /setcounter{figure}{2}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{3}/makeatother%
 /label{fig-capnotes}
@@ -1278,6 +1281,7 @@ Only the second panel has a note; the first must render without one
 
 /setcounter{figure}{3}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{4}/makeatother%
 /label{fig-mixed}
@@ -1342,6 +1346,7 @@ The table branch of the filter is unchanged; confirm it still works
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-note}

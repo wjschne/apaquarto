@@ -1115,6 +1115,7 @@ See /hyperref[fig-first]{Figure~/ref*{fig-first}},
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-first}
@@ -1143,6 +1144,7 @@ See /hyperref[fig-first]{Figure~/ref*{fig-first}},
 
 /setcounter{figure}{1}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{fig-panels}
@@ -1186,6 +1188,7 @@ Right.
 
 /setcounter{figure}{2}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{3}/makeatother%
 /label{fig-third}
@@ -1216,6 +1219,7 @@ Right.
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-values}
@@ -1266,6 +1270,7 @@ A & B //
 
 /setcounter{figure}{0}
 
+/def/theHfigure{A/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{A1}/makeatother%
 /label{fig-appendix}
@@ -1296,6 +1301,7 @@ A & B //
 
 /setcounter{table}{0}
 
+/def/theHtable{A/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{A1}/makeatother%
 /label{tbl-appendix}

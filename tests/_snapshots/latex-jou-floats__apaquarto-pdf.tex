@@ -1114,6 +1114,7 @@ See /hyperref[fig-wideimage]{Figure~/ref*{fig-wideimage}},
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-wideimage}
@@ -1141,6 +1142,7 @@ markdown image.}
 
 /setcounter{figure}{1}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{fig-widechunk}
@@ -1168,6 +1170,7 @@ chunk.}
 
 /setcounter{figure}{2}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{3}/makeatother%
 /label{fig-narrow}
@@ -1195,6 +1198,7 @@ code chunk.}
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-widechunk}

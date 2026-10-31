@@ -121,9 +121,16 @@ local function label_blocks(float)
   if n and n:match("^%d+$") then
     out:insert(raw("\\setcounter{" .. counter .. "}{" .. (tonumber(n) - 1) .. "}"))
   end
-  local tex = "\\refstepcounter{" .. counter .. "}%\n"
+  -- hyperref names the anchor after \theH<counter>, which is the bare count.
+  -- An appendix starts its count again, so Table A2 got the anchor table.2,
+  -- the same as Table 2 in the body, and a link to it went to Table 2
+  -- (wjschne/apaquarto#175). The prefix goes into the anchor name too.
+  local prefix = (float.attributes or {}).prefix or ""
+  local tex = "\\def\\theH" .. counter .. "{" .. prefix
+    .. "\\arabic{" .. counter .. "}}%\n"
+    .. "\\refstepcounter{" .. counter .. "}%\n"
   if n then
-    local shown = ((float.attributes or {}).prefix or "") .. n
+    local shown = prefix .. n
     tex = tex .. "\\makeatletter\\def\\@currentlabel{" .. shown
       .. "}\\makeatother%\n"
   end

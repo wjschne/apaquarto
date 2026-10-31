@@ -1108,6 +1108,7 @@ The figures and tables are
 
 /setcounter{figure}{0}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{fig-chunk}
@@ -1146,6 +1147,7 @@ Zqafterchunkfig.
 
 /setcounter{table}{0}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{1}/makeatother%
 /label{tbl-chunk}
@@ -1203,6 +1205,7 @@ Zqafterchunktbl.
 
 /setcounter{figure}{1}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{fig-md}
@@ -1239,6 +1242,7 @@ Zqaftermdfig.
 
 /setcounter{figure}{2}
 
+/def/theHfigure{/arabic{figure}}%
 /refstepcounter{figure}%
 /makeatletter/def/@currentlabel{3}/makeatother%
 /label{fig-div}
@@ -1277,6 +1281,7 @@ Zqafterdivfig.
 
 /setcounter{table}{1}
 
+/def/theHtable{/arabic{table}}%
 /refstepcounter{table}%
 /makeatletter/def/@currentlabel{2}/makeatother%
 /label{tbl-md}
